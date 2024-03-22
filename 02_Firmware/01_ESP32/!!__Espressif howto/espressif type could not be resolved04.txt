@@ -1,0 +1,7 @@
+Komenda w VisualGDB
+openocd.exe -c "gdb_port 49492" -c "telnet_port 49490" -f interface/jlink.cfg -c "adapter_khz 3000" -f target/esp32.cfg -c "echo VisualGDB_OpenOCD_Ready"
+
+
+Komenda działająca w Espressif (Config options:):
+-s ${openocd_path}/share/openocd/scripts -f interface/jlink.cfg -c "adapter_khz 3000" -f target/esp32.cfg
+-s ${openocd_path}/share/openocd/scripts -c "set ESP_RTOS none" -f interface/jlink.cfg -c "adapter_khz 3000" -f target/esp32.cfg

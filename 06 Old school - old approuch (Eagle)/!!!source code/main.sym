@@ -1,0 +1,229 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004-013 comunication_MasterBuffer
+014-033 comunication_SlaveBuffer
+034-035 I2CReadLength
+036-037 I2CWriteLength
+038-039 strtok.save
+03A-03D _Randseed
+03E-042 tea5767_config
+043-046 tea5767_init.frequency
+043     TDA7418__LeftRear.Volume_dB_value
+043     _TDA7418_Audio_Processor_Testing_Mode.mode
+043     TDA7418__LeftFront.Volume_dB_value
+043     TDA7418__Loudness.Loudness_dB_value
+043     TDA7418__Bass.Bass_dB_value
+043     TDA7418__Subwoofer.Volume_dB_value
+043     tea5767_SetCommand_SendData.command_byte
+043     TDA7418__Treble.Treble_dB_value
+043     TDA7418__RightRear.Volume_dB_value
+043     TDA7418__SelectInput.input
+043     TDA7418__RightFront.Volume_dB_value
+043     TDA7418__Middle.Middle_dB_value
+043     TDA7418__Volume.Volume_dB_value
+043     MAIN.@SCRATCH1
+044     TDA7418__Loudness.Low_HighBoost
+044     _TDA7418_Audio_Processor_Testing_Mode.miltiplekser
+044     tea5767_SetCommand_SendData.value
+044     @delay_ms1.P1
+044     TDA7418__SelectInput.input_gain_dB_value
+044     _TDA7418__Volume_Speaker_Attenuation.Volume_dB_value
+045     tea5767_SetCommand_SendData.command
+045     TDA7418__SelectInput.SE4_PD_mode_Diffin_Mode
+045     _TDA7418__Volume_Speaker_Attenuation.Output_TDA7418_i2C_Addres
+045     _TDA7418_Audio_Processor_Testing_Mode.SC_clock
+045     TDA7418__Loudness.@SCRATCH1
+046     _TDA7418_Audio_Processor_Testing_Mode.MUTE_Pin_Config
+046     tea5767_SetCommand_SendData.@SCRATCH1
+046     TDA7418__SelectInput.@SCRATCH1
+047-04A tea5767_init.PLL_freq
+047     tea5767_SetCommand_SendData.@SCRATCH2
+047     _TDA7418_i2cWritePrepare.@SCRATCH1
+047     _TDA7418_Audio_Processor_Testing_Mode.@SCRATCH1
+048     tea5767_SetCommand_SendData.@SCRATCH3
+048     _TDA7418_i2cWritePrepare.@SCRATCH2
+04B-04C tea5767SendData.bytes
+04B-04E tea5767CalculatePLL.freqency
+04B     nth_bit_to_x.var_to_change
+04B     tea5767_init.@SCRATCH1
+04C     nth_bit_to_x.x
+04C     tea5767_init.@SCRATCH2
+04D     nth_bit_to_x.nth_bit
+04D     tea5767SendData.i
+04D     tea5767_init.@SCRATCH3
+04E     i2cEngine.eeprom_read
+04E     nth_bit_to_x.@SCRATCH1
+04E     tea5767SendData.@SCRATCH1
+04E     tea5767_init.@SCRATCH4
+04F     i2cEngine.i2c_ACK
+04F-052 tea5767CalculatePLL.temp
+04F     tea5767SendData.@SCRATCH2
+04F     tea5767_init.@SCRATCH5
+050-051 ClearBuffers.buffer
+050-051 i2cEngine.i
+050     tea5767SendData.@SCRATCH3
+052-053 ClearBuffers.buffer_size
+052.0   i2cEngine.state
+053     __try_i2c_bus.i2c_try
+053     i2cEngine.@SCRATCH1
+054-055 __try_i2c_bus.i2c_tryout_error
+054-055 ClearBuffers.i
+054     i2cEngine.@SCRATCH2
+055     i2cEngine.@SCRATCH3
+056     @delay_us1.P1
+056     @PRINTF_X_674.P2
+056     @PRINTF_D_674.P3
+056     @PSTRINGCN_674.P4
+056     @I2C_READU_1.P5
+056-057 @PRINTF_LU_674.P6
+056     __i2cDeviceStatus.ack
+056     ClearBuffers.@SCRATCH1
+057     @PRINTF_D_674.P1
+057     @PRINTF_X_674.P2
+057     ClearBuffers.@SCRATCH2
+057     __i2cDeviceStatus.@SCRATCH1
+057     @PSTRINGCN_674.@SCRATCH1
+058     @I2C_WRITEU_1.P1
+058     @PSTRINGCN_674.@SCRATCH2
+058     @PRINTF_LU_674.@SCRATCH1
+058     @PRINTF_D_674.@SCRATCH1
+059     @PRINTF_LU_674.@SCRATCH2
+059     @PRINTF_D_674.@SCRATCH2
+05A     @PRINTF_LU_674.@SCRATCH3
+05A     @PRINTF_D_674.@SCRATCH3
+05B     @PRINTF_LU_674.@SCRATCH4
+05B     @PRINTF_D_674.@SCRATCH4
+05C     @DIV88.P1
+05C     @PRINTF_LU_674.@SCRATCH5
+05D     @DIV88.P1
+05D     @PRINTF_LU_674.@SCRATCH6
+05E     @PRINTF_LU_674.@SCRATCH7
+05E     @DIV88.@SCRATCH1
+05F     @PUTCHAR_2_.P1
+F83     PSP_DATA
+FAD     UART_BUFFOR
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @READ_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @WRITE_PROGRAM_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+000004  @const701.call
+00002E  @const718.call
+000040  @const719.call
+000052  @const720.call
+000064  @const721.call
+000078  ClearBuffers
+0000A6  _TDA7418_i2cWritePrepare
+0000C4  @I2C_WRITEU_1
+0000E0  __i2cDeviceStatus
+00011A  @PUTCHAR_2_
+00015A  @PSTRINGCN_674
+000178  @PRINTF_X_674
+0001B6  @PRINTF_LU_674
+000272  @DIV88
+00029A  @PRINTF_D_674
+000346  fprintf_return_carriage
+000354  @delay_us1
+000370  __try_i2c_bus
+0003F6  @I2C_READU_1
+000414  i2cEngine
+0005D2  _TDA7418_i2cWriteExecute
+0005E2  TDA7418__SelectInput
+0005F4  TDA7418__Loudness
+00060A  _TDA7418__Volume_Speaker_Attenuation
+000618  TDA7418__Volume
+000626  TDA7418__Treble
+000638  TDA7418__Middle
+00064A  TDA7418__Bass
+00065C  TDA7418__Middle_Bass_Fc_Select
+00066C  TDA7418__LeftFront
+00067A  TDA7418__LeftRear
+000688  TDA7418__RightRear
+000696  TDA7418__RightFront
+0006A4  TDA7418__Subwoofer
+0006B2  TDA7418_Soft_Mut_Step_Time
+0006C2  _TDA7418_Audio_Processor_Testing_Mode
+0006D8  TDA7418_Audio_Processor_Operating_Mode
+0006E6  tea5767CalculatePLL
+000754  nth_bit_to_x
+00078C  tea5767SendData
+0007EA  tea5767_init
+000962  @delay_ms1
+00098A  tea5767_SetCommand_SendData
+0009D2  MAIN
+0009D2  @cinit1
+000A0C  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    G:\Elektronika_projekty\Car_Radio\!!!source code\
+
+Project Files:
+    main.c                                                  [17-kwi-19 20:26  CRC=9DCE694D]
+    main.h                                                  [17-kwi-19 18:14  CRC=1EA546BB]
+    C:\Program Files (x86)\PICC\Devices\18F4520.h           [10-lip-18 10:15  CRC=F56CEE78]
+    HW_drivers\AAntena\ActiveAntena.c                       [13-paü-16 14:17  CRC=9DF7001F]
+    HW_drivers\AAntena\ActiveAntena.h                       [04-wrz-17 18:30  CRC=D872A938]
+    core\I2C_ENGINE\I2C_Engine.c                            [21-gru-17 11:32  CRC=1DEF7DAB]
+    core\I2C_ENGINE\I2C_Engine.h                            [25-wrz-17 13:11  CRC=87941A81]
+    core\transmission_buffers\transmission_buffers.c        [08-paü-18 21:53  CRC=0449A6FB]
+    core\transmission_buffers\transmission_buffers.h        [17-kwi-19 18:52  CRC=3927D31F]
+    HW_drivers\TEA5767\TEA5767.c                            [21-gru-17 11:32  CRC=A99CFC57]
+    HW_drivers\TEA5767\TEA5767.h                            [25-wrz-17 14:37  CRC=8D4AC89B]
+    core\silelis_math\silelis_math.c                        [11-paü-18 20:53  CRC=34EF2B68]
+    C:\Program Files (x86)\PICC\Drivers\STDLIB.H            [29-cze-16 10:34  CRC=7E9CC16B]
+    C:\Program Files (x86)\PICC\Drivers\stddef.h            [05-wrz-14 12:47  CRC=897CEC6C]
+    C:\Program Files (x86)\PICC\Drivers\string.h            [26-mar-15 13:34  CRC=C4814297]
+    C:\Program Files (x86)\PICC\Drivers\ctype.h             [03-sty-08 15:55  CRC=2D1F019F]
+    core\silelis_math\BIT_MATH.c                            [09-paü-18 18:53  CRC=3436D591]
+    core\silelis_math\BIT_MATH.h                            [03-paü-17 13:09  CRC=BA118B5C]
+    HW_drivers\au7860_mp3\au7860_mp3.c                      [28-wrz-17 13:40  CRC=00000000]
+    HW_drivers\au7860_mp3\au7860_mp3.h                      [28-wrz-17 14:45  CRC=5745A70A]
+    HW_drivers\TDA7418\TDA7418.c                            [16-lis-18 19:51  CRC=93883CA3]
+    HW_drivers\TDA7418\TDA7418.h                            [16-lis-18 19:53  CRC=4BCD3B62]
+
+Source signature=E180F7E2
+Program memory checksum=E2D8
+Program memory CRC=0498
+Hex file CRC=96CE
+
+Units:
+    main (main)
+
+Compiler Settings:
+    Processor:      PIC18F4520
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX32:      main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA

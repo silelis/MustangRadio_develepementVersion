@@ -1,0 +1,199 @@
+#include <main.h>
+//#include <modules/tea5767.h>
+//#include </core/I2C/I2C_Engine.c>
+
+
+volatile unsigned int8   MasterBuffer[I2C_BUFSIZE];
+volatile unsigned int8   SlaveBuffer[I2C_BUFSIZE];
+volatile unsigned int8   tea5767_config[5]={0,0,0,0,0};
+//float FMfreqency;
+
+
+#ifndef _I2C_ENGINE_
+   #include </core/I2C/I2C_Engine.c>
+#endif
+#include </modules/TEA5767/TEA5767.c>
+//#include </modules/TDA7418/TDA7418.c>
+
+
+void main()
+{
+StartupVoltageStabilisation;
+unsigned int32 FMfreqency;
+delay_ms(1000);
+i2c_start();
+i2c_write(0b10001001);
+
+
+
+/*
+https://developer.mbed.org/forum/mbed/topic/311/?page=1#comment-1594
+
+You need to programm all control bytes for the first time, like this:
+
+   I2caddr = &H88                                            'address
+   I2cdata(1) = &H20                                        'REG0 AUTO INC
+   I2cdata(2) = &H01                                        '0-INPUT SELECTOR
+   I2cdata(3) = &H80                                        '1-LOUDNESS OFF
+   I2cdata(4) = &H80                                        '2-*VOLUME 0DB
+   I2cdata(5) = &HCF                                        '3-TREBLE CENTER 15KHZ, 0DB
+   I2cdata(6) = &HCF                                        '4-MIDDLE Q=1 0DB
+   I2cdata(7) = &H8F                                        '5-BASS Q=1 0DB
+   I2cdata(8) = &H0E                                        '6-BASS 200HZ MIDDLE 1,5KHZ
+   I2cdata(9) = &HA0                                        '7-*  LEFT FRONT
+   I2cdata(10) = &HA0                                       '8-*  LEFT REAR
+   I2cdata(11) = &HA0                                       '9-*  RIGHT REAR
+   I2cdata(12) = &HA0                                       '10-* RIGHT FRONT
+   I2cdata(13) = &H80                                       '11-* SUBWOOFER
+   I2cdata(14) = &H01                                       '12-SOFT MUTE SOFT STEP OFF
+   I2cdata(15) = &H00                                       '13-IN OPERATION
+
+   I2cstart
+   I2csend I2caddr , I2cdata(1) , 15                        'PGM CHIP
+   I2cstop
+
+This is a BASCOM sample, but I used this sequence and is working fine
+
+Harald
+*/
+int8 a =0;
+printf("i2c =: %x\r\n", a);
+a = i2c_read(TRUE);
+printf("i2c read status =: %x\r\n", a);
+
+i2c_stop();
+
+i2c_start();
+i2c_write(0b10001000);
+
+i2c_write(0b11101101); //input
+i2c_write(0b00011101);
+
+i2c_write(0x01); //loudness
+i2c_write(0x01);
+
+i2c_write(0x02); //volume
+i2c_write(0x10);
+
+i2c_write(0x03); // trebble
+i2c_write(0x9f);
+
+i2c_write(0x04); // middle
+i2c_write(0x1F);
+
+i2c_write(0x04); // basss
+i2c_write(0x0F);
+
+i2c_write(0x06); //bass / middle fs factor
+i2c_write(0x3F);
+
+i2c_write(0x07); //Speaker Attenuator Left Front
+i2c_write(0x10);
+
+i2c_write(0x08); //Speaker Attenuator Left Right
+i2c_write(0x10);
+
+i2c_write(0x09); //Speaker Attenuator Right Rear
+i2c_write(0x10);
+
+i2c_write(0x0A); //Speaker Attenuator Right Front
+i2c_write(0x10);
+
+i2c_write(0x0B); //Subwoofer Attenuator
+i2c_write(0x10);
+
+i2c_write(0x0C); //Soft Mute / Soft Step
+i2c_write(0x7D); //JAK NIE GRA TO SPRAWDZIÆ TO
+
+i2c_stop();
+
+i2c_start();
+i2c_write(0b10001001);
+
+int8 b =0;
+printf("i2c =: %x\r\n", b);
+a = i2c_read(TRUE);
+printf("i2c read status =: %x\r\n", b);
+i2c_stop();
+
+/*for (int i = 0; i<I2C_BUFSIZE; i++)
+{
+MasterBuffer[i]=0xff;
+}*/
+//Example blinking LED program
+   //while(true)
+   /*{
+     //tea5767_config[];
+      //unsigned int32 pllValue;
+
+      //FMfreqency = 100.2;
+       FMfreqency = 107700000;
+
+      tea5767SetFreq(FMfreqency);
+      delay_ms(3000);
+      
+      //tea5767Scan(FMfreqency,ON, SCAN_DOWN);
+      
+      //delay_ms(3000);
+      BYTE a= 0;
+      unsigned int32 temp_freq = 0;
+      while(a==0)
+      {
+      a= tea5767ScanModeStatus();
+      printf("Scan bits =: %x\r\n", a);
+      temp_freq = tea5767GetFrequencySignificant();
+      printf("Scaned frequency =: %Lu\r\n", temp_freq);
+      }
+      //tea5767ScanOFF();
+      
+      //delay_ms(2000);
+      
+      tea5767SetFreq (100200000);
+      //tea5767Scan(108000000,ON, SCAN_DOWN);
+     // delay_ms(8000);
+      
+      //tea5767Scan(100300000, ON, SCAN_DOWN);
+      //delay_ms(3000);
+    // tea5767SetFreq(100200000);
+      
+      //tea5767MuteLeft(OFF);
+
+      //tea5767Scan(100.4, ON, SCAN_DOWN);
+      
+      
+    //unsigned int32 temp_freq = tea5767GetFrequency();  
+      //printf ("FM freq_FINAL: %Lu\n", FMfreqency);
+      //printf ("Calc  freq FINAL: %Lu\n", temp_freq);
+      //printf ("Calc freq_normalised: %Lu\n", ((temp_freq/10000)+1)*10000); //& (0b111111111111110000000000000) ));
+      //printf ("Calc: %Lu\n", (107305000 & 0b111111111111111000000000000));
+/*
+
+     while(a==0)
+      {
+      a= tea5767ScanModeStatus();
+       printf("Scan bits =: %x\r\n", a);
+      
+      //temp_freq = tea5767GetFrequencySignificant();
+      //printf("Aktualna czestotliwosc: %lu:\n", temp_freq);
+      //if (MasterBuffer[61]==0x00)
+      //float localFM;
+      //localFM=tea5767GetFrequency();
+      //#include <math.h>
+      
+   /* if ((FMfreqency ==temp_freq))
+      {
+      output_high(LED);
+      }
+      delay_ms(3000);
+      //output_low(LED);
+      //delay_ms(1000);*/
+      
+   /*   }
+      printf("koniec");
+      //temp_freq = tea5767GetFrequencySignificant();
+      //printf("Scan freq =: %Lu\r\n", temp_freq);
+   }*/
+
+}
+
+

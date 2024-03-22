@@ -1,0 +1,9 @@
+#include <16F877.h>
+//#use delay(oscillator=4000000)
+#use delay(crystal=20000000)
+#use rs232(baud=115200,parity=N,xmit=PIN_c6,rcv=PIN_c7,bits=8,stream=PORT1)
+
+#define LED PIN_A0
+#define DELAY 1000
+
+

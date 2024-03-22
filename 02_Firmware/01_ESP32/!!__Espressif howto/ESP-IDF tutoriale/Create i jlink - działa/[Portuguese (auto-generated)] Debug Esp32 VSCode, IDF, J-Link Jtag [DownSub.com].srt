@@ -1,0 +1,1036 @@
+1
+00:00:03,659 --> 00:00:06,180
+Olá pessoal então hoje nós vamos para
+
+2
+00:00:06,180 --> 00:00:09,179
+mais um vídeo aí eu decidi Então hoje
+
+3
+00:00:09,179 --> 00:00:12,179
+fazer a configuração então do The Burger
+
+4
+00:00:12,179 --> 00:00:17,120
+eu vou usar o d-link junto com espius
+
+5
+00:00:21,080 --> 00:00:23,699
+então com isso a gente consegue botar os
+
+6
+00:00:23,699 --> 00:00:25,859
+breakbonds parar consegue olhar as
+
+7
+00:00:25,859 --> 00:00:28,560
+variáveis como é que tá o estado lá das
+
+8
+00:00:28,560 --> 00:00:32,040
+variáveis dentro do UESP né então é isso
+
+9
+00:00:32,040 --> 00:00:33,420
+que nós vamos fazer hoje então vamos
+
+10
+00:00:33,420 --> 00:00:35,100
+fazer essa configuração e vamos pegar um
+
+11
+00:00:35,100 --> 00:00:37,280
+projeto que a gente tinha feito já
+
+12
+00:00:37,280 --> 00:00:40,140
+no vídeo anterior
+
+13
+00:00:40,140 --> 00:00:42,899
+e vamos fazer um testes lá então vamos
+
+14
+00:00:42,899 --> 00:00:45,140
+começar
+
+15
+00:00:55,260 --> 00:00:57,120
+Então esse aqui é o projeto que a gente
+
+16
+00:00:57,120 --> 00:00:59,840
+tinha feito então no vídeo anterior
+
+17
+00:00:59,840 --> 00:01:02,640
+eu aumentar ele um pouquinho aqui já que
+
+18
+00:01:02,640 --> 00:01:06,180
+a gente tem essa área para
+
+19
+00:01:06,180 --> 00:01:08,880
+trabalhar então eu estou utilizando
+
+20
+00:01:08,880 --> 00:01:10,159
+então
+
+21
+00:01:10,159 --> 00:01:13,580
+um d-link
+
+22
+00:01:20,180 --> 00:01:22,500
+e aqui a gente tem que fazer algumas
+
+23
+00:01:22,500 --> 00:01:25,020
+configurações dentro do visual Studio né
+
+24
+00:01:25,020 --> 00:01:28,880
+para poder ele identificar esse
+
+25
+00:01:28,880 --> 00:01:33,360
+esse The Burger aqui né junto com Open
+
+26
+00:01:33,360 --> 00:01:37,079
+ocd né e consegui debugar o esp então
+
+27
+00:01:37,079 --> 00:01:39,780
+nas configurações aqui a gente vai pegar
+
+28
+00:01:39,780 --> 00:01:42,720
+primeira coisa a gente vai vir aqui né E
+
+29
+00:01:42,720 --> 00:01:46,140
+vai definir aqui a nossa nosso método de
+
+30
+00:01:46,140 --> 00:01:49,500
+flash aqui como gateg
+
+31
+00:01:49,500 --> 00:01:52,380
+fazendo isso eu tinha comentado sobre os
+
+32
+00:01:52,380 --> 00:01:54,119
+arquivos aqui de configuração hoje nós
+
+33
+00:01:54,119 --> 00:01:56,399
+vamos mexer neles então fazendo isso
+
+34
+00:01:56,399 --> 00:01:58,860
+dentro de sétimos ele vai colocar essa
+
+35
+00:01:58,860 --> 00:02:01,320
+opção aqui né então no de vocês vai
+
+36
+00:02:01,320 --> 00:02:03,000
+estar esse cara aqui que é aquele kit
+
+37
+00:02:03,000 --> 00:02:05,100
+que a gente configurou lá no quando a
+
+38
+00:02:05,100 --> 00:02:07,740
+gente criou o projeto então a esse cara
+
+39
+00:02:07,740 --> 00:02:09,419
+aqui a gente não vai utilizar ele porque
+
+40
+00:02:09,419 --> 00:02:12,060
+a gente não tem esse kit
+
+41
+00:02:12,060 --> 00:02:16,620
+né aí a gente vai pegar e vai colocar
+
+42
+00:02:16,620 --> 00:02:19,440
+esta linha aqui nessa linha aqui a gente
+
+43
+00:02:19,440 --> 00:02:21,780
+vai dizer que a interface que a gente
+
+44
+00:02:21,780 --> 00:02:24,840
+quer utilizar é o d-link e aqui a gente
+
+45
+00:02:24,840 --> 00:02:28,620
+vai botar o nosso target como o s32 Se
+
+46
+00:02:28,620 --> 00:02:30,480
+tiver outro micro por exemplo lá vai
+
+47
+00:02:30,480 --> 00:02:31,980
+botar o target do micro que vocês
+
+48
+00:02:31,980 --> 00:02:34,319
+tiverem então eu como tenho aqui o kit
+
+49
+00:02:34,319 --> 00:02:37,020
+meu kit é um esp 32 eu vou colocar ele
+
+50
+00:02:37,020 --> 00:02:39,300
+aqui e aqui a gente não precisa mexer em
+
+51
+00:02:39,300 --> 00:02:41,640
+mais nada então a gente dá um control S
+
+52
+00:02:41,640 --> 00:02:44,459
+Salva esse arquivo
+
+53
+00:02:44,459 --> 00:02:47,760
+aqui dentro do lounge quando vocês
+
+54
+00:02:47,760 --> 00:02:49,920
+abriram de vocês essa parte aqui que eu
+
+55
+00:02:49,920 --> 00:02:51,360
+coloquei que ela tá comentada ela não
+
+56
+00:02:51,360 --> 00:02:54,180
+vai existir tá isso serve aqui para
+
+57
+00:02:54,180 --> 00:02:57,480
+configuração para o nosso the Burgers só
+
+58
+00:02:57,480 --> 00:02:59,160
+tem esse Launcher que é essa
+
+59
+00:02:59,160 --> 00:03:01,560
+configuração aqui tá Então a gente vai
+
+60
+00:03:01,560 --> 00:03:05,540
+Eu vou descontar aqui
+
+61
+00:03:05,940 --> 00:03:09,180
+ó e aí aqui vocês vão ver que ele já vai
+
+62
+00:03:09,180 --> 00:03:11,519
+quando eu apertar o control S aqui ele
+
+63
+00:03:11,519 --> 00:03:13,319
+já vai aparecer que as configuração ó
+
+64
+00:03:13,319 --> 00:03:16,099
+esp Open o CD que é essa minha aqui
+
+65
+00:03:16,099 --> 00:03:18,480
+então dentro dessas configurações a
+
+66
+00:03:18,480 --> 00:03:21,239
+gente vai ter o tipo de The Burger
+
+67
+00:03:21,239 --> 00:03:25,140
+né então que é o CPP the Burger aqui vai
+
+68
+00:03:25,140 --> 00:03:27,900
+ser o tipo da request aqui onde está a
+
+69
+00:03:27,900 --> 00:03:30,420
+nossa pasta de build né vai ser dentro
+
+70
+00:03:30,420 --> 00:03:34,140
+do projeto aqui build aonde vai estar
+
+71
+00:03:34,140 --> 00:03:35,180
+build
+
+72
+00:03:35,180 --> 00:03:37,519
+aqui o nosso
+
+73
+00:03:37,519 --> 00:03:40,200
+programa Então esse cara aqui vai mudar
+
+74
+00:03:40,200 --> 00:03:42,060
+de acordo com o nome do projeto de vocês
+
+75
+00:03:42,060 --> 00:03:44,879
+então dentro de build vai ter um arquivo
+
+76
+00:03:44,879 --> 00:03:48,200
+lá com o nome de Elf com ponto Elf lá
+
+77
+00:03:48,200 --> 00:03:53,220
+que deixa eu ver onde tá esse cara
+
+78
+00:03:53,220 --> 00:03:55,319
+tá aqui ó Então esse aqui é primeiro
+
+79
+00:03:55,319 --> 00:03:57,659
+projeto tá
+
+80
+00:03:57,659 --> 00:03:59,819
+se eu clicar ele só para selecionar ele
+
+81
+00:03:59,819 --> 00:04:02,940
+já não mas é esse cara aqui ó
+
+82
+00:04:02,940 --> 00:04:04,739
+Então esse aqui vai ser o nome do
+
+83
+00:04:04,739 --> 00:04:06,299
+projeto de vocês que aí vocês vão
+
+84
+00:04:06,299 --> 00:04:08,060
+colocar aqui
+
+85
+00:04:08,060 --> 00:04:10,319
+essa apontar para essa variável do
+
+86
+00:04:10,319 --> 00:04:12,840
+workspace aqui o build o nome do projeto
+
+87
+00:04:12,840 --> 00:04:14,939
+de vocês né No meu caso aqui é o
+
+88
+00:04:14,939 --> 00:04:17,579
+primeiro projeto ponto Elf que vai ser o
+
+89
+00:04:17,579 --> 00:04:20,160
+programa onde que ele vai atacar o mi
+
+90
+00:04:20,160 --> 00:04:22,560
+the Burger Pet esse cara aqui também vai
+
+91
+00:04:22,560 --> 00:04:24,080
+ser de acordo com
+
+92
+00:04:24,080 --> 00:04:26,880
+a instalação de vocês vocês podem ver
+
+93
+00:04:26,880 --> 00:04:28,639
+que ele tá aqui dentro do meu usuário né
+
+94
+00:04:28,639 --> 00:04:31,520
+sei users
+
+95
+00:04:31,520 --> 00:04:34,680
+HBR da Vick seria ali né aí ponto
+
+96
+00:04:34,680 --> 00:04:36,060
+específico que foi onde eu fiz a
+
+97
+00:04:36,060 --> 00:04:39,259
+instalação né do específico
+
+98
+00:04:39,259 --> 00:04:44,160
+aqui depende da versão que vocês vão
+
+99
+00:04:44,160 --> 00:04:45,840
+utilizar vocês podem ver que aqui o meu
+
+100
+00:04:45,840 --> 00:04:48,800
+eu tenho dois
+
+101
+00:04:49,979 --> 00:04:53,180
+pronto só mostrar aqui
+
+102
+00:04:54,360 --> 00:04:56,460
+Ó o meu eu tenho dois eu tenho da versão
+
+103
+00:04:56,460 --> 00:04:58,979
+4 que é esse aqui e tenho da versão 5
+
+104
+00:04:58,979 --> 00:05:00,960
+como eu tô utilizando a versão 5 eu vim
+
+105
+00:05:00,960 --> 00:05:03,419
+para esse de baixo então ele vai entrar
+
+106
+00:05:03,419 --> 00:05:06,360
+aqui nesse 11.2 dentro desse cara aqui a
+
+107
+00:05:06,360 --> 00:05:09,780
+gente vai ter o extens ali né a pasta
+
+108
+00:05:09,780 --> 00:05:11,220
+Bin
+
+109
+00:05:11,220 --> 00:05:13,500
+e aqui a gente vai pegar e vai procurar
+
+110
+00:05:13,500 --> 00:05:19,680
+esse arquivo aqui que ele é um ponto exz
+
+111
+00:05:19,680 --> 00:05:22,620
+que aí vai ser esse cara aqui
+
+112
+00:05:22,620 --> 00:05:27,720
+que a gente vai utilizar para o s32 tá
+
+113
+00:05:27,720 --> 00:05:30,180
+a partir daí então a gente vai ter que
+
+114
+00:05:30,180 --> 00:05:31,860
+fazer uma configuração então no arquivo
+
+115
+00:05:31,860 --> 00:05:35,419
+do J link que é esse cara aqui
+
+116
+00:05:35,419 --> 00:05:37,440
+inicialmente ele vai ter só essa
+
+117
+00:05:37,440 --> 00:05:39,419
+configuração do adapta de link a gente
+
+118
+00:05:39,419 --> 00:05:41,280
+vai colocar o Speed desse cara aí que
+
+119
+00:05:41,280 --> 00:05:43,320
+ele vai trabalhar e a camada de
+
+120
+00:05:43,320 --> 00:05:45,180
+transporte então que a gente vai colocar
+
+121
+00:05:45,180 --> 00:05:49,919
+um filé esse arquivo ele fica lá dentro
+
+122
+00:05:49,919 --> 00:05:52,440
+da instalação então isso aí pode mudar
+
+123
+00:05:52,440 --> 00:05:54,780
+de acordo com a instalação no meu caso
+
+124
+00:05:54,780 --> 00:05:57,180
+aqui tá dentro do meu usuário ponto
+
+125
+00:05:57,180 --> 00:05:58,800
+específico
+
+126
+00:05:58,800 --> 00:06:02,220
+a gente vai aqui em Tools vai procurar
+
+127
+00:06:02,220 --> 00:06:05,759
+aqui por opinião CD aqui também mesma
+
+128
+00:06:05,759 --> 00:06:07,560
+coisa como eu tenho duas versões eu
+
+129
+00:06:07,560 --> 00:06:10,680
+tenho a versão 4.4 e a versão 5 eu tenho
+
+130
+00:06:10,680 --> 00:06:12,840
+duas instalações aqui do pince deles tem
+
+131
+00:06:12,840 --> 00:06:14,340
+versões diferentes então como eu tô
+
+132
+00:06:14,340 --> 00:06:16,800
+utilizando assim vamos para essa versão
+
+133
+00:06:16,800 --> 00:06:19,080
+opinião CD
+
+134
+00:06:19,080 --> 00:06:21,199
+share
+
+135
+00:06:21,199 --> 00:06:25,620
+Open CD script e aqui dentro de
+
+136
+00:06:25,620 --> 00:06:28,259
+interface a gente vai ter o d-lin que
+
+137
+00:06:28,259 --> 00:06:30,000
+vai ter algumas outras interface então é
+
+138
+00:06:30,000 --> 00:06:31,020
+esse arquivo aqui que a gente vai
+
+139
+00:06:31,020 --> 00:06:33,060
+alterar eu já tenho ele aberto aqui já
+
+140
+00:06:33,060 --> 00:06:35,220
+dentro do visual estúdio vocês podem ver
+
+141
+00:06:35,220 --> 00:06:37,639
+que o endereço aqui é o mesmo então só
+
+142
+00:06:37,639 --> 00:06:40,139
+fechar aqui E esse aqui era o outro
+
+143
+00:06:40,139 --> 00:06:41,940
+arquivo que é o que ele que a gente
+
+144
+00:06:41,940 --> 00:06:45,300
+apontou dentro do Launcher dentro deste
+
+145
+00:06:45,300 --> 00:06:47,300
+cara de sétimos
+
+146
+00:06:47,300 --> 00:06:50,039
+32 CFG esse aqui a gente não precisa
+
+147
+00:06:50,039 --> 00:06:52,259
+mexer mas se alguém quiser dar uma
+
+148
+00:06:52,259 --> 00:06:54,539
+olhada nele a gente vai voltar aqui
+
+149
+00:06:54,539 --> 00:06:56,580
+dentro de
+
+150
+00:06:56,580 --> 00:06:58,639
+é scripts
+
+151
+00:06:58,639 --> 00:07:03,380
+target e aqui a gente vai ter lá os
+
+152
+00:07:03,380 --> 00:07:05,400
+micros que a gente tem então a gente tem
+
+153
+00:07:05,400 --> 00:07:08,880
+mais 32 C2 S3 aí podemos se tiver um
+
+154
+00:07:08,880 --> 00:07:11,100
+micro diferente do que eu tenho aqui por
+
+155
+00:07:11,100 --> 00:07:12,539
+exemplo se a pessoa tiver um C2 vai
+
+156
+00:07:12,539 --> 00:07:14,699
+selecionar esse daqui
+
+157
+00:07:14,699 --> 00:07:17,520
+fazendo isso daí a gente vai passar para
+
+158
+00:07:17,520 --> 00:07:20,280
+os comandos que o visual Studio vai
+
+159
+00:07:20,280 --> 00:07:23,460
+mandar para conectar Nesse cara aí
+
+160
+00:07:23,460 --> 00:07:25,199
+então aqui a gente vai dizer que o
+
+161
+00:07:25,199 --> 00:07:28,919
+target é o domínio local né na porta 333
+
+162
+00:07:28,919 --> 00:07:32,460
+que quando eu startar o adb ele vai
+
+163
+00:07:32,460 --> 00:07:34,919
+criar algumas portas para the bug Então
+
+164
+00:07:34,919 --> 00:07:37,199
+a gente vai criar um servidor ele vai a
+
+165
+00:07:37,199 --> 00:07:38,639
+gente vai conectar com o visual Studio
+
+166
+00:07:38,639 --> 00:07:41,520
+nesse servidor aqui um watch Point né
+
+167
+00:07:41,520 --> 00:07:44,639
+aqui monitor para dar um route e dá um
+
+168
+00:07:44,639 --> 00:07:47,580
+flush nos Rex a gente fazendo essas
+
+169
+00:07:47,580 --> 00:07:50,060
+configurações aí a gente já vai
+
+170
+00:07:50,060 --> 00:07:53,220
+conseguir já divulgar a gente vai ter
+
+171
+00:07:53,220 --> 00:07:55,020
+que fazer algumas mudanças no Drive lá
+
+172
+00:07:55,020 --> 00:07:56,639
+também né
+
+173
+00:07:56,639 --> 00:08:00,539
+do jailink então vou deixar tudo ali na
+
+174
+00:08:00,539 --> 00:08:02,699
+descrição Vou deixar um link para com
+
+175
+00:08:02,699 --> 00:08:04,580
+esses arquivos aqui com
+
+176
+00:08:04,580 --> 00:08:08,120
+e com os arquivos ali dos drivers Então
+
+177
+00:08:08,120 --> 00:08:11,819
+deixa eu dar uma olhadinha aqui então a
+
+178
+00:08:11,819 --> 00:08:15,800
+gente vai usar esse USB Tool drivers
+
+179
+00:08:22,039 --> 00:08:25,099
+quando você
+
+180
+00:08:25,099 --> 00:08:28,919
+vierem colocar o d-link no Windows de
+
+181
+00:08:28,919 --> 00:08:30,419
+vocês ele vai estar com esse driver aqui
+
+182
+00:08:30,419 --> 00:08:31,800
+ó
+
+183
+00:08:31,800 --> 00:08:34,320
+Porém esse driver ele não vai funcionar
+
+184
+00:08:34,320 --> 00:08:38,640
+com o adb a gente vai ter que vir aqui
+
+185
+00:08:38,640 --> 00:08:40,979
+ó vim aqui selecione a gente vai
+
+186
+00:08:40,979 --> 00:08:43,380
+selecionar esse Win USB
+
+187
+00:08:43,380 --> 00:08:45,480
+para ele conseguir funcionar Então a
+
+188
+00:08:45,480 --> 00:08:48,060
+gente vai vir aqui nesse programinha vem
+
+189
+00:08:48,060 --> 00:08:50,160
+Bota ele para o USB ele vai aparecer
+
+190
+00:08:50,160 --> 00:08:53,660
+aqui como em USB pode dar um close
+
+191
+00:08:53,660 --> 00:08:56,700
+a partir daí
+
+192
+00:08:56,700 --> 00:08:59,640
+tá praticamente tudo configurado Vamos
+
+193
+00:08:59,640 --> 00:09:01,380
+fazer um teste só que se a gente vê aqui
+
+194
+00:09:01,380 --> 00:09:02,300
+nosso
+
+195
+00:09:02,300 --> 00:09:05,339
+hello world também aqui vamos apertar um
+
+196
+00:09:05,339 --> 00:09:08,899
+F5 e vamos ver o que que vai acontecer
+
+197
+00:09:11,940 --> 00:09:14,040
+vamos ver se vai acontecer tudo certo se
+
+198
+00:09:14,040 --> 00:09:16,940
+ele vai gerar algum erro
+
+199
+00:09:23,779 --> 00:09:27,660
+então que nós tivemos um erro
+
+200
+00:09:27,660 --> 00:09:28,980
+Ele tá dizendo que não conseguiu
+
+201
+00:09:28,980 --> 00:09:32,279
+conectar vamos lá porque isso aconteceu
+
+202
+00:09:32,279 --> 00:09:35,580
+por causa que o nosso Open ocd ele tá
+
+203
+00:09:35,580 --> 00:09:37,920
+não tá rodando
+
+204
+00:09:37,920 --> 00:09:39,600
+então vocês viram ali ó depois que eu
+
+205
+00:09:39,600 --> 00:09:41,160
+cliquei ele rodar ele fica aqui com essa
+
+206
+00:09:41,160 --> 00:09:43,980
+essa marquinha Verde Aqui tá dizendo lá
+
+207
+00:09:43,980 --> 00:09:46,019
+que tá rodando Então vamos apertar esse
+
+208
+00:09:46,019 --> 00:09:48,320
+cinco de novo
+
+209
+00:09:51,420 --> 00:09:53,760
+ele não conseguiu startar o the bug vou
+
+210
+00:09:53,760 --> 00:09:56,279
+apertar F5 de novo vamos ver se ele
+
+211
+00:09:56,279 --> 00:09:59,420
+agora ele consegue conectar
+
+212
+00:10:04,080 --> 00:10:06,300
+então quando ele conectar às vezes ele
+
+213
+00:10:06,300 --> 00:10:08,160
+não consegue conectar no servidor que
+
+214
+00:10:08,160 --> 00:10:09,600
+nem aconteceu aí comigo quando ele
+
+215
+00:10:09,600 --> 00:10:12,060
+conectar essa barra do Veloso onde ela
+
+216
+00:10:12,060 --> 00:10:14,100
+vai ficar laranja aí tu sabe que o The
+
+217
+00:10:14,100 --> 00:10:16,200
+banner ele tá conectado E a gente já
+
+218
+00:10:16,200 --> 00:10:18,000
+começa já a conseguir parar dentro do
+
+219
+00:10:18,000 --> 00:10:20,820
+código ó então aqui eu vou mandar ele
+
+220
+00:10:20,820 --> 00:10:22,140
+para frente ele vai parar nesse outro
+
+221
+00:10:22,140 --> 00:10:24,600
+breakpoint que eu botei lá embaixo
+
+222
+00:10:24,600 --> 00:10:26,459
+vocês podem ver aqui que a gente já
+
+223
+00:10:26,459 --> 00:10:29,399
+consegue identificar que o i né Ó que
+
+224
+00:10:29,399 --> 00:10:31,680
+essa variável aqui
+
+225
+00:10:31,680 --> 00:10:33,779
+assim a gente colocar aqui em cima aqui
+
+226
+00:10:33,779 --> 00:10:36,480
+ó das varas a gente já consegue ver o
+
+227
+00:10:36,480 --> 00:10:38,100
+que que tem dentro dessas variáveis aqui
+
+228
+00:10:38,100 --> 00:10:39,959
+aqui também a gente pode botar inclusive
+
+229
+00:10:39,959 --> 00:10:42,360
+para inspeção né
+
+230
+00:10:42,360 --> 00:10:43,860
+Deixa eu botar aqui uma variável aqui
+
+231
+00:10:43,860 --> 00:10:46,980
+vou precisar do nome
+
+232
+00:10:46,980 --> 00:10:48,600
+botar aqui para a linha inspecionar essa
+
+233
+00:10:48,600 --> 00:10:50,720
+aqui
+
+234
+00:10:51,540 --> 00:10:55,279
+eu errei o nome vamos excluir
+
+235
+00:10:57,180 --> 00:10:59,279
+vamos lá
+
+236
+00:10:59,279 --> 00:11:01,380
+chip info então aqui a gente pode ver né
+
+237
+00:11:01,380 --> 00:11:03,959
+pode monitorar a cada variável a gente
+
+238
+00:11:03,959 --> 00:11:05,459
+consegue ver a pilha de chamadas então
+
+239
+00:11:05,459 --> 00:11:08,160
+né que que tá acontecendo em cada trade
+
+240
+00:11:08,160 --> 00:11:09,380
+desse
+
+241
+00:11:09,380 --> 00:11:12,600
+desses aí o que eu queria demonstrar
+
+242
+00:11:12,600 --> 00:11:15,500
+para vocês era essa configuração então
+
+243
+00:11:15,500 --> 00:11:17,240
+do esp
+
+244
+00:11:17,240 --> 00:11:19,680
+na plataforma do visor estúdio de como a
+
+245
+00:11:19,680 --> 00:11:21,180
+gente configura o visual Studio para
+
+246
+00:11:21,180 --> 00:11:24,480
+conseguir estar tal o open o CD e
+
+247
+00:11:24,480 --> 00:11:26,760
+conectar nele né fazer com que o open o
+
+248
+00:11:26,760 --> 00:11:28,920
+CD connecte no esp que a gente consiga
+
+249
+00:11:28,920 --> 00:11:32,700
+conectar nesse Open ocv mostrar que como
+
+250
+00:11:32,700 --> 00:11:34,860
+é que ele funciona então as variáveis
+
+251
+00:11:34,860 --> 00:11:39,600
+ali o que que a gente consegue ver né do
+
+252
+00:11:39,600 --> 00:11:41,720
+esp
+
+253
+00:11:41,720 --> 00:11:44,820
+através desse the Burger
+
+254
+00:11:44,820 --> 00:11:46,680
+e eu deixo aí então meu muito obrigado
+
+255
+00:11:46,680 --> 00:11:49,800
+para quem Assistiu o vídeo aí se gostar
+
+256
+00:11:49,800 --> 00:11:52,399
+e compartilha com o pessoal dá o like lá
+
+257
+00:11:52,399 --> 00:11:54,839
+que isso aí ajuda a gente a divulgar
+
+258
+00:11:54,839 --> 00:11:56,700
+para mais pessoas então muito obrigado
+
+259
+00:11:56,700 --> 00:11:59,360
+aí valeu
+

@@ -1,0 +1,91 @@
+#ifndef _UART_ENGINE_
+
+   #include </UART_Engine.h>
+   #include </core/transmission_buffers/transmission_buffers.c> 
+   
+   void uart_read_slave_data(void)
+   
+   // jest to g³ówna funkcja odczytu danych z urz¹dzenia slave i powinna byæ wywo³ywana w przerwaniu.
+   // funkcja zapisuje dane w buforze UART_SlaveBuffer oraz dodatkowo modyfikuje zmienne:
+   //- UART_kbhit_timeout,
+   //- received_data_counter
+   //- UART_data_received_STATEMENT
+   // -UART_r_buffer_overflowed_STATEMENT
+   
+   {
+      disable_interrupts(global);
+      if(received_data_counter<UART_mcu_Reception_BUFSIZE)
+      {
+         //buffer[received_data_count]=fgetc(Hrdw);
+         *(UART_SlaveBuffer+received_data_counter)=fgetc(Hrdw);
+         received_data_counter=received_data_counter+1;
+      }
+      else
+      {
+         fgetc(Hrdw);
+         UART_r_buffer_overflowed_STATEMENT=TRUE;
+      }
+      UART_kbhit_timeout=0;                  //ka¿da otrzymana dana resetuje timeout. Timeout oznacza, ¿e wiêcej danych nie jest ju¿ transmitowanych
+      UART_data_received_STATEMENT=TRUE;     //otrzymanie jakiejkolwiek danej oznacza, ¿e nast¹pi³a transmisja i dane nale¿y przetwo¿yæ
+      enable_interrupts(global);
+   }
+   
+   void uart_isTransmision_timeout(unsigned int8 *timeout_counter)
+   {
+   // Gdy "UART_data_received_STATEMENT=TRUE", tzn SLAVE przes³a³ dane go mcu funkcja sprawdza czy przez pewiem okres nie pojawiaj¹ siê kolejne dane.
+   // Jeœli nie to wyskakuje z pêtki i przechodzi do nastêpnego kroku.
+   // "timeout_counter" - resetowany jest podczas pobierania danych (w przerwaniu patrz UART_kbhit_timeout)
+     /* while(*timeout_counter<KEYHIT_DELAY_9600 *10)
+      {
+         delay_us(10);   
+         *timeout_counter=*timeout_counter+1;
+      }*/
+      
+      while(*timeout_counter<KEYHIT_DELAY_9600)
+      {
+         delay_us(10);   
+         *timeout_counter=*timeout_counter+1;
+      }
+      //fprintf(Dbg, "T\r\n");
+      disable_interrupts(global);
+   }
+   
+   
+   void uart_ClearRxParameter(void)
+   {
+      UART_ClearSlaveBuffers();        //mo¿e nie byæ potrzebne
+      UART_kbhit_timeout=0;
+      received_data_counter=0;
+      UART_data_received_STATEMENT=FALSE;
+      UART_r_buffer_overflowed_STATEMENT=FALSE;
+      //received_data_counter=0;
+      enable_interrupts(global);
+   }
+  
+   
+ 
+   
+   void uart_debug_display_data(char *buffer_to_display, unsigned int16 received_data_lenght, unsigned int8 display_type)
+   {
+      #define  display_char   1
+      #define  display_hex    0     
+   
+      unsigned int16 buffere_counter=0;
+      while(buffere_counter<(received_data_lenght))
+      {
+      
+         switch(display_type)
+         {
+         case  display_char:
+            fprintf(Dbg, "%c",*(buffer_to_display+buffere_counter));
+            break;
+         case display_hex:
+            fprintf(Dbg, "%x",*(buffer_to_display+buffere_counter));
+            break;
+         }
+         buffere_counter++;
+      }
+      //fprintf(Dbg, "\r\n");
+   }
+   
+#endif

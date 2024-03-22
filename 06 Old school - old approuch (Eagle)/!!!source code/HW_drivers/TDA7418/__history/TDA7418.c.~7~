@@ -1,0 +1,241 @@
+/**************************************************************************/
+/*! 
+    @file     TDA7418.c
+    @author   D. Bankowski (d.bankowski@gmail.com)
+    
+    @brief    Driver for the TDA7418 3 band car audio processor.
+    @section LICENSE
+    Software License Agreement (BSD License)
+    Copyright (c) 2017, D. Bankowski
+    All rights reserved.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+    1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holders nor the
+    names of its contributors may be used to endorse or promote products
+    derived from this software without specific prior written permission.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY
+    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+/**************************************************************************/
+
+#include </TDA7418.h>
+
+#ifndef _I2C_ENGINE_
+   #include </core/I2C_ENGINE/I2C_Engine.c>
+#endif
+
+/*#ifndef _BIT_MATH_
+   #include </core/BIT_MATH/BIT_MATH.c>
+#endif*/
+
+//extern volatile unsigned int8 MasterBuffer[I2C_BUFSIZE];
+//extern volatile unsigned int8 SlaveBuffer[I2C_BUFSIZE];
+
+
+/*
+extern volatile unsigned int16 I2CReadLength;
+extern volatile unsigned int16 I2CWriteLength;*/
+
+const int8 AUDIO_volume_attenuation[41] = //To raczej powinno byæ symetrycznie
+{   
+   0x60 /* <-- MUTE*/, /*0x5F, 0x5D, 0x5B, 0x59, 0x57,*/   0x55, 0x53, 0x51, 
+   0x4F, 0x4D, 0x4B, 0x49, 0x47, 0x45, 0x43, 0x41, 
+   0x3F, 0x3D, 0x3B, 0x39, 0x37, 0x35, 0x33, 0x31, 
+   0x2F, 0x2D, 0x2B, 0x29, 0x27, 0x25, 0x23, 0x21, 
+   0x1F, 0x1D, 0x1B, 0x19, 0x17, 0x15, 0x13, 0x11,/*idx_35 default*/
+   0x0 /* 0dB*/,  0x02, 0x04, 0x06, 0x08  /*, 0x0A, 0x0C, 0x0E*/
+};
+
+const int8 AUDIO_speaker_LeftRight_FrontRear[41] = //idx 20 default i jego wartoœæ powinna byæ 0 db, a reszta symetrycznie a idx 0 0x60 czylu mute
+{   
+//   0x60 /* <-- MUTE*/, /*0x5F, 0x5D, 0x5B, 0x59, 0x57,*/   0x55, 0x53, 0x51, 
+//   0x4F, 0x4D, 0x4B, 0x49, 0x47, 0x45, 0x43, 0x41, 
+//   0x3F, 0x3D, 0x3B, 0x39, 0x37, 0x35, 0x33, 0x31, 
+//   0x2F, 0x2D, 0x2B, 0x29, 0x27, 0x25, 0x23, 0x21, 
+//   0x1F, 0x1D, 0x1B, 0x19, 0x17, 0x15, 0x13, 0x11,/*idx_35 default*/
+//   0x0 /* 0dB*/,  0x02, 0x04, 0x06, 0x08  /*, 0x0A, 0x0C, 0x0E*/
+};
+
+const int8 AUDIO_Loudness_attenuation[16] = //To raczej powinno byæ symetrycznie
+{   
+   0x0, 0x1, 0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xA,0XB,0xC,0xD,0xE,0xF
+};
+
+const int8 AUDIO_Treble_Middle_Bass[31] = //To raczej powinno byæ symetrycznie
+{   
+   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0XB, 0x0C,
+   0x0D, 0x0E, 0x0F, 0x1E, 0x1D, 0x1C, 0x1B, 0x1A, 0x19, 0x18, 0x17, 0x16, 0x15,
+   0x14, 0x13, 0x12, 0x11, 0x10
+};
+
+const int8 AUDIO_low_high_boost[2] =
+{
+0b00000000,
+0b01000000
+};
+
+void TDA7418_HardwareTest()
+{
+/* Simple hardwarew test. 1st imput*/
+      i2c_start();
+      
+         i2c_write(0x88);                                //          'address
+         i2c_write(0x20);                                //        'REG0 AUTO INC
+         i2c_write(0x01);                                //        '0-INPUT SELECTOR
+         i2c_write(0x80);                                //        '1-LOUDNESS OFF
+         i2c_write(0x80);                                //        '2-*VOLUME 0DB
+         i2c_write(0xCF);                                //        '3-TREBLE CENTER 15KHZ, 0DB
+         i2c_write(0xCF);                                //        '4-MIDDLE Q=1 0DB
+         i2c_write(0x8F);                                //        '5-BASS Q=1 0DB
+         i2c_write(0x0E);                                //        '6-BASS 200HZ MIDDLE 1,5KHZ
+         i2c_write(0xA0);                                //        '7-*  LEFT FRONT
+         i2c_write(0xA0);                                //        '8-*  LEFT REAR
+         i2c_write(0xA0);                                //        '9-*  RIGHT REAR
+         i2c_write(0xA0);                                //        '10-* RIGHT FRONT
+         i2c_write(0x80);                                //        '11-* SUBWOOFER
+         i2c_write(0x01);                                //        '12-SOFT MUTE SOFT STEP OFF
+         i2c_write(0x00);                                //        '13-IN OPERATION
+         
+      i2c_stop();
+}
+
+const int8 AUDIO_L_H_BOOST[2]=
+{
+TDA7418_SHAPE_LOW_BOOST, TDA7418_SHAPE_LOW_HIGH_BOOST
+};
+
+void _TDA7418_i2cWritePrepare (void)
+{
+/* Prepare Transmission buffer to transmission*/
+   //ClearBuffers(&MasterBuffer,I2C_BUFSIZE);
+   i2c_ClearMasterBuffer  ();
+   *(i2c_MasterBuffer) = TDA7418_ADDRESS_Write;
+}
+
+void _TDA7418_i2cWriteExecute(void)
+{
+/* I2Cengine write parameters setup */
+   I2CWriteLength = 3; //i2cEngine write information
+   I2CReadLength = 0;  //i2cEngine read information
+   i2cEngine(FALSE);        //write or read data  depend of I2CWriteLength and I2CReadLength
+}
+
+void TDA7418__SelectInput (int8 input, int8 input_gain_dB_value)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Src;
+   //MasterBuffer[2] = TDA7418_DIFFIN_MODE_DIFFERENTIAL|TDA7418_INPUT_GAIN_0dB|input;
+   MasterBuffer[2] = TDA7418_DIFFIN_MODE_DIFFERENTIAL|input_gain_dB_value|input;
+   _TDA7418_i2cWriteExecute();
+}
+
+void TDA7418__Loudness(int8 Loudness_dB_value, int8 Low_HighBoost)
+{
+   _TDA7418_i2cWritePrepare();
+    MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Loud;
+   MasterBuffer[2] = TDA7418_LOUDNESS_SOFT_STEF_OFF|Low_HighBoost|TDA7418_CENTER_FREQ|Loudness_dB_value;
+   _TDA7418_i2cWriteExecute();
+}
+
+void _TDA7418__Volume_Speaker_Attenuation(int8 Volume_dB_value, int8 Output_TDA7418_i2C_Addres)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|Output_TDA7418_i2C_Addres;
+   MasterBuffer[2] = TDA7418_VOLUME_SOFT_STEP|Volume_dB_value;
+   _TDA7418_i2cWriteExecute();
+}
+
+void TDA7418__Volume(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_Vol);
+}
+
+void TDA7418__LeftFront(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_LF);
+}
+
+void TDA7418__LeftRear(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_LR);
+}
+
+void TDA7418__RightRear(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_RR);
+}
+
+void TDA7418__RightFront(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_RF);
+}
+
+void TDA7418__Subwoofer(int8 Volume_dB_value)
+{
+   _TDA7418__Volume_Speaker_Attenuation(Volume_dB_value, TDA7418_SubAddr_SW );
+}
+void TDA7418__Treble(int8 Treble_dB_value)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Tre;
+   MasterBuffer[2] = TDA7418_TREBLE_BIT7|TDA7418_TREBLE_CENTRAL_FREQUENCY|Treble_dB_value;
+   _TDA7418_i2cWriteExecute();
+}
+
+void TDA7418__Middle(int8 Middle_dB_value)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Mid;
+   MasterBuffer[2] = TDA7418_MIDDLE_SOFT_STEP|TDA7418_MIDDLE_Q_FACTOR|Middle_dB_value;
+   _TDA7418_i2cWriteExecute();   
+}
+
+void TDA7418__Bass(int8 Bass_dB_value)
+{ 
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Bas;
+   MasterBuffer[2] = TDA7418_BASS_SOFT_STEP|TDA7418_BASS_Q_FACTOR|Bass_dB_value;
+   _TDA7418_i2cWriteExecute(); 
+}
+
+void TDA7418__Middle_Bass_Fc_Select(void)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_FC;
+   MasterBuffer[2] = TDA7418_SMOOTHING_FILTER|TDA7418_BASS_DC_MODE|TDA7418_BASS_CENTER_FREQUENCY|TDA7418_MIDDLE_CENTER_FREQUENCY;
+   _TDA7418_i2cWriteExecute();    
+}
+
+void TDA7418_Soft_Mut_Step_Time(void)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Soft_Mute;
+   MasterBuffer[2] = TDA7418_SOFT_MUTE|TDA7418_SOFT_MUTE_TIME|TDA7418_SOFT_STEP_TIME|TDA7418_AZ_FUNCTION;
+   _TDA7418_i2cWriteExecute();  
+}
+
+void _TDA7418_Audio_Processor_Testing_Mode(int8 mode, int8 miltiplekser, int8 SC_clock, int8 MUTE_Pin_Config)
+{
+   _TDA7418_i2cWritePrepare();
+   MasterBuffer[1] = TDA7418_SubAddr_Testing_Mode_OFF|TDA7418_SubAddr_Auto_Zero_Remain_OFF|TDA7418_SubAddr_Auto_Increment_Mode_OFF|TDA7418_SubAddr_Test_Processor ;
+   MasterBuffer[2] = mode|miltiplekser|SC_clock|MUTE_Pin_Config;
+   _TDA7418_i2cWriteExecute();  
+}
+
+void TDA7418_Audio_Processor_Operating_Mode(void)
+{
+   _TDA7418_Audio_Processor_Testing_Mode(TDA7418_AUDIO_PROCESSOR_OPERATIING_MODE, 0, 0, 0);
+}

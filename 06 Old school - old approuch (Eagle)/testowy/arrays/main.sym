@@ -1,0 +1,116 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     data
+005-006 tata
+007-00B @STRING657
+00C-059 pResponse
+05A-05B strtok.save
+05C-05D @sprintf_string
+05E-061 MAIN.data
+062     MAIN.data_input_lengh
+063     MAIN.compare
+064     MAIN.respond_value
+065     MAIN.data_position
+066     MAIN.@SCRATCH1
+066     @PSTRINGC_9600_31766_31767.@SCRATCH1
+067     @PRINTF_D_9600_31766_31767.P1
+067     MAIN.@SCRATCH2
+067     @PSTRINGC_9600_31766_31767.@SCRATCH2
+068     @PRINTF_D_9600_31766_31767.P1
+068-069 memcmp.s1
+068     MAIN.@SCRATCH3
+069     MAIN.@SCRATCH4
+069     @PRINTF_D_9600_31766_31767.@SCRATCH1
+06A     @PSTRINGCN_9600_31766_31767.P1
+06A-06B memcmp.s2
+06A     @PRINTF_D_9600_31766_31767.@SCRATCH2
+06B     @PSTRINGCN_9600_31766_31767.@SCRATCH1
+06B     @PRINTF_D_9600_31766_31767.@SCRATCH3
+06C-06D memcmp.n
+06C     @PSTRINGCN_9600_31766_31767.@SCRATCH2
+06C     @PRINTF_D_9600_31766_31767.@SCRATCH4
+06D     @DIV88.P1
+06E     @DIV88.P1
+06E-06F memcmp.su1
+06F     @DIV88.@SCRATCH1
+070-071 memcmp.su2
+072     memcmp.@SCRATCH1
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FE1-FE2 @READ_PACKED_MEMORY.P1
+FE1-FE2 @WRITE_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P1
+FE9-FEA @WRITE_PROGRAM_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+000004  @const764.call
+000020  @const773.call
+000044  @const774.call
+000056  @const775.call
+00006A  @const776.call
+00007E  @const777.call
+000092  @const778.call
+0000A6  @const779.call
+0000C2  @const780.call
+0000D4  memcmp
+000154  @PSTRINGCN_9600_31766_31767
+000174  @DIV88
+00019C  @PRINTF_D_9600_31766_31767
+00024E  @PSTRINGC_9600_31766_31767
+000272  MAIN
+000272  @cinit1
+00029C  @cinit2
+
+Project Directory:
+    F:\Elektronika_projekty\Car_Radio\testowy\arrays\
+
+Project Files:
+    main.c                                                  [18-gru-17 14:44  CRC=B5B50529]
+    main.h                                                  [15-gru-17 11:56  CRC=00000000]
+    ..\..\..\..\elektronika_progs\PICC\Devices\18F4520.h    [24-lut-17 16:24  CRC=DFA0DB09]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\string.h     [26-mar-15 12:34  CRC=C4814297]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\stddef.h     [05-wrz-14 11:47  CRC=897CEC6C]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\ctype.h      [03-sty-08 14:55  CRC=2D1F019F]
+
+Source signature=3D921273
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=635D
+
+Units:
+    main (main)
+
+Compiler Settings:
+    Processor:      PIC18F4520
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX32:      main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA

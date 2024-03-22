@@ -1,0 +1,22 @@
+#include <main.h>
+
+#INT_TIMER0
+void  TIMER0_isr(void) 
+{
+
+}
+
+void main()
+{
+	setup_timer_0(RTCC_INTERNAL|RTCC_DIV_256|RTCC_8_bit);		//13,1 ms overflow
+
+
+	enable_interrupts(INT_TIMER0);
+	enable_interrupts(GLOBAL);
+
+	while(TRUE)
+	{
+		//TODO: User Code
+	}
+
+}

@@ -1,0 +1,335 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Mustang Radio - LED display"
+Date "2021-03-08"
+Rev "2"
+Comp "Dawid \"SileliS\" Bańkowski"
+Comment1 "d.bankowski@gmail.com"
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text Notes 6800 2200 0    50   ~ 0
+LED1:\n(R)  - FM\n(G)  - DAB+\n(RGB)  - AM\n(B)  - BLUETOOTH\n(RG)  - USB\n(RB)  - SD\n(GB)   - AUX\n(BLK)  - RND\n
+Text Notes 6750 3800 0    50   ~ 0
+LED2:\n(R) - Antena\n(G) - Treble\n(B) - Middle\n(RG) - Bass\n(RG_BLACK) - Subwoofer\n(RB) - L_H_Boost\n(GB_WHITE) - Left-Right\n(GB_BLACK) - Front-Rear\n(RGB) - Backlight -- \n             PODŚWIETLENIE NA ZAMIGAĆ
+Text Notes 6750 5150 0    50   ~ 0
+LED3:\n(R)  -\n(G)  -  ANT_SP\n(RGB)  - ON\n(B)  - \n(RG)  - Media In\n(RB)  - \n(GB)   -\n(BLK)  -\n(WHITE_BLACK) - OFF\n(R_BLACK) - ERROR
+$Comp
+L power:GND #PWR01
+U 1 1 5D983346
+P 1600 3200
+F 0 "#PWR01" H 1600 2950 50  0001 C CNN
+F 1 "GND" H 1605 3027 50  0000 C CNN
+F 2 "" H 1600 3200 50  0001 C CNN
+F 3 "" H 1600 3200 50  0001 C CNN
+	1    1600 3200
+	1    0    0    1   
+$EndComp
+$Comp
+L Connector:TestPoint TP1
+U 1 1 5D9A69AC
+P 1750 7150
+F 0 "TP1" H 1808 7268 50  0000 L CNN
+F 1 "Mount_pad" H 1808 7177 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_1.5x1.5mm" H 1950 7150 50  0001 C CNN
+F 3 "~" H 1950 7150 50  0001 C CNN
+F 4 "Display" H 1750 7150 50  0001 C CNN "Module"
+	1    1750 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP2
+U 1 1 5D9A824C
+P 2300 7150
+F 0 "TP2" H 2358 7268 50  0000 L CNN
+F 1 "Mount_pad" H 2358 7177 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_1.5x1.5mm" H 2500 7150 50  0001 C CNN
+F 3 "~" H 2500 7150 50  0001 C CNN
+F 4 "Display" H 2300 7150 50  0001 C CNN "Module"
+	1    2300 7150
+	1    0    0    -1  
+$EndComp
+NoConn ~ 1750 7150
+NoConn ~ 2300 7150
+$Comp
+L LED:WS2812B D4
+U 1 1 60460715
+P 9350 1800
+F 0 "D4" H 9694 1846 50  0000 L CNN
+F 1 "WS2812B" H 9694 1755 50  0000 L CNN
+F 2 "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm" H 9400 1500 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 9450 1425 50  0001 L TNN
+F 4 "C114586" H 9350 1800 50  0001 C CNN "JLCPCB"
+F 5 "Worldsemi" H 9350 1800 50  0001 C CNN "Manufacturer"
+F 6 "WS2812B" H 9350 1800 50  0001 C CNN "Manufacturer no."
+F 7 "Display" H 9350 1800 50  0001 C CNN "Module"
+F 8 "WS2812B-B" H 9350 1800 50  0001 C CNN "TME"
+	1    9350 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D5
+U 1 1 60460C38
+P 9350 3300
+F 0 "D5" H 9694 3346 50  0000 L CNN
+F 1 "WS2812B" H 9694 3255 50  0000 L CNN
+F 2 "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm" H 9400 3000 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 9450 2925 50  0001 L TNN
+F 4 "C114586" H 9350 3300 50  0001 C CNN "JLCPCB"
+F 5 "Worldsemi" H 9350 3300 50  0001 C CNN "Manufacturer"
+F 6 "WS2812B" H 9350 3300 50  0001 C CNN "Manufacturer no."
+F 7 "Display" H 9350 3300 50  0001 C CNN "Module"
+F 8 "WS2812B-B" H 9350 3300 50  0001 C CNN "TME"
+	1    9350 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D6
+U 1 1 60461665
+P 9400 4750
+F 0 "D6" H 9744 4796 50  0000 L CNN
+F 1 "WS2812B" H 9744 4705 50  0000 L CNN
+F 2 "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm" H 9450 4450 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 9500 4375 50  0001 L TNN
+F 4 "C114586" H 9400 4750 50  0001 C CNN "JLCPCB"
+F 5 "Worldsemi" H 9400 4750 50  0001 C CNN "Manufacturer"
+F 6 "WS2812B" H 9400 4750 50  0001 C CNN "Manufacturer no."
+F 7 "Display" H 9400 4750 50  0001 C CNN "Module"
+F 8 "WS2812B-B" H 9400 4750 50  0001 C CNN "TME"
+	1    9400 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x03_Male J1
+U 1 1 604683C7
+P 1300 3700
+F 0 "J1" H 1272 3724 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 1272 3633 50  0001 R CNN
+F 2 "Connector_Wire_SileliS:SolderWirePad_1x03_SMD_3x0.75" H 1300 3700 50  0001 C CNN
+F 3 "~" H 1300 3700 50  0001 C CNN
+F 4 "Display" H 1300 3700 50  0001 C CNN "Module"
+	1    1300 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5VD #PWR0101
+U 1 1 60469275
+P 1850 3200
+F 0 "#PWR0101" H 1850 3050 50  0001 C CNN
+F 1 "+5VD" H 1865 3373 50  0000 C CNN
+F 2 "" H 1850 3200 50  0001 C CNN
+F 3 "" H 1850 3200 50  0001 C CNN
+	1    1850 3200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 3600 1600 3200
+Wire Wire Line
+	1500 3700 1850 3700
+Wire Wire Line
+	1850 3700 1850 3200
+Text Label 2050 3800 0    50   ~ 0
+DATA
+$Comp
+L power:+5VD #PWR0102
+U 1 1 6046B7F3
+P 9350 1350
+F 0 "#PWR0102" H 9350 1200 50  0001 C CNN
+F 1 "+5VD" H 9365 1523 50  0000 C CNN
+F 2 "" H 9350 1350 50  0001 C CNN
+F 3 "" H 9350 1350 50  0001 C CNN
+	1    9350 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5VD #PWR0103
+U 1 1 6046BC75
+P 9350 2850
+F 0 "#PWR0103" H 9350 2700 50  0001 C CNN
+F 1 "+5VD" H 9365 3023 50  0000 C CNN
+F 2 "" H 9350 2850 50  0001 C CNN
+F 3 "" H 9350 2850 50  0001 C CNN
+	1    9350 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5VD #PWR0104
+U 1 1 6046BEB0
+P 9400 4350
+F 0 "#PWR0104" H 9400 4200 50  0001 C CNN
+F 1 "+5VD" H 9415 4523 50  0000 C CNN
+F 2 "" H 9400 4350 50  0001 C CNN
+F 3 "" H 9400 4350 50  0001 C CNN
+	1    9400 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0105
+U 1 1 6046C4B7
+P 9400 5300
+F 0 "#PWR0105" H 9400 5050 50  0001 C CNN
+F 1 "GND" H 9405 5127 50  0000 C CNN
+F 2 "" H 9400 5300 50  0001 C CNN
+F 3 "" H 9400 5300 50  0001 C CNN
+	1    9400 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0106
+U 1 1 6046CC25
+P 9350 3750
+F 0 "#PWR0106" H 9350 3500 50  0001 C CNN
+F 1 "GND" H 9355 3577 50  0000 C CNN
+F 2 "" H 9350 3750 50  0001 C CNN
+F 3 "" H 9350 3750 50  0001 C CNN
+	1    9350 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0107
+U 1 1 6046D182
+P 9350 2250
+F 0 "#PWR0107" H 9350 2000 50  0001 C CNN
+F 1 "GND" H 9355 2077 50  0000 C CNN
+F 2 "" H 9350 2250 50  0001 C CNN
+F 3 "" H 9350 2250 50  0001 C CNN
+	1    9350 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 1350 9350 1400
+Wire Wire Line
+	9350 2100 9350 2250
+Wire Wire Line
+	9350 3750 9350 3600
+Wire Wire Line
+	9400 4350 9400 4400
+Wire Wire Line
+	9400 5300 9400 5050
+Text Label 9000 1400 1    50   ~ 0
+DATA
+Wire Wire Line
+	9000 1400 9000 1800
+Wire Wire Line
+	9000 1800 9050 1800
+Wire Wire Line
+	9650 1800 9650 2550
+Wire Wire Line
+	9650 2550 9050 2550
+Wire Wire Line
+	9650 3300 9650 4000
+Wire Wire Line
+	9650 4000 9100 4000
+Wire Wire Line
+	9350 3000 9350 2950
+Wire Wire Line
+	9050 2550 9050 3300
+Wire Wire Line
+	9100 4000 9100 4750
+$Comp
+L Device:C C1
+U 1 1 60471986
+P 10350 1850
+F 0 "C1" H 10465 1896 50  0000 L CNN
+F 1 "100nF" H 10465 1805 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 10388 1700 50  0001 C CNN
+F 3 "~" H 10350 1850 50  0001 C CNN
+F 4 "Display" H 10350 1850 50  0001 C CNN "Module"
+	1    10350 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 6047204C
+P 10350 3300
+F 0 "C2" H 10465 3346 50  0000 L CNN
+F 1 "100nF" H 10465 3255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 10388 3150 50  0001 C CNN
+F 3 "~" H 10350 3300 50  0001 C CNN
+F 4 "Display" H 10350 3300 50  0001 C CNN "Module"
+	1    10350 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C3
+U 1 1 6047260F
+P 10350 4750
+F 0 "C3" H 10465 4796 50  0000 L CNN
+F 1 "100nF" H 10465 4705 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 10388 4600 50  0001 C CNN
+F 3 "~" H 10350 4750 50  0001 C CNN
+F 4 "Display" H 10350 4750 50  0001 C CNN "Module"
+	1    10350 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10350 4600 10350 4400
+Wire Wire Line
+	10350 4400 9400 4400
+Connection ~ 9400 4400
+Wire Wire Line
+	9400 4400 9400 4450
+Wire Wire Line
+	10350 3150 10350 2950
+Wire Wire Line
+	10350 2950 9350 2950
+Connection ~ 9350 2950
+Wire Wire Line
+	9350 2950 9350 2850
+Wire Wire Line
+	10350 1700 10350 1400
+Wire Wire Line
+	10350 1400 9350 1400
+Connection ~ 9350 1400
+Wire Wire Line
+	9350 1400 9350 1500
+$Comp
+L power:GND #PWR0108
+U 1 1 60473916
+P 10350 2200
+F 0 "#PWR0108" H 10350 1950 50  0001 C CNN
+F 1 "GND" H 10355 2027 50  0000 C CNN
+F 2 "" H 10350 2200 50  0001 C CNN
+F 3 "" H 10350 2200 50  0001 C CNN
+	1    10350 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0109
+U 1 1 60473DAD
+P 10350 3650
+F 0 "#PWR0109" H 10350 3400 50  0001 C CNN
+F 1 "GND" H 10355 3477 50  0000 C CNN
+F 2 "" H 10350 3650 50  0001 C CNN
+F 3 "" H 10350 3650 50  0001 C CNN
+	1    10350 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0110
+U 1 1 60474105
+P 10350 5100
+F 0 "#PWR0110" H 10350 4850 50  0001 C CNN
+F 1 "GND" H 10355 4927 50  0000 C CNN
+F 2 "" H 10350 5100 50  0001 C CNN
+F 3 "" H 10350 5100 50  0001 C CNN
+	1    10350 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10350 5100 10350 4900
+Wire Wire Line
+	10350 3650 10350 3450
+Wire Wire Line
+	10350 2200 10350 2000
+Wire Wire Line
+	1600 3600 1500 3600
+NoConn ~ 9700 4750
+Wire Wire Line
+	1500 3800 2050 3800
+$EndSCHEMATC

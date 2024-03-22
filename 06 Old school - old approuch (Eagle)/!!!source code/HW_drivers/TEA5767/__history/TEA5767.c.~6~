@@ -1,0 +1,490 @@
+/**************************************************************************/
+/*! 
+    @file     tea5767.c
+    @author   D. Bankowski (d.bankowski@gmail.com)
+    
+    @brief    Driver for the TEA5767 FM receiver.
+    @section LICENSE
+    Software License Agreement (BSD License)
+    Copyright (c) 2017, D. Bankowski
+    All rights reserved.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+    1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holders nor the
+    names of its contributors may be used to endorse or promote products
+    derived from this software without specific prior written permission.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY
+    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+/**************************************************************************/
+
+#include </TEA5767.h>
+
+#ifndef _I2C_ENGINE_
+   #include </core/I2C/I2C_Engine.c>
+#endif
+
+#ifndef __silelis_math__
+   #include </core/silelis_math/silelis_math.c>
+#endif
+
+/*
+#ifndef _BIT_MATH_
+   #include </core/BIT_MATH/BIT_MATH.c>
+#endif*/
+
+
+//#ifdef ACTIVE_ANTENA 
+//   #include </HW_drivers/AAntena/ActiveAntena.c>
+//#endif
+
+/*
+#define ON        1
+#define OFF       0
+#define SCAN_UP   1
+#define SCAN_DOWN 0*/
+
+//extern volatile unsigned int8 MasterBuffer[I2C_BUFSIZE];
+//extern volatile unsigned int8 SlaveBuffer[I2C_BUFSIZE];
+/*
+extern volatile unsigned int16 I2CReadLength;
+extern volatile unsigned int16 I2CWriteLength;*/
+//extern volatile unsigned int8  tea5767_config[5];
+volatile unsigned int8  tea5767_config[5];
+
+//#define        last_READ      0
+//#define        last_WRITE     1
+//volatile int1  TEA5767_last_i2c_action_WRITE; //Should be last_action_READ at startup
+
+unsigned int32 tea5767CalculatePLL (unsigned int32 freqency)
+///*
+//This function calculates frequency as PLL which should be sent to TEA5767
+//*/
+{
+   unsigned int32 temp= 4* (freqency + 225000);
+   return temp/ TEA5767_crystal_PLL_value;
+}
+
+void tea5767SendData(unsigned int8 *bytes)
+{
+  // Clear write buffers
+   //ClearBuffers(&MasterBuffer,I2C_BUFSIZE);
+   i2c_ClearMasterBuffer  ();
+   //TODO: To daæ do i2c_Engine - jako generaln¹ funkcjê fill buffer w wersj dla I2C i innych np. UART
+   I2CWriteLength = 6; //i2cEngine write information
+   I2CReadLength = 0;  //i2cEngine read information
+   i2c_MasterBuffer[0] = TEA5767_ADDRESS_WRITE;
+   unsigned int8 i;
+   for ( i = 1; i < I2CWriteLength; i++ )
+   {
+      *(i2c_MasterBuffer+i) = bytes[i-1]; 
+   }
+  i2cEngine(FALSE);
+  //delay_ms(100);
+  
+//     if (TEA5767_last_i2c_action_WRITE==last_READ)
+
+//   {
+//      TEA5767_last_i2c_action_WRITE=last_WRITE;
+      //delay_ms(499);
+      //dbg_printf("BUG:TEA5767 wykasowaæ linijke wy¿ej");
+ //  }
+}
+
+void tea5767ReadData(void)
+{
+  i2c_ClearMasterBuffer  ();
+  i2c_ClearSlaveBuffers  ();
+  
+  
+  I2CWriteLength = 1; //"1" beacause i2c after start should write adress
+  I2CReadLength = 5;
+  MasterBuffer[0] = TEA5767_ADDRESS_WRITE | TEA5767_ADDRESS_READ;
+  i2cEngine(FALSE);
+  
+  /*i2c_start();
+  i2c_write(TEA5767_ADDRESS_WRITE | TEA5767_ADDRESS_READ);
+  SlaveBuffer[0]=i2c_read(TRUE);
+  SlaveBuffer[1]=i2c_read(TRUE);
+  SlaveBuffer[2]=i2c_read(TRUE);
+  SlaveBuffer[3]=i2c_read(TRUE);
+  SlaveBuffer[4]=i2c_read(FALSE);
+  i2c_stop();
+  dbg_printf("TEA5767 i2c read bug");*/
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // OPIS BUG'a
+  //jest jakiœ bug w czytaniu nie wiem czemu na i2c_engine zawiesza siê tutaj:
+  /*
+     if (I2CWriteLength>0)
+   {  
+      for(i=0;i<I2CWriteLength; i++)
+      {
+         i2c_write(MasterBuffer[i]); //write to device from buffer
+         //po i2c_write(MasterBuffer[i]); tym siê zawiesza adok³adnie jak jest robiona operacja int8  i2c_ACK=_try_i2c_bus(); przed czytaniem. gdy zrobiê int8  i2c_ACK=0; (nie robi pinga do TEA5767 przed czytaniem to wszystko jest w jak najlepszym porzadku
+         delay_us(I2C_DELAY_US);
+      }
+   }
+   */
+   // OPIS BUG'a
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   
+}
+
+void tea5767_init(unsigned int32 frequency = TEA5767_FM_LIMIT_DOWN)
+{
+   tea5767_config[TEA5767_WRITE_byte_1]=tea5767_config[TEA5767_WRITE_byte_2]=tea5767_config[TEA5767_WRITE_byte_3]=tea5767_config[TEA5767_WRITE_byte_4]=tea5767_config[TEA5767_WRITE_byte_5]=0;
+   
+   unsigned int32 PLL_freq = tea5767CalculatePLL(frequency);
+   
+   tea5767_config[TEA5767_WRITE_byte_1] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_1], TEA5767_MUTE_OFF, TEA5767_MUTE_bit);
+   tea5767_config[TEA5767_WRITE_byte_1] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_1], TEA5767_SEARCHMODE_disable, TEA5767_SEARCHMODE_bit);
+   //tea5767_config[TEA5767_WRITE_byte_1] |= ((tea5767CalculatePLL(frequency)>> 8) & TEA5767_PLL13_8_bit_mask);//|0;// |TEA5767_WRITE1_SEARCHMODE_OFF;
+   tea5767_config[TEA5767_WRITE_byte_1] |= ((PLL_freq>> 8) & TEA5767_PLL13_8_bit_mask);//|0;// |TEA5767_WRITE1_SEARCHMODE_OFF;
+
+   //tea5767_config[TEA5767_WRITE_byte_2] = (tea5767CalculatePLL(frequency) & TEA5767_PLL7_0_bit_mask);
+   tea5767_config[TEA5767_WRITE_byte_2] = (PLL_freq & TEA5767_PLL7_0_bit_mask);
+   
+   //tea5767_config[2] = (0x20);
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_SEARCHDOWN, TEA5767_SearchUpDown_bit);
+   tea5767_config[TEA5767_WRITE_byte_3] |= TEA5767_SEARCHSTOPLEVEL;
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_HLSI_value, TEA5767_HighLowSideInjection_bit);
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_MONOTOSTEREO, TEA5767_Mono2Stereo_bit);
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_MUTELEFT_OFF, TEA5767_MuteRight_bit);
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_MUTELEFT_OFF, TEA5767_MuteLeft_bit);
+   tea5767_config[TEA5767_WRITE_byte_3] = nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], TEA5767_SWP1_value, TEA5767_SoftwareProgrammablePort1_bit);
+   
+   //tea5767_config[3] = (0x14);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[3],TEA5767_SWP2_value, TEA5767_SoftwareProgrammablePort2_bit);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_STBY_disable, 6);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_BANDLIMITS_value, 5);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],1, 4);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_SMute_value, 3);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_HCC_value, 2);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_SNC_value, 1);
+   tea5767_config[TEA5767_WRITE_byte_4] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_4],TEA5767_SI_output_ready__port1, 0);
+   
+   //tea5767_config[4] = (0x40);
+   tea5767_config[TEA5767_WRITE_byte_5] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_5], TEA5767_PLLREF_value , TEA5767_PLLREF_bit);
+   tea5767_config[TEA5767_WRITE_byte_5] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_5], TEA5767_DTC__value, TEA5767_De_emphasisTimeConstant_bit);
+   
+   tea5767SendData (&tea5767_config);
+}
+
+void tea5767_set_frequency(unsigned int32 frequency)
+{
+   unsigned int32 PLL_freq = tea5767CalculatePLL(frequency);
+   //tea5767_config[TEA5767_WRITE_byte_1] |= ((tea5767CalculatePLL(frequency)>> 8) & TEA5767_PLL13_8_bit_mask);//|0;// |TEA5767_WRITE1_SEARCHMODE_OFF;
+   //tea5767_config[TEA5767_WRITE_byte_2] = (tea5767CalculatePLL(frequency) & TEA5767_PLL7_0_bit_mask);
+   
+   tea5767_config[TEA5767_WRITE_byte_1] |= ((PLL_freq>> 8) & TEA5767_PLL13_8_bit_mask);//|0;// |TEA5767_WRITE1_SEARCHMODE_OFF;
+   tea5767_config[TEA5767_WRITE_byte_2] = (PLL_freq & TEA5767_PLL7_0_bit_mask);
+   tea5767SendData (&tea5767_config);
+}
+
+void tea5767_SetCommand_SendData(unsigned int8 command_byte, int8 value, unsigned int8 command)
+{
+/*
+command_byte - bit komendy
+value - wartoœæ komendy
+command jaki rozkaz
+*/
+   tea5767_config[command_byte] =nth_bit_to_x(tea5767_config[command_byte], value , command);
+   tea5767SendData (&tea5767_config);
+}
+
+/*#define        tea5767_Mute(on_off_value)            (tea5767_SetCommand_SendData(TEA5767_WRITE_byte_1, on_off_value, TEA5767_MUTE_bit))
+
+#define        tea5767_force_MonoStereo(mono_stereo_value)  (tea5767_SetCommand_SendData(TEA5767_WRITE_byte_3 , mono_stereo_value, TEA5767_Mono2Stereo_bit))
+#define        tea5767_Mute_Right(on_off_value)             (tea5767_SetCommand_SendData(TEA5767_WRITE_byte_3, on_off_value, TEA5767_MuteRight_bit))
+#define        tea5767_Mute_Left(on_off_value)              (tea5767_SetCommand_SendData(TEA5767_WRITE_byte_3, on_off_value, TEA5767_MuteLeft_bit))
+
+
+#define        tea5767_StandBy(enable_disable_value)        (tea5767_SetCommand_SendData(TEA5767_WRITE_byte_4, enable_disable_value, TEA5767_StandBy_bit))*/
+
+void tea5767_auto_search(int1 direction, unsigned int32 frequency=0)
+/*
+   if frequency == 0 auto search from current TEA5767 frequency other case start point is new frequency
+*/
+{
+   if (frequency!=0)
+   {
+      tea5767_config[TEA5767_WRITE_byte_1] |= ((tea5767CalculatePLL(frequency)>> 8) & TEA5767_PLL13_8_bit_mask);//|0;// |TEA5767_WRITE1_SEARCHMODE_OFF;
+      tea5767_config[TEA5767_WRITE_byte_2] = (tea5767CalculatePLL(frequency) & TEA5767_PLL7_0_bit_mask);
+   }
+   tea5767_config[TEA5767_WRITE_byte_1] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_1], TEA5767_SEARCHMODE_enable , TEA5767_SEARCHMODE_bit);
+   
+   tea5767_config[TEA5767_WRITE_byte_3] |= TEA5767_SEARCHSTOPLEVEL;
+   
+   
+   tea5767_config[TEA5767_WRITE_byte_3] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_3], direction , TEA5767_SearchUpDown_bit );
+   tea5767SendData (&tea5767_config);
+   // after send command set TEA5767 bytes to not auto_search condition
+   tea5767_config[TEA5767_WRITE_byte_1] =nth_bit_to_x(tea5767_config[TEA5767_WRITE_byte_1], TEA5767_SEARCHMODE_disable , TEA5767_SEARCHMODE_bit);
+}
+
+unsigned int32 tea5767ReadPLL_frequency(void)
+{  
+   //unsigned int32 PLL_frequency;
+   tea5767ReadData();
+   unsigned int32 PLL_frequency = (unsigned int16) (SlaveBuffer[TEA5767_READ_byte_1] & TEA5767_PLL13_8_bit_mask);
+   PLL_frequency =  PLL_frequency <<8;   
+   return PLL_frequency+(SlaveBuffer[TEA5767_READ_byte_2] & TEA5767_PLL7_0_bit_mask);
+   
+   //SPRAWDZIÆ DZIA£ANIE TEGO!!!!!!!!!!!!!
+}
+
+unsigned int8 tea5767GetStationQualityLevel(void)
+/*
+answer:
+TEA5767_station_level_low         5                 // SSL1 SSL0 Search stop level: low level (ADC = 5) mid level (ADC = 7) high level (ADC = 10)
+EA5767_station_level_medium      7                 // SSL1 SSL0 Search stop level: low level (ADC = 5) mid level (ADC = 7) high level (ADC = 10)
+TEA5767_station_level_high        10                 // SSL1 SSL0 Search stop level: low level (ADC = 5) mid level (ADC = 7) high level (ADC = 10)
+*/
+{
+   tea5767ReadData();
+   return SlaveBuffer[TEA5767_READ_byte_4]>>TEA5767_LEV0_bit;
+}
+
+int1  tea5767GetStereoMonoReceptionStatus(void)
+/*
+answer:
+TEA5767_STEREO_reception          1  //Stereo indication: if STEREO = 1 then stereo reception; if STEREO = 0 then mono reception
+TEA5767_MONO_reception            0  //Stereo indication: if STEREO = 1 then stereo reception; if STEREO = 0 then mono reception
+*/
+{
+   tea5767ReadData();
+   return SlaveBuffer[TEA5767_READ_byte_3]>>TEA5767_STEREO_MONO_reception_bit;
+}
+
+
+unsigned int8  tea5767GetSearchStatus(void)
+/*
+answer:
+   TEA5767_search_status_NOTfound_NOTreached   0 0b00  // no station found no band limit reached
+   //TEA5767_search_status                   0b01  // not possible
+   TEA5767_search_status_found_NOTreached     2 0b10  // station found no band limit reached
+   TEA5767_search_status_found_reached        3 0b11  // station found band limit reached
+*/
+{
+   tea5767ReadData();
+   return SlaveBuffer[TEA5767_READ_byte_1]>>TEA5767_BandLimitFlag_bit;
+}
+
+
+unsigned int32 tea5767GetFrequency (void)
+{
+   return (((tea5767ReadPLL_frequency()*TEA5767_crystal_PLL_value)/ 4)-225000);
+   //temp = (((temp * TEA5767_crystal_PLL_value) / 4) - 225000);
+}
+
+unsigned int32 tea5767GetFrequency_humanClosest (void)
+/*
+Because the output of tea5767GetFrequency is different that seted frequency i.e.
+If I set 100200000 to TEA the TEA sets 10019XXXXX frequency so I decided to
+normalise the ending of calculated frequency
+*/
+{
+   //return ((unsigned int32) (tea5767GetFrequency() + (100000 / 2)) / 100000)*100000;
+   return   (round_closest(tea5767GetFrequency(),100000)*100000);
+}
+
+
+//unsigned int32 tea5767GetFrequency (void)
+///*
+//This function calculates frequency based on PLL which is readen form TEA5767
+//*/
+/*{
+   tea5767ReadData();
+   unsigned int32 temp = (tea5767_config[0] & 0x3F);
+   temp = temp << 8;
+   temp = temp + tea5767_config[1];
+   temp = (((temp * TEA5767_crystal_PLL_value) / 4) - 225000);
+   return temp;
+   
+ /*  #ifdef crystal_13_MHz
+      temp = (((temp * 13000000) / 4) - 225000);
+      return temp;
+   #endif
+   #ifdef crystal_32_768_kHz    
+      temp = (((temp * 32768) / 4) - 225000);
+      return temp;
+   #endif
+   #ifdef crystal_6_5_MHz 
+      temp = (((temp * 6500000) / 4) - 225000);
+      return temp;       
+   #endif*/
+//}
+
+//unsigned int32 tea5767GetFrequencySignificant (void)
+/*
+Because the output of tea5767GetFrequency is different that seted frequency i.e.
+If I set 100200000 to TEA the TEA sets 10019XXXXX frequency so I decided to
+normalise the ending of calculated frequency
+*/
+/*{
+   unsigned int32 temp = tea5767GetFrequency();
+   return ((temp/100000)+1)*100000;
+}*/
+
+
+/*void tea5767SetFreq(unsigned int32 frequency)// = FMfreqency)
+/*
+This function is main TEA tuning funstion sets FREQUENCY
+but do not set Active Anthena so there is no Active Anthena power on delay
+*/
+/*{
+tea5767_config[0] = ((tea5767CalculatePLL(frequency)>> 8) & 0x3F)|TEA5767_WRITE1_MUTE_OFF |TEA5767_WRITE1_SEARCHMODE_OFF;
+tea5767_config[1] = (tea5767CalculatePLL(frequency) & 0xFF);
+tea5767_config[2] = TEA5767_SEARCHSTOPLEVEL|TEA5767_WRITE3_HLSI; //(0x10);
+//tea5767_config[3] = TEA5767_WRITE4_XTAL|TEA5767_WBYTE4_STEREONOISECANCEL_ON; //(0x10);
+tea5767_config[3] = TEA5767_WRITE4_XTAL|TEA5767_WBYTE4_STEREONOISECANCEL_ON|TEA5767_MONOTOSTEREO; //(0x14);
+tea5767_config[4] = 0; //(0xC0);
+tea5767SendData (&tea5767_config);
+}*/
+
+
+//void tea5767_init(unsigned int32 frequency)// = FMfreqency)
+/*
+This function is main TEA funcstion used as init TEA chip, set initial
+frequency and Active anthena set ON so there is AA delay
+*/
+/*{
+//#ifdef ACTIVE_ANTENA
+//   AAntenna_ON();
+//#endif
+tea5767SetFreq(frequency);
+}*/
+
+//void tea5767Mute(int8 state)  //state = ON OFF
+/*
+Mute the TEA5767 output
+*/
+/*{
+tea5767_config[0] = nth_bit_to_x(tea5767_config[0], state, TEA5767_WRITE1_MUTE_ON);
+tea5767SendData (&tea5767_config);
+}*/
+
+//void tea5767Standby(int8 state)  //state = ON OFF
+//void tea5767Standby(void)
+/*
+Switch TEA5767 to Standby mode
+*/
+/*{
+//tea5767_config[3] = nth_bit_to_x(tea5767_config[3], state, TEA5767_WRITE4_STANDBY_ON);
+tea5767_config[3] = nth_bit_to_x(tea5767_config[3], 1, TEA5767_WRITE4_STANDBY_ON);
+tea5767SendData (&tea5767_config);
+//#ifdef ACTIVE_ANTENA
+//   /*if (state==1)
+//      {*/
+//      //output_low(ACTIVE_ANTENA);
+//      AAntenna_OFF();
+//     /* }
+//   else
+//   {
+//   AAntenna_ON();
+//   }   */
+//#endif
+//}
+
+/*void tea5767ForceMono(int8 state)  //state  ON- mono OFF-stereo
+{
+tea5767_config[2] = nth_bit_to_x(tea5767_config[2], state, TEA5767_MONOTOSTEREO);
+tea5767SendData (&tea5767_config);
+}*/
+
+/*void tea5767MuteRight(int8 state)  //state  ON- mute OFF-no mute
+{
+tea5767_config[2] = nth_bit_to_x(tea5767_config[2], state, TEA5767_WRITE3_MUTERIGHT_ON);
+tea5767SendData (&tea5767_config);
+}*/
+
+/*void tea5767MuteLeft(int8 state)  //state  ON- mute OFF-no mute
+{
+tea5767_config[2] = nth_bit_to_x(tea5767_config[2], state, TEA5767_WRITE3_MUTELEFT_ON );
+tea5767SendData (&tea5767_config);
+}*/
+
+/*void tea5767Scan(unsigned int32 frequency, int8 scan_mode, int8 direction)
+{
+/*
+frequency - scan start frequency
+scan_mode - On OFF
+up_down
+!!!!!!!!!!!!!!!!
+IF STATION WAS FOUNF YOU HAVE TO SET SCAM bit to 0
+!!!!!!!!!!!!!!!!
+*/
+//#ifdef ACTIVE_ANTENA
+//   AAntenna_ON();
+//#endif
+/*tea5767_config[0] = tea5767_config[0]|((tea5767CalculatePLL(frequency)>> 8) & 0x3F);
+tea5767_config[1] = (tea5767CalculatePLL(frequency) & 0xFF);
+tea5767_config[0] = nth_bit_to_x(tea5767_config[0], scan_mode, TEA5767_WRITE1_SEARCHMODE_ON);
+tea5767_config[2] = nth_bit_to_x(tea5767_config[2], direction, TEA5767_WRITE3_SEARCHDIRECTION);
+tea5767SendData (&tea5767_config);
+tea5767SetBit2ScanOFF();
+}*/
+
+
+/*void tea5767SetBit2ScanOFF(void)
+{
+// Switch OFF SEARCHMODE bit in TEA5767 register
+   tea5767_config[0] = nth_bit_to_x(tea5767_config[0], OFF, TEA5767_WRITE1_SEARCHMODE_ON);
+   tea5767_config[2] = nth_bit_to_x(tea5767_config[2], 0, TEA5767_WRITE3_SEARCHDIRECTION);
+}*/
+
+//BYTE tea5767StereoReception(void)
+/*
+RETURNS:
+0 - if mono reception
+1 - if stereo reception
+*/
+/*{
+   tea5767ReadData();
+  // printf("aaaa : %x",(tea5767_config[2]>>7));
+   //return ((tea5767_config[2]>>7) == 0x1);
+   return ((SlaveBuffer[2]>>7) == 0x1);
+}*/
+
+
+//BYTE tea5767ScanModeStatus(void)
+/*
+Afrer tea5767Scan this function gives information about TEA5767 scan state.
+return conditions:
+00 (000000) - no station found, band limit not reached
+01 (000000) - no station found, band limit reached 
+10 (000000) - station found , band limit not reached
+11 (000000) - station found , band limit reached
+*/
+/*{
+   tea5767ReadData();
+   return SlaveBuffer[0]>>6;
+}*/
+
+/*void tea5767ReadData(void)
+{
+  // Clear buffers
+  ClearBuffers(&MasterBuffer,I2C_BUFSIZE);
+  ClearBuffers(&SlaveBuffer,I2C_BUFSIZE);
+
+  I2CWriteLength = 1; //"1" beacause i2c after start should write adress
+  I2CReadLength = 5;
+  MasterBuffer[0] = TEA5767_ADDRESS_WRITE | TEA5767_ADDRESS_READ;
+  i2cEngine(FALSE);
+  
+  //put PLL to current config tea5767 config
+  tea5767_config[0] = (SlaveBuffer[0] & 0x3F)|tea5767_config[0];
+  tea5767_config[1] = (SlaveBuffer[1] & 0xFF);
+}*/

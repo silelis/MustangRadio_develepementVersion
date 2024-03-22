@@ -1,0 +1,149 @@
+ /* C++ exception handling example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+
+//#include <iostream>
+#include "hwConfigFile.h"
+//#include "WS2812/WS2812.h"
+//#include "keyboard/keyboard.h"
+
+
+//using std::cout;
+//using std::endl;
+//using std::runtime_error;
+
+#include <inttypes.h>
+#include "cstdio"
+#include "driver/gpio.h"
+
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "driver/gptimer.h"
+#include "esp_log.h"
+
+
+#include "keyboard/keyboard.h"
+#include "Leds/Leds_backlight.h"
+//#include "MCP23008/MCP23008.h"
+#include "StepperOpto/StepperOpto.h"
+#include "tasksFunctions/tasksFunctions.h"
+#include "NVSeeprom/NVSeeprom.h"
+
+
+#include "driver/uart.h"
+void init_uart();
+
+
+extern "C" void app_main(void)
+{
+	/* CAUTION */
+	//this project had been created with:
+	//- Visual Studio 2019
+	//- VisualGDB-5.6r9.msi
+	//- esp32-gcc11.2.0-r2.exe (ESP32 toolchain)
+	/* CAUTION */
+	
+	init_uart();
+	
+	const char *main_TAG = "Main function:";
+	ESP_LOGI(main_TAG, "starting");
+	//printf("%s: starting...\n", main_TAG);
+		
+	displayLedsColors.equaliserLed.primary.blue = 0;
+	displayLedsColors.equaliserLed.primary.green = 0;
+	displayLedsColors.equaliserLed.primary.red = 25;
+	displayLedsColors.equaliserLed.secondary.blue = 0;
+	displayLedsColors.equaliserLed.secondary.green = 0;
+	displayLedsColors.equaliserLed.secondary.red = 0;
+	
+	
+	displayLedsColors.backlightLeds.primary.red = 0;
+	displayLedsColors.backlightLeds.primary.green=0;
+	displayLedsColors.backlightLeds.primary.blue=0;
+	
+	//tworzy obiekt obsługujący NVS flash radio
+	ESP_LOGI(main_TAG, "NVS storage init");
+	NVS * storage = NULL;
+	assert(storage = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
+	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
+	
+	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
+	ESP_LOGI(main_TAG, "Backlight and display leds init");
+	LEDS_BACKLIGHT *ledDisplay = NULL;
+	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
+	ledDisplay->ledStripClearAll();
+	
+	handlerMutex_ledDisplay_Backlight = NULL;																								//czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
+	assert(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary());																	//tworzy mutex dla podświetlenia
+	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);																						//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
+	ESP_LOGI(main_TAG, "Display leds task starting");
+	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_ledDisplay));				//tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	
+	ESP_LOGI(main_TAG, "Backlight leds task starting");
+	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
+	
+	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
+	ESP_LOGI(main_TAG, "Buttons and encoders (aka keyboard) init");
+	handlerQueue_MainKeyboard = NULL;
+	handlerQueue_MainKeyboard = xQueueCreate(QueueHandlerMainKeyboard_len, sizeof(keyboardUnion));
+	assert(handlerQueue_MainKeyboard);
+	//ESP_LOGI(main_TAG, "handlerQueue_MainKeyboard created at: %lx", (long) handlerQueue_MainKeyboard);
+	
+	//tworzy obiekt obsługujący klawiaturę
+	KEYBOARD *klawiatura = NULL;
+	assert(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
+	handlerTask_keyboardQueueParametersParser = NULL;
+	ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
+	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 2048, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser));		//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	
+	
+	StepperOpto * motor = NULL;
+	assert(motor = new StepperOpto());
+	
+	motorTaskParam motorTaskParamStruct;
+	motorTaskParamStruct.motorPointer = motor;
+	motorTaskParamStruct.storagePointer = storage;
+	
+	//motor->measureSliderRange();
+	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, &motorTaskParamStruct, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
+	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 2048, &motorTaskParamStruct, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotor, TASK_TO_CORE1));
+	
+	//	Motor.measureSliderRange();
+
+	//Motor.enableStepperMotor();
+	//Motor.disableStepperMotor();
+	
+//	Motor.moveXSteps(-3000);
+	
+//	Motor.moveTo_xPercent(80.1);
+		
+	while (true)
+	{
+	         
+	}
+		
+}
+
+
+
+
+void init_uart() {
+	uart_config_t uart_config = {
+		.baud_rate = 115200,
+		.data_bits = UART_DATA_8_BITS,
+		.parity = UART_PARITY_DISABLE,
+		.stop_bits = UART_STOP_BITS_1,
+		.flow_ctrl = UART_HW_FLOWCTRL_DISABLE
+	};
+
+	uart_param_config(UART_NUM_0, &uart_config);
+	//uart_set_pin(UART_NUM_0, 1, 3, 0, 0);
+	uart_driver_install(UART_NUM_0, 256, 0, 0, NULL, 0);
+}

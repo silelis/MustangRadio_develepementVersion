@@ -1,0 +1,75 @@
+
+ROM used:   1088/8192 (13%)
+            1088/8192 (13%) including unused fragments
+
+            0.7 Average locations per line
+            8.8 Average locations per statement
+
+RAM used:   145/368 (39%) at main() level
+            156/368 (42%) worst case
+
+Stack used: 4 worst case (4 in main + 0 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  113    13  10  main.c
+   26     0   0  main.h
+  640     0   0  ..\..\..\..\elektronika_progs\PICC\Devices\16F877.h
+   40    16  13  core\EEPROM_2416\EEPROM_2416.c
+   29     0   0  core\EEPROM_2416\EEPROM_2416.h
+   49     0   0  core\EEPROM_2416\eeprom_address_map.h.h
+  143    64  52  core\I2C_ENGINE\I2C_Engine.c
+   49     0   0  core\I2C_ENGINE\I2C_Engine.h
+  127    31  25  core\i2c_HMI_LEDS\i2c_HMI_LEDS.c
+   60     0   0  core\i2c_HMI_LEDS\i2c_HMI_LEDS.h
+  180     0   0  ..\PIC2PIC_slave\core\i2c_Slave_buffer_addresses\i2c_Slave_buffer_addresses.h
+    2     0   0  ..\PIC2PIC_slave\core\i2c_slave_address\i2c_slave_address.h
+----- -----
+ 1458   124 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     20   2    1             @delay_ms1
+ Inline         3             @I2C_READ_1
+0     52   5    1             @I2C_WRITE_1
+0     41   4    1             @PUTCHAR_1_
+ Inline         1    154  2.6  __i2cDeviceStatus
+ Inline         6   1705  8.8  i2cEngine
+0     10   1    0             @const637
+0    122  11    5             @PSTRINGCN7_618
+0     37   3    2             @PRINTF_X_618
+0     10   1    0             @const643
+0      9   1    0             @const644
+0     11   1    0             @const645
+0      9   1    2     30  1.5  _HMI_i2cWritePrepare
+0    497  46    0     56  1.6  _HMI_i2cWriteExecute
+0     15   1    2    138  2.8  set_x_pack_colour
+0     17   2    3    188  3.0  set_blink_x_pack
+0    113  10    1    370  2.7  MAIN
+0      3   0    0             @const674
+0    118  11    4             @PSTRINGC7_618
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               7
+    Statements              124
+    Comments                444
+    Volume (V)              3582
+    Difficulty (D)          22.5
+    Effort to implement (E) 80731
+    Time to implement (T)   1 hours, 15 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   9
+    Maintainability (MI)    80
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-007FF  1084  960  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+

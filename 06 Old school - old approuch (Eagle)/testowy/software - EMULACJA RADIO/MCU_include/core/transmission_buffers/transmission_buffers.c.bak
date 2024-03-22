@@ -1,0 +1,21 @@
+#include </transmission_buffers.h>
+
+void ClearBuffers (unsigned int *buffer, short int buffer_size)
+   {
+      unsigned int8 i;
+      for ( i = 0; i < buffer_size; i++ )
+      {
+         *(buffer+i)= 0x00;
+      }
+   }
+
+void ClearMasterBuffer  (void)
+{
+   ClearBuffers(&MasterBuffer,mcu_Transmission_BUFSIZE);
+
+}
+
+void ClearSlaveBuffers  (void)
+{
+   ClearBuffers(&SlaveBuffer,mcu_Reception_BUFSIZE);
+}

@@ -1,0 +1,694 @@
+ÀÄmcu_main
+   ÃÄMAIN  0/2722  Ram=26
+   ³  ÃÄ@cinit1  (Inline)  Ram=0
+   ³  ÃÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ÃÄACTIVE_ANTENA_MODULE_get_antena_power_setup_from_HMI  0/48  Ram=0
+   ³  ³  ÃÄi2c_ClearMasterBuffer  0/16  Ram=0
+   ³  ³  ³  ÀÄClearBuffers  0/46  Ram=8
+   ³  ³  ÃÄi2c_ClearSlaveBuffers  0/16  Ram=0
+   ³  ³  ³  ÀÄClearBuffers  0/46  Ram=8
+   ³  ³  ÃÄi2cEngine  0/446  Ram=8
+   ³  ³  ³  ÃÄ__try_i2c_bus  0/134  Ram=3
+   ³  ³  ³  ³  ÃÄ__i2cDeviceStatus  0/58  Ram=2
+   ³  ³  ³  ³  ³  ÀÄ@I2C_WRITEU_1  0/28  Ram=1
+   ³  ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ³  ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ³  ÃÄ@PRINTF_LU_640  0/188  Ram=9
+   ³  ³  ³  ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ³  ÃÄ@PRINTF_D_640  0/170  Ram=6
+   ³  ³  ³  ³  ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ³  ³  ³  ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ³  ³  ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ³  ÀÄ@delay_us1  0/28  Ram=1
+   ³  ³  ³  ÃÄ@I2C_WRITEU_1  0/28  Ram=1
+   ³  ³  ³  ÃÄ@I2C_WRITEU_1  0/28  Ram=1
+   ³  ³  ³  ÃÄ@I2C_READU_1  0/30  Ram=1
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÀÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄeeprom_erease  0/54  Ram=3
+   ³  ³  ÀÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³     ÃÄi2c_ClearMasterBuffer  0/16  Ram=0
+   ³  ³     ³  ÀÄ*
+   ³  ³     ÀÄi2cEngine  0/446  Ram=8
+   ³  ³        ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÃÄi2c_ClearMasterBuffer  0/16  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄi2c_ClearSlaveBuffers  0/16  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄi2cEngine  0/446  Ram=8
+   ³  ³     ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_D_640  0/170  Ram=6
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_D_640  0/170  Ram=6
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int32  0/198  Ram=18
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int32  0/198  Ram=18
+   ³  ³  ÀÄ*
+   ³  ÃÄread_ext_eeprom  0/164  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_read_value_int8  0/92  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄinit_keyboard  0/10  Ram=0
+   ³  ÃÄinit_timeout  0/12  Ram=0
+   ³  ÃÄclrl_all_packs  0/14  Ram=0
+   ³  ³  ÃÄ_HMI_i2cWritePrepare  0/16  Ram=2
+   ³  ³  ÀÄ_HMI_i2cWriteExecute  0/16  Ram=1
+   ³  ³     ÀÄi2cEngine  0/446  Ram=8
+   ³  ³        ÀÄ*
+   ³  ÃÄset_backlight  0/62  Ram=1
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_D_640  0/170  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ_HMI_i2cWritePrepare  0/16  Ram=2
+   ³  ³  ÀÄ_HMI_i2cWriteExecute  0/16  Ram=1
+   ³  ³     ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÃÄset_button_loop_breakout  0/4  Ram=0
+   ³  ³  ÃÄclear_keyboard_value  0/12  Ram=0
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_BUTTON_KEYBOARD  0/16  Ram=0
+   ³  ³  ÃÄset_button_loop_breakout  0/4  Ram=0
+   ³  ³  ÃÄclear_keyboard_value  0/12  Ram=0
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON  0/14  Ram=0
+   ³  ³  ÃÄreset_button_loop_breakout  0/6  Ram=0
+   ³  ³  ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ÃÄcheck_timeout  0/18  Ram=1
+   ³  ÃÄclear_timer  0/6  Ram=0
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_submenu_clear_LED  0/16  Ram=1
+   ³  ³  ÀÄclrl_x_pack  0/20  Ram=1
+   ³  ³     ÃÄ_HMI_i2cWritePrepare  0/16  Ram=2
+   ³  ³     ÀÄ_HMI_i2cWriteExecute  0/16  Ram=1
+   ³  ³        ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄclear_keyboard_value  0/12  Ram=0
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_U_640  0/108  Ram=2
+   ³  ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ÃÄ@DIV88  0/40  Ram=3
+   ³  ³  ÃÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_audio_device_init  0/818  Ram=8
+   ³  ³  ÃÄ@const832  0/24  Ram=0
+   ³  ³  ÃÄ@goto39568  0/44  Ram=0
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÀÄACTIVE_ANTENA_MODULE_active_antena_OFF  0/26  Ram=0
+   ³  ³  ³     ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³     ³  ÃÄ_HMI_i2cWritePrepare  0/16  Ram=2
+   ³  ³  ³     ³  ÀÄ_HMI_i2cWriteExecute  0/16  Ram=1
+   ³  ³  ³     ³     ÀÄ*
+   ³  ³  ³     ÀÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³        ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³        ³  ÀÄ*
+   ³  ³  ³        ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³        ³  ÀÄ*
+   ³  ³  ³        ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³        ³  ÀÄ*
+   ³  ³  ³        ÀÄ@delay_ms1  0/38  Ram=1
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@MUL88  0/76  Ram=2
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_reset_all_devices  0/20  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_640  0/108  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³     ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_audio_device_step_action  0/406  Ram=17
+   ³  ³  ÃÄ@goto39602  0/36  Ram=0
+   ³  ³  ÃÄ@const883  0/24  Ram=0
+   ³  ³  ÃÄ@const884  0/26  Ram=0
+   ³  ³  ÃÄ@const885  0/28  Ram=0
+   ³  ³  ÃÄ@const886  0/30  Ram=0
+   ³  ³  ÃÄ@const832  0/24  Ram=0
+   ³  ³  ÃÄ@goto39649  0/44  Ram=0
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ@PUTCHAR_2_  0/64  Ram=1
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³     ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_audio_device_step_action  0/406  Ram=17
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_audio_device_step_action  0/406  Ram=17
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_audio_device_step_action  0/406  Ram=17
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_BUTTON_KEYBOARD  0/16  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_timeout  0/18  Ram=1
+   ³  ÃÄclear_timer  0/6  Ram=0
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_U_640  0/108  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_submenu_set_LED  0/116  Ram=1
+   ³  ³  ÃÄ@goto39789  0/42  Ram=0
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_x_pack_colour  0/22  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄset_blink_x_pack  0/24  Ram=3
+   ³  ³  ³  ÃÄ_HMI_i2cWritePrepare  0/16  Ram=2
+   ³  ³  ³  ÀÄ_HMI_i2cWriteExecute  0/16  Ram=1
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄset_blink_x_pack  0/24  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄset_x_pack_colour  0/22  Ram=2
+   ³  ³     ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄMENU_MODULE_submenu_action  0/604  Ram=13
+   ³  ³  ÃÄ@const900  0/20  Ram=0
+   ³  ³  ÃÄ@const901  0/22  Ram=0
+   ³  ³  ÃÄ@goto39765  0/44  Ram=0
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_OFF  0/26  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄACTIVE_ANTENA_MODULE_active_antena_ON  0/96  Ram=6
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_check_variable_boarders  0/88  Ram=6
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄMENU_MODULE_check_variable_boarders  0/88  Ram=6
+   ³  ³  ÃÄset_backlight  0/62  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_640  0/38  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³     ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@const832  0/24  Ram=0
+   ³  ÃÄMENU_MODULE_submenu_action  0/604  Ram=13
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD  0/18  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_BUTTON_KEYBOARD  0/16  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄMENU_MODULE_reset_loop_conditions_TIMER_BUTTON  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄcheck_timeout  0/18  Ram=1
+   ³  ÃÄclear_timer  0/6  Ram=0
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGC_640  0/32  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄwrite_ext_eeprom  0/118  Ram=7
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PSTRINGCN_640  0/30  Ram=3
+   ³  ³  ÀÄ*
+   ³  ÃÄ@PRINTF_X_640  0/62  Ram=2
+   ³  ³  ÀÄ*
+   ³  ÃÄfprintf_return_carriage  0/14  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÀÄclear_keyboard_value  0/12  Ram=0
+   ÃÄEXT_isr  0/12  Ram=0
+   ³  ÀÄread_keyboard_value  0/72  Ram=4
+   ³     ÀÄdebounce_inputs  0/78  Ram=7
+   ÀÄTIMER1_isr  0/24  Ram=0
+      ÀÄset_timer  0/66  Ram=3
+         ÃÄ@MUL1616  0/32  Ram=5
+         ÀÄ@DIV1616  0/68  Ram=5

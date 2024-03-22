@@ -1,0 +1,127 @@
+CCS PCM C Compiler, Version 5.070, 5967               06-maj-18 16:57
+
+               Filename:   F:\Elektronika_projekty\optocoupler\pic16\main.lst
+
+               ROM used:   69 words (1%)
+                           Largest free fragment is 2048
+               RAM used:   6 (2%) at main() level
+                           7 (2%) worst case
+               Stack used: 1 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   018
+0003:  NOP
+.................... #include <main.h> 
+.................... #include <16F877.h> 
+.................... //////////// Standard Header file for the PIC16F877 device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877 
+....................  
+.................... #list 
+....................  
+.................... //#use delay(oscillator=4000000) 
+.................... #use delay(crystal=20000000) 
+0004:  MOVLW  22
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   017
+000A:  MOVLW  06
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  7B
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  DECFSZ 00,F
+0016:  GOTO   00A
+0017:  RETURN
+.................... #use rs232(baud=115200,parity=N,xmit=PIN_c6,rcv=PIN_c7,bits=8,stream=PORT1) 
+.................... //#use rs232(baud=9600,parity=N,xmit=PIN_c6,rcv=PIN_c7,bits=8,stream=PORT1) 
+.................... #define LED PIN_A0 
+.................... #define DELAY 1000 
+....................  
+....................  
+....................  
+....................  
+.................... void main() 
+0018:  MOVF   03,W
+0019:  ANDLW  1F
+001A:  MOVWF  03
+001B:  MOVLW  0A
+001C:  BSF    03.5
+001D:  MOVWF  19
+001E:  MOVLW  A6
+001F:  MOVWF  18
+0020:  MOVLW  90
+0021:  BCF    03.5
+0022:  MOVWF  18
+0023:  BSF    03.5
+0024:  BSF    1F.0
+0025:  BSF    1F.1
+0026:  BSF    1F.2
+0027:  BCF    1F.3
+0028:  BCF    03.7
+.................... { 
+....................  
+....................    while(TRUE) 
+....................    { 
+....................  
+....................       //Example blinking LED program 
+....................       output_low(LED); 
+0029:  BCF    05.0
+002A:  BCF    03.5
+002B:  BCF    05.0
+....................       delay_ms(DELAY); 
+002C:  MOVLW  04
+002D:  MOVWF  21
+002E:  MOVLW  FA
+002F:  MOVWF  22
+0030:  CALL   004
+0031:  DECFSZ 21,F
+0032:  GOTO   02E
+....................       output_high(LED); 
+0033:  BSF    03.5
+0034:  BCF    05.0
+0035:  BCF    03.5
+0036:  BSF    05.0
+....................       delay_ms(DELAY); 
+0037:  MOVLW  04
+0038:  MOVWF  21
+0039:  MOVLW  FA
+003A:  MOVWF  22
+003B:  CALL   004
+003C:  DECFSZ 21,F
+003D:  GOTO   039
+....................  
+....................       //TODO: User Code 
+....................       printf("a"); 
+003E:  MOVLW  61
+003F:  BTFSS  0C.4
+0040:  GOTO   03F
+0041:  MOVWF  19
+0042:  BSF    03.5
+0043:  GOTO   029
+....................    } 
+....................  
+.................... } 
+0044:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F72   HS NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

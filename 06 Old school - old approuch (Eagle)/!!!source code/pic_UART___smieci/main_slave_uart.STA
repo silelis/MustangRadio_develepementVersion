@@ -1,0 +1,51 @@
+
+ROM used:   163/8192 (2%)
+            163/8192 (2%) including unused fragments
+
+            0.2 Average locations per line
+            27.2 Average locations per statement
+
+RAM used:   8/368 (2%) at main() level
+            11/368 (3%) worst case
+
+Stack used: 0 worst case (0 in main + 0 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   21     6 100  main_slave_uart.c
+    6     0   0  main_slave_uart.h
+  642     0   0  F:\elektronika_progs\PICC\Devices\16F877.h
+----- -----
+  669     6 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     22  13    1             @delay_ms1
+0     40  25    1     90  2.2  main
+0      7   4    0             @const594
+0     90  55    4             @PSTRINGC7_57600_62_63
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               1
+    Statements              6
+    Comments                114
+    Volume (V)              97
+    Difficulty (D)          1.6
+    Effort to implement (E) 155
+    Time to implement (T)   0 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   1
+    Maintainability (MI)    81
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-007FF   159  1885  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+
