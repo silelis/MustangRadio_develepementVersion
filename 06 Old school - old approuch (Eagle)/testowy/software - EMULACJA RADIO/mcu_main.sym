@@ -1,0 +1,448 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     @INTERRUPT_AREA
+018     @INTERRUPT_AREA
+019     rs232_errors
+01A     button_value_pattern
+01B.0   button_loop_breakout
+01B.1   timeout_occured
+01B.2   Active_FM_antena_hardware_setup
+01B.3   Active_DAB_antena_hardware_setup
+01B.4   Active_converter_antena_hardware_setup
+01C-02B i2c_MasterBuffer
+02C-03B i2c_SlaveBuffer
+03C-03D I2CReadLength
+03E-03F I2CWriteLength
+040     timer_overflow_counter
+041     EQU_use_active_antena_val
+042     EQU_Backlight_value
+043     EQU_VOL_value
+044     EQU_Treble_value
+045     EQU_Middle_value
+046     EQU_Bass_value
+047     EQU_L_H_Boost_value
+048     EQU_Left_Right_value
+049     EQU_Front_Rear_value
+04A-04B @sprintf_string
+04C     MAIN.active_antena_power_setup
+04D     MAIN.main_menu
+04E     MAIN.back_to_menu
+04F.0   MAIN.device_already_started
+04F.1   MAIN.is_VOLUME_loop_timeout
+04F.2   MAIN.is_AUDIO_INPUT_loop_timeout
+04F.3   MAIN.is_EQUALISERT_loop_timeout
+04F.4   MAIN._1st_EQUALISER_loop_execution
+04F.5   MAIN.is_ACTIVE_ANTENA_MENU_REQUIRED
+050     MAIN.equaliser_submenu
+051     MAIN._radio_1st_run
+052     MAIN.audio_devices_playing_submenu
+053-056 MAIN.FM_freuency_value
+057-05A MAIN.AM_freuency_value
+05B     MAIN.i
+05C     MAIN.last_main_menu
+05D     MAIN.EQU_VOL_temp
+05E     MAIN.last_main_menu
+05F     MAIN.EQU_Backlight_val_temp
+060     MAIN.EQU_use_active_antena_val_temp
+061     MAIN.last_main_menu
+062     MENU_MODULE_submenu_set_LED.which_submenu
+062     MENU_MODULE_audio_device_step_action.which_device
+062     eeprom_erease.erease_data
+062-063 MENU_MODULE_audio_device_init.which_device
+062-063 read_ext_eeprom.address
+062     MENU_MODULE_submenu_clear_LED._main_menu
+062     check_timeout.@SCRATCH1
+062     MAIN.@SCRATCH1
+063     MENU_MODULE_audio_device_step_action.direction_UP_DOWN
+063     set_blink_x_pack.pack_no
+063     clrl_x_pack.pack_no
+063-064 eeprom_erease.i
+063     MENU_MODULE_submenu_action.which_submenu
+063     MAIN.@SCRATCH2
+064.0   MENU_MODULE_audio_device_init.is_dev_already_starter
+064     set_blink_x_pack.colour_1
+064-065 read_ext_eeprom.data
+064-070 MENU_MODULE_audio_device_step_action.direction
+064-065 check_read_value_int8.readen_val
+064-065 check_read_value_int32.readen_val
+064     MENU_MODULE_submenu_action.direction_UP_DOWN
+064     MAIN.@SCRATCH3
+065     MENU_MODULE_submenu_action.which_device
+065-066 write_ext_eeprom.address
+065     set_blink_x_pack.colour_2
+065     MENU_MODULE_audio_device_init.@SCRATCH1
+065     MAIN.@SCRATCH4
+066-067 read_ext_eeprom._size_of_data
+066     check_read_value_int8.min_val
+066-069 check_read_value_int32.min_val
+066     MENU_MODULE_reset_all_devices.which_device
+066-06A MENU_MODULE_submenu_action.direction
+066     @PRINTF_U_640.P1
+066     MENU_MODULE_audio_device_init.@SCRATCH2
+067     check_read_value_int8.max_val
+067-068 write_ext_eeprom.data
+067     @PRINTF_U_640.P1
+067     @MUL88.P2
+067     MENU_MODULE_audio_device_init.@SCRATCH3
+068     check_read_value_int8.default_val
+068     @MUL88.P1
+068     read_ext_eeprom.@SCRATCH1
+068     MENU_MODULE_audio_device_init.@SCRATCH4
+069-06A write_ext_eeprom._size_of_data
+069     check_read_value_int8.@SCRATCH1
+069     MENU_MODULE_audio_device_init.@SCRATCH5
+06A-06D check_read_value_int32.max_val
+06A     check_read_value_int8.@SCRATCH2
+06B-06C ClearBuffers.buffer
+06B-06C MENU_MODULE_check_variable_boarders.current_value
+06B     set_backlight.value
+06B     write_ext_eeprom.@SCRATCH1
+06B     MENU_MODULE_submenu_action.@SCRATCH1
+06C     MENU_MODULE_submenu_action.@SCRATCH2
+06D-06E ClearBuffers.buffer_size
+06D     MENU_MODULE_check_variable_boarders.min_value
+06D     MENU_MODULE_submenu_action.@SCRATCH3
+06E     MENU_MODULE_check_variable_boarders.max_value
+06E-071 check_read_value_int32.default_val
+06E     MENU_MODULE_submenu_action.@SCRATCH4
+06F-070 ClearBuffers.i
+06F     MENU_MODULE_check_variable_boarders.@SCRATCH1
+06F     MENU_MODULE_submenu_action.@SCRATCH5
+070     ACTIVE_ANTENA_MODULE_active_antena_ON.FM_hardware_setup
+070     MENU_MODULE_check_variable_boarders.@SCRATCH2
+071     ACTIVE_ANTENA_MODULE_active_antena_ON.FM_eeprom_value
+071     ClearBuffers.@SCRATCH1
+071     MENU_MODULE_audio_device_step_action.@SCRATCH1
+071     @PSTRINGR_640.@SCRATCH1
+072     ACTIVE_ANTENA_MODULE_active_antena_ON.Converter_hardware_setup
+072     ClearBuffers.@SCRATCH2
+072     check_read_value_int32.@SCRATCH1
+072     MENU_MODULE_audio_device_step_action.@SCRATCH2
+072     @PSTRINGR_640.@SCRATCH2
+073     ACTIVE_ANTENA_MODULE_active_antena_ON.DAB_hardware_setup
+073     check_read_value_int32.@SCRATCH2
+074     ACTIVE_ANTENA_MODULE_active_antena_ON.DAB_eeprom_value
+074     check_read_value_int32.@SCRATCH3
+075     ACTIVE_ANTENA_MODULE_active_antena_ON.antena_voltage_propagation_time
+075     check_read_value_int32.@SCRATCH4
+076     set_x_pack_colour.pack_no
+076     @delay_ms1.P1
+076     @PSTRINGC_640.@SCRATCH1
+077     set_x_pack_colour.colour_1
+077     @PSTRINGC_640.@SCRATCH2
+078     _HMI_i2cWriteExecute._I2CWriteLength
+078     _HMI_i2cWritePrepare.@SCRATCH1
+079     i2cEngine.eeprom_read
+079     _HMI_i2cWritePrepare.@SCRATCH2
+07A     i2cEngine.i2c_ACK
+07B-07C i2cEngine.i
+07D.0   i2cEngine.state
+07E     __try_i2c_bus.i2c_try
+07E     i2cEngine.@SCRATCH1
+07F-080 __try_i2c_bus.i2c_tryout_error
+07F     i2cEngine.@SCRATCH2
+080     i2cEngine.@SCRATCH3
+081     __i2cDeviceStatus.ack
+081-082 @PRINTF_LU_640.P1
+081     @delay_us1.P2
+081     @PSTRINGCN_640.P3
+081     @PRINTF_D_640.P4
+081     @PRINTF_X_640.P5
+081     @I2C_READU_1.P6
+082     @PRINTF_X_640.P1
+082     @PRINTF_D_640.P2
+082     __i2cDeviceStatus.@SCRATCH1
+082     @PSTRINGCN_640.@SCRATCH1
+083     @I2C_WRITEU_1.P1
+083     @PSTRINGCN_640.@SCRATCH2
+083     @PRINTF_LU_640.@SCRATCH1
+083     @PRINTF_D_640.@SCRATCH1
+084     @PRINTF_LU_640.@SCRATCH2
+084     @PRINTF_D_640.@SCRATCH2
+085     @PRINTF_LU_640.@SCRATCH3
+085     @PRINTF_D_640.@SCRATCH3
+086     @PRINTF_LU_640.@SCRATCH4
+086     @PRINTF_D_640.@SCRATCH4
+087     @DIV88.P1
+087     @PRINTF_LU_640.@SCRATCH5
+088     @DIV88.P1
+088     @PRINTF_LU_640.@SCRATCH6
+089     @PRINTF_LU_640.@SCRATCH7
+089     @DIV88.@SCRATCH1
+08A     @PUTCHAR_2_.P1
+08B-08C debounce_inputs.time2debounce
+08B     set_timer.time_seconds
+08B     read_keyboard_value.@SCRATCH1
+08C-08D @MUL1616.P1
+08C     read_keyboard_value.@SCRATCH2
+08C     set_timer.@SCRATCH1
+08D-08E debounce_inputs.count_low_signal_A
+08D     read_keyboard_value.@SCRATCH3
+08D     set_timer.@SCRATCH2
+08E-08F @DIV1616.P1
+08E-08F @MUL1616.P2
+08E     read_keyboard_value.@SCRATCH4
+08F-090 debounce_inputs.count_high_signal_A
+090-091 @DIV1616.P1
+090     @MUL1616.@SCRATCH1
+091     debounce_inputs.@SCRATCH1
+092     @DIV1616.@SCRATCH1
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FD0.0   MAIN.BOR
+FD0     MAIN.RCON
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+000004  set_button_loop_breakout
+0000BA  MENU_MODULE_audio_devices_list.call
+0000CA  MENU_MODULE_audio_devices_list.data
+0000D2  @const883.call
+0000EA  @const884.call
+000104  @const885.call
+000120  @const886.call
+00013E  @const900.call
+000152  @const901.call
+000168  @const678.call
+000192  @const695.call
+0001A4  @const696.call
+0001B6  @const697.call
+0001C8  @const698.call
+0001DC  @const738.call
+000200  @const743.call
+000212  @const788.call
+000226  @const794.call
+00023A  @const829.call
+00025E  @const859.call
+00026C  comunicate.call
+00026C  comunicate.data
+00027A  @const866.call
+000286  @const867.call
+000290  @const868.call
+00029C  @const869.call
+0002A6  @const873.call
+0002AE  @const874.call
+0002BA  @const875.call
+0002C2  @const876.call
+0002CA  @const877.call
+0002E0  @const888.call
+0002EC  @const890.call
+0002FE  @const891.call
+000312  @const892.call
+000324  @const893.call
+00032E  @const894.call
+00033C  @const895.call
+00034A  @const896.call
+000352  @const897.call
+000368  @const902.call
+00037A  @const903.call
+000384  @const904.call
+00038E  @const905.call
+000396  @const906.call
+0003A4  @const907.call
+0003B2  @const908.call
+0003C0  @const909.call
+0003CE  @const910.call
+0003DC  debounce_inputs
+00042A  read_keyboard_value
+000472  EXT_isr
+00047E  @MUL1616
+00049E  @DIV1616
+0004E2  set_timer
+000524  TIMER1_isr
+00053C  @const918.call
+00055C  @const922.call
+000572  @const931.call
+000592  @const933.call
+0005A0  @const934.call
+0005C6  @const935.call
+0005EC  @const936.call
+0005F8  @const937.call
+000604  @const938.call
+00060C  @const939.call
+000616  @const940.call
+00061C  @const941.call
+000622  @const942.call
+000628  @const943.call
+000630  @const944.call
+000638  @const945.call
+00063E  @const946.call
+000644  @const947.call
+00064E  @const948.call
+00065A  @const949.call
+000680  @const950.call
+0006A8  @const953.call
+0006B2  @const955.call
+0006B8  @const956.call
+0006BE  @const957.call
+0006CA  @const958.call
+0006E0  @const960.call
+0006EE  @const961.call
+0006FC  @const965.call
+00070C  @const969.call
+00071A  @const970.call
+00072A  @const971.call
+00073A  @const972.call
+000748  @const974.call
+000766  @delay_ms1
+00078C  @PUTCHAR_2_
+0007CC  @PSTRINGC_640
+0007EC  fprintf_return_carriage
+0007FA  ClearBuffers
+000828  i2c_ClearMasterBuffer
+000838  i2c_ClearSlaveBuffers
+000848  @I2C_WRITEU_1
+000864  __i2cDeviceStatus
+00089E  @PSTRINGCN_640
+0008BC  @PRINTF_X_640
+0008FA  @PRINTF_LU_640
+0009B6  @DIV88
+0009DE  @PRINTF_D_640
+000A88  @delay_us1
+000AA4  __try_i2c_bus
+000B2A  @I2C_READU_1
+000B48  i2cEngine
+000D06  ACTIVE_ANTENA_MODULE_get_antena_power_setup_from_HMI
+000D36  write_ext_eeprom
+000DAC  eeprom_erease
+000DE2  read_ext_eeprom
+000E86  check_read_value_int8
+000EE2  check_read_value_int32
+000FA8  init_keyboard
+000FB2  init_timeout
+000FBE  _HMI_i2cWritePrepare
+000FCE  _HMI_i2cWriteExecute
+000FDE  clrl_all_packs
+000FEC  set_backlight
+00102A  clear_keyboard_value
+001036  MENU_MODULE_reset_loop_conditions_TIMER_BUTTON_KEYBOARD
+001048  MENU_MODULE_reset_loop_conditions_BUTTON_KEYBOARD
+001058  reset_button_loop_breakout
+00105E  MENU_MODULE_reset_loop_conditions_TIMER_BUTTON
+00106C  check_timeout
+00107E  clear_timer
+001084  clrl_x_pack
+001098  MENU_MODULE_submenu_clear_LED
+0010A8  @PRINTF_U_640
+001114  set_x_pack_colour
+00112A  ACTIVE_ANTENA_MODULE_active_antena_ON
+00118A  ACTIVE_ANTENA_MODULE_active_antena_OFF
+0011A4  MENU_MODULE_reset_all_devices
+0011B8  @MUL88
+001204  MENU_MODULE_audio_device_init
+001536  @goto39568
+001562  @PSTRINGR_640
+001588  MENU_MODULE_audio_device_step_action
+00171E  @goto39602
+001742  @goto39649
+00176E  set_blink_x_pack
+001786  MENU_MODULE_submenu_set_LED
+0017FA  @goto39789
+001824  MENU_MODULE_check_variable_boarders
+00187C  MENU_MODULE_submenu_action
+001AD8  @goto39765
+001B04  MAIN
+001B04  @cinit1
+001B60  @cinit2
+
+Project Directory:
+    E:\Elektronika_projekty\Car_Radio\testowy\software - EMULACJA RADIO\
+
+Project Files:
+    mcu_main.c                                              [03-kwi-19 13:54  CRC=ED47BB21]
+    ..\..\..\..\elektronika_progs\PICC\Devices\18F4520.h    [24-lut-17 17:24  CRC=DFA0DB09]
+    mcu_main_MASTER_CONFIG_FILE.h                           [12-wrz-17 14:20  CRC=E33E478B]
+    mcu_main.h                                              [16-lis-18 20:22  CRC=81B1AC9C]
+    MCU_include\hardware\keyboard\kyeboard.c                [08-mar-17 12:12  CRC=7981DC5E]
+    MCU_include\hardware\keyboard\kyeboard.h                [08-mar-17 12:23  CRC=B309C8D4]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_STEPPER_MOTOR\i2c_HMI_STEPPER_MOTOR.c [21-gru-17 11:29  CRC=9D6A95CD]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_STEPPER_MOTOR\i2c_HMI_STEPPER_MOTOR.h [03-lip-17 13:42  CRC=BCB6EAA7]
+    MCU_include\core\I2C_Engine\I2C_Engine.c                [21-gru-17 11:23  CRC=78B56534]
+    MCU_include\core\I2C_Engine\I2C_Engine.h                [25-wrz-17 13:11  CRC=87941A81]
+    MCU_include\core\transmission_buffers\transmission_buffers.c [03-kwi-19 13:54  CRC=97866A38]
+    MCU_include\core\transmission_buffers\transmission_buffers.h [03-kwi-19 13:54  CRC=57A109B1]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_main.c             [21-gru-17 11:23  CRC=2C377D7F]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_main.h             [30-cze-17 14:24  CRC=346EAEAB]
+    HMI_MCU_common_includes\HMI_i2c_Slave_buffer_addresses\i2c_Slave_buffer_addresses.h [06-lip-17 22:58  CRC=AC079E7B]
+    HMI_MCU_common_includes\HMI_i2c_slave_address\i2c_slave_address.h [06-lip-17 22:55  CRC=58DE01D5]
+    MCU_include\core\timer\timeout.c                        [26-paü-16 09:08  CRC=4530C983]
+    MCU_include\core\timer\timeout.h                        [26-paü-16 09:08  CRC=B7D5B4CF]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_BACKLIGHT\i2c_HMI_BACKLIGHT.c [21-gru-17 11:24  CRC=DFBA05EE]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_BACKLIGHT\i2c_HMI_BACKLIGHT.h [26-cze-17 11:29  CRC=26568192]
+    MCU_include\modules\eeprom_module\eeprom_module.c       [05-paü-17 10:52  CRC=58552EF4]
+    MCU_include\modules\eeprom_module\eeprom_module.h       [26-cze-17 11:03  CRC=8CBA6BA9]
+    MCU_include\hardware\EEPROM_2416\EEPROM_2416.c          [21-gru-17 11:29  CRC=2544A38C]
+    MCU_include\hardware\EEPROM_2416\EEPROM_2416.h          [26-cze-17 10:59  CRC=B1CDB75B]
+    MCU_include\hardware\EEPROM_MAP\eeprom_map.h            [26-cze-17 15:52  CRC=F45B50B9]
+    HMI_MCU_common_includes\MCU_radio_default_parameters\radio_default_parameters.h [25-wrz-17 12:06  CRC=781EE48C]
+    MCU_include\modules\menu_module\menu_module.c           [05-paü-17 10:54  CRC=36DD54E4]
+    MCU_include\modules\menu_module\menu_module.h           [27-cze-17 13:27  CRC=7606D0B2]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_LEDS\i2c_HMI_LEDS.c [21-gru-17 11:26  CRC=D3FD787C]
+    MCU_include\hardware\I2C_HMI\i2c_HMI_LEDS\i2c_HMI_LEDS.h [26-cze-17 11:29  CRC=860B8C2F]
+    MCU_include\modules\active_antena_module\active_antena_module.c [21-gru-17 11:59  CRC=F1D6F07E]
+    MCU_include\modules\active_antena_module\active_antena_module.h [27-cze-17 14:56  CRC=F8FA41B7]
+
+Source signature=23EE3ED7
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=C7D2
+
+Units:
+    mcu_main (main)
+
+Compiler Settings:
+    Processor:      PIC18F4520
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   mcu_main.xsym
+    Errors:      mcu_main.err
+    Ext Symbols: mcu_main.esym
+    INHX32:      mcu_main.hex
+    Symbols:     mcu_main.sym
+    List:        mcu_main.lst
+    Debug/COFF:  mcu_main.cof
+    Project:     mcu_main.ccspjt
+    Call Tree:   mcu_main.tre
+    Statistics:  mcu_main.STA

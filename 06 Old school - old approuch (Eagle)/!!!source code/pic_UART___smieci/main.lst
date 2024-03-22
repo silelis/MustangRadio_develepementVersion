@@ -1,0 +1,588 @@
+CCS PCH C Compiler, Version 5.070, 5967               05-paü-17 09:37
+
+               Filename:   G:\pic_UART\main.lst
+
+               ROM used:   888 bytes (3%)
+                           Largest free fragment is 31876
+               RAM used:   284 (18%) at main() level
+                           295 (19%) worst case
+               Stack used: 4 locations (2 in main + 2 for interrupts)
+               Stack size: 31
+
+*
+0000:  GOTO   0284
+*
+0008:  MOVWF  04
+000A:  MOVFF  FD8,05
+000E:  MOVFF  FE0,06
+0012:  MOVLB  0
+0014:  MOVFF  FE9,0C
+0018:  MOVFF  FEA,07
+001C:  MOVFF  FE1,08
+0020:  MOVFF  FE2,09
+0024:  MOVFF  FD9,0A
+0028:  MOVFF  FDA,0B
+002C:  MOVFF  FF3,12
+0030:  MOVFF  FF4,13
+0034:  MOVFF  FFA,14
+0038:  MOVFF  FF5,15
+003C:  MOVFF  FF6,16
+0040:  MOVFF  FF7,17
+0044:  MOVFF  00,0E
+0048:  MOVFF  01,0F
+004C:  MOVFF  02,10
+0050:  MOVFF  03,11
+0054:  BTFSS  F9D.5
+0056:  GOTO   0060
+005A:  BTFSC  F9E.5
+005C:  GOTO   00DA
+0060:  MOVFF  0E,00
+0064:  MOVFF  0F,01
+0068:  MOVFF  10,02
+006C:  MOVFF  11,03
+0070:  MOVFF  0C,FE9
+0074:  MOVFF  07,FEA
+0078:  BSF    07.7
+007A:  MOVFF  08,FE1
+007E:  MOVFF  09,FE2
+0082:  MOVFF  0A,FD9
+0086:  MOVFF  0B,FDA
+008A:  MOVFF  12,FF3
+008E:  MOVFF  13,FF4
+0092:  MOVFF  14,FFA
+0096:  MOVFF  15,FF5
+009A:  MOVFF  16,FF6
+009E:  MOVFF  17,FF7
+00A2:  MOVF   04,W
+00A4:  MOVFF  06,FE0
+00A8:  MOVFF  05,FD8
+00AC:  RETFIE 0
+.................... #include <main.h> 
+.................... #include <18F4520.h> 
+.................... //////////// Standard Header file for the PIC18F4520 device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC18F4520 
+00AE:  MOVLB  1
+00B0:  MOVF   x25,W
+00B2:  CLRF   01
+00B4:  SUBWF  x24,W
+00B6:  BC    00BE
+00B8:  MOVFF  124,00
+00BC:  BRA    00D6
+00BE:  CLRF   00
+00C0:  MOVLW  08
+00C2:  MOVWF  x26
+00C4:  RLCF   x24,F
+00C6:  RLCF   00,F
+00C8:  MOVF   x25,W
+00CA:  SUBWF  00,W
+00CC:  BTFSC  FD8.0
+00CE:  MOVWF  00
+00D0:  RLCF   01,F
+00D2:  DECFSZ x26,F
+00D4:  BRA    00C4
+00D6:  MOVLB  0
+00D8:  RETURN 0
+*
+0122:  DATA 0D,0A
+0124:  DATA 52,75
+0126:  DATA 6E,6E
+0128:  DATA 69,6E
+012A:  DATA 67,2E
+012C:  DATA 2E,2E
+012E:  DATA 0D,0A
+0130:  DATA 00,00
+0132:  DATA 21,21
+0134:  DATA 21,20
+0136:  DATA 55,41
+0138:  DATA 52,54
+013A:  DATA 20,4F
+013C:  DATA 56,45
+013E:  DATA 52,46
+0140:  DATA 4C,4F
+0142:  DATA 57,45
+0144:  DATA 44,2C
+0146:  DATA 20,72
+0148:  DATA 65,70
+014A:  DATA 65,61
+014C:  DATA 74,20
+014E:  DATA 63,6F
+0150:  DATA 6D,6D
+0152:  DATA 61,6E
+0154:  DATA 64,20
+0156:  DATA 0D,0A
+0158:  DATA 00,00
+015A:  DATA 55,41
+015C:  DATA 52,54
+015E:  DATA 20,64
+0160:  DATA 61,74
+0162:  DATA 61,3A
+0164:  DATA 20,00
+0166:  DATA 00,00
+0168:  TBLRD*+
+016A:  MOVF   FF5,F
+016C:  BZ    0188
+016E:  MOVFF  FF6,11B
+0172:  MOVFF  FF7,11C
+0176:  MOVF   FF5,W
+0178:  BTFSS  F9E.4
+017A:  BRA    0178
+017C:  MOVWF  FAD
+017E:  MOVFF  11B,FF6
+0182:  MOVFF  11C,FF7
+0186:  BRA    0168
+0188:  GOTO   02D0 (RETURN)
+*
+01F8:  TBLRD*+
+01FA:  MOVF   FF5,F
+01FC:  BZ    0216
+01FE:  MOVFF  FF6,11B
+0202:  MOVFF  FF7,11C
+0206:  MOVFF  FF5,11D
+020A:  RCALL  01B4
+020C:  MOVFF  11B,FF6
+0210:  MOVFF  11C,FF7
+0214:  BRA    01F8
+0216:  RETURN 0
+*
+025E:  MOVF   FEF,F
+0260:  BZ    0280
+0262:  MOVFF  FEA,11C
+0266:  MOVFF  FE9,11B
+026A:  MOVFF  FEF,11D
+026E:  RCALL  01B4
+0270:  MOVFF  11C,FEA
+0274:  MOVFF  11B,FE9
+0278:  INCF   FE9,F
+027A:  BTFSC  FD8.2
+027C:  INCF   FEA,F
+027E:  BRA    025E
+0280:  GOTO   035E (RETURN)
+....................  
+.................... #list 
+....................  
+.................... #device ADC=10 
+....................  
+....................  
+.................... #fuses HS,NOWDT,NOPROTECT,NOLVP 
+....................  
+.................... #use delay(crystal=20MHz, fast_start) 
+*
+018C:  MOVLW  01
+018E:  MOVWF  FEA
+0190:  MOVLW  1B
+0192:  MOVWF  FE9
+0194:  MOVF   FEF,W
+0196:  BZ    01B2
+0198:  MOVLW  06
+019A:  MOVWF  01
+019C:  CLRF   00
+019E:  DECFSZ 00,F
+01A0:  BRA    019E
+01A2:  DECFSZ 01,F
+01A4:  BRA    019C
+01A6:  MOVLW  7B
+01A8:  MOVWF  00
+01AA:  DECFSZ 00,F
+01AC:  BRA    01AA
+01AE:  DECFSZ FEF,F
+01B0:  BRA    0198
+01B2:  RETURN 0
+....................  
+.................... //#use delay(clock=20MHz,oscillator=20MHz) 
+....................  
+.................... #use rs232(UART1, baud=57600,parity=N,xmit=PIN_C6,rcv=PIN_C7,bits=8,stream=Hrdw) 
+.................... #use rs232(baud=38400,parity=N,xmit=PIN_b7,rcv=PIN_b6,bits=8,stream=Dbg) 
+01B4:  BCF    F93.7
+01B6:  BCF    F8A.7
+01B8:  MOVLW  08
+01BA:  MOVWF  01
+01BC:  BRA    01BE
+01BE:  NOP   
+01C0:  BSF    01.7
+01C2:  BRA    01E4
+01C4:  BCF    01.7
+01C6:  MOVLB  1
+01C8:  RRCF   x1D,F
+01CA:  MOVLB  0
+01CC:  BTFSC  FD8.0
+01CE:  BSF    F8A.7
+01D0:  BTFSS  FD8.0
+01D2:  BCF    F8A.7
+01D4:  BSF    01.6
+01D6:  BRA    01E4
+01D8:  BCF    01.6
+01DA:  DECFSZ 01,F
+01DC:  BRA    01C6
+01DE:  BRA    01E0
+01E0:  NOP   
+01E2:  BSF    F8A.7
+01E4:  MOVLW  25
+01E6:  MOVWF  FE9
+01E8:  DECFSZ FE9,F
+01EA:  BRA    01E8
+01EC:  NOP   
+01EE:  BTFSC  01.7
+01F0:  BRA    01C4
+01F2:  BTFSC  01.6
+01F4:  BRA    01D8
+01F6:  RETURN 0
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... #define BUFFER_SIZE 251 
+.................... BYTE buffer[BUFFER_SIZE]; 
+.................... BYTE next_in = 0; 
+.................... BYTE next_out = 0; 
+.................... int1 buffer_overflow = FALSE; 
+.................... int1 int_rda_STATEMENT = FALSE; 
+....................  
+.................... //BYTE LAST_next_in=0; 
+....................  
+.................... #int_rda 
+.................... void serial_isr() { 
+....................    int t; 
+....................     
+....................  /*  if (int_rda_STATEMENT == FALSE) 
+....................    { 
+....................       next_in = 0; 
+....................       next_out = 0; 
+....................    }*/ 
+....................     
+....................     
+....................  
+....................    buffer[next_in]=fgetc(Hrdw); 
+*
+00DA:  CLRF   03
+00DC:  MOVLB  1
+00DE:  MOVF   x15,W
+00E0:  ADDLW  1A
+00E2:  MOVWF  FE9
+00E4:  MOVLW  00
+00E6:  ADDWFC 03,W
+00E8:  MOVWF  FEA
+00EA:  BTFSS  F9E.5
+00EC:  BRA    00EA
+00EE:  MOVFF  FAE,FEF
+....................    t=next_in; 
+00F2:  MOVFF  115,121
+....................    next_in=(next_in+1) % BUFFER_SIZE; 
+00F6:  MOVLW  01
+00F8:  ADDWF  x15,W
+00FA:  MOVWF  x23
+00FC:  MOVWF  x24
+00FE:  MOVLW  FB
+0100:  MOVWF  x25
+0102:  MOVLB  0
+0104:  RCALL  00AE
+0106:  MOVFF  00,115
+....................    if(next_in==next_out) 
+010A:  MOVLB  1
+010C:  MOVF   x16,W
+010E:  SUBWF  x15,W
+0110:  BNZ   0118
+....................    { 
+....................      next_in=t;           // Buffer full !! 
+0112:  MOVFF  121,115
+....................      buffer_overflow = TRUE; 
+0116:  BSF    x17.0
+....................       
+....................    } 
+....................    int_rda_STATEMENT = TRUE; 
+0118:  BSF    x17.1
+....................       
+.................... } 
+....................  
+011A:  BCF    F9E.5
+011C:  MOVLB  0
+011E:  GOTO   0060
+.................... #define bkbhit (next_in!=next_out) 
+....................  
+.................... BYTE bgetc() { 
+....................    BYTE c; 
+....................  
+....................    while(!bkbhit) ; 
+*
+0218:  MOVLB  1
+021A:  MOVF   x16,W
+021C:  SUBWF  x15,W
+021E:  BZ    021A
+....................    c=buffer[next_out]; 
+0220:  CLRF   03
+0222:  MOVF   x16,W
+0224:  ADDLW  1A
+0226:  MOVWF  FE9
+0228:  MOVLW  00
+022A:  ADDWFC 03,W
+022C:  MOVWF  FEA
+022E:  MOVFF  FEF,11B
+....................    next_out=(next_out+1) % BUFFER_SIZE; 
+0232:  MOVLW  01
+0234:  ADDWF  x16,W
+0236:  MOVWF  x1D
+0238:  CLRF   19
+023A:  BTFSC  FF2.7
+023C:  BSF    19.7
+023E:  BCF    FF2.7
+0240:  MOVWF  x24
+0242:  MOVLW  FB
+0244:  MOVWF  x25
+0246:  MOVLB  0
+0248:  RCALL  00AE
+024A:  BTFSC  19.7
+024C:  BSF    FF2.7
+024E:  MOVFF  00,116
+....................    return(c); 
+0252:  MOVLB  1
+0254:  MOVFF  11B,01
+0258:  MOVLB  0
+025A:  GOTO   0326 (RETURN)
+.................... } 
+....................  
+....................  
+.................... void main() 
+*
+0284:  CLRF   FF8
+0286:  BCF    FD0.7
+0288:  BSF    07.7
+028A:  BSF    FB8.3
+028C:  MOVLW  56
+028E:  MOVWF  FAF
+0290:  MOVLW  00
+0292:  MOVWF  FB0
+0294:  MOVLW  A6
+0296:  MOVWF  FAC
+0298:  MOVLW  90
+029A:  MOVWF  FAB
+029C:  NOP   
+029E:  NOP   
+02A0:  BCF    F93.7
+02A2:  BSF    F8A.7
+02A4:  MOVLB  1
+02A6:  CLRF   x15
+02A8:  CLRF   x16
+02AA:  BCF    x17.0
+02AC:  BCF    x17.1
+02AE:  CLRF   x19
+02B0:  CLRF   x18
+02B2:  MOVF   FC1,W
+02B4:  ANDLW  C0
+02B6:  IORLW  0F
+02B8:  MOVWF  FC1
+02BA:  MOVLW  07
+02BC:  MOVWF  FB4
+.................... { 
+....................  
+....................   // fprintf(Hrdw,"UART_TEST"); 
+....................   // fprintf(Dbg,"UART_TEST"); 
+....................  
+....................    enable_interrupts(int_rda); 
+02BE:  BSF    F9D.5
+....................    enable_interrupts(global); 
+02C0:  MOVLW  C0
+02C2:  IORWF  FF2,F
+....................    printf("\r\n\Running...\r\n"); 
+02C4:  MOVLW  22
+02C6:  MOVWF  FF6
+02C8:  MOVLW  01
+02CA:  MOVWF  FF7
+02CC:  MOVLB  0
+02CE:  BRA    0168
+....................  
+....................                // The program will delay for 10 seconds and then display 
+....................                // any data that came in during the 10 second delay 
+....................  
+....................    do { 
+....................          //delay_ms(300); 
+....................           
+....................           
+....................           
+....................          if (int_rda_STATEMENT == TRUE) 
+02D0:  MOVLB  1
+02D2:  BTFSS  x17.1
+02D4:  BRA    0378
+....................          { 
+....................             //disable_interrupts(int_rda); 
+....................              
+....................             BYTE TEMP_next_in=next_in; 
+02D6:  MOVFF  115,11A
+....................              
+....................             //LAST_next_in = next_in; 
+....................             //fprintf(Dbg, "Check UART communication end\r\n"); 
+....................             delay_ms(100); 
+02DA:  MOVLW  64
+02DC:  MOVWF  x1B
+02DE:  MOVLB  0
+02E0:  RCALL  018C
+....................             while(TEMP_next_in!=next_in){ 
+02E2:  MOVLB  1
+02E4:  MOVF   x15,W
+02E6:  SUBWF  x1A,W
+02E8:  BZ    02FA
+....................              
+....................                //fprintf(Dbg, "LAST in %d  ",LAST_next_in); 
+....................                //fprintf(Dbg, "Nexrt in %d    ", next_in); 
+....................                 
+....................                TEMP_next_in = next_in; 
+02EA:  MOVFF  115,11A
+....................                delay_ms(100); 
+02EE:  MOVLW  64
+02F0:  MOVWF  x1B
+02F2:  MOVLB  0
+02F4:  RCALL  018C
+02F6:  BRA    02E2
+02F8:  MOVLB  1
+....................                 
+....................                //fprintf(Dbg, "UART data in progress \r\n"); 
+....................             } 
+....................           
+....................              
+....................  
+....................             if(buffer_overflow == TRUE) 
+02FA:  BTFSS  x17.0
+02FC:  BRA    030E
+....................             { 
+....................             buffer_overflow = FALSE; 
+02FE:  BCF    x17.0
+....................             fprintf(Dbg, "!!! UART OVERFLOWED, repeat command \r\n"); 
+0300:  MOVLW  32
+0302:  MOVWF  FF6
+0304:  MOVLW  01
+0306:  MOVWF  FF7
+0308:  MOVLB  0
+030A:  RCALL  01F8
+030C:  MOVLB  1
+....................             //delay_ms(3000); 
+....................             }       
+....................             //else 
+....................             //{ 
+....................              
+....................             fprintf(Dbg, "UART data: "); 
+030E:  MOVLW  5A
+0310:  MOVWF  FF6
+0312:  MOVLW  01
+0314:  MOVWF  FF7
+0316:  MOVLB  0
+0318:  RCALL  01F8
+....................             while(bkbhit) 
+031A:  MOVLB  1
+031C:  MOVF   x16,W
+031E:  SUBWF  x15,W
+0320:  BZ    0334
+....................             { 
+....................               fputc(bgetc(), Dbg); 
+0322:  MOVLB  0
+0324:  BRA    0218
+0326:  MOVFF  01,11B
+032A:  MOVFF  01,11D
+032E:  RCALL  01B4
+0330:  BRA    031A
+0332:  MOVLB  1
+....................             } 
+....................             int_rda_STATEMENT = FALSE; 
+0334:  BCF    x17.1
+....................             fputs("",Dbg);  
+0336:  MOVLW  66
+0338:  MOVWF  FF6
+033A:  MOVLW  01
+033C:  MOVWF  FF7
+033E:  MOVLB  0
+0340:  RCALL  01F8
+0342:  MOVLW  0D
+0344:  MOVLB  1
+0346:  MOVWF  x1D
+0348:  MOVLB  0
+034A:  RCALL  01B4
+034C:  MOVLW  0A
+034E:  MOVLB  1
+0350:  MOVWF  x1D
+0352:  MOVLB  0
+0354:  RCALL  01B4
+....................              
+....................             fputs(("%u",0x1), Dbg); 
+0356:  CLRF   FEA
+0358:  MOVLW  01
+035A:  MOVWF  FE9
+035C:  BRA    025E
+035E:  MOVLW  0D
+0360:  MOVLB  1
+0362:  MOVWF  x1D
+0364:  MOVLB  0
+0366:  RCALL  01B4
+0368:  MOVLW  0A
+036A:  MOVLB  1
+036C:  MOVWF  x1D
+036E:  MOVLB  0
+0370:  RCALL  01B4
+....................             //fprintf(Dbg, "\r\n"); 
+....................              
+....................              
+....................             next_in = 0; 
+0372:  MOVLB  1
+0374:  CLRF   x15
+....................             next_out = 0; 
+0376:  CLRF   x16
+....................              
+....................              
+....................              
+....................             //enable_interrupts(int_rda); 
+....................          } 
+....................           
+....................           
+....................           
+....................          /*else 
+....................          { 
+....................          fprintf(Dbg, "No data   "); 
+....................          }*/ 
+....................        
+....................    } while (TRUE); 
+0378:  BRA    02D2
+....................       
+....................       
+....................      /* 
+....................       
+....................       do { 
+....................       //fprintf(Dbg, "\r\nBuffered data => "); 
+....................       if(buffer_overflow == TRUE) 
+....................       { 
+....................       buffer_overflow = FALSE; 
+....................       fprintf(Dbg, "\r\nBuffer overflowed, repeat command \r\n"); 
+....................       //delay_ms(3000); 
+....................       }       
+....................       //else 
+....................       //{ 
+....................       while(bkbhit) 
+....................         fputc(bgetc(), Dbg); 
+....................       //} 
+....................          
+....................       } 
+....................        
+....................        
+....................        
+....................    } while (TRUE); */ 
+....................     
+....................  
+....................  
+....................  
+....................  
+.................... } 
+037A:  SLEEP 
+
+Configuration Fuses:
+   Word  1: C200   HS FCMEN IESO
+   Word  2: 1E1E   PUT BROWNOUT BORV21 NOWDT WDT32768
+   Word  3: 8700   CCP2C1 PBADEN LPT1OSC MCLR
+   Word  4: 0081   STVREN NOLVP NOXINST NODEBUG
+   Word  5: C00F   NOPROTECT NOCPB NOCPD
+   Word  6: E00F   NOWRT NOWRTC NOWRTB NOWRTD
+   Word  7: 400F   NOEBTR NOEBTRB

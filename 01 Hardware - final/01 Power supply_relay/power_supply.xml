@@ -1,0 +1,1290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\01 Hardware\_01 Power supply_relay\power_supply.kicad_sch</source>
+    <date>30.09.2023 07:55:19</date>
+    <tool>Eeschema 7.0.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Power supply</title>
+        <company>Dawid "SileliS" Bańkowski</company>
+        <rev>1.0</rev>
+        <date>2021-03-03</date>
+        <source>power_supply.kicad_sch</source>
+        <comment number="1" value="d.bankowski@gmail.com"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="B1">
+      <value>HW-613 3V3</value>
+      <footprint>breakot_SileliS:DC-DC_24V_Stepdown_brekout_vertical</footprint>
+      <fields>
+        <field name="Manufacturer">AliExpress</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="breakout_SileliS" part="DC-DC_24V_Stepdown" description=""/>
+      <property name="Manufacturer" value="AliExpress"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604165ce</tstamps>
+    </comp>
+    <comp ref="B2">
+      <value>HW-613 9V0</value>
+      <footprint>breakot_SileliS:DC-DC_24V_Stepdown_brekout_vertical</footprint>
+      <fields>
+        <field name="Manufacturer">AliExpress</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="breakout_SileliS" part="DC-DC_24V_Stepdown" description=""/>
+      <property name="Manufacturer" value="AliExpress"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060403540</tstamps>
+    </comp>
+    <comp ref="B3">
+      <value>HW-613 5V0</value>
+      <footprint>breakot_SileliS:DC-DC_24V_Stepdown_brekout_vertical</footprint>
+      <fields>
+        <field name="Manufacturer">AliExpress</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="breakout_SileliS" part="DC-DC_24V_Stepdown" description=""/>
+      <property name="Manufacturer" value="AliExpress"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060415d47</tstamps>
+    </comp>
+    <comp ref="BAT+1">
+      <value>14V4</value>
+      <footprint>TestPoint:TestPoint_Keystone_5019_Minature</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x01_Female" description=""/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000603fbcf7</tstamps>
+    </comp>
+    <comp ref="BAT-1">
+      <value>GND</value>
+      <footprint>TestPoint:TestPoint_Keystone_5019_Minature</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x01_Female" description=""/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060402c11</tstamps>
+    </comp>
+    <comp ref="C1">
+      <value>470uF/25V</value>
+      <footprint>Capacitor_SMD:CP_Elec_8x10</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">EEEFT1E471AP</field>
+      </fields>
+      <libsource lib="Device" part="CP" description=""/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value=""/>
+      <property name="Remarks" value=""/>
+      <property name="TME no." value="EEEFT1E471AP"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>551eba8a-0f29-43a3-9286-48f82b1003c0</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>2.2uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">CL10A225KA8NNNC</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="CL10A225KA8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0f7b69b1-5611-4cee-99d7-65f4a577c59a</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>470uF/25V</value>
+      <footprint>Capacitor_SMD:CP_Elec_8x10</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">EEEFT1E471AP</field>
+      </fields>
+      <libsource lib="Device" part="CP" description=""/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value=""/>
+      <property name="Remarks" value=""/>
+      <property name="TME no." value="EEEFT1E471AP"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060441d36</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006043192d</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604321d1</tstamps>
+    </comp>
+    <comp ref="C6">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604328bb</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604254a5</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060776725</tstamps>
+    </comp>
+    <comp ref="C11">
+      <value>470uF/25V</value>
+      <footprint>Capacitor_SMD:CP_Elec_8x10</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">EEEFT1E471AP</field>
+      </fields>
+      <libsource lib="Device" part="CP" description=""/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value=""/>
+      <property name="Remarks" value=""/>
+      <property name="TME no." value="EEEFT1E471AP"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2596f448-79e5-480e-9c7c-aecdedb53a67</tstamps>
+    </comp>
+    <comp ref="C12">
+      <value>470uF/25V</value>
+      <footprint>Capacitor_SMD:CP_Elec_8x10</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">EEEFT1E471AP</field>
+      </fields>
+      <libsource lib="Device" part="CP" description=""/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value=""/>
+      <property name="Remarks" value=""/>
+      <property name="TME no." value="EEEFT1E471AP"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aae70f2f-dc64-4b08-b059-c775ec6ef3bc</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Diodes Incorporated</field>
+        <field name="Manufacturer no.">1N4148W-7-F</field>
+        <field name="Module">power supply</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+        <field name="TME no.">1N4148W-7-F</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="TME no." value="1N4148W-7-F"/>
+      <property name="Manufacturer" value="Diodes Incorporated"/>
+      <property name="Manufacturer no." value="1N4148W-7-F"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Module" value="power supply"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c6da12b0-9ed9-4434-8e81-47d5cd8e62a3</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Diodes Incorporated</field>
+        <field name="Manufacturer no.">1N4148W-7-F</field>
+        <field name="Module">power supply</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+        <field name="TME no.">1N4148W-7-F</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="TME no." value="1N4148W-7-F"/>
+      <property name="Manufacturer" value="Diodes Incorporated"/>
+      <property name="Manufacturer no." value="1N4148W-7-F"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Module" value="power supply"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2b745daf-8880-4491-b02d-7ea1b688eca7</tstamps>
+    </comp>
+    <comp ref="D3">
+      <value>15V/17.4V</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <datasheet>https://www.tme.eu/Document/f79e52be37eda8d949b8429f331b0dcd/SMBJ-st.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C133673</field>
+        <field name="Manufacturer">STMicroelectronics</field>
+        <field name="Manufacturer no.">SMBJ15CA-TR</field>
+        <field name="Module">power supply</field>
+        <field name="Remarks">Optional (15V/17.4V)</field>
+        <field name="TME no.">SMBJ15CA-TR</field>
+      </fields>
+      <libsource lib="Diode_TVS" part="DiodeTVS" description=""/>
+      <property name="TME no." value="SMBJ15CA-TR"/>
+      <property name="JLCPBC" value="C133673"/>
+      <property name="Manufacturer no." value="SMBJ15CA-TR"/>
+      <property name="Remarks" value="Optional (15V/17.4V)"/>
+      <property name="Module" value="power supply"/>
+      <property name="Manufacturer" value="STMicroelectronics"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006046cf8a</tstamps>
+    </comp>
+    <comp ref="D4">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Diodes Incorporated</field>
+        <field name="Manufacturer no.">1N4148W-7-F</field>
+        <field name="Module">power supply</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+        <field name="TME no.">1N4148W-7-F</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="TME no." value="1N4148W-7-F"/>
+      <property name="Manufacturer" value="Diodes Incorporated"/>
+      <property name="Manufacturer no." value="1N4148W-7-F"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Module" value="power supply"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8b630ef5-9dce-4e87-a453-e500994333b7</tstamps>
+    </comp>
+    <comp ref="D5">
+      <value>10V</value>
+      <footprint>Diode_SMD:D_SOD-323_HandSoldering</footprint>
+      <fields>
+        <field name="Manufacturer">NEXPERIA</field>
+        <field name="Manufacturer no.">PDZ10B-QZ</field>
+        <field name="Module">power supply</field>
+        <field name="Remarks">Optional</field>
+        <field name="TME no.">PDZ10B-QZ</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener_ALT" description=""/>
+      <property name="JLCPBC" value=""/>
+      <property name="Manufacturer" value="NEXPERIA"/>
+      <property name="Manufacturer no." value="PDZ10B-QZ"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="PDZ10B-QZ"/>
+      <property name="Remarks" value="Optional"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060400e11</tstamps>
+    </comp>
+    <comp ref="D6">
+      <value>5V1</value>
+      <footprint>Diode_SMD:D_SOD-323_HandSoldering</footprint>
+      <fields>
+        <field name="JLCPBC">C152524</field>
+        <field name="Manufacturer">ONSEMI</field>
+        <field name="Manufacturer no.">MM3Z5V1ST1G</field>
+        <field name="Module">power supply</field>
+        <field name="Remarks">Optional</field>
+        <field name="TME no.">MM3Z5V1ST1G</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener_ALT" description=""/>
+      <property name="JLCPBC" value="C152524"/>
+      <property name="Manufacturer" value="ONSEMI"/>
+      <property name="Manufacturer no." value="MM3Z5V1ST1G"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="MM3Z5V1ST1G"/>
+      <property name="Remarks" value="Optional"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060497883</tstamps>
+    </comp>
+    <comp ref="D7">
+      <value>3V9</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <fields>
+        <field name="JLCPBC">C107594</field>
+        <field name="Module">power supply</field>
+        <field name="Remarks">Optional</field>
+        <field name="TME no.">BZT52C3V9-DC</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener_ALT" description=""/>
+      <property name="JLCPBC" value="C107594"/>
+      <property name="Manufacturer" value=""/>
+      <property name="Manufacturer no." value=""/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="BZT52C3V9-DC"/>
+      <property name="Remarks" value="Optional"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604026e0</tstamps>
+    </comp>
+    <comp ref="D8">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Diodes Incorporated</field>
+        <field name="Manufacturer no.">1N4148W-7-F</field>
+        <field name="Module">power supply</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+        <field name="TME no.">1N4148W-7-F</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="TME no." value="1N4148W-7-F"/>
+      <property name="Manufacturer" value="Diodes Incorporated"/>
+      <property name="Manufacturer no." value="1N4148W-7-F"/>
+      <property name="Sim.Device" value="D"/>
+      <property name="Sim.Pins" value="1=K 2=A"/>
+      <property name="Module" value="power supply"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="ki_keywords" value="diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>805f79a1-dc5b-4ae5-a763-308bb70d1c98</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_DIN965_Pad</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole with connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060438600</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_DIN965_Pad</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole with connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604678b8</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_DIN965_Pad</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole with connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060467b14</tstamps>
+    </comp>
+    <comp ref="H4">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_DIN965_Pad</footprint>
+      <fields>
+        <field name="JLCPBC">n/a</field>
+        <field name="Manufacturer">n/a</field>
+        <field name="Manufacturer no.">n/a</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="n/a"/>
+      <property name="Manufacturer" value="n/a"/>
+      <property name="Manufacturer no." value="n/a"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole with connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060467cf9</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>to HMI/ KBRD module</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MPT-0,5-6-2.54_1x06_P2.54mm_Horizontal</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="Remarks">to HMI/ KBRD module</field>
+        <field name="TME no.">MPT0.5/6-2.54</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x06_Female" description=""/>
+      <property name="Remarks" value="to HMI/ KBRD module"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="MPT0.5/6-2.54"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ba03b8c2-c3c4-473f-85de-2df543afd2d4</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>Conn_01x06_Female</value>
+      <footprint>Connector_Phoenix_MC:PhoenixContact_MCV_1,5_6-G-3.5_1x06_P3.50mm_Vertical</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="Remarks">to MAIN module</field>
+        <field name="TME no.">MKDS1/6-3.5</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x06_Female" description=""/>
+      <property name="Remarks" value="to MAIN module"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="MKDS1/6-3.5"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e66ef702-cb52-4629-bfba-6419019160a1</tstamps>
+    </comp>
+    <comp ref="K1">
+      <value>LEG-1A-12F</value>
+      <footprint>Relay_THT:Relay_SPDT_Finder_36.11</footprint>
+      <datasheet>https://www.tme.eu/Document/facc22af0219a1d2944a33df4662b473/LEG-F-SERIES.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">LEG-1A-12F</field>
+        <field name="Manufacturer no.">LEG1A-12F</field>
+        <field name="TME no.">LEG-1A-12F</field>
+      </fields>
+      <libsource lib="Relay" part="FINDER-36.11" description="FINDER 36.11, SPDT relay, 10A"/>
+      <property name="Manufacturer" value="LEG-1A-12F"/>
+      <property name="Manufacturer no." value="LEG1A-12F"/>
+      <property name="TME no." value="LEG-1A-12F"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="FINDER 36.11, SPDT relay, 10A"/>
+      <property name="ki_keywords" value="spdt relay"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>89ba5a83-4754-4941-a9cf-ba97e8edddc8</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>BC817</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BC818-D.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C8589</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">BC817-16-DIO</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC817" description="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="C8589"/>
+      <property name="TME no." value="BC817-16-DIO"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>16df3545-1e02-4878-978c-014418678453</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>BC817</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BC818-D.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C8589</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">BC817-16-DIO</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC817" description="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="C8589"/>
+      <property name="TME no." value="BC817-16-DIO"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c21e8ab2-d4b2-49d5-9882-fa1e437785c6</tstamps>
+    </comp>
+    <comp ref="Q3">
+      <value>BC817</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BC818-D.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C8589</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">BC817-16-DIO</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC817" description="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="C8589"/>
+      <property name="TME no." value="BC817-16-DIO"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5df99701-86ba-49d7-8d11-949b5247f3b2</tstamps>
+    </comp>
+    <comp ref="Q4">
+      <value>BC817</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/BC818-D.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C8589</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">BC817-16-DIO</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="BC817" description="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="Module" value="power supply"/>
+      <property name="JLCPBC" value="C8589"/>
+      <property name="TME no." value="BC817-16-DIO"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="0.8A Ic, 45V Vce, NPN Transistor, SOT-23"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9c26c438-bad6-4b60-b0f2-68097041af65</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">RC0603FR-1310KL</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="RC0603FR-1310KL"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>45f37ebb-38f9-4e46-a679-e2159ffba570</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>100k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">RC0603FR-07100K</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="RC0603FR-07100K"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>239c0699-fe16-413d-ac67-21265a161abe</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>0</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">n/a</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>01474332-f67d-4ee3-82e6-9a883304e358</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">CRG0603F1K0</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="CRG0603F1K0"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4e05ed38-1e50-4c14-8e15-86dd3a3d1f4d</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">RC0603FR-1310KL</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="RC0603FR-1310KL"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>572e35a3-d7e2-429c-9023-28e27b22d976</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">CRG0603F1K0</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="CRG0603F1K0"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>acb7a07f-60f7-4e4f-af44-9ce338ab0057</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">RC0603FR-1310KL</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="RC0603FR-1310KL"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>53601f47-c6f0-4767-ab26-92777ff5ce44</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">CRG0603F1K0</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="CRG0603F1K0"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e5a34203-509c-4486-85c6-f2afa7d8062c</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">CRG0603F1K0</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="CRG0603F1K0"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006040c96d</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">power supply</field>
+        <field name="TME no.">RC0603FR-1310KL</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="RC0603FR-1310KL"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1a3f3dd5-4752-4181-a03e-db6c031917f0</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>AP2204K-3.3</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5</footprint>
+      <datasheet>https://www.tme.eu/Document/1c13c0a4489a83f613509c4f26653ad8/AP2204.pdf</datasheet>
+      <fields>
+        <field name="JLCPBC">C112032</field>
+        <field name="Manufacturer">DIODES Incorporated</field>
+        <field name="Manufacturer no.">AP2204K-3.3TRG1</field>
+        <field name="Module">power supply</field>
+        <field name="TME no.">AP2204K-3.3TRG1</field>
+      </fields>
+      <libsource lib="Regulator_Linear" part="AP2204K-3.3" description="150mA low dropout linear regulator, wide input voltage range, 3.3V fixed positive output, SOT-23-5"/>
+      <property name="Module" value="power supply"/>
+      <property name="TME no." value="AP2204K-3.3TRG1"/>
+      <property name="JLCPBC" value="C112032"/>
+      <property name="Manufacturer" value="DIODES Incorporated"/>
+      <property name="Manufacturer no." value="AP2204K-3.3TRG1"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="power_supply.kicad_sch"/>
+      <property name="ki_description" value="150mA low dropout linear regulator, wide input voltage range, 3.3V fixed positive output, SOT-23-5"/>
+      <property name="ki_keywords" value="linear regulator ldo fixed positive"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604ba350</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x01_Female">
+      <footprints>
+        <fp>Connector*:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Connector_Conn_01x01_Female</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x06_Female">
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Connector_Conn_01x06_Female</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="CP">
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">Device_CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Zener_ALT">
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">Device_D_Zener_ALT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode" part="1N4148W">
+      <description>75V 0.15A Fast Switching Diode, SOD-123</description>
+      <docs>https://www.vishay.com/docs/85748/1n4148w.pdf</docs>
+      <footprints>
+        <fp>D*SOD?123*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">1N4148W</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet">https://www.vishay.com/docs/85748/1n4148w.pdf</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode_TVS" part="DiodeTVS">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">Diode_TVS_DiodeTVS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole_Pad">
+      <description>Mounting Hole with connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*Pad*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole_Pad</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="AP2204K-3.3">
+      <description>150mA low dropout linear regulator, wide input voltage range, 3.3V fixed positive output, SOT-23-5</description>
+      <docs>https://www.diodes.com/assets/Datasheets/AP2204.pdf</docs>
+      <footprints>
+        <fp>SOT?23?5*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AP2204K-3.3</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet">https://www.diodes.com/assets/Datasheets/AP2204.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="NC" type="no_connect"/>
+        <pin num="5" name="VOUT" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="Relay" part="FINDER-36.11">
+      <description>FINDER 36.11, SPDT relay, 10A</description>
+      <docs>https://gfinder.findernet.com/public/attachments/36/EN/S36EN.pdf</docs>
+      <footprints>
+        <fp>Relay*SPDT*Finder*36.11*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">K</field>
+        <field name="Value">FINDER-36.11</field>
+        <field name="Footprint">Relay_THT:Relay_SPDT_Finder_36.11</field>
+        <field name="Datasheet">https://gfinder.findernet.com/public/attachments/36/EN/S36EN.pdf</field>
+      </fields>
+      <pins>
+        <pin num="11" name="" type="passive"/>
+        <pin num="12" name="" type="passive"/>
+        <pin num="14" name="" type="passive"/>
+        <pin num="A1" name="" type="passive"/>
+        <pin num="A2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_BJT" part="BC817">
+      <description>0.8A Ic, 45V Vce, NPN Transistor, SOT-23</description>
+      <docs>https://www.onsemi.com/pub/Collateral/BC818-D.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">BC817</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/BC818-D.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="breakout_SileliS" part="DC-DC_24V_Stepdown">
+      <fields>
+        <field name="Reference">B</field>
+        <field name="Value">breakout_SileliS_DC-DC_24V_Stepdown</field>
+      </fields>
+      <pins>
+        <pin num="1" name="EN" type="input"/>
+        <pin num="2" name="IN+" type="power_in"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="VO+" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="Diode">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Diode.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Mechanical.kicad_sym</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Regulator_Linear.kicad_sym</uri>
+    </library>
+    <library logical="Relay">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Relay.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_BJT">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Transistor_BJT.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3V3">
+      <node ref="B1" pin="4" pinfunction="VO+" pintype="power_in"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="D7" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="Pin_2" pintype="passive"/>
+    </net>
+    <net code="2" name="+5V">
+      <node ref="B3" pin="4" pinfunction="VO+" pintype="power_in"/>
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="D6" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J3" pin="3" pinfunction="Pin_3" pintype="passive"/>
+    </net>
+    <net code="3" name="+9V">
+      <node ref="B2" pin="4" pinfunction="VO+" pintype="power_in"/>
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="D5" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J3" pin="4" pinfunction="Pin_4" pintype="passive"/>
+    </net>
+    <net code="4" name="+12V">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="J3" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="K1" pin="14" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="/14V4">
+      <node ref="B1" pin="2" pinfunction="IN+" pintype="power_in"/>
+      <node ref="B2" pin="2" pinfunction="IN+" pintype="power_in"/>
+      <node ref="B3" pin="2" pinfunction="IN+" pintype="power_in"/>
+      <node ref="BAT+1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="D3" pin="1" pintype="passive"/>
+      <node ref="K1" pin="11" pintype="passive"/>
+      <node ref="K1" pin="A1" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+    </net>
+    <net code="6" name="/DC-DC_EN">
+      <node ref="B1" pin="1" pinfunction="EN" pintype="input"/>
+      <node ref="B2" pin="1" pinfunction="EN" pintype="input"/>
+      <node ref="B3" pin="1" pinfunction="EN" pintype="input"/>
+      <node ref="Q3" pin="3" pinfunction="C" pintype="passive"/>
+    </net>
+    <net code="7" name="/ON_OFF_button_IN">
+      <node ref="J2" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+    </net>
+    <net code="8" name="/ON_OFF_button_OUT">
+      <node ref="D4" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="J2" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="9" name="/~{MCU_PS_SUSTAIN}">
+      <node ref="J3" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+    </net>
+    <net code="10" name="GNDD">
+      <node ref="B1" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="B2" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="B3" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="BAT-1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="D3" pin="2" pintype="passive"/>
+      <node ref="D5" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="D6" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="D7" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="H1" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="H2" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="H3" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="H4" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="Q3" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="Q4" pin="2" pinfunction="E" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U4" pin="2" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="11" name="Net-(D1-A)">
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="K1" pin="A2" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+    </net>
+    <net code="12" name="Net-(D2-K)">
+      <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="R17" pin="2" pintype="passive"/>
+      <node ref="U4" pin="1" pinfunction="VIN" pintype="power_in"/>
+    </net>
+    <net code="13" name="Net-(D4-K)">
+      <node ref="D4" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+    </net>
+    <net code="14" name="Net-(D8-A)">
+      <node ref="D8" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+    </net>
+    <net code="15" name="Net-(D8-K)">
+      <node ref="D8" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="Q2" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+    </net>
+    <net code="16" name="Net-(Q1-B)">
+      <node ref="Q1" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+    </net>
+    <net code="17" name="Net-(Q1-C)">
+      <node ref="Q1" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+    </net>
+    <net code="18" name="Net-(Q3-B)">
+      <node ref="Q3" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="Q4" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="19" name="Net-(Q4-B)">
+      <node ref="Q4" pin="1" pinfunction="B" pintype="input"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+    </net>
+    <net code="20" name="Net-(U4-EN)">
+      <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="U4" pin="3" pinfunction="EN" pintype="input"/>
+    </net>
+    <net code="21" name="Net-(U4-VOUT)">
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="U4" pin="5" pinfunction="VOUT" pintype="power_out"/>
+    </net>
+    <net code="22" name="unconnected-(K1-Pad12)">
+      <node ref="K1" pin="12" pintype="passive"/>
+    </net>
+    <net code="23" name="unconnected-(U4-NC-Pad4)">
+      <node ref="U4" pin="4" pinfunction="NC" pintype="no_connect"/>
+    </net>
+  </nets>
+</export>

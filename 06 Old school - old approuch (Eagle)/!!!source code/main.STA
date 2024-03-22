@@ -1,0 +1,107 @@
+
+ROM used:   2718/32768 (8%)
+            2718/32768 (8%) including unused fragments
+
+            0.5 Average locations per line
+            3.6 Average locations per statement
+
+RAM used:   68/1536 (4%) at main() level
+            96/1536 (6%) worst case
+
+Stack used: 0 worst case (0 in main + 0 for interrupts)
+Stack size: 31
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  143    22   3  main.c
+   58     1   0  main.h
+  854     0   0  C:\Program Files (x86)\PICC\Devices\18F4520.h
+   19     4   1  HW_drivers\AAntena\ActiveAntena.c
+    8     0   0  HW_drivers\AAntena\ActiveAntena.h
+  162    70   9  core\I2C_ENGINE\I2C_Engine.c
+   47     0   0  core\I2C_ENGINE\I2C_Engine.h
+   32     3   0  core\transmission_buffers\transmission_buffers.c
+   56     0   0  core\transmission_buffers\transmission_buffers.h
+  491    66   9  HW_drivers\TEA5767\TEA5767.c
+  515     0   0  HW_drivers\TEA5767\TEA5767.h
+   28     8   1  core\silelis_math\silelis_math.c
+ 1352   359  48  C:\Program Files (x86)\PICC\Drivers\STDLIB.H
+   32     0   0  C:\Program Files (x86)\PICC\Drivers\stddef.h
+  435   129  17  C:\Program Files (x86)\PICC\Drivers\string.h
+   28     0   0  C:\Program Files (x86)\PICC\Drivers\ctype.h
+  109    17   2  core\silelis_math\BIT_MATH.c
+   11     0   0  core\silelis_math\BIT_MATH.h
+    3     0   0  HW_drivers\au7860_mp3\au7860_mp3.c
+  121     0   0  HW_drivers\au7860_mp3\au7860_mp3.h
+  244    66   9  HW_drivers\TDA7418\TDA7418.c
+  500     0   0  HW_drivers\TDA7418\TDA7418.h
+----- -----
+ 5248   745 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     40   1    1             @delay_ms1
+0     28   1    1             @delay_us1
+0     28   1    1             @I2C_WRITEU_1
+0     30   1    1             @I2C_READU_1
+0     64   1    1             @PUTCHAR_2_
+0     14   0    0     31  1.1  fprintf_return_carriage
+0     46   1    8    165  5.3  ClearBuffers
+0     58   1    2    167  3.1  __i2cDeviceStatus
+0    134   2    3    359  5.9  __try_i2c_bus
+0     42   1    0    604  8.2  @const701
+0     30   1    3             @PSTRINGCN_674
+0     62   1    2    496  8.2  @PRINTF_X_674
+0    188   3    9    333  7.3  @PRINTF_LU_674
+0     40   1    3    290  6.0  @DIV88
+0    172   3    6    367  7.8  @PRINTF_D_674
+0    446   8    8   2337  3.9  i2cEngine
+0     18   0    0    243  7.0  @const718
+0     18   0    0    243  7.0  @const719
+0     18   0    0    354  9.4  @const720
+0     20   0    0    399  8.6  @const721
+0     56   1    4    142  5.4  nth_bit_to_x
+0    110   2    8     89  4.0  tea5767CalculatePLL
+0     94   2    6    327  6.5  tea5767SendData
+0    376   7   13   2390  4.5  tea5767_init
+0     72   1    6    138  4.0  tea5767_SetCommand_SendData
+0     30   1    2     66  2.6  _TDA7418_i2cWritePrepare
+0     16   0    0     56  1.6  _TDA7418_i2cWriteExecute
+0     18   0    4    179  3.5  TDA7418__SelectInput
+0     22   0    3    174  3.3  TDA7418__Loudness
+0     14   0    2    151  3.3  _TDA7418__Volume_Speaker_Attenuation
+0     14   0    1     35  1.4  TDA7418__Volume
+0     14   0    1     35  1.4  TDA7418__LeftFront
+0     14   0    1     35  1.4  TDA7418__LeftRear
+0     14   0    1     35  1.4  TDA7418__RightRear
+0     14   0    1     35  1.4  TDA7418__RightFront
+0     14   0    1     35  1.4  TDA7418__Subwoofer
+0     18   0    1    145  2.6  TDA7418__Treble
+0     18   0    1    145  2.6  TDA7418__Middle
+0     18   0    1    145  2.6  TDA7418__Bass
+0     16   0    0    149  2.6  TDA7418__Middle_Bass_Fc_Select
+0     16   0    0    149  2.6  TDA7418_Soft_Mut_Step_Time
+0     22   0    5    207  3.7  _TDA7418_Audio_Processor_Testing_Mode
+0     14   0    0     47  1.5  TDA7418_Audio_Processor_Operating_Mode
+0    204   4    1    729  3.9  MAIN
+ Inline         0    149  2.6  @cinit1
+
+Program metrics:
+    Functions               39
+    Statements              745
+    Comments                2533
+    Volume (V)              21917
+    Difficulty (D)          146.4
+    Effort to implement (E) 3207823
+    Time to implement (T)   49 hours, 30 minutes
+    Est Delivered Bugs (B)  7
+    Cyclomatic Complexity   34
+    Maintainability (MI)    86
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-07FFE  2714  30050  
+
+
+

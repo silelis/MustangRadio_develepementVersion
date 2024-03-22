@@ -1,0 +1,100 @@
+
+ROM used:   2622/8192 (32%)
+            2712/8192 (33%) including unused fragments
+
+            0.8 Average locations per line
+            3.8 Average locations per statement
+
+RAM used:   53/368 (14%) at main() level
+            77/368 (21%) worst case
+
+Stack used: 4 worst case (4 in main + 0 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  189    72  11  HMI_stepper_motor_calibrator.c
+    7     0   0  HMI_MCU_common_includes\HMI_i2c_slave_address\i2c_slave_address.h
+   11     0   0  HMI_main_SLAVE_CONFIG_FILE.h
+   52     1   0  HMI_stepper_motor_calibrator.h
+  608     0   0  G:\elektronika_progs\PICC\Devices\16F77.h
+  102    35   5  HMI_include\modules\stepper_motor_module\module_stepper_motor.c
+   60     0   0  HMI_include\modules\stepper_motor_module\module_stepper_motor.h
+  144    61   9  HMI_include\HW_drivers\L293\L293D.c
+  103     0   0  HMI_include\HW_drivers\L293\l293d.h
+   29     8   1  HMI_MCU_common_includes\SileliS_math\silelis_math.c
+ 1352   359  53  G:\elektronika_progs\PICC\Drivers\STDLIB.H
+   32     0   0  G:\elektronika_progs\PICC\Drivers\stddef.h
+  435   129  19  G:\elektronika_progs\PICC\Drivers\string.h
+   28     0   0  G:\elektronika_progs\PICC\Drivers\ctype.h
+  105    17   2  HMI_MCU_common_includes\SileliS_math\BIT_MATH.c
+   11     0   0  HMI_MCU_common_includes\SileliS_math\BIT_MATH.h
+----- -----
+ 3268   682 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     20   1    1             @delay_ms1
+0     28   1    0             @GET_TICKS_1
+ Inline         2             @SET_TICKS_1
+0     34   1    1             @PUTCHAR_1_
+0      7   0    0     45  0.3  fprintf_return_carriage
+0     24   1    0             @const591
+0    122   5   11   1147  9.2  STEPPER_motor
+0     11   0    0     56  1.1  enable_EN_12
+0     11   0    0     56  1.1  disable_EN_12
+0     41   2    1    243  3.9  module_steper_motor_step_left
+0     11   0    0             @const627
+0     86   3    4             @PSTRINGC7_585
+0     40   2    1    243  3.9  module_steper_motor_step_right
+0     12   0    0             @const632
+0     15   1    0    113  2.1  module_steper_motor_stop
+0     30   1    0     30  1.3  __reset_L293D_conditions__
+0     12   0    0     61  1.9  steper_motor_sensor_enable
+0     10   0    0    104  2.4  steper_motor_sensor_disable
+0    117   4   13             @MULFF
+0     29   1    2             @ITOF
+ Inline        16             @ADDFF
+0    202   8   14             @DIVFF
+0    417  16   12     72  3.1  round_closest
+ Inline         5             @FTOSD
+1    664  25   27   2957 12.4  MAIN
+0     56   2    0             @const952
+0     46   2    2             @PSTRINGC_585
+0     29   1    4             @DTOF
+0      7   0    0             @const957
+0     87   3    5             @PSTRINGCN7_585
+0     79   3   13             @DIV3232
+0     87   3   12             @PRINTF_L32U_585
+0     65   2   10             @FLT
+0     31   1    0             @const968
+0     21   1    3             @DIV88
+0     53   2    2             @PRINTF_U_585
+0     28   1    0             @const975
+0     27   1    0             @const976
+0     27   1    0             @const977
+0     32   1    0             @const978
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               12
+    Statements              682
+    Comments                1119
+    Volume (V)              7164
+    Difficulty (D)          41.2
+    Effort to implement (E) 295372
+    Time to implement (T)   4 hours, 33 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   23
+    Maintainability (MI)    106
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-007FF  1954  90  
+00800-00FFF   664  1384  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+

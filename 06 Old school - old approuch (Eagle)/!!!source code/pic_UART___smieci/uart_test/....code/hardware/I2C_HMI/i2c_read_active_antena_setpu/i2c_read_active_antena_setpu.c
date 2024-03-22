@@ -1,0 +1,27 @@
+#include <i2c_read_active_antena_setpu.h>
+
+int8 get_active_antena_power_setup(void)
+{
+   disable_interrupts(GLOBAL);
+   int8 data;
+   _HMI_i2cWritePrepare ();
+   if (__try_i2c_bus()==0)
+   {
+   
+      //int8 data;
+      i2c_start();
+      i2c_write(i2c_slave_address+1);
+      data=i2c_read(0);
+      i2c_stop();
+      
+      return data;
+   }
+   else
+   {
+      dbg_printf("HMI i2c error. ");
+      data= 0;
+   }
+   enable_interrupts(GLOBAL);
+   return data;
+}
+

@@ -1,0 +1,225 @@
+004-005 @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020-021 UPPER_TICKS_1
+022     @TRIS_C
+023     steper_motor_calibration_state
+023     MAIN.steper_motor_calibration_state
+024     stepper_motor_phase
+025-028 MAIN.stepper_motor_position
+025-028 stepper_motor_position
+029-02C stepper_motor_position_max
+029-02C MAIN.stepper_motor_position_max
+02D-02E @sprintf_string
+02F-030 strtok.save
+031-034 _Randseed
+035     MAIN.stepper_motor_delay_time_beetwen_steps
+035     @WRITEBITA.P1
+036     @WRITEBITA.P1
+036     MAIN.correct_calibration_counter
+037-038 @WRITEBITA.P1
+037.0   MAIN.recalculate_percentage_to_steps_STATEMENT
+037.1   MAIN.stepper_motor_need_to_drive_STATEMENT
+038-03B MAIN.stepper_motor_percents_goto
+03C-03F MAIN.stepper_motor_steps_goto
+040     MAIN.i
+041     MAIN.@SCRATCH1
+042     MAIN.@SCRATCH2
+043     MAIN.@SCRATCH3
+044     MAIN.@SCRATCH4
+045     MAIN.@SCRATCH5
+046     MAIN.@SCRATCH6
+04A-04D @DTOF.P1
+04A     STEPPER_motor.present_phase
+04A-04B @SET_TICKS_1.P1
+04A     module_steper_motor_step_left.@SCRATCH1
+04A     @PSTRINGC7_585.@SCRATCH1
+04A     module_steper_motor_step_right.@SCRATCH1
+04A     @PSTRINGC_585.@SCRATCH1
+04B     @PSTRINGCN7_585.P1
+04B     @delay_ms1.P2
+04B-04E @PRINTF_L32U_585.P3
+04B     STEPPER_motor.LEFT_RIGHT_STOP
+04B     @PRINTF_U_585.P1
+04B     @PSTRINGC7_585.@SCRATCH2
+04B     @PSTRINGC_585.@SCRATCH2
+04C-04F STEPPER_motor.output_order
+04C-04F @MULFF.P1
+04C     @PRINTF_U_585.P2
+04C     @PSTRINGC7_585.@SCRATCH3
+04C     @PSTRINGCN7_585.@SCRATCH1
+04D     @DIV88.P1
+04D     @PSTRINGC7_585.@SCRATCH4
+04D     @PSTRINGCN7_585.@SCRATCH2
+04E-051 round_closest.dividend
+04E     @DIV88.P1
+04E     @PSTRINGCN7_585.@SCRATCH3
+04F     @PSTRINGCN7_585.@SCRATCH4
+04F     @PRINTF_L32U_585.@SCRATCH1
+04F     @DIV88.@SCRATCH1
+050-053 @FLT.P1
+050-051 @ITOF.P2
+050-053 @MULFF.P3
+050     STEPPER_motor.i
+050     @PRINTF_L32U_585.@SCRATCH2
+051     STEPPER_motor.i
+051     @PRINTF_L32U_585.@SCRATCH3
+052-055 round_closest.divisor
+052     STEPPER_motor.@SCRATCH1
+052     @PRINTF_L32U_585.@SCRATCH4
+053     STEPPER_motor.@SCRATCH2
+053     @PRINTF_L32U_585.@SCRATCH5
+054-057 @FLT.P1
+054     STEPPER_motor.@SCRATCH3
+054     @MULFF.@SCRATCH1
+054     @PRINTF_L32U_585.@SCRATCH6
+055     @MULFF.@SCRATCH2
+055     @PRINTF_L32U_585.@SCRATCH7
+056-059 @ADDFF.P1
+056-059 @FTOSD.P2
+056     @MULFF.@SCRATCH3
+056     round_closest.@SCRATCH1
+056     @PRINTF_L32U_585.@SCRATCH8
+057-05A @DIV3232.P1
+057     @PUTCHAR_1_.P2
+057     @MULFF.@SCRATCH4
+057     round_closest.@SCRATCH2
+058     @MULFF.@SCRATCH5
+058     round_closest.@SCRATCH3
+058     @FLT.@SCRATCH1
+059     round_closest.@SCRATCH4
+059     @FLT.@SCRATCH2
+05A-05D @DIVFF.P1
+05A-05D @ADDFF.P2
+05A     @FTOSD.@SCRATCH1
+05B-05E @DIV3232.P1
+05E-061 @DIVFF.P1
+05E     @ADDFF.@SCRATCH1
+05F     @ADDFF.@SCRATCH2
+05F     @DIV3232.@SCRATCH1
+060     @ADDFF.@SCRATCH3
+060     @DIV3232.@SCRATCH2
+061     @ADDFF.@SCRATCH4
+061     @DIV3232.@SCRATCH3
+062     @ADDFF.@SCRATCH5
+062     @DIVFF.@SCRATCH1
+062     @DIV3232.@SCRATCH4
+063     @ADDFF.@SCRATCH6
+063     @DIVFF.@SCRATCH2
+063     @DIV3232.@SCRATCH5
+064     @ADDFF.@SCRATCH7
+064     @DIVFF.@SCRATCH3
+065     @ADDFF.@SCRATCH8
+065     @DIVFF.@SCRATCH4
+066     @DIVFF.@SCRATCH5
+067     @DIVFF.@SCRATCH6
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  stepper_motor_pase.call
+000008  stepper_motor_pase.data
+00001C  @const627.call
+000027  @const632.call
+000033  @const952.call
+00006B  @const957.call
+000072  @const968.call
+000091  @const975.call
+0000AD  @const976.call
+0000C8  @const977.call
+0000E3  @const978.call
+000103  @PUTCHAR_1_
+000125  @PSTRINGC_585
+000153  fprintf_return_carriage
+00015A  @delay_ms1
+00016E  steper_motor_sensor_enable
+00017A  disable_EN_12
+000185  STEPPER_motor
+0001FF  enable_EN_12
+00020A  __reset_L293D_conditions__
+00020C  @SET_TICKS_1
+000228  @PSTRINGC7_585
+00027E  module_steper_motor_stop
+00028D  module_steper_motor_step_right
+0002B5  steper_motor_sensor_disable
+0002BF  @DTOF
+0002DC  @MULFF
+000351  @DIVFF
+00041B  round_closest
+00043A  @ADDFF
+00059B  @FTOSD
+0005BC  @PSTRINGCN7_585
+000613  @DIV3232
+000662  @PRINTF_L32U_585
+0006B9  @GET_TICKS_1
+0006D5  @ITOF
+0006F2  @FLT
+000733  module_steper_motor_step_left
+00075C  @DIV88
+000771  @PRINTF_U_585
+000800  MAIN
+000800  @cinit1
+000819  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    F:\Elektronika_projekty\Car_Radio\testowy\software - EMULACJA RADIO\
+
+Project Files:
+    HMI_stepper_motor_calibrator.c                          [18-paü-18 14:53  CRC=120F76B6]
+    HMI_MCU_common_includes\HMI_i2c_slave_address\i2c_slave_address.h [06-lip-17 21:55  CRC=58DE01D5]
+    HMI_main_SLAVE_CONFIG_FILE.h                            [14-lip-17 11:25  CRC=01CD288E]
+    HMI_stepper_motor_calibrator.h                          [05-paü-17 09:44  CRC=8679635E]
+    G:\elektronika_progs\PICC\Devices\16F77.h               [24-lut-17 17:21  CRC=688C3552]
+    HMI_include\modules\stepper_motor_module\module_stepper_motor.c [05-paü-17 09:57  CRC=3C069BC3]
+    HMI_include\modules\stepper_motor_module\module_stepper_motor.h [29-sie-17 18:38  CRC=D814BDDC]
+    HMI_include\HW_drivers\L293\L293D.c                     [27-lip-17 12:43  CRC=E2472C95]
+    HMI_include\HW_drivers\L293\l293d.h                     [05-lip-17 07:58  CRC=34E7F68F]
+    HMI_MCU_common_includes\SileliS_math\silelis_math.c     [01-wrz-17 08:55  CRC=78430320]
+    G:\elektronika_progs\PICC\Drivers\STDLIB.H              [29-cze-16 10:34  CRC=7E9CC16B]
+    G:\elektronika_progs\PICC\Drivers\stddef.h              [05-wrz-14 12:47  CRC=897CEC6C]
+    G:\elektronika_progs\PICC\Drivers\string.h              [26-mar-15 13:34  CRC=C4814297]
+    G:\elektronika_progs\PICC\Drivers\ctype.h               [03-sty-08 15:55  CRC=2D1F019F]
+    HMI_MCU_common_includes\SileliS_math\BIT_MATH.c         [04-paü-17 15:35  CRC=1ABE51F1]
+    HMI_MCU_common_includes\SileliS_math\BIT_MATH.h         [04-paü-17 15:35  CRC=BA118B5C]
+
+Source signature=87E91462
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=F379
+
+Units:
+    HMI_stepper_motor_calibrator (main)
+
+Compiler Settings:
+    Processor:      PIC16F77
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   HMI_stepper_motor_calibrator.xsym
+    Errors:      HMI_stepper_motor_calibrator.err
+    Ext Symbols: HMI_stepper_motor_calibrator.esym
+    INHX8:       HMI_stepper_motor_calibrator.hex
+    Symbols:     HMI_stepper_motor_calibrator.sym
+    List:        HMI_stepper_motor_calibrator.lst
+    Debug/COFF:  HMI_stepper_motor_calibrator.cof
+    Project:     HMI_stepper_motor_calibrator.ccspjt
+    Call Tree:   HMI_stepper_motor_calibrator.tre
+    Statistics:  HMI_stepper_motor_calibrator.STA

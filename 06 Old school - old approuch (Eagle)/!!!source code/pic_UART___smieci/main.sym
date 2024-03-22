@@ -1,0 +1,123 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     @INTERRUPT_AREA
+005     @INTERRUPT_AREA
+006     @INTERRUPT_AREA
+007     @INTERRUPT_AREA
+008     @INTERRUPT_AREA
+009     @INTERRUPT_AREA
+00A     @INTERRUPT_AREA
+00B     @INTERRUPT_AREA
+00C     @INTERRUPT_AREA
+00D     @INTERRUPT_AREA
+00E     @INTERRUPT_AREA
+00F     @INTERRUPT_AREA
+010     @INTERRUPT_AREA
+011     @INTERRUPT_AREA
+012     @INTERRUPT_AREA
+013     @INTERRUPT_AREA
+014     @INTERRUPT_AREA
+015     @INTERRUPT_AREA
+016     @INTERRUPT_AREA
+017     @INTERRUPT_AREA
+018     @INTERRUPT_AREA
+019     @INTERRUPT_AREA
+01A-114 buffer
+115     next_in
+116     next_out
+117.0   buffer_overflow
+117.1   int_rda_STATEMENT
+118-119 @sprintf_string
+11A     MAIN.TEMP_next_in
+11B     @delay_ms1.P1
+11B     bgetc.c
+11B     MAIN.@SCRATCH1
+11B     @PSTRINGC_57600_31766_31767.@SCRATCH1
+11B     @PSTRINGC_630.@SCRATCH1
+11B     @PSTRINGR_630.@SCRATCH1
+11C     bgetc.@SCRATCH1
+11C     @PSTRINGC_57600_31766_31767.@SCRATCH2
+11C     @PSTRINGC_630.@SCRATCH2
+11C     @PSTRINGR_630.@SCRATCH2
+11D     @PUTCHAR_2_.P1
+11D     bgetc.@SCRATCH2
+121     serial_isr.t
+122     serial_isr.@SCRATCH1
+123     serial_isr.@SCRATCH2
+124     @DIV88.P1
+125     @DIV88.P1
+126     @DIV88.@SCRATCH1
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2_LOW
+FBB     CCP_2
+FBC     CCP_2_HIGH
+FBE     CCP_1_LOW
+FBE     CCP_1
+FBF     CCP_1_HIGH
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P3
+FE9-FEA @READ_PACKED_MEMORY.P4
+FF6-FF8 @READ_PROGRAM_MEMORY.P1
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+0000AE  @DIV88
+0000DA  serial_isr
+000122  @const648.call
+000132  @const654.call
+00015A  @const656.call
+000166  @const657.call
+000168  @PSTRINGC_57600_31766_31767
+00018C  @delay_ms1
+0001B4  @PUTCHAR_2_
+0001F8  @PSTRINGC_630
+000218  bgetc
+00025E  @PSTRINGR_630
+000284  MAIN
+000284  @cinit1
+0002BE  @cinit2
+
+Project Directory:
+    G:\pic_UART\
+
+Project Files:
+    main.c                                                  [05-paü-17 09:37  CRC=62886F54]
+    main.h                                                  [05-paü-17 09:26  CRC=97D74FF2]
+    F:\elektronika_progs\PICC\Devices\18F4520.h             [24-lut-17 16:24  CRC=DFA0DB09]
+
+Source signature=B9A17558
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=DC62
+
+Units:
+    main (main)
+
+Compiler Settings:
+    Processor:      PIC18F4520
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX32:      main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA

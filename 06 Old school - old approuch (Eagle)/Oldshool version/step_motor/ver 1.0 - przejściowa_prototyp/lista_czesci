@@ -1,0 +1,61 @@
+Partlist
+
+Exported from untitled.sch at 08.05.2017 20:32:41
+
+EAGLE Version 6.3.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
+Part             Value                 Device                Package      Library             Sheet
+
+
+BCK_LIGHT_12V    JST_2_PIN_B2B-XH-A    JST_2_PIN_B2B-XH-A    B2B-XH-A     conn-JST            1
+
+TO_MOTOR         JST_4_PIN_B4B-XH-A i JST_4_PIN_B4B-PH-KS        JST_4_PIN_B4B-XH-A    B4B-XH-A     conn-JST            1
+
+
+
+
+
+KBRD_SUPPLY      JST_2_PIN_B2B-PH-KS   JST_2_PIN_B2B-PH-KS   B2B-PH-KS    conn-JST            1
+MOTOR_END_LEFT   JST_2_PIN_B2B-PH-KS   JST_2_PIN_B2B-PH-KS   B2B-PH-KS    conn-JST            1
+MOTOR_END_RIGHT  JST_2_PIN_B2B-PH-KS   JST_2_PIN_B2B-PH-KS   B2B-PH-KS    conn-JST            1
+I2C              JST_3_PIN_B3B-PH-KS   JST_3_PIN_B3B-PH-KS   B3B-PH-KS    conn-JST            1
+ANT_POW_SELECTOR JST_4_PIN_B4B-PH-KS   JST_4_PIN_B4B-PH-KS   B4B-PH-KS    conn-JST            1
+TO_MOTOR         JST_4_PIN_B4B-PH-KS   
+LED_DISP         JST_10_PIN_B10B-PH-KS JST_10_PIN_B10B-PH-KS B10B-PH-KS   conn-JST            1
+
+
+
+w koszyku:
+R3               R220 2W               R-EU_0204/7           0204/7       rcl                 1
+C7               KC220nF               C-EU050-030X075       C050-030X075 rcl                 1
+C3               KE220/16              CPOL-EUE3.5-8         E3,5-8       rcl                 1
+C4               KE220/25              CPOL-EUTT2D7          TT2D7        rcl                 1
+IC1              24C16BP               24C16BP               DIL8         microchip           1
+D1               Zener 12V             ZENER-DIODEZD-5       ZDIO-5       diode               1
+D14              SS14                  DIODE-SMB             SMB          diode               1
+Q3               IRLML2502 or BSS138   MOSFET-NCHANNELSMD    SOT23-3      SparkFun            1
+R19              R2K 805               R-EU_R0805            R0805        resistor            1
+R15              R2K 805               R-EU_R0805            R0805        resistor            1
+R16              R2K 805               R-EU_R0805            R0805        resistor            1
+R2               R2K 805              R-EU_R0805            R0805        resistor            1
+SW1    DIP SWITCH                              SW_DIP-3   EDG-03   special  1
+ICSP  - podwójny !!!!           Z? 403-06             22-27-2061-06         6410-06      con-molex           1
+
+
+
+D3               BAT85     1n418            BAT85DO34-5           DO34-5       diode_SileliS       1
+D4               BAT85     1n418              BAT85DO34-5           DO34-5       diode_SileliS       1
+
+
+
+
+
+
+
+
+
+
+
+

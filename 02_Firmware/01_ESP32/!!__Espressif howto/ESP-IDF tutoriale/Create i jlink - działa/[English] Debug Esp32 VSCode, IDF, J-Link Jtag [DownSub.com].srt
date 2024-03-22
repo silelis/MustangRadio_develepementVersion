@@ -1,0 +1,1036 @@
+1
+00:00:03,659 --> 00:00:06,180
+Hello everyone, so today we're going to
+
+2
+00:00:06,180 --> 00:00:09,179
+another video, so I decided. So today,
+
+3
+00:00:09,179 --> 00:00:12,179
+
+
+4
+00:00:12,179 --> 00:00:17,120
+I'm going to configure The Burger, I'm going to use the d-link together with espius,
+
+5
+00:00:21,080 --> 00:00:23,699
+so with that we can set the
+
+6
+00:00:23,699 --> 00:00:25,859
+breakbonds, stop, look at the
+
+7
+00:00:25,859 --> 00:00:28,560
+variables, how are they?  the state of the
+
+8
+00:00:28,560 --> 00:00:32,040
+variables within UESP, right, so that's
+
+9
+00:00:32,040 --> 00:00:33,420
+what we're going to do today, so we're going to
+
+10
+00:00:33,420 --> 00:00:35,100
+do this configuration and we're going to take a
+
+11
+00:00:35,100 --> 00:00:37,280
+project that we had already done
+
+12
+00:00:37,280 --> 00:00:40,140
+in the previous video
+
+13
+00:00:40,140 --> 00:00:42,899
+and we're going to do some testing there, so let's get
+
+14
+00:00:42,899 --> 00:00:45,140
+started.
+
+15
+00:00:55,260 --> 00:00:57,120
+So this one is the  project that we
+
+16
+00:00:57,120 --> 00:00:59,840
+had done so in the previous video
+
+17
+00:00:59,840 --> 00:01:02,640
+I enlarged it a little here since
+
+18
+00:01:02,640 --> 00:01:06,180
+we have this area to
+
+19
+00:01:06,180 --> 00:01:08,880
+work with so I'm using
+
+20
+00:01:08,880 --> 00:01:10,159
+
+
+21
+00:01:10,159 --> 00:01:13,580
+a d-link
+
+22
+00:01:20,180 --> 00:01:22,500
+and here we have to make some
+
+23
+00:01:22,500 --> 00:01:25,020
+settings within Visual Studio, right,
+
+24
+00:01:25,020 --> 00:01:28,880
+to be able to  it identifies this
+
+25
+00:01:28,880 --> 00:01:33,360
+one The Burger here, right, along with Open
+
+26
+00:01:33,360 --> 00:01:37,079
+ocd, right, and I managed to debug the esp so
+
+27
+00:01:37,079 --> 00:01:39,780
+in the settings here we will get
+
+28
+00:01:39,780 --> 00:01:42,720
+first thing we will come here, right And we
+
+29
+00:01:42,720 --> 00:01:46,140
+will define here our our
+
+30
+00:01:46,140 --> 00:01:49,500
+flash method here as gateg
+
+31
+00:01:49,500 --> 00:01:52,380
+doing this I  I had commented about the
+
+32
+00:01:52,380 --> 00:01:54,119
+configuration files here today we
+
+33
+00:01:54,119 --> 00:01:56,399
+are going to change them so by doing this
+
+34
+00:01:56,399 --> 00:01:58,860
+in sevenths it will put this
+
+35
+00:01:58,860 --> 00:02:01,320
+option here right then in yours there will
+
+36
+00:02:01,320 --> 00:02:03,000
+be this guy here who is that kit
+
+37
+00:02:03,000 --> 00:02:05,100
+that we configured there when
+
+38
+00:02:05,100 --> 00:02:07,740
+we created the  project, so this guy
+
+39
+00:02:07,740 --> 00:02:09,419
+here, we're not going to use him because
+
+40
+00:02:09,419 --> 00:02:12,060
+we don't have this kit,
+
+41
+00:02:12,060 --> 00:02:16,620
+right
+
+42
+00:02:16,620 --> 00:02:19,440
+
+
+43
+00:02:19,440 --> 00:02:21,780
+
+
+44
+00:02:21,780 --> 00:02:24,840
+?  link and here we
+
+45
+00:02:24,840 --> 00:02:28,620
+will put our target as the s32 If you
+
+46
+00:02:28,620 --> 00:02:30,480
+have another computer, for example, there we will
+
+47
+00:02:30,480 --> 00:02:31,980
+put the target of the computer you
+
+48
+00:02:31,980 --> 00:02:34,319
+have, so I have the kit here,
+
+49
+00:02:34,319 --> 00:02:37,020
+my kit is an esp 32, I will put it
+
+50
+00:02:37,020 --> 00:02:39,300
+here and here  We don't need to touch
+
+51
+00:02:39,300 --> 00:02:41,640
+anything else so we give it a control
+
+52
+00:02:41,640 --> 00:02:44,459
+
+
+53
+00:02:44,459 --> 00:02:47,760
+
+
+54
+00:02:47,760 --> 00:02:49,920
+
+
+55
+00:02:49,920 --> 00:02:51,360
+
+
+56
+00:02:51,360 --> 00:02:54,180
+
+
+57
+00:02:54,180 --> 00:02:57,480
+Burgers only
+
+58
+00:02:57,480 --> 00:02:59,160
+has this Launcher which is this
+
+59
+00:02:59,160 --> 00:03:01,560
+configuration here So we go
+
+60
+00:03:01,560 --> 00:03:05,540
+I'm going to deduct it here
+
+61
+00:03:05,940 --> 00:03:09,180
+and then here you will see that it goes
+
+62
+00:03:09,180 --> 00:03:11,519
+when I press control S here it
+
+63
+00:03:11,519 --> 00:03:13,319
+will appear that the configurations o
+
+64
+00:03:13,319 --> 00:03:16,099
+esp Open the CD which  this is mine here,
+
+65
+00:03:16,099 --> 00:03:18,480
+so within these settings
+
+66
+00:03:18,480 --> 00:03:21,239
+we will have the type of The Burger,
+
+67
+00:03:21,239 --> 00:03:25,140
+right, which is CPP, the Burger, here will
+
+68
+00:03:25,140 --> 00:03:27,900
+be the type of the request, here where
+
+69
+00:03:27,900 --> 00:03:30,420
+our build folder is, right, it will be inside
+
+70
+00:03:30,420 --> 00:03:34,140
+the project, here, build, where will it go?  our program will be
+
+71
+00:03:34,140 --> 00:03:35,180
+build
+
+72
+00:03:35,180 --> 00:03:37,519
+here
+
+73
+00:03:37,519 --> 00:03:40,200
+So this guy here will change
+
+74
+00:03:40,200 --> 00:03:42,060
+according to the name of your project
+
+75
+00:03:42,060 --> 00:03:44,879
+so within build there will be a file
+
+76
+00:03:44,879 --> 00:03:48,200
+there with the name of Elf with a dot Elf there
+
+77
+00:03:48,200 --> 00:03:53,220
+that lets me see where this guy
+
+78
+00:03:53,220 --> 00:03:55,319
+is here.  So this one is the first
+
+79
+00:03:55,319 --> 00:03:57,659
+project,
+
+80
+00:03:57,659 --> 00:03:59,819
+if I click on it just to select it, it's
+
+81
+00:03:59,819 --> 00:04:02,940
+not this guy here,
+
+82
+00:04:02,940 --> 00:04:04,739
+so this one will be the name of
+
+83
+00:04:04,739 --> 00:04:06,299
+your project, and then you'll
+
+84
+00:04:06,299 --> 00:04:08,060
+put
+
+85
+00:04:08,060 --> 00:04:10,319
+this pointing to this
+
+86
+00:04:10,319 --> 00:04:12,840
+workspace variable here, the build  the name of
+
+87
+00:04:12,840 --> 00:04:14,939
+your project, right? In my case, this is the
+
+88
+00:04:14,939 --> 00:04:17,579
+first project, dot Elf, which will be the
+
+89
+00:04:17,579 --> 00:04:20,160
+program where he will attack mi
+
+90
+00:04:20,160 --> 00:04:22,560
+the Burger Pet, this guy here will also
+
+91
+00:04:22,560 --> 00:04:24,080
+be according to
+
+92
+00:04:24,080 --> 00:04:26,880
+your installation, you can see
+
+93
+00:04:26,880 --> 00:04:28,639
+that he  it's here inside my user, right, I
+
+94
+00:04:28,639 --> 00:04:31,520
+know
+
+95
+00:04:31,520 --> 00:04:34,680
+Vick's HBR users, it would be there, right,
+
+96
+00:04:34,680 --> 00:04:36,060
+specific point where I did the
+
+97
+00:04:36,060 --> 00:04:39,259
+installation, right, the specific one
+
+98
+00:04:39,259 --> 00:04:44,160
+here depends on the version you're going to
+
+99
+00:04:44,160 --> 00:04:45,840
+use, you can see that here mine,
+
+100
+00:04:45,840 --> 00:04:48,800
+I have two
+
+101
+00:04:49,979 --> 00:04:53,180
+ready, just show them here
+
+102
+00:04:54,360 --> 00:04:56,460
+Oh mine I have two I have version
+
+103
+00:04:56,460 --> 00:04:58,979
+4 which is this one and I have version 5
+
+104
+00:04:58,979 --> 00:05:00,960
+as I'm using version 5 I came
+
+105
+00:05:00,960 --> 00:05:03,419
+to this one from below so it will go
+
+106
+00:05:03,419 --> 00:05:06,360
+here in this 11.2 inside this guy here
+
+107
+00:05:06,360 --> 00:05:09,780
+we will have the extensions  there, the Bin folder
+
+108
+00:05:09,780 --> 00:05:11,220
+
+
+109
+00:05:11,220 --> 00:05:13,500
+and here we will take and look for
+
+110
+00:05:13,500 --> 00:05:19,680
+this file here which is an exz point
+
+111
+00:05:19,680 --> 00:05:22,620
+which will then be this guy here
+
+112
+00:05:22,620 --> 00:05:27,720
+that we will use for s32 and
+
+113
+00:05:27,720 --> 00:05:30,180
+from there we will have to do
+
+114
+00:05:30,180 --> 00:05:31,860
+a  configuration, then in the
+
+115
+00:05:31,860 --> 00:05:35,419
+J link file, which is this guy here,
+
+116
+00:05:35,419 --> 00:05:37,440
+initially he will only have this
+
+117
+00:05:37,440 --> 00:05:39,419
+configuration of the link adaptor, we
+
+118
+00:05:39,419 --> 00:05:41,280
+will put this guy's Speed ​​where
+
+119
+00:05:41,280 --> 00:05:43,320
+he will work and the
+
+120
+00:05:43,320 --> 00:05:45,180
+transport layer, so we will put
+
+121
+00:05:45,180 --> 00:05:49,919
+a file like this  file it is there within
+
+122
+00:05:49,919 --> 00:05:52,440
+the installation so this can change
+
+123
+00:05:52,440 --> 00:05:54,780
+according to the installation in my case
+
+124
+00:05:54,780 --> 00:05:57,180
+here it is within my user specific point we
+
+125
+00:05:57,180 --> 00:05:58,800
+
+
+126
+00:05:58,800 --> 00:06:02,220
+go here in Tools we will look
+
+127
+00:06:02,220 --> 00:06:05,759
+here for opinion CD here also same
+
+128
+00:06:05,759 --> 00:06:07,560
+thing as I have two versions I
+
+129
+00:06:07,560 --> 00:06:10,680
+I have version 4.4 and version 5, I have
+
+130
+00:06:10,680 --> 00:06:12,840
+two installations here of their pince, they have
+
+131
+00:06:12,840 --> 00:06:14,340
+different versions, so as I'm
+
+132
+00:06:14,340 --> 00:06:16,800
+using it, let's go to this version,
+
+133
+00:06:16,800 --> 00:06:19,080
+opinion CD
+
+134
+00:06:19,080 --> 00:06:21,199
+share
+
+135
+00:06:21,199 --> 00:06:25,620
+Open CD script and here within the
+
+136
+00:06:25,620 --> 00:06:28,259
+interface we will have the d-lin that
+
+137
+00:06:28,259 --> 00:06:30,000
+goes  have some other interface so it's
+
+138
+00:06:30,000 --> 00:06:31,020
+this file here that we're going to
+
+139
+00:06:31,020 --> 00:06:33,060
+change, I already have it open here
+
+140
+00:06:33,060 --> 00:06:35,220
+inside visual studio you can see
+
+141
+00:06:35,220 --> 00:06:37,639
+that the address here is the same so just
+
+142
+00:06:37,639 --> 00:06:40,139
+close it here And this here was the other
+
+143
+00:06:40,139 --> 00:06:41,940
+file which is what  we
+
+144
+00:06:41,940 --> 00:06:45,300
+pointed it out inside the Launcher, inside this
+
+145
+00:06:45,300 --> 00:06:47,300
+guy from seventh
+
+146
+00:06:47,300 --> 00:06:50,039
+32 CFG, this one we don't need to
+
+147
+00:06:50,039 --> 00:06:52,259
+touch, but if anyone wants to take a
+
+148
+00:06:52,259 --> 00:06:54,539
+look at it, we'll come back here
+
+149
+00:06:54,539 --> 00:06:56,580
+inside
+
+150
+00:06:56,580 --> 00:06:58,639
+it's
+
+151
+00:06:58,639 --> 00:07:03,380
+target scripts and here we'll have the
+
+152
+00:07:03,380 --> 00:07:05,400
+computers that  we have then we have
+
+153
+00:07:05,400 --> 00:07:08,880
+another 32 C2 S3 then we can if you have a
+
+154
+00:07:08,880 --> 00:07:11,100
+different computer than the one I have here for
+
+155
+00:07:11,100 --> 00:07:12,539
+example if the person has a C2 they will
+
+156
+00:07:12,539 --> 00:07:14,699
+select this one
+
+157
+00:07:14,699 --> 00:07:17,520
+doing this then we will go to
+
+158
+00:07:17,520 --> 00:07:20,280
+the commands that Visual Studio will
+
+159
+00:07:20,280 --> 00:07:23,460
+send it to connect This guy there
+
+160
+00:07:23,460 --> 00:07:25,199
+so here we will say that the
+
+161
+00:07:25,199 --> 00:07:28,919
+target is the local domain, right on port 333
+
+162
+00:07:28,919 --> 00:07:32,460
+that when I start adb it will
+
+163
+00:07:32,460 --> 00:07:34,919
+create some ports for the bug So
+
+164
+00:07:34,919 --> 00:07:37,199
+we will create a server it will
+
+165
+00:07:37,199 --> 00:07:38,639
+we will connect  with Visual Studio
+
+166
+00:07:38,639 --> 00:07:41,520
+on this server, here is a watch point, right
+
+167
+00:07:41,520 --> 00:07:44,639
+here, monitor to give a route and
+
+168
+00:07:44,639 --> 00:07:47,580
+flush the Rex, we make these
+
+169
+00:07:47,580 --> 00:07:50,060
+settings then we will be
+
+170
+00:07:50,060 --> 00:07:53,220
+able to publish it, we will have to
+
+171
+00:07:53,220 --> 00:07:55,020
+make some changes to the Drive there
+
+172
+00:07:55,020 --> 00:07:56,639
+too, right?
+
+173
+00:07:56,639 --> 00:08:00,539
+jailink so I'll leave everything there in the
+
+174
+00:08:00,539 --> 00:08:02,699
+description I'll leave a link to
+
+175
+00:08:02,699 --> 00:08:04,580
+these files here with
+
+176
+00:08:04,580 --> 00:08:08,120
+and with the driver files there So
+
+177
+00:08:08,120 --> 00:08:11,819
+let me take a look here so
+
+178
+00:08:11,819 --> 00:08:15,800
+we'll use this USB Tool drivers
+
+179
+00:08:22,039 --> 00:08:25,099
+when you
+
+180
+00:08:25,099 --> 00:08:28,919
+come and put the d-link in  In
+
+181
+00:08:28,919 --> 00:08:30,419
+your Windows, it will have this driver here,
+
+182
+00:08:30,419 --> 00:08:31,800
+
+
+183
+00:08:31,800 --> 00:08:34,320
+but this driver will not work
+
+184
+00:08:34,320 --> 00:08:38,640
+with adb, we will have to come here, I
+
+185
+00:08:38,640 --> 00:08:40,979
+came here, select, we will
+
+186
+00:08:40,979 --> 00:08:43,380
+select this Win USB
+
+187
+00:08:43,380 --> 00:08:45,480
+so it can work, so
+
+188
+00:08:45,480 --> 00:08:48,060
+we will come here,  little program comes
+
+189
+00:08:48,060 --> 00:08:50,160
+Boot it to the USB it will appear
+
+190
+00:08:50,160 --> 00:08:53,660
+here as in USB you can take a close up
+
+191
+00:08:53,660 --> 00:08:56,700
+from there it
+
+192
+00:08:56,700 --> 00:08:59,640
+is practically all configured Let's
+
+193
+00:08:59,640 --> 00:09:01,380
+do a test but if we see
+
+194
+00:09:01,380 --> 00:09:02,300
+our
+
+195
+00:09:02,300 --> 00:09:05,339
+hello world here also here we will press
+
+196
+00:09:05,339 --> 00:09:08,899
+F5 and we will see what  what will happen
+
+197
+00:09:11,940 --> 00:09:14,040
+let's see if everything will happen ok if
+
+198
+00:09:14,040 --> 00:09:16,940
+it will generate an error
+
+199
+00:09:23,779 --> 00:09:27,660
+then we had an error
+
+200
+00:09:27,660 --> 00:09:28,980
+It is saying that it was unable to
+
+201
+00:09:28,980 --> 00:09:32,279
+connect let's go why did this happen
+
+202
+00:09:32,279 --> 00:09:35,580
+because our Open ocd is
+
+203
+00:09:35,580 --> 00:09:37,920
+not running
+
+204
+00:09:37,920 --> 00:09:39,600
+so you saw it there  after I
+
+205
+00:09:39,600 --> 00:09:41,160
+clicked it, it runs, it stays here with
+
+206
+00:09:41,160 --> 00:09:43,980
+this little Green mark Here it says
+
+207
+00:09:43,980 --> 00:09:46,019
+that it's running So let's press this
+
+208
+00:09:46,019 --> 00:09:48,320
+five again,
+
+209
+00:09:51,420 --> 00:09:53,760
+it couldn't start the bug, I'll
+
+210
+00:09:53,760 --> 00:09:56,279
+press F5 again, let's see if
+
+211
+00:09:56,279 --> 00:09:59,420
+it can connect
+
+212
+00:10:04,080 --> 00:10:06,300
+now.  When he connects, sometimes he
+
+213
+00:10:06,300 --> 00:10:08,160
+can't connect to the server, which did
+
+214
+00:10:08,160 --> 00:10:09,600
+n't even happen to me, when he
+
+215
+00:10:09,600 --> 00:10:12,060
+connects this Veloso bar where it
+
+216
+00:10:12,060 --> 00:10:14,100
+will turn orange, then you know that The
+
+217
+00:10:14,100 --> 00:10:16,200
+banner is connected And we're
+
+218
+00:10:16,200 --> 00:10:18,000
+already starting to be able to stop within the
+
+219
+00:10:18,000 --> 00:10:20,820
+code  oh, so here I'm going to send it
+
+220
+00:10:20,820 --> 00:10:22,140
+forward, it's going to stop at this other
+
+221
+00:10:22,140 --> 00:10:24,600
+breakpoint that I put down there,
+
+222
+00:10:24,600 --> 00:10:26,459
+you can see here that we
+
+223
+00:10:26,459 --> 00:10:29,399
+can already identify that the i, right?
+
+224
+00:10:29,399 --> 00:10:31,680
+
+
+225
+00:10:31,680 --> 00:10:33,779
+
+
+226
+00:10:33,779 --> 00:10:36,480
+We can now see
+
+227
+00:10:36,480 --> 00:10:38,100
+what's inside these variables
+
+228
+00:10:38,100 --> 00:10:39,959
+here, we can also put them
+
+229
+00:10:39,959 --> 00:10:42,360
+for inspection, right?
+
+230
+00:10:42,360 --> 00:10:43,860
+Let me put a variable here, I
+
+231
+00:10:43,860 --> 00:10:46,980
+'ll need the name,
+
+232
+00:10:46,980 --> 00:10:48,600
+put it here for the line to inspect this one, I got
+
+233
+00:10:48,600 --> 00:10:50,720
+
+
+234
+00:10:51,540 --> 00:10:55,279
+the name wrong, let's delete it, let's
+
+235
+00:10:57,180 --> 00:10:59,279
+go
+
+236
+00:10:59,279 --> 00:11:01,380
+chip  info so here we can see, you can
+
+237
+00:11:01,380 --> 00:11:03,959
+monitor each variable, we
+
+238
+00:11:03,959 --> 00:11:05,459
+can see the call stack, so
+
+239
+00:11:05,459 --> 00:11:08,160
+what is happening in each trade
+
+240
+00:11:08,160 --> 00:11:09,380
+like
+
+241
+00:11:09,380 --> 00:11:12,600
+this, what I wanted to demonstrate
+
+242
+00:11:12,600 --> 00:11:15,500
+to you was this configuration, then,
+
+243
+00:11:15,500 --> 00:11:17,240
+of esp
+
+244
+00:11:17,240 --> 00:11:19,680
+on the display platform  studio of how
+
+245
+00:11:19,680 --> 00:11:21,180
+we configure Visual Studio to
+
+246
+00:11:21,180 --> 00:11:24,480
+be able to open the CD and
+
+247
+00:11:24,480 --> 00:11:26,760
+connect to it, right, make the open
+
+248
+00:11:26,760 --> 00:11:28,920
+CD connect to the esp so that we can
+
+249
+00:11:28,920 --> 00:11:32,700
+connect to this Open ocv show that how
+
+250
+00:11:32,700 --> 00:11:34,860
+it works so the variables
+
+251
+00:11:34,860 --> 00:11:39,600
+there  what we can see from
+
+252
+00:11:39,600 --> 00:11:41,720
+esp
+
+253
+00:11:41,720 --> 00:11:44,820
+through this the Burger
+
+254
+00:11:44,820 --> 00:11:46,680
+and I leave it there so thank you very much
+
+255
+00:11:46,680 --> 00:11:49,800
+to those who watched the video, if you like it
+
+256
+00:11:49,800 --> 00:11:52,399
+and share it with people, give it a like,
+
+257
+00:11:52,399 --> 00:11:54,839
+this helps us to spread it
+
+258
+00:11:54,839 --> 00:11:56,700
+to more people  so thank you very much,
+
+259
+00:11:56,700 --> 00:11:59,360
+thanks
+

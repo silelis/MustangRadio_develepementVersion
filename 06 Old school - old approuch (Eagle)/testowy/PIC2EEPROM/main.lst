@@ -1,0 +1,1950 @@
+CCS PCM C Compiler, Version 5.046, 5967               03-lis-16 13:04
+
+               Filename:   F:\Elektronika_projekty\Car_Radio\testowy\PIC2EEPROM\main.lst
+
+               ROM used:   1088 words (13%)
+                           Largest free fragment is 2048
+               RAM used:   145 (39%) at main() level
+                           156 (42%) worst case
+               Stack used: 4 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  03
+0001:  MOVWF  0A
+0002:  GOTO   3CF
+0003:  NOP
+.................... #include <main.h> 
+.................... #include <16F877.h> 
+.................... //////////// Standard Header file for the PIC16F877 device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877 
+0004:  DATA 49,19
+0005:  DATA 43,10
+0006:  DATA 77,17
+0007:  DATA 61,32
+0008:  DATA 64,39
+0009:  DATA BA,12
+000A:  DATA 78,10
+000B:  DATA C1,21
+000C:  DATA 4B,10
+000D:  DATA 00,00
+000E:  DATA 49,19
+000F:  DATA 43,10
+0010:  DATA 72,17
+0011:  DATA 61,32
+0012:  DATA 64,39
+0013:  DATA BA,12
+0014:  DATA 78,10
+0015:  DATA C1,21
+0016:  DATA 4B,10
+0017:  DATA 00,01
+0018:  DATA 49,19
+0019:  DATA 43,10
+001A:  DATA 61,32
+001B:  DATA 64,39
+001C:  DATA BA,12
+001D:  DATA 78,10
+001E:  DATA A1,20
+001F:  DATA C3,25
+0020:  DATA 20,00
+0021:  DATA 49,19
+0022:  DATA 43,10
+0023:  DATA 61,32
+0024:  DATA 72,1D
+0025:  DATA 25,3C
+0026:  DATA A0,21
+0027:  DATA 4F,26
+0028:  DATA C9,29
+0029:  DATA C9,27
+002A:  DATA 4E,10
+002B:  DATA 00,00
+002C:  DATA B1,39
+002D:  DATA 74,10
+002E:  DATA 00,00
+*
+006C:  MOVF   0B,W
+006D:  BSF    03.5
+006E:  MOVWF  60
+006F:  BCF    03.5
+0070:  BCF    0B.7
+0071:  BSF    03.5
+0072:  BSF    03.6
+0073:  BSF    0C.7
+0074:  BSF    0C.0
+0075:  NOP
+0076:  NOP
+0077:  BCF    03.6
+0078:  BTFSS  60.7
+0079:  GOTO   07D
+007A:  BCF    03.5
+007B:  BSF    0B.7
+007C:  BSF    03.5
+007D:  BCF    03.5
+007E:  BSF    03.6
+007F:  MOVF   0C,W
+0080:  ANDLW  7F
+0081:  BTFSC  03.2
+0082:  GOTO   0DE
+0083:  BSF    03.5
+0084:  BCF    03.6
+0085:  MOVWF  60
+0086:  BCF    03.5
+0087:  BSF    03.6
+0088:  MOVF   0D,W
+0089:  BSF    03.5
+008A:  BCF    03.6
+008B:  MOVWF  61
+008C:  BCF    03.5
+008D:  BSF    03.6
+008E:  MOVF   0F,W
+008F:  BSF    03.5
+0090:  BCF    03.6
+0091:  MOVWF  62
+0092:  MOVF   60,W
+0093:  MOVWF  6B
+0094:  BCF    03.5
+0095:  CALL   043
+0096:  BSF    03.5
+0097:  MOVF   61,W
+0098:  BCF    03.5
+0099:  BSF    03.6
+009A:  MOVWF  0D
+009B:  BSF    03.5
+009C:  BCF    03.6
+009D:  MOVF   62,W
+009E:  BCF    03.5
+009F:  BSF    03.6
+00A0:  MOVWF  0F
+00A1:  BCF    03.6
+00A2:  MOVF   0B,W
+00A3:  BSF    03.5
+00A4:  MOVWF  63
+00A5:  BCF    03.5
+00A6:  BCF    0B.7
+00A7:  BSF    03.5
+00A8:  BSF    03.6
+00A9:  BSF    0C.7
+00AA:  BSF    0C.0
+00AB:  NOP
+00AC:  NOP
+00AD:  BCF    03.6
+00AE:  BTFSS  63.7
+00AF:  GOTO   0B3
+00B0:  BCF    03.5
+00B1:  BSF    0B.7
+00B2:  BSF    03.5
+00B3:  BCF    03.5
+00B4:  BSF    03.6
+00B5:  RLF    0C,W
+00B6:  RLF    0E,W
+00B7:  ANDLW  7F
+00B8:  BTFSC  03.2
+00B9:  GOTO   0DE
+00BA:  BSF    03.5
+00BB:  BCF    03.6
+00BC:  MOVWF  60
+00BD:  BCF    03.5
+00BE:  BSF    03.6
+00BF:  MOVF   0D,W
+00C0:  BSF    03.5
+00C1:  BCF    03.6
+00C2:  MOVWF  61
+00C3:  BCF    03.5
+00C4:  BSF    03.6
+00C5:  MOVF   0F,W
+00C6:  BSF    03.5
+00C7:  BCF    03.6
+00C8:  MOVWF  62
+00C9:  MOVF   60,W
+00CA:  MOVWF  6B
+00CB:  BCF    03.5
+00CC:  CALL   043
+00CD:  BSF    03.5
+00CE:  MOVF   61,W
+00CF:  BCF    03.5
+00D0:  BSF    03.6
+00D1:  MOVWF  0D
+00D2:  BSF    03.5
+00D3:  BCF    03.6
+00D4:  MOVF   62,W
+00D5:  BCF    03.5
+00D6:  BSF    03.6
+00D7:  MOVWF  0F
+00D8:  INCF   0D,F
+00D9:  BTFSC  03.2
+00DA:  INCF   0F,F
+00DB:  BCF    03.6
+00DC:  GOTO   06C
+00DD:  BSF    03.6
+00DE:  BCF    03.6
+00DF:  BCF    0A.3
+00E0:  BCF    0A.4
+00E1:  GOTO   3F1 (RETURN)
+*
+011F:  MOVF   0B,W
+0120:  BSF    03.5
+0121:  MOVWF  68
+0122:  BCF    03.5
+0123:  BCF    0B.7
+0124:  BSF    03.5
+0125:  BSF    03.6
+0126:  BSF    0C.7
+0127:  BSF    0C.0
+0128:  NOP
+0129:  NOP
+012A:  BCF    03.6
+012B:  BTFSS  68.7
+012C:  GOTO   130
+012D:  BCF    03.5
+012E:  BSF    0B.7
+012F:  BSF    03.5
+0130:  BTFSC  03.0
+0131:  GOTO   169
+0132:  BCF    03.5
+0133:  BSF    03.6
+0134:  MOVF   0C,W
+0135:  ANDLW  7F
+0136:  BSF    03.5
+0137:  BCF    03.6
+0138:  MOVWF  68
+0139:  BCF    03.5
+013A:  BSF    03.6
+013B:  MOVF   0D,W
+013C:  BSF    03.5
+013D:  BCF    03.6
+013E:  MOVWF  69
+013F:  BCF    03.5
+0140:  BSF    03.6
+0141:  MOVF   0F,W
+0142:  BSF    03.5
+0143:  BCF    03.6
+0144:  MOVWF  6A
+0145:  MOVF   68,W
+0146:  MOVWF  6B
+0147:  BCF    03.5
+0148:  CALL   043
+0149:  BSF    03.5
+014A:  MOVF   69,W
+014B:  BCF    03.5
+014C:  BSF    03.6
+014D:  MOVWF  0D
+014E:  BSF    03.5
+014F:  BCF    03.6
+0150:  MOVF   6A,W
+0151:  BCF    03.5
+0152:  BSF    03.6
+0153:  MOVWF  0F
+0154:  BCF    03.6
+0155:  MOVF   0B,W
+0156:  BSF    03.5
+0157:  MOVWF  6B
+0158:  BCF    03.5
+0159:  BCF    0B.7
+015A:  BSF    03.5
+015B:  BSF    03.6
+015C:  BSF    0C.7
+015D:  BSF    0C.0
+015E:  NOP
+015F:  NOP
+0160:  BCF    03.6
+0161:  BTFSS  6B.7
+0162:  GOTO   166
+0163:  BCF    03.5
+0164:  BSF    0B.7
+0165:  BSF    03.5
+0166:  DECFSZ 67,F
+0167:  GOTO   169
+0168:  GOTO   197
+0169:  BCF    03.5
+016A:  BSF    03.6
+016B:  RLF    0C,W
+016C:  RLF    0E,W
+016D:  ANDLW  7F
+016E:  BSF    03.5
+016F:  BCF    03.6
+0170:  MOVWF  68
+0171:  BCF    03.5
+0172:  BSF    03.6
+0173:  MOVF   0D,W
+0174:  BSF    03.5
+0175:  BCF    03.6
+0176:  MOVWF  69
+0177:  BCF    03.5
+0178:  BSF    03.6
+0179:  MOVF   0F,W
+017A:  BSF    03.5
+017B:  BCF    03.6
+017C:  MOVWF  6A
+017D:  MOVF   68,W
+017E:  MOVWF  6B
+017F:  BCF    03.5
+0180:  CALL   043
+0181:  BSF    03.5
+0182:  MOVF   69,W
+0183:  BCF    03.5
+0184:  BSF    03.6
+0185:  MOVWF  0D
+0186:  BSF    03.5
+0187:  BCF    03.6
+0188:  MOVF   6A,W
+0189:  BCF    03.5
+018A:  BSF    03.6
+018B:  MOVWF  0F
+018C:  INCF   0D,F
+018D:  BTFSC  03.2
+018E:  INCF   0F,F
+018F:  BCF    03.0
+0190:  BSF    03.5
+0191:  BCF    03.6
+0192:  DECFSZ 67,F
+0193:  GOTO   195
+0194:  GOTO   197
+0195:  BCF    03.5
+0196:  GOTO   11F
+0197:  BCF    03.5
+0198:  RETURN
+0199:  BSF    03.5
+019A:  BTFSC  68.7
+019B:  GOTO   1AE
+019C:  MOVLW  0F
+019D:  MOVWF  77
+019E:  SWAPF  67,W
+019F:  ANDWF  77,F
+01A0:  MOVLW  0A
+01A1:  SUBWF  77,W
+01A2:  BTFSC  03.0
+01A3:  GOTO   1A7
+01A4:  MOVLW  30
+01A5:  ADDWF  77,F
+01A6:  GOTO   1A9
+01A7:  MOVF   68,W
+01A8:  ADDWF  77,F
+01A9:  MOVF   77,W
+01AA:  MOVWF  6B
+01AB:  BCF    03.5
+01AC:  CALL   043
+01AD:  BSF    03.5
+01AE:  MOVLW  0F
+01AF:  ANDWF  67,F
+01B0:  MOVLW  0A
+01B1:  SUBWF  67,W
+01B2:  BTFSC  03.0
+01B3:  GOTO   1B6
+01B4:  MOVLW  30
+01B5:  GOTO   1B8
+01B6:  BCF    68.7
+01B7:  MOVF   68,W
+01B8:  ADDWF  67,F
+01B9:  MOVF   67,W
+01BA:  MOVWF  6B
+01BB:  BCF    03.5
+01BC:  CALL   043
+01BD:  RETURN
+....................  
+.................... #list 
+....................  
+.................... #device ADC=10 
+.................... #use delay(crystal=20000000) 
+*
+002F:  MOVLW  E8
+0030:  MOVWF  04
+0031:  BCF    03.7
+0032:  MOVF   00,W
+0033:  BTFSC  03.2
+0034:  GOTO   042
+0035:  MOVLW  06
+0036:  MOVWF  78
+0037:  CLRF   77
+0038:  DECFSZ 77,F
+0039:  GOTO   038
+003A:  DECFSZ 78,F
+003B:  GOTO   037
+003C:  MOVLW  7B
+003D:  MOVWF  77
+003E:  DECFSZ 77,F
+003F:  GOTO   03E
+0040:  DECFSZ 00,F
+0041:  GOTO   035
+0042:  RETURN
+.................... //#use rs232(baud=9600,parity=N,xmit=None,rcv=None,bits=8,stream=PORT1) 
+....................  
+.................... #define _I2C_SDA  PIN_D1 
+.................... #define _I2C_SCL  PIN_D0 
+....................  
+.................... #use i2c(Master,Fast,sda=_I2C_SDA,scl=_I2C_SCL) 
+*
+00EB:  MOVLW  08
+00EC:  MOVWF  78
+00ED:  NOP
+00EE:  BCF    08.0
+00EF:  BSF    03.5
+00F0:  BCF    08.0
+00F1:  NOP
+00F2:  RLF    68,F
+00F3:  BCF    03.5
+00F4:  BCF    08.1
+00F5:  BTFSS  03.0
+00F6:  GOTO   0FA
+00F7:  BSF    03.5
+00F8:  BSF    08.1
+00F9:  BCF    03.5
+00FA:  BTFSC  03.0
+00FB:  GOTO   0FF
+00FC:  BSF    03.5
+00FD:  BCF    08.1
+00FE:  BCF    03.5
+00FF:  BSF    03.5
+0100:  BSF    08.0
+0101:  BCF    03.5
+0102:  BTFSS  08.0
+0103:  GOTO   102
+0104:  DECFSZ 78,F
+0105:  GOTO   0ED
+0106:  NOP
+0107:  BCF    08.0
+0108:  BSF    03.5
+0109:  BCF    08.0
+010A:  NOP
+010B:  BSF    08.1
+010C:  NOP
+010D:  NOP
+010E:  BSF    08.0
+010F:  BCF    03.5
+0110:  BTFSS  08.0
+0111:  GOTO   110
+0112:  CLRF   78
+0113:  NOP
+0114:  BTFSC  08.1
+0115:  BSF    78.0
+0116:  BCF    08.0
+0117:  BSF    03.5
+0118:  BCF    08.0
+0119:  BCF    03.5
+011A:  BCF    08.1
+011B:  BSF    03.5
+011C:  BCF    08.1
+011D:  BCF    03.5
+011E:  RETURN
+*
+029E:  MOVLW  08
+029F:  MOVWF  6A
+02A0:  MOVF   77,W
+02A1:  MOVWF  6B
+02A2:  BSF    08.1
+02A3:  NOP
+02A4:  BSF    08.0
+02A5:  BCF    03.5
+02A6:  BTFSS  08.0
+02A7:  GOTO   2A6
+02A8:  BTFSC  08.1
+02A9:  BSF    03.0
+02AA:  BTFSS  08.1
+02AB:  BCF    03.0
+02AC:  RLF    78,F
+02AD:  NOP
+02AE:  BSF    03.5
+02AF:  BCF    08.0
+02B0:  BCF    03.5
+02B1:  BCF    08.0
+02B2:  BSF    03.5
+02B3:  DECFSZ 6A,F
+02B4:  GOTO   2A2
+02B5:  BSF    08.1
+02B6:  NOP
+02B7:  BCF    03.5
+02B8:  BCF    08.1
+02B9:  BSF    03.5
+02BA:  MOVF   6B,W
+02BB:  BTFSS  03.2
+02BC:  BCF    08.1
+02BD:  NOP
+02BE:  BSF    08.0
+02BF:  BCF    03.5
+02C0:  BTFSS  08.0
+02C1:  GOTO   2C0
+02C2:  NOP
+02C3:  BCF    08.0
+02C4:  BSF    03.5
+02C5:  BCF    08.0
+02C6:  NOP
+02C7:  BCF    03.5
+02C8:  BCF    08.1
+02C9:  BSF    03.5
+02CA:  BCF    08.1
+....................  
+.................... #define LED PIN_C0 
+.................... #define DELAY 1000 
+....................  
+....................  
+.................... #define _USE_LOGPORT_ 
+....................  
+.................... #if defined(DEBUG_ENABLED) 
+....................    #use rs232(ICD,stream=ICD_DBG,DISABLE_INTS) 
+....................    #define dbg_printf(fmt,...)   fprintf(ICD_DBG,fmt,__VA_ARGS__) 
+.................... #elif defined(_USE_LOGPORT_) 
+....................    #use rs232(baud=9600,parity=N,xmit=PIN_B7,bits=8,stream=LOG_PORT, DISABLE_INTS) 
+*
+0043:  MOVF   0B,W
+0044:  MOVWF  7A
+0045:  BCF    0B.7
+0046:  BSF    03.5
+0047:  BCF    06.7
+0048:  BCF    03.5
+0049:  BCF    06.7
+004A:  MOVLW  08
+004B:  MOVWF  78
+004C:  GOTO   04D
+004D:  NOP
+004E:  BSF    78.7
+004F:  GOTO   060
+0050:  BCF    78.7
+0051:  BSF    03.5
+0052:  RRF    6B,F
+0053:  BCF    03.5
+0054:  BTFSC  03.0
+0055:  BSF    06.7
+0056:  BTFSS  03.0
+0057:  BCF    06.7
+0058:  BSF    78.6
+0059:  GOTO   060
+005A:  BCF    78.6
+005B:  DECFSZ 78,F
+005C:  GOTO   051
+005D:  GOTO   05E
+005E:  NOP
+005F:  BSF    06.7
+0060:  MOVLW  A7
+0061:  MOVWF  04
+0062:  DECFSZ 04,F
+0063:  GOTO   062
+0064:  GOTO   065
+0065:  BTFSC  78.7
+0066:  GOTO   050
+0067:  BTFSC  78.6
+0068:  GOTO   05A
+0069:  BTFSC  7A.7
+006A:  BSF    0B.7
+006B:  RETURN
+....................    #define dbg_printf(fmt,...)   fprintf(LOG_PORT,fmt,__VA_ARGS__);  delay_ms(500) 
+.................... #else 
+....................    #define dbg_printf(fmt,...) 
+.................... #endif 
+....................  
+....................  
+.................... #define I2C_BUFSIZE         64 
+.................... //#include </core/I2C/I2C_Engine.c> 
+....................  
+.................... #ifndef __EEPROM_2416_ 
+....................    //#define __EEPROM_2416_ 
+....................    #include </core/EEPROM_2416/EEPROM_2416.c> 
+.................... #include </core/EEPROM_2416/EEPROM_2416.h> 
+....................  
+.................... #ifndef __EEPROM_2416_ 
+....................    #define __EEPROM_2416_ 
+....................  
+.................... #ifndef __EEPROM_ADDRESS_MAP_ 
+....................    #define __EEPROM_ADDRESS_MAP_ 
+....................    #include </core/EEPROM_2416/eeprom_address_map.h.h> 
+.................... #ifndef __EEPROM_ADDRESS_MAP_ 
+....................    #define __EEPROM_ADDRESS_MAP_ 
+....................     
+....................    #define  RADIO_1st_run_addr   0x00 
+....................    #define  RADIO_1st_run_len    0x1 
+....................     
+....................    #define  TDA_Vol_addr         0x01 
+....................    #define  TDA_Vol_len          0x1 
+....................     
+....................    #define  Active_Antena_addr   0x02 
+....................    #define  Active_Antena_len    0x1 
+....................     
+....................    #define  EQU_Treble_addr      0x03 
+....................    #define  EQU_Treble_len       0x1 
+....................     
+....................    #define  EQU_Middle_addr      0x04 
+....................    #define  EQU_Middle_len       0x1 
+....................     
+....................    #define  EQU_Bass_addr        0x05 
+....................    #define  EQU_Bass_len         0x1 
+....................     
+....................    #define  EQU_L_H_Boost_addr   0x06 
+....................    #define  EQU_L_H_Boost_len    0x1 
+....................     
+....................    #define  EQU_Left_Right_addr  0x07 
+....................    #define  EQU_Left_Right_len   0x1 
+....................     
+....................    #define  EQU_Front_Rear_addr  0x08 
+....................    #define  EQU_Front_Rear_len   0x1 
+....................     
+....................    #define  RADIO_Input_addr     0x09 
+....................    #define  RADIO_Input_len      0x1    
+....................       
+....................    #define  FM_freuency_addr 
+....................    #define  FM_freuency_len 
+....................     
+....................    #define  DAB_freuency_addr 
+....................    #define  DAB_freuency_len 
+....................     
+....................    #define  Backlight_addr 
+....................    #define  Backlight_len    
+....................     
+....................     
+....................     
+....................     
+.................... #ednif 
+....................  
+....................  
+....................  
+.................... #endif 
+....................  
+.................... #ifndef _I2C_ENGINE_ 
+....................    #include </core/I2C_ENGINE/I2C_Engine.c> 
+.................... /**************************************************************************/ 
+.................... /*!  
+....................     @file     tea5767.c 
+....................     @author   D. Bankowski (d.bankowski@gmail.com) 
+....................      
+....................     @brief    Driver for the TEA5767 FM receiver. 
+....................     @section LICENSE 
+....................     Software License Agreement (BSD License) 
+....................     Copyright (c) 2015, D. Bankowski 
+....................     All rights reserved. 
+....................     Redistribution and use in source and binary forms, with or without 
+....................     modification, are permitted provided that the following conditions are met: 
+....................     1. Redistributions of source code must retain the above copyright 
+....................     notice, this list of conditions and the following disclaimer. 
+....................     2. Redistributions in binary form must reproduce the above copyright 
+....................     notice, this list of conditions and the following disclaimer in the 
+....................     documentation and/or other materials provided with the distribution. 
+....................     3. Neither the name of the copyright holders nor the 
+....................     names of its contributors may be used to endorse or promote products 
+....................     derived from this software without specific prior written permission. 
+....................     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY 
+....................     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+....................     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+....................     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY 
+....................     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+....................     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+....................     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
+....................     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+....................     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+....................     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+.................... */ 
+.................... /**************************************************************************/ 
+....................  
+.................... #define _I2C_ENGINE_ 
+.................... //#include </core/I2C_ENGINE/I2C_Engine.h> 
+.................... #include <I2C_Engine.h> 
+.................... /**************************************************************************/ 
+.................... /*!  
+....................     @file     tea5767.c 
+....................     @author   D. Bankowski (d.bankowski@gmail.com) 
+....................      
+....................     @brief    Driver for the TEA5767 FM receiver. 
+....................     @section LICENSE 
+....................     Software License Agreement (BSD License) 
+....................     Copyright (c) 2015, D. Bankowski 
+....................     All rights reserved. 
+....................     Redistribution and use in source and binary forms, with or without 
+....................     modification, are permitted provided that the following conditions are met: 
+....................     1. Redistributions of source code must retain the above copyright 
+....................     notice, this list of conditions and the following disclaimer. 
+....................     2. Redistributions in binary form must reproduce the above copyright 
+....................     notice, this list of conditions and the following disclaimer in the 
+....................     documentation and/or other materials provided with the distribution. 
+....................     3. Neither the name of the copyright holders nor the 
+....................     names of its contributors may be used to endorse or promote products 
+....................     derived from this software without specific prior written permission. 
+....................     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY 
+....................     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+....................     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+....................     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY 
+....................     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+....................     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+....................     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND 
+....................     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+....................     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+....................     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+.................... */ 
+.................... /**************************************************************************/ 
+....................  
+.................... #ifndef _I2C_ENGINE_ 
+....................    #define _I2C_ENGINE_ 
+.................... #endif 
+....................  
+.................... #define I2C_DELAY_US           20 // worked 20 //Worked 32 //75 //100  
+.................... #define I2C_INTERBYTE_DELAY_US 60 // worked 80 
+.................... #define  READ__EEPROM             TRUE 
+.................... #define  normal_I2C              FALSE 
+....................  
+.................... void i2cInit      (void);    
+.................... void ClearBuffers (unsigned int *, short int); 
+.................... void i2cEngine    (int1); //, unsigned int8);   
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... /*extern volatile unsigned int   MasterBuffer[I2C_BUFSIZE]; 
+.................... extern volatile unsigned int   SlaveBuffer[I2C_BUFSIZE]; 
+.................... volatile unsigned int32 I2CReadLength; //I2C zmieniæ na  
+.................... volatile unsigned int32 I2CWriteLength;*/ 
+....................  
+....................  
+.................... unsigned int   MasterBuffer[I2C_BUFSIZE]; 
+.................... unsigned int   SlaveBuffer[I2C_BUFSIZE]; 
+....................  
+....................  
+.................... unsigned int32 I2CReadLength; //I2C zmieniæ na  
+.................... unsigned int32 I2CWriteLength; 
+....................  
+.................... //#define UARTReadLength I2CReadLength; 
+.................... //#define UARTRWriteLength I2CWriteLength; 
+....................  
+.................... void ClearBuffers (unsigned int *buffer, short int buffer_size) 
+.................... { 
+....................    unsigned int8 i; 
+....................    for ( i = 0; i < buffer_size; i++ ) 
+....................    { 
+....................       *(buffer+i)= 0x00; 
+....................    } 
+.................... } 
+....................  
+.................... void i2cInit(void) { 
+....................    output_float(_I2C_SCL); 
+....................    output_float(_I2C_SDA); 
+.................... } 
+....................  
+.................... int1 __i2cDeviceStatus() { 
+....................    int1 ack; 
+....................    i2c_start();            // If the write command is acknowledged, 
+*
+01D9:  BSF    08.1
+01DA:  NOP
+01DB:  BSF    08.0
+01DC:  NOP
+01DD:  BCF    03.5
+01DE:  BCF    08.1
+01DF:  BSF    03.5
+01E0:  BCF    08.1
+01E1:  NOP
+01E2:  BCF    03.5
+01E3:  BCF    08.0
+01E4:  BSF    03.5
+01E5:  BCF    08.0
+....................    delay_us(I2C_DELAY_US); 
+01E6:  MOVLW  21
+01E7:  MOVWF  77
+01E8:  DECFSZ 77,F
+01E9:  GOTO   1E8
+....................    ack = i2c_write(MasterBuffer[0]);  // then the device is ready. 
+01EA:  BCF    03.5
+01EB:  MOVF   20,W
+01EC:  BSF    03.5
+01ED:  MOVWF  68
+01EE:  BCF    03.5
+01EF:  CALL   0EB
+01F0:  MOVF   78,W
+01F1:  BSF    03.5
+01F2:  BCF    67.0
+01F3:  BTFSC  78.0
+01F4:  BSF    67.0
+....................    delay_us(I2C_DELAY_US); 
+01F5:  MOVLW  21
+01F6:  MOVWF  77
+01F7:  DECFSZ 77,F
+01F8:  GOTO   1F7
+....................    i2c_stop(); 
+01F9:  BCF    08.1
+01FA:  NOP
+01FB:  BSF    08.0
+01FC:  BCF    03.5
+01FD:  BTFSS  08.0
+01FE:  GOTO   1FD
+01FF:  NOP
+0200:  GOTO   201
+0201:  NOP
+0202:  BSF    03.5
+0203:  BSF    08.1
+0204:  NOP
+....................    delay_us(I2C_DELAY_US); 
+0205:  MOVLW  21
+0206:  MOVWF  77
+0207:  DECFSZ 77,F
+0208:  GOTO   207
+....................    return ack;             // 0 means ACK, 1 means NO ACK, 2 means there was a collision if in Multi_Master Mode. This does not return an ACK if using i2c in slave mode 
+0209:  MOVLW  00
+020A:  BTFSC  67.0
+020B:  MOVLW  01
+020C:  MOVWF  78
+.................... } 
+....................  
+.................... void i2cEngine(int1 eeprom_read = FALSE) //, unsigned int8 = 0) 
+.................... { 
+....................    disable_interrupts(GLOBAL); 
+*
+01C9:  BCF    03.5
+01CA:  BCF    0B.6
+01CB:  BCF    0B.7
+01CC:  BTFSC  0B.7
+01CD:  GOTO   1CB
+....................     
+....................    int8  i2c_ACK=1; 
+....................    unsigned int i2c_tryout_error = 0; 
+01CE:  MOVLW  01
+01CF:  BSF    03.5
+01D0:  MOVWF  64
+01D1:  CLRF   65
+....................    while(i2c_ACK!=0&&i2c_tryout_error <100) 
+01D2:  MOVF   64,F
+01D3:  BTFSC  03.2
+01D4:  GOTO   212
+01D5:  MOVF   65,W
+01D6:  SUBLW  63
+01D7:  BTFSS  03.0
+01D8:  GOTO   212
+....................    {i2c_ACK = __i2cDeviceStatus(); 
+*
+020D:  MOVF   78,W
+020E:  MOVWF  64
+....................    i2c_tryout_error = i2c_tryout_error +1; 
+020F:  MOVLW  01
+0210:  ADDWF  65,F
+0211:  GOTO   1D2
+....................    } 
+....................     
+....................    if (i2c_ACK==0) 
+0212:  MOVF   64,F
+0213:  BTFSS  03.2
+0214:  GOTO   348
+....................    { 
+....................    i2c_start(); 
+0215:  BSF    08.1
+0216:  NOP
+0217:  BSF    08.0
+0218:  NOP
+0219:  BCF    03.5
+021A:  BCF    08.1
+021B:  BSF    03.5
+021C:  BCF    08.1
+021D:  NOP
+021E:  BCF    03.5
+021F:  BCF    08.0
+0220:  BSF    03.5
+0221:  BCF    08.0
+....................    delay_us(I2C_DELAY_US); 
+0222:  MOVLW  21
+0223:  MOVWF  77
+0224:  DECFSZ 77,F
+0225:  GOTO   224
+....................    unsigned int8 i; 
+....................    if (I2CWriteLength>0) 
+0226:  BCF    03.5
+0227:  MOVF   64,F
+0228:  BTFSS  03.2
+0229:  GOTO   233
+022A:  MOVF   65,F
+022B:  BTFSS  03.2
+022C:  GOTO   233
+022D:  MOVF   66,F
+022E:  BTFSS  03.2
+022F:  GOTO   233
+0230:  MOVF   67,F
+0231:  BTFSC  03.2
+0232:  GOTO   257
+....................    {      
+....................       for(i=0;i<I2CWriteLength; i++) 
+0233:  BSF    03.5
+0234:  CLRF   66
+0235:  BCF    03.5
+0236:  MOVF   67,F
+0237:  BTFSS  03.2
+0238:  GOTO   245
+0239:  MOVF   66,F
+023A:  BTFSS  03.2
+023B:  GOTO   245
+023C:  MOVF   65,F
+023D:  BTFSS  03.2
+023E:  GOTO   245
+023F:  MOVF   64,W
+0240:  BSF    03.5
+0241:  SUBWF  66,W
+0242:  BTFSC  03.0
+0243:  GOTO   256
+0244:  BCF    03.5
+....................       { 
+....................          i2c_write(MasterBuffer[i]); //write to device from buffer 
+0245:  MOVLW  20
+0246:  BSF    03.5
+0247:  ADDWF  66,W
+0248:  MOVWF  04
+0249:  BCF    03.7
+024A:  MOVF   00,W
+024B:  MOVWF  67
+024C:  MOVWF  68
+024D:  BCF    03.5
+024E:  CALL   0EB
+....................          delay_us(I2C_DELAY_US); 
+024F:  MOVLW  21
+0250:  MOVWF  77
+0251:  DECFSZ 77,F
+0252:  GOTO   251
+0253:  BSF    03.5
+0254:  INCF   66,F
+0255:  GOTO   235
+0256:  BCF    03.5
+....................       } 
+....................    } 
+....................       if (eeprom_read == TRUE) 
+0257:  BSF    03.5
+0258:  DECFSZ 63,W
+0259:  GOTO   278
+....................    { 
+....................       i2c_start(); 
+025A:  BSF    08.1
+025B:  NOP
+025C:  BSF    08.0
+025D:  NOP
+025E:  BCF    03.5
+025F:  BTFSS  08.0
+0260:  GOTO   25F
+0261:  BCF    08.1
+0262:  BSF    03.5
+0263:  BCF    08.1
+0264:  NOP
+0265:  BCF    03.5
+0266:  BCF    08.0
+0267:  BSF    03.5
+0268:  BCF    08.0
+....................       delay_us(I2C_DELAY_US); 
+0269:  MOVLW  21
+026A:  MOVWF  77
+026B:  DECFSZ 77,F
+026C:  GOTO   26B
+....................       i2c_write(MasterBuffer[2]); 
+026D:  BCF    03.5
+026E:  MOVF   22,W
+026F:  BSF    03.5
+0270:  MOVWF  68
+0271:  BCF    03.5
+0272:  CALL   0EB
+....................       delay_us(I2C_DELAY_US); 
+0273:  MOVLW  21
+0274:  MOVWF  77
+0275:  DECFSZ 77,F
+0276:  GOTO   275
+0277:  BSF    03.5
+....................    }    
+....................     
+....................    if (I2CReadLength > 0) 
+0278:  BCF    03.5
+0279:  MOVF   60,F
+027A:  BTFSS  03.2
+027B:  GOTO   285
+027C:  MOVF   61,F
+027D:  BTFSS  03.2
+027E:  GOTO   285
+027F:  MOVF   62,F
+0280:  BTFSS  03.2
+0281:  GOTO   285
+0282:  MOVF   63,F
+0283:  BTFSC  03.2
+0284:  GOTO   2D5
+....................    { 
+....................       for(i=0;i<I2CReadLength; i++) 
+0285:  BSF    03.5
+0286:  CLRF   66
+0287:  BCF    03.5
+0288:  MOVF   63,F
+0289:  BTFSS  03.2
+028A:  GOTO   297
+028B:  MOVF   62,F
+028C:  BTFSS  03.2
+028D:  GOTO   297
+028E:  MOVF   61,F
+028F:  BTFSS  03.2
+0290:  GOTO   297
+0291:  MOVF   60,W
+0292:  BSF    03.5
+0293:  SUBWF  66,W
+0294:  BTFSC  03.0
+0295:  GOTO   2D4
+0296:  BCF    03.5
+....................       { 
+....................          SlaveBuffer[i]=i2c_read(); ///write to buffer from device 
+0297:  MOVLW  A0
+0298:  BSF    03.5
+0299:  ADDWF  66,W
+029A:  MOVWF  04
+029B:  BCF    03.7
+029C:  MOVLW  01
+029D:  MOVWF  77
+*
+02CB:  MOVF   78,W
+02CC:  MOVWF  00
+....................          delay_us(I2C_INTERBYTE_DELAY_US); 
+02CD:  MOVLW  63
+02CE:  MOVWF  77
+02CF:  DECFSZ 77,F
+02D0:  GOTO   2CF
+02D1:  GOTO   2D2
+02D2:  INCF   66,F
+02D3:  GOTO   287
+02D4:  BCF    03.5
+....................       } 
+....................    } 
+....................    i2c_stop(); 
+02D5:  BSF    03.5
+02D6:  BCF    08.1
+02D7:  NOP
+02D8:  BSF    08.0
+02D9:  BCF    03.5
+02DA:  BTFSS  08.0
+02DB:  GOTO   2DA
+02DC:  NOP
+02DD:  GOTO   2DE
+02DE:  NOP
+02DF:  BSF    03.5
+02E0:  BSF    08.1
+02E1:  NOP
+....................    delay_us(I2C_DELAY_US); 
+02E2:  MOVLW  21
+02E3:  MOVWF  77
+02E4:  DECFSZ 77,F
+02E5:  GOTO   2E4
+....................    if (I2CReadLength == 0) 
+02E6:  BCF    03.5
+02E7:  MOVF   60,F
+02E8:  BTFSS  03.2
+02E9:  GOTO   31E
+02EA:  MOVF   61,F
+02EB:  BTFSS  03.2
+02EC:  GOTO   31E
+02ED:  MOVF   62,F
+02EE:  BTFSS  03.2
+02EF:  GOTO   31E
+02F0:  MOVF   63,F
+02F1:  BTFSS  03.2
+02F2:  GOTO   31E
+....................       {dbg_printf("I2C w.addr:%x ACK ", MasterBuffer[0]);} 
+02F3:  MOVLW  04
+02F4:  BSF    03.6
+02F5:  MOVWF  0D
+02F6:  MOVLW  00
+02F7:  MOVWF  0F
+02F8:  BCF    03.0
+02F9:  MOVLW  0B
+02FA:  BSF    03.5
+02FB:  BCF    03.6
+02FC:  MOVWF  67
+02FD:  BCF    03.5
+02FE:  CALL   11F
+02FF:  MOVF   20,W
+0300:  BSF    03.5
+0301:  MOVWF  67
+0302:  MOVLW  57
+0303:  MOVWF  68
+0304:  BCF    03.5
+0305:  CALL   199
+0306:  MOVLW  0A
+0307:  BSF    03.6
+0308:  MOVWF  0D
+0309:  MOVLW  00
+030A:  MOVWF  0F
+030B:  BSF    03.0
+030C:  MOVLW  05
+030D:  BSF    03.5
+030E:  BCF    03.6
+030F:  MOVWF  67
+0310:  BCF    03.5
+0311:  CALL   11F
+0312:  MOVLW  02
+0313:  BSF    03.5
+0314:  MOVWF  67
+0315:  MOVLW  FA
+0316:  MOVWF  68
+0317:  BCF    03.5
+0318:  CALL   02F
+0319:  BSF    03.5
+031A:  DECFSZ 67,F
+031B:  GOTO   315
+031C:  GOTO   347
+031D:  BCF    03.5
+....................    else 
+....................       {dbg_printf("I2C r.addr:%x ACK ", MasterBuffer[0]);} 
+031E:  MOVLW  0E
+031F:  BSF    03.6
+0320:  MOVWF  0D
+0321:  MOVLW  00
+0322:  MOVWF  0F
+0323:  BCF    03.0
+0324:  MOVLW  0B
+0325:  BSF    03.5
+0326:  BCF    03.6
+0327:  MOVWF  67
+0328:  BCF    03.5
+0329:  CALL   11F
+032A:  MOVF   20,W
+032B:  BSF    03.5
+032C:  MOVWF  67
+032D:  MOVLW  57
+032E:  MOVWF  68
+032F:  BCF    03.5
+0330:  CALL   199
+0331:  MOVLW  14
+0332:  BSF    03.6
+0333:  MOVWF  0D
+0334:  MOVLW  00
+0335:  MOVWF  0F
+0336:  BSF    03.0
+0337:  MOVLW  05
+0338:  BSF    03.5
+0339:  BCF    03.6
+033A:  MOVWF  67
+033B:  BCF    03.5
+033C:  CALL   11F
+033D:  MOVLW  02
+033E:  BSF    03.5
+033F:  MOVWF  67
+0340:  MOVLW  FA
+0341:  MOVWF  68
+0342:  BCF    03.5
+0343:  CALL   02F
+0344:  BSF    03.5
+0345:  DECFSZ 67,F
+0346:  GOTO   340
+....................    //I2CWriteLength = 0; 
+....................    //I2CReadLength = 0; 
+....................    break; 
+....................    } 
+0347:  GOTO   3A3
+....................    else if (i2c_ACK==1) 
+0348:  DECFSZ 64,W
+0349:  GOTO   375
+....................    { 
+....................    dbg_printf("I2C addr:%x !ACK ", MasterBuffer[0]); 
+034A:  MOVLW  18
+034B:  BCF    03.5
+034C:  BSF    03.6
+034D:  MOVWF  0D
+034E:  MOVLW  00
+034F:  MOVWF  0F
+0350:  BCF    03.0
+0351:  MOVLW  09
+0352:  BSF    03.5
+0353:  BCF    03.6
+0354:  MOVWF  67
+0355:  BCF    03.5
+0356:  CALL   11F
+0357:  MOVF   20,W
+0358:  BSF    03.5
+0359:  MOVWF  67
+035A:  MOVLW  57
+035B:  MOVWF  68
+035C:  BCF    03.5
+035D:  CALL   199
+035E:  MOVLW  1D
+035F:  BSF    03.6
+0360:  MOVWF  0D
+0361:  MOVLW  00
+0362:  MOVWF  0F
+0363:  BSF    03.0
+0364:  MOVLW  06
+0365:  BSF    03.5
+0366:  BCF    03.6
+0367:  MOVWF  67
+0368:  BCF    03.5
+0369:  CALL   11F
+036A:  MOVLW  02
+036B:  BSF    03.5
+036C:  MOVWF  67
+036D:  MOVLW  FA
+036E:  MOVWF  68
+036F:  BCF    03.5
+0370:  CALL   02F
+0371:  BSF    03.5
+0372:  DECFSZ 67,F
+0373:  GOTO   36D
+....................    break; 
+....................    } 
+0374:  GOTO   3A3
+....................    else if (i2c_ACK==2) 
+0375:  MOVF   64,W
+0376:  SUBLW  02
+0377:  BTFSS  03.2
+0378:  GOTO   3A3
+....................    { 
+....................    dbg_printf("I2C adr:%x COLISION ", MasterBuffer[0]); 
+0379:  MOVLW  21
+037A:  BCF    03.5
+037B:  BSF    03.6
+037C:  MOVWF  0D
+037D:  MOVLW  00
+037E:  MOVWF  0F
+037F:  BCF    03.0
+0380:  MOVLW  08
+0381:  BSF    03.5
+0382:  BCF    03.6
+0383:  MOVWF  67
+0384:  BCF    03.5
+0385:  CALL   11F
+0386:  MOVF   20,W
+0387:  BSF    03.5
+0388:  MOVWF  67
+0389:  MOVLW  57
+038A:  MOVWF  68
+038B:  BCF    03.5
+038C:  CALL   199
+038D:  MOVLW  26
+038E:  BSF    03.6
+038F:  MOVWF  0D
+0390:  MOVLW  00
+0391:  MOVWF  0F
+0392:  BCF    03.0
+0393:  MOVLW  0A
+0394:  BSF    03.5
+0395:  BCF    03.6
+0396:  MOVWF  67
+0397:  BCF    03.5
+0398:  CALL   11F
+0399:  MOVLW  02
+039A:  BSF    03.5
+039B:  MOVWF  67
+039C:  MOVLW  FA
+039D:  MOVWF  68
+039E:  BCF    03.5
+039F:  CALL   02F
+03A0:  BSF    03.5
+03A1:  DECFSZ 67,F
+03A2:  GOTO   39C
+....................    break; 
+....................    } 
+....................    I2CWriteLength = 0; 
+03A3:  BCF    03.5
+03A4:  CLRF   67
+03A5:  CLRF   66
+03A6:  CLRF   65
+03A7:  CLRF   64
+....................    I2CReadLength = 0; 
+03A8:  CLRF   63
+03A9:  CLRF   62
+03AA:  CLRF   61
+03AB:  CLRF   60
+....................    enable_interrupts(GLOBAL);  
+03AC:  MOVLW  C0
+03AD:  IORWF  0B,F
+.................... } 
+....................  
+.................... #endif 
+....................  
+.................... #define EEPROM_I2C_WRITE_ADDRESS 0xa0     
+.................... #define EEPROM_ADDRESS           unsigned int16 
+.................... #define EEPROM_SIZE              1024 
+....................  
+....................  
+....................  
+.................... //void write_ext_eeprom(EEPROM_ADDRESS, BYTE, unsigned int16 ); 
+.................... void write_ext_eeprom(EEPROM_ADDRESS, void *, EEPROM_ADDRESS); 
+.................... //BYTE read_ext_eeprom(EEPROM_ADDRESS); 
+.................... void read_ext_eeprom(EEPROM_ADDRESS address, void *, EEPROM_ADDRESS); 
+.................... //#define pic_eeprom 
+.................... //#define external_eeprom_24C16 //TO DO 
+.................... //#define max_buffer_size 5 
+.................... //#define eeprom_write_delay 50 
+.................... #endif 
+....................  
+....................  
+.................... /*#ifndef __EEPROM_ADDRESS_MAP 
+....................    #define __EEPROM_ADDRESS_MAP 
+....................    #include </core/EEPROM_2416/eeprom_address_map.h.h> 
+.................... #endif 
+....................  
+.................... #ifndef _I2C_ENGINE_ 
+....................    #include </core/I2C/I2C_Engine.c> 
+.................... #endif*/ 
+....................  
+....................  
+....................  
+....................  
+.................... void write_ext_eeprom(EEPROM_ADDRESS address, void *data, unsigned int16 _size_of_data) { 
+....................    ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................    MasterBuffer[0]   =  (EEPROM_I2C_WRITE_ADDRESS|(BYTE)(address>>7))&0xfe; 
+....................    MasterBuffer[1]   =  address; 
+....................    memcpy(&MasterBuffer+2, data, _size_of_data); 
+....................    I2CWriteLength = 2+_size_of_data; 
+....................    I2CReadLength = 0; 
+....................    i2cEngine(normal_I2C); 
+.................... } 
+....................  
+....................  
+.................... void read_ext_eeprom(EEPROM_ADDRESS address, void *data, EEPROM_ADDRESS _size_of_data) { 
+....................    ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................    ClearBuffers(&SlaveBuffer,I2C_BUFSIZE); 
+....................    MasterBuffer[0]   = ((EEPROM_I2C_WRITE_ADDRESS|(BYTE)(address>>7))&0xfe); 
+....................    MasterBuffer[1]   = (address); 
+....................    MasterBuffer[2]   = ((EEPROM_I2C_WRITE_ADDRESS|(BYTE)(address>>7))|1); 
+....................    I2CWriteLength = 3; 
+....................    I2CReadLength = _size_of_data; 
+....................    i2cEngine(READ__EEPROM); 
+....................    memcpy(data, &SlaveBuffer, _size_of_data); 
+.................... } 
+....................  
+....................  
+....................  
+....................  
+.................... #endif 
+....................  
+....................  
+....................  
+.................... //#define EEPROM_WRITE_DELAY 10 
+....................  
+.................... extern volatile unsigned int   MasterBuffer[I2C_BUFSIZE]; 
+.................... extern volatile unsigned int   SlaveBuffer[I2C_BUFSIZE]; 
+....................  
+.................... /*volatile unsigned int8   MasterBuffer[I2C_BUFSIZE]; 
+.................... volatile unsigned int8   SlaveBuffer[I2C_BUFSIZE];*/ 
+....................  
+.................... #ifndef _i2c_HMI_LEDS_ 
+....................    #include </core/i2c_HMI_LEDS/i2c_HMI_LEDS.c> 
+.................... #include <i2c_HMI_LEDS.h> 
+.................... #ifndef _i2c_HMI_LEDS_ 
+....................    #define _i2c_HMI_LEDS_ 
+....................    #ifndef _i2c_Slave_buffer_addresses_ 
+....................       #include <F:/Elektronika_projekty/Car_Radio/testowy/PIC2PIC_slave/core/i2c_Slave_buffer_addresses/i2c_Slave_buffer_addresses.h> 
+.................... #ifndef _i2c_Slave_buffer_addresses_ 
+....................    #define _i2c_Slave_buffer_addresses_ 
+.................... //****************************************************// 
+.................... /*       i2c COMMANDS protocol and addresses          */ 
+.................... //****************************************************// 
+....................  
+.................... // i2c protocle// 
+....................      #define command_clrl_all_packs             0x0      //command - size 1/ 0x00           / 0x0             /  0x0            / 
+....................      #define command_clrl_x_pack                0x1      //command - size 1/pack_no - size 1/ 0x0             /  0x0            / 
+....................      #define command_set_all_packs              0x2      //command - size 1/ 0x0            /colour - size 1  /  0x0            / 
+....................      #define command_set_x_pack                 0x3      //command - size 1/pack_no - size 1/colour - size 1  /  0x0            / 
+....................      #define command_blink_all_packs            0x4      //command - size 1/ 0x0            /colour_1 - size 1/colour_2 - size 1/ 
+....................      #define command_blink_x_pack               0x5      //command - size 1/pack_no - size 1/colour_1 - size 1/colour_2 - size 1/ 
+....................      #define command_set_backlight              0x6 
+....................      #define command_stepper_motor_percen       0x7 
+....................      #define command_stepper_motor_abs_val      0x8 
+....................      #define command_stepper_motor_rel_val      0x9 
+....................      #define command_stepper_motor_calibrate    0xa 
+....................       
+....................      #define command_address              0x00 
+....................      #define pack_no_addres               0x01 
+....................      #define colour_1_addres              0x02 
+....................      #define colour_2_addres              0x03   
+....................       
+....................      #define command_len                  0x1 
+....................      #define pack_no_len                  0x1 
+....................      #define colour_no_len                0x1 
+.................... // i2c protocle// 
+....................  
+....................  
+.................... //     #define command_motor_???      
+.................... //     #define command_backlight_??? 
+....................  
+.................... //   #define command_set_all_leds        0x0        //command/ON_OFF unsigned int 8; sizeof:1; value: 0-1/ 
+.................... //   #define command_set_x_pack          0x1        //command/unsigned int8 which leds pack- 1 st, 2nd, 3rd set; sizeof:1; value: 0-1/  
+.................... //   #define command_set_led             0x2        //command/unsigned int8  - which led/ON_OFF unsigned int 8; sizeof:1; value: 0-1/ 
+.................... //   #define command_set_x_pack_x_color  0x3    
+.................... //   #define command_set_motor_percent   0x4        //command/perventage; unsigned float; sizeof:4; value: <0-100>/ 
+.................... //   #define command_set_motor_abs_val   0x5        //command/motor steps + -; int32; sizeof:4; value –2,147,483,648 to 2,147,483,647/ 
+.................... //   #define command_set_motor_rel_val   0x6        //command/min value; int32; sizeof:4; value –2,147,483,648 to 2,147,483,647/ current value; int32; sizeof:4; value –2,147,483,648 to 2,147,483,647/ max value; int32; sizeof:4; value –2,147,483,648 to 2,147,483,647/ 
+.................... //   #define command_set_backlight_val   0x7        //command/potentiometer step; unsigned int 8; sizeof:1; value: 0-63/ 
+....................     
+....................     
+.................... //   #define SB_command_address          0x00 
+.................... //   #define SB_command_address_len      0x01 
+.................... //****************************************************// 
+.................... /*       i2c COMMANDS protocol and addresses          */ 
+.................... //****************************************************// 
+....................  
+....................  
+.................... //****************************************************// 
+.................... /*                  LED i2c protocol                  */ 
+.................... //****************************************************// 
+....................  
+.................... //hardware LEDS definition - can be changed 
+....................    #define LED1_BLUE    PIN_A0 
+....................    #define LED1_GREEN   PIN_A1 
+....................    #define LED1_RED     PIN_A2 
+....................    #define LED2_BLUE    PIN_A3 
+....................    #define LED2_GREEN   PIN_E0 
+....................    #define LED2_RED     PIN_A5 
+....................    #define LED3_BLUE    PIN_C0 
+....................    #define LED3_GREEN   PIN_C1 
+....................    #define LED3_RED     PIN_C2 
+.................... //hardware LEDS definition - can be changed 
+....................         
+....................    #define  unset_mask              0b10000000 
+....................    #define  colour_BLUE             0b00000001 
+....................    #define  colour_GREEN            0b00000010 
+....................    #define  colour_RED              0b00000100 
+....................    #define  colour_YELLOW           colour_RED|colour_GREEN 
+....................    #define  colour_PURPLE           colour_RED|colour_BLUE 
+....................    #define  colour_SKYBLUE          colour_GREEN|colour_BLUE 
+....................    #define  colour_WHITE            colour_BLUE|colour_GREEN|colour_RED 
+....................    #define  colour_BLACK            unset_mask|colour_WHITE 
+....................     
+....................    #define  unset_colour_BLUE       unset_mask|0b00000001 
+....................    #define  unset_colour_GREEN      unset_mask|0b00000010 
+....................    #define  unset_colour_RED        unset_mask|0b00000100 
+....................    #define  unset_colour_YELLOW     unset_mask|colour_RED|colour_GREEN 
+....................    #define  unset_colour_PURPLE     unset_mask|colour_RED|colour_BLUE 
+....................    #define  unset_colour_SKYBLUE    unset_mask|colour_GREEN|colour_BLUE 
+....................    #define  unset_colour_WHITE      unset_mask|colour_WHITE 
+....................     
+....................    #define  pack_1             0b00000001 
+....................    #define  pack_2             0b00000010 
+....................    #define  pack_3             0b00000011 
+....................  
+....................  
+....................     
+....................     
+....................     
+....................     
+....................     
+....................     
+....................     
+....................     
+.................... /*   #define LED1_BLUE_no    0x1 
+....................    #define LED1_GREEN_no   0x2 
+....................    #define LED1_RED_no     0x3 
+....................    #define LED2_BLUE_no    0x4 
+....................    #define LED2_GREEN_no   0x5 
+....................    #define LED2_RED_no     0x6 
+....................    #define LED3_BLUE_no    0x7 
+....................    #define LED3_GREEN_no   0x8 
+....................    #define LED3_RED_no     0x9*/ 
+....................     
+....................    #define SB_set_x_pack_no_address                0x01 
+....................    #define SB_set_x_pack_no_len                    0x01 
+....................    #define SB_set_x_pack_Val_address               0x02    
+....................    #define SB_set_x_pack_Val_len                   0x01     
+....................     
+....................     
+....................    #define set_1st_pack                            0x1 
+....................    #define set_2nd_pack                            0x2 
+....................    #define set_3rd_pack                            0x3    
+....................     
+....................    #define SB_set_all_leds_address                 0x01 
+....................    #define SB_set_all_leds_len                     0x01 
+....................     
+....................    #define SB_set_led_number_address               0x01 
+....................    #define SB_set_led_number_len                   0x01    
+....................     
+....................    #define SB_set_led_Val_address                  0x02 
+....................    #define SB_set_led_Val_len                      0x01 
+....................        
+....................    #define SB_set_motor__percent_Val_address       0x01 
+....................    #define SB_set_motor__percent_len               0x04 
+....................     
+....................    #define SB_set_abs_val_Val_address              0x01 
+....................    #define SB_set_abs_val_len                      0x04 
+....................     
+....................    #define SB_set_motor_rel_val_min_Val_address    0x01 
+....................    #define SB_set_motor_rel_val_min_len            0x04 
+....................     
+....................    #define SB_set_motor_rel_val_curr_Val_address   0x05 
+....................    #define SB_set_motor_rel_val_curr_len           0x04 
+....................     
+....................    #define SB_set_motor_rel_val_max_Val_address    0x09 
+....................    #define SB_sets_motor_rel_val_curr_len          0x04 
+....................     
+....................    #define SB_set_backlight_Val_address            0x01 
+....................    #define SB_set_backlight_len                    0x01 
+.................... //****************************************************// 
+.................... /*                  LED i2c protocol                  */ 
+.................... //****************************************************// 
+....................  
+....................  
+.................... //****************************************************// 
+.................... /*        BACKLIGHTY i2c protocol addresses           */ 
+.................... //****************************************************// 
+....................  
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... //****************************************************// 
+.................... /*        BACKLIGHTY i2c protocol addresses           */ 
+.................... //****************************************************// 
+....................  
+....................  
+.................... //****************************************************// 
+.................... /*      STEPPER MOTOR i2c protocol addresses          */ 
+.................... //****************************************************// 
+....................  
+....................  
+....................  
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... //****************************************************// 
+.................... /*      STEPPER MOTOR i2c protocol addresses          */ 
+.................... //****************************************************// 
+.................... #endif 
+....................  
+....................  
+....................  
+....................       #include <F:/Elektronika_projekty/Car_Radio/testowy/PIC2PIC_slave/core/i2c_slave_address/i2c_slave_address.h> 
+.................... #define i2c_slave_address  0xA0 
+....................  
+....................        
+....................    #endif 
+.................... #ifndef _I2C_ENGINE_ 
+....................    #include </core/I2C_Engine/I2C_Engine.c> 
+.................... #endif 
+....................     
+....................    #define led_ON    1 
+....................    #define led_OFF   0 
+....................     
+....................    #define  audio_led_pack       set_1st_pack 
+....................    #define  equalizer_led_pack   set_2nd_pack 
+....................    #define  AANTENA_led_pack     set_3rd_pack 
+....................     
+....................    #define  audio_FM_R                 LED1_RED_no 
+....................    #define  audio_DAB_G                LED1_GREEN_no 
+....................    #define  audio_MP3_B                LED1_BLUE_no 
+....................    #define  audio_MP3_RND_R            LED1_RED_no 
+....................    #define  audio_MP3_RND_G            LED1_GREEN_no 
+....................    #define  audio_AUX_R                LED1_RED_no 
+....................    #define  audio_AUX_B                LED1_BLUE_no 
+....................     
+....................    #define  equalizer_AANTENA_R        LED2_RED_no 
+....................    #define  equalizer_TREBLE_G         LED2_GREEN_no 
+....................    #define  equalizer_MIDDLE_B         LED2_BLUE_no 
+....................    #define  equalizer_BASS_R           LED2_RED_no 
+....................    #define  equalizer_BASS_G           LED2_GREEN_no 
+....................    #define  equalizer_L_H_BOOST_R      LED2_RED_no 
+....................    #define  equalizer_L_H_BOOST_B      LED2_BLUE_no 
+....................    #define  equalizer_LEFT_RIGHT_G     LED2_GREEN_no 
+....................    #define  equalizer_LEFT_RIGHT_B     LED2_BLUE_no 
+....................    #define  equalizer_FRONT_READ_R     LED2_RED_no 
+....................    #define  equalizer_FRONT_READ_G     LED2_GREEN_no 
+....................    #define  equalizer_FRONT_READ_B     LED2_BLUE_no 
+....................     
+....................    #define  AANTENA_R                  LED3_RED_no          //ACTIVE ANTENA LED on/off 
+....................     
+....................  
+.................... /*void set_all_leds(unsigned int8); 
+.................... void set_one_led(unsigned int8, unsigned int8); 
+.................... void set_leds_pack(unsigned int8, unsigned int8);*/ 
+....................  
+.................... void set_all_pack_colour(int8); 
+.................... void set_x_pack_colour(int8, int8); 
+.................... void set_blink_all_packs(int8, int8); 
+.................... void set_blink_x_pack(int8, int8, int8); 
+.................... void clrl_all_packs(void); 
+.................... void clrl_x_pack(int8); 
+.................... #endif 
+....................     
+....................     
+....................     
+....................     
+....................     
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... void _HMI_i2cWritePrepare (void) 
+.................... { 
+.................... /* Prepare Transmission buffer to transmission*/ 
+....................    //ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................    *(MasterBuffer) = i2c_slave_address; 
+*
+00E2:  CLRF   7A
+00E3:  MOVLW  20
+00E4:  MOVWF  04
+00E5:  BCF    03.7
+00E6:  BTFSC  7A.0
+00E7:  BSF    03.7
+00E8:  MOVLW  A0
+00E9:  MOVWF  00
+00EA:  RETURN
+.................... } 
+....................  
+.................... void _HMI_i2cWriteExecute(void) 
+.................... { 
+.................... /* I2Cengine write parameters setup */ 
+....................    I2CWriteLength = 5; //i2cEngine write information 
+*
+01BE:  CLRF   67
+01BF:  CLRF   66
+01C0:  CLRF   65
+01C1:  MOVLW  05
+01C2:  MOVWF  64
+....................    I2CReadLength = 0;  //i2cEngine read information 
+01C3:  CLRF   63
+01C4:  CLRF   62
+01C5:  CLRF   61
+01C6:  CLRF   60
+....................    i2cEngine(FALSE);        //write or read data  depend of I2CWriteLength and I2CReadLength 
+01C7:  BSF    03.5
+01C8:  CLRF   63
+*
+03AE:  RETURN
+.................... } 
+....................  
+.................... void set_all_pack_colour(int8 colour_1) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+....................    MasterBuffer[1] = command_set_all_packs; 
+....................    //MasterBuffer[2] = 0x0; 
+....................    MasterBuffer[3] = colour_1; 
+....................    //MasterBuffer[4] = 0x0; 
+....................    _HMI_i2cWriteExecute(); 
+.................... } 
+....................  
+.................... void set_x_pack_colour(int8 pack_no, int8 colour_1) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+*
+03C0:  CALL   0E2
+....................    MasterBuffer[1] = command_set_x_pack; 
+03C1:  MOVLW  03
+03C2:  MOVWF  21
+....................    MasterBuffer[2] = pack_no; 
+03C3:  BSF    03.5
+03C4:  MOVF   60,W
+03C5:  BCF    03.5
+03C6:  MOVWF  22
+....................    MasterBuffer[3] = colour_1; 
+03C7:  BSF    03.5
+03C8:  MOVF   61,W
+03C9:  BCF    03.5
+03CA:  MOVWF  23
+....................    //MasterBuffer[4] = 0x0; 
+....................    _HMI_i2cWriteExecute(); 
+03CB:  CALL   1BE
+03CC:  BCF    0A.3
+03CD:  BCF    0A.4
+03CE:  GOTO   41C (RETURN)
+.................... } 
+....................  
+.................... void set_blink_all_packs(int8 colour_1, int8 colour_2) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+....................    MasterBuffer[1] = command_blink_all_packs; 
+....................    //MasterBuffer[2] = pack_no; 
+....................    MasterBuffer[3] = colour_1; 
+....................    MasterBuffer[4] = colour_2; 
+....................    _HMI_i2cWriteExecute(); 
+.................... } 
+....................  
+.................... void set_blink_x_pack(int8 pack_no, int8 colour_1, int8 colour_2) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+*
+03AF:  CALL   0E2
+....................    MasterBuffer[1] = command_blink_x_pack; 
+03B0:  MOVLW  05
+03B1:  MOVWF  21
+....................    MasterBuffer[2] = pack_no; 
+03B2:  BSF    03.5
+03B3:  MOVF   60,W
+03B4:  BCF    03.5
+03B5:  MOVWF  22
+....................    MasterBuffer[3] = colour_1; 
+03B6:  BSF    03.5
+03B7:  MOVF   61,W
+03B8:  BCF    03.5
+03B9:  MOVWF  23
+....................    MasterBuffer[4] = colour_2; 
+03BA:  BSF    03.5
+03BB:  MOVF   62,W
+03BC:  BCF    03.5
+03BD:  MOVWF  24
+....................    _HMI_i2cWriteExecute(); 
+03BE:  CALL   1BE
+03BF:  RETURN
+.................... } 
+....................  
+....................  
+....................  
+....................  
+.................... void clrl_all_packs(void) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+....................    MasterBuffer[1] = command_clrl_all_packs; 
+....................    //MasterBuffer[2] = pack_no; 
+....................    //MasterBuffer[3] = colour_1; 
+....................    //MasterBuffer[4] = colour_2; 
+....................    _HMI_i2cWriteExecute(); 
+.................... } 
+....................  
+.................... void clrl_x_pack(int8 pack_no) 
+.................... { 
+....................    _HMI_i2cWritePrepare(); 
+....................    MasterBuffer[1] = command_clrl_x_pack; 
+....................    MasterBuffer[2] = pack_no; 
+....................    //MasterBuffer[3] = colour_1; 
+....................    //MasterBuffer[4] = colour_2; 
+....................    _HMI_i2cWriteExecute(); 
+.................... } 
+....................  
+....................  
+.................... /*void set_all_leds(unsigned int8 on_off) 
+.................... {   
+....................    ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................    ClearBuffers(&SlaveBuffer,I2C_BUFSIZE); 
+....................    MasterBuffer[0]=i2c_slave_address; 
+....................    MasterBuffer[1]=command_set_all_leds; 
+....................    MasterBuffer[2]=on_off; 
+....................    I2CWriteLength = 3; 
+....................    I2CReadLength = 0; 
+....................    i2cEngine(FALSE); 
+.................... } 
+....................  
+.................... void set_leds_pack(unsigned int8 x_pack, unsigned int8 on_off) 
+.................... { 
+....................    ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................    ClearBuffers(&SlaveBuffer,I2C_BUFSIZE); 
+....................    MasterBuffer[0]=i2c_slave_address; 
+....................    MasterBuffer[1]=command_set_x_pack; 
+....................    MasterBuffer[2]=x_pack; 
+....................    MasterBuffer[3]=on_off; 
+....................    I2CWriteLength = 4; 
+....................    I2CReadLength = 0; 
+....................    i2cEngine(FALSE); 
+.................... } 
+....................  
+....................  
+....................  
+....................  
+.................... void set_one_led(unsigned int8 led_no, unsigned int8 on_off) 
+.................... { 
+....................   ClearBuffers(&MasterBuffer,I2C_BUFSIZE); 
+....................   ClearBuffers(&SlaveBuffer,I2C_BUFSIZE); 
+....................   MasterBuffer[0]=i2c_slave_address; 
+....................   MasterBuffer[1]=command_set_led; 
+....................   MasterBuffer[2]=led_no; 
+....................   MasterBuffer[3]=on_off; 
+....................   I2CWriteLength = 4; 
+....................   I2CReadLength = 0; 
+....................   i2cEngine(FALSE); 
+.................... }*/ 
+....................  
+....................  
+....................  
+....................  
+.................... #endif 
+....................  
+....................  
+.................... //#define READ_24LC16 TRUE 
+.................... //#define _24LC16_WRITE_DELAY   10 
+....................  
+.................... void main() 
+*
+03CF:  MOVF   03,W
+03D0:  ANDLW  1F
+03D1:  MOVWF  03
+03D2:  BSF    03.5
+03D3:  BCF    06.7
+03D4:  BCF    03.5
+03D5:  BSF    06.7
+03D6:  CLRF   69
+03D7:  CLRF   68
+03D8:  MOVLW  FF
+03D9:  MOVWF  6A
+03DA:  BSF    03.5
+03DB:  BSF    1F.0
+03DC:  BSF    1F.1
+03DD:  BSF    1F.2
+03DE:  BCF    1F.3
+03DF:  BCF    03.7
+.................... {   
+....................    //init_i2cEngine(); 
+....................    //Example blinking LED program 
+....................    //dbg_printf("t"); 
+....................     
+....................    //i2cInit(); 
+....................    //i2cEngine(); 
+....................   // double a=-152.221; 
+....................   // double b=152.0; 
+....................   // double c = (double)a+b; 
+....................    /*dbg_printf("%3.5f ",c); 
+....................    write_ext_eeprom(0x0,&a,sizeof(a)); 
+....................    read_ext_eeprom(0x0,&b,sizeof(b)); 
+....................    //b=read_ext_eeprom(0x0); 
+....................    //dbg_printf("tata "); 
+....................    dbg_printf("%3.5f ",a); 
+....................    dbg_printf("%3.5f",b);*/ 
+....................     
+....................    /*if (b==a) 
+....................       {output_high(PIN_C1);}*/ 
+....................      
+....................    delay_ms(2000); 
+03E0:  MOVLW  08
+03E1:  MOVWF  60
+03E2:  MOVLW  FA
+03E3:  MOVWF  68
+03E4:  BCF    03.5
+03E5:  CALL   02F
+03E6:  BSF    03.5
+03E7:  DECFSZ 60,F
+03E8:  GOTO   3E2
+....................     
+....................    dbg_printf("1st ");    
+03E9:  MOVLW  2C
+03EA:  BCF    03.5
+03EB:  BSF    03.6
+03EC:  MOVWF  0D
+03ED:  MOVLW  00
+03EE:  MOVWF  0F
+03EF:  BCF    03.6
+03F0:  GOTO   06C
+03F1:  MOVLW  02
+03F2:  BSF    03.5
+03F3:  MOVWF  60
+03F4:  MOVLW  FA
+03F5:  MOVWF  68
+03F6:  BCF    03.5
+03F7:  CALL   02F
+03F8:  BSF    03.5
+03F9:  DECFSZ 60,F
+03FA:  GOTO   3F4
+....................     
+....................    set_blink_x_pack(pack_1, colour_RED, colour_WHITE); 
+03FB:  MOVLW  01
+03FC:  MOVWF  60
+03FD:  MOVLW  04
+03FE:  MOVWF  61
+03FF:  MOVLW  07
+0400:  MOVWF  62
+0401:  BCF    03.5
+0402:  CALL   3AF
+....................     
+....................    delay_ms(2500); 
+0403:  MOVLW  0A
+0404:  BSF    03.5
+0405:  MOVWF  60
+0406:  MOVLW  FA
+0407:  MOVWF  68
+0408:  BCF    03.5
+0409:  CALL   02F
+040A:  BSF    03.5
+040B:  DECFSZ 60,F
+040C:  GOTO   406
+....................    set_blink_x_pack(pack_2, colour_RED, colour_PURPLE); 
+040D:  MOVLW  02
+040E:  MOVWF  60
+040F:  MOVLW  04
+0410:  MOVWF  61
+0411:  MOVLW  05
+0412:  MOVWF  62
+0413:  BCF    03.5
+0414:  CALL   3AF
+....................    set_x_pack_colour(pack_1, colour_RED); 
+0415:  MOVLW  01
+0416:  BSF    03.5
+0417:  MOVWF  60
+0418:  MOVLW  04
+0419:  MOVWF  61
+041A:  BCF    03.5
+041B:  GOTO   3C0
+....................    /*delay_ms(2000); 
+....................    clrl_x_pack(pack_1); 
+....................    delay_ms(2000); 
+....................    clrl_all_packs();*/ 
+....................     
+.................... /*   set_all_leds(led_ON); 
+....................    delay_ms(2000); 
+....................    set_all_leds(led_OFF); 
+....................  
+....................    set_one_led(LED1_BLUE_no, led_ON); 
+....................    set_one_led(LED1_GREEN_no, led_ON); 
+....................    set_one_led(LED1_RED_no, led_ON); 
+....................     
+....................    set_one_led(LED2_BLUE_no, led_ON);       
+....................    set_one_led(LED2_GREEN_no, led_ON);       
+....................    set_one_led(LED2_RED_no, led_ON);       
+....................     
+....................     
+....................    set_one_led(LED3_BLUE_no, led_ON); 
+....................    set_one_led(LED3_GREEN_no, led_ON);       
+....................    set_one_led(LED3_RED_no, led_ON); 
+....................   
+....................  
+....................  
+....................    set_one_led(LED1_BLUE_no, led_OFF); 
+....................    set_one_led(LED1_GREEN_no, led_OFF); 
+....................    set_one_led(LED1_RED_no, led_OFF); 
+....................     
+....................    set_one_led(LED2_BLUE_no, led_OFF);       
+....................    set_one_led(LED2_GREEN_no, led_OFF);       
+....................    set_one_led(LED2_RED_no, led_OFF);       
+....................     
+....................    set_one_led(LED3_BLUE_no, led_OFF); 
+....................    set_one_led(LED3_GREEN_no, led_OFF);       
+....................    set_one_led(LED3_RED_no, led_OFF); 
+....................   
+....................  set_leds_pack(set_1st_pack, led_ON); 
+....................   set_leds_pack(set_2nd_pack, led_ON); 
+....................    set_leds_pack(set_3rd_pack, led_ON); 
+....................   
+....................  delay_ms(500); 
+....................  set_leds_pack(set_1st_pack, led_OFF); 
+....................   set_leds_pack(set_2nd_pack, led_OFF); 
+....................    set_leds_pack(set_3rd_pack, led_OFF);*/ 
+....................    while(true) 
+....................    { 
+....................       output_low(LED); 
+041C:  BCF    6A.0
+041D:  MOVF   6A,W
+041E:  BSF    03.5
+041F:  MOVWF  07
+0420:  BCF    03.5
+0421:  BCF    07.0
+....................       delay_ms(DELAY); 
+0422:  MOVLW  04
+0423:  BSF    03.5
+0424:  MOVWF  60
+0425:  MOVLW  FA
+0426:  MOVWF  68
+0427:  BCF    03.5
+0428:  CALL   02F
+0429:  BSF    03.5
+042A:  DECFSZ 60,F
+042B:  GOTO   425
+....................       output_high(LED); 
+042C:  BCF    03.5
+042D:  BCF    6A.0
+042E:  MOVF   6A,W
+042F:  BSF    03.5
+0430:  MOVWF  07
+0431:  BCF    03.5
+0432:  BSF    07.0
+....................       delay_ms(DELAY); 
+0433:  MOVLW  04
+0434:  BSF    03.5
+0435:  MOVWF  60
+0436:  MOVLW  FA
+0437:  MOVWF  68
+0438:  BCF    03.5
+0439:  CALL   02F
+043A:  BSF    03.5
+043B:  DECFSZ 60,F
+043C:  GOTO   436
+043D:  BCF    03.5
+043E:  GOTO   41C
+....................    } 
+....................  
+.................... } 
+043F:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3B72   HS NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

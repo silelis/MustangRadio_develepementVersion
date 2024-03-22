@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\01 Hardware\_03 LED_display\04_LED_display.kicad_sch</source>
+    <date>30.09.2023 07:54:47</date>
+    <tool>Eeschema 7.0.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Mustang Radio - LED display</title>
+        <company>Dawid "SileliS" Bańkowski</company>
+        <rev>2</rev>
+        <date>2021-03-08</date>
+        <source>04_LED_display.kicad_sch</source>
+        <comment number="1" value="d.bankowski@gmail.com"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">Display</field>
+        <field name="TME">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060471986</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">Display</field>
+        <field name="TME">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006047204c</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Module">Display</field>
+        <field name="TME">0603F104Z250CT</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="0603F104Z250CT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00006047260f</tstamps>
+    </comp>
+    <comp ref="D4">
+      <value>WS2812B</value>
+      <footprint>LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm</footprint>
+      <datasheet>https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf</datasheet>
+      <fields>
+        <field name="JLCPCB">C114586</field>
+        <field name="Manufacturer">Worldsemi</field>
+        <field name="Manufacturer no.">WS2812B</field>
+        <field name="Module">Display</field>
+        <field name="TME">WS2812B-B</field>
+      </fields>
+      <libsource lib="LED" part="WS2812B" description="RGB LED with integrated controller"/>
+      <property name="JLCPCB" value="C114586"/>
+      <property name="Manufacturer" value="Worldsemi"/>
+      <property name="Manufacturer no." value="WS2812B"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="WS2812B-B"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="RGB LED with integrated controller"/>
+      <property name="ki_keywords" value="RGB LED NeoPixel addressable"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060460715</tstamps>
+    </comp>
+    <comp ref="D5">
+      <value>WS2812B</value>
+      <footprint>LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm</footprint>
+      <datasheet>https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf</datasheet>
+      <fields>
+        <field name="JLCPCB">C114586</field>
+        <field name="Manufacturer">Worldsemi</field>
+        <field name="Manufacturer no.">WS2812B</field>
+        <field name="Module">Display</field>
+        <field name="TME">WS2812B-B</field>
+      </fields>
+      <libsource lib="LED" part="WS2812B" description="RGB LED with integrated controller"/>
+      <property name="JLCPCB" value="C114586"/>
+      <property name="Manufacturer" value="Worldsemi"/>
+      <property name="Manufacturer no." value="WS2812B"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="WS2812B-B"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="RGB LED with integrated controller"/>
+      <property name="ki_keywords" value="RGB LED NeoPixel addressable"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060460c38</tstamps>
+    </comp>
+    <comp ref="D6">
+      <value>WS2812B</value>
+      <footprint>LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm</footprint>
+      <datasheet>https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf</datasheet>
+      <fields>
+        <field name="JLCPCB">C114586</field>
+        <field name="Manufacturer">Worldsemi</field>
+        <field name="Manufacturer no.">WS2812B</field>
+        <field name="Module">Display</field>
+        <field name="TME">WS2812B-B</field>
+      </fields>
+      <libsource lib="LED" part="WS2812B" description="RGB LED with integrated controller"/>
+      <property name="JLCPCB" value="C114586"/>
+      <property name="Manufacturer" value="Worldsemi"/>
+      <property name="Manufacturer no." value="WS2812B"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="WS2812B-B"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="RGB LED with integrated controller"/>
+      <property name="ki_keywords" value="RGB LED NeoPixel addressable"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-000060461665</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x03_Male</value>
+      <footprint>Connector_Wire_SileliS:SolderWirePad_1x03_SMD_3x0.75</footprint>
+      <fields>
+        <field name="Module">Display</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x03_Male" description=""/>
+      <property name="Module" value="Display"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-0000604683c7</tstamps>
+    </comp>
+    <comp ref="TP1">
+      <value>Mount_pad</value>
+      <footprint>TestPoint:TestPoint_Pad_1.5x1.5mm</footprint>
+      <fields>
+        <field name="Module">Display</field>
+        <field name="TME">n/a</field>
+      </fields>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00005d9a69ac</tstamps>
+    </comp>
+    <comp ref="TP2">
+      <value>Mount_pad</value>
+      <footprint>TestPoint:TestPoint_Pad_1.5x1.5mm</footprint>
+      <fields>
+        <field name="Module">Display</field>
+        <field name="TME">n/a</field>
+      </fields>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Module" value="Display"/>
+      <property name="TME" value="n/a"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="04_LED_display.kicad_sch"/>
+      <property name="ki_description" value="test point"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00005d9a824c</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x03_Male">
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Connector_Conn_01x03_Male</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="TestPoint">
+      <description>test point</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Pin*</fp>
+        <fp>Test*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="LED" part="WS2812B">
+      <description>RGB LED with integrated controller</description>
+      <docs>https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf</docs>
+      <footprints>
+        <fp>LED*WS2812*PLCC*5.0x5.0mm*P3.2mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">WS2812B</field>
+        <field name="Footprint">LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm</field>
+        <field name="Datasheet">https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="power_in"/>
+        <pin num="2" name="DOUT" type="output"/>
+        <pin num="3" name="VSS" type="power_in"/>
+        <pin num="4" name="DIN" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="LED">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/LED.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5VD">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="D4" pin="1" pinfunction="VDD" pintype="power_in"/>
+      <node ref="D5" pin="1" pinfunction="VDD" pintype="power_in"/>
+      <node ref="D6" pin="1" pinfunction="VDD" pintype="power_in"/>
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+    </net>
+    <net code="2" name="/DATA">
+      <node ref="D4" pin="4" pinfunction="DIN" pintype="input"/>
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+    </net>
+    <net code="3" name="GND">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="D4" pin="3" pinfunction="VSS" pintype="power_in"/>
+      <node ref="D5" pin="3" pinfunction="VSS" pintype="power_in"/>
+      <node ref="D6" pin="3" pinfunction="VSS" pintype="power_in"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="4" name="Net-(D4-DOUT)">
+      <node ref="D4" pin="2" pinfunction="DOUT" pintype="output"/>
+      <node ref="D5" pin="4" pinfunction="DIN" pintype="input"/>
+    </net>
+    <net code="5" name="Net-(D5-DOUT)">
+      <node ref="D5" pin="2" pinfunction="DOUT" pintype="output"/>
+      <node ref="D6" pin="4" pinfunction="DIN" pintype="input"/>
+    </net>
+    <net code="6" name="unconnected-(D6-DOUT-Pad2)">
+      <node ref="D6" pin="2" pinfunction="DOUT" pintype="output+no_connect"/>
+    </net>
+    <net code="7" name="unconnected-(TP1-Pad1)">
+      <node ref="TP1" pin="1" pinfunction="1" pintype="passive+no_connect"/>
+    </net>
+    <net code="8" name="unconnected-(TP2-Pad1)">
+      <node ref="TP2" pin="1" pinfunction="1" pintype="passive+no_connect"/>
+    </net>
+  </nets>
+</export>

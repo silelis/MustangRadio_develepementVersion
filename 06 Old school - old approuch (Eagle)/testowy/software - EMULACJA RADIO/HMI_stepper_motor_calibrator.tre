@@ -1,0 +1,144 @@
+ÀÄHMI_stepper_motor_calibrator
+   ÀÄMAIN  1/664  Ram=27
+      ÃÄ@cinit1  (Inline)  Ram=0
+      ÃÄ@PSTRINGC_585  0/46  Ram=2
+      ³  ÀÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÀÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄ@delay_ms1  0/20  Ram=1
+      ÃÄsteper_motor_sensor_enable  0/12  Ram=0
+      ³  ÀÄ@delay_ms1  0/20  Ram=1
+      ÃÄmodule_steper_motor_step_right  0/40  Ram=1
+      ³  ÃÄdisable_EN_12  0/11  Ram=0
+      ³  ÃÄSTEPPER_motor  0/122  Ram=11
+      ³  ³  ÃÄ@const591  0/24  Ram=0
+      ³  ³  ÀÄ@const591  0/24  Ram=0
+      ³  ÃÄenable_EN_12  0/11  Ram=0
+      ³  ÃÄ__reset_L293D_conditions__  0/30  Ram=0
+      ³  ³  ÀÄ@SET_TICKS_1  (Inline)  Ram=2
+      ³  ÃÄ@PSTRINGC7_585  0/86  Ram=4
+      ³  ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ³  ÀÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÀÄmodule_steper_motor_stop  0/15  Ram=0
+      ³     ÃÄdisable_EN_12  0/11  Ram=0
+      ³     ÃÄSTEPPER_motor  0/122  Ram=11
+      ³     ³  ÀÄ*
+      ³     ÃÄenable_EN_12  0/11  Ram=0
+      ³     ÃÄ@delay_ms1  0/20  Ram=1
+      ³     ÃÄ__reset_L293D_conditions__  0/30  Ram=0
+      ³     ³  ÀÄ*
+      ³     ÀÄdisable_EN_12  0/11  Ram=0
+      ÃÄ@delay_ms1  0/20  Ram=1
+      ÃÄmodule_steper_motor_stop  0/15  Ram=0
+      ³  ÀÄ*
+      ÃÄsteper_motor_sensor_disable  0/10  Ram=0
+      ³  ÀÄ@delay_ms1  0/20  Ram=1
+      ÃÄ@delay_ms1  0/20  Ram=1
+      ÃÄ@DTOF  0/29  Ram=4
+      ÃÄ@MULFF  0/117  Ram=13
+      ÃÄround_closest  0/417  Ram=12
+      ³  ÃÄ@DIVFF  0/202  Ram=14
+      ³  ÃÄ@ADDFF  (Inline)  Ram=16
+      ³  ÃÄ@DIVFF  0/202  Ram=14
+      ³  ÀÄ@FTOSD  (Inline)  Ram=5
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÀÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄ@PRINTF_L32U_585  0/87  Ram=12
+      ³  ÃÄ@DIV3232  0/79  Ram=13
+      ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÀÄ@DIV3232  0/79  Ram=13
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÀÄ*
+      ÃÄ@GET_TICKS_1  0/28  Ram=0
+      ÃÄ@ITOF  0/29  Ram=2
+      ÃÄ@MULFF  0/117  Ram=13
+      ÃÄ@ITOF  0/29  Ram=2
+      ÃÄ@FLT  0/65  Ram=10
+      ÃÄmodule_steper_motor_step_left  0/41  Ram=1
+      ³  ÃÄdisable_EN_12  0/11  Ram=0
+      ³  ÃÄSTEPPER_motor  0/122  Ram=11
+      ³  ³  ÀÄ*
+      ³  ÃÄenable_EN_12  0/11  Ram=0
+      ³  ÃÄ__reset_L293D_conditions__  0/30  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÃÄ@PSTRINGC7_585  0/86  Ram=4
+      ³  ³  ÀÄ*
+      ³  ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ³  ÀÄ*
+      ³  ÀÄmodule_steper_motor_stop  0/15  Ram=0
+      ³     ÀÄ*
+      ÃÄmodule_steper_motor_step_right  0/40  Ram=1
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_L32U_585  0/87  Ram=12
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_L32U_585  0/87  Ram=12
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÃÄ@DIV88  0/21  Ram=3
+      ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÃÄ@DIV88  0/21  Ram=3
+      ³  ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ³  ÀÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÀÄ*
+      ÃÄmodule_steper_motor_stop  0/15  Ram=0
+      ³  ÀÄ*
+      ÃÄsteper_motor_sensor_disable  0/10  Ram=0
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_L32U_585  0/87  Ram=12
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄ@PUTCHAR_1_  0/34  Ram=1
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄfprintf_return_carriage  0/7  Ram=0
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_L32U_585  0/87  Ram=12
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÃÄ@PSTRINGCN7_585  0/87  Ram=5
+      ³  ÀÄ*
+      ÃÄ@PRINTF_U_585  0/53  Ram=2
+      ³  ÀÄ*
+      ÀÄfprintf_return_carriage  0/7  Ram=0
+         ÀÄ*

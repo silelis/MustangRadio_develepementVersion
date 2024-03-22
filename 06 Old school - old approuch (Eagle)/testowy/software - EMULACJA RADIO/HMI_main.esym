@@ -1,0 +1,312 @@
+D G "__PCM__" 6 22 ""5.070""
+D G "__DEVICE__" 6 22 "77"
+D G "__DATE__" 6 22 ""18-paŸ-18""
+D G "__TIME__" 6 22 ""14:57:24""
+D G "_UNICODE" 6 22 ""?""
+D G "__EVAL" 6 22 ""?""
+D G "i2c_slave_address" 1 1 "0x10"
+D G "i2c_slave_fake_address" 1 2 "0x12"
+D G "i2c_slave_ready" 1 4 "()            I2C_SlaveAddr(i2c_slave_address)" "ustawia w³aœciwy adres slave, wtedy master otrzymuje ACK = 0 czyli ok"
+D G "i2c_slave_not_ready" 1 5 "()        I2C_SlaveAddr(i2c_slave_fake_address)" "ustawia fa³szywy adres slave (jak ¿adnego innego urz¹dzenia w uk³adzie), wtedy master nie otrzymuje ¿adnego ACK"
+D G "__CONFIG_FILE__" 2 2 ""
+D G "slave_fw_version" 2 5 ""HMI_stepper_motor_calibrator_fw_v0_1 ""
+D G "_USE_LOGPORT_" 2 7 "" "chode one of _USE_LOGPORT_ or DEBUG_ENABLED"
+D G "i2c_SDA_pin" 0 7 "PIN_C4"
+D G "i2c_SCL_pin" 0 8 "PIN_C3"
+D G "LED1_GREEN" 0 12 "PIN_A0"
+D G "LED1_RED" 0 13 "PIN_A1"
+D G "LED1_BLUE" 0 14 "PIN_A2"
+D G "LED2_GREEN" 0 16 "PIN_A3"
+D G "LED2_RED" 0 17 "PIN_A5"
+D G "LED2_BLUE" 0 18 "PIN_E0"
+D G "LED3_GREEN" 0 20 "PIN_E1"
+D G "LED3_RED" 0 21 "PIN_E2"
+D G "LED3_BLUE" 0 22 "PIN_C0"
+D G "IS_FM_ANT_ACTIVE" 0 26 "PIN_B0"
+D G "IS_DAB_ANT_ACTIVE" 0 27 "PIN_B1"
+D G "IS_FM_DAB_CONVERTER_ACTIVE" 0 28 "PIN_B2"
+D G "A1" 0 32 "PIN_C5"
+D G "A2" 0 33 "PIN_C6"
+D G "A3" 0 34 "PIN_C7"
+D G "A4" 0 35 "PIN_D4"
+D G "use_EN_pins" 0 36 ""
+D G "EN_12" 0 37 "PIN_D2"
+D G "EN_34" 0 38 "EN_12"
+D G "one_fase_control" 0 40 "" "chose one of one_fase_control  OR two_fase_control OR halfstep_control"
+D G "steper_motor_left_end" 0 44 "PIN_D5"
+D G "steper_motor_right_end" 0 45 "PIN_D6"
+D G "steper_motor_sensor_enable_pin" 0 46 "PIN_D7"
+D G "__RADIO_DEFAULTS_PARAMETERS__" 3 2 ""
+D G "FM_freuency_DEFAULT_VAL" 3 11 "87500000"
+D G "FM_freuency_step" 3 12 "100000"
+D G "active_antena_MIN_VAL" 3 33 "0"
+D G "active_antena_MAX_VAL" 3 34 "1"
+D G "EQU_VOL_DEFAULT_VAL" 3 36 "5"
+D G "EQU_VOL_MIN_VAL" 3 37 "0"
+D G "EQU_VOL_MAX_VAL" 3 38 "40" "const int8 AUDIO_speaker_LeftRight_FrontRear[41], wiêc 41-1"
+D G "EQU_Treble_DEFAULT_VAL" 3 40 "0"
+D G "EQU_Treble_MIN_VAL" 3 41 "0"
+D G "EQU_Treble_MAX_VAL" 3 42 "30" "const int8 AUDIO_Treble_Middle_Bass[31], wiêc 31-1"
+D G "EQU_Middle_DEFAULT_VAL" 3 44 "0"
+D G "EQU_Middle_MIN_VAL" 3 45 "0"
+D G "EQU_Middle_MAX_VAL" 3 46 "30" "const int8 AUDIO_Treble_Middle_Bass[31], wiêc 31-1"
+D G "EQU_Bass_DEFAULT_VAL" 3 48 "0"
+D G "EQU_Bass_MIN_VAL" 3 49 "0"
+D G "EQU_Bass_MAX_VAL" 3 50 "30" "const int8 AUDIO_Treble_Middle_Bass[31], wiêc 31-1"
+D G "EQU_L_H_Boost_DEFAULT_VAL" 3 52 "0"
+D G "EQU_L_H_Boost_MIN_VAL" 3 53 "0"
+D G "EQU_L_H_Boost_MAX_VAL" 3 54 "1" "const int8 AUDIO_low_high_boost[2], wiêc 2-1"
+D G "EQU_Left_Right_DEFAULT_VAL" 3 56 "0"
+D G "EQU_Left_Right_MIN_VAL" 3 57 "-6" "0xFA      //-6 w hex"
+D G "EQU_Left_Right_MAX_VAL" 3 58 "6" "const int8 AUDIO_speaker_LeftRight_FrontRear[7], wiêc 7-1"
+D G "EQU_Front_Rear_DEFAULT_VAL" 3 60 "0"
+D G "EQU_Front_Rear_MIN_VAL" 3 61 "-6" "0xFA      //-6 w hex"
+D G "EQU_Front_Rear_MAX_VAL" 3 62 "6" "const int8 AUDIO_speaker_LeftRight_FrontRear[7], wiêc 7-1"
+D G "Backlight_MAX_VAL" 3 64 "1"
+D G "Backlight_DEFAULT_VAL" 3 65 "Backlight_MAX_VAL"
+D G "Backlight_MIN_VAL" 3 66 "0"
+D G "audio_input_DEFAULT_VAL" 3 79 "0"
+D G "audio_input_MIN_VAL" 3 80 "0"
+D G "audio_input_MAX_VAL" 3 81 "MENU_MODULE_NOTSUPPORTED_input"
+D G "dbg_return_carriage" 4 44 "() fprintf_return_carriage()"
+D G "dbg_printf" 4 45 "(fmt,...)   fprintf(LOG_PORT,fmt, __VA_ARGS__); dbg_return_carriage()" ";  fprintf_return_carriage()//return_carrier//;  delay_ms(500)"
+D G "BACKLIGHT_pin" 4 67 "PIN_C2"
+F N "fprintf_return_carriage" 4 70 ""
+F G "fprintf_return_carriage" 4 71 "void()" `41 
+D G "__Actice_antena_select__" 6 2 ""
+D G "_i2c_Slave_buffer_addresses_" 7 2 ""
+C G "" 7 3 2 "*"
+D G "command_clrl_all_packs" 7 8 "0x0" "command - size 1/ 0x00           / 0x0             /  0x0            /"
+D G "command_clrl_x_pack" 7 9 "0x1" "command - size 1/pack_no - size 1/ 0x0             /  0x0            /"
+D G "command_set_all_packs" 7 10 "0x2" "command - size 1/ 0x0            /colour - size 1  /  0x0            /"
+D G "command_set_x_pack" 7 11 "0x3" "command - size 1/pack_no - size 1/colour - size 1  /  0x0            /"
+D G "command_blink_all_packs" 7 12 "0x4" "command - size 1/ 0x0            /colour_1 - size 1/colour_2 - size 1/"
+D G "command_blink_x_pack" 7 13 "0x5" "command - size 1/pack_no - size 1/colour_1 - size 1/colour_2 - size 1/"
+D G "command_set_backlight" 7 14 "0x6" "command - size 1/backlight value - size 1/0x0      /  0x0            /"
+D G "command_stepper_motor_percen" 7 15 "0x7" "command - size 1/percents value - size 4/"
+D G "command_stepper_motor_abs_val" 7 16 "0x8" "command - size 1/min_value - size 4/ max_value - size 4/ goto value - size 4/"
+D G "command_stepper_motor_calibrate" 7 18 "0xA"
+D G "command_address" 7 21 "0x00"
+D G "pack_no_addres" 7 22 "0x01"
+D G "colour_1_addres" 7 23 "0x02"
+D G "colour_2_addres" 7 24 "0x03"
+D G "command_len" 7 26 "0x1"
+D G "pack_no_len" 7 27 "0x1"
+D G "colour_no_len" 7 28 "0x1"
+C G "" 7 31 2 "*"
+C G "" 7 33 1 "*"
+C G "" 7 36 2 "*"
+D G "unset_mask" 7 56 "0b10000000"
+D G "colour_BLUE" 7 57 "0b00000001"
+D G "colour_GREEN" 7 58 "0b00000010"
+D G "colour_RED" 7 59 "0b00000100"
+D G "colour_YELLOW" 7 60 "colour_RED|colour_GREEN"
+D G "colour_PURPLE" 7 61 "colour_RED|colour_BLUE"
+D G "colour_SKYBLUE" 7 62 "colour_GREEN|colour_BLUE"
+D G "colour_WHITE" 7 63 "colour_BLUE|colour_GREEN|colour_RED"
+D G "colour_BLACK" 7 64 "unset_mask|colour_WHITE"
+D G "unset_colour_BLUE" 7 66 "unset_mask|0b00000001"
+D G "unset_colour_GREEN" 7 67 "unset_mask|0b00000010"
+D G "unset_colour_RED" 7 68 "unset_mask|0b00000100"
+D G "unset_colour_YELLOW" 7 69 "unset_mask|colour_RED|colour_GREEN"
+D G "unset_colour_PURPLE" 7 70 "unset_mask|colour_RED|colour_BLUE"
+D G "unset_colour_SKYBLUE" 7 71 "unset_mask|colour_GREEN|colour_BLUE"
+D G "unset_colour_WHITE" 7 72 "unset_mask|colour_WHITE"
+D G "pack_1" 7 74 "0b00000001"
+D G "pack_2" 7 75 "0b00000010"
+D G "pack_3" 7 76 "0b00000011"
+D G "SB_set_x_pack_no_address" 7 81 "0x01"
+D G "SB_set_x_pack_no_len" 7 82 "0x01"
+D G "SB_set_x_pack_Val_address" 7 83 "0x02"
+D G "SB_set_x_pack_Val_len" 7 84 "0x01"
+D G "set_1st_pack" 7 87 "0x1"
+D G "set_2nd_pack" 7 88 "0x2"
+D G "set_3rd_pack" 7 89 "0x3"
+D G "SB_set_all_leds_address" 7 91 "0x01"
+D G "SB_set_all_leds_len" 7 92 "0x01"
+D G "SB_set_led_number_address" 7 94 "0x01"
+D G "SB_set_led_number_len" 7 95 "0x01"
+D G "SB_set_led_Val_address" 7 97 "0x02"
+D G "SB_set_led_Val_len" 7 98 "0x01"
+D G "SB_set_motor__percent_Val_address" 7 100 "0x01"
+D G "SB_set_motor__percent_len" 7 101 "0x04"
+D G "SB_set_abs_val_Val_address" 7 103 "0x01"
+D G "SB_set_abs_val_len" 7 104 "0x04"
+D G "SB_set_motor_rel_val_min_Val_address" 7 106 "0x01"
+D G "SB_set_motor_rel_val_min_len" 7 107 "0x04"
+D G "SB_set_motor_rel_val_curr_Val_address" 7 109 "0x05"
+D G "SB_set_motor_rel_val_curr_len" 7 110 "0x04"
+D G "SB_set_motor_rel_val_max_Val_address" 7 112 "0x09"
+D G "SB_sets_motor_rel_val_curr_len" 7 113 "0x04"
+D G "SB_set_backlight_Val_address" 7 115 "0x01"
+D G "SB_set_backlight_len" 7 116 "0x01"
+C G "" 7 117 2 "*"
+C G "" 7 119 1 "*"
+C G "" 7 122 2 "*"
+D G "SBL_Val_address" 7 125 "0x01"
+D G "SBL_Val_address_len" 7 126 "0x01"
+C G "" 7 128 2 "*"
+C G "" 7 130 1 "*"
+C G "" 7 133 2 "*"
+D G "STP_MOTTOR_percentage_addres" 7 136 "0x01"
+D G "STP_MOTTOR_percentage_len" 7 137 "0x04"
+D G "STP_MOTTOR_min_range_address" 7 139 "0x01"
+D G "STP_MOTTOR_min_range_len" 7 140 "0x04"
+D G "STP_MOTTOR_max_range_address" 7 141 "0x05"
+D G "STP_MOTTOR_max_range_len" 7 142 "0x04"
+D G "STP_MOTTOR_goto_address" 7 143 "0x09"
+D G "STP_MOTTOR_goto_len" 7 144 "0x04"
+C G "" 7 146 2 "*"
+C G "" 7 148 1 "*"
+C G "" 7 150 2 "*"
+D G "IS_FM_ANT_ACTIVE_bit" 7 154 "0b00000001"
+D G "IS_DAB_ANT_ACTIVE_bit" 7 155 "0b00000010"
+D G "IS_FM_DAB_CONVERTER_bit" 7 156 "0b00000100"
+C G "" 7 159 2 "*"
+D G "ANTENA_SWITCH_SUPPLY" 6 18 "PIN_B3"
+F B "IS_FM_ANT_ACTIVE" 0 0
+F B "IS_DAB_ANT_ACTIVE" 1 0
+F B "IS_FM_DAB_CONVERTER_ACTIVE" 0 0
+F B "A1" 1 0
+F B "A2" 2 0
+F B "A3" 3 0
+F B "A4" 2 2
+F B "use_EN_pins" 2 2
+F B "EN_12" 2 0
+F B "EN_34" 2 0
+F B "one_fase_control" 2 0
+F B "steper_motor_left_end" 3 0
+F B "steper_motor_right_end" 2 0
+F B "steper_motor_sensor_enable_pin" 2 0
+F B "__RADIO_DEFAULTS_PARAMETERS__" 2 0
+F B "FM_freuency_DEFAULT_VAL" 2 0
+F B "FM_freuency_step" 2 0
+F B "active_antena_MIN_VAL" 1 0
+F B "active_antena_MAX_VAL" 1 0
+F B "EQU_VOL_DEFAULT_VAL" 1 0
+F B "EQU_VOL_MIN_VAL" 1 255
+F B "EQU_VOL_MAX_VAL" 1 255
+F B "EQU_Treble_DEFAULT_VAL" 1 255
+F B "EQU_Treble_MIN_VAL" 1 255
+F B "EQU_Treble_MAX_VAL" 1 255
+F B "EQU_Middle_DEFAULT_VAL" 2 0
+F B "EQU_Middle_MIN_VAL" 2 0
+F B "EQU_Middle_MAX_VAL" 1 255
+F B "EQU_Bass_DEFAULT_VAL" 1 1
+F B "EQU_Bass_MIN_VAL" 1 0
+F B "EQU_Bass_MAX_VAL" 1 0
+F B "EQU_L_H_Boost_DEFAULT_VAL" 2 2
+F B "EQU_L_H_Boost_MIN_VAL" 1 2
+F B "EQU_L_H_Boost_MAX_VAL" 1 2
+F B "EQU_Left_Right_DEFAULT_VAL" 1 0
+F B "EQU_Left_Right_MIN_VAL" 1 0
+F B "EQU_Left_Right_MAX_VAL" 1 0
+F B "EQU_Front_Rear_DEFAULT_VAL" 1 0
+F B "EQU_Front_Rear_MIN_VAL" 1 0
+F B "EQU_Front_Rear_MAX_VAL" 1 0
+F B "Backlight_MAX_VAL" 1 2
+F B "Backlight_DEFAULT_VAL" 1 0
+F B "Backlight_MIN_VAL" 4 0
+F B "audio_input_DEFAULT_VAL" 4 0
+F B "audio_input_MIN_VAL" 3 0
+F B "Steper_motor_timer" 2 0
+F B "LED_blink_timer" 3 0
+F B "dbg_return_carriage" 2 0
+F B "dbg_printf" 1 0
+F B "BACKLIGHT_pin" 1 0
+F B "fprintf_return_carriage" 1 0
+F B "fprintf" 1 0
+F B "MAIN" 1 0
+F B "LOG_PORT" 1 0
+F B "__Actice_antena_select__" 1 1
+F B "_i2c_Slave_buffer_addresses_" 1 0
+F B "command_clrl_all_packs" 1 0
+F B "command_clrl_x_pack" 1 0
+F B "command_set_all_packs" 1 0
+F B "command_set_x_pack" 1 0
+F B "command_blink_all_packs" 1 0
+F B "command_blink_x_pack" 0 0
+F B "command_set_backlight" 0 0
+F B "command_stepper_motor_percen" 0 0
+F B "command_stepper_motor_abs_val" 0 0
+F B "command_stepper_motor_calibrate" 0 0
+F B "command_address" 1 0
+F B "pack_no_addres" 1 0
+F B "colour_1_addres" 1 0
+F B "colour_2_addres" 1 0
+F B "command_len" 1 0
+F B "pack_no_len" 0 0
+F B "colour_no_len" 0 0
+F B "unset_mask" 0 0
+F B "colour_BLUE" 0 0
+F B "colour_GREEN" 0 0
+F B "colour_RED" 0 0
+F B "colour_YELLOW" 0 0
+F B "colour_PURPLE" 0 0
+F B "colour_SKYBLUE" 0 0
+F B "colour_WHITE" 0 0
+F B "colour_BLACK" 1 0
+F B "unset_colour_BLUE" 2 0
+F B "unset_colour_GREEN" 1 0
+F B "unset_colour_RED" 0 0
+F B "unset_colour_YELLOW" 0 0
+F B "unset_colour_PURPLE" 0 0
+F B "unset_colour_SKYBLUE" 1 0
+F B "unset_colour_WHITE" 0 0
+F B "pack_1" 1 0
+F B "pack_2" 1 2
+F B "pack_3" 1 2
+F B "SB_set_x_pack_no_address" 0 0
+F B "SB_set_x_pack_no_len" 1 0
+F B "SB_set_x_pack_Val_address" 1 0
+F B "SB_set_x_pack_Val_len" 0 1
+F B "set_1st_pack" 0 0
+F B "set_2nd_pack" 1 2
+F B "set_3rd_pack" 0 1
+F B "SB_set_all_leds_address" 1 2
+F B "SB_set_all_leds_len" 1 0
+F B "SB_set_led_number_address" 1 0
+F B "SB_set_led_number_len" 0 0
+F B "SB_set_led_Val_address" 1 0
+F B "SB_set_led_Val_len" 3 0
+F B "SB_set_motor__percent_Val_address" 0 0
+F B "SB_set_motor__percent_len" 1 0
+F B "SB_set_abs_val_Val_address" 1 0
+F B "SB_set_abs_val_len" 1 0
+F B "SB_set_motor_rel_val_min_Val_address" 1 0
+F B "SB_set_motor_rel_val_min_len" 1 0
+F B "SB_set_motor_rel_val_curr_Val_address" 1 0
+F B "SB_set_motor_rel_val_curr_len" 0 0
+F B "SB_set_motor_rel_val_max_Val_address" 0 0
+F B "SB_sets_motor_rel_val_curr_len" 0 0
+F B "SB_set_backlight_Val_address" 1 0
+F B "SB_set_backlight_len" 0 1
+F B "SBL_Val_address" 1 2
+F B "SBL_Val_address_len" 0 0
+F B "STP_MOTTOR_percentage_addres" 1 0
+F B "STP_MOTTOR_percentage_len" 0 1
+F B "STP_MOTTOR_min_range_address" 1 2
+F B "STP_MOTTOR_min_range_len" 0 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "get_ticks" 0 1
+F B "set_ticks" 1 2
+F B "putchar" 1 2
+F B "puts" 1 2
+F B "getch" 0 1
+F B "gets" 1 3
+F B "kbhit" 0 1
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0
+F B "delay_ms" 1 0
+F B "delay_us" 1 0

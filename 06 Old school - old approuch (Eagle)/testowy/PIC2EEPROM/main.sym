@@ -1,0 +1,123 @@
+004-005 @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020-05F MasterBuffer
+060-063 I2CReadLength
+064-067 I2CWriteLength
+068-069 @sprintf_string
+06A     @TRIS_C
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+0A0-0DF SlaveBuffer
+0E0     set_blink_x_pack.pack_no
+0E0     set_x_pack_colour.pack_no
+0E0     MAIN.@SCRATCH1
+0E0     @PSTRINGC7_618.@SCRATCH1
+0E1     set_blink_x_pack.colour_1
+0E1     set_x_pack_colour.colour_1
+0E1     @PSTRINGC7_618.@SCRATCH2
+0E2     set_blink_x_pack.colour_2
+0E2     @PSTRINGC7_618.@SCRATCH3
+0E3     i2cEngine.eeprom_read
+0E3     _HMI_i2cWritePrepare.@SCRATCH1
+0E3     @PSTRINGC7_618.@SCRATCH4
+0E4     i2cEngine.i2c_ACK
+0E4     _HMI_i2cWritePrepare.@SCRATCH2
+0E5     i2cEngine.i2c_tryout_error
+0E6     i2cEngine.i
+0E7     @PSTRINGCN7_618.P1
+0E7     @PRINTF_X_618.P2
+0E7.0   __i2cDeviceStatus.ack
+0E7     i2cEngine.@SCRATCH1
+0E8     @delay_ms1.P1
+0E8     @I2C_WRITE_1.P2
+0E8     @PRINTF_X_618.P3
+0E8     i2cEngine.@SCRATCH2
+0E8     @PSTRINGCN7_618.@SCRATCH1
+0E9     @I2C_READ_1.P1
+0E9     @PSTRINGCN7_618.@SCRATCH2
+0EA     @I2C_READ_1.@SCRATCH1
+0EA     @PSTRINGCN7_618.@SCRATCH3
+0EB     @PUTCHAR_1_.P1
+0EB     @I2C_READ_1.@SCRATCH2
+0EB     @PSTRINGCN7_618.@SCRATCH4
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  @const637.call
+00000E  @const643.call
+000018  @const644.call
+000021  @const645.call
+00002C  @const674.call
+00002F  @delay_ms1
+000043  @PUTCHAR_1_
+00006C  @PSTRINGC7_618
+0000E2  _HMI_i2cWritePrepare
+0000EB  @I2C_WRITE_1
+00011F  @PSTRINGCN7_618
+000199  @PRINTF_X_618
+0001BE  _HMI_i2cWriteExecute
+0001C9  i2cEngine
+0001D9  __i2cDeviceStatus
+00029E  @I2C_READ_1
+0003AF  set_blink_x_pack
+0003C0  set_x_pack_colour
+0003CF  @cinit1
+0003CF  MAIN
+0003DF  @cinit2
+
+Project Directory:
+    F:\Elektronika_projekty\Car_Radio\testowy\PIC2EEPROM\
+
+Project Files:
+    main.c                                                  [02-lis-16 14:49  CRC=B64DD87E]
+    main.h                                                  [28-paü-16 08:21  CRC=8708F9A4]
+    ..\..\..\..\elektronika_progs\PICC\Devices\16F877.h     [21-maj-15 14:19  CRC=13B25154]
+    core\EEPROM_2416\EEPROM_2416.c                          [03-lis-16 13:04  CRC=872F85BE]
+    core\EEPROM_2416\EEPROM_2416.h                          [03-lis-16 13:03  CRC=0EA97EDE]
+    core\EEPROM_2416\eeprom_address_map.h.h                 [03-lis-16 13:02  CRC=B50D95B6]
+    core\I2C_ENGINE\I2C_Engine.c                            [02-lis-16 12:11  CRC=24D141C2]
+    core\I2C_ENGINE\I2C_Engine.h                            [03-lis-16 13:04  CRC=7DEAF02A]
+    core\i2c_HMI_LEDS\i2c_HMI_LEDS.c                        [02-lis-16 14:37  CRC=204A7F8E]
+    core\i2c_HMI_LEDS\i2c_HMI_LEDS.h                        [02-lis-16 14:37  CRC=02C04E2C]
+    ..\PIC2PIC_slave\core\i2c_Slave_buffer_addresses\i2c_Slave_buffer_addresses.h [01-lis-16 15:19  CRC=F53EF04C]
+    ..\PIC2PIC_slave\core\i2c_slave_address\i2c_slave_address.h [26-paü-16 08:53  CRC=00000000]
+
+Source signature=56F5ADBA
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=F4A4
+
+Units:
+    main (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX8:       main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA

@@ -1,0 +1,404 @@
+004-005 @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     @INTERRUPT_AREA
+029     @INTERRUPT_AREA
+02A     @INTERRUPT_AREA
+02B     @TRIS_C
+02C-02D UPPER_TICKS_1
+02E-02F UPPER_TICKS_2
+030-03E Master_2_Slave_Buffer
+03F-04D Slave_2_Master_Buffer
+04E     i2c_buffer_counter
+04F     @I2C_STATE
+050-051 pin_BLUE_no
+052-053 pin_GREEN_no
+054-055 pin_RED_no
+056.0   blink_display_color_no1
+056.1   blink_time_2_switch_color
+056.2   i2c_data_to_PROCEED
+057     steper_motor_calibration_state
+057     MAIN.steper_motor_calibration_state
+058     stepper_motor_phase
+059-05C MAIN.stepper_motor_position
+059-05C stepper_motor_position
+05D-060 MAIN.stepper_motor_position_max
+05D-060 stepper_motor_position_max
+061-062 @sprintf_string
+063-064 strtok.save
+065-068 _Randseed
+069     MAIN.slave_buffer_colour_1
+06A     MAIN.slave_buffer_colour_2
+06B.0   MAIN.blink_STATEMENT
+06B.1   MAIN.blikn_1_pack_STATEMENT
+06B.2   MAIN.blikn_2_pack_STATEMENT
+06B.3   MAIN.blikn_3_pack_STATEMENT
+06B.4   MAIN.recalculate_percentage_to_steps_STATEMENT
+06B.5   MAIN.stepper_motor_need_to_drive_STATEMENT
+06B.6   MAIN.steper_motor_sensor_power_STATEMENT
+06C     MAIN.pack_1_blink_colour_1
+06D     MAIN.pack_1_blink_colour_2
+06E     MAIN.pack_2_blink_colour_1
+06F     MAIN.pack_2_blink_colour_2
+070     MAIN.pack_3_blink_colour_1
+071     MAIN.pack_3_blink_colour_2
+072     MAIN.pack_colour
+073     MAIN.pack_number
+074     MAIN.i
+075     MAIN.backlight_current_value
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B-07E MAIN.stepper_motor_percents_goto
+07F     @INTERRUPT_AREA
+094     SSP1STAT
+094.4   SSP1STAT_STOP_SEEN
+0A0-0A3 MAIN.stepper_motor_steps_goto
+0A4-0A7 MAIN.STP_MOTTOR_min_range_temp_value
+0A8-0AB MAIN.STP_MOTTOR_max_range_temp_value
+0AC-0AF MAIN.STP_MOTTOR_goto_temp_value
+0B0     MAIN.@SCRATCH1
+0B1     MAIN.@SCRATCH2
+0B2     MAIN.@SCRATCH3
+0B3     MAIN.@SCRATCH4
+0BB     set_x_pack_blink.pack_no
+0BB     @PRINTF_U_593.P1
+0BB     clear_x_pack.pack_no
+0BB-0BE @PRINTF_L32D_593FPFPF.P1
+0BB-0BE @PRINTF_L32U_593.P2
+0BB-0BC @SET_TICKS_1.P3
+0BB     set_all_pack_colour.colour
+0BB     @PSTRINGCN7_593.P1
+0BB     STEPPER_motor.present_phase
+0BB-0BC @SET_TICKS_2.P1
+0BB     @PRINTF_X_593.P2
+0BB     run_led_blink_timer.@SCRATCH1
+0BB     module_steper_motor_step_left.@SCRATCH1
+0BB     @PSTRINGC7_593.@SCRATCH1
+0BB     module_steper_motor_step_right.@SCRATCH1
+0BB     @PSTRINGC_593.@SCRATCH1
+0BC     @PRINTF_X_593.P1
+0BC     STEPPER_motor.LEFT_RIGHT_STOP
+0BC     @delay_ms1.P1
+0BC     @PRINTF_U_593.P2
+0BC     set_x_pack_blink.colour1
+0BC     run_led_blink_timer.@SCRATCH2
+0BC     @PSTRINGC7_593.@SCRATCH2
+0BC     @PSTRINGC_593.@SCRATCH2
+0BC     @PSTRINGCN7_593.@SCRATCH1
+0BD-0C0 @FLT.P1
+0BD-0C0 STEPPER_motor.output_order
+0BD-0BE @ITOF.P1
+0BD     set_x_pack_blink.colour2
+0BD     @DIV88.P1
+0BD     @PSTRINGC7_593.@SCRATCH3
+0BD     @PSTRINGCN7_593.@SCRATCH2
+0BE     set_x_pack_colour.pack_no
+0BE     @DIV88.P1
+0BE     set_x_pack_blink.@SCRATCH1
+0BE     @PSTRINGC7_593.@SCRATCH4
+0BE     @PSTRINGCN7_593.@SCRATCH3
+0BF-0C2 round_closest.dividend
+0BF-0C2 @DTOF.P1
+0BF     @PRINTF_L32D_593FPFPF.P2
+0BF     set_x_pack_colour.colour
+0BF     @PSTRINGCN7_593.@SCRATCH4
+0BF     @DIV88.@SCRATCH1
+0BF     @PRINTF_L32U_593.@SCRATCH1
+0C0     led_DELETE._uset_colour
+0C0     led_ADD._set_colour
+0C0     choose_LED_PAD.pack_number
+0C0     set_x_pack_colour.@SCRATCH1
+0C0     @PRINTF_L32D_593FPFPF.@SCRATCH1
+0C0     @PRINTF_L32U_593.@SCRATCH2
+0C1     @WRITEBITA.P1
+0C1     STEPPER_motor.i
+0C1-0C4 @FLT.P1
+0C1     led_ADD.@SCRATCH1
+0C1     led_DELETE.@SCRATCH1
+0C1     @PRINTF_L32D_593FPFPF.@SCRATCH2
+0C1     @PRINTF_L32U_593.@SCRATCH3
+0C2     STEPPER_motor.i
+0C2     @WRITEBITA.P1
+0C2     @PRINTF_L32D_593FPFPF.@SCRATCH3
+0C2     @PRINTF_L32U_593.@SCRATCH4
+0C3-0C6 round_closest.divisor
+0C3-0C4 @WRITEBITA.P1
+0C3     STEPPER_motor.@SCRATCH1
+0C3     @PRINTF_L32D_593FPFPF.@SCRATCH4
+0C3     @PRINTF_L32U_593.@SCRATCH5
+0C4     STEPPER_motor.@SCRATCH2
+0C4     @PRINTF_L32D_593FPFPF.@SCRATCH5
+0C4     @PRINTF_L32U_593.@SCRATCH6
+0C5     STEPPER_motor.@SCRATCH3
+0C5     @PRINTF_L32D_593FPFPF.@SCRATCH6
+0C5     @PRINTF_L32U_593.@SCRATCH7
+0C5     @FLT.@SCRATCH1
+0C6     @PRINTF_L32D_593FPFPF.@SCRATCH7
+0C6     @PRINTF_L32U_593.@SCRATCH8
+0C6     @FLT.@SCRATCH2
+0C7-0CA @ADDFF.P1
+0C7     round_closest.@SCRATCH1
+0C7     @PRINTF_L32D_593FPFPF.@SCRATCH8
+0C8-0CB @DIV3232.P1
+0C8-0CB @FTOSD.P2
+0C8     @PUTCHAR_1_.P3
+0C8-0CB @MULFF.P4
+0C8     round_closest.@SCRATCH2
+0C9     round_closest.@SCRATCH3
+0CA     round_closest.@SCRATCH4
+0CB-0CE @DIVFF.P1
+0CB-0CE @ADDFF.P2
+0CC-0CF @DIV3232.P1
+0CC-0CF @MULFF.P2
+0CC     @FTOSD.@SCRATCH1
+0CF-0D2 @DIVFF.P1
+0CF     @ADDFF.@SCRATCH1
+0D0     @MULFF.@SCRATCH1
+0D0     @ADDFF.@SCRATCH2
+0D0     @DIV3232.@SCRATCH1
+0D1     @MULFF.@SCRATCH2
+0D1     @ADDFF.@SCRATCH3
+0D1     @DIV3232.@SCRATCH2
+0D2     @MULFF.@SCRATCH3
+0D2     @ADDFF.@SCRATCH4
+0D2     @DIV3232.@SCRATCH3
+0D3     @MULFF.@SCRATCH4
+0D3     @ADDFF.@SCRATCH5
+0D3     @DIVFF.@SCRATCH1
+0D3     @DIV3232.@SCRATCH4
+0D4     @MULFF.@SCRATCH5
+0D4     @ADDFF.@SCRATCH6
+0D4     @DIVFF.@SCRATCH2
+0D4     @DIV3232.@SCRATCH5
+0D5     @ADDFF.@SCRATCH7
+0D5     @DIVFF.@SCRATCH3
+0D6     @ADDFF.@SCRATCH8
+0D6     @DIVFF.@SCRATCH4
+0D7     @DIVFF.@SCRATCH5
+0D8     @DIVFF.@SCRATCH6
+0D9     i2c_slave_interrupt.state
+0DA     get_active_antenas_supply_setup.@SCRATCH1
+0DA     i2c_slave_interrupt.@SCRATCH1
+0DB     @I2C_WRITE_1.P1
+0DB     get_active_antenas_supply_setup.@SCRATCH2
+0DB     i2c_slave_interrupt.@SCRATCH2
+0FF     @INTERRUPT_AREA
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+47F     @INTERRUPT_AREA
+4FF     @INTERRUPT_AREA
+57F     @INTERRUPT_AREA
+5FF     @INTERRUPT_AREA
+67F     @INTERRUPT_AREA
+6FF     @INTERRUPT_AREA
+77F     @INTERRUPT_AREA
+7FF     @INTERRUPT_AREA
+87F     @INTERRUPT_AREA
+8FF     @INTERRUPT_AREA
+97F     @INTERRUPT_AREA
+9FF     @INTERRUPT_AREA
+A7F     @INTERRUPT_AREA
+AFF     @INTERRUPT_AREA
+B7F     @INTERRUPT_AREA
+BFF     @INTERRUPT_AREA
+C7F     @INTERRUPT_AREA
+CFF     @INTERRUPT_AREA
+D7F     @INTERRUPT_AREA
+DFF     @INTERRUPT_AREA
+E7F     @INTERRUPT_AREA
+EFF     @INTERRUPT_AREA
+F7F     @INTERRUPT_AREA
+FFF     @INTERRUPT_AREA
+107F     @INTERRUPT_AREA
+10FF     @INTERRUPT_AREA
+117F     @INTERRUPT_AREA
+11FF     @INTERRUPT_AREA
+127F     @INTERRUPT_AREA
+12FF     @INTERRUPT_AREA
+137F     @INTERRUPT_AREA
+13FF     @INTERRUPT_AREA
+147F     @INTERRUPT_AREA
+14FF     @INTERRUPT_AREA
+157F     @INTERRUPT_AREA
+15FF     @INTERRUPT_AREA
+167F     @INTERRUPT_AREA
+16FF     @INTERRUPT_AREA
+177F     @INTERRUPT_AREA
+17FF     @INTERRUPT_AREA
+187F     @INTERRUPT_AREA
+18FF     @INTERRUPT_AREA
+197F     @INTERRUPT_AREA
+19FF     @INTERRUPT_AREA
+1A7F     @INTERRUPT_AREA
+1AFF     @INTERRUPT_AREA
+1B7F     @INTERRUPT_AREA
+1BFF     @INTERRUPT_AREA
+1C7F     @INTERRUPT_AREA
+1CFF     @INTERRUPT_AREA
+1D7F     @INTERRUPT_AREA
+1DFF     @INTERRUPT_AREA
+1E7F     @INTERRUPT_AREA
+1EFF     @INTERRUPT_AREA
+1F7F     @INTERRUPT_AREA
+1FFF     @INTERRUPT_AREA
+
+ROM Allocation:
+000051  stepper_motor_pase.call
+000055  stepper_motor_pase.data
+000069  @const679.call
+000074  @const684.call
+000080  i2c_slave_interrupt
+000080  SSP_isr
+0000AD  get_active_antenas_supply_setup
+0000D4  @I2C_WRITE_1
+0000F1  @const1018.call
+000129  @const1023.call
+00012E  @const1024.call
+000132  @const1030.call
+00013A  @const1031.call
+000142  @const1038.call
+00014E  @const1039.call
+000159  @const1040.call
+00016A  @const1041.call
+00017A  @const1042.call
+000183  @const1043.call
+00018C  @const1055.call
+000195  @const1056.call
+00019A  @const1057.call
+0001B0  @const1058.call
+0001CC  @const1059.call
+0001D1  @const1060.call
+0001D8  @const1066.call
+0001EE  @const1067.call
+0001FD  @const1068.call
+000201  @PUTCHAR_1_
+000225  @PSTRINGC_593
+000262  fprintf_return_carriage
+00026D  @delay_ms1
+000281  steper_motor_sensor_enable
+00028C  disable_EN_12
+000298  STEPPER_motor
+000326  enable_EN_12
+000332  __reset_L293D_conditions__
+000335  @SET_TICKS_1
+000352  @PSTRINGC7_593
+0003C6  module_steper_motor_stop
+0003D9  module_steper_motor_step_right
+000405  steper_motor_sensor_disable
+000410  clr_SSPSTAT
+000410  set_i2c_interrupt_ready
+000419  choose_LED_PAD
+000444  @WRITEBITA
+000466  led_DELETE
+0004AE  set_x_pack_colour
+0004C5  led_ADD
+00050F  set_all_pack_colour
+000525  @PSTRINGCN7_593
+00059F  @PRINTF_X_593
+0005C6  clear_x_pack
+0005D1  clear_all_pack
+0005E3  @DIV88
+0005FA  @PRINTF_U_593
+000639  @SET_TICKS_2
+000654  @MULFF
+0006CB  @FTOSD
+0006EC  @DIV3232
+00073D  @DTOF
+00075A  run_led_blink_timer
+00075A  @GET_TICKS_2
+00079B  set_x_pack_blink
+0007AF  @GET_TICKS_1
+0007CB  @ITOF
+000800  @PRINTF_L32D_593FPFPF
+0008E9  @DIVFF
+0009B5  round_closest
+0009D7  @ADDFF
+000B41  @PRINTF_L32U_593
+000BAA  @FLT
+000BED  module_steper_motor_step_left
+001000  MAIN
+001000  @cinit1
+001035  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    F:\Elektronika_projekty\Car_Radio\testowy\software\
+
+Project Files:
+    HMI_main.c                                              [25-wrz-17 18:51  CRC=959F237B]
+    HMI_MCU_common_includes\HMI_i2c_slave_address\i2c_slave_address.h [06-lip-17 21:55  CRC=58DE01D5]
+    HMI_main_SLAVE_CONFIG_FILE.h                            [14-lip-17 11:25  CRC=01CD288E]
+    HMI_MCU_common_includes\MCU_radio_default_parameters\radio_default_parameters.h [25-wrz-17 11:06  CRC=781EE48C]
+    HMI_main.h                                              [05-paü-17 09:43  CRC=D30AF451]
+    ..\..\..\..\elektronika_progs\PICC\Devices\16F77.h      [24-lut-17 16:21  CRC=688C3552]
+    HMI_include\HW_drivers\Active_antena_selector\active_antena_selector.c [31-maj-17 09:24  CRC=6EFECFDE]
+    HMI_include\HW_drivers\Active_antena_selector\active_antena_selector.h [26-cze-17 10:24  CRC=1394990D]
+    HMI_MCU_common_includes\HMI_i2c_Slave_buffer_addresses\i2c_Slave_buffer_addresses.h [06-lip-17 21:58  CRC=AC079E7B]
+    HMI_include\core\i2c_slave\i2c_slave.c                  [21-wrz-17 16:36  CRC=0564B0AC]
+    HMI_include\core\i2c_slave\i2c_slave.h                  [21-wrz-17 16:33  CRC=9C0B4A62]
+    HMI_include\modules\led_module\led_module.c             [06-lip-17 22:00  CRC=7F61131B]
+    HMI_include\modules\led_module\led_module.h             [06-lip-17 21:53  CRC=C64879E8]
+    HMI_include\modules\stepper_motor_module\module_stepper_motor.c [24-wrz-17 14:42  CRC=2BE8B50F]
+    HMI_include\modules\stepper_motor_module\module_stepper_motor.h [29-sie-17 18:38  CRC=D814BDDC]
+    HMI_include\HW_drivers\L293\L293D.c                     [27-lip-17 12:43  CRC=E2472C95]
+    HMI_include\HW_drivers\L293\l293d.h                     [05-lip-17 07:58  CRC=34E7F68F]
+    HMI_MCU_common_includes\SileliS_math\silelis_math.c     [01-wrz-17 08:55  CRC=78430320]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\STDLIB.H     [29-cze-16 09:34  CRC=7E9CC16B]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\stddef.h     [05-wrz-14 11:47  CRC=897CEC6C]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\string.h     [26-mar-15 12:34  CRC=C4814297]
+    ..\..\..\..\elektronika_progs\PICC\Drivers\ctype.h      [03-sty-08 14:55  CRC=2D1F019F]
+    HMI_MCU_common_includes\SileliS_math\BIT_MATH.c         [04-paü-17 15:35  CRC=1ABE51F1]
+    HMI_MCU_common_includes\SileliS_math\BIT_MATH.h         [04-paü-17 15:35  CRC=BA118B5C]
+
+Source signature=D5BFDF69
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=E4BD
+
+Units:
+    HMI_main (main)
+
+Compiler Settings:
+    Processor:      PIC16F77
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    XREF file:   HMI_main.xsym
+    Errors:      HMI_main.err
+    Ext Symbols: HMI_main.esym
+    INHX8:       HMI_main.hex
+    Symbols:     HMI_main.sym
+    List:        HMI_main.lst
+    Debug/COFF:  HMI_main.cof
+    Project:     HMI_main.ccspjt
+    Call Tree:   HMI_main.tre
+    Statistics:  HMI_main.STA

@@ -1,0 +1,248 @@
+#include <main.h>
+#fuses nomclr
+
+#use rs232(baud=9600,parity=N,xmit=PIN_C6,RCV=PIN_C7,bits=8)
+
+
+#define MAX_RESPONSE_LEN 4
+char data;
+
+enum vResponse {
+   // Prompts returned by all VNC1L firmware
+    Resp_Prompt_OK,   // >  (Success)
+    Resp_Prompt_ND,   // ND (Success)
+    Resp_Prompt_UE,   // E echo
+    Resp_Prompt_LE,   // e echo
+    Resp_Prompt_CF,   // CF (Command Failed)
+    Resp_Prompt_BC,   // BC (Bad Command)
+    Resp_Prompt_DF,   // DF (Disk Full)
+    Resp_Prompt_FI,   // FI (File Invalid)
+    Resp_Prompt_RO,   // RO (Read Only)
+    Resp_Prompt_FO,   // FO (File Open)
+    Resp_Prompt_NE,   // NE (Dir Not Empty)
+    Resp_Prompt_FN,   // FN (Filename Invalid)
+   Resp_Prompt_End,
+   // Asynchronous messages returned by VMSC1 firmware
+    Resp_Message_P,      // P / Playing
+    Resp_Message_S,      // S / Stopped
+    Resp_Message_T,      // T / Time
+   // Asynchronous messages returned by all VNC1L firmware
+    Resp_Message_NU,      // NU / No Upgrade
+    Resp_Message_DD1,   // DD1 / Device Detected USB Port 1)
+    Resp_Message_DD2,   // DD2 / Device Detected USB Port 2)
+    Resp_Message_DR1,   // DR1 / Device Removed USB Port 1)
+    Resp_Message_DR2,   // DR2 / Device Removed USB Port 2)
+    Resp_Message_Splash, // Ver ...
+    Resp_None = 0xff,
+};
+
+//char aaa[3] = {'1','2','3'};
+
+char pResponse  [98] = {
+//char *pResponse  = {
+   // SCS Prompts
+    Resp_Prompt_OK, 2, '>',0x0d,
+    Resp_Prompt_UE, 2, 'E',0x0d,
+    Resp_Prompt_LE, 2, 'e',0x0d,
+    Resp_Message_P, 2, 'P',' ',
+    Resp_Message_S, 2, 'S',0x0d,
+    Resp_Message_T, 2, 'T',' ',
+    Resp_Prompt_ND, 3, 'N','D',0x0d,
+    Resp_Prompt_CF, 3, 'C','F',0x0d,
+    Resp_Prompt_BC, 3, 'B','C',0x0d,
+    Resp_Prompt_DF, 3, 'D','F',0x0d,
+    Resp_Prompt_FI, 3, 'F','I',0x0d,
+    Resp_Prompt_RO, 3, 'R','O',0x0d,
+    Resp_Prompt_FO, 3, 'F','O',0x0d,
+    Resp_Prompt_NE, 3, 'N','E',0x0d,
+    Resp_Prompt_FN, 3, 'F','N',0x0d,
+    Resp_Message_NU, 3, 'N','U',0x0d,
+
+    Resp_Message_DD1, 4, 'D','D','1',0x0d,
+    Resp_Message_DD2, 4, 'D','D','2',0x0d,
+    Resp_Message_DR1, 4, 'D','R','1',0x0d,
+    Resp_Message_DR2, 4, 'D','R','2',0x0d
+};
+
+/*
+enum vResponse monResponse()
+{
+   enum vResponse tpResp, tpThis;
+   unsigned char romBufOffset;
+   char cBuf[MAX_RESPONSE_LEN];
+   unsigned char bufCnt, romCnt;
+   char data;
+
+   // initialise prompt detection
+   bufCnt = 0;
+   tpResp = Resp_None;
+
+   // read single byte from SPI if one waiting
+   if (monRead(&data) != XFER_RETRY)      //tutaj powinno byæ czytanie uart
+
+   {
+      printf("%c \r\n",  data);
+      for (bufCnt = 0; bufCnt < MAX_RESPONSE_LEN; bufCnt++)
+      {
+         
+         romBufOffset = 0;
+         
+         // put last read byte of data in receive/compare buffer
+         cBuf[bufCnt] = data;
+
+         // find if the Message matches any of our predefined types
+         while (tpResp == Resp_None)
+         {
+         
+            // message code for this entry
+            tpThis = pResponse[romBufOffset++];
+            // number of characters for this entry
+            romCnt = pResponse[romBufOffset++];
+
+            // reached end of Message definitions
+            if (romCnt == 0)
+            {
+               break;
+            }
+
+            // check against this Message if length is correct
+            if (romCnt == bufCnt + 1)
+            {
+               unsigned char j;
+               tpResp = tpThis;
+
+               for (j = 0; j < bufCnt; j++)
+               {
+                  romCnt--;
+                  // mis-match of data
+                  if (pResponse[romBufOffset++] != cBuf[j])
+                  {
+                     tpResp = Resp_None;
+                     break; // break from for loop
+                  }
+               }
+            }
+            else if (romCnt > bufCnt)
+            {
+               // length of reponse too long
+               break;
+            }
+
+            romBufOffset += romCnt;
+         }
+
+         if (data == 0x0d)
+            break;
+
+         if (tpResp != Resp_None)
+            break;
+
+         // read subsequent bytes from the SPI interface
+         //data = monReadWait();  //tutaj powinno byæ czytanie uart
+         data=getch();
+         
+         tpResp = Resp_None;
+      }
+      
+      if (bufCnt == MAX_RESPONSE_LEN)
+      {
+         // wait for carriage return
+         while (data != 0x0d)
+         {
+            //data = monReadWait(); //tutaj powinno byæ czytanie uart
+            data=getch();
+         }
+      }
+   }
+
+   return tpResp;
+}*/
+#include<string.h>
+
+void main()
+{
+
+/*
+   char data[MAX_RESPONSE_LEN];
+   int data_input=0;
+   
+   char temp_data;
+   
+   
+   do{
+
+   //printf("czekam na dane\r\n");
+   temp_data=getc();
+   printf("%c", temp_data);
+   if(data_input<MAX_RESPONSE_LEN)
+   {
+   //printf("Zapisuje: %c\r\n", temp_data);
+   data[data_input]=temp_data;
+   data_input++;
+   }
+   else
+   {
+   data_input=5;
+   }
+   }while(temp_data!=0x0d);
+   //printf("\r\n\r\n\r\n");
+   printf("ZAPISANO %c %c %c %c\r\n", data[0],data[1],data[2],data[3]);
+   if (data_input<=MAX_RESPONSE_LEN&&data_input!=1)
+   {
+   printf("D³ugosc sekwencji %d", data_input);
+   }
+   else
+   {
+   printf("To nie komenda");
+   
+   }
+   printf("SZUKAM SEKWENCJI\r\n\r\n\r\n");*/
+
+   char data[MAX_RESPONSE_LEN]={'D','R','2',0x0d};
+   int8 data_input_lengh=2;
+   signed  int8 compare;
+   
+   for (int8 data_position=0; (data_position+data_input_lengh)<=98; data_position++)
+   {
+   compare=memcmp(pResponse+data_position,data,data_input_lengh);
+   
+   if (compare==0)
+   {
+   printf("POZYCJA ZGODNA %d:   \r\n\r\n\r\n",data_position);
+   printf("WARTOŒÆ ZGODNA: %c %c %c %c \r\n\r\n\r\n",pResponse[data_position] ,pResponse[data_position+1] ,pResponse[data_position+2],pResponse[data_position+3] );
+    printf("pos+lenght: %d \r\n", data_position+data_input_lengh);
+   
+   break;
+   }
+   }
+   compare=memcmp(pResponse,data,data_input_lengh);
+   printf("Wynik %d:   \r\n\r\n\r\n",compare);
+      compare=memcmp(pResponse+1,data,data_input_lengh);
+   printf("Wynik %d:   \r\n\r\n\r\n",compare);
+      compare=memcmp(pResponse+2,data,data_input_lengh);
+   printf("Wynik %d:   \r\n\r\n\r\n",compare);
+      compare=memcmp(pResponse+3,data,data_input_lengh);
+   printf("Wynik %d:   \r\n\r\n\r\n",compare);
+   
+   //int8 ptr = strcmp ("tata","tat");
+   
+ /*  if(outout==Resp_Prompt_ND)
+      {
+      output_low(pin_A1);
+      }
+      
+      printf("koniec");*/
+   
+   
+   
+   while(TRUE)
+   {
+   //data = 0;
+   //data=getc();
+   //printf("%c",data);
+
+
+      //TODO: User Code
+   }
+
+}

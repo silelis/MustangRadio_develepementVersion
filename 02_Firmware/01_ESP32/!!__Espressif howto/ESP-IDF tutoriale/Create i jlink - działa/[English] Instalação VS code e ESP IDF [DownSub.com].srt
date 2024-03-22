@@ -1,0 +1,848 @@
+1
+00:00:04,040 --> 00:00:07,440
+Hello everyone, so this is our
+
+2
+00:00:07,440 --> 00:00:09,019
+first video here,
+
+3
+00:00:09,019 --> 00:00:11,639
+I'm going to talk a little about the
+
+4
+00:00:11,639 --> 00:00:14,460
+motivations that led me to record this
+
+5
+00:00:14,460 --> 00:00:17,340
+video here, right?
+
+6
+00:00:17,340 --> 00:00:18,840
+
+
+7
+00:00:18,840 --> 00:00:22,380
+
+
+8
+00:00:22,380 --> 00:00:24,720
+I had to find
+
+9
+00:00:24,720 --> 00:00:30,560
+material and things like that in Portuguese
+
+10
+00:00:30,560 --> 00:00:33,719
+when programming the apps, so the idea was to
+
+11
+00:00:33,719 --> 00:00:37,980
+make some tutorials, I don't know
+
+12
+00:00:37,980 --> 00:00:39,840
+yet how many there will be, but we'll
+
+13
+00:00:39,840 --> 00:00:42,300
+start from the beginning, from the installation
+
+14
+00:00:42,300 --> 00:00:45,420
+of the visual studio to the installation of the IDF Plugin
+
+15
+00:00:45,420 --> 00:00:46,980
+
+
+16
+00:00:46,980 --> 00:00:49,260
+and it will  then following with some
+
+17
+00:00:49,260 --> 00:00:52,260
+implementations there that I will end up
+
+18
+00:00:52,260 --> 00:00:54,300
+deciding during the
+
+19
+00:00:54,300 --> 00:00:57,120
+execution of the
+
+20
+00:00:57,120 --> 00:00:59,399
+videos. So this first one we will
+
+21
+00:00:59,399 --> 00:01:01,260
+do then the installation of Visual
+
+22
+00:01:01,260 --> 00:01:06,479
+Studio and the installation of IDF in Visual
+
+23
+00:01:06,479 --> 00:01:07,920
+Studio
+
+24
+00:01:07,920 --> 00:01:09,799
+then in Visual Studio we will download it
+
+25
+00:01:09,799 --> 00:01:12,659
+from this website  Here is the Visual Studio that
+
+26
+00:01:12,659 --> 00:01:14,040
+we are going to use, we are going to
+
+27
+00:01:14,040 --> 00:01:17,280
+download it here, as I already downloaded it, I am just
+
+28
+00:01:17,280 --> 00:01:20,360
+going to install it, so
+
+29
+00:01:20,460 --> 00:01:24,420
+we go here, accept the terms,
+
+30
+00:01:24,420 --> 00:01:27,299
+I will install everything in the directories that are
+
+31
+00:01:27,299 --> 00:01:30,740
+standard for Visual Studio,
+
+32
+00:01:31,080 --> 00:01:33,180
+I always like it  to add these two
+
+33
+00:01:33,180 --> 00:01:35,220
+options here
+
+34
+00:01:35,220 --> 00:01:38,100
+they are, when you
+
+35
+00:01:38,100 --> 00:01:39,420
+right-click on the desktop, they
+
+36
+00:01:39,420 --> 00:01:41,759
+place Visual Studio in the
+
+37
+00:01:41,759 --> 00:01:44,420
+context menu
+
+38
+00:01:45,960 --> 00:01:47,700
+and here we do the installation. So
+
+39
+00:01:47,700 --> 00:01:50,180
+let's wait to
+
+40
+00:02:03,659 --> 00:02:06,840
+fix my window here,
+
+41
+00:02:06,840 --> 00:02:10,380
+adjust it to the  video size
+
+42
+00:02:10,380 --> 00:02:13,140
+So this here is the Visual
+
+43
+00:02:13,140 --> 00:02:15,500
+Studio interface which is where we will work,
+
+44
+00:02:15,500 --> 00:02:18,840
+it comes out here on a welcome screen and
+
+45
+00:02:18,840 --> 00:02:20,700
+from there we will come here and
+
+46
+00:02:20,700 --> 00:02:22,860
+start installing the plugins so
+
+47
+00:02:22,860 --> 00:02:25,020
+we will use
+
+48
+00:02:25,020 --> 00:02:27,480
+the plugins  there is a very easy installation
+
+49
+00:02:27,480 --> 00:02:29,459
+here so we can start working
+
+50
+00:02:29,459 --> 00:02:32,220
+with this one we will need some
+
+51
+00:02:32,220 --> 00:02:35,280
+plugins And then we will look for the
+
+52
+00:02:35,280 --> 00:02:37,739
+first one here which is IDF we will
+
+53
+00:02:37,739 --> 00:02:39,900
+look for IDF here and this first
+
+54
+00:02:39,900 --> 00:02:42,480
+option here so
+
+55
+00:02:42,480 --> 00:02:45,680
+don't install me
+
+56
+00:02:49,260 --> 00:02:51,060
+So, to install this
+
+57
+00:02:51,060 --> 00:02:53,160
+first guy here,
+
+58
+00:02:53,160 --> 00:02:55,379
+we will take it and start
+
+59
+00:02:55,379 --> 00:02:57,420
+configuring this plugin. So
+
+60
+00:02:57,420 --> 00:02:59,819
+we will press the F1 key here.
+
+61
+00:02:59,819 --> 00:03:01,620
+And then this option will appear here,
+
+62
+00:03:01,620 --> 00:03:06,680
+configure spdf, we will click
+
+63
+00:03:10,159 --> 00:03:13,940
+here, we have three options
+
+64
+00:03:13,940 --> 00:03:17,340
+The ideal would be for us to use something
+
+65
+00:03:17,340 --> 00:03:20,220
+that if we already have here, right?
+
+66
+00:03:20,220 --> 00:03:22,860
+So as I had already installed
+
+67
+00:03:22,860 --> 00:03:25,140
+another version here I could use this one
+
+68
+00:03:25,140 --> 00:03:28,819
+but I'm going to put Express right
+
+69
+00:03:29,459 --> 00:03:31,260
+here and we'll get it What version
+
+70
+00:03:31,260 --> 00:03:36,060
+do we want to get DF  right, I
+
+71
+00:03:36,060 --> 00:03:39,360
+'m going to put version 5.0 here, the
+
+72
+00:03:39,360 --> 00:03:41,459
+directories where it will save it, right? And here
+
+73
+00:03:41,459 --> 00:03:43,019
+will be the repository from where it will
+
+74
+00:03:43,019 --> 00:03:46,680
+download, so it will download version 5 from github,
+
+75
+00:03:46,680 --> 00:03:48,299
+
+
+76
+00:03:48,299 --> 00:03:50,099
+which is a release, and it will save it
+
+77
+00:03:50,099 --> 00:03:53,360
+in these folders here
+
+78
+00:03:55,140 --> 00:03:57,120
+from there onwards.  We are now going to wait
+
+79
+00:03:57,120 --> 00:04:01,260
+for this guy to download all
+
+80
+00:04:01,260 --> 00:04:04,019
+the plugins here, here all the tools
+
+81
+00:04:04,019 --> 00:04:06,379
+he needs
+
+82
+00:04:51,919 --> 00:04:54,960
+So guys, as soon as he configures it,
+
+83
+00:04:54,960 --> 00:04:59,040
+he will show us this message
+
+84
+00:04:59,040 --> 00:05:03,000
+here and we already have it The plugin is already
+
+85
+00:05:03,000 --> 00:05:06,000
+practically configured,
+
+86
+00:05:06,000 --> 00:05:07,919
+he will probably ask us  a few more plugins
+
+87
+00:05:07,919 --> 00:05:10,020
+later for us to install, I already
+
+88
+00:05:10,020 --> 00:05:14,040
+installed the C part here, but right? It should contain
+
+89
+00:05:14,040 --> 00:05:16,620
+containers, which are some plugins that
+
+90
+00:05:16,620 --> 00:05:19,320
+IDF uses.
+
+91
+00:05:19,320 --> 00:05:21,139
+But let's go now,
+
+92
+00:05:21,139 --> 00:05:23,160
+it will show us this
+
+93
+00:05:23,160 --> 00:05:25,800
+welcome screen, so let's now configure
+
+94
+00:05:25,800 --> 00:05:30,360
+our first project here  let's
+
+95
+00:05:30,360 --> 00:05:32,759
+create a new project here so we
+
+96
+00:05:32,759 --> 00:05:34,919
+'re going to press F1 and it's going to open this
+
+97
+00:05:34,919 --> 00:05:38,960
+little screen here we're going to type IDF there
+
+98
+00:05:38,960 --> 00:05:42,840
+PDF and here Type thousand it's going to
+
+99
+00:05:42,840 --> 00:05:45,900
+appear there, the new Project we're going to
+
+100
+00:05:45,900 --> 00:05:48,539
+click on this guy here
+
+101
+00:05:48,539 --> 00:05:49,680
+we're going to give a  name for our
+
+102
+00:05:49,680 --> 00:05:51,600
+project so
+
+103
+00:05:51,600 --> 00:05:56,100
+our project will be the first
+
+104
+00:05:59,580 --> 00:06:02,240
+project
+
+105
+00:06:02,240 --> 00:06:05,580
+pay attention here as there are some
+
+106
+00:06:05,580 --> 00:06:06,660
+details that can cause a lot of
+
+107
+00:06:06,660 --> 00:06:08,220
+problems for us to have to configure
+
+108
+00:06:08,220 --> 00:06:09,440
+
+
+109
+00:06:09,440 --> 00:06:12,060
+spaces in the name of the project then here it is very
+
+110
+00:06:12,060 --> 00:06:16,020
+bad, so try not to leave
+
+111
+00:06:16,020 --> 00:06:18,320
+spaces here put the underline  Or put a
+
+112
+00:06:18,320 --> 00:06:21,319
+camera Case something like that
+
+113
+00:06:21,319 --> 00:06:23,780
+in the project in the
+
+114
+00:06:23,780 --> 00:06:28,199
+project there so as not to leave spaces
+
+115
+00:06:28,199 --> 00:06:29,060
+there
+
+116
+00:06:29,060 --> 00:06:31,680
+here the directory it will save or just
+
+117
+00:06:31,680 --> 00:06:35,419
+go to documents s32 Project
+
+118
+00:06:35,419 --> 00:06:37,860
+we select the development board here
+
+119
+00:06:37,860 --> 00:06:39,780
+So I'm going to launch this
+
+120
+00:06:39,780 --> 00:06:42,660
+egg kit to the port That would be where it is
+
+121
+00:06:42,660 --> 00:06:45,120
+connected And  this space here we use
+
+122
+00:06:45,120 --> 00:06:47,460
+to place a component the
+
+123
+00:06:47,460 --> 00:06:48,960
+components we will deal with in the video
+
+124
+00:06:48,960 --> 00:06:50,340
+later on there will be another
+
+125
+00:06:50,340 --> 00:06:52,680
+content there will be a video just dealing
+
+126
+00:06:52,680 --> 00:06:55,199
+with them there on how we place
+
+127
+00:06:55,199 --> 00:06:57,600
+these components within our
+
+128
+00:06:57,600 --> 00:06:59,280
+project for now we will  leave it
+
+129
+00:06:59,280 --> 00:07:02,160
+empty let's click on choose the
+
+130
+00:07:02,160 --> 00:07:03,080
+template
+
+131
+00:07:03,080 --> 00:07:06,780
+here it presents us with three templates
+
+132
+00:07:06,780 --> 00:07:10,080
+or if we want to get it from the IDF
+
+133
+00:07:10,080 --> 00:07:14,060
+it has several examples here it is, I'll
+
+134
+00:07:14,060 --> 00:07:15,919
+take it let me
+
+135
+00:07:15,919 --> 00:07:18,120
+take a look at this template
+
+136
+00:07:18,120 --> 00:07:21,180
+app here it is an empty template
+
+137
+00:07:21,180 --> 00:07:24,860
+I generally use it to start my  projects
+
+138
+00:07:24,860 --> 00:07:27,300
+But it would be very interesting if we
+
+139
+00:07:27,300 --> 00:07:29,400
+came here and watched hello
+
+140
+00:07:29,400 --> 00:07:30,840
+world, right?
+
+141
+00:07:30,840 --> 00:07:32,580
+Let's create from hello world
+
+142
+00:07:32,580 --> 00:07:33,660
+So we're going to create a new project
+
+143
+00:07:33,660 --> 00:07:36,919
+from hello world
+
+144
+00:07:36,960 --> 00:07:39,840
+just so we can demonstrate it here so
+
+145
+00:07:39,840 --> 00:07:42,419
+he already created this project there  he created it
+
+146
+00:07:42,419 --> 00:07:43,979
+in those folders there and that one is asking
+
+147
+00:07:43,979 --> 00:07:47,819
+me to open Visual Studio there
+
+148
+00:07:47,819 --> 00:07:51,479
+inside that folder So this here is
+
+149
+00:07:51,479 --> 00:07:53,520
+our project window so we
+
+150
+00:07:53,520 --> 00:07:55,860
+can see here
+
+151
+00:07:55,860 --> 00:07:59,220
+that there is a whole structure that
+
+152
+00:07:59,220 --> 00:08:02,400
+our IDF plugin there created so there is
+
+153
+00:08:02,400 --> 00:08:04,259
+here within the vsco point of some
+
+154
+00:08:04,259 --> 00:08:06,860
+configuration files
+
+155
+00:08:06,860 --> 00:08:10,319
+Jason so we will work
+
+156
+00:08:10,319 --> 00:08:12,900
+on them later for now we
+
+157
+00:08:12,900 --> 00:08:14,759
+will not change anything in it we will leave everything the
+
+158
+00:08:14,759 --> 00:08:17,280
+default configuration as it
+
+159
+00:08:17,280 --> 00:08:21,300
+is inside me Hello Word So this
+
+160
+00:08:21,300 --> 00:08:22,620
+guy he already does the  import of
+
+161
+00:08:22,620 --> 00:08:25,319
+some libraries from the system
+
+162
+00:08:25,319 --> 00:08:28,860
+and from here in the mother app it will
+
+163
+00:08:28,860 --> 00:08:30,780
+print a hello world and here it will
+
+164
+00:08:30,780 --> 00:08:34,459
+get some information from esp, right it
+
+165
+00:08:34,700 --> 00:08:40,580
+will print here the size of the memory
+
+166
+00:08:40,580 --> 00:08:43,200
+when we have it here it will
+
+167
+00:08:43,200 --> 00:08:45,300
+count up to 10 seconds  it will slow down
+
+168
+00:08:45,300 --> 00:08:48,420
+So we'll take it here, I'll
+
+169
+00:08:48,420 --> 00:08:49,860
+close these messages here because I don't
+
+170
+00:08:49,860 --> 00:08:51,740
+want to install these extensions here,
+
+171
+00:08:51,740 --> 00:08:53,899
+so we'll take it here, we'll
+
+172
+00:08:53,899 --> 00:08:55,980
+configure our Extra here, right, so
+
+173
+00:08:55,980 --> 00:08:57,899
+here we configure the port, right, I already
+
+174
+00:08:57,899 --> 00:08:59,580
+had it configured there, so it's with  three
+
+175
+00:08:59,580 --> 00:09:03,080
+for this project here we configure
+
+176
+00:09:03,080 --> 00:09:05,580
+the esc that we have so first
+
+177
+00:09:05,580 --> 00:09:07,440
+project it will show that the list
+
+178
+00:09:07,440 --> 00:09:13,019
+So mine is an s32 from this kit
+
+179
+00:09:13,019 --> 00:09:16,560
+here we can clean the
+
+180
+00:09:16,560 --> 00:09:18,360
+project if we have already seen
+
+181
+00:09:18,360 --> 00:09:20,040
+something  here we can do a
+
+182
+00:09:20,040 --> 00:09:22,080
+Clean here and it deletes that Build folder
+
+183
+00:09:22,080 --> 00:09:24,320
+
+
+184
+00:09:24,320 --> 00:09:28,320
+here in this guy here he records
+
+185
+00:09:28,320 --> 00:09:30,180
+here we will configure the
+
+186
+00:09:30,180 --> 00:09:32,100
+very important recording method so ours it will
+
+187
+00:09:32,100 --> 00:09:34,140
+be by art we will record it
+
+188
+00:09:34,140 --> 00:09:37,080
+by serial with 3
+
+189
+00:09:37,080 --> 00:09:39,540
+here is a  monitor where we will open
+
+190
+00:09:39,540 --> 00:09:42,660
+a terminal and get the
+
+191
+00:09:42,660 --> 00:09:45,180
+esp responses that it is sending through the terminal and
+
+192
+00:09:45,180 --> 00:09:47,220
+here I will use this little fire which is
+
+193
+00:09:47,220 --> 00:09:49,740
+where it builds Flash and then
+
+194
+00:09:49,740 --> 00:09:51,420
+it opens the monitor which is this little screen
+
+195
+00:09:51,420 --> 00:09:53,399
+here so  let's click there and let's
+
+196
+00:09:53,399 --> 00:09:55,700
+wait
+
+197
+00:09:59,100 --> 00:10:02,220
+then it comes here a hello world most
+
+198
+00:10:02,220 --> 00:10:04,380
+showed the number of doe here the
+
+199
+00:10:04,380 --> 00:10:08,040
+memory size right it went there and restarted that's
+
+200
+00:10:08,040 --> 00:10:09,360
+what we expected here from our
+
+201
+00:10:09,360 --> 00:10:11,060
+code then
+
+202
+00:10:11,060 --> 00:10:12,210
+installed then
+
+203
+00:10:12,210 --> 00:10:13,740
+[Music]
+
+204
+00:10:13,740 --> 00:10:16,320
+visual studio along with  the plugin here is
+
+205
+00:10:16,320 --> 00:10:18,420
+the IDF,
+
+206
+00:10:18,420 --> 00:10:21,360
+right this guy here installed along with
+
+207
+00:10:21,360 --> 00:10:24,180
+it we can now program and
+
+208
+00:10:24,180 --> 00:10:26,360
+record
+
+209
+00:10:26,519 --> 00:10:28,399
+in this video So let's stay here,
+
+210
+00:10:28,399 --> 00:10:30,540
+thank you very much to everyone who watched
+
+211
+00:10:30,540 --> 00:10:33,420
+until the end so I thank you all and see you in
+
+212
+00:10:33,420 --> 00:10:36,620
+the next video thanks
+

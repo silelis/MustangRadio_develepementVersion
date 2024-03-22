@@ -1,0 +1,23 @@
+#include </transmission_buffers.h>
+
+//void ClearBuffers (unsigned int *buffer, short int buffer_size)
+/*void ClearBuffers (unsigned int *buffer, unsigned int16 buffer_size)
+   {
+      //unsigned int8 i;
+      unsigned int16 i;
+      for ( i = 0; i < buffer_size; i++ )
+      {
+         *(buffer+i)= 0x00;
+      }*/
+   }
+
+void i2c_ClearMasterBuffer  (void)
+{
+   ClearBuffers(&i2c_MasterBuffer,i2c_mcu_Transmission_BUFSIZE);
+
+}
+
+void i2c_ClearSlaveBuffers  (void)
+{
+   ClearBuffers(&i2c_SlaveBuffer,i2c_mcu_Reception_BUFSIZE);
+}

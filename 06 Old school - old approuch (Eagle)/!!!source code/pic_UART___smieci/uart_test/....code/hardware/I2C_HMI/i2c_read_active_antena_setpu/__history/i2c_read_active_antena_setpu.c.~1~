@@ -1,0 +1,16 @@
+#include <i2c_read_active_antena_setpu.h>
+
+int8 get_active_antena_power_setup(void)
+{
+   //_HMI_i2cReadPrepare();
+   //_HMI_i2cReadExecute();
+   //return *(SlaveBuffer);
+   
+   int8 data;
+   i2c_start();
+   i2c_write(i2c_slave_address+1);
+   data=i2c_read(0);
+   i2c_stop();
+   return data;
+}
+
