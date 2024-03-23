@@ -3246,44 +3246,6 @@
     {
         "children": [
             {
-                "children": [
-                    {
-                        "children": [],
-                        "depends_on": "<choice ESP32_BOARD>",
-                        "help": null,
-                        "id": "ESP_LYRAT_V4_3_BOARD",
-                        "name": "ESP_LYRAT_V4_3_BOARD",
-                        "range": null,
-                        "title": "ESP32-Lyrat V4.3",
-                        "type": "bool"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": "<choice ESP32_BOARD>",
-                        "help": null,
-                        "id": "ESP_CUSTOM_BOARD",
-                        "name": "ESP_CUSTOM_BOARD",
-                        "range": null,
-                        "title": "ESP32 custom board",
-                        "type": "bool"
-                    }
-                ],
-                "depends_on": null,
-                "help": "select an ESP32 board to use with BTstack.",
-                "id": "example-board-configuration-esp32-board",
-                "name": "ESP32_BOARD",
-                "title": "ESP32 board",
-                "type": "choice"
-            }
-        ],
-        "depends_on": null,
-        "id": "example-board-configuration",
-        "title": "Example Board Configuration",
-        "type": "menu"
-    },
-    {
-        "children": [
-            {
                 "children": [],
                 "depends_on": null,
                 "help": "If set, then the app will be built with the current time/date stamp. It is stored in the app description\nstructure. If not set, time/date stamp will be excluded from app image. This can be useful for getting the\nsame binary image files made from the same source, but at different times.",
@@ -10467,24 +10429,6 @@
                 "name": "BLE_MESH",
                 "range": null,
                 "title": "ESP BLE Mesh Support",
-                "type": "menu"
-            },
-            {
-                "children": [
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Select this option to enable BTstack's default audio driver",
-                        "id": "BTSTACK_AUDIO",
-                        "name": "BTSTACK_AUDIO",
-                        "range": null,
-                        "title": "I2S Audio driver",
-                        "type": "bool"
-                    }
-                ],
-                "depends_on": null,
-                "id": "component-config-btstack-configuration",
-                "title": "BTstack Configuration",
                 "type": "menu"
             },
             {
