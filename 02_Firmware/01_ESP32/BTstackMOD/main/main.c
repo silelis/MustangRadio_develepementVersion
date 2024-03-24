@@ -65,10 +65,10 @@ extern int btstack_main(int argc, const char * argv[]);
 int app_main(void){
 
     // optional: enable packet logger
-    // hci_dump_init(hci_dump_embedded_stdout_get_instance());
+     //hci_dump_init(hci_dump_embedded_stdout_get_instance());
 
     // Enable buffered stdout
-    btstack_stdio_init();
+    //btstack_stdio_init();
 
     // Configure BTstack for ESP32 VHCI Controller
     btstack_init();

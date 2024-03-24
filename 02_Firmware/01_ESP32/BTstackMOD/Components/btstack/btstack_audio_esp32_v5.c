@@ -34,6 +34,7 @@
  * contact@bluekitchen-gmbh.com
  *
  */
+#include "../../../main/Header.h"
 
 #define BTSTACK_FILE__ "btstack_audio_esp32.c"
 
@@ -90,12 +91,22 @@ i2s_chan_handle_t rx_handle = NULL;
 #define BTSTACK_AUDIO_I2S_IN  GPIO_NUM_10
 #else
 // ESP32-LyraT V4
+#ifndef CHIP
 #define BTSTACK_AUDIO_I2S_MCLK GPIO_NUM_0
 #define BTSTACK_AUDIO_I2S_BCK  GPIO_NUM_5
 #define BTSTACK_AUDIO_I2S_WS   GPIO_NUM_25
 #define BTSTACK_AUDIO_I2S_OUT  GPIO_NUM_26
 #define BTSTACK_AUDIO_I2S_IN   GPIO_NUM_35
 #define HEADPHONE_DETECT       GPIO_NUM_19
+#else#if CHIP == ESP32#define BTSTACK_AUDIO_I2S_MCLK GPIO_NUM_NC//-1//GPIO_NUM_0
+#define BTSTACK_AUDIO_I2S_BCK  I2S_PIN_BCK//26//GPIO_NUM_5
+#define BTSTACK_AUDIO_I2S_WS   I2S_PIN_WS//27//GPIO_NUM_25
+#define BTSTACK_AUDIO_I2S_OUT  I2S_PIN_OUT//25//GPIO_NUM_26
+#define BTSTACK_AUDIO_I2S_IN   GPIO_NUM_NC//GPIO_NUM_35
+#define HEADPHONE_DETECT       GPIO_NUM_NC//GPIO_NUM_19#endif
+#endif // !CHIP
+
+
 #endif
 
 // set MCLK unused

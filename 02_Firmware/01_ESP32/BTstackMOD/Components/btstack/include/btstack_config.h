@@ -4,12 +4,18 @@
 // Documentation: https://bluekitchen-gmbh.com/btstack/#how_to/
 //
 
+#include "../../../main/Header.h"
 #ifndef BTSTACK_CONFIG_H
 #define BTSTACK_CONFIG_H
 
 // Port related features
 #define HAVE_ASSERT
-#define HAVE_BTSTACK_STDIN
+
+#ifndef CHIP
+	#define HAVE_BTSTACK_STDIN
+#endif // CHIP
+
+
 #define HAVE_EMBEDDED_TIME_MS
 #define HAVE_FREERTOS_INCLUDE_PREFIX
 #define HAVE_FREERTOS_TASK_NOTIFICATIONS
@@ -22,8 +28,8 @@
 
 // BTstack features that can be enabled
 #define ENABLE_PRINTF_HEXDUMP
-#define ENABLE_LOG_ERROR
-#define ENABLE_LOG_INFO
+//#define ENABLE_LOG_ERROR
+//#define ENABLE_LOG_INFO
 
 // Enable Classic/LE based on esp-idf sdkconfig
 #include "sdkconfig.h"
@@ -55,7 +61,12 @@
 #define ENABLE_CROSS_TRANSPORT_KEY_DERIVATION
 #endif
 
+#ifndef CHIP
 #define NVM_NUM_LINK_KEYS 16
+#else
+#define NVM_NUM_LINK_KEYS 1
+#endif
+
 
 #endif
 
@@ -70,7 +81,13 @@
 // ESP32 supports ECDH HCI Commands, but micro-ecc lib is already provided anyway
 #define ENABLE_MICRO_ECC_FOR_LE_SECURE_CONNECTIONS
 
+
+#ifndef CHIP
 #define NVM_NUM_DEVICE_DB_ENTRIES 16
+#else
+#define NVM_NUM_DEVICE_DB_ENTRIES 1
+#endif
+
 
 // Mesh Configuration
 #define ENABLE_MESH
