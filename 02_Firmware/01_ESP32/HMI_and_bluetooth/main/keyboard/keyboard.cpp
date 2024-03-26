@@ -394,7 +394,8 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
  *-----------------------------------------------------------*/
 KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler_LongpressNotification)
 {
-	ESP_LOGI(this->TAG, "Create input GPIOs debounce timer configuration");
+	//ESP_LOGI(this->TAG, "Create input GPIOs debounce timer configuration");
+	printf("%s: Create input GPIOs debounce timer configuration\n", this->TAG);
 	//configures the timer, which is responsible for checking whether the contacts vibrate (debounceing), and after stabilizing contacts, checks how long the button was pressed
 	gpioDebounceTimer_config.clk_src = GPTIMER_CLK_SRC_DEFAULT;
 	gpioDebounceTimer_config.direction = GPTIMER_COUNT_UP;
@@ -421,8 +422,8 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	ESP_ERROR_CHECK(gptimer_register_event_callbacks(gptimer, &cbs, &this->gpioInterruptCallback));
 	ESP_ERROR_CHECK(gptimer_enable(gptimer));
 
-	
-	ESP_LOGI(this->TAG, "Create button inputs GPIO configuration");
+	printf("%s: Create button inputs GPIO configuration.\n", this->TAG);
+	//ESP_LOGI(this->TAG, "Create button inputs GPIO configuration");
 	this->iputButtonsConf.pin_bit_mask = ((1ULL << VolBut) | (1ULL << BUT_1) | (1ULL << BUT_2) | (1ULL << BUT_3) | (1ULL << BUT_4) | (1ULL << BUT_5) | (1ULL << EquBut));
 	this->iputButtonsConf.mode = GPIO_MODE_INPUT;
 	this->iputButtonsConf.pull_up_en = GPIO_PULLUP_DISABLE;
@@ -430,7 +431,8 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	this->iputButtonsConf.intr_type = GPIO_INTR_NEGEDGE;
 	gpio_config(&this->iputButtonsConf);
 	
-	ESP_LOGI(this->TAG, "Create rotary encoder inputs GPIO configuration");
+	printf("%s: Create rotary encoder inputs GPIO configuration.\n", this->TAG);
+	//ESP_LOGI(this->TAG, "Create rotary encoder inputs GPIO configuration");
 	this->iputRotaryEncoderConf.pin_bit_mask = ((1ULL << VolRot_A) | (1ULL << VolRot_B) | (1ULL << EquRot_A) | (1ULL << EquRot_B));
 	this->iputRotaryEncoderConf.mode = GPIO_MODE_INPUT;
 	this->iputRotaryEncoderConf.pull_up_en = GPIO_PULLUP_DISABLE;
@@ -449,7 +451,8 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	
 	do
 	{
-		ESP_LOGI(this->TAG, "Release Power ON/OFF to continue initializing \r\n ");
+		//ESP_LOGI(this->TAG, "Release Power ON/OFF to continue initializing \r\n ");
+		printf("%s: Release Power ON/OFF to continue initializing \r\n", this->TAG);
 		//button = buttonsGetLevel();
 	} while (!(buttonsGetLevel() & 0b00000001));		//czeka zanim przycisk Power On/Off zostanie zwolniony po właczeniu radio
 		

@@ -16,7 +16,8 @@
 LEDS_BACKLIGHT::LEDS_BACKLIGHT(/*led_strip_rmt_config_t rtmConfig,*/ int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel)
 {
 	
-	ESP_LOGI(TAG, "Leds and background light configuration");
+	//ESP_LOGI(TAG, "Leds and background light configuration");
+	printf("%s: Leds and background light configuration\n", TAG);
 	/* LED strip initialization with the GPIO and pixels number*/
 
 	

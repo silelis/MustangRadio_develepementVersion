@@ -67,14 +67,16 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 	//esp_err_t retVal;
 	if (i2cInstanceCounter>0)
 	{
-		ESP_LOGI(this->TAG, "I2C had already been configured.");
+		//ESP_LOGI(this->TAG, "I2C had already been configured.");
+		printf("%s: I2C had already been configured.\n", this->TAG);
 		i2cInstanceCounter++;
 	}
 	else if (i2cInstanceCounter==0)
 	{
 		xI2CMasterMutex = xSemaphoreCreateMutex();
 		
-		ESP_LOGI(this->TAG, "Create I2C master configuration.");
+		printf("%s: Create I2C master configuration.\n", this->TAG);
+		//ESP_LOGI(this->TAG, "Create I2C master configuration.");
 		i2cMasterPort = 1;
 					
 		i2cConfig.mode = I2C_MODE_MASTER;
@@ -95,21 +97,25 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 			{
 				i2c_filter_enable(i2cMasterPort, 5);
 			}*/		
-			i2cInstanceCounter++;			
-			ESP_LOGI(this->TAG, "I2C has been configured.");
+			i2cInstanceCounter++;
+			printf("%s: I2C has been configured.\n", this->TAG);
+			//ESP_LOGI(this->TAG, "I2C has been configured.");
 			xSemaphoreGive(xI2CMasterMutex);
 		}
 		else
 		{
-			ESP_LOGI(this->TAG, "I2C configuration error.");
+			//ESP_LOGI(this->TAG, "I2C configuration error.");
+			printf("%s: I2C configuration error.\n", this->TAG);
 			if (i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) != ESP_OK)
 			{
-				ESP_LOGI(this->TAG, "I2C hardware configuration error");
+				//ESP_LOGI(this->TAG, "I2C hardware configuration error");
+				printf("%s: I2C hardware configuration error.\n", this->TAG);
 				assert(!i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0));
 			}
 			if (xI2CMasterMutex == NULL)
 			{
-				ESP_LOGI(this->TAG, "I2C mutex configuration error");
+				//ESP_LOGI(this->TAG, "I2C mutex configuration error");
+				printf("%s: I2C mutex configuration error.\n", this->TAG);
 				assert(xI2CMasterMutex);
 			}
 		}
@@ -175,17 +181,20 @@ esp_err_t i2cMaster::i2cPing(uint8_t i2c_address)
 	
 	if (retVal == ESP_OK)
 	{
-		ESP_LOGI(TAG, "Device found at address 0x%02X", i2c_address);
+		printf("%s: Device found at address 0x%02X.\n", this->TAG, i2c_address);
+		//ESP_LOGI(TAG, "Device found at address 0x%02X", i2c_address);
 		//return true;
 	}
 	else if (retVal == ESP_ERR_TIMEOUT)
 	{
-		ESP_LOGW(TAG, "No response from device at address 0x%02X", i2c_address);
+		printf("%s: No response from device at address 0x%02X.\n", this->TAG, i2c_address);
+		//ESP_LOGW(TAG, "No response from device at address 0x%02X", i2c_address);
 		//return false;
 	}
 	else
 	{
-		ESP_LOGE(TAG, "Error %d during I2C communication", retVal);
+		//ESP_LOGE(TAG, "Error %d during I2C communication", retVal);
+		printf("%s: Error %d during I2C communication.\n", this->TAG, retVal);
 		//return false;
 	}
 	
