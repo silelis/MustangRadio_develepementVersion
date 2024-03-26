@@ -46,6 +46,9 @@
 
 #include <stddef.h>
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
 // warn about unsuitable sdkconfig
 #include "sdkconfig.h"
 #if !CONFIG_BT_ENABLED
@@ -62,6 +65,19 @@
 
 extern int btstack_main(int argc, const char * argv[]);
 
+void task1(void* partam)
+{
+	
+	vTaskDelay(pdMS_TO_TICKS(15000));
+	//btstack_run_loop_execute_on_main_thread(btstack_run_loop_trigger_exit);
+	
+	btstack_run_loop_execute_on_main_thread(btstack_run_loop_deinit);
+	btstack_run_loop_execute_on_main_thread(NULL);
+	while (true)
+	{
+	         
+	}
+}
 int app_main(void){
 
     // optional: enable packet logger
@@ -75,9 +91,15 @@ int app_main(void){
 
     // Setup example
     btstack_main(0, NULL);
-
+	//xTaskCreate(task1, "1111", 2048, NULL, tskIDLE_PRIORITY, NULL);
     // Enter run loop (forever)
-    btstack_run_loop_execute();
-
+   btstack_run_loop_execute();
+   // #include "btstack_run_loop_freertos.h"
+	//task1(NULL);
+	
+	while (true)
+	{
+	         
+	}
     return 0;
 }
