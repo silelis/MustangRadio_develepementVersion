@@ -400,7 +400,9 @@ uint8_t btstack_init(void){
 
 #if CONFIG_BTSTACK_AUDIO
     // setup i2s audio for sink and source
-    btstack_audio_sink_set_instance(btstack_audio_esp32_sink_get_instance());
+    btstack_audio_sink_set_instance(btstack_audio_esp32_sink_get_instance());       //btstack_audio_sink_t
+	                                                                                //i2s init w .init           = &btstack_audio_esp32_sink_init
+	                                                                                //i2s deinit w 
     btstack_audio_source_set_instance(btstack_audio_esp32_source_get_instance());
 #endif
 
