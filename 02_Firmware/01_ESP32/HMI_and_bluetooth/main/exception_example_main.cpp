@@ -53,9 +53,11 @@ extern "C" void app_main(void)
 	init_uart();
 	
 	const char *main_TAG = "Main function:";
-	ESP_LOGI(main_TAG, "starting");
-	//printf("%s: starting...\n", main_TAG);
-		
+	//ESP_LOGI(main_TAG, "starting");
+	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
+
+	
+	
 	displayLedsColors.equaliserLed.primary.blue = 0;
 	displayLedsColors.equaliserLed.primary.green = 0;
 	displayLedsColors.equaliserLed.primary.red = 25;
@@ -69,13 +71,15 @@ extern "C" void app_main(void)
 	displayLedsColors.backlightLeds.primary.blue=0;
 	
 	//tworzy obiekt obsługujący NVS flash radio
-	ESP_LOGI(main_TAG, "NVS storage init");
+	printf("%s: NVS storage init\n", main_TAG);
+	//ESP_LOGI(main_TAG, "NVS storage init");
 	NVS * storage = NULL;
 	assert(storage = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
 	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
-	ESP_LOGI(main_TAG, "Backlight and display leds init");
+	//ESP_LOGI(main_TAG, "Backlight and display leds init");
+	printf("%s: Backlight and display leds init\n", main_TAG);
 	LEDS_BACKLIGHT *ledDisplay = NULL;
 	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
 	ledDisplay->ledStripClearAll();
@@ -83,14 +87,17 @@ extern "C" void app_main(void)
 	handlerMutex_ledDisplay_Backlight = NULL;																								//czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
 	assert(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary());																	//tworzy mutex dla podświetlenia
 	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);																						//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
-	ESP_LOGI(main_TAG, "Display leds task starting");
+	printf("%s: Display leds task starting\n", main_TAG);
+	//ESP_LOGI(main_TAG, "Display leds task starting");
 	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_ledDisplay));				//tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
 	
-	ESP_LOGI(main_TAG, "Backlight leds task starting");
+	printf("%s: Backlight leds task starting\n", main_TAG);
+	//ESP_LOGI(main_TAG, "Backlight leds task starting");
 	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
-	ESP_LOGI(main_TAG, "Buttons and encoders (aka keyboard) init");
+	printf("%s: Buttons and encoders (aka keyboard) init\n", main_TAG);
+	//ESP_LOGI(main_TAG, "Buttons and encoders (aka keyboard) init");
 	handlerQueue_MainKeyboard = NULL;
 	handlerQueue_MainKeyboard = xQueueCreate(QueueHandlerMainKeyboard_len, sizeof(keyboardUnion));
 	assert(handlerQueue_MainKeyboard);
@@ -100,7 +107,8 @@ extern "C" void app_main(void)
 	KEYBOARD *klawiatura = NULL;
 	assert(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
 	handlerTask_keyboardQueueParametersParser = NULL;
-	ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
+	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
+	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
 	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 2048, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser));		//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 	

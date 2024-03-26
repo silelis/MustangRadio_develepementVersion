@@ -24,10 +24,12 @@ MCP23008::MCP23008(uint8_t i2cDeviceOpcode, int pinSDA, int pinSCL, uint32_t i2c
 	//todo: PANIC ERROR IF I2C MASTER NOT INIOTIALISED
 	//TOTO:	BROWNOUT DETECTION
 	
-	ESP_LOGI(this->TAG, "Create MCP23008 configuration.");
+	//ESP_LOGI(this->TAG, "Create MCP23008 configuration.");
+	printf("%s: Create MCP23008 configuration.\n", this->TAG);
 	if (this->geti2cInstanceCounterState() == 0)
 	{
-		ESP_LOGE(TAG, "I2C master configuration error.");
+		//ESP_LOGE(TAG, "I2C master configuration error.");
+		printf("%s: I2C master configuration error.\n", this->TAG);
 	}
 	else
 	{
@@ -47,7 +49,8 @@ MCP23008::MCP23008(uint8_t i2cDeviceOpcode, int pinSDA, int pinSCL, uint32_t i2c
 *---------------------------------------------------------------*/
 MCP23008::~MCP23008()
 {
-	ESP_LOGI(this->TAG, "MCP23008 destruction.");	
+	//ESP_LOGI(this->TAG, "MCP23008 destruction.");
+	printf("%s: MCP23008 destruction.\n", this->TAG);
 
 }
 
