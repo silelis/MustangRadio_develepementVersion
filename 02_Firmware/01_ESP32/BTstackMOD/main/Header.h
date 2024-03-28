@@ -1,6 +1,8 @@
 #pragma once
 
-#define CHIP ESP32
+#define chipESP32	1
+
+#define CHIP chipESP32
 
 #define I2S_PIN_BCK		GPIO_NUM_26
 #define I2S_PIN_WS		GPIO_NUM_27

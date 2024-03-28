@@ -64,6 +64,23 @@
 #endif
 
 extern int btstack_main(int argc, const char * argv[]);
+extern esp_err_t i2sPinsHighImpedanceDisabled();
+extern esp_err_t i2sPinsHighImpedanceEnabled();
+
+#include "driver/uart.h"
+void init_uart() {
+	uart_config_t uart_config = {
+		.baud_rate = 115200,
+		.data_bits = UART_DATA_8_BITS,
+		.parity = UART_PARITY_DISABLE,
+		.stop_bits = UART_STOP_BITS_1,
+		.flow_ctrl = UART_HW_FLOWCTRL_DISABLE
+	};
+
+	uart_param_config(UART_NUM_0, &uart_config);
+	//uart_set_pin(UART_NUM_0, 1, 3, 0, 0);
+	uart_driver_install(UART_NUM_0, 256, 0, 0, NULL, 0);
+}
 
 void task1(void* partam)
 {
@@ -85,7 +102,9 @@ int app_main(void){
 
     // Enable buffered stdout
     //btstack_stdio_init();
-
+	
+	//init_uart();
+	i2sPinsHighImpedanceEnabled();
     // Configure BTstack for ESP32 VHCI Controller
     btstack_init();
 
@@ -97,9 +116,9 @@ int app_main(void){
    // #include "btstack_run_loop_freertos.h"
 	//task1(NULL);
 	
-	while (true)
+	/*while (true)
 	{
 	         
-	}
+	}*/
     return 0;
 }

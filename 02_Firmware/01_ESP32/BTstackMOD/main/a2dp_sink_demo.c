@@ -71,6 +71,55 @@
 
 #include "btstack_resample.h"
 
+//functions required by Mustang radio hardware
+#include "driver/gpio.h"
+
+esp_err_t i2sPinsHighImpedanceEnabled()
+{
+	gpio_config_t io_conf = { };
+	io_conf.intr_type = GPIO_INTR_DISABLE;
+	io_conf.pin_bit_mask = ((1ULL << I2S_PIN_BCK) | (1ULL << I2S_PIN_WS) | (1ULL << I2S_PIN_OUT));
+	io_conf.mode = GPIO_MODE_INPUT;
+	io_conf.pull_up_en = GPIO_PULLUP_DISABLE; 
+	io_conf.pull_down_en = GPIO_PULLUP_DISABLE;
+	esp_err_t retVal = gpio_config(&io_conf);
+	if (retVal == ESP_OK)
+	{
+		printf("I2S pins high impedance mode had been initialized.\n");
+	}
+	else
+	{
+		printf("PROBLEM with I2S pins high impedance mode initialization.\n");
+		assert(!ESP_OK);
+	}
+	return retVal;
+}
+
+
+esp_err_t i2sPinsHighImpedanceDisabled()
+{
+	gpio_config_t io_conf = {};
+	io_conf.intr_type = GPIO_INTR_DISABLE;
+	io_conf.pin_bit_mask = ((1ULL << I2S_PIN_BCK) | (1ULL << I2S_PIN_WS) | (1ULL << I2S_PIN_OUT));
+	io_conf.mode = GPIO_MODE_DISABLE;
+	//io_conf.pull_up_en = GPIO_PULLUP_DISABLE; 
+	//io_conf.pull_down_en = GPIO_PULLUP_DISABLE;
+	esp_err_t retVal = gpio_config(&io_conf);
+	if (retVal == ESP_OK)
+	{
+		printf("I2S pins high impedance mode had been deinitialized.\n");
+	}
+	else
+	{
+		printf("PROBLEM with I2S pins high impedance mode deinitialization.\n");
+		assert(!ESP_OK);
+	}
+	return retVal;
+}
+
+//functions required by Mustang radio hardware
+
+
 //#define AVRCP_BROWSING_ENABLED
 
 #ifdef HAVE_BTSTACK_STDIN
@@ -457,6 +506,7 @@ static int media_processing_init(media_codec_configuration_sbc_t * configuration
     // setup audio playback
     const btstack_audio_sink_t * audio = btstack_audio_sink_get_instance();
     if (audio){
+	    i2sPinsHighImpedanceDisabled();
         audio->init(NUM_CHANNELS, configuration->sampling_frequency, &playback_handler);
     }
 
@@ -520,6 +570,7 @@ static void media_processing_close(void){
     if (audio){
         printf("close stream\n");
         audio->close();
+	    i2sPinsHighImpedanceEnabled();
     }
 }
 
