@@ -50,7 +50,7 @@
 #define ENABLE_SCO_OVER_HCI
 
 // mainly needed for AVRCP Browsing, can be removed otherwise to reduce code size
-#define ENABLE_L2CAP_ENHANCED_RETRANSMISSION_MODE
+//#define ENABLE_L2CAP_ENHANCED_RETRANSMISSION_MODE
 
 // work around to link layer issues in ESP32
 // https://github.com/espressif/esp-idf/issues/5494
@@ -79,7 +79,7 @@
 #define ENABLE_LE_PERIPHERAL
 #define ENABLE_LE_SECURE_CONNECTIONS
 // ESP32 supports ECDH HCI Commands, but micro-ecc lib is already provided anyway
-#define ENABLE_MICRO_ECC_FOR_LE_SECURE_CONNECTIONS
+//#define ENABLE_MICRO_ECC_FOR_LE_SECURE_CONNECTIONS
 
 
 #ifndef CHIP
