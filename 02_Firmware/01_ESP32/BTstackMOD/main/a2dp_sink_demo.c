@@ -35,8 +35,7 @@
  *
  */
 
-#include "a2dp_sink_demo.h"
-//#define BTSTACK_FILE__ "a2dp_sink_demo.c"
+#define BTSTACK_FILE__ "a2dp_sink_demo.c"
 
 /*
  * a2dp_sink_demo.c
@@ -63,7 +62,17 @@
  */
 // *****************************************************************************
 
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
+#include "btstack.h"
+
+#include "btstack_resample.h"
+
+//functions required by Mustang radio hardware
+#include "driver/gpio.h"
 
 esp_err_t i2sPinsHighImpedanceEnabled()
 {
@@ -132,10 +141,10 @@ esp_err_t i2sPinsHighImpedanceDisabled()
 #define BYTES_PER_FRAME     (2*NUM_CHANNELS)
 #define MAX_SBC_FRAME_SIZE 120
 
-//#ifdef HAVE_BTSTACK_STDIN
-static const char * device_addr_string = ; // pts v5.0
+#ifdef HAVE_BTSTACK_STDIN
+static const char * device_addr_string = "00:1B:DC:08:E2:72"; // pts v5.0
 static bd_addr_t device_addr;
-//#endif
+#endif
 
 #ifdef HAVE_BTSTACK_AUDIO_EFFECTIVE_SAMPLERATE
 static btstack_sample_rate_compensation_t sample_rate_compensation;
@@ -288,9 +297,9 @@ static void handle_l2cap_media_data_packet(uint8_t seid, uint8_t *packet, uint16
 static void avrcp_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t *packet, uint16_t size);
 static void avrcp_controller_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t *packet, uint16_t size);
 static void avrcp_target_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t *packet, uint16_t size);
-//#ifdef HAVE_BTSTACK_STDIN
-//static void stdin_process(char cmd);
-//#endif
+#ifdef HAVE_BTSTACK_STDIN
+static void stdin_process(char cmd);
+#endif
 
 static int setup_demo(void){
 
@@ -816,10 +825,10 @@ static void avrcp_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t 
             avrcp_subevent_connection_established_get_bd_addr(packet, address);
             printf("AVRCP: Connected to %s, cid 0x%02x\n", bd_addr_to_str(address), connection->avrcp_cid);
 
-//#ifdef HAVE_BTSTACK_STDIN
+#ifdef HAVE_BTSTACK_STDIN
             // use address for outgoing connections
             avrcp_subevent_connection_established_get_bd_addr(packet, device_addr);
-//#endif
+#endif
 
             avrcp_target_support_event(connection->avrcp_cid, AVRCP_NOTIFICATION_EVENT_VOLUME_CHANGED);
             avrcp_target_support_event(connection->avrcp_cid, AVRCP_NOTIFICATION_EVENT_BATT_STATUS_CHANGED);
@@ -1114,10 +1123,10 @@ static void a2dp_sink_packet_handler(uint8_t packet_type, uint16_t channel, uint
 
             printf("A2DP  Sink      : Streaming connection is established, address %s, cid 0x%02x, local seid %d\n",
                    bd_addr_to_str(a2dp_conn->addr), a2dp_conn->a2dp_cid, a2dp_conn->a2dp_local_seid);
-//#ifdef HAVE_BTSTACK_STDIN
+#ifdef HAVE_BTSTACK_STDIN
             // use address for outgoing connections
             memcpy(device_addr, a2dp_conn->addr, 6);
-//#endif
+#endif
             break;
         
 #ifdef ENABLE_AVDTP_ACCEPTOR_EXPLICIT_START_STREAM_CONFIRMATION
@@ -1160,49 +1169,47 @@ static void a2dp_sink_packet_handler(uint8_t packet_type, uint16_t channel, uint
     }
 }
 
-//#ifdef HAVE_BTSTACK_STDIN
-static void show_usage() {
-		bd_addr_t      iut_address;
-		gap_local_bd_addr(iut_address);
-		printf("\n--- A2DP Sink Demo Console %s ---\n", bd_addr_to_str(iut_address));
-		printf("b - A2DP Sink create connection to addr %s\n", bd_addr_to_str(device_addr));
-		printf("B - A2DP Sink disconnect\n");
+#ifdef HAVE_BTSTACK_STDIN
+static void show_usage(void){
+    bd_addr_t      iut_address;
+    gap_local_bd_addr(iut_address);
+    printf("\n--- A2DP Sink Demo Console %s ---\n", bd_addr_to_str(iut_address));
+    printf("b - A2DP Sink create connection to addr %s\n", bd_addr_to_str(device_addr));
+    printf("B - A2DP Sink disconnect\n");
 
-		printf("\n--- AVRCP Controller ---\n");
-		printf("c - AVRCP create connection to addr %s\n", bd_addr_to_str(device_addr));
-		printf("C - AVRCP disconnect\n");
-		printf("O - get play status\n");
-		printf("j - get now playing info\n");
-		printf("k - play\n");
-		printf("K - stop\n");
-		printf("L - pause\n");
-		printf("u - start fast forward\n");
-		printf("U - stop  fast forward\n");
-		printf("n - start rewind\n");
-		printf("N - stop rewind\n");
-		printf("i - forward\n");
-		printf("I - backward\n");
-		printf("M - mute\n");
-		printf("r - skip\n");
-		printf("q - query repeat and shuffle mode\n");
-		printf("v - repeat single track\n");
-		printf("w - delay report\n");
-		printf("x - repeat all tracks\n");
-		printf("X - disable repeat mode\n");
-		printf("z - shuffle all tracks\n");
-		printf("Z - disable shuffle mode\n");
+    printf("\n--- AVRCP Controller ---\n");
+    printf("c - AVRCP create connection to addr %s\n", bd_addr_to_str(device_addr));
+    printf("C - AVRCP disconnect\n");
+    printf("O - get play status\n");
+    printf("j - get now playing info\n");
+    printf("k - play\n");
+    printf("K - stop\n");
+    printf("L - pause\n");
+    printf("u - start fast forward\n");
+    printf("U - stop  fast forward\n");
+    printf("n - start rewind\n");
+    printf("N - stop rewind\n");
+    printf("i - forward\n");
+    printf("I - backward\n");
+    printf("M - mute\n");
+    printf("r - skip\n");
+    printf("q - query repeat and shuffle mode\n");
+    printf("v - repeat single track\n");
+    printf("w - delay report\n");
+    printf("x - repeat all tracks\n");
+    printf("X - disable repeat mode\n");
+    printf("z - shuffle all tracks\n");
+    printf("Z - disable shuffle mode\n");
 
-		printf("a/A - register/deregister TRACK_CHANGED\n");
-		printf("R/P - register/deregister PLAYBACK_POS_CHANGED\n");
+    printf("a/A - register/deregister TRACK_CHANGED\n");
+    printf("R/P - register/deregister PLAYBACK_POS_CHANGED\n");
 
-		printf("s/S - send/release long button press REWIND\n");
+    printf("s/S - send/release long button press REWIND\n");
 
-		printf("\n--- Volume and Battery Control ---\n");
-		printf("t - volume up   for 10 percent\n");
-		printf("T - volume down for 10 percent\n");
-		printf("V - toggle Battery status from AVRCP_BATTERY_STATUS_NORMAL to AVRCP_BATTERY_STATUS_FULL_CHARGE\n");
-	}
-//}
+    printf("\n--- Volume and Battery Control ---\n");
+    printf("t - volume up   for 10 percent\n");
+    printf("T - volume down for 10 percent\n");
+    printf("V - toggle Battery status from AVRCP_BATTERY_STATUS_NORMAL to AVRCP_BATTERY_STATUS_FULL_CHARGE\n");
 
 #ifdef ENABLE_AVRCP_COVER_ART
     printf("\n--- Cover Art Client ---\n");
@@ -1220,12 +1227,12 @@ static void show_usage() {
     printf("---\n");
 #endif
 
-//}
-//#endif
+}
+#endif
 
-//#ifdef HAVE_BTSTACK_STDIN
+#ifdef HAVE_BTSTACK_STDIN
 
-/*static*/ void stdin_process(char cmd) {
+static void stdin_process(char cmd){
     uint8_t status = ERROR_CODE_SUCCESS;
     uint8_t volume;
     avrcp_battery_status_t old_battery_status;
@@ -1405,14 +1412,14 @@ static void show_usage() {
             break;
 #endif
         default:
-	        show_usage();
+            show_usage();
             return;
     }
     if (status != ERROR_CODE_SUCCESS){
         printf("Could not perform command, status 0x%02x\n", status);
     }
 }
-//#endif
+#endif
 
 int btstack_main(int argc, const char * argv[]);
 int btstack_main(int argc, const char * argv[]){
@@ -1421,28 +1428,12 @@ int btstack_main(int argc, const char * argv[]){
 
     setup_demo();
 
-	
-	
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #ifdef HAVE_BTSTACK_STDIN
     // parse human-readable Bluetooth address
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     sscanf_bd_addr(device_addr_string, device_addr);
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     btstack_stdin_setup(stdin_process);
 #endif
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
+
     // turn on!
     printf("Starting BTstack ...\n");
     hci_power_control(HCI_POWER_ON);

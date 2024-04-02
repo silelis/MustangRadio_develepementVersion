@@ -236,7 +236,8 @@ esp_err_t StepperOpto::makeStep()
 {
 	uint8_t data = this->readOLAT();
 	data ^= MOTOR_STEP_MASK;
-	vTaskDelay(pdMS_TO_TICKS(8));
+	//vTaskDelay(pdMS_TO_TICKS(8)); //działa przy configTICK_RATE_HZ 100
+	//vTaskDelay(pdMS_TO_TICKS(1));
 	return this->writeOLAT(data);
 	
 }
