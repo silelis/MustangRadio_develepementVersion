@@ -381,7 +381,7 @@ void btstack_replace_bd_addr_placeholder(uint8_t * buffer, uint16_t size, const 
             continue;
         }
         // set address
-	    (void)memcpy(&buffer[i], bd_addr_to_str(address), bd_addr_string_len);
+        (void)memcpy(&buffer[i], bd_addr_to_str(address), bd_addr_string_len);
         i += bd_addr_string_len;
     }
 }
