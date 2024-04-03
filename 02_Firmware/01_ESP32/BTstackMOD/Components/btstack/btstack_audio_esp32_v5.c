@@ -102,14 +102,16 @@ i2s_chan_handle_t rx_handle = NULL;
 #endif
 
 #ifdef CHIP
-#if CHIP==chipESP32
+//#if CHIP==chipESP32
+#if CHIP==chip_ESP32_WROOM32D_DEVBOARD
 #define BTSTACK_AUDIO_I2S_MCLK GPIO_NUM_NC //-1//GPIO_NUM_0
 #define BTSTACK_AUDIO_I2S_BCK  I2S_PIN_BCK //26//GPIO_NUM_5
 #define BTSTACK_AUDIO_I2S_WS   I2S_PIN_WS //27//GPIO_NUM_25
 #define BTSTACK_AUDIO_I2S_OUT  I2S_PIN_OUT //25//GPIO_NUM_26
 #define BTSTACK_AUDIO_I2S_IN   GPIO_NUM_NC //GPIO_NUM_35
 #define HEADPHONE_DETECT       GPIO_NUM_NC //GPIO_NUM_19
-#else#error "HMI and bluetooth hardware not supported by configuration."
+#else
+#error "HMI and bluetooth hardware not supported by configuration."
 #endif
 #endif // !CHIP
 

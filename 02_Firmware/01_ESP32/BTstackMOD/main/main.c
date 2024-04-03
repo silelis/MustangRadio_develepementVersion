@@ -67,6 +67,7 @@ extern int btstack_main(int argc, const char * argv[]);
 extern esp_err_t i2sPinsHighImpedanceDisabled();
 extern esp_err_t i2sPinsHighImpedanceEnabled();
 
+/*
 #include "driver/uart.h"
 void init_uart() {
 	uart_config_t uart_config = {
@@ -94,7 +95,8 @@ void task1(void* partam)
 	{
 	         
 	}
-}
+}*/
+	
 int app_main(void){
 
     // optional: enable packet logger
