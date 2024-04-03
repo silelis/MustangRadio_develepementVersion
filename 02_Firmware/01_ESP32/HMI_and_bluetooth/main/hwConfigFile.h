@@ -4,52 +4,12 @@
 #include "comunicationProtocol.h"
 #include "driver/gpio.h"
 
-#define CHIP ESP32
+#define chip_ESP32_WROOM32D_DEVBOARD	0
 
-#if CHIP == ESP32  
-	//task to core assigment
-	#define TASK_TO_CORE1		1
+#define CHIP chip_ESP32_WROOM32D_DEVBOARD		//select Your chip/ devboard type
 
-	//Please set your hardware details - BEGINNING
-	#define I2C_MASTER_PIN_SDA				GPIO_NUM_19
-	#define I2C_MASTER_PIN_SCL				GPIO_NUM_18
-	#define	I2C_MASTER_SPEED				400000								//DO NOT CHANGE
-	#define	I2C_MASTER_RX_BEFFER			10
-	#define	I2C_MASTER_TX_BEFFER			10
-	#define MCP23008_I2C_DEVICE_OPCODE		0b0100000
-
-
-
-
-	//input buttons and rotary encoder configuration
-	#define BUT_0	GPIO_NUM_33						//DO NOT CHANGE
-	#define BUT_1	GPIO_NUM_36						//DO NOT CHANGE
-	#define BUT_2	GPIO_NUM_39						//DO NOT CHANGE
-	#define BUT_3	GPIO_NUM_34						//DO NOT CHANGE
-	#define BUT_4	GPIO_NUM_35						//DO NOT CHANGE
-	#define BUT_5	GPIO_NUM_32						//DO NOT CHANGE
-	#define BUT_6	GPIO_NUM_23						//DO NOT CHANGE
-	#define VolBut	BUT_0							//DO NOT CHANGE
-	#define EquBut	BUT_6							//DO NOT CHANGE
-	#define VolRot_A	GPIO_NUM_2					//DO NOT CHANGE
-	#define VolRot_B	GPIO_NUM_4					//DO NOT CHANGE
-	#define EquRot_A	GPIO_NUM_17					//DO NOT CHANGE
-	#define EquRot_B	GPIO_NUM_5					//DO NOT CHANGE
-	#define LED_DISPLAY_GPIO	GPIO_NUM_16
-	//input buttons and rotary encoder configuration
-
-	//stepper motor and optotransistor sensors connected to MCP23008
-	#define SENSOR_EQU_SIDE_MASK	(1<<7)
-	#define SENSOR_VOL_SIDE_MASK	(1<<6)
-	#define MOTOR_FAULT_MASK		(1<<5)
-	#define MOTOR_DIRECTION_MAKS	(1<<4)
-	#define MOTOR_STEP_MASK			(1<<3)
-	#define MOTOR_NOT_SLEEP_MASK	(1<<2)
-	//#define MUX_SELECT_MASK		(1<<1)
-	//#define INTERRUP_REQUEST_MASK	(1<<0)
-	//stepper motor and optotransistor sensors connected to MCP23008
-
-	//Please set your hardware details - END
+#if CHIP == chip_ESP32_WROOM32D_DEVBOARD  
+#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 #endif
 
 #define DEBOUNCE_PARAMETERS				DEBOUNCE_PARAMETERS_100us_20x		//PLEASE choose one of: "DEBOUNCE_PARAMETERS_100us_20x" or "DEBOUNCE_PARAMETERS_275us_20x" or "DEBOUNCE_PARAMETERS_137us_40x"
