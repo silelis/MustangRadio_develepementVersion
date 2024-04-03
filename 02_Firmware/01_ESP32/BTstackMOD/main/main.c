@@ -64,8 +64,8 @@
 #endif
 
 extern int btstack_main(int argc, const char * argv[]);
-extern esp_err_t i2sPinsHighImpedanceDisabled();
-extern esp_err_t i2sPinsHighImpedanceEnabled();
+extern esp_err_t i2sPinsHighImpedanceDisabled(void);
+extern esp_err_t i2sPinsHighImpedanceEnabled(void);
 
 /*
 #include "driver/uart.h"

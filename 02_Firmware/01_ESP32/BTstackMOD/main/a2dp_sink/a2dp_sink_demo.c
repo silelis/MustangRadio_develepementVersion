@@ -74,7 +74,11 @@
 //functions required by Mustang radio hardware
 #include "driver/gpio.h"
 
-esp_err_t i2sPinsHighImpedanceEnabled()
+
+esp_err_t i2sPinsHighImpedanceEnabled(void);
+esp_err_t i2sPinsHighImpedanceDisabled(void);
+
+esp_err_t i2sPinsHighImpedanceEnabled(void)
 {
 	gpio_config_t io_conf = { };
 	io_conf.intr_type = GPIO_INTR_DISABLE;
@@ -96,7 +100,7 @@ esp_err_t i2sPinsHighImpedanceEnabled()
 }
 
 
-esp_err_t i2sPinsHighImpedanceDisabled()
+esp_err_t i2sPinsHighImpedanceDisabled(void)
 {
 	gpio_config_t io_conf = {};
 	io_conf.intr_type = GPIO_INTR_DISABLE;
