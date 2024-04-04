@@ -306,6 +306,13 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
+# Example Board Configuration
+#
+# CONFIG_ESP_LYRAT_V4_3_BOARD is not set
+CONFIG_ESP_CUSTOM_BOARD=y
+# end of Example Board Configuration
+
+#
 # Compiler options
 #
 CONFIG_COMPILER_OPTIMIZATION_DEFAULT=y
@@ -1520,6 +1527,12 @@ CONFIG_WPA_MBEDTLS_TLS_CLIENT=y
 # CONFIG_WPA_11R_SUPPORT is not set
 # CONFIG_WPA_WPS_SOFTAP_REGISTRAR is not set
 # end of Supplicant
+
+#
+# BTstack Configuration
+#
+CONFIG_BTSTACK_AUDIO=y
+# end of BTstack Configuration
 # end of Component config
 
 # Deprecated options for backward compatibility

@@ -4005,6 +4005,44 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "<choice ESP32_BOARD>",
+                        "help": null,
+                        "id": "ESP_LYRAT_V4_3_BOARD",
+                        "name": "ESP_LYRAT_V4_3_BOARD",
+                        "range": null,
+                        "title": "ESP32-Lyrat V4.3",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "<choice ESP32_BOARD>",
+                        "help": null,
+                        "id": "ESP_CUSTOM_BOARD",
+                        "name": "ESP_CUSTOM_BOARD",
+                        "range": null,
+                        "title": "ESP32 custom board",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "help": "select an ESP32 board to use with BTstack.",
+                "id": "example-board-configuration-esp32-board",
+                "name": "ESP32_BOARD",
+                "title": "ESP32 board",
+                "type": "choice"
+            }
+        ],
+        "depends_on": null,
+        "id": "example-board-configuration",
+        "title": "Example Board Configuration",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "children": [],
                         "depends_on": "<choice COMPILER_OPTIMIZATION>",
                         "help": null,
                         "id": "COMPILER_OPTIMIZATION_DEFAULT",
@@ -5190,10 +5228,7 @@
                                                 "help": "Maximum GATT Server Profiles Count",
                                                 "id": "BT_GATT_MAX_SR_PROFILES",
                                                 "name": "BT_GATT_MAX_SR_PROFILES",
-                                                "range": [
-                                                    1,
-                                                    32
-                                                ],
+                                                "range": null,
                                                 "title": "Max GATT Server Profiles",
                                                 "type": "int"
                                             },
@@ -5203,10 +5238,7 @@
                                                 "help": "Maximum GATT Service Attributes Count",
                                                 "id": "BT_GATT_MAX_SR_ATTRIBUTES",
                                                 "name": "BT_GATT_MAX_SR_ATTRIBUTES",
-                                                "range": [
-                                                    1,
-                                                    500
-                                                ],
+                                                "range": null,
                                                 "title": "Max GATT Service Attributes",
                                                 "type": "int"
                                             },
@@ -5267,10 +5299,7 @@
                                                 "help": "Maximum GATTC cache characteristic count",
                                                 "id": "BT_GATTC_MAX_CACHE_CHAR",
                                                 "name": "BT_GATTC_MAX_CACHE_CHAR",
-                                                "range": [
-                                                    1,
-                                                    500
-                                                ],
+                                                "range": null,
                                                 "title": "Max gattc cache characteristic for discover",
                                                 "type": "int"
                                             },
@@ -5290,10 +5319,7 @@
                                                 "help": "The number of attempts to reconnect if the connection establishment failed",
                                                 "id": "BT_GATTC_CONNECT_RETRY_COUNT",
                                                 "name": "BT_GATTC_CONNECT_RETRY_COUNT",
-                                                "range": [
-                                                    0,
-                                                    7
-                                                ],
+                                                "range": null,
                                                 "title": "The number of attempts to reconnect if the connection establishment failed",
                                                 "type": "int"
                                             }
@@ -7250,10 +7276,7 @@
                                 "help": "Maximum BT/BLE connection count",
                                 "id": "BT_ACL_CONNECTIONS",
                                 "name": "BT_ACL_CONNECTIONS",
-                                "range": [
-                                    1,
-                                    7
-                                ],
+                                "range": null,
                                 "title": "BT/BLE MAX ACL CONNECTIONS(1~7)",
                                 "type": "int"
                             },
@@ -7323,10 +7346,7 @@
                                 "help": "Bluetooth Connection establishment maximum time, if connection time exceeds this value, the connection\nestablishment fails, ESP_GATTC_OPEN_EVT or ESP_GATTS_OPEN_EVT is triggered.",
                                 "id": "BT_BLE_ESTAB_LINK_CONN_TOUT",
                                 "name": "BT_BLE_ESTAB_LINK_CONN_TOUT",
-                                "range": [
-                                    1,
-                                    60
-                                ],
+                                "range": null,
                                 "title": "Timeout of BLE connection establishment",
                                 "type": "int"
                             },
@@ -7336,10 +7356,7 @@
                                 "help": "Bluetooth Device name length shall be no larger than 248 octets, If the broadcast data cannot contain\nthe complete device name, then only the shortname will be displayed, the rest parts that can't fit in\nwill be truncated.",
                                 "id": "BT_MAX_DEVICE_NAME_LEN",
                                 "name": "BT_MAX_DEVICE_NAME_LEN",
-                                "range": [
-                                    32,
-                                    248
-                                ],
+                                "range": null,
                                 "title": "length of bluetooth device name",
                                 "type": "int"
                             },
@@ -21903,6 +21920,24 @@
                 "depends_on": null,
                 "id": "component-config-supplicant",
                 "title": "Supplicant",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Select this option to enable BTstack's default audio driver",
+                        "id": "BTSTACK_AUDIO",
+                        "name": "BTSTACK_AUDIO",
+                        "range": null,
+                        "title": "I2S Audio driver",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-btstack-configuration",
+                "title": "BTstack Configuration",
                 "type": "menu"
             }
         ],
