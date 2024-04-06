@@ -35,6 +35,8 @@
 #include "StepperOpto/StepperOpto.h"
 #include "tasksFunctions/tasksFunctions.h"
 #include "NVSeeprom/NVSeeprom.h"
+#include "i2sHighImpedance/i2sHighImpedance.h"
+
 
 #include "driver/uart.h"
 void init_uart();
@@ -47,12 +49,14 @@ extern "C" void app_main(void)
 	//- VisualGDB-5.6r9.msi
 	//- esp32-gcc11.2.0-r2.exe (ESP32 toolchain)
 	/* CAUTION */
-		
-	init_uart();
 	
+	printf("\n");
+	i2sPinsHighImpedanceEnabled();
+	init_uart();
 	const char *main_TAG = "Main function:";
 	//ESP_LOGI(main_TAG, "starting");
-	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
+	printf("\n%s: starting...\n", main_TAG);
+	//i2sPinsHighImpedanceEnabled();
 
 	
 	
