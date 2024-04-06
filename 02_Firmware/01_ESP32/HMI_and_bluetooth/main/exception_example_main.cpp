@@ -40,8 +40,6 @@
 #include "driver/uart.h"
 void init_uart();
 
-#include "A2DPsink/bt_A2DPSink.h"
-
 extern "C" void app_main(void)
 {
 	/* CAUTION */
@@ -50,13 +48,7 @@ extern "C" void app_main(void)
 	//- VisualGDB-5.6r9.msi
 	//- esp32-gcc11.2.0-r2.exe (ESP32 toolchain)
 	/* CAUTION */
-	
-	btstack_init();
-
-	setup_demo();
-	
-	btstack_run_loop_execute();
-	
+		
 	init_uart();
 	
 	const char *main_TAG = "Main function:";
