@@ -36,7 +36,6 @@
 #include "tasksFunctions/tasksFunctions.h"
 #include "NVSeeprom/NVSeeprom.h"
 
-
 #include "driver/uart.h"
 void init_uart();
 
