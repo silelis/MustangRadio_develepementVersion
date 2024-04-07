@@ -13,44 +13,46 @@ using std::cout;
 using std::endl;
 using std::runtime_error;
 
-/* A simple class which may throw an exception from constructor */
-class Throwing
-{
-public:
-    Throwing(int arg)
-    : m_arg(arg)
-    {
-        cout << "In constructor, arg=" << arg << endl;
-        if (arg == 0) {
-            throw runtime_error("Exception in constructor");
-        }
-    }
 
-    ~Throwing()
-    {
-        cout << "In destructor, m_arg=" << m_arg << endl;
-    }
+#include "btstack_port_esp32.h"
+#include "btstack_run_loop.h"
+#include "btstack_stdio_esp32.h"
+#include "hci_dump.h"
+#include "hci_dump_embedded_stdout.h"
 
-protected:
-    int m_arg;
-};
+#include <stddef.h>
 
-/* Inside .cpp file, app_main function must be declared with C linkage */
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+// warn about unsuitable sdkconfig
+#include "sdkconfig.h"
+#if !CONFIG_BT_ENABLED
+#error "Bluetooth disabled - please set CONFIG_BT_ENABLED via menuconfig -> Component Config -> Bluetooth -> [x] Bluetooth"
+#endif
+#if !CONFIG_BT_CONTROLLER_ONLY
+#error "Different Bluetooth Host stack selected - please set CONFIG_BT_CONTROLLER_ONLY via menuconfig -> Component Config -> Bluetooth -> Host -> Disabled"
+#endif
+#if ESP_IDF_VERSION_MAJOR >= 5
+#if !CONFIG_BT_CONTROLLER_ENABLED
+#error "Different Bluetooth Host stack selected - please set CONFIG_BT_CONTROLLER_ENABLED via menuconfig -> Component Config -> Bluetooth -> Controller -> Enabled"
+#endif
+#endif
+
+extern int btstack_main(int argc, const char * argv[]);
+extern esp_err_t i2sPinsHighImpedanceDisabled(void);
+extern esp_err_t i2sPinsHighImpedanceEnabled(void);
+
 extern "C" void app_main(void)
 {
-    cout << "app_main starting" << endl;
-
-    try {
-        /* This will succeed */
-        Throwing obj1(42);
-
-        /* This will throw an exception */
-        Throwing obj2(0);
-
-        cout << "This will not be printed" << endl;
-    } catch (const runtime_error &e) {
-        cout << "Exception caught: " << e.what() << endl;
-    }
-
-    cout << "app_main done" << endl;
+	i2sPinsHighImpedanceEnabled();
+	btstack_init();
+	btstack_main(0, NULL);
+	btstack_run_loop_execute();
+	while (true)
+	{
+		
+		
+		
+	}
 }
