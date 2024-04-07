@@ -4105,6 +4105,44 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "<choice ESP32_BOARD>",
+                        "help": null,
+                        "id": "ESP_LYRAT_V4_3_BOARD",
+                        "name": "ESP_LYRAT_V4_3_BOARD",
+                        "range": null,
+                        "title": "ESP32-Lyrat V4.3",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "<choice ESP32_BOARD>",
+                        "help": null,
+                        "id": "ESP_CUSTOM_BOARD",
+                        "name": "ESP_CUSTOM_BOARD",
+                        "range": null,
+                        "title": "ESP32 custom board",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "help": "select an ESP32 board to use with BTstack.",
+                "id": "example-board-configuration-esp32-board",
+                "name": "ESP32_BOARD",
+                "title": "ESP32 board",
+                "type": "choice"
+            }
+        ],
+        "depends_on": null,
+        "id": "example-board-configuration",
+        "title": "Example Board Configuration",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "children": [],
                         "depends_on": "<choice COMPILER_OPTIMIZATION>",
                         "help": null,
                         "id": "COMPILER_OPTIMIZATION_DEFAULT",
@@ -8404,7 +8442,10 @@
                                 "help": "BLE maximum connections of bluetooth controller.\nEach connection uses 1KB static DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BLE_MAX_CONN",
                                 "name": "BTDM_CTRL_BLE_MAX_CONN",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    9
+                                ],
                                 "title": "BLE Max Connections",
                                 "type": "int"
                             },
@@ -8414,7 +8455,10 @@
                                 "help": "BR/EDR ACL maximum connections of bluetooth controller.\nEach connection uses 1.2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    7
+                                ],
                                 "title": "BR/EDR ACL Max Connections",
                                 "type": "int"
                             },
@@ -8424,7 +8468,10 @@
                                 "help": "BR/EDR Synchronize maximum connections of bluetooth controller.\nEach connection uses 2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
-                                "range": null,
+                                "range": [
+                                    0,
+                                    3
+                                ],
                                 "title": "BR/EDR Sync(SCO/eSCO) Max Connections",
                                 "type": "int"
                             },
@@ -8905,7 +8952,10 @@
                                         "help": "Maximum number of devices which can be recorded in scan duplicate filter.\nWhen the maximum amount of device in the filter is reached, the cache will be refreshed.",
                                         "id": "BTDM_SCAN_DUPL_CACHE_SIZE",
                                         "name": "BTDM_SCAN_DUPL_CACHE_SIZE",
-                                        "range": null,
+                                        "range": [
+                                            10,
+                                            1000
+                                        ],
                                         "title": "Maximum number of devices in scan duplicate filter",
                                         "type": "int"
                                     },
@@ -8957,7 +9007,10 @@
                                         "help": "The number of unprocessed advertising report that Bluedroid can save.If you set\n`BTDM_BLE_ADV_REPORT_FLOW_CTRL_NUM` to a small value, this may cause adv packets lost.\nIf you set `BTDM_BLE_ADV_REPORT_FLOW_CTRL_NUM` to a large value, Bluedroid may cache a\nlot of adv packets and this may cause system memory run out. For example, if you set\nit to 50, the maximum memory consumed by host is 35 * 50 bytes. Please set\n`BTDM_BLE_ADV_REPORT_FLOW_CTRL_NUM` according to your system free memory and handle adv\npackets as fast as possible, otherwise it will cause adv packets lost.",
                                         "id": "BTDM_BLE_ADV_REPORT_FLOW_CTRL_NUM",
                                         "name": "BTDM_BLE_ADV_REPORT_FLOW_CTRL_NUM",
-                                        "range": null,
+                                        "range": [
+                                            50,
+                                            1000
+                                        ],
                                         "title": "BLE adv report flow control number",
                                         "type": "int"
                                     },
@@ -8967,7 +9020,10 @@
                                         "help": "When adv report flow control is enabled, The ADV lost event will be generated when the number\nof ADV packets lost in the controller reaches this threshold. It is better to set a larger value.\nIf you set `BTDM_BLE_ADV_REPORT_DISCARD_THRSHOLD` to a small value or printf every adv lost event, it\nmay cause adv packets lost more.",
                                         "id": "BTDM_BLE_ADV_REPORT_DISCARD_THRSHOLD",
                                         "name": "BTDM_BLE_ADV_REPORT_DISCARD_THRSHOLD",
-                                        "range": null,
+                                        "range": [
+                                            1,
+                                            1000
+                                        ],
                                         "title": "BLE adv lost event threshold value",
                                         "type": "int"
                                     }
@@ -16184,7 +16240,7 @@
                                 "id": "FREERTOS_ISR_STACKSIZE",
                                 "name": "FREERTOS_ISR_STACKSIZE",
                                 "range": [
-                                    1536,
+                                    2096,
                                     32768
                                 ],
                                 "title": "ISR stack size",
@@ -21970,6 +22026,24 @@
                 "depends_on": null,
                 "id": "component-config-supplicant",
                 "title": "Supplicant",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Select this option to enable BTstack's default audio driver",
+                        "id": "BTSTACK_AUDIO",
+                        "name": "BTSTACK_AUDIO",
+                        "range": null,
+                        "title": "I2S Audio driver",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": null,
+                "id": "component-config-btstack-configuration",
+                "title": "BTstack Configuration",
                 "type": "menu"
             }
         ],

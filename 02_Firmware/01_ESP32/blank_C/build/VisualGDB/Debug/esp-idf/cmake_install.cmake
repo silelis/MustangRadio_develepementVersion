@@ -392,3 +392,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/blank_C/build/VisualGDB/Debug/esp-idf/main/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/blank_C/build/VisualGDB/Debug/esp-idf/btstack/cmake_install.cmake")
+endif()
+
