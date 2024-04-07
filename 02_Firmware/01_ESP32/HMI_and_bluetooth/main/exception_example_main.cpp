@@ -35,6 +35,8 @@
 #include "StepperOpto/StepperOpto.h"
 #include "tasksFunctions/tasksFunctions.h"
 #include "NVSeeprom/NVSeeprom.h"
+#include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
+
 
 #include "driver/uart.h"
 void init_uart();
@@ -49,6 +51,7 @@ extern "C" void app_main(void)
 	/* CAUTION */
 		
 	init_uart();
+	i2sPinsHighImpedanceEnabled();
 	
 	const char *main_TAG = "Main function:";
 	//ESP_LOGI(main_TAG, "starting");
@@ -130,6 +133,12 @@ extern "C" void app_main(void)
 	
 //	Motor.moveTo_xPercent(80.1);
 		
+	btstack_init();
+	btstack_main(0, NULL);
+	btstack_run_loop_execute();
+	
+	
+	
 	while (true)
 	{
 	         

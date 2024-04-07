@@ -8,4 +8,5 @@ idf_component_register(
                     	tasksFunctions/tasksFunctions.cpp
                     	NVSeeprom/NVSeeprom.cpp
                     	StepperOpto/StepperOpto.cpp
+                    	a2dpSikn/a2dp_sink_demo.cpp
                     INCLUDE_DIRS ".")
