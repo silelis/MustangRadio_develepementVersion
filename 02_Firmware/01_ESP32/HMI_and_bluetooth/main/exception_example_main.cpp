@@ -35,8 +35,6 @@
 #include "StepperOpto/StepperOpto.h"
 #include "tasksFunctions/tasksFunctions.h"
 #include "NVSeeprom/NVSeeprom.h"
-#include "i2sHighImpedance/i2sHighImpedance.h"
-
 
 #include "driver/uart.h"
 void init_uart();
@@ -49,14 +47,12 @@ extern "C" void app_main(void)
 	//- VisualGDB-5.6r9.msi
 	//- esp32-gcc11.2.0-r2.exe (ESP32 toolchain)
 	/* CAUTION */
-	
-	printf("\n");
-	i2sPinsHighImpedanceEnabled();
+		
 	init_uart();
+	
 	const char *main_TAG = "Main function:";
 	//ESP_LOGI(main_TAG, "starting");
-	printf("\n%s: starting...\n", main_TAG);
-	//i2sPinsHighImpedanceEnabled();
+	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
 
 	
 	
@@ -91,11 +87,11 @@ extern "C" void app_main(void)
 	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);																						//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s: Display leds task starting\n", main_TAG);
 	//ESP_LOGI(main_TAG, "Display leds task starting");
-	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_ledDisplay));				//tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, ledDisplay, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
 	
 	printf("%s: Backlight leds task starting\n", main_TAG);
 	//ESP_LOGI(main_TAG, "Backlight leds task starting");
-	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 850, ledDisplay, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
+	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128*7, ledDisplay, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
 	printf("%s: Buttons and encoders (aka keyboard) init\n", main_TAG);
@@ -111,7 +107,7 @@ extern "C" void app_main(void)
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
 	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
-	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 2048, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser));		//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128*20, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser));		//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 	
 	StepperOpto * motor = NULL;
