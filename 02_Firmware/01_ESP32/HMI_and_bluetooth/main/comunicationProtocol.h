@@ -2,9 +2,10 @@
 #include "inttypes.h"
 #include "comunicationStructures.h"
 
-#define HMI_INPUT_BUTTON			'B'
-#define HMI_INPUT_VOLUME			'V'
-#define HMI_INPUT_EQUALISER			'E'
+#define HMI_INPUT_BUTTON					'b'		//ma³e "b" oznacza, ¿eprzycisk zosta³ zwolniony lub na samym pocz¹tku kody, ¿e obs³uga klawiszy dotyczy przycisków
+#define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'
+#define HMI_INPUT_VOLUME					'v'
+#define HMI_INPUT_EQUALISER					'e'
 //#define HMI_INPUT_COMMAND_LEN		2
 
 

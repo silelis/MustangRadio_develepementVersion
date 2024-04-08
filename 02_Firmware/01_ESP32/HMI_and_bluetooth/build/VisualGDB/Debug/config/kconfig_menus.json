@@ -8355,7 +8355,10 @@
                                 "help": "BR/EDR ACL maximum connections of bluetooth controller.\nEach connection uses 1.2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    7
+                                ],
                                 "title": "BR/EDR ACL Max Connections",
                                 "type": "int"
                             },
@@ -8365,7 +8368,10 @@
                                 "help": "BR/EDR Synchronize maximum connections of bluetooth controller.\nEach connection uses 2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
-                                "range": null,
+                                "range": [
+                                    0,
+                                    3
+                                ],
                                 "title": "BR/EDR Sync(SCO/eSCO) Max Connections",
                                 "type": "int"
                             },
