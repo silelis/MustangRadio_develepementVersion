@@ -216,11 +216,12 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 			{
 				if (!(_gpioInterruptCallback->pbuttonsState->latchedState>>7))		//jeśli nastąpił LONG PRESS to więcej nie powinno zatrzaskiwać klawiszy (jest to warunek, aby dobrze działało odczytywanie długiwgo wciśnięcia w lub więcej klawiszy na raz.
 				{
-					_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->newState;		
+					_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->newState;
 					if (_gpioInterruptCallback->debounceTime /*>*/ == GPIO_LONG_PRESS)
 					{
 						_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->latchedState | LONG_PRESS_BIT_MASK; // set "1" in LONG_PRESS_BIT_MASK aka 0b10000000 means long button press
 						xTaskResumeFromISR(_gpioInterruptCallback->taskHandler_LongpressNotification);	//Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
+						
 					}
 				}
 			}		
