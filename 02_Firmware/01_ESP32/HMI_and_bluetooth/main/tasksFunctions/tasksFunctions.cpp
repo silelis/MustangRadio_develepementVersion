@@ -2,10 +2,12 @@
 
 
 QueueHandle_t handlerQueue_MainKeyboard;				//wskaźnik do kolejki przechowującej wyniki odpowiedzi z klawiatury		
-TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce klawiatury "handlerQueue_MainKeyboard"
+TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce
+														//klawiatury "handlerQueue_MainKeyboard"
 TaskHandle_t handlerTask_ledDisplay;					//uchwyt do taska wyświetlającego ledy 
 TaskHandle_t handlerTask_backlightDisplay;				//uchwyt do taska wyświetlającego backlight
 TaskHandle_t handlerTask_stepperMotor;					//uchwyt do taska zarządzającego ruchami silnika krokowego
+
 
 SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
@@ -29,6 +31,7 @@ void keyboardQueueParametersParser(void *nothing)
 			switch (dataToParse.array[0])
 			{
 			case HMI_INPUT_BUTTON:
+			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:
 				
 				//#include <stdio.h>
 				//char buffer[20];
@@ -229,6 +232,5 @@ void stepperMotor(void *TaskParameters)
 		vTaskSuspend(NULL);
 
 	}
-	
-	
 }
+

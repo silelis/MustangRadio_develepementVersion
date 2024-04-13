@@ -112,6 +112,11 @@ extern "C" void app_main(void)
 	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
 	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
+//	handlerTask_keyboardLongPressOnPressQueueFeeder	 = NULL;
+//	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 10, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
+	
+	
+	
 	
 	StepperOpto * motor = NULL;
 	assert(motor = new StepperOpto());

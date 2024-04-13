@@ -1,5 +1,40 @@
 #include "keyboard.h"
 
+
+/*---------------------------------------------------------------
+ * Zadaniem funkcji jest cyliczne wysyłanie do kolejki klawiatury
+ * "queueHandler_keyboard" informacji na temat kombinajci klawiszy,
+ * jakie były wciśnięte w momencie upłynięcia czasu "long press".
+ * Funkcja przestaje wysyłać tę informację w momencie puszczenia
+ * klawiszy. Wtedy przerwanie zawiesza działanie tej funkcji.
+ * Parameters:
+ * void *object	- funkcja przyjmuje wskaźnik do obiektu klasy KEYBOARD,
+ *				  ale poniewarz jest ona wywoływana jako task (zadanie
+ *				  freertos) przyjmuje go jako void*, a dopiero w ciele
+ *				  funkcji następuje rzutowanie na obiekt klasy.
+ * Returns:
+ * NONE
+ *---------------------------------------------------------------*/ 
+static void keyboardLongPressOnPressQueueFeeder(void *object)
+{
+	KEYBOARD* instance = static_cast<KEYBOARD*>(object);
+	keyboardUnion valueToQueue;
+	valueToQueue.kbrdValue.input = HMI_INPUT_BUTTON_LONG_AND_PRESSED;
+	BaseType_t xHigherPriorityTaskWoken;
+	xHigherPriorityTaskWoken = pdFALSE;
+	vTaskSuspend(NULL);
+	while (true)
+	{
+		valueToQueue.kbrdValue.value = instance->buttonsState.latchedState;
+		//xQueueSend(instance->gpioInterruptCallback.queueHandler_keyboard, valueToQueue.array, portMAX_DELAY);
+		xQueueSendFromISR(instance->gpioInterruptCallback.queueHandler_keyboard, valueToQueue.array, &xHigherPriorityTaskWoken);
+		vTaskDelay(pdMS_TO_TICKS(ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS));
+	}
+}
+
+
+
+
 /*---------------------------------------------------------------
  * Funckja obsługująca przerwanie od zmiany stanu na GPIO klawiatury.
  * Zadaniem funkcji jest zresetowanie wszystkich zmiennycxh do stanu
@@ -220,8 +255,8 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 					if (_gpioInterruptCallback->debounceTime /*>*/ == GPIO_LONG_PRESS)
 					{
 						_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->latchedState | LONG_PRESS_BIT_MASK; // set "1" in LONG_PRESS_BIT_MASK aka 0b10000000 means long button press
-						xTaskResumeFromISR(_gpioInterruptCallback->taskHandler_LongpressNotification);	//Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
-						
+						xTaskResumeFromISR(_gpioInterruptCallback->taskHandler_onPeriodLongButtonPressNotification); //Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
+						vTaskResume(handlerTask_keyboardLongPressOnPressQueueFeeder);
 					}
 				}
 			}		
@@ -343,6 +378,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 		{
 		case HMI_INPUT_BUTTON:
 			_gpioInterruptCallback->keyboardExitValueHandler->array[1] = (char) _gpioInterruptCallback->pbuttonsState->latchedState;
+			vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);
 			break;
 		case HMI_INPUT_EQUALISER:
 			_gpioInterruptCallback->keyboardExitValueHandler->array[1] = _gpioInterruptCallback->pEquEncState->latchedQEM;
@@ -415,6 +451,13 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	this->gpioAlarm_config.flags.auto_reload_on_alarm	= pdTRUE;
 	ESP_ERROR_CHECK(gptimer_set_alarm_action(gptimer, &this->gpioAlarm_config));
 	
+	
+	//starting task that feed queue about button long press	in progress
+	printf("%s: Starting 'keyboardLongPressOnPressQueueFeeder' task.\n", this->TAG);
+	handlerTask_keyboardLongPressOnPressQueueFeeder	 = NULL;
+	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 5, this, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
+						 
+
 	//interrupts (GPIOs and timer) callback function data passing structure
 	this->gpioInterruptCallback.pbuttonsState = &buttonsState;
 	this->gpioInterruptCallback.pEquEncState = &EquEncState;
@@ -422,8 +465,8 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	this->gpioInterruptCallback.pgptimer = gptimer;
 	this->gpioInterruptCallback.queueHandler_keyboard = queueHandler_Keyboard;
 	this->gpioInterruptCallback.keyboardExitValueHandler = &this->onExitHMIValue;
-	this->gpioInterruptCallback.taskHandler_LongpressNotification = taskHandler_onPeriodLongButtonPressNotification;
-
+	this->gpioInterruptCallback.taskHandler_onPeriodLongButtonPressNotification = taskHandler_onPeriodLongButtonPressNotification;
+	this->gpioInterruptCallback.taskHandler_keyboardLongPressOnPressQueueFeeder = handlerTask_keyboardLongPressOnPressQueueFeeder;
 	
 	cbs.on_alarm = debounceAndGpiosCheckCallback;
 	ESP_ERROR_CHECK(gptimer_register_event_callbacks(gptimer, &cbs, &this->gpioInterruptCallback));
