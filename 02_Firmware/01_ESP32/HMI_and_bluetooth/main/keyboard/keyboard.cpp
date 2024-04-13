@@ -383,17 +383,23 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
  * #define BUT_6	GPIO_NUM_23						//DO NOT CHANGE
  * #define VolBut	BUT_0							//DO NOT CHANGE
  * #define EquBut	BUT_6							//DO NOT CHANGE
- * #define VolRot_A	GPIO_NUM_2					//DO NOT CHANGE
- * #define VolRot_B	GPIO_NUM_4					//DO NOT CHANGE
- * #define EquRot_A	GPIO_NUM_17					//DO NOT CHANGE
- * #define EquRot_B	GPIO_NUM_5					//DO NOT CHANGE
+ * #define VolRot_A	GPIO_NUM_2						//DO NOT CHANGE
+ * #define VolRot_B	GPIO_NUM_4						//DO NOT CHANGE
+ * #define EquRot_A	GPIO_NUM_17						//DO NOT CHANGE
+ * #define EquRot_B	GPIO_NUM_5						//DO NOT CHANGE
  * zdefiniowane w pliku: hwConfigFile.h.
  * Parameters:
- * NONE
+ * QueueHandle_t queueHandler_Keyboard				- kolejka do której przerwanie
+ *					od klatiatury pisze odczytane wartości klaiszy/ enkoderów, a z
+ *					której task keyboardQueueParametersParser sprawdza czy wartości
+ *					są poprawne
+ * TaskHandle_t taskHandler_onPeriodLongButtonPressNotificationn - uchwyt do taska
+ *					sprawdzającego czy w kolejce queueHandler_Keyboard znajdują się
+ *					sprawidłowe dane 
  * Returns:
  * NONE
  *-----------------------------------------------------------*/
-KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler_LongpressNotification)
+KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler_onPeriodLongButtonPressNotification)
 {
 	//ESP_LOGI(this->TAG, "Create input GPIOs debounce timer configuration");
 	printf("%s: Create input GPIOs debounce timer configuration\n", this->TAG);
@@ -416,7 +422,7 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	this->gpioInterruptCallback.pgptimer = gptimer;
 	this->gpioInterruptCallback.queueHandler_keyboard = queueHandler_Keyboard;
 	this->gpioInterruptCallback.keyboardExitValueHandler = &this->onExitHMIValue;
-	this->gpioInterruptCallback.taskHandler_LongpressNotification = taskHandler_LongpressNotification;
+	this->gpioInterruptCallback.taskHandler_LongpressNotification = taskHandler_onPeriodLongButtonPressNotification;
 
 	
 	cbs.on_alarm = debounceAndGpiosCheckCallback;

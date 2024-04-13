@@ -110,7 +110,7 @@ extern "C" void app_main(void)
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
 	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
-	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128*20, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser));		//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, NULL, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 	
 	StepperOpto * motor = NULL;
@@ -155,7 +155,9 @@ void init_uart() {
 		.data_bits = UART_DATA_8_BITS,
 		.parity = UART_PARITY_DISABLE,
 		.stop_bits = UART_STOP_BITS_1,
-		.flow_ctrl = UART_HW_FLOWCTRL_DISABLE
+		.flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+		.rx_flow_ctrl_thresh = 122,
+		.source_clk =UART_SCLK_DEFAULT
 	};
 
 	uart_param_config(UART_NUM_0, &uart_config);
