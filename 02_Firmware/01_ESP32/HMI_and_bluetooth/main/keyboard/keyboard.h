@@ -13,7 +13,8 @@
 //#include "tasksFunctions/tasksFunctions.h"
 
 
-#define LONG_PRESS_BIT_MASK		0b10000000
+#define LONG_PRESS_BIT_MASK					0b10000000
+#define ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS	750
 
 struct kbrdState
 {
@@ -64,8 +65,11 @@ struct gpioInterruptCallbackStruct				//struct which is passed to interrupts (ti
 	uint16_t debounceTime;						//debounce time and long press counting variable
 	//QueueHandle_t callbackKeyboardQueueHandler;
 	QueueHandle_t queueHandler_keyboard;		//pointer to keyboard values queue received from main (form class Keyboard constructor)
-	TaskHandle_t taskHandler_LongpressNotification;		//wskaźnik do zadania (taska), które wskazuje (notyfikuje), że nastąpił long button press 
+	TaskHandle_t taskHandler_onPeriodLongButtonPressNotification; //wskaźnik do zadania (taska), które wskazuje (notyfikuje), że nastąpił long button press 
+	TaskHandle_t taskHandler_keyboardLongPressOnPressQueueFeeder; //wskaźnik do zadania (taska), które po przekroczenia minimalnego czasu long press i do czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
 	
+	
+
 	//char *keyboardExitValueHandler;				//wskaźnik (pomocniczy) odwołujący sie do zmiennej z klasy kalwaitura przechowującej ostateczną wartośc odczytaną z klawiatury
 	keyboardUnion *keyboardExitValueHandler;	//wskaźnik (pomocniczy) odwołujący sie do zmiennej z klasy kalwaitura przechowującej ostateczną wartośc odczytaną z klawiatury, która jest zwracana do kolejki klawiatury
 	
@@ -78,6 +82,13 @@ struct gpioInterruptCallbackStruct				//struct which is passed to interrupts (ti
 	//const char case_equaliserInput = HMI_INPUT_EQUALISER; // additional constant 'E' used in switch
 };
 
+
+
+
+static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder;	//uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
+																		//czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
+
+static void keyboardLongPressOnPressQueueFeeder(void *);
 
 class KEYBOARD
 {
@@ -108,4 +119,5 @@ private:
 	encoderState VolEncState;
 	encoderState EquEncState;
 	//void keyboardQueueSendResetToDefault(QueueHandle_t );
+	friend void keyboardLongPressOnPressQueueFeeder(void *parameters);
 };
