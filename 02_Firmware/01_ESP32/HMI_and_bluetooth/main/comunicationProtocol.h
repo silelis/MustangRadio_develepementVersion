@@ -2,41 +2,23 @@
 #include "inttypes.h"
 #include "comunicationStructures.h"
 
-#define HMI_INPUT_BUTTON					'b'		//ma³e "b" oznacza, ¿eprzycisk zosta³ zwolniony lub na samym pocz¹tku kody, ¿e obs³uga klawiszy dotyczy przycisków
-#define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'
-#define HMI_INPUT_VOLUME					'v'
-#define HMI_INPUT_EQUALISER					'e'
-//#define HMI_INPUT_COMMAND_LEN		2
 
-
-/*struct ws2812Color
-{
-	uint8_t red;
-	uint8_t green;
-	uint8_t blue;
-};
-
-
-union keyboardUnion
-{
-	char array[2];
-	struct //charUint8
-	{
-		char input;
-		int8_t value;
-	} encoderValue;
-	
-	struct //charInt8
-	{
-		char input;
-		uint8_t value;
-	}kbrdValue;
-};*/
+#define I2C_COMMAND_GROUP_PING				0x00
+#define I2C_COMMAND_GROUP_KEYBOARD			0x01
+#define I2C_COMMAND_GROUP_NVS				0x02
 
 
 
+//I2C_COMMAND_GROUP_KEYBOARD			0x01
+#define HMI_INPUT_BUTTON					'b'		//oznacza, ¿e przycisk zosta³ zwolniony (po osiagniêciu czasu long press lub przed tym czasem)
+#define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, ¿e przycisk jest nadal wciœniêty po osiagniêciu czasu long press 
+#define HMI_INPUT_VOLUME					'v'		//oznacza, ¿e poruszany jest encoder g³oœnoœci
+#define HMI_INPUT_EQUALISER					'e'		//oznacza, ¿e poruszany jest encoder equalizera
 
-//NVS keys definition
+
+
+//NVS keys definition	+
+//I2C_COMMAND_GROUP_NVS					0x02
 #define NVS_KEY_i8_test					"test"
 #define NVS_KEY_BLOB_MotorParameters	"MotorParam"
 

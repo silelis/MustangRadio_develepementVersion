@@ -83,11 +83,6 @@ struct gpioInterruptCallbackStruct				//struct which is passed to interrupts (ti
 };
 
 
-
-
-static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder;	//uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
-																		//czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
-
 static void keyboardLongPressOnPressQueueFeeder(void *);
 
 class KEYBOARD

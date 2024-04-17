@@ -1,5 +1,7 @@
 #include "keyboard.h"
 
+static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
+																		//czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
 
 /*---------------------------------------------------------------
  * Zadaniem funkcji jest cyliczne wysyłanie do kolejki klawiatury
@@ -642,6 +644,9 @@ KEYBOARD::~KEYBOARD()
 	ESP_ERROR_CHECK(gptimer_set_alarm_action(gptimer, &this->gpioAlarm_config));
 	gptimer_stop(gptimer);
 	gptimer_del_timer(gptimer);
+	
+	vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);
+	vTaskDelete(handlerTask_keyboardLongPressOnPressQueueFeeder);
 	
 }
 

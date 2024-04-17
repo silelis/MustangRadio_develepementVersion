@@ -31,25 +31,14 @@ void keyboardQueueParametersParser(void *nothing)
 			switch (dataToParse.array[0])
 			{
 			case HMI_INPUT_BUTTON:
-			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:
-				
-				//#include <stdio.h>
-				//char buffer[20];
-				//sprintf(buffer, "%x", dataToParse.kbrdValue.value);
-				//ESP_LOGI("KBRD", "B: %s", buffer);			
+			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:		
 				printf("KBRD %c: %x\n", dataToParse.array[0], dataToParse.kbrdValue.value);
-				break;
-				
-				
+				break;	
 			case HMI_INPUT_VOLUME:
 			case HMI_INPUT_EQUALISER:
-
-				if ((dataToParse.array[1] % 4) == 0 && (dataToParse.array[1] != 0))
+				if ((dataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (dataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
+				//if ((dataToParse.array[1] % ENCODER_PULSED_PER_DETANT) == 0 && (dataToParse.array[1] != 0))
 					printf("ENC %c: %d\n", dataToParse.array[0], dataToParse.encoderValue.value);
-				else
-				{
-					printf("ENC %c error %d\n", dataToParse.array[0], dataToParse.encoderValue.value);
-				}
 				break;
 			}
 		}
