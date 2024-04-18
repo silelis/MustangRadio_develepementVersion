@@ -2,7 +2,6 @@
 #include "inttypes.h"
 #include "comunicationStructures.h"
 
-
 #define I2C_COMMAND_GROUP_PING				0x00
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
 #define I2C_COMMAND_GROUP_NVS				0x02
@@ -10,10 +9,10 @@
 
 
 //I2C_COMMAND_GROUP_KEYBOARD			0x01
-#define HMI_INPUT_BUTTON					'b'		//oznacza, ¿e przycisk zosta³ zwolniony (po osiagniêciu czasu long press lub przed tym czasem)
-#define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, ¿e przycisk jest nadal wciœniêty po osiagniêciu czasu long press 
-#define HMI_INPUT_VOLUME					'v'		//oznacza, ¿e poruszany jest encoder g³oœnoœci
-#define HMI_INPUT_EQUALISER					'e'		//oznacza, ¿e poruszany jest encoder equalizera
+#define HMI_INPUT_BUTTON					'b'		//oznacza, Å¼e przycisk zostaÅ‚ zwolniony (po osiagniÄ™ciu czasu long press lub przed tym czasem)
+#define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, Å¼e przycisk jest nadal wciÅ›niÄ™ty po osiagniÄ™ciu czasu long press 
+#define HMI_INPUT_VOLUME					'v'		//oznacza, Å¼e poruszany jest encoder gÅ‚oÅ›noÅ›ci
+#define HMI_INPUT_EQUALISER					'e'		//oznacza, Å¼e poruszany jest encoder equalizera
 
 
 
@@ -24,3 +23,17 @@
 
 
 //NVS keys definition
+
+
+
+//i2c_farame
+typedef struct {
+	uint8_t frameSize;				//frameSize = sizeof(frameSize) + 	sizeof(commandGroup)+sizeof(commandData)
+	uint8_t commandGroup; //aka I2C_COMMAND_GROUP
+	union dataUnion
+	{
+		union keyboardUnion keyboardData;
+		
+	}commandData;
+		
+} i2cFrame;
