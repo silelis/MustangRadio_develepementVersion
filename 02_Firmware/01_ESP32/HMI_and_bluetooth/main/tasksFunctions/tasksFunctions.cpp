@@ -31,7 +31,7 @@ void keyboardQueueParametersParser(void *nothing)
 			switch (dataToParse.array[0])
 			{
 			case HMI_INPUT_BUTTON:
-			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:		
+			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:	
 				printf("KBRD %c: %x\n", dataToParse.array[0], dataToParse.kbrdValue.value);
 				break;	
 			case HMI_INPUT_VOLUME:

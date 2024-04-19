@@ -127,7 +127,7 @@ extern "C" void app_main(void)
 	
 	//motor->measureSliderRange();
 	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, &motorTaskParamStruct, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
-	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 2048, &motorTaskParamStruct, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
+	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, &motorTaskParamStruct, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
 	
 	//	Motor.measureSliderRange();
 
