@@ -39,14 +39,12 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 	{
 	case HMI_INPUT_BUTTON:
 	case HMI_INPUT_BUTTON_LONG_AND_PRESSED:	
-		printf("KBRD %c: %x\n", DataToParse.array[0], DataToParse.kbrdValue.value);
-					
-								
+		printf("KBRD %c: %x\n", DataToParse.array[0], DataToParse.kbrdValue.value);					
 		break;	
 	case HMI_INPUT_VOLUME:
 	case HMI_INPUT_EQUALISER:
-		if ((DataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (DataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
-			printf("ENC %c: %d\n", DataToParse.array[0], DataToParse.encoderValue.value);
+		//if ((DataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (DataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
+		printf("ENC %c: %d\n", DataToParse.array[0], DataToParse.encoderValue.value);
 		break;
 	}
 	
@@ -89,7 +87,7 @@ void keyboardQueueParametersParser(void *parameters)
 		{
 			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-			assert(xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(5000)/*portMAX_DELAY*/));
+			xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/));
 			
 			/*----------------------------------------------------------------------*/
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
