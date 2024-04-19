@@ -57,6 +57,7 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 void keyboardQueueParametersParser(void *parameters)
 {
 	bool isQueueFeedRequirted = pdFALSE;
+	BaseType_t queueFeedRetVal;
 	keyboardUnion keyboardDataToParse;
 	keyboardDataToParse.array[0] = 0;
 	keyboardDataToParse.array[1] = 0;
@@ -88,13 +89,13 @@ void keyboardQueueParametersParser(void *parameters)
 		{
 			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-			xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, portMAX_DELAY);
+			assert(xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(5000)/*portMAX_DELAY*/));
 			
 			/*----------------------------------------------------------------------*/
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
 			//i2cFrame daneZKolejki;
 			//xQueueReceive(handlerStruct->handlerQueue_i2cFrameTransmitt, &daneZKolejki, portMAX_DELAY);
-			//keyboardQueueParametersParserPrintf(keyboardDataToParse);
+			keyboardQueueParametersParserPrintf(keyboardDataToParse);
 			//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
 			/*----------------------------------------------------------------------*/
