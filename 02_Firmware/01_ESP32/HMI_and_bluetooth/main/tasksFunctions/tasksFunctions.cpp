@@ -28,38 +28,79 @@ hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszys
 
 
 
-
-
+/*---------------------------------------------------------------
+* Lokalna funkcja potrzebna na etapie programownaia. Poprzez tę 
+* funkcję sprawdzam czy do taska parsującego dane z klawiatury
+* *wpływają popraswen dane i dane sa poprawenie przetważane.
+*---------------------------------------------------------------*/ 
+static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
+{
+	switch (DataToParse.array[0])
+	{
+	case HMI_INPUT_BUTTON:
+	case HMI_INPUT_BUTTON_LONG_AND_PRESSED:	
+		printf("KBRD %c: %x\n", DataToParse.array[0], DataToParse.kbrdValue.value);
+					
+								
+		break;	
+	case HMI_INPUT_VOLUME:
+	case HMI_INPUT_EQUALISER:
+		if ((DataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (DataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
+			printf("ENC %c: %d\n", DataToParse.array[0], DataToParse.encoderValue.value);
+		break;
+	}
+	
+}
 
 
 
 void keyboardQueueParametersParser(void *parameters)
 {
+	bool isQueueFeedRequirted = pdFALSE;
 	keyboardUnion keyboardDataToParse;
 	keyboardDataToParse.array[0] = 0;
 	keyboardDataToParse.array[1] = 0;
-	
+	i2cFrame keyboardDataToI2cTransmittQueue;
 	taskParameters_keyboardQueueParametersParser* handlerStruct = (taskParameters_keyboardQueueParametersParser*) parameters;
-
 	
+	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	for (;;)
 	{
-		if (xQueueReceive(/*handlerQueue_MainKeyboard*/ handlerStruct->handlerQueue_mainKeyboard, &keyboardDataToParse, portMAX_DELAY))
+		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania 
+		if (xQueueReceive(handlerStruct->handlerQueue_mainKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
-			switch (keyboardDataToParse.array[0])
-			{
-			case HMI_INPUT_BUTTON:
-			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:	
-				printf("KBRD %c: %x\n", keyboardDataToParse.array[0], keyboardDataToParse.kbrdValue.value);
-				break;	
-			case HMI_INPUT_VOLUME:
-			case HMI_INPUT_EQUALISER:
-				if ((keyboardDataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
-				//if ((dataToParse.array[1] % ENCODER_PULSED_PER_DETANT) == 0 && (dataToParse.array[1] != 0))
-				printf("ENC %c: %d\n", keyboardDataToParse.array[0], keyboardDataToParse.encoderValue.value);
-				break;
+			//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
+			if ((keyboardDataToParse.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToParse.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED)) {
+				isQueueFeedRequirted  = pdTRUE;
 			}
+			
+			//sprawdza czy dane do parsowania pochodzą z enkoderów
+			if ((keyboardDataToParse.array[0] == HMI_INPUT_VOLUME) || (keyboardDataToParse.array[0] == HMI_INPUT_EQUALISER))
+			{
+				//sprawdza czy dane z enkoderów sa poprawne, tzn. czy są równie +/- encoder detant
+				if ((keyboardDataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT)) {
+					isQueueFeedRequirted  = pdTRUE;
+				}
+			}
+			
+		//jeśli dane są poprawne to następuje przesłanie danych do kolejki buffora nadawczego i2c
+		if (isQueueFeedRequirted  == pdTRUE)
+		{
+			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
+			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
+			xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, portMAX_DELAY);
+			
+			/*----------------------------------------------------------------------*/
+			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+			//i2cFrame daneZKolejki;
+			//xQueueReceive(handlerStruct->handlerQueue_i2cFrameTransmitt, &daneZKolejki, portMAX_DELAY);
+			//keyboardQueueParametersParserPrintf(keyboardDataToParse);
+			//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
+			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+			/*----------------------------------------------------------------------*/
+			}		
 		}
+		isQueueFeedRequirted  = pdFALSE;
 	}
 }
 
