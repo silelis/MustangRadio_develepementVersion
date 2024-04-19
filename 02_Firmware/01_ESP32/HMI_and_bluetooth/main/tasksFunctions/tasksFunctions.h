@@ -17,11 +17,7 @@
 
 
 struct hmiDisplay {
-	/*struct colorSet {
-		struct ws2812Color primary;
-		struct ws2812Color secondary;
-	}*/ colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
-
+	colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
 };
 
@@ -31,16 +27,12 @@ typedef struct {
 } motorTaskParam;
 
 
-extern QueueHandle_t handlerQueue_MainKeyboard;
-extern TaskHandle_t handlerTask_keyboardQueueParametersParser;
-extern TaskHandle_t handlerTask_ledDisplay;
-extern TaskHandle_t handlerTask_backlightDisplay;	
-extern TaskHandle_t handlerTask_stepperMotor;	
-extern hmiDisplay displayLedsColors;
-extern SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;
-
-
-
+//Struktura służaca tylko i wyłacznie do przekazania parametyrów do taska/ funkcji keyboardQueueParametersParser
+struct taskParameters_keyboardQueueParametersParser
+{
+	QueueHandle_t handlerQueue_mainKeyboard;
+	QueueHandle_t handlerQueue_i2cFrameTransmitt;
+};
 
 
 

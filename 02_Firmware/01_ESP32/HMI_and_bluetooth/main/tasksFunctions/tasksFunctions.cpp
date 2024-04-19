@@ -2,11 +2,21 @@
 
 
 QueueHandle_t handlerQueue_MainKeyboard;				//wskaźnik do kolejki przechowującej wyniki odpowiedzi z klawiatury		
+QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
+
+
+
+
+
+
 TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce
 														//klawiatury "handlerQueue_MainKeyboard"
 TaskHandle_t handlerTask_ledDisplay;					//uchwyt do taska wyświetlającego ledy 
 TaskHandle_t handlerTask_backlightDisplay;				//uchwyt do taska wyświetlającego backlight
 TaskHandle_t handlerTask_stepperMotor;					//uchwyt do taska zarządzającego ruchami silnika krokowego
+
+
+
 
 
 SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
@@ -17,28 +27,36 @@ SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wy
 hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 
 
-void keyboardQueueParametersParser(void *nothing)
+
+
+
+
+
+
+void keyboardQueueParametersParser(void *parameters)
 {
-	keyboardUnion dataToParse;
-	dataToParse.array[0] = 0;
-	dataToParse.array[1] = 0;
+	keyboardUnion keyboardDataToParse;
+	keyboardDataToParse.array[0] = 0;
+	keyboardDataToParse.array[1] = 0;
+	
+	taskParameters_keyboardQueueParametersParser* handlerStruct = (taskParameters_keyboardQueueParametersParser*) parameters;
 
 	
 	for (;;)
 	{
-		if (xQueueReceive(handlerQueue_MainKeyboard, &dataToParse, portMAX_DELAY))
+		if (xQueueReceive(/*handlerQueue_MainKeyboard*/ handlerStruct->handlerQueue_mainKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
-			switch (dataToParse.array[0])
+			switch (keyboardDataToParse.array[0])
 			{
 			case HMI_INPUT_BUTTON:
 			case HMI_INPUT_BUTTON_LONG_AND_PRESSED:	
-				printf("KBRD %c: %x\n", dataToParse.array[0], dataToParse.kbrdValue.value);
+				printf("KBRD %c: %x\n", keyboardDataToParse.array[0], keyboardDataToParse.kbrdValue.value);
 				break;	
 			case HMI_INPUT_VOLUME:
 			case HMI_INPUT_EQUALISER:
-				if ((dataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (dataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
+				if ((keyboardDataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT))
 				//if ((dataToParse.array[1] % ENCODER_PULSED_PER_DETANT) == 0 && (dataToParse.array[1] != 0))
-					printf("ENC %c: %d\n", dataToParse.array[0], dataToParse.encoderValue.value);
+				printf("ENC %c: %d\n", keyboardDataToParse.array[0], keyboardDataToParse.encoderValue.value);
 				break;
 			}
 		}

@@ -47,9 +47,11 @@
 #endif
 
 
-#define	QueueHandlerMainKeyboard_len	0x32
-#define LED_DISPLAY_LEDS_QUANTITY		11
-#define LED_DISPLAY_BLINK_TIME			1000
+#define	QueueHandlerMainKeyboard_len			16
+#define QueueHandleri2cFrameTransmittBuffer		32
+#define QueueHandleri2cFrameReceiveBuffer		32
+#define LED_DISPLAY_LEDS_QUANTITY				11
+#define LED_DISPLAY_BLINK_TIME					1000
 
 
 #define NVS_RADIO_CONFIG_NAMESPACE			"RadioConfig"		//not for bluetooth which is controlled via BTstack nvs functions
