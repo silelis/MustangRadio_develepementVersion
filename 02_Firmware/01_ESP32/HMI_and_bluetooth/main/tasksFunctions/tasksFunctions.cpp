@@ -54,7 +54,7 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 
 void keyboardQueueParametersParser(void *parameters)
 {
-	bool isQueueFeedRequirted = pdFALSE;
+	bool isQueueFeedRequirted;// = pdFALSE;
 	BaseType_t queueFeedRetVal;
 	keyboardUnion keyboardDataToParse;
 	keyboardDataToParse.array[0] = 0;
@@ -65,6 +65,7 @@ void keyboardQueueParametersParser(void *parameters)
 	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	for (;;)
 	{
+		isQueueFeedRequirted  = pdFALSE;
 		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania 
 		if (xQueueReceive(handlerStruct->handlerQueue_mainKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
@@ -99,7 +100,7 @@ void keyboardQueueParametersParser(void *parameters)
 			/*----------------------------------------------------------------------*/
 			}		
 		}
-		isQueueFeedRequirted  = pdFALSE;
+		//isQueueFeedRequirted  = pdFALSE;
 	}
 }
 
