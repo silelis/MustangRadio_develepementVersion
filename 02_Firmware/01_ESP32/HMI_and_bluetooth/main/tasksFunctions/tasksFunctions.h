@@ -27,15 +27,6 @@ typedef struct {
 } motorTaskParam;
 
 
-//Struktura służaca tylko i wyłacznie do przekazania parametyrów do taska/ funkcji keyboardQueueParametersParser
-/*struct taskParameters_keyboardQueueParametersParser
-{
-	QueueHandle_t handlerQueue_mainKeyboard;
-	QueueHandle_t handlerQueue_i2cFrameTransmitt;
-}; */
-
-
-
 void keyboardQueueParametersParser(void*);
 void humanMahineDisplayLeds(void *);
 void humanMahineBacklightLeds(void *);

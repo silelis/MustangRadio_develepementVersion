@@ -31,12 +31,12 @@
 void init_uart();
 
 
-extern QueueHandle_t handlerQueue_MainKeyboard;
+/*extern*/ QueueHandle_t handlerQueue_MainKeyboard;
 //extern QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;
-extern TaskHandle_t handlerTask_keyboardQueueParametersParser;
-extern TaskHandle_t handlerTask_ledDisplay;
-extern TaskHandle_t handlerTask_backlightDisplay;	
-extern TaskHandle_t handlerTask_stepperMotor;	
+/*extern*/ TaskHandle_t handlerTask_keyboardQueueParametersParser;
+/*extern*/ TaskHandle_t handlerTask_ledDisplay;
+/*extern*/ TaskHandle_t handlerTask_backlightDisplay;	
+/*extern*/ TaskHandle_t handlerTask_stepperMotor;	
 //extern hmiDisplay displayLedsColors;
 //extern SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;
 
@@ -58,24 +58,8 @@ extern "C" void app_main(void)
 	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
 
 	
+	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
-	
-	/*displayLedsColors.equaliserLed.primary.blue = 0;
-	displayLedsColors.equaliserLed.primary.green = 0;
-	displayLedsColors.equaliserLed.primary.red = 25;
-	displayLedsColors.equaliserLed.secondary.blue = 0;
-	displayLedsColors.equaliserLed.secondary.green = 0;
-	displayLedsColors.equaliserLed.secondary.red = 0;
-	
-	
-	displayLedsColors.backlightLeds.primary.red = 0;
-	displayLedsColors.backlightLeds.primary.green=0;
-	displayLedsColors.backlightLeds.primary.blue=0;*/
-			
-	
-	
-	
-	
 	
 	//tworzy obiekt obsługujący NVS flash radio
 	printf("%s: NVS storage init\n", main_TAG);
@@ -83,27 +67,11 @@ extern "C" void app_main(void)
 	assert(storage = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
 	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
-	
-	
-	
-	/*//tworzenie kolejki bufora nadawczego i2c
-	handlerQueue_i2cFrameTransmittBuffer = NULL;
-	handlerQueue_i2cFrameTransmittBuffer = xQueueCreate(QueueHandleri2cFrameTransmittBuffer, sizeof(i2cFrame)); 
-	assert(handlerQueue_i2cFrameTransmittBuffer);*/
-	
-	
-
-	
-	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
 	printf("%s: Backlight and display leds init\n", main_TAG);
 	LEDS_BACKLIGHT *ledDisplay = NULL;
 	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
 	ledDisplay->ledStripClearAll();
-	///handlerMutex_ledDisplay_Backlight = NULL;																								//czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
-	///assert(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary());																	//tworzy mutex dla podświetlenia
-	///xSemaphoreGive(handlerMutex_ledDisplay_Backlight);		
-	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s: Display leds task starting\n", main_TAG);
@@ -125,12 +93,7 @@ extern "C" void app_main(void)
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
 	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
-	
-	//tworzenie struktury zawierającej parametry przekazywane do taska parsującego/ sprawdzajacego poprawnośc danych z klawaitury i przekazujących informacje do bufora nadawczego i2c
-	//taskParameters_keyboardQueueParametersParser taskParameters_keyboardQueueParametersParserTask = { 
-	//	.handlerQueue_mainKeyboard = handlerQueue_MainKeyboard,
-	//	.handlerQueue_i2cFrameTransmitt = NULL//handlerQueue_i2cFrameTransmittBuffer
-	//};
+
 	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 	

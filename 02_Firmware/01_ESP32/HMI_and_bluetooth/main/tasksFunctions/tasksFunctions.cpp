@@ -1,20 +1,15 @@
 #include "tasksFunctions.h"
 
 
-QueueHandle_t handlerQueue_MainKeyboard;				//wskaźnik do kolejki przechowującej wyniki odpowiedzi z klawiatury		
-QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
+//QueueHandle_t handlerQueue_MainKeyboard;				//wskaźnik do kolejki przechowującej wyniki odpowiedzi z klawiatury		
+static QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 
-
-
-
-
-
-TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce
+/*TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce
 														//klawiatury "handlerQueue_MainKeyboard"
 TaskHandle_t handlerTask_ledDisplay;					//uchwyt do taska wyświetlającego ledy 
 TaskHandle_t handlerTask_backlightDisplay;				//uchwyt do taska wyświetlającego backlight
 TaskHandle_t handlerTask_stepperMotor;					//uchwyt do taska zarządzającego ruchami silnika krokowego
-
+ */
 
 
 
@@ -24,7 +19,7 @@ static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizuj
 
 
 
-hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
+static hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 
 
 void taskFunctionsStaticHandlersInit(void)
@@ -40,9 +35,7 @@ void taskFunctionsStaticHandlersInit(void)
 	displayLedsColors.backlightLeds.primary.red = 0;
 	displayLedsColors.backlightLeds.primary.green = 0;
 	displayLedsColors.backlightLeds.primary.blue = 0;
-	
-	
-	
+
 	
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
