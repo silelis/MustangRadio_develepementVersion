@@ -19,12 +19,43 @@ TaskHandle_t handlerTask_stepperMotor;					//uchwyt do taska zarządzającego ru
 
 
 
-SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
+static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
 
 
 
 hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
+
+
+void taskFunctionsStaticHandlersInit(void)
+{
+	displayLedsColors.errorLed.primary.blue = 0;
+	displayLedsColors.errorLed.primary.green = 0;
+	displayLedsColors.errorLed.primary.red = 25;
+	displayLedsColors.errorLed.secondary.blue = 0;
+	displayLedsColors.errorLed.secondary.green = 0;
+	displayLedsColors.errorLed.secondary.red = 0;
+	
+	
+	displayLedsColors.backlightLeds.primary.red = 0;
+	displayLedsColors.backlightLeds.primary.green = 0;
+	displayLedsColors.backlightLeds.primary.blue = 0;
+	
+	
+	
+	
+	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
+	handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
+	assert(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary()); //tworzy mutex dla podświetlenia
+	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);	
+	
+	//tworzenie kolejki bufora nadawczego i2c
+	handlerQueue_i2cFrameTransmittBuffer = NULL;
+	handlerQueue_i2cFrameTransmittBuffer = xQueueCreate(QueueHandleri2cFrameTransmittBuffer, sizeof(i2cFrame)); 
+	assert(handlerQueue_i2cFrameTransmittBuffer);
+	
+}
+
 
 
 
@@ -60,14 +91,18 @@ void keyboardQueueParametersParser(void *parameters)
 	keyboardDataToParse.array[0] = 0;
 	keyboardDataToParse.array[1] = 0;
 	i2cFrame keyboardDataToI2cTransmittQueue;
-	taskParameters_keyboardQueueParametersParser* handlerStruct = (taskParameters_keyboardQueueParametersParser*) parameters;
+	//taskParameters_keyboardQueueParametersParser* handlerStruct = (taskParameters_keyboardQueueParametersParser*) parameters;
 	
+	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;
+	
+	
+		
 	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	for (;;)
 	{
 		isQueueFeedRequirted  = pdFALSE;
 		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania 
-		if (xQueueReceive(handlerStruct->handlerQueue_mainKeyboard, &keyboardDataToParse, portMAX_DELAY))
+		if (xQueueReceive(handlerParameterAsKeyboard/*handlerStruct->handlerQueue_mainKeyboard*/, &keyboardDataToParse, portMAX_DELAY))
 		{
 			//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
 			if ((keyboardDataToParse.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToParse.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED)) {
@@ -88,13 +123,13 @@ void keyboardQueueParametersParser(void *parameters)
 		{
 			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-			xQueueSend(handlerStruct->handlerQueue_i2cFrameTransmitt, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/));
+			xQueueSend(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/  handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/);
 			
 			/*----------------------------------------------------------------------*/
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-			//i2cFrame daneZKolejki;
-			//xQueueReceive(handlerStruct->handlerQueue_i2cFrameTransmitt, &daneZKolejki, portMAX_DELAY);
 			keyboardQueueParametersParserPrintf(keyboardDataToParse);
+			//i2cFrame daneZKolejki;
+			//xQueueReceive(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/     handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
 			//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
 			/*----------------------------------------------------------------------*/
