@@ -27,8 +27,9 @@ typedef struct {
 } motorTaskParam;
 
 
+
+void taskFunctionsStaticHandlersInit(void);
 void keyboardQueueParametersParser(void*);
 void humanMahineDisplayLeds(void *);
 void humanMahineBacklightLeds(void *);
 void stepperMotor(void *);
-void taskFunctionsStaticHandlersInit(void);

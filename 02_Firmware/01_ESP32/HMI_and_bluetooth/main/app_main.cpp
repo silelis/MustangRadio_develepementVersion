@@ -31,14 +31,11 @@
 void init_uart();
 
 
-/*extern*/ QueueHandle_t handlerQueue_MainKeyboard;
-//extern QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;
-/*extern*/ TaskHandle_t handlerTask_keyboardQueueParametersParser;
-/*extern*/ TaskHandle_t handlerTask_ledDisplay;
-/*extern*/ TaskHandle_t handlerTask_backlightDisplay;	
-/*extern*/ TaskHandle_t handlerTask_stepperMotor;	
-//extern hmiDisplay displayLedsColors;
-//extern SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;
+QueueHandle_t handlerQueue_MainKeyboard;
+TaskHandle_t handlerTask_keyboardQueueParametersParser;
+TaskHandle_t handlerTask_ledDisplay;
+TaskHandle_t handlerTask_backlightDisplay;	
+TaskHandle_t handlerTask_stepperMotor;	
 
 
 
@@ -92,16 +89,13 @@ extern "C" void app_main(void)
 	assert(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
-	//ESP_LOGI(main_TAG, "Keyboard queue pareser task starting");
 
 	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 	
 	
 	
-	
-	
-	
+		  	
 	StepperOpto * motor = NULL;
 	assert(motor = new StepperOpto());
 	

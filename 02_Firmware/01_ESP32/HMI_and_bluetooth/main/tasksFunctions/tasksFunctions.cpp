@@ -1,27 +1,24 @@
 #include "tasksFunctions.h"
 
 
-//QueueHandle_t handlerQueue_MainKeyboard;				//wskaźnik do kolejki przechowującej wyniki odpowiedzi z klawiatury		
+
 static QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
-
-/*TaskHandle_t handlerTask_keyboardQueueParametersParser; //uchwyt do taska realizującego parsowanie / sprawdzanie danych w kolejce
-														//klawiatury "handlerQueue_MainKeyboard"
-TaskHandle_t handlerTask_ledDisplay;					//uchwyt do taska wyświetlającego ledy 
-TaskHandle_t handlerTask_backlightDisplay;				//uchwyt do taska wyświetlającego backlight
-TaskHandle_t handlerTask_stepperMotor;					//uchwyt do taska zarządzającego ruchami silnika krokowego
- */
-
-
-
-
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
-
-
-
 
 static hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 
 
+/*---------------------------------------------------------------
+* Funkcja, która poowinna być wywołana jak najwcześniej, a której
+* zadaniem jest zainicjowanie handlerów, które sa niezbedne do
+* prawidłowego działania tasków. Handlery w obrębie includa są
+* GLOBALNE, ale jako, że mają atrybut STATIC nie są widoczna poza
+* jewgo obrębem.
+* Parameters:
+* NONE
+* Returns:
+* NONE
+ *---------------------------------------------------------------*/ 
 void taskFunctionsStaticHandlersInit(void)
 {
 	displayLedsColors.errorLed.primary.blue = 0;
@@ -55,7 +52,12 @@ void taskFunctionsStaticHandlersInit(void)
 /*---------------------------------------------------------------
 * Lokalna funkcja potrzebna na etapie programownaia. Poprzez tę 
 * funkcję sprawdzam czy do taska parsującego dane z klawiatury
-* *wpływają popraswen dane i dane sa poprawenie przetważane.
+* wpływają popraswen dane i dane sa poprawenie przetważane
+* Parameters:
+* keyboardUnion DataToParse - unia zawierająca dane na temat stanu
+*				klawiszy
+* Returns:
+* NONE
 *---------------------------------------------------------------*/ 
 static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 {
@@ -76,6 +78,11 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 
 
 
+
+
+
+
+
 void keyboardQueueParametersParser(void *parameters)
 {
 	bool isQueueFeedRequirted;// = pdFALSE;
@@ -84,18 +91,15 @@ void keyboardQueueParametersParser(void *parameters)
 	keyboardDataToParse.array[0] = 0;
 	keyboardDataToParse.array[1] = 0;
 	i2cFrame keyboardDataToI2cTransmittQueue;
-	//taskParameters_keyboardQueueParametersParser* handlerStruct = (taskParameters_keyboardQueueParametersParser*) parameters;
-	
+
 	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;
-	
-	
 		
 	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	for (;;)
 	{
 		isQueueFeedRequirted  = pdFALSE;
 		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania 
-		if (xQueueReceive(handlerParameterAsKeyboard/*handlerStruct->handlerQueue_mainKeyboard*/, &keyboardDataToParse, portMAX_DELAY))
+		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
 			//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
 			if ((keyboardDataToParse.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToParse.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED)) {
@@ -116,7 +120,7 @@ void keyboardQueueParametersParser(void *parameters)
 		{
 			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-			xQueueSend(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/  handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/);
+			xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/);
 			
 			/*----------------------------------------------------------------------*/
 			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
@@ -136,6 +140,7 @@ void keyboardQueueParametersParser(void *parameters)
 static 	bool areEqual(const struct ws2812Color *color1, const struct ws2812Color *color2) {
 	return memcmp(color1, color2, sizeof(struct ws2812Color)) == 0;
 }
+
 
 static void init_BacklightColors(LEDS_BACKLIGHT *ledsDisplay)
 {	
