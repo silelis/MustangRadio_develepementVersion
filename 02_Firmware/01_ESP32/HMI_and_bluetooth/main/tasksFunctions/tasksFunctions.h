@@ -21,10 +21,10 @@ struct hmiDisplay {
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
 };
 
-typedef struct {
-	StepperOpto * motorPointer;
-	NVS * storagePointer;
-} motorTaskParam;
+//typedef struct {
+//	StepperOpto * motorPointer;
+//	NVS * storagePointer;
+//} motorTaskParam;
 
 
 
