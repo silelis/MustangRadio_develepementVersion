@@ -7,6 +7,7 @@ static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizuj
 
 static hmiDisplay displayLedsColors; //struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 
+static NVS* pSTORAGE; //obiekt zapisujący i czytający dane z NCS ESP32
 
 /*---------------------------------------------------------------
 * Funkcja, która poowinna być wywołana jak najwcześniej, a której
@@ -43,6 +44,12 @@ void taskFunctionsStaticHandlersInit(void)
 	handlerQueue_i2cFrameTransmittBuffer = NULL;
 	handlerQueue_i2cFrameTransmittBuffer = xQueueCreate(QueueHandleri2cFrameTransmittBuffer, sizeof(i2cFrame)); 
 	assert(handlerQueue_i2cFrameTransmittBuffer);
+	
+	//tworzy obiekt obsługujący NVS flash radio
+	printf("NVS storage init\n");
+	//NVS * storage = NULL;
+	assert(pSTORAGE = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
+	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
 }
 
@@ -129,33 +136,32 @@ void keyboardQueueParametersParser(void *parameters)
 			{
 				keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 				memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(1000)) == pdPASS)
+				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(700)) == pdFAIL)
 				{
-					/*----------------------------------------------------------------------*/
-					//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-					keyboardQueueParametersParserPrintf(keyboardDataToParse);
-					//i2cFrame daneZKolejki;
-					//xQueueReceive(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/     handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
-					//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
-					//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-					/*----------------------------------------------------------------------*/
-				}
-				else
-				{
-					printf("i2cFrameTransmittBuffer queue feeding error\n");
+					printf("Queue feeding error\n");
 					if (keyboardDataToParse.kbrdValue.input == HMI_INPUT_BUTTON)	//long press release button event
 					{
 						switch (keyboardDataToParse.kbrdValue.value)
 						{
 						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))): //BUT0	presses
-							printf("Emergency hardware reset\n");
+							printf("Emergency hardware restart\n");
 							break;
 						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses
 							printf("Emergency NVS reset\n");
+							pSTORAGE->CAUTION_NVS_ereaseAndInit(10);
+							printf("Please restart device\n");
 							break;
 						}	 
 					}
 				}
+				//----------------------------------------------------------------------//
+				//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+				keyboardQueueParametersParserPrintf(keyboardDataToParse);
+				//i2cFrame daneZKolejki;
+				//xQueueReceive(handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
+				//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
+				//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+				//----------------------------------------------------------------------//
 			}		
 		}
 	}
@@ -319,23 +325,18 @@ void humanMahineDisplayLeds(void *ledsDisplay)
 
 void stepperMotor(void *TaskParameters)
 {
-	NVS * pStorage;
-	StepperOpto * pMotor;
+	//NVS * pStorage;
+	StepperOpto * pMotor=NULL;
+	assert(pMotor = new StepperOpto());
 	
-	{
-		motorTaskParam *parameter = (motorTaskParam*) TaskParameters;
-		pMotor = parameter->motorPointer;
-		pStorage = parameter->storagePointer;
-	}
-
 	//pStorage->get_blob(NVS_KEY_BLOB_MotorParameters, pMotor->)
 
-	MotorParameters test;
-	test.beginOffest = 1;
-	test.currentPosition = 2;
-	test.endOffset = 50;
-	test.maxPosition = 5000;
-	pMotor->setValue_motorParameters(&test);
+	//MotorParameters test;
+	//test.beginOffest = 1;
+	//test.currentPosition = 2;
+	//test.endOffset = 50;
+	//test.maxPosition = 5000;
+	//pMotor->setValue_motorParameters(&test);
 	for (;;)
 	{
 		pMotor->measureSliderRange();

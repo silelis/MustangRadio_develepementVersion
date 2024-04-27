@@ -58,12 +58,6 @@ extern "C" void app_main(void)
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
-	//tworzy obiekt obsługujący NVS flash radio
-	printf("%s: NVS storage init\n", main_TAG);
-	NVS * storage = NULL;
-	assert(storage = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
-	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
-	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
 	printf("%s: Backlight and display leds init\n", main_TAG);
 	LEDS_BACKLIGHT *ledDisplay = NULL;
@@ -92,18 +86,9 @@ extern "C" void app_main(void)
 
 	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
-	
-	
-	
-		  	
-	StepperOpto * motor = NULL;
-	assert(motor = new StepperOpto());
-	
-	motorTaskParam motorTaskParamStruct;
-	motorTaskParamStruct.motorPointer = motor;
-	motorTaskParamStruct.storagePointer = storage;
-	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, &motorTaskParamStruct, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
-	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, &motorTaskParamStruct, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
+
+	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, NULL, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
+	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
 	btstack_init();
 	btstack_main(0, NULL);
