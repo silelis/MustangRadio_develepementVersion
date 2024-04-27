@@ -81,8 +81,17 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 
 
 
-
-
+/*---------------------------------------------------------------
+* Funkcja sprawdza czy wartości znajdujące się w kolejce klawiatury
+* są poprawne (*głównie chodszi tutaj o wartości z enkoderów) i
+* jeśli sa poprawne to przekazuje je do kolejki i2cFrame (kolejka
+* z której dane są wysyłane do stm32).
+* Parameters:
+* void *parameters - uchwyt do kolejki zawiwerasjącej dane
+*				z przerwania klawiatury
+* Returns:
+* NONE
+*---------------------------------------------------------------*/ 
 void keyboardQueueParametersParser(void *parameters)
 {
 	bool isQueueFeedRequirted;// = pdFALSE;
@@ -116,29 +125,55 @@ void keyboardQueueParametersParser(void *parameters)
 			}
 			
 		//jeśli dane są poprawne to następuje przesłanie danych do kolejki buffora nadawczego i2c
-		if (isQueueFeedRequirted  == pdTRUE)
-		{
-			keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
-			memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-			xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(10000)/*portMAX_DELAY*/);
-			
-			/*----------------------------------------------------------------------*/
-			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-			keyboardQueueParametersParserPrintf(keyboardDataToParse);
-			//i2cFrame daneZKolejki;
-			//xQueueReceive(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/     handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
-			//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
-			//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-			/*----------------------------------------------------------------------*/
+			if (isQueueFeedRequirted  == pdTRUE)
+			{
+				keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
+				memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
+				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(1000)) == pdPASS)
+				{
+					/*----------------------------------------------------------------------*/
+					//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+					keyboardQueueParametersParserPrintf(keyboardDataToParse);
+					//i2cFrame daneZKolejki;
+					//xQueueReceive(/*handlerStruct->handlerQueue_i2cFrameTransmitt*/     handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
+					//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
+					//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+					/*----------------------------------------------------------------------*/
+				}
+				else
+				{
+					printf("i2cFrameTransmittBuffer queue feeding error\n");
+					if (keyboardDataToParse.kbrdValue.input == HMI_INPUT_BUTTON)	//long press release button event
+					{
+						switch (keyboardDataToParse.kbrdValue.value)
+						{
+						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))): //BUT0	presses
+							printf("Emergency hardware reset\n");
+							break;
+						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses
+							printf("Emergency NVS reset\n");
+							break;
+						}	 
+					}
+				}
 			}		
 		}
-		//isQueueFeedRequirted  = pdFALSE;
 	}
 }
 
-
+/*---------------------------------------------------------------
+* Funkcja statyczna (lokalna) której zadaniem jest porównanie
+* wartości dwóch kolorów diód led (== nie odnosi sie do tego typu
+* danych).
+* Parameters:
+* const struct ws2812Color *color1 - pierwszy kolor do porównania
+* const struct ws2812Color *color2 - drugi kolor do porównania
+* Returns:
+* bool - TRUE jeżeli kolory sa sobie równe, FALSE jeżeli kolory
+*				nie są sobie równe.	  
+*---------------------------------------------------------------*/ 
 static 	bool areEqual(const struct ws2812Color *color1, const struct ws2812Color *color2) {
-	return memcmp(color1, color2, sizeof(struct ws2812Color)) == 0;
+	return (bool)(memcmp(color1, color2, sizeof(struct ws2812Color)) == 0) ;
 }
 
 
@@ -214,16 +249,11 @@ void humanMahineDisplayLeds(void *ledsDisplay)
 	for (;;)
 	{
 		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		//leds->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.primary.red,
-		//	(uint32_t) displayLedsColors.backlightLeds.primary.green,
-		//	(uint32_t) displayLedsColors.backlightLeds.primary.blue);
 		
 		if (areEqual(&displayLedsColors.equaliserLed.primary, &displayLedsColors.equaliserLed.secondary)&&
 					areEqual(&displayLedsColors.errorLed.primary, &displayLedsColors.errorLed.secondary)&&
 					areEqual(&displayLedsColors.sourceLed.primary, &displayLedsColors.sourceLed.secondary))		//if all leds primary == secondary
 		{
-			
-			
 											
 			leds->ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.primary.red,
 														(uint32_t) displayLedsColors.equaliserLed.primary.green,
