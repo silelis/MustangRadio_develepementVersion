@@ -136,7 +136,7 @@ void keyboardQueueParametersParser(void *parameters)
 			{
 				keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 				memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(700)) == pdFAIL)
+				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
 				{
 					printf("Queue feeding error\n");
 					if (keyboardDataToParse.kbrdValue.input == HMI_INPUT_BUTTON)	//long press release button event
