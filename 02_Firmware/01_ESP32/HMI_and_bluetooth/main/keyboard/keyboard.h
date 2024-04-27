@@ -13,7 +13,7 @@
 //#include "tasksFunctions/tasksFunctions.h"
 
 
-#define LONG_PRESS_BIT_MASK					0b10000000
+//#define LONG_PRESS_BIT_MASK					0b10000000
 #define ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS	750
 
 

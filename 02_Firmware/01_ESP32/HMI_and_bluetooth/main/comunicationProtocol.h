@@ -13,7 +13,7 @@
 #define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, że przycisk jest nadal wciśnięty po osiagnięciu czasu long press 
 #define HMI_INPUT_VOLUME					'v'		//oznacza, że poruszany jest encoder głośności
 #define HMI_INPUT_EQUALISER					'e'		//oznacza, że poruszany jest encoder equalizera
-
+#define LONG_PRESS_BIT_MASK					0b10000000
 
 
 //NVS keys definition	+
