@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "esp-idf/protocomm/libprotocomm.a"
+			"path" : "esp-idf/esp_local_ctrl/libesp_local_ctrl.a"
 		}
 	],
 	"backtrace" : 2,
@@ -26,7 +26,7 @@
 		"files" : 
 		[
 			"C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/component.cmake",
-			"C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/CMakeLists.txt",
+			"C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/CMakeLists.txt",
 			"C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/utilities.cmake"
 		],
 		"nodes" : 
@@ -37,7 +37,7 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 46,
+				"line" : 20,
 				"parent" : 0
 			},
 			{
@@ -55,18 +55,6 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 356,
-				"parent" : 3
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 335,
-				"parent" : 4
-			},
-			{
-				"command" : 3,
-				"file" : 0,
 				"line" : 353,
 				"parent" : 3
 			},
@@ -74,12 +62,6 @@
 				"command" : 2,
 				"file" : 0,
 				"line" : 338,
-				"parent" : 6
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 335,
 				"parent" : 4
 			},
 			{
@@ -98,7 +80,7 @@
 				"command" : 5,
 				"file" : 2,
 				"line" : 282,
-				"parent" : 10
+				"parent" : 7
 			},
 			{
 				"command" : 5,
@@ -109,13 +91,13 @@
 			{
 				"command" : 7,
 				"file" : 1,
-				"line" : 52,
+				"line" : 28,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 335,
+				"line" : 338,
 				"parent" : 4
 			},
 			{
@@ -134,19 +116,7 @@
 				"command" : 9,
 				"file" : 0,
 				"line" : 314,
-				"parent" : 16
-			},
-			{
-				"command" : 9,
-				"file" : 0,
-				"line" : 314,
-				"parent" : 16
-			},
-			{
-				"command" : 9,
-				"file" : 0,
-				"line" : 314,
-				"parent" : 16
+				"parent" : 13
 			},
 			{
 				"command" : 10,
@@ -158,31 +128,31 @@
 				"command" : 9,
 				"file" : 0,
 				"line" : 314,
-				"parent" : 20
+				"parent" : 15
 			},
 			{
 				"command" : 9,
 				"file" : 0,
 				"line" : 314,
-				"parent" : 20
+				"parent" : 15
 			},
 			{
 				"command" : 9,
 				"file" : 0,
 				"line" : 314,
-				"parent" : 20
+				"parent" : 15
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 356,
+				"parent" : 3
 			},
 			{
 				"command" : 2,
 				"file" : 0,
 				"line" : 335,
-				"parent" : 4
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 335,
-				"parent" : 4
+				"parent" : 19
 			}
 		]
 	},
@@ -195,154 +165,146 @@
 					"fragment" : "-mlongcalls -Wno-frame-address  -g -fdiagnostics-color=always"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-ffunction-sections"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fdata-sections"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wall"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Werror=all"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-error=unused-function"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-error=unused-variable"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-error=deprecated-declarations"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wextra"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-unused-parameter"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-sign-compare"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-enum-conversion"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-gdwarf-4"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-ggdb"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Og"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fmacro-prefix-map=D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth=."
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fmacro-prefix-map=C:/SysGCC/esp32/esp-idf/v5.0=/IDF"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fstrict-volatile-bitfields"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-Wno-error=unused-but-set-variable"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fno-jump-tables"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-fno-tree-switch-conversion"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 6,
 					"fragment" : "-DconfigENABLE_FREERTOS_DEBUG_OCDAWARE=1"
 				},
 				{
-					"backtrace" : 11,
+					"backtrace" : 8,
 					"fragment" : "-std=gnu17"
 				},
 				{
-					"backtrace" : 11,
+					"backtrace" : 8,
 					"fragment" : "-Wno-old-style-declaration"
 				},
 				{
-					"backtrace" : 12,
+					"backtrace" : 9,
 					"fragment" : "-D_GNU_SOURCE"
 				},
 				{
-					"backtrace" : 12,
+					"backtrace" : 9,
 					"fragment" : "-DIDF_VER=\\\"v5.0-dirty\\\""
 				},
 				{
-					"backtrace" : 12,
+					"backtrace" : 9,
 					"fragment" : "-DESP_PLATFORM"
 				},
 				{
-					"backtrace" : 12,
+					"backtrace" : 9,
 					"fragment" : "-D_POSIX_READER_WRITER_LOCKS"
 				},
 				{
-					"backtrace" : 13,
+					"backtrace" : 10,
 					"fragment" : "-Wno-format"
 				}
 			],
 			"defines" : 
 			[
 				{
-					"backtrace" : 14,
+					"backtrace" : 11,
 					"define" : "MBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\""
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 15,
+					"backtrace" : 12,
 					"path" : "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/config"
 				},
 				{
+					"backtrace" : 14,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/include"
+				},
+				{
+					"backtrace" : 16,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/proto-c"
+				},
+				{
 					"backtrace" : 17,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/common"
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/src"
 				},
 				{
 					"backtrace" : 18,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/security"
-				},
-				{
-					"backtrace" : 19,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/transports"
-				},
-				{
-					"backtrace" : 21,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c"
-				},
-				{
-					"backtrace" : 22,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/common"
-				},
-				{
-					"backtrace" : 23,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/crypto/srp6a/include"
 				},
 				{
 					"backtrace" : 2,
@@ -477,108 +439,100 @@
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/lwip/port/esp32/include/arch"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/common"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/security"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/include/transports"
+				},
+				{
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/include/esp32/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/common/osi/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/common/api/include/api"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/common/btc/profile/esp/blufi/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/common/btc/profile/esp/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/bt/porting/ext/tinycrypt/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_timer/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_wifi/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_event/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_phy/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_phy/esp32/include"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 5,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_netif/include"
 				},
 				{
-					"backtrace" : 8,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protobuf-c/protobuf-c"
-				},
-				{
-					"backtrace" : 14,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/port/include"
-				},
-				{
-					"backtrace" : 14,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/mbedtls/include"
-				},
-				{
-					"backtrace" : 14,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/mbedtls/library"
-				},
-				{
-					"backtrace" : 14,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/esp_crt_bundle/include"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/console"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/vfs/include"
-				},
-				{
-					"backtrace" : 24,
+					"backtrace" : 11,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_http_server/include"
 				},
 				{
-					"backtrace" : 24,
+					"backtrace" : 11,
 					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/http_parser"
 				},
 				{
-					"backtrace" : 25,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/driver/include"
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp-tls"
 				},
 				{
-					"backtrace" : 25,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/driver/deprecated"
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp-tls/esp-tls-crypto"
 				},
 				{
-					"backtrace" : 25,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/driver/esp32/include"
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/port/include"
 				},
 				{
-					"backtrace" : 25,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_pm/include"
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/mbedtls/include"
 				},
 				{
-					"backtrace" : 25,
-					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_ringbuf/include"
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/mbedtls/library"
+				},
+				{
+					"backtrace" : 11,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/esp_crt_bundle/include"
+				},
+				{
+					"backtrace" : 20,
+					"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protobuf-c/protobuf-c"
 				}
 			],
 			"language" : "C",
@@ -586,17 +540,7 @@
 			[
 				0,
 				1,
-				2,
-				3,
-				4,
-				5,
-				6,
-				7,
-				8,
-				9,
-				10,
-				11,
-				12
+				2
 			]
 		}
 	],
@@ -608,24 +552,28 @@
 		},
 		{
 			"backtrace" : 5,
-			"id" : "__idf_console::@4311ed8d271cc0ee1422"
-		},
-		{
-			"backtrace" : 7,
 			"id" : "__idf_bt::@0a9ab9982b985d43ed2a"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 5,
+			"id" : "__idf_console::@4311ed8d271cc0ee1422"
+		},
+		{
+			"backtrace" : 5,
 			"id" : "__idf_protobuf-c::@b14513c4bd859268ec22"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "__idf_protocomm::@d76d01c8dec06205e1fc"
 		}
 	],
-	"id" : "__idf_protocomm::@d76d01c8dec06205e1fc",
-	"name" : "__idf_protocomm",
-	"nameOnDisk" : "libprotocomm.a",
+	"id" : "__idf_esp_local_ctrl::@d6aad58d2946e56208ef",
+	"name" : "__idf_esp_local_ctrl",
+	"nameOnDisk" : "libesp_local_ctrl.a",
 	"paths" : 
 	{
-		"build" : "esp-idf/protocomm",
-		"source" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm"
+		"build" : "esp-idf/esp_local_ctrl",
+		"source" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl"
 	},
 	"sourceGroups" : 
 	[
@@ -635,17 +583,7 @@
 			[
 				0,
 				1,
-				2,
-				3,
-				4,
-				5,
-				6,
-				7,
-				8,
-				9,
-				10,
-				11,
-				12
+				2
 			]
 		}
 	],
@@ -654,79 +592,19 @@
 		{
 			"backtrace" : 2,
 			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/common/protocomm.c",
+			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/src/esp_local_ctrl.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 2,
 			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c/constants.pb-c.c",
+			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/src/esp_local_ctrl_handler.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 2,
 			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c/sec0.pb-c.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c/sec1.pb-c.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c/sec2.pb-c.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/proto-c/session.pb-c.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/transports/protocomm_console.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/transports/protocomm_httpd.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/security/security0.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/security/security1.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/security/security2.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/crypto/srp6a/esp_srp.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 2,
-			"compileGroupIndex" : 0,
-			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/protocomm/src/crypto/srp6a/esp_srp_mpi.c",
+			"path" : "C:/SysGCC/esp32/esp-idf/v5.0/components/esp_local_ctrl/proto-c/esp_local_ctrl.pb-c.c",
 			"sourceGroupIndex" : 0
 		}
 	],

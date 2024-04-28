@@ -58,17 +58,17 @@ extern "C" void app_main(void)
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
-	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
-	printf("%s: Backlight and display leds init\n", main_TAG);
-	LEDS_BACKLIGHT *ledDisplay = NULL;
-	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
-	ledDisplay->ledStripClearAll();
+//	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
+//	printf("%s: Backlight and display leds init\n", main_TAG);
+//	LEDS_BACKLIGHT *ledDisplay = NULL;
+//	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
+//	ledDisplay->ledStripClearAll();
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s: Display leds task starting\n", main_TAG);
-	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, ledDisplay, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
 	printf("%s: Backlight leds task starting\n", main_TAG);
-	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128*7, ledDisplay, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
+	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128*7, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
 	
 	
