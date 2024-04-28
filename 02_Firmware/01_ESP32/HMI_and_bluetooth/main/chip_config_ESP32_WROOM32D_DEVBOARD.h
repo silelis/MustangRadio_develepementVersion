@@ -33,11 +33,11 @@
 #define LED_DISPLAY_GPIO	GPIO_NUM_16
 
 //stepper motor and optotransistor sensors connected to MCP23008
-#define SENSOR_EQU_SIDE_MASK	(1<<7)
-#define SENSOR_VOL_SIDE_MASK	(1<<6)
-#define MOTOR_FAULT_MASK		(1<<5)
-#define MOTOR_DIRECTION_MAKS	(1<<4)
-#define MOTOR_STEP_MASK			(1<<3)
-#define MOTOR_NOT_SLEEP_MASK	(1<<2)
-//#define MUX_SELECT_MASK		(1<<1)
+#define SENSOR_EQU_SIDE_MASK		(1<<7)
+#define SENSOR_VOL_SIDE_MASK		(1<<6)
+#define MOTOR_FAULT_MASK			(1<<5)
+#define MOTOR_DIRECTION_MAKS		(1<<4)
+#define MOTOR_STEP_MASK				(1<<3)
+#define MOTOR_NOT_SLEEP_MASK		(1<<2)
+#define POWER_SUPPLU_SUSTAIN_MASK	(1<<1)
 //#define INTERRUP_REQUEST_MASK	(1<<0)
