@@ -9,6 +9,9 @@ static hmiDisplay displayLedsColors; //struktura zawierająca informacje na tema
 
 static NVS* pSTORAGE;				//obiekt zapisujący i czytający dane z NCS ESP32
 static LEDS_BACKLIGHT *pLedDisplay;	//obiekt sterujący pracą ledów (diody i backlioght)
+static 	StepperOptoPowerOFF * pMotor; //obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
+
+
 
 /*---------------------------------------------------------------
 * Funkcja, która poowinna być wywołana jak najwcześniej, a której
@@ -48,19 +51,32 @@ void taskFunctionsStaticHandlersInit(void)
 	
 	//tworzy obiekt obsługujący NVS flash radio
 	printf("NVS storage init\n");
-	//NVS * storage = NULL;
 	assert(pSTORAGE = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
 	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
 	printf("Backlight and display leds init\n");
-	//LEDS_BACKLIGHT *ledDisplay = NULL;
 	assert(pLedDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
 	pLedDisplay->ledStripClearAll();
+	
+	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
+	printf("Stepper motor and powerOFF gpio init\n");
+	assert(pMotor = new StepperOptoPowerOFF());
 }
 
 
-
+/*---------------------------------------------------------------
+* Lokalna funkcja odpowiadająca za wyłaczenia zasilania hardware'u
+* wykonane przez ESP32
+* Parameters:
+* NONE
+* Returns:
+* NONE
+*---------------------------------------------------------------*/ 
+static void hardwarePowerOFF(void)
+{
+	pMotor->radioPowerOFF();
+}
 
 /*---------------------------------------------------------------
 * Lokalna funkcja potrzebna na etapie programownaia. Poprzez tę 
@@ -151,6 +167,7 @@ void keyboardQueueParametersParser(void *parameters)
 						{
 						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))): //BUT0	presses
 							printf("Emergency hardware restart\n");
+							hardwarePowerOFF();
 							break;
 						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses
 							printf("Emergency NVS reset\n");
@@ -228,25 +245,24 @@ static void init_BacklightColors(LEDS_BACKLIGHT *ledsDisplay)
 
 void humanMahineBacklightLeds(void *lnothing)
 {
-	//LEDS_BACKLIGHT *leds = static_cast<LEDS_BACKLIGHT*>(ledsDisplay);		
 	init_BacklightColors(pLedDisplay);
 		
 	for (;;)
 	{
 		vTaskSuspend(NULL);
 		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		/*leds*/pLedDisplay->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.secondary.red,
+		pLedDisplay->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.secondary.red,
 			(uint32_t) displayLedsColors.backlightLeds.secondary.green,
 			(uint32_t) displayLedsColors.backlightLeds.secondary.blue);
-		/*leds*/pLedDisplay->ledStripRefresh();
+		pLedDisplay->ledStripRefresh();
 		xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 		vTaskDelay(pdMS_TO_TICKS(150));
 		
 		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		/*leds*/pLedDisplay->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.primary.red,
+		pLedDisplay->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.primary.red,
 			(uint32_t) displayLedsColors.backlightLeds.primary.green,
 			(uint32_t) displayLedsColors.backlightLeds.primary.blue);
-		/*leds*/pLedDisplay->ledStripRefresh();
+		pLedDisplay->ledStripRefresh();
 		xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 		//vTaskSuspend(NULL);	
 	}
@@ -255,8 +271,6 @@ void humanMahineBacklightLeds(void *lnothing)
 	
 void humanMahineDisplayLeds(void *nothiong)
 {
-	//LEDS_BACKLIGHT *leds = static_cast<LEDS_BACKLIGHT*>(ledsDisplay);
-
 	uint8_t ledsPrimarySecondary = 0;
 	for (;;)
 	{
@@ -267,19 +281,16 @@ void humanMahineDisplayLeds(void *nothiong)
 					areEqual(&displayLedsColors.sourceLed.primary, &displayLedsColors.sourceLed.secondary))		//if all leds primary == secondary
 		{
 											
-			/*leds*/pLedDisplay -> ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.primary.red,
+			pLedDisplay -> ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.primary.red,
 														(uint32_t) displayLedsColors.equaliserLed.primary.green,
 														(uint32_t) displayLedsColors.equaliserLed.primary.blue);
-			/*leds*/pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.primary.red,
+			pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.primary.red,
 														(uint32_t) displayLedsColors.errorLed.primary.green,
 														(uint32_t) displayLedsColors.errorLed.primary.blue);
-			/*leds*/pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.primary.red,
+			pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.primary.red,
 														(uint32_t) displayLedsColors.sourceLed.primary.green,
 														(uint32_t) displayLedsColors.sourceLed.primary.blue);
-			//leds->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.primary.red,
-			//	(uint32_t) displayLedsColors.backlightLeds.primary.green,
-			//	(uint32_t) displayLedsColors.backlightLeds.primary.blue);
-			/*leds*/pLedDisplay->ledStripRefresh();
+			pLedDisplay->ledStripRefresh();
 
 			
 			xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
@@ -291,25 +302,25 @@ void humanMahineDisplayLeds(void *nothiong)
 			switch (ledsPrimarySecondary)
 			{
 			case 0:
-				/*leds*/pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.primary.red,
+				pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.primary.red,
 					(uint32_t) displayLedsColors.equaliserLed.primary.green,
 					(uint32_t) displayLedsColors.equaliserLed.primary.blue);
-				/*leds*/pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.primary.red,
+				pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.primary.red,
 					(uint32_t) displayLedsColors.errorLed.primary.green,
 					(uint32_t) displayLedsColors.errorLed.primary.blue);
-				/*leds*/pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.primary.red,
+				pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.primary.red,
 					(uint32_t) displayLedsColors.sourceLed.primary.green,
 					(uint32_t) displayLedsColors.sourceLed.primary.blue);
 				ledsPrimarySecondary = 1; //next time leds flip to secondary color
 				break;
 			case 1:
-				/*leds*/pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.secondary.red,
+				pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.equaliserLed.secondary.red,
 					(uint32_t) displayLedsColors.equaliserLed.secondary.green,
 					(uint32_t) displayLedsColors.equaliserLed.secondary.blue);
-				/*leds*/pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.secondary.red,
+				pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.errorLed.secondary.red,
 					(uint32_t) displayLedsColors.errorLed.secondary.green,
 					(uint32_t) displayLedsColors.errorLed.secondary.blue);
-				/*leds*/pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.secondary.red,
+				pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.sourceLed.secondary.red,
 					(uint32_t) displayLedsColors.sourceLed.secondary.green,
 					(uint32_t) displayLedsColors.sourceLed.secondary.blue);
 				ledsPrimarySecondary = 0; //next time leds flip to primary color
@@ -317,11 +328,7 @@ void humanMahineDisplayLeds(void *nothiong)
 				
 			}
 			
-			//leds->ledStripSet_backlightLeds((uint32_t) displayLedsColors.backlightLeds.primary.red,
-			//	(uint32_t) displayLedsColors.backlightLeds.primary.green,
-			//	(uint32_t) displayLedsColors.backlightLeds.primary.blue);
-			
-			/*leds*/pLedDisplay->ledStripRefresh();
+			pLedDisplay->ledStripRefresh();
 			xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 			vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));													//wait 1s till change color
 		}
@@ -332,8 +339,8 @@ void humanMahineDisplayLeds(void *nothiong)
 void stepperMotor(void *TaskParameters)
 {
 	//NVS * pStorage;
-	StepperOpto * pMotor=NULL;
-	assert(pMotor = new StepperOpto());
+//	StepperOpto * pMotor=NULL;
+//	assert(pMotor = new StepperOpto());
 	
 	//pStorage->get_blob(NVS_KEY_BLOB_MotorParameters, pMotor->)
 

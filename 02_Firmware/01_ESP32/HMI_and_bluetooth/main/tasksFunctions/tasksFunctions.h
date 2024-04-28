@@ -11,8 +11,8 @@
 #include "hwConfigFile.h"
 #include "tasksFunctions.h"
 #include "keyboard/keyboard.h"
-#include "Leds\Leds_backlight.h"
-#include "StepperOpto/StepperOpto.h"
+#include "Leds/Leds_backlight.h"
+#include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 #include "NVSeeprom/NVSeeprom.h"
 
 
@@ -20,12 +20,6 @@ struct hmiDisplay {
 	colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
 };
-
-//typedef struct {
-//	StepperOpto * motorPointer;
-//	NVS * storagePointer;
-//} motorTaskParam;
-
 
 
 void taskFunctionsStaticHandlersInit(void);

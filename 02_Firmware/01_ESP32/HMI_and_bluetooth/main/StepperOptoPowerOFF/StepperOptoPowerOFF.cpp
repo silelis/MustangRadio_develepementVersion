@@ -1,4 +1,4 @@
-#include "StepperOpto.h"
+#include "StepperOptoPowerOFF.h"
 
 /*---------------------------------------------------------------
  * Konstruktor klasy obsługującej silnik krokowy i jego krańcówki.
@@ -8,7 +8,7 @@
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-StepperOpto::StepperOpto()
+StepperOptoPowerOFF::StepperOptoPowerOFF()
 	: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
 {
 	this->writeIODIR(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
@@ -32,7 +32,7 @@ StepperOpto::StepperOpto()
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-StepperOpto::~StepperOpto()
+StepperOptoPowerOFF::~StepperOptoPowerOFF()
 {
 	this->writeOLAT(0b00000000); //all GPIOs down to save energy
 	this->writeGPPU(0b00000000);		//pull-down enabled to save energy
@@ -83,7 +83,7 @@ esp_err_t StepperOpto::disableMuxSelect()
  * Returns:
  * esp_err_t retVal - 0x00 = OK
  *---------------------------------------------------------------*/
-esp_err_t StepperOpto::enableStepperMotor()
+esp_err_t StepperOptoPowerOFF::enableStepperMotor()
 {
 	uint8_t data = this->readOLAT();
 	data |= MOTOR_NOT_SLEEP_MASK;						//set bit ONE
@@ -103,7 +103,7 @@ esp_err_t StepperOpto::enableStepperMotor()
  * esp_err_t retVal - informacja o poprawności wykonania operacji
  *           (0x00 = OK)
  *---------------------------------------------------------------*/
-esp_err_t StepperOpto::disableStepperMotor()
+esp_err_t StepperOptoPowerOFF::disableStepperMotor()
 {
 	uint8_t data = this->readOLAT();
 	//data ^= MOTOR_NOT_SLEEP_MASK;
@@ -122,7 +122,7 @@ esp_err_t StepperOpto::disableStepperMotor()
  *         SENSOR_VOL_SIDE_MASK, MOTOR_FAULT_MASK na ekspanderze
  *         MCP2300
  *---------------------------------------------------------------*/
-uint8_t  StepperOpto::readInputs()
+uint8_t  StepperOptoPowerOFF::readInputs()
 {
 	return this->readGPIO()&(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
 }
@@ -137,7 +137,7 @@ uint8_t  StepperOpto::readInputs()
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::measureSliderRange()
+void StepperOptoPowerOFF::measureSliderRange()
 {
 	uint8_t inputsStates;
 	//uint16_t measuredMaxPosition = 0;
@@ -206,7 +206,7 @@ void StepperOpto::measureSliderRange()
  * esp_err_t retVal - informacja o poprawności wykonania operacji
  *           (0x00 = OK)
  *---------------------------------------------------------------*/
-esp_err_t StepperOpto::setDirection(bool direction)
+esp_err_t StepperOptoPowerOFF::setDirection(bool direction)
 {
 	uint8_t data = this->readOLAT();
 	switch ((uint8_t)direction)
@@ -232,7 +232,7 @@ esp_err_t StepperOpto::setDirection(bool direction)
  * esp_err_t retVal - informacja o poprawności wykonania operacji
  *           (0x00 = OK)
  *---------------------------------------------------------------*/
-esp_err_t StepperOpto::makeStep()
+esp_err_t StepperOptoPowerOFF::makeStep()
 {
 	uint8_t data = this->readOLAT();
 	data ^= MOTOR_STEP_MASK;
@@ -249,7 +249,7 @@ esp_err_t StepperOpto::makeStep()
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::moveXSteps(int32_t stepAmount)
+void StepperOptoPowerOFF::moveXSteps(int32_t stepAmount)
 {
 	uint8_t inputData;
 	if ((stepAmount < 0)&&(this->whichDirection != MOVE_BACKWARD))
@@ -305,7 +305,7 @@ void StepperOpto::moveXSteps(int32_t stepAmount)
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::moveTo_xPosition(uint16_t xPosition)
+void StepperOptoPowerOFF::moveTo_xPosition(uint16_t xPosition)
 {
 	int32_t stepAmount;
 	if (xPosition < 0)
@@ -329,7 +329,7 @@ void StepperOpto::moveTo_xPosition(uint16_t xPosition)
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::moveTo_xPercent(float xPercent)
+void StepperOptoPowerOFF::moveTo_xPercent(float xPercent)
 {
 	uint16_t xPosition = (uint16_t) std::round(this->motorParameters.maxPosition*(xPercent / 100));
 	this->moveTo_xPosition(xPosition);
@@ -346,7 +346,7 @@ void StepperOpto::moveTo_xPercent(float xPercent)
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::moveTo_xPercentIncludeOffset(float xPercent)
+void StepperOptoPowerOFF::moveTo_xPercentIncludeOffset(float xPercent)
 {
 	uint16_t xPosition = (uint16_t) std::round((this->motorParameters.endOffset - this->motorParameters.beginOffest)*(xPercent / 100));
 	xPosition = xPosition + this->motorParameters.beginOffest;
@@ -360,7 +360,7 @@ void StepperOpto::moveTo_xPercentIncludeOffset(float xPercent)
  * Returns:
  * MotorParameters motorParameters - zwraca wartośc całej struktury.
  *---------------------------------------------------------------*/
-MotorParameters StepperOpto::getValue_motorParameters()
+MotorParameters StepperOptoPowerOFF::getValue_motorParameters()
 {
 	return this->motorParameters;
 }
@@ -376,7 +376,14 @@ MotorParameters StepperOpto::getValue_motorParameters()
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOpto::setValue_motorParameters(const void *src)
+void StepperOptoPowerOFF::setValue_motorParameters(const void *src)
 {
 	memcpy(&this->motorParameters, src, sizeof(this->motorParameters));
+}
+
+void StepperOptoPowerOFF::radioPowerOFF(void)
+{
+	uint8_t data = this->readOLAT();
+	data |= POWER_SUPPLU_SUSTAIN_MASK; //set bit ONE
+	/*return*/ this->writeOLAT(data);
 }

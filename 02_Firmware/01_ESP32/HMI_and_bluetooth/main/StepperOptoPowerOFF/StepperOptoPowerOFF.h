@@ -9,14 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/*#define SENSOR_EQU_SIDE_MASK	(1<<7)
-#define SENSOR_VOL_SIDE_MASK	(1<<6)
-#define MOTOR_FAULT_MASK		(1<<5)
-#define MOTOR_DIRECTION_MAKS	(1<<4)
-#define MOTOR_STEP_MASK			(1<<3)
-#define MOTOR_NOT_SLEEP_MASK	(1<<2)
-//#define MUX_SELECT_MASK		(1<<1)
-//#define INTERRUP_REQUEST_MASK	(1<<0)*/
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0
 
@@ -29,22 +21,23 @@ typedef struct {
 } MotorParameters;
 
 	
-class StepperOpto:private MCP23008
+class StepperOptoPowerOFF:private MCP23008
 {
 public:
-	StepperOpto();
-	~StepperOpto();
+	StepperOptoPowerOFF();
+	~StepperOptoPowerOFF();
 	
 	//esp_err_t enableESP32InterruptNotification();
 	//esp_err_t disableESP32InterruptNotification();
 	
-	//esp_err_t enableMuxSelect();		//TODO: nie wiem czy w ostatecznej wersji hardware będzie to wykorzystywane, zależy od sposobu w jaki rozwiąże przełączanie I2S
+	//esp_err_t ;		//TODO: nie wiem czy w ostatecznej wersji hardware będzie to wykorzystywane, zależy od sposobu w jaki rozwiąże przełączanie I2S
 	//esp_err_t disableMuxSelect();		//TODO: nie wiem czy w ostatecznej wersji hardware będzie to wykorzystywane, zależy od sposobu w jaki rozwiąże przełączanie I2S
 	
 
 	//esp_err_t measureSliderRange();
 	
-	void measureSliderRange();
+	void radioPowerOFF(void);
+	void measureSliderRange(void);
 	void moveXSteps(int32_t stepAmount);
 	void moveTo_xPosition(uint16_t xPosition);
 	void moveTo_xPercent(float xPercent);

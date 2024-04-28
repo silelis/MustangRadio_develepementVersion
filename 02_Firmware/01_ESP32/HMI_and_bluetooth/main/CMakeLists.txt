@@ -7,6 +7,6 @@ idf_component_register(
                     	Leds/Leds_backlight.cpp
                     	tasksFunctions/tasksFunctions.cpp
                     	NVSeeprom/NVSeeprom.cpp
-                    	StepperOpto/StepperOpto.cpp
+                    	StepperOptoPowerOFF/StepperOptoPowerOFF.cpp
                     	a2dpSikn/a2dp_sink_demo.cpp
                     INCLUDE_DIRS ".")

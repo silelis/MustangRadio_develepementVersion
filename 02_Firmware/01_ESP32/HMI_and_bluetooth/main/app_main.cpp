@@ -20,10 +20,10 @@
 #include "driver/gptimer.h"
 #include "esp_log.h"
 #include "keyboard/keyboard.h"
-#include "Leds/Leds_backlight.h"
-#include "StepperOpto/StepperOpto.h"
+//#include "Leds/Leds_backlight.h"
+//#include "StepperOpto/StepperOptoPowerOFF.h"
 #include "tasksFunctions/tasksFunctions.h"
-#include "NVSeeprom/NVSeeprom.h"
+//#include "NVSeeprom/NVSeeprom.h"
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
 
 
@@ -58,12 +58,6 @@ extern "C" void app_main(void)
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
-//	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
-//	printf("%s: Backlight and display leds init\n", main_TAG);
-//	LEDS_BACKLIGHT *ledDisplay = NULL;
-//	assert(ledDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
-//	ledDisplay->ledStripClearAll();
-	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s: Display leds task starting\n", main_TAG);
 	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
@@ -93,8 +87,6 @@ extern "C" void app_main(void)
 	btstack_init();
 	btstack_main(0, NULL);
 	btstack_run_loop_execute();
-	
-	
 	
 	while (true)
 	{
