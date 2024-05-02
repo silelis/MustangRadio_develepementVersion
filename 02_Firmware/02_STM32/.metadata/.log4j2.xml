@@ -2,7 +2,7 @@
 <Configuration status="info">
     <ThresholdFilter level="INFO"/>
     <Appenders>
-        <RollingFile name="DEBUGFILE" fileName="D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/02 STM32/.metadata/.ide.log" filePattern="D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/02 STM32/.metadata/.ide.log-%d{yyyy-MM-dd}.log">
+        <RollingFile name="DEBUGFILE" fileName="D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/02_STM32/.metadata/.ide.log" filePattern="D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/02_STM32/.metadata/.ide.log-%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} [%p] %c{1}:%L - %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
