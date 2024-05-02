@@ -1,10 +1,29 @@
-17:07:07 **** Incremental Build of configuration Debug for project qspi_test ****
+20:39:27 **** Incremental Build of configuration Debug for project qspi_test ****
 make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:99:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   99 |   printf("Hello world!!!\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:24:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   23 | #include "gpio.h"
+  +++ |+#include <stdio.h>
+   24 | 
+../Core/Src/main.c:99:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+   99 |   printf("Hello world!!!\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:99:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+arm-none-eabi-g++ -o "qspi_test.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\qspi_test\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="qspi_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: qspi_test.elf
+ 
 arm-none-eabi-size  qspi_test.elf 
+arm-none-eabi-objdump -h -S qspi_test.elf  > "qspi_test.list"
    text	   data	    bss	    dec	    hex	filename
-  29640	    108	   2148	  31896	   7c98	qspi_test.elf
+  28144	    108	   2148	  30400	   76c0	qspi_test.elf
 Finished building: default.size.stdout
  
+Finished building: qspi_test.list
+ 
 
-17:07:08 Build Finished. 0 errors, 0 warnings. (took 301ms)
+20:39:29 Build Finished. 0 errors, 2 warnings. (took 1s.161ms)
 

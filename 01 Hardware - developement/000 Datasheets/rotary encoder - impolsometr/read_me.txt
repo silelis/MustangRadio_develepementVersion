@@ -1,0 +1,1 @@
+http://www.hobbytronics.co.uk/rotary-encoder-tutorial
