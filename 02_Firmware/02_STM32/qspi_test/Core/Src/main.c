@@ -96,7 +96,8 @@ int main(void)
   MX_OCTOSPI2_Init();
   /* USER CODE BEGIN 2 */
 
-  printf("Hello world!!!\n\r");
+  printf("Hello world!!!\r\n");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
