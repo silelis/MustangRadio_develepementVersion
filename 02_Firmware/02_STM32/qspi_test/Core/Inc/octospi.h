@@ -32,13 +32,13 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern OSPI_HandleTypeDef hospi2;
+extern OSPI_HandleTypeDef hospi1;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_OCTOSPI2_Init(void);
+void MX_OCTOSPI1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
