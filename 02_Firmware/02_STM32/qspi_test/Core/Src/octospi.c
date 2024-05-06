@@ -24,54 +24,51 @@
 
 /* USER CODE END 0 */
 
-OSPI_HandleTypeDef hospi2;
+OSPI_HandleTypeDef hospi1;
 
-/* OCTOSPI2 init function */
-void MX_OCTOSPI2_Init(void)
+/* OCTOSPI1 init function */
+void MX_OCTOSPI1_Init(void)
 {
 
-  /* USER CODE BEGIN OCTOSPI2_Init 0 */
+  /* USER CODE BEGIN OCTOSPI1_Init 0 */
 
-  /* USER CODE END OCTOSPI2_Init 0 */
+  /* USER CODE END OCTOSPI1_Init 0 */
 
   OSPIM_CfgTypeDef sOspiManagerCfg = {0};
 
-  /* USER CODE BEGIN OCTOSPI2_Init 1 */
+  /* USER CODE BEGIN OCTOSPI1_Init 1 */
 
-  //hospi2.Init.DeviceSize = 26; //formula is (log(flashsize_MBx1024x1024)-log(2))/log(2)
-
-
-  /* USER CODE END OCTOSPI2_Init 1 */
-  hospi2.Instance = OCTOSPI2;
-  hospi2.Init.FifoThreshold = 4;
-  hospi2.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
-  hospi2.Init.MemoryType = HAL_OSPI_MEMTYPE_MICRON;
-  hospi2.Init.DeviceSize = 26;
-  hospi2.Init.ChipSelectHighTime = 1;
-  hospi2.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
-  hospi2.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
-  hospi2.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
-  hospi2.Init.ClockPrescaler = 1;
-  hospi2.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE;
-  hospi2.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_DISABLE;
-  hospi2.Init.ChipSelectBoundary = 0;
-  hospi2.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_BYPASSED;
-  hospi2.Init.MaxTran = 0;
-  hospi2.Init.Refresh = 0;
-  if (HAL_OSPI_Init(&hospi2) != HAL_OK)
+  /* USER CODE END OCTOSPI1_Init 1 */
+  hospi1.Instance = OCTOSPI1;
+  hospi1.Init.FifoThreshold = 4;
+  hospi1.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
+  hospi1.Init.MemoryType = HAL_OSPI_MEMTYPE_MICRON;
+  hospi1.Init.DeviceSize = 26;
+  hospi1.Init.ChipSelectHighTime = 1;
+  hospi1.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
+  hospi1.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
+  hospi1.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
+  hospi1.Init.ClockPrescaler = 1;
+  hospi1.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE;
+  hospi1.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_DISABLE;
+  hospi1.Init.ChipSelectBoundary = 0;
+  hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_BYPASSED;
+  hospi1.Init.MaxTran = 0;
+  hospi1.Init.Refresh = 0;
+  if (HAL_OSPI_Init(&hospi1) != HAL_OK)
   {
     Error_Handler();
   }
   sOspiManagerCfg.ClkPort = 1;
   sOspiManagerCfg.NCSPort = 1;
   sOspiManagerCfg.IOLowPort = HAL_OSPIM_IOPORT_1_LOW;
-  if (HAL_OSPIM_Config(&hospi2, &sOspiManagerCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_OSPIM_Config(&hospi1, &sOspiManagerCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN OCTOSPI2_Init 2 */
+  /* USER CODE BEGIN OCTOSPI1_Init 2 */
 
-  /* USER CODE END OCTOSPI2_Init 2 */
+  /* USER CODE END OCTOSPI1_Init 2 */
 
 }
 
@@ -80,11 +77,11 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* ospiHandle)
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if(ospiHandle->Instance==OCTOSPI2)
+  if(ospiHandle->Instance==OCTOSPI1)
   {
-  /* USER CODE BEGIN OCTOSPI2_MspInit 0 */
+  /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
 
-  /* USER CODE END OCTOSPI2_MspInit 0 */
+  /* USER CODE END OCTOSPI1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -95,14 +92,14 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* ospiHandle)
       Error_Handler();
     }
 
-    /* OCTOSPI2 clock enable */
+    /* OCTOSPI1 clock enable */
     __HAL_RCC_OCTOSPIM_CLK_ENABLE();
-    __HAL_RCC_OSPI2_CLK_ENABLE();
+    __HAL_RCC_OSPI1_CLK_ENABLE();
 
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**OCTOSPI2 GPIO Configuration
+    /**OCTOSPI1 GPIO Configuration
     PC2     ------> OCTOSPIM_P1_IO2
     PC3     ------> OCTOSPIM_P1_IO0
     PA1     ------> OCTOSPIM_P1_IO3
@@ -145,25 +142,25 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* ospiHandle)
     GPIO_InitStruct.Alternate = GPIO_AF9_OCTOSPIM_P1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN OCTOSPI2_MspInit 1 */
+  /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
-  /* USER CODE END OCTOSPI2_MspInit 1 */
+  /* USER CODE END OCTOSPI1_MspInit 1 */
   }
 }
 
 void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* ospiHandle)
 {
 
-  if(ospiHandle->Instance==OCTOSPI2)
+  if(ospiHandle->Instance==OCTOSPI1)
   {
-  /* USER CODE BEGIN OCTOSPI2_MspDeInit 0 */
+  /* USER CODE BEGIN OCTOSPI1_MspDeInit 0 */
 
-  /* USER CODE END OCTOSPI2_MspDeInit 0 */
+  /* USER CODE END OCTOSPI1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_OCTOSPIM_CLK_DISABLE();
-    __HAL_RCC_OSPI2_CLK_DISABLE();
+    __HAL_RCC_OSPI1_CLK_DISABLE();
 
-    /**OCTOSPI2 GPIO Configuration
+    /**OCTOSPI1 GPIO Configuration
     PC2     ------> OCTOSPIM_P1_IO2
     PC3     ------> OCTOSPIM_P1_IO0
     PA1     ------> OCTOSPIM_P1_IO3
@@ -177,9 +174,9 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* ospiHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_10);
 
-  /* USER CODE BEGIN OCTOSPI2_MspDeInit 1 */
+  /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
 
-  /* USER CODE END OCTOSPI2_MspDeInit 1 */
+  /* USER CODE END OCTOSPI1_MspDeInit 1 */
   }
 }
 
