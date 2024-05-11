@@ -1,0 +1,76 @@
+/*
+ * w25xx.c
+ *
+ *  Created on: May 11, 2024
+ *      Author: dbank
+ */
+
+#include "main.h"
+#include "w25qxx.h"
+#include "octospi.h"
+#include <stdio.h>
+#include <string.h>
+
+static void sCommandInit(OSPI_RegularCmdTypeDef* psCommand){
+	OSPI_RegularCmdTypeDef sCommand={0};
+	/* Common Commands*/
+	sCommand.OperationType      		= HAL_OSPI_OPTYPE_COMMON_CFG; 				/* Common configuration (indirect or auto-polling mode) */
+	sCommand.FlashId            		= HAL_OSPI_FLASH_ID_1; 						/* Set The OCTO SPI Flash ID */
+	sCommand.InstructionDtrMode 		= HAL_OSPI_INSTRUCTION_DTR_DISABLE; 		/* Disable Instruction DDR/DTR Mode */
+	sCommand.AddressDtrMode     		= HAL_OSPI_ADDRESS_DTR_DISABLE; 			/* Disable Address DDR/DTR Mode */
+	sCommand.DataDtrMode				= HAL_OSPI_DATA_DTR_DISABLE; 				/* Disable Data DDR/DTR Mode */
+	sCommand.DQSMode            		= HAL_OSPI_DQS_DISABLE; 					/* Disable Data Strobe */
+	sCommand.SIOOMode          			= HAL_OSPI_SIOO_INST_EVERY_CMD; 			/* SIOO Mode: Send instruction on every transaction */
+	sCommand.AlternateBytesMode 		= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Disable Alternate Bytes Mode */
+	sCommand.AlternateBytes				= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Alternate Bytes = 0 */
+	sCommand.AlternateBytesSize			= HAL_OSPI_ALTERNATE_BYTES_NONE; 			/* Alternate Bytes Size = 0 */
+	sCommand.AlternateBytesDtrMode		= HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE; 	/* Disable Alternate Bytes DDR/DTR Mode */
+	sCommand.InstructionMode   			= HAL_OSPI_INSTRUCTION_1_LINE;				/* Instruction on a single line */
+	sCommand.InstructionSize    		= HAL_OSPI_INSTRUCTION_8_BITS;				/* 8-bit Instruction */
+	sCommand.AddressSize 				= HAL_OSPI_ADDRESS_SIZE;					/* 24-bit Address */
+	/* Instruction */
+	sCommand.Instruction 				= 0;						/* What We Do? */
+	/* Address */
+	sCommand.AddressMode       			= HAL_OSPI_ADDRESS_NONE;					/* Define Address Lines: No Address */
+	sCommand.Address					= 0;										/* Byte Address */
+	/* Data */
+	sCommand.DataMode          			= HAL_OSPI_DATA_NONE;						/* Define Data Lines: No Data */
+	sCommand.DummyCycles       			= 0;										/* Bytes Send With No Data */
+	sCommand.NbData            			= 0;										/* Bytes Send With Data */
+	memcpy(psCommand, &sCommand, sizeof(OSPI_RegularCmdTypeDef));
+}
+
+HAL_StatusTypeDef QSPI_ResetChip(OSPI_HandleTypeDef* hospi){
+	OSPI_RegularCmdTypeDef sCommand={0};
+    /* Enable Reset --------------------------- */
+	/* Common Commands*/
+	sCommandInit(&sCommand);
+	sCommand.OperationType      		= HAL_OSPI_OPTYPE_COMMON_CFG; 				/* Common configuration (indirect or auto-polling mode) */
+	sCommand.Instruction 				= RESET_ENABLE_CMD;							/* What We Do? */
+	sCommand.AddressMode       			= HAL_OSPI_ADDRESS_NONE;					/* Define Address Lines: No Address */
+	sCommand.Address					= 0;										/* Byte Address */
+	sCommand.DummyCycles       			= 0;										/* Bytes Send With No Data */
+	sCommand.NbData            			= 0;										/* Bytes Send With Data */
+    if (HAL_OSPI_Command(hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+        return HAL_ERROR;
+    }
+
+	/* Reset Device --------------------------- */
+	/* Common Commands*/
+    sCommandInit(&sCommand);
+	sCommand.OperationType      		= HAL_OSPI_OPTYPE_COMMON_CFG; 				/* Common configuration (indirect or auto-polling mode) */
+	sCommand.Instruction 				= RESET_EXECUTE_CMD;							/* What We Do? */
+	sCommand.Address					= 0;										/* Byte Address */
+	sCommand.DummyCycles       			= 0;										/* Bytes Send With No Data */
+	sCommand.NbData            			= 0;										/* Bytes Send With Data */
+
+    if (HAL_OSPI_Command(hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+        return HAL_ERROR;
+    }
+
+	for (uint32_t temp = 0; temp < 4*500000; temp++) {
+		__NOP();
+	}
+
+	return HAL_OK;
+}
