@@ -57,6 +57,15 @@ static void MPU_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/*W25Q32 memory parameters*/
+
+
+
+
+
+HAL_StatusTypeDef QSPI_Erase_Chip(OSPI_HandleTypeDef* hospi);
+HAL_StatusTypeDef QSPI_WriteEnable(OSPI_HandleTypeDef* hospi);
+
 uint8_t writebuf[] = "Hello world from QSPI";
 uint8_t Readbuf[100];
 
@@ -76,206 +85,7 @@ uint8_t Readbuf[100];
 */
 /**************************************************************************/
 
-#define hospi	hospi1
-void Set_OSPI_MemoryMappedMode(void)
-{
-    OSPI_RegularCmdTypeDef sCommand = {0};
-    OSPI_MemoryMappedTypeDef sMemMappedCfg = {0};
-    uint8_t reg_data =0;
 
-    /* Initialize OCTO-SPI I/O */
-    //OSPI_IoInit_If();
-
-    /* Initialize OCTO-SPI */
-    hospi.Instance                      = OCTOSPI1;
-    hospi.Init.FifoThreshold            = 1;
-    hospi.Init.DualQuad                 = HAL_OSPI_DUALQUAD_DISABLE;
-    hospi.Init.MemoryType               = HAL_OSPI_MEMTYPE_MICRON;
-    hospi.Init.DeviceSize               = 24;   /* 128Mbit=16MByte=2^24 W25Q128JVSIQ */
-    hospi.Init.ChipSelectHighTime       = 2;    /* 2ClockCycle(18nSec@110MHz) Need for W25Q128JVSIQ >10nSec@read */
-    hospi.Init.FreeRunningClock         = HAL_OSPI_FREERUNCLK_DISABLE;
-    hospi.Init.ClockMode                = HAL_OSPI_CLOCK_MODE_0;
-    hospi.Init.WrapSize                 = HAL_OSPI_WRAP_NOT_SUPPORTED;
-    hospi.Init.ClockPrescaler           = 2;    /* 110MHzMAX/2 = 55MHz(MAX OSPI-CLK:90MHz) */
-    hospi.Init.SampleShifting           = HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE;
-    hospi.Init.DelayHoldQuarterCycle    = HAL_OSPI_DHQC_DISABLE;
-    hospi.Init.ChipSelectBoundary       = 0;
-    hospi.Init.DelayBlockBypass         = HAL_OSPI_DELAY_BLOCK_BYPASSED;
-    hospi.Init.Refresh                  = 0;
-    if (HAL_OSPI_Init(&hospi) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Enable Reset --------------------------- */
-    /* Common Commands */
-    sCommand.OperationType              = HAL_OSPI_OPTYPE_COMMON_CFG;
-    sCommand.FlashId                    = HAL_OSPI_FLASH_ID_1;
-    sCommand.InstructionDtrMode         = HAL_OSPI_INSTRUCTION_DTR_DISABLE;
-    sCommand.AddressDtrMode             = HAL_OSPI_ADDRESS_DTR_DISABLE;
-    sCommand.DataDtrMode                = HAL_OSPI_DATA_DTR_DISABLE;
-    sCommand.DQSMode                    = HAL_OSPI_DQS_DISABLE;
-    sCommand.SIOOMode                   = HAL_OSPI_SIOO_INST_EVERY_CMD;
-    sCommand.AlternateBytesMode         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytes             = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesSize         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesDtrMode      = HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE;
-    sCommand.InstructionMode            = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.InstructionSize            = HAL_OSPI_INSTRUCTION_8_BITS;
-    sCommand.AddressSize                = HAL_OSPI_ADDRESS_24_BITS;
-    /* Instruction */
-    sCommand.Instruction                = 0x66; /* Reset Enable W25Q128JVSIQ */
-    /* Address */
-    sCommand.AddressMode                = HAL_OSPI_ADDRESS_NONE;
-    sCommand.Address                    = 0;
-    /* Data */
-    sCommand.DataMode                   = HAL_OSPI_DATA_NONE;
-    sCommand.DummyCycles                = 0;
-    sCommand.NbData                     = 0;
-
-    if (HAL_OSPI_Command(&hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Reset Device --------------------------- */
-    /* Common Commands */
-    sCommand.OperationType              = HAL_OSPI_OPTYPE_COMMON_CFG;
-    sCommand.FlashId                    = HAL_OSPI_FLASH_ID_1;
-    sCommand.InstructionDtrMode         = HAL_OSPI_INSTRUCTION_DTR_DISABLE;
-    sCommand.AddressDtrMode             = HAL_OSPI_ADDRESS_DTR_DISABLE;
-    sCommand.DataDtrMode                = HAL_OSPI_DATA_DTR_DISABLE;
-    sCommand.DQSMode                    = HAL_OSPI_DQS_DISABLE;
-    sCommand.SIOOMode                   = HAL_OSPI_SIOO_INST_EVERY_CMD;
-    sCommand.AlternateBytesMode         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytes             = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesSize         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesDtrMode      = HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE;
-    sCommand.InstructionMode            = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.InstructionSize            = HAL_OSPI_INSTRUCTION_8_BITS;
-    sCommand.AddressSize                = HAL_OSPI_ADDRESS_24_BITS;
-    /* Instruction */
-    sCommand.Instruction                = 0x99; /* Reset W25Q128JVSIQ */
-    /* Address */
-    sCommand.AddressMode                = HAL_OSPI_ADDRESS_NONE;
-    sCommand.Address                    = 0;
-    /* Data */
-    sCommand.DataMode                   = HAL_OSPI_DATA_NONE;
-    sCommand.DummyCycles                = 0;
-    sCommand.NbData                     = 0;
-
-    if (HAL_OSPI_Command(&hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Enter Quad-SPI Mode --------------------------- */
-    /* Common Commands */
-    sCommand.OperationType              = HAL_OSPI_OPTYPE_COMMON_CFG;
-    sCommand.FlashId                    = HAL_OSPI_FLASH_ID_1;
-    sCommand.InstructionDtrMode         = HAL_OSPI_INSTRUCTION_DTR_DISABLE;
-    sCommand.AddressDtrMode             = HAL_OSPI_ADDRESS_DTR_DISABLE;
-    sCommand.DataDtrMode                = HAL_OSPI_DATA_DTR_DISABLE;
-    sCommand.DQSMode                    = HAL_OSPI_DQS_DISABLE;
-    sCommand.SIOOMode                   = HAL_OSPI_SIOO_INST_EVERY_CMD;
-    sCommand.AlternateBytesMode         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytes             = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesSize         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesDtrMode      = HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE;
-    sCommand.InstructionMode            = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.InstructionSize            = HAL_OSPI_INSTRUCTION_8_BITS;
-    sCommand.AddressSize                = HAL_OSPI_ADDRESS_24_BITS;
-    /* Instruction */
-    sCommand.Instruction                = 0x31; /* Set Status2 W25Q128JVSIQ */
-    /* Address */
-    sCommand.AddressMode                = HAL_OSPI_ADDRESS_NONE;
-    sCommand.Address                    = 0;
-    /* Data */
-    sCommand.DataMode                   = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.DummyCycles                = 0;
-    sCommand.NbData                     = 1;
-    reg_data                            = 0x02; /* Enable QuadI/O Mode */
-
-    if (HAL_OSPI_Command(&hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    if (HAL_OSPI_Transmit(&hospi, &reg_data, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Enter MemoryMappedMode --------------------------- */
-    /* Read Commands */
-    sCommand.OperationType              = HAL_OSPI_OPTYPE_READ_CFG;
-    sCommand.FlashId                    = HAL_OSPI_FLASH_ID_1;
-    sCommand.InstructionDtrMode         = HAL_OSPI_INSTRUCTION_DTR_DISABLE;
-    sCommand.AddressDtrMode             = HAL_OSPI_ADDRESS_DTR_DISABLE;
-    sCommand.DataDtrMode                = HAL_OSPI_DATA_DTR_DISABLE;
-    sCommand.DQSMode                    = HAL_OSPI_DQS_DISABLE;
-    sCommand.SIOOMode                   = HAL_OSPI_SIOO_INST_EVERY_CMD;
-    sCommand.AlternateBytesMode         = HAL_OSPI_ALTERNATE_BYTES_4_LINES;
-    sCommand.AlternateBytes             = 0xFF; /* Need for Fast Read QUAD W25Q128JVSIQ */
-    sCommand.AlternateBytesSize         = HAL_OSPI_ALTERNATE_BYTES_8_BITS;
-    sCommand.AlternateBytesDtrMode      = HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE;
-    sCommand.InstructionMode            = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.InstructionSize            = HAL_OSPI_INSTRUCTION_8_BITS;
-    sCommand.AddressSize                = HAL_OSPI_ADDRESS_24_BITS;
-    /* Instruction */
-    sCommand.Instruction                = 0xEB; /* Fast Read QUAD W25Q128JVSIQ */
-    /* Address */
-    sCommand.AddressMode                = HAL_OSPI_ADDRESS_4_LINES;
-    sCommand.Address                    = 0;
-    /* Data */
-    sCommand.DataMode                   = HAL_OSPI_DATA_4_LINES;
-    sCommand.DummyCycles                = 4;    /* DUMMY 4Cycle for Fast Read QUAD W25Q128JVSIQ */
-    sCommand.NbData                     = 0;
-
-    if(HAL_OSPI_Command(&hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Write Commands */
-    sCommand.OperationType              = HAL_OSPI_OPTYPE_WRITE_CFG;
-    sCommand.FlashId                    = HAL_OSPI_FLASH_ID_1;
-    sCommand.InstructionDtrMode         = HAL_OSPI_INSTRUCTION_DTR_DISABLE;
-    sCommand.AddressDtrMode             = HAL_OSPI_ADDRESS_DTR_DISABLE;
-    sCommand.DataDtrMode                = HAL_OSPI_DATA_DTR_DISABLE;
-    sCommand.DQSMode                    = HAL_OSPI_DQS_DISABLE;
-    sCommand.SIOOMode                   = HAL_OSPI_SIOO_INST_EVERY_CMD;
-    sCommand.AlternateBytesMode         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytes             = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesSize         = HAL_OSPI_ALTERNATE_BYTES_NONE;
-    sCommand.AlternateBytesDtrMode      = HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE;
-    sCommand.InstructionMode            = HAL_OSPI_INSTRUCTION_1_LINE;
-    sCommand.InstructionSize            = HAL_OSPI_INSTRUCTION_8_BITS;
-    sCommand.AddressSize                = HAL_OSPI_ADDRESS_24_BITS;
-    /* Instruction */
-    sCommand.Instruction                = 0x32; /* Page Write QUAD W25Q128JVSIQ */
-    /* Address */
-    sCommand.AddressMode                = HAL_OSPI_ADDRESS_1_LINE;
-    sCommand.Address                    = 0;
-    /* Data */
-    sCommand.DataMode                   = HAL_OSPI_DATA_4_LINES;
-    sCommand.DummyCycles                = 0;
-    sCommand.NbData                     = 0;
-
-    if(HAL_OSPI_Command(&hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-    {
-        for(;;);
-    }
-
-    /* Set OCTO-SPI as MemoryMappedMode */
-    sMemMappedCfg.TimeOutActivation = HAL_OSPI_TIMEOUT_COUNTER_DISABLE;
-    sMemMappedCfg.TimeOutPeriod     = 0;
-    if(HAL_OSPI_MemoryMapped(&hospi, &sMemMappedCfg) != HAL_OK)
-    {
-        for(;;);
-    }
-
-}
 /* USER CODE END 0 */
 
 /**
@@ -317,20 +127,13 @@ int main(void)
 
 
   HAL_StatusTypeDef retVal;
-  //retVal = W25Q128_OCTO_SPI_Init(&hospi1);
-
   printf("Erease\r\n");
-  //W25Q128_OSPI_Erase_Chip(&hospi1);
   printf("Hello world!!!\r\n");
 
-  retVal = W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
-  //Set_OSPI_MemoryMappedMode();
+  retVal = QSPI_ResetChip(&hospi1);
+  //retVal = QSPI_WriteEnable(&hospi1);
+  //retVal = QSPI_Erase_Chip(&hospi1);
 
-  HAL_Delay(1500);
-  uint8_t *map;
-  map = 0x90000000;
-
-  memcpy(Readbuf, map, 22);
  // printf("%s\r\n", map[0]);
 
   /* USER CODE END 2 */
@@ -364,7 +167,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
@@ -377,7 +180,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 15;
+  RCC_OscInitStruct.PLL.PLLN = 10;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
@@ -409,6 +212,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+
+
+
+
+
+
+
 
 /* USER CODE END 4 */
 

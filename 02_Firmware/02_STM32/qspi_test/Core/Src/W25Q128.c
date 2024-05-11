@@ -5,11 +5,11 @@
 /* OCTO SPI Initial Function */
 HAL_StatusTypeDef W25Q128_OCTO_SPI_Init(OSPI_HandleTypeDef* hospi)
 {
-//	if (HAL_OSPI_DeInit(hospi) != HAL_OK) {
-//	    return HAL_ERROR;
-//	}
+	if (HAL_OSPI_DeInit(hospi) != HAL_OK) {
+	    return HAL_ERROR;
+	}
 
-//	MX_OCTOSPI1_Init();
+	MX_OCTOSPI1_Init();
 
 	if (W25Q128_OSPI_ResetChip(hospi) != HAL_OK) {
 	    return HAL_ERROR;
@@ -490,7 +490,7 @@ HAL_StatusTypeDef W25Q128_OSPI_Read(OSPI_HandleTypeDef* hospi,uint8_t* pData, ui
   sCommand.Address					= ReadAddr;									/* Byte Address */
   /* Data */
   sCommand.DataMode          		= HAL_OSPI_DATA_4_LINES;					/* Define Data Lines: Data On Four Lines */
-  sCommand.DummyCycles       		= W25Q_DUMMY_CYCLES_READ_QUAD;				/* Bytes Send With No Data */
+  sCommand.DummyCycles       		= W25Q_DUMMY_CYCLES_READ_QUAD;										/* Bytes Send With No Data */
   sCommand.NbData            		= Size;										/* Bytes Send With Data */
 
   /* Configure the command */
@@ -571,9 +571,9 @@ HAL_StatusTypeDef W25Q128_OSPI_EnableMemoryMappedMode(OSPI_HandleTypeDef* hospi)
     sCommand.DummyCycles       		= 0;										/* Bytes Send With No Data */
     sCommand.NbData            		= 0;										/* Bytes Send With Data */
 
-   if (HAL_OSPI_Command(hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
-       return HAL_ERROR;
-   }
+    if (HAL_OSPI_Command(hospi, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+        return HAL_ERROR;
+    }
 
     /* Initialize Memory Mapped Command */
     sMemMappedCfg.TimeOutActivation 	= HAL_OSPI_TIMEOUT_COUNTER_DISABLE;		/* Timeout counter disabled, nCS remains active */
