@@ -63,9 +63,6 @@ static void MPU_Config(void);
 
 
 
-HAL_StatusTypeDef QSPI_Erase_Chip(OSPI_HandleTypeDef* hospi);
-HAL_StatusTypeDef QSPI_WriteEnable(OSPI_HandleTypeDef* hospi);
-
 uint8_t writebuf[] = "Hello world from QSPI";
 uint8_t Readbuf[100];
 
@@ -126,13 +123,21 @@ int main(void)
 
 
 
-  HAL_StatusTypeDef retVal;
-  printf("Erease\r\n");
+  HAL_StatusTypeDef ret;
+  uint8_t rxbuf[100];
+  uint8_t txbuf[] = "TEST";
+  ret=W25Q128_OCTO_SPI_Init(&hospi1);
+
+  //ret=W25Q128_OSPI_Erase_Chip(&hospi1);
+  //ret=W25Q128_OSPI_Write(&hospi1,txbuf,0,sizeof(txbuf));
+  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
+  ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
+  HAL_Delay(1000);
+
+  memcpy(rxbuf, 0x90000000, 50);
   printf("Hello world!!!\r\n");
 
-  retVal = QSPI_ResetChip(&hospi1);
-  //retVal = QSPI_WriteEnable(&hospi1);
-  //retVal = QSPI_Erase_Chip(&hospi1);
+
 
  // printf("%s\r\n", map[0]);
 

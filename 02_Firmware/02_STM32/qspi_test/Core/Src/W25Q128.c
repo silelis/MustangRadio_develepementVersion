@@ -508,14 +508,14 @@ HAL_StatusTypeDef W25Q128_OSPI_Read(OSPI_HandleTypeDef* hospi,uint8_t* pData, ui
   return HAL_OK;
 }
 
-/* Memory Map Enable Function */
+/* Memory Map Enable Function while external loader operates*/
 HAL_StatusTypeDef W25Q128_OSPI_EnableMemoryMappedMode(OSPI_HandleTypeDef* hospi)
 {
 
     OSPI_RegularCmdTypeDef sCommand={0};
     OSPI_MemoryMappedTypeDef sMemMappedCfg={0};
 
-    /* Enable Memory-Mapped mode-------------------------------------------------- */
+    /* Enable Memory-Mapped mode while external loader operates--------------------------------------------- */
 	/* Common Commands*/
     sCommand.OperationType      	= HAL_OSPI_OPTYPE_READ_CFG; 				/* Read Configuration (Memory-Mapped Mode) */
     sCommand.FlashId            	= HAL_OSPI_FLASH_ID_1; 						/* Set The OCTO SPI Flash ID */
@@ -723,5 +723,42 @@ HAL_StatusTypeDef W25Q128_Write_Status_Registers(OSPI_HandleTypeDef* hospi, uint
         return HAL_ERROR;
     }
 
+	return HAL_OK;
+}
+
+/* Enable Memory-Mapped mode - map external flash as internal while mcu firmware operates*/
+HAL_StatusTypeDef W25Q128_OSPI_EnableMemoryMappedModeFlashAsInternal(OSPI_HandleTypeDef* hospi1){
+
+	OSPI_RegularCmdTypeDef sCommand;
+	OSPI_MemoryMappedTypeDef sMemMappedCfg;
+
+	/* Enable Memory-Mapped mode - map external flash as internal while mcu firmware operates----------------------- */
+
+	sCommand.InstructionMode = HAL_OSPI_INSTRUCTION_1_LINE;
+	sCommand.Instruction = 0xEB;
+	sCommand.AddressSize = HAL_OSPI_ADDRESS_24_BITS;
+	sCommand.AddressMode = HAL_OSPI_ADDRESS_4_LINES;
+	sCommand.Address = 0;
+	sCommand.AlternateBytesMode = HAL_OSPI_ALTERNATE_BYTES_4_LINES;
+	sCommand.AlternateBytes = 0xFF;
+	sCommand.AlternateBytesSize = 1;
+	sCommand.DataDtrMode/*DdrMode*/ = HAL_OSPI_DATA_DTR_DISABLE;
+	sCommand.InstructionDtrMode/*DdrHoldHalfCycle*/ = HAL_OSPI_INSTRUCTION_DTR_ENABLE;/*QSPI_DDR_HHC_ANALOG_DELAY;*/
+	sCommand.SIOOMode = HAL_OSPI_SIOO_INST_EVERY_CMD;
+	sCommand.DataMode = HAL_OSPI_DATA_4_LINES;
+	sCommand.NbData = 0;
+	sCommand.DummyCycles = 4;
+
+    if (HAL_OSPI_Command(hospi1, &sCommand, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+        return HAL_ERROR;
+    }
+
+	sMemMappedCfg.TimeOutActivation = HAL_OSPI_TIMEOUT_COUNTER_DISABLE;
+	sMemMappedCfg.TimeOutPeriod = 0;
+
+	if (HAL_OSPI_MemoryMapped(hospi1, &sMemMappedCfg) != HAL_OK) {
+		return HAL_ERROR;
+	}
+	HAL_Delay(100);
 	return HAL_OK;
 }
