@@ -1,6 +1,7 @@
-23:03:09 **** Incremental Build of configuration Debug for project qspi_test ****
+10:25:03 **** Incremental Build of configuration Debug for project qspi_test ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/octospi.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/octospi.d" -MT"Core/Src/octospi.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/octospi.o"
 ../Core/Src/main.c: In function 'main':
 ../Core/Src/main.c:129:7: warning: implicit declaration of function 'W25Q128_OCTO_SPI_Init' [-Wimplicit-function-declaration]
   129 |   ret=W25Q128_OCTO_SPI_Init(&hospi1);
@@ -57,5 +58,5 @@ Finished building: default.size.stdout
 Finished building: qspi_test.list
  
 
-23:03:10 Build Finished. 0 errors, 10 warnings. (took 1s.160ms)
+10:25:05 Build Finished. 0 errors, 10 warnings. (took 1s.903ms)
 

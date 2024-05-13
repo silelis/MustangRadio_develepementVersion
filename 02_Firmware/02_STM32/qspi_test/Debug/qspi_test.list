@@ -1973,13 +1973,13 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
  8000ee8:	2300      	movs	r3, #0
  8000eea:	603b      	str	r3, [r7, #0]
  8000eec:	4b2c      	ldr	r3, [pc, #176]	@ (8000fa0 <SystemClock_Config+0xe8>)
  8000eee:	699b      	ldr	r3, [r3, #24]
  8000ef0:	4a2b      	ldr	r2, [pc, #172]	@ (8000fa0 <SystemClock_Config+0xe8>)
- 8000ef2:	f423 4340 	bic.w	r3, r3, #49152	@ 0xc000
+ 8000ef2:	f443 4340 	orr.w	r3, r3, #49152	@ 0xc000
  8000ef6:	6193      	str	r3, [r2, #24]
  8000ef8:	4b29      	ldr	r3, [pc, #164]	@ (8000fa0 <SystemClock_Config+0xe8>)
  8000efa:	699b      	ldr	r3, [r3, #24]
@@ -2016,8 +2016,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 4;
  8000f28:	2304      	movs	r3, #4
  8000f2a:	653b      	str	r3, [r7, #80]	@ 0x50
-  RCC_OscInitStruct.PLL.PLLN = 10;
- 8000f2c:	230a      	movs	r3, #10
+  RCC_OscInitStruct.PLL.PLLN = 31;
+ 8000f2c:	231f      	movs	r3, #31
  8000f2e:	657b      	str	r3, [r7, #84]	@ 0x54
   RCC_OscInitStruct.PLL.PLLP = 2;
  8000f30:	2302      	movs	r3, #2
@@ -2034,68 +2034,67 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
  8000f40:	2300      	movs	r3, #0
  8000f42:	66bb      	str	r3, [r7, #104]	@ 0x68
-  RCC_OscInitStruct.PLL.PLLFRACN = 0;
- 8000f44:	2300      	movs	r3, #0
- 8000f46:	66fb      	str	r3, [r7, #108]	@ 0x6c
+  RCC_OscInitStruct.PLL.PLLFRACN = 2048;
+ 8000f44:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+ 8000f48:	66fb      	str	r3, [r7, #108]	@ 0x6c
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
- 8000f48:	f107 0324 	add.w	r3, r7, #36	@ 0x24
- 8000f4c:	4618      	mov	r0, r3
- 8000f4e:	f002 fbf9 	bl	8003744 <HAL_RCC_OscConfig>
- 8000f52:	4603      	mov	r3, r0
- 8000f54:	2b00      	cmp	r3, #0
- 8000f56:	d001      	beq.n	8000f5c <SystemClock_Config+0xa4>
+ 8000f4a:	f107 0324 	add.w	r3, r7, #36	@ 0x24
+ 8000f4e:	4618      	mov	r0, r3
+ 8000f50:	f002 fbf8 	bl	8003744 <HAL_RCC_OscConfig>
+ 8000f54:	4603      	mov	r3, r0
+ 8000f56:	2b00      	cmp	r3, #0
+ 8000f58:	d001      	beq.n	8000f5e <SystemClock_Config+0xa6>
   {
     Error_Handler();
- 8000f58:	f000 f850 	bl	8000ffc <Error_Handler>
+ 8000f5a:	f000 f84f 	bl	8000ffc <Error_Handler>
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
- 8000f5c:	233f      	movs	r3, #63	@ 0x3f
- 8000f5e:	607b      	str	r3, [r7, #4]
+ 8000f5e:	233f      	movs	r3, #63	@ 0x3f
+ 8000f60:	607b      	str	r3, [r7, #4]
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
                               |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
- 8000f60:	2303      	movs	r3, #3
- 8000f62:	60bb      	str	r3, [r7, #8]
+ 8000f62:	2303      	movs	r3, #3
+ 8000f64:	60bb      	str	r3, [r7, #8]
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
- 8000f64:	2300      	movs	r3, #0
- 8000f66:	60fb      	str	r3, [r7, #12]
+ 8000f66:	2300      	movs	r3, #0
+ 8000f68:	60fb      	str	r3, [r7, #12]
   RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
- 8000f68:	2300      	movs	r3, #0
- 8000f6a:	613b      	str	r3, [r7, #16]
+ 8000f6a:	2300      	movs	r3, #0
+ 8000f6c:	613b      	str	r3, [r7, #16]
   RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
- 8000f6c:	2340      	movs	r3, #64	@ 0x40
- 8000f6e:	617b      	str	r3, [r7, #20]
+ 8000f6e:	2340      	movs	r3, #64	@ 0x40
+ 8000f70:	617b      	str	r3, [r7, #20]
   RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
- 8000f70:	2340      	movs	r3, #64	@ 0x40
- 8000f72:	61bb      	str	r3, [r7, #24]
+ 8000f72:	2340      	movs	r3, #64	@ 0x40
+ 8000f74:	61bb      	str	r3, [r7, #24]
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
- 8000f74:	f44f 6380 	mov.w	r3, #1024	@ 0x400
- 8000f78:	61fb      	str	r3, [r7, #28]
+ 8000f76:	f44f 6380 	mov.w	r3, #1024	@ 0x400
+ 8000f7a:	61fb      	str	r3, [r7, #28]
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
- 8000f7a:	2340      	movs	r3, #64	@ 0x40
- 8000f7c:	623b      	str	r3, [r7, #32]
+ 8000f7c:	2340      	movs	r3, #64	@ 0x40
+ 8000f7e:	623b      	str	r3, [r7, #32]
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
- 8000f7e:	1d3b      	adds	r3, r7, #4
- 8000f80:	2103      	movs	r1, #3
- 8000f82:	4618      	mov	r0, r3
- 8000f84:	f003 f810 	bl	8003fa8 <HAL_RCC_ClockConfig>
- 8000f88:	4603      	mov	r3, r0
- 8000f8a:	2b00      	cmp	r3, #0
- 8000f8c:	d001      	beq.n	8000f92 <SystemClock_Config+0xda>
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+ 8000f80:	1d3b      	adds	r3, r7, #4
+ 8000f82:	2105      	movs	r1, #5
+ 8000f84:	4618      	mov	r0, r3
+ 8000f86:	f003 f80f 	bl	8003fa8 <HAL_RCC_ClockConfig>
+ 8000f8a:	4603      	mov	r3, r0
+ 8000f8c:	2b00      	cmp	r3, #0
+ 8000f8e:	d001      	beq.n	8000f94 <SystemClock_Config+0xdc>
   {
     Error_Handler();
- 8000f8e:	f000 f835 	bl	8000ffc <Error_Handler>
+ 8000f90:	f000 f834 	bl	8000ffc <Error_Handler>
   }
 }
- 8000f92:	bf00      	nop
- 8000f94:	3770      	adds	r7, #112	@ 0x70
- 8000f96:	46bd      	mov	sp, r7
- 8000f98:	bd80      	pop	{r7, pc}
- 8000f9a:	bf00      	nop
+ 8000f94:	bf00      	nop
+ 8000f96:	3770      	adds	r7, #112	@ 0x70
+ 8000f98:	46bd      	mov	sp, r7
+ 8000f9a:	bd80      	pop	{r7, pc}
  8000f9c:	58024400 	.word	0x58024400
  8000fa0:	58024800 	.word	0x58024800
 
@@ -2229,9 +2228,9 @@ void MX_OCTOSPI1_Init(void)
  800101e:	4b28      	ldr	r3, [pc, #160]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
  8001020:	4a28      	ldr	r2, [pc, #160]	@ (80010c4 <MX_OCTOSPI1_Init+0xbc>)
  8001022:	601a      	str	r2, [r3, #0]
-  hospi1.Init.FifoThreshold = 4;
+  hospi1.Init.FifoThreshold = 1;
  8001024:	4b26      	ldr	r3, [pc, #152]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
- 8001026:	2204      	movs	r2, #4
+ 8001026:	2201      	movs	r2, #1
  8001028:	605a      	str	r2, [r3, #4]
   hospi1.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
  800102a:	4b25      	ldr	r3, [pc, #148]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
@@ -2241,9 +2240,9 @@ void MX_OCTOSPI1_Init(void)
  8001030:	4b23      	ldr	r3, [pc, #140]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
  8001032:	2200      	movs	r2, #0
  8001034:	60da      	str	r2, [r3, #12]
-  hospi1.Init.DeviceSize = 21;
+  hospi1.Init.DeviceSize = 24;
  8001036:	4b22      	ldr	r3, [pc, #136]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
- 8001038:	2215      	movs	r2, #21
+ 8001038:	2218      	movs	r2, #24
  800103a:	611a      	str	r2, [r3, #16]
   hospi1.Init.ChipSelectHighTime = 8;
  800103c:	4b20      	ldr	r3, [pc, #128]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
@@ -2261,9 +2260,9 @@ void MX_OCTOSPI1_Init(void)
  800104e:	4b1c      	ldr	r3, [pc, #112]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
  8001050:	2200      	movs	r2, #0
  8001052:	621a      	str	r2, [r3, #32]
-  hospi1.Init.ClockPrescaler = 1;
+  hospi1.Init.ClockPrescaler = 2;
  8001054:	4b1a      	ldr	r3, [pc, #104]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
- 8001056:	2201      	movs	r2, #1
+ 8001056:	2202      	movs	r2, #2
  8001058:	625a      	str	r2, [r3, #36]	@ 0x24
   hospi1.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE;
  800105a:	4b19      	ldr	r3, [pc, #100]	@ (80010c0 <MX_OCTOSPI1_Init+0xb8>)
