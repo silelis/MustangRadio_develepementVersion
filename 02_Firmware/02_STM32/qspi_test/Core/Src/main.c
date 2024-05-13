@@ -126,17 +126,17 @@ int main(void)
 
   ret=W25Q128_OSPI_Erase_Chip(&hospi1);
   printf("Erased\r\n");
-  ret=W25Q128_OSPI_Write(&hospi1,txbuf,0,sizeof(txbuf));
-  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
+  ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
+  ret=W25Q128_OSPI_Read(&hospi1, rxbuf,0x7FFFFEC,sizeof(txbuf));
   ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
   HAL_Delay(1000);
 
   /*__IO*/ uint8_t *mem_addr;
   //mem_addr = (uint8_t *)(0x08010000);
-  mem_addr = (uint8_t *)(0x090000000);
+  mem_addr = (uint8_t *)(0x090000000+0x7FFFFEC);
   uint8_t* ala = mem_addr;
 
-  memcpy(rxbuf, mem_addr, 8);
+  memcpy(rxbuf, mem_addr, sizeof(txbuf));
   printf("Hello world!!!\r\n");
 
 
