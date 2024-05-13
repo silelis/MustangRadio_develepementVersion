@@ -1,17 +1,47 @@
-21:07:48 **** Incremental Build of configuration Debug for project qspi_test ****
+23:23:50 **** Incremental Build of configuration Debug for project qspi_test ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/octospi.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/octospi.d" -MT"Core/Src/octospi.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/octospi.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:125:7: warning: implicit declaration of function 'W25Q128_OCTO_SPI_Init' [-Wimplicit-function-declaration]
+  125 |   ret=W25Q128_OCTO_SPI_Init(&hospi1);
+      |       ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:128:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  128 |   printf("Erased\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:28:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   27 | #include "string.h"
+  +++ |+#include <stdio.h>
+   28 | /* USER CODE END Includes */
+../Core/Src/main.c:128:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  128 |   printf("Erased\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:128:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c:129:7: warning: implicit declaration of function 'W25Q128_OSPI_Write' [-Wimplicit-function-declaration]
+  129 |   ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
+      |       ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:130:7: warning: implicit declaration of function 'W25Q128_OSPI_Read' [-Wimplicit-function-declaration]
+  130 |   ret=W25Q128_OSPI_Read(&hospi1, rxbuf,0x7FFFFEC,sizeof(txbuf));
+      |       ^~~~~~~~~~~~~~~~~
+../Core/Src/main.c:131:7: warning: implicit declaration of function 'W25Q128_OSPI_EnableMemoryMappedMode' [-Wimplicit-function-declaration]
+  131 |   ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:137:12: warning: unused variable 'ala' [-Wunused-variable]
+  137 |   uint8_t* ala = mem_addr;
+      |            ^~~
+../Core/Src/main.c:122:21: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+  122 |   HAL_StatusTypeDef ret;
+      |                     ^~~
 arm-none-eabi-g++ -o "qspi_test.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\qspi_test\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="qspi_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: qspi_test.elf
  
 arm-none-eabi-size  qspi_test.elf 
 arm-none-eabi-objdump -h -S qspi_test.elf  > "qspi_test.list"
    text	   data	    bss	    dec	    hex	filename
-  33420	    108	   2148	  35676	   8b5c	qspi_test.elf
+  33152	    108	   2148	  35408	   8a50	qspi_test.elf
 Finished building: default.size.stdout
  
 Finished building: qspi_test.list
  
 
-21:07:50 Build Finished. 0 errors, 0 warnings. (took 1s.912ms)
+23:23:51 Build Finished. 0 errors, 8 warnings. (took 1s.215ms)
 
