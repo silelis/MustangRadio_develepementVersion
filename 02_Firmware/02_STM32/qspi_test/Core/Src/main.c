@@ -124,9 +124,9 @@ int main(void)
   uint8_t txbuf[] = "TEST";
   ret=W25Q128_OCTO_SPI_Init(&hospi1);
 
-  ret=W25Q128_OSPI_Erase_Chip(&hospi1);
+  //ret=W25Q128_OSPI_Erase_Chip(&hospi1);
   printf("Erased\r\n");
-  ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
+  //ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
   ret=W25Q128_OSPI_Read(&hospi1, rxbuf,0x7FFFFEC,sizeof(txbuf));
   ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
   HAL_Delay(1000);
@@ -187,13 +187,13 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 31;
+  RCC_OscInitStruct.PLL.PLLN = 35;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
-  RCC_OscInitStruct.PLL.PLLFRACN = 2048;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -212,7 +212,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
   {
     Error_Handler();
   }
