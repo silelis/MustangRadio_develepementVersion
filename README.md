@@ -1,4 +1,4 @@
-# MustangRadio_develepementVersion
+#MustangRadio_develepementVersion
 
 open-source software:
 https://github.com/bakhshipoor/STM32H7-W25Q128-External-Loader/blob/main/LICENSE
