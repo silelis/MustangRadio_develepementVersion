@@ -6,6 +6,8 @@
 //Please set your hardware details - BEGINNING
 #define I2C_MASTER_PIN_SDA				GPIO_NUM_19
 #define I2C_MASTER_PIN_SCL				GPIO_NUM_18
+#define I2C_SLAVE_PIN_SDA				GPIO_NUM_21
+#define I2C_SLAVE_PIN_SCL				GPIO_NUM_22
 #define	I2C_MASTER_SPEED				400000								//DO NOT CHANGE
 #define	I2C_MASTER_RX_BEFFER			10
 #define	I2C_MASTER_TX_BEFFER			10

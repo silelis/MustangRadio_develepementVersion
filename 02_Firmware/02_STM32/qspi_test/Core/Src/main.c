@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "octospi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -115,38 +116,46 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_OCTOSPI1_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
 
 
-  HAL_StatusTypeDef ret;
-  uint8_t rxbuf[100];
-  uint8_t txbuf[] = "TEST";
-  ret=W25Q128_OCTO_SPI_Init(&hospi1);
+//		  HAL_StatusTypeDef ret;
+//		  uint8_t rxbuf[100];
+//		  uint8_t txbuf[] = "TEST";
+//		  ret=W25Q128_OCTO_SPI_Init(&hospi1);
+//
+//		  //ret=W25Q128_OSPI_Erase_Chip(&hospi1);
+//		  printf("Erased\r\n");
+//		  //ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
+//		  ret=W25Q128_OSPI_Read(&hospi1, rxbuf,0x7FFFFEC,sizeof(txbuf));
+//		  ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
+//		  HAL_Delay(1000);
+//
+//		  /*__IO*/ uint8_t *mem_addr;
+//		  //mem_addr = (uint8_t *)(0x08010000);
+//		  mem_addr = (uint8_t *)(0x090000000+0x7FFFFEC);
+//		  uint8_t* ala = mem_addr;
+//		  memcpy(rxbuf, mem_addr, sizeof(txbuf));
 
-  //ret=W25Q128_OSPI_Erase_Chip(&hospi1);
-  printf("Erased\r\n");
-  //ret=W25Q128_OSPI_Write(&hospi1,txbuf,0x7FFFFEC/*0x3FFFFEC*/,sizeof(txbuf));
-  ret=W25Q128_OSPI_Read(&hospi1, rxbuf,0x7FFFFEC,sizeof(txbuf));
-  ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
-  HAL_Delay(1000);
-
-  /*__IO*/ uint8_t *mem_addr;
-  //mem_addr = (uint8_t *)(0x08010000);
-  mem_addr = (uint8_t *)(0x090000000+0x7FFFFEC);
-  uint8_t* ala = mem_addr;
-
-  memcpy(rxbuf, mem_addr, sizeof(txbuf));
+  HAL_Delay(0x8ff);
   printf("Hello world!!!\r\n");
-
-
-
+  char receiveData[8];
+  memset(receiveData[0],0xff,8);
+  HAL_StatusTypeDef result;				//1000100
+ // result= HAL_I2C_IsDeviceReady(&hi2c1, 0b1010000, 13, HAL_MAX_DELAY);
+ // result= HAL_I2C_Master_Receive(&hi2c1,0b1010010, receiveData, 8, HAL_MAX_DELAY);
+  result=HAL_I2C_Mem_Read(&hi2c1, 0b1010010<<1, 0x00, 1, &receiveData,1, HAL_MAX_DELAY);
+  //result= HAL_I2C_Master_Receive(&hi2c4, 0xA0, receiveData, 8, HAL_MAX_DELAY);
+  //result= HAL_I2C_Master_Receive(&hi2c4, 0xA0, receiveData, 8, HAL_MAX_DELAY);
  // printf("%s\r\n", map[0]);
-
+  HAL_Delay(0x8ff);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
     /* USER CODE END WHILE */
