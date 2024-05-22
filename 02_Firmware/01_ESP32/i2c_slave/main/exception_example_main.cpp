@@ -9,11 +9,10 @@
 
 #include <stdio.h>
 #include <cstring>
-#include "driver/i2c.h"
 #include "esp_log.h"
 #include "esp_system.h"
+#include "driver/i2c.h"
 #include "sdkconfig.h"
-#include "soc/dport_access.h"
 
 static const char *TAG = "i2c-slave";
 
@@ -22,8 +21,8 @@ static const char *TAG = "i2c-slave";
 #define DELAY_TIME_BETWEEN_ITEMS_MS \
   20 /*!< delay time between different test items */
 
-#define I2C_SLAVE_SDA_IO GPIO_NUM_22
-#define I2C_SLAVE_SCL_IO GPIO_NUM_21
+#define I2C_SLAVE_SDA_IO 21
+#define I2C_SLAVE_SCL_IO 22
 
 #define I2C_SLAVE_NUM I2C_NUM_0
 #define I2C_SLAVE_TX_BUF_LEN 256  //(2 * DATA_LENGTH)
@@ -64,37 +63,68 @@ uint8_t inBuff[256];
 uint16_t inBuffLen = 0;
 
 esp_err_t i2c_slave_init() {
-	i2c_port_t i2c_slave_port = I2C_SLAVE_NUM;
+	i2c_port_t i2c_slave_port = 0;// I2C_SLAVE_NUM;
 	i2c_config_t conf_slave;
 	conf_slave.sda_io_num = I2C_SLAVE_SDA_IO;
 	//conf_slave.sda_pullup_en = GPIO_PULLUP_ENABLE;
 	conf_slave.scl_io_num = I2C_SLAVE_SCL_IO;
-	//conf_slave.scl_pullup_en = GPIO_PULLUP_ENABLE;
+	//conf_slave.sda_pullup_en = GPIO_PULLUP_ENABLE,
 	conf_slave.mode = I2C_MODE_SLAVE;
 	conf_slave.slave.addr_10bit_en = 0;
-	conf_slave.slave.slave_addr = 0b0111100;
+	conf_slave.slave.slave_addr = 0x3C;
+	//conf_slave.slave.maximum_speed = 100000;
+	//conf_slave.clk_flags = 0;
 	i2c_param_config(i2c_slave_port, &conf_slave);
-	return i2c_driver_install(i2c_slave_port,
+	esp_err_t retVal;
+	retVal = i2c_driver_install(i2c_slave_port,
 		conf_slave.mode,
-		I2C_SLAVE_RX_BUF_LEN,
-		6,
+		2*512,
+		2*512,
 		0);
+	return retVal;
 }
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	static esp_err_t i2c_slave_init1(void)
+	{
+		int i2c_slave_port = 0; //I2C_SLAVE_NUM;
+		i2c_config_t conf_slave;// = {
+		conf_slave.sda_io_num = 21;//,
+			//.sda_pullup_en = GPIO_PULLUP_ENABLE,
+		conf_slave.scl_io_num = 22;//,
+			//.scl_pullup_en = GPIO_PULLUP_ENABLE,
+		conf_slave.mode = I2C_MODE_SLAVE;//,
+		conf_slave.slave.addr_10bit_en = 0;//,
+		conf_slave.slave.slave_addr = 0x3C;//, 
+			//ESP_SLAVE_ADDR,
+		//};
+		esp_err_t err = i2c_param_config(i2c_slave_port, &conf_slave);
+		if (err != ESP_OK) {
+			return err;
+		}
+		return i2c_driver_install(i2c_slave_port, conf_slave.mode, 512 * 2, 512 * 2, 0);
+	}	
+	
+#ifdef __cplusplus
+}
+#endif
 
 extern "C" void app_main(void)
 {
-	esp_err_t retVal = i2c_slave_init();
+	esp_err_t retVal = i2c_slave_init1();
 	assert(!retVal);
-	char data[] = "Dawid";
+	//char data[] = "Dawid";
 	int ile = 0;
-	ile = i2c_slave_write_buffer(I2C_SLAVE_NUM,	(const uint8_t * )&data, sizeof(data)*2, portMAX_DELAY);
-	ile = ile + 1;
-	ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
-	ile = ile + 1;
-	ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
-	ile = ile + 1;
-	ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
-	ile = ile + 1;
+	//ile = i2c_slave_write_buffer(I2C_SLAVE_NUM,	(const uint8_t * )&data, sizeof(data)*2, portMAX_DELAY);
+	//ile = ile + 1;
+	//ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
+	//ile = ile + 1;
+	//ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
+	//ile = ile + 1;
+	//ile = i2c_slave_write_buffer(I2C_SLAVE_NUM, (const uint8_t *)&data, sizeof(data) * 2, portMAX_DELAY);
+	//ile = ile + 1;
 	//rtc_reg_get
 	for (;;) {
 		vTaskDelay(10);

@@ -139,18 +139,18 @@ int main(void)
 //		  uint8_t* ala = mem_addr;
 //		  memcpy(rxbuf, mem_addr, sizeof(txbuf));
 
-  HAL_Delay(0x8ff);
+  //HAL_Delay(0x8ff);
   printf("Hello world!!!\r\n");
   char receiveData[8];
   memset(receiveData[0],0xff,8);
   HAL_StatusTypeDef result;				//1000100
- // result= HAL_I2C_IsDeviceReady(&hi2c1, 0b1010000, 13, HAL_MAX_DELAY);
- // result= HAL_I2C_Master_Receive(&hi2c1,0b1010010, receiveData, 8, HAL_MAX_DELAY);
-  result=HAL_I2C_Mem_Read(&hi2c1, 0b1010010<<1, 0x00, 1, &receiveData,1, HAL_MAX_DELAY);
-  //result= HAL_I2C_Master_Receive(&hi2c4, 0xA0, receiveData, 8, HAL_MAX_DELAY);
+  //result= HAL_I2C_IsDeviceReady(&hi2c1, 0b1010010<<1, 13, HAL_MAX_DELAY);
+  result= HAL_I2C_IsDeviceReady(&hi2c1, /*0b1000100<<1*/0x3C<<1, 13, HAL_MAX_DELAY);
+  //result=HAL_I2C_Mem_Read(&hi2c1, 0b1010010<<1, 0x00, 1,(uint8_t *) &receiveData,1, HAL_MAX_DELAY);
+  //result= HAL_I2C_Master_Receive(&hi2c1, 0x3C<<1, (uint8_t *)&receiveData, 8, HAL_MAX_DELAY);
   //result= HAL_I2C_Master_Receive(&hi2c4, 0xA0, receiveData, 8, HAL_MAX_DELAY);
  // printf("%s\r\n", map[0]);
-  HAL_Delay(0x8ff);
+  HAL_Delay(0x1ff);
   /* USER CODE END 2 */
 
   /* Infinite loop */
