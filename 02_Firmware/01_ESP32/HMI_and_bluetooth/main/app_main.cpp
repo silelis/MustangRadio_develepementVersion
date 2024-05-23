@@ -26,7 +26,6 @@
 //#include "NVSeeprom/NVSeeprom.h"
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
 
-
 #include "driver/uart.h"
 void init_uart();
 
@@ -51,6 +50,7 @@ extern "C" void app_main(void)
 	init_uart();
 	i2sPinsHighImpedanceEnabled();
 	
+
 	const char *main_TAG = "Main function:";
 	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
 
