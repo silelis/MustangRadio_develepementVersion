@@ -10,4 +10,5 @@ idf_component_register(
                     	StepperOptoPowerOFF/StepperOptoPowerOFF.cpp
                     	a2dpSikn/a2dp_sink_demo.cpp
                     	i2c_slave/i2c_slave.cpp
+                    	i2c_slave/i2c_slave_hw_init.c
                     INCLUDE_DIRS ".")

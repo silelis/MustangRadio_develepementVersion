@@ -77,7 +77,7 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 		
 		printf("%s: Create I2C master configuration.\n", this->TAG);
 		//ESP_LOGI(this->TAG, "Create I2C master configuration.");
-		i2cMasterPort = 1;
+		i2cMasterPort = I2C_MASTER_PORT;
 					
 		i2cConfig.mode = I2C_MODE_MASTER;
 		i2cConfig.sda_io_num = pinSDA;	//GPIO_NUM_19;

@@ -2,6 +2,7 @@
 
 //#include "esp_log.h"
 #include "driver/i2c.h"
+#include "hwConfigFile.h"
 
 
 #include "freertos/FreeRTOS.h"
