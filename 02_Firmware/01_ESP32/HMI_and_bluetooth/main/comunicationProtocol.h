@@ -2,10 +2,11 @@
 #include "inttypes.h"
 #include "comunicationStructures.h"
 
-
+#define I2C_SLAVE_INTERRUPT_REQUEST_LEVEL_ON	0	//poziom logicznyu linii interrupt request, który mówi, że slave prosi master o komunikację
+#define I2C_SLAVE_INTERRUPT_REQUEST_LEVEL_OFF	1	//poziom logicznyu linii interrupt request, który mówi, że slave nie prosi master o komunikację
 #define I2C_SLAVE_ADDRESS					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define I2C_SLAVE_RX_BUFFER_LEN				512
-#define I2C_SLAVE_TX_BUFFER_LEN				512
+#define I2C_SLAVE_RX_BUFFER_LEN				263		//260 to maksymalna długość scieżki katalogu w Win95 + len + command group + subcommand
+#define I2C_SLAVE_TX_BUFFER_LEN				5*I2C_SLAVE_RX_BUFFER_LEN	//tutaj lepiej jest mieć zapas
 
 
 #define I2C_COMMAND_GROUP_SYSTEM/*PING*/	0x00
