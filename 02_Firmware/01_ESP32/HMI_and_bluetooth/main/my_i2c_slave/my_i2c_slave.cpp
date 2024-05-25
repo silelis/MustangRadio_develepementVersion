@@ -1,4 +1,4 @@
-#include "i2c_slave.h"
+#include "my_i2c_slave.h"
 
 
 i2c_slave::i2c_slave()

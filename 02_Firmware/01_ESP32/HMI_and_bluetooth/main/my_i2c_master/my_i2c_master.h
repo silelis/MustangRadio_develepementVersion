@@ -1,7 +1,12 @@
 #pragma once
 
 //#include "esp_log.h"
+#include "esp_idf_version.h"
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0))
 #include "driver/i2c.h"
+#elif (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 0))
+#include "driver/i2c_master.h"
+#endif
 #include "hwConfigFile.h"
 
 
@@ -14,7 +19,7 @@ public:
 	i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen);
 	~i2cMaster();
 	esp_err_t i2cPing(uint8_t i2c_address);
-	esp_err_t i2cWriteData(i2c_cmd_handle_t cmd_handle); //TODO: przenieœæ tê funkcjê do protected
+	esp_err_t i2cWriteData(i2c_cmd_handle_t cmd_handle); //TODO: przenieÅ›Ä‡ tÄ™ funkcjÄ™ do protected
 	
 	
 protected:
@@ -25,6 +30,11 @@ private:
 	static uint8_t i2cInstanceCounter; //thisone should be initioalised to "0" at !!!very top!!!
 
 	static int i2cMasterPort;
-	static i2c_config_t i2cConfig;
+	#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0))
+		static i2c_config_t i2cConfig;
+	#elif (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 0))
+		static i2c_master_bus_config_t i2c_mst_config;
+		static i2c_master_bus_handle_t bus_handle;
+	#endif
 	static SemaphoreHandle_t xI2CMasterMutex;		//mutex which controlls access to I2C interface
 };

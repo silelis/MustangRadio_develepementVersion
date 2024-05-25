@@ -1,4 +1,4 @@
-#include "i2c_master.h"
+#include "my_i2c_master.h"
 
 /*----------------------------------------------------------------------------------
 *uint8_t i2cInstanceCounter
@@ -31,7 +31,14 @@ int i2cMaster::i2cMasterPort;
 * się klasą i2cMaster, która jest przechowuje konfigurację dla interfejsu komunikacyjnego
 * I2C. 
 *----------------------------------------------------------------------------------*/
-i2c_config_t i2cMaster::i2cConfig;
+
+
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0))
+	i2c_config_t i2cMaster::i2cConfig;
+#elif (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 0))
+	i2c_master_bus_config_t i2cMaster::i2c_mst_config;
+	i2c_master_bus_handle_t i2cMaster::bus_handle;
+#endif
 
 /*----------------------------------------------------------------------------------
 * SemaphoreHandle_t xI2CMasterMutex;
@@ -79,48 +86,91 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 		//ESP_LOGI(this->TAG, "Create I2C master configuration.");
 		i2cMasterPort = I2C_MASTER_PORT;
 					
-		i2cConfig.mode = I2C_MODE_MASTER;
-		i2cConfig.sda_io_num = pinSDA;	//GPIO_NUM_19;
-		i2cConfig.scl_io_num = pinSCL;	//GPIO_NUM_18;
-		//i2c_conf.sda_pullup_en = 0;
-		//i2c_conf.scl_pullup_en = 0;
-		i2cConfig.master.clk_speed = i2cSpeed; //400khz 
-		i2cConfig.clk_flags = 0;
-		
-		i2c_param_config(i2cMasterPort, &i2cConfig);
- 
-		
-		if ((i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) == ESP_OK)&& (xI2CMasterMutex !=NULL))
-		{
-			
-			/*if (i2cSpeed > 400000)
-			{
-				i2c_filter_enable(i2cMasterPort, 5);
-			}*/		
-			i2cInstanceCounter++;
-			printf("%s: I2C has been configured.\n", this->TAG);
-			//ESP_LOGI(this->TAG, "I2C has been configured.");
-			xSemaphoreGive(xI2CMasterMutex);
-		}
-		else
-		{
-			//ESP_LOGI(this->TAG, "I2C configuration error.");
-			printf("%s: I2C configuration error.\n", this->TAG);
-			if (i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) != ESP_OK)
-			{
-				//ESP_LOGI(this->TAG, "I2C hardware configuration error");
-				printf("%s: I2C hardware configuration error.\n", this->TAG);
-				assert(!i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0));
-			}
-			if (xI2CMasterMutex == NULL)
-			{
-				//ESP_LOGI(this->TAG, "I2C mutex configuration error");
-				printf("%s: I2C mutex configuration error.\n", this->TAG);
-				assert(xI2CMasterMutex);
-			}
-		}
-	}
 
+		
+		#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0))
+				i2cConfig.mode = I2C_MODE_MASTER;
+				i2cConfig.sda_io_num = pinSDA; //GPIO_NUM_19;
+				i2cConfig.scl_io_num = pinSCL; //GPIO_NUM_18;
+				//i2c_conf.sda_pullup_en = 0;
+				//i2c_conf.scl_pullup_en = 0;
+				i2cConfig.master.clk_speed = i2cSpeed; //400khz 
+				i2cConfig.clk_flags = 0;
+		
+				i2c_param_config(i2cMasterPort, &i2cConfig);	
+		
+				if ((i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) == ESP_OK)&& (xI2CMasterMutex != NULL))
+				{
+			
+					/*if (i2cSpeed > 400000)
+					{
+						i2c_filter_enable(i2cMasterPort, 5);
+					}*/		
+					i2cInstanceCounter++;
+					printf("%s: I2C has been configured.\n", this->TAG);
+					//ESP_LOGI(this->TAG, "I2C has been configured.");
+					xSemaphoreGive(xI2CMasterMutex);
+				}
+				else
+				{
+					//ESP_LOGI(this->TAG, "I2C configuration error.");
+					printf("%s: I2C configuration error.\n", this->TAG);
+					if (i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) != ESP_OK)
+					{
+						//ESP_LOGI(this->TAG, "I2C hardware configuration error");
+						printf("%s: I2C hardware configuration error.\n", this->TAG);
+						assert(!i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0));
+					}
+					if (xI2CMasterMutex == NULL)
+					{
+						//ESP_LOGI(this->TAG, "I2C mutex configuration error");
+						printf("%s: I2C mutex configuration error.\n", this->TAG);
+						assert(xI2CMasterMutex);
+					}
+				}
+		#elif (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 0))
+				i2c_mst_config.clk_source = I2C_CLK_SRC_DEFAULT;
+				i2c_mst_config.i2c_port = i2cMasterPort;		
+				i2c_mst_config.scl_io_num = (gpio_num_t) pinSCL ;
+				i2c_mst_config.sda_io_num = (gpio_num_t) pinSDA ;
+				i2c_mst_config.glitch_ignore_cnt = 7;
+				i2c_mst_config.flags.enable_internal_pullup = pdFALSE;
+				esp_err_t retVal = i2c_new_master_bus(&i2c_mst_config, &bus_handle);
+		
+		
+		
+		
+			
+				if ((retVal == ESP_OK)&& (xI2CMasterMutex != NULL))
+				{
+					/*if (i2cSpeed > 400000)
+					{
+						i2c_filter_enable(i2cMasterPort, 5);
+					}*/		
+					i2cInstanceCounter++;
+					printf("%s: I2C has been configured.\n", this->TAG);
+					//ESP_LOGI(this->TAG, "I2C has been configured.");
+					xSemaphoreGive(xI2CMasterMutex);
+				}
+				else
+				{
+					//ESP_LOGI(this->TAG, "I2C configuration error.");
+					printf("%s: I2C configuration error.\n", this->TAG);
+					if (retVal != ESP_OK)
+					{
+						//ESP_LOGI(this->TAG, "I2C hardware configuration error");
+						printf("%s: I2C hardware configuration error.\n", this->TAG);
+						assert(!retVal);
+					}
+					if (xI2CMasterMutex == NULL)
+					{
+						//ESP_LOGI(this->TAG, "I2C mutex configuration error");
+						printf("%s: I2C mutex configuration error.\n", this->TAG);
+						assert(xI2CMasterMutex);
+					}
+				}
+		#endif
+	}
 }
 
 /*----------------------------------------------------------------------------------
@@ -146,9 +196,11 @@ i2cMaster::~i2cMaster()
 		if (xSemaphoreTake(xI2CMasterMutex, portMAX_DELAY) == pdTRUE)
 		{
 			vSemaphoreDelete(xI2CMasterMutex);
-			i2c_reset_tx_fifo(i2cMasterPort);
-			i2c_reset_rx_fifo(i2cMasterPort);
-			i2c_driver_delete(i2cMasterPort);			
+			#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0))
+				i2c_reset_tx_fifo(i2cMasterPort);
+				i2c_reset_rx_fifo(i2cMasterPort);
+				i2c_driver_delete(i2cMasterPort);
+			#endif
 		}
 
 	}

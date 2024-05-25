@@ -9,7 +9,6 @@
 
 //#include <iostream>
 #include "hwConfigFile.h"
-
 #include <inttypes.h>
 #include "cstdio"
 #include "driver/gpio.h"
@@ -20,10 +19,7 @@
 #include "driver/gptimer.h"
 #include "esp_log.h"
 #include "keyboard/keyboard.h"
-//#include "Leds/Leds_backlight.h"
-//#include "StepperOpto/StepperOptoPowerOFF.h"
 #include "tasksFunctions/tasksFunctions.h"
-//#include "NVSeeprom/NVSeeprom.h"
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
 
 #include "driver/uart.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "i2c_master/i2c_master.h"
+#include "my_i2c_master/my_i2c_master.h"
 #include "esp_log.h"
 
 #define MCP23008_IODIR		0x00		//I/O DIRECTION (IODIR) REGISTER
