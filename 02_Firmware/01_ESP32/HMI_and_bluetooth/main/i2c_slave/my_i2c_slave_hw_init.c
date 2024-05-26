@@ -1,7 +1,7 @@
-#include "i2c_slave_hw_init.h"
+#include "my_i2c_slave_hw_init.h"
 
 
-esp_err_t i2c_slave_init(i2c_mode_t mode, uint16_t slave_7bit_Address, int port, int SDA_pin, int SCL_pin, size_t rxBufferLen, size_t txButterLen)
+esp_err_t my_i2c_slave_init(i2c_mode_t mode, uint16_t slave_7bit_Address, int port, int SDA_pin, int SCL_pin, size_t rxBufferLen, size_t txButterLen)
 {
 	int i2c_slave_port = port; //I2C_SLAVE_NUM;
 	i2c_config_t conf_slave = {
