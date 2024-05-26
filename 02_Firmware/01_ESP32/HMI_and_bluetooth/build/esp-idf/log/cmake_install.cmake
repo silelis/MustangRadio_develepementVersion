@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/log
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/log
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

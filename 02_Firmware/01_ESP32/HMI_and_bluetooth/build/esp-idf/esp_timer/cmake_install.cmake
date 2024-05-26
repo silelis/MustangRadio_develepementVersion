@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/esp_timer
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/esp_timer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

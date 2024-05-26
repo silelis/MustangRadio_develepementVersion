@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 file(MAKE_DIRECTORY
-  "C:/SysGCC/esp32/esp-idf/v5.0/components/bootloader/subproject"
+  "C:/SysGCC/esp32/esp-idf/v5.3/components/bootloader/subproject"
   "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/bootloader"
   "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/bootloader-prefix"
   "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/bootloader-prefix/tmp"

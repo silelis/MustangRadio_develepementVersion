@@ -5,7 +5,7 @@ events:
     kind: "message-v1"
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:228 (message)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       The target system is: Generic -  - 
@@ -16,12 +16,12 @@ events:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
       Compiler: C:/SysGCC/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc.exe 
-      Build flags: -mlongcalls;-Wno-frame-address
+      Build flags: -mlongcalls;-Wno-frame-address;-fno-builtin-memcpy;-fno-builtin-memset;-fno-builtin-bzero;-fno-builtin-stpcpy;-fno-builtin-strncpy
       Id flags:  
       
       The output was:
@@ -39,12 +39,12 @@ events:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
       Compiler: C:/SysGCC/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-g++.exe 
-      Build flags: -mlongcalls;-Wno-frame-address
+      Build flags: -mlongcalls;-Wno-frame-address;-fno-builtin-memcpy;-fno-builtin-memset;-fno-builtin-bzero;-fno-builtin-stpcpy;-fno-builtin-strncpy
       Id flags:  
       
       The output was:
@@ -61,7 +61,7 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:1131 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineASMCompiler.cmake:131 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
@@ -75,26 +75,26 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-1s4ewa"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-1s4ewa"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-wgsn71"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-wgsn71"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-1s4ewa'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-wgsn71'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_bf74d
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address     -v -o CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_b403a
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe
         Target: xtensa-esp32-elf
@@ -102,8 +102,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib
         gcc version 11.2.0 (crosstool-NG esp-2022r1) 
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_bf74d.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mlongcalls -Wno-frame-address -version -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccGMOU1F.s
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_b403a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mlongcalls -Wno-frame-address -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccbrRGWX.s
         GNU C17 (crosstool-NG esp-2022r1) version 11.2.0 (xtensa-esp32-elf)
         	compiled by GNU C version 6.3.0 20170516, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -124,12 +124,12 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 6940ee8c920defc5ee0fc3ab296ed286
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccGMOU1F.s
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccbrRGWX.s
         COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/
         LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.'
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address -v CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -o cmTC_bf74d   && cd ."
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.'
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -v CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -o cmTC_b403a   && cd ."
         Using built-in specs.
         COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe
         COLLECT_LTO_WRAPPER=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe
@@ -140,9 +140,9 @@ events:
         gcc version 11.2.0 (crosstool-NG esp-2022r1) 
         COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/
         LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_bf74d' '-dumpdir' 'cmTC_bf74d.'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccWaKpDJ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_bf74d c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_bf74d' '-dumpdir' 'cmTC_bf74d.'
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_b403a' '-dumpdir' 'cmTC_b403a.'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccJQjvz6.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_b403a c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_b403a' '-dumpdir' 'cmTC_b403a.'
         
       exitCode: 0
   -
@@ -150,7 +150,7 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Parsed C implicit include dir info: rv=done
@@ -173,15 +173,15 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(xtensa-esp32-elf-ld\\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-1s4ewa']
+        ignore line: [Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-wgsn71']
         ignore line: []
-        ignore line: [Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_bf74d]
-        ignore line: [[1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address     -v -o CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_b403a]
+        ignore line: [[1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe]
         ignore line: [Target: xtensa-esp32-elf]
@@ -189,8 +189,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 11.2.0 (crosstool-NG esp-2022r1) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/']
-        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_bf74d.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mlongcalls -Wno-frame-address -version -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccGMOU1F.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/']
+        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_b403a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mlongcalls -Wno-frame-address -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccbrRGWX.s]
         ignore line: [GNU C17 (crosstool-NG esp-2022r1) version 11.2.0 (xtensa-esp32-elf)]
         ignore line: [	compiled by GNU C version 6.3.0 20170516  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -211,16 +211,16 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 6940ee8c920defc5ee0fc3ab296ed286]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/']
-        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccGMOU1F.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/']
+        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccbrRGWX.s]
         ignore line: [COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/]
         ignore line: [LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.']
-        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address -v CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -o cmTC_bf74d   && cd ."]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.']
+        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -v CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -o cmTC_b403a   && cd ."]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe]
         ignore line: [COLLECT_LTO_WRAPPER=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe]
@@ -235,27 +235,27 @@ events:
         ignore line: [LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_bf74d' '-dumpdir' 'cmTC_bf74d.']
-        link line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccWaKpDJ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_bf74d c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_b403a' '-dumpdir' 'cmTC_b403a.']
+        link line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccJQjvz6.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_b403a c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe] ==> ignore
           arg [-plugin] ==> ignore
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll] ==> ignore
           arg [-plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe] ==> ignore
-          arg [-plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccWaKpDJ.res] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccJQjvz6.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lnosys] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_bf74d] ==> ignore
+          arg [cmTC_b403a] ==> ignore
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib]
-          arg [CMakeFiles/cmTC_bf74d.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [CMakeFiles/cmTC_b403a.dir/CMakeCCompilerABI.c.obj] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [-lc] ==> lib [c]
           arg [-lnosys] ==> lib [nosys]
@@ -282,26 +282,26 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-9ipa51"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-9ipa51"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-yonm38"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-yonm38"
     cmakeVariables:
-      CMAKE_CXX_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_CXX_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-9ipa51'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-yonm38'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_ce76b
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe   -mlongcalls -Wno-frame-address     -v -o CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_04879
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe
         Target: xtensa-esp32-elf
@@ -309,8 +309,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib
         gcc version 11.2.0 (crosstool-NG esp-2022r1) 
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1plus.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ce76b.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mlongcalls -Wno-frame-address -version -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccUVeCIa.s
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1plus.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_04879.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mlongcalls -Wno-frame-address -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o C:\\Users\\dbank\\AppData\\Local\\Temp\\cckjkrrl.s
         GNU C++17 (crosstool-NG esp-2022r1) version 11.2.0 (xtensa-esp32-elf)
         	compiled by GNU C version 6.3.0 20170516, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -337,12 +337,12 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 88cd85ad0390d653645f18be897d6236
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccUVeCIa.s
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\cckjkrrl.s
         COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/
         LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.'
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe -mlongcalls -Wno-frame-address -v CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_ce76b   && cd ."
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.'
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -v CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_04879   && cd ."
         Using built-in specs.
         COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe
         COLLECT_LTO_WRAPPER=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe
@@ -353,9 +353,9 @@ events:
         gcc version 11.2.0 (crosstool-NG esp-2022r1) 
         COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/
         LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/;c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_ce76b' '-dumpdir' 'cmTC_ce76b.'
-         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccodTAqf.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_ce76b c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o
-        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_ce76b' '-dumpdir' 'cmTC_ce76b.'
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_04879' '-dumpdir' 'cmTC_04879.'
+         c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccSO4Hem.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_04879 c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o
+        COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_04879' '-dumpdir' 'cmTC_04879.'
         
       exitCode: 0
   -
@@ -363,7 +363,7 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Parsed CXX implicit include dir info: rv=done
@@ -392,15 +392,15 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/project.cmake:342 (__project)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/project.cmake:506 (__project)"
       - "CMakeLists.txt:7 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(xtensa-esp32-elf-ld\\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-9ipa51']
+        ignore line: [Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-yonm38']
         ignore line: []
-        ignore line: [Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_ce76b]
-        ignore line: [[1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe   -mlongcalls -Wno-frame-address     -v -o CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_04879]
+        ignore line: [[1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe]
         ignore line: [Target: xtensa-esp32-elf]
@@ -408,8 +408,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 11.2.0 (crosstool-NG esp-2022r1) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/']
-        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1plus.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ce76b.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mlongcalls -Wno-frame-address -version -o C:\\Users\\dbank\\AppData\\Local\\Temp\\ccUVeCIa.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/']
+        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/cc1plus.exe -quiet -v -iprefix c:\\sysgcc\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\../lib/gcc/xtensa-esp32-elf/11.2.0/ C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_04879.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mlongcalls -Wno-frame-address -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o C:\\Users\\dbank\\AppData\\Local\\Temp\\cckjkrrl.s]
         ignore line: [GNU C++17 (crosstool-NG esp-2022r1) version 11.2.0 (xtensa-esp32-elf)]
         ignore line: [	compiled by GNU C version 6.3.0 20170516  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -436,16 +436,16 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 88cd85ad0390d653645f18be897d6236]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/']
-        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\ccUVeCIa.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/']
+        ignore line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/as.exe --traditional-format --longcalls -o CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\dbank\\AppData\\Local\\Temp\\cckjkrrl.s]
         ignore line: [COMPILER_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/]
         ignore line: [LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe -mlongcalls -Wno-frame-address -v CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_ce76b   && cd ."]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -v CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_04879   && cd ."]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-g++.exe]
         ignore line: [COLLECT_LTO_WRAPPER=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe]
@@ -460,27 +460,27 @@ events:
         ignore line: [LIBRARY_PATH=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/]
         ignore line: [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-v' '-o' 'cmTC_ce76b' '-dumpdir' 'cmTC_ce76b.']
-        link line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccodTAqf.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_ce76b c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-mlongcalls' '-Wno-frame-address' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'cmTC_04879' '-dumpdir' 'cmTC_04879.']
+        link line: [ c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe -plugin c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll -plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccSO4Hem.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -o cmTC_04879 c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0 -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc -Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtend.o c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtn.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/collect2.exe] ==> ignore
           arg [-plugin] ==> ignore
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/liblto_plugin.dll] ==> ignore
           arg [-plugin-opt=c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../libexec/gcc/xtensa-esp32-elf/11.2.0/lto-wrapper.exe] ==> ignore
-          arg [-plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccodTAqf.res] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\dbank\\AppData\\Local\\Temp\\ccSO4Hem.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lnosys] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_ce76b] ==> ignore
+          arg [cmTC_04879] ==> ignore
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib/crt0.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crti.o]
           arg [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o] ==> obj [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/crtbegin.o]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc]
           arg [-Lc:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib] ==> dir [c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/lib]
-          arg [CMakeFiles/cmTC_ce76b.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [CMakeFiles/cmTC_04879.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc] ==> lib [gcc]
@@ -509,26 +509,26 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:250 (check_include_file)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/CMakeLists.txt:215 (check_type_size)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/CMakeLists.txt:249 (check_type_size)"
     checks:
       - "Looking for sys/types.h"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6nu4ly"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6nu4ly"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uktv0e"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uktv0e"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "HAVE_SYS_TYPES_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6nu4ly'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uktv0e'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_01878
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_01878.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6nu4ly/CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_01878.dir/CheckIncludeFile.c.obj -o cmTC_01878   && cd ."
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_94a84
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_94a84.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uktv0e/CheckIncludeFile.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_94a84.dir/CheckIncludeFile.c.obj -o cmTC_94a84   && cd ."
         
       exitCode: 0
   -
@@ -536,26 +536,26 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:251 (check_include_file)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/CMakeLists.txt:215 (check_type_size)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/CMakeLists.txt:249 (check_type_size)"
     checks:
       - "Looking for stdint.h"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e5otk4"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e5otk4"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uyshe3"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uyshe3"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "HAVE_STDINT_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e5otk4'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uyshe3'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_caf3f
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_caf3f.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e5otk4/CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_caf3f.dir/CheckIncludeFile.c.obj -o cmTC_caf3f   && cd ."
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_d4f9c
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_d4f9c.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-uyshe3/CheckIncludeFile.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_d4f9c.dir/CheckIncludeFile.c.obj -o cmTC_d4f9c   && cd ."
         
       exitCode: 0
   -
@@ -563,26 +563,26 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:252 (check_include_file)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/CMakeLists.txt:215 (check_type_size)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/CMakeLists.txt:249 (check_type_size)"
     checks:
       - "Looking for stddef.h"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-gtolf2"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-gtolf2"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bkvlgk"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bkvlgk"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "HAVE_STDDEF_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-gtolf2'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bkvlgk'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_64bcb
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_64bcb.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-gtolf2/CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_64bcb.dir/CheckIncludeFile.c.obj -o cmTC_64bcb   && cd ."
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_cd0c0
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_cd0c0.dir/CheckIncludeFile.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bkvlgk/CheckIncludeFile.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_cd0c0.dir/CheckIncludeFile.c.obj -o cmTC_cd0c0   && cd ."
         
       exitCode: 0
   -
@@ -590,54 +590,194 @@ events:
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/CMakeLists.txt:215 (check_type_size)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/CMakeLists.txt:249 (check_type_size)"
     checks:
       - "Check size of time_t"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u392y3"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u392y3"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-g3h2v3"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-g3h2v3"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "HAVE_TIME_T_SIZE"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u392y3'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-g3h2v3'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_c9653
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_c9653.dir/TIME_T_SIZE.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u392y3/TIME_T_SIZE.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_c9653.dir/TIME_T_SIZE.c.obj -o cmTC_c9653   && cd ."
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_0167f
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_0167f.dir/TIME_T_SIZE.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-g3h2v3/TIME_T_SIZE.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_0167f.dir/TIME_T_SIZE.c.obj -o cmTC_0167f   && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bed9gf"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bed9gf"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bed9gf'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_38736
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -DCMAKE_HAVE_LIBC_PTHREAD  -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_38736.dir/src.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-bed9gf/src.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_38736.dir/src.c.obj -o cmTC_38736   && cd ."
+        FAILED: cmTC_38736 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_38736.dir/src.c.obj -o cmTC_38736   && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0x4): undefined reference to `pthread_create'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0x8): undefined reference to `pthread_detach'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0xc): undefined reference to `pthread_cancel'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0x10): undefined reference to `pthread_join'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0x14): undefined reference to `pthread_atfork'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj:(.literal+0x18): undefined reference to `pthread_exit'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_38736.dir/src.c.obj: in function `main':
+        src.c:(.text+0x1c): undefined reference to `pthread_create'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x26): undefined reference to `pthread_detach'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x30): undefined reference to `pthread_cancel'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x3c): undefined reference to `pthread_join'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x48): undefined reference to `pthread_atfork'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x50): undefined reference to `pthread_exit'
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:136 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:169 (_threads_check_flag_pthread)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Check if compiler accepts -pthread"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6srcha"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6srcha"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "THREADS_HAVE_PTHREAD_ARG"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6srcha'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_5fbb8
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_5fbb8.dir/CheckForPthreads.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-6srcha/CheckForPthreads.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_5fbb8.dir/CheckForPthreads.c.obj -o cmTC_5fbb8  -pthread && cd ."
+        FAILED: cmTC_5fbb8 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy  CMakeFiles/cmTC_5fbb8.dir/CheckForPthreads.c.obj -o cmTC_5fbb8  -pthread && cd ."
+        xtensa-esp32-elf-gcc.exe: error: unrecognized command-line option '-pthread'
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-0ta9hq"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-0ta9hq"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-0ta9hq'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_6b985
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_6b985.dir/CheckFunctionExists.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-0ta9hq/CheckFunctionExists.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_6b985.dir/CheckFunctionExists.c.obj -o cmTC_6b985  -lpthreads && cd ."
+        FAILED: cmTC_6b985 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_6b985.dir/CheckFunctionExists.c.obj -o cmTC_6b985  -lpthreads && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: cannot find -lpthreads
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e2jcjg"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e2jcjg"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e2jcjg'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_80ece
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_80ece.dir/CheckFunctionExists.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-e2jcjg/CheckFunctionExists.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_80ece.dir/CheckFunctionExists.c.obj -o cmTC_80ece  -lpthread && cd ."
+        FAILED: cmTC_80ece 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_80ece.dir/CheckFunctionExists.c.obj -o cmTC_80ece  -lpthread && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: cannot find -lpthread
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
       - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
-      - "C:/SysGCC/esp32/esp-idf/v5.0/components/mbedtls/mbedtls/CMakeLists.txt:193 (CHECK_C_COMPILER_FLAG)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:211 (CHECK_C_COMPILER_FLAG)"
     checks:
       - "Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS"
     directories:
-      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u1odbi"
-      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u1odbi"
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-ctwk7r"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-ctwk7r"
     cmakeVariables:
-      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow"
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow"
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.0/tools/cmake/third_party"
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
     buildResult:
       variable: "C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS"
       cached: true
       stdout: |
-        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u1odbi'
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-ctwk7r'
         
-        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_da18c
-        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -DC_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS  -mlongcalls -Wno-frame-address  -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow    -Wformat-signedness -o CMakeFiles/cmTC_da18c.dir/src.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-u1odbi/src.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow  CMakeFiles/cmTC_da18c.dir/src.c.obj -o cmTC_da18c   && cd ."
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_06a94
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -DC_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS  -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow    -Wformat-signedness -o CMakeFiles/cmTC_06a94.dir/src.c.obj -c D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Debug/CMakeFiles/CMakeScratch/TryCompile-ctwk7r/src.c
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow  CMakeFiles/cmTC_06a94.dir/src.c.obj -o cmTC_06a94   && cd ."
         
       exitCode: 0
 ...

@@ -87,10 +87,10 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 		i2cConfig.master.clk_speed = i2cSpeed; //400khz 
 		i2cConfig.clk_flags = 0;
 		
-		i2c_param_config(i2cMasterPort, &i2cConfig);
+		i2c_param_config((i2c_port_t)i2cMasterPort, &i2cConfig) ;
  
 		
-		if ((i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) == ESP_OK)&& (xI2CMasterMutex !=NULL))
+		if ((i2c_driver_install((i2c_port_t)i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) == ESP_OK)&& (xI2CMasterMutex !=NULL))
 		{
 			
 			/*if (i2cSpeed > 400000)
@@ -106,11 +106,11 @@ i2cMaster::i2cMaster(int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen
 		{
 			//ESP_LOGI(this->TAG, "I2C configuration error.");
 			printf("%s: I2C configuration error.\n", this->TAG);
-			if (i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) != ESP_OK)
+			if (i2c_driver_install((i2c_port_t)i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0) != ESP_OK)
 			{
 				//ESP_LOGI(this->TAG, "I2C hardware configuration error");
 				printf("%s: I2C hardware configuration error.\n", this->TAG);
-				assert(!i2c_driver_install(i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0));
+				assert(!i2c_driver_install((i2c_port_t)i2cMasterPort, i2cConfig.mode, rxBuffLen, txBuffLen, 0)) ;
 			}
 			if (xI2CMasterMutex == NULL)
 			{
@@ -146,9 +146,9 @@ i2cMaster::~i2cMaster()
 		if (xSemaphoreTake(xI2CMasterMutex, portMAX_DELAY) == pdTRUE)
 		{
 			vSemaphoreDelete(xI2CMasterMutex);
-			i2c_reset_tx_fifo(i2cMasterPort);
-			i2c_reset_rx_fifo(i2cMasterPort);
-			i2c_driver_delete(i2cMasterPort);			
+			i2c_reset_tx_fifo((i2c_port_t)i2cMasterPort) ;
+			i2c_reset_rx_fifo((i2c_port_t)i2cMasterPort) ;
+			i2c_driver_delete((i2c_port_t)i2cMasterPort) ;			
 		}
 
 	}
@@ -175,7 +175,7 @@ esp_err_t i2cMaster::i2cPing(uint8_t i2c_address)
 	i2c_master_stop(cmd);
 	
 	xSemaphoreTake(xI2CMasterMutex, portMAX_DELAY);
-	esp_err_t retVal = i2c_master_cmd_begin(i2cMasterPort, cmd, 10000);
+	esp_err_t retVal = i2c_master_cmd_begin((i2c_port_t)i2cMasterPort, cmd, 10000) ;
 	xSemaphoreGive(xI2CMasterMutex);
 	i2c_cmd_link_delete(cmd);
 	
@@ -222,7 +222,7 @@ esp_err_t i2cMaster::i2cPing(uint8_t i2c_address)
 esp_err_t i2cMaster::i2cWriteData(i2c_cmd_handle_t cmd_handle)
 {
 	xSemaphoreTake(xI2CMasterMutex, portMAX_DELAY);
-	esp_err_t retVal = i2c_master_cmd_begin(i2cMasterPort, cmd_handle, portMAX_DELAY);
+	esp_err_t retVal = i2c_master_cmd_begin((i2c_port_t)i2cMasterPort, cmd_handle, portMAX_DELAY) ;
 	xSemaphoreGive(xI2CMasterMutex);
 	return retVal;
 }

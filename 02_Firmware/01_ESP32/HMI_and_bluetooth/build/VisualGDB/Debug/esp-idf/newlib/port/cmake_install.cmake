@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/newlib/port
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/newlib/port
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

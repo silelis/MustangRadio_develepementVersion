@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/esp_http_client
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/esp_http_client
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

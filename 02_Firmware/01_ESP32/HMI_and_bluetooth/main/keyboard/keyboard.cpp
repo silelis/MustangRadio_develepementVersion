@@ -445,7 +445,13 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	gpioDebounceTimer_config.clk_src = GPTIMER_CLK_SRC_DEFAULT;
 	gpioDebounceTimer_config.direction = GPTIMER_COUNT_UP;
 	gpioDebounceTimer_config.resolution_hz = GPIO_DEBOUNCE_TIMER_RESOLUTION_HZ;
-	ESP_ERROR_CHECK(gptimer_new_timer(&this->gpioDebounceTimer_config, &gptimer));
+	
+	
+	gpioDebounceTimer_config.intr_priority = DEBOUNCE_TIMER_PRIORITY;
+	//gpioDebounceTimer_config.flags.intr_shared = pdFALSE;
+	
+	//ESP_ERROR_CHECK(
+	assert(!gptimer_new_timer(&this->gpioDebounceTimer_config, &gptimer));
 	
 	//configure alarms (interrupts) for timer	
 	gpioAlarm_config.alarm_count = 1;

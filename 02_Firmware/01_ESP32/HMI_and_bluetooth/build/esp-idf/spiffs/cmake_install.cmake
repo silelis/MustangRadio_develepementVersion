@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/spiffs
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/spiffs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/openthread
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/openthread
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

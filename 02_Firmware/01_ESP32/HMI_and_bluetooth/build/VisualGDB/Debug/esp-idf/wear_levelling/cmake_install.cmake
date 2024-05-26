@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.0/components/wear_levelling
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/wear_levelling
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
