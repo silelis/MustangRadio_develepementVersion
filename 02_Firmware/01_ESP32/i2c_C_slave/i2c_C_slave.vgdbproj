@@ -7,7 +7,7 @@
     </CustomSourceDirectories>
     <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <ProjectModeSettings>
-      <ProjectGUID>a5b8eec1-5500-47a6-8e87-6467fe061d9f</ProjectGUID>
+      <ProjectGUID>4ddd9667-c22b-464e-96b8-0f1093c58286</ProjectGUID>
       <GroupSourcesByTypes>true</GroupSourcesByTypes>
       <GroupSourcesByPaths>true</GroupSourcesByPaths>
       <HeaderScanMode>SourceDirs</HeaderScanMode>
@@ -60,15 +60,15 @@
       </ProjectItemSettings>
       <TargetSpecificSettings />
       <SetLDLibraryPathFromDependentArtifacts>true</SetLDLibraryPathFromDependentArtifacts>
-      <ProjectGUID>1652a644-aade-4755-8a84-ec0607b17cda</ProjectGUID>
+      <ProjectGUID>80955c21-353d-4a71-aca8-0bd5c02b6809</ProjectGUID>
       <VirtualFolders />
       <ConfigurationNameCase>Upper</ConfigurationNameCase>
       <DefaultHeaderDiscoveryMode>HeaderDirectoryAndSubdirectories</DefaultHeaderDiscoveryMode>
       <EnableFastUpToDateCheck>true</EnableFastUpToDateCheck>
       <ESPIDFExtension>
         <IDFCheckout>
-          <Version>release/v5.0</Version>
-          <Subdirectory>esp-idf/v5.0</Subdirectory>
+          <Version>release/v5.2</Version>
+          <Subdirectory>esp-idf/v5.2</Subdirectory>
           <Type>ESPIDF</Type>
         </IDFCheckout>
         <COMPort>COM5</COMPort>
@@ -219,23 +219,37 @@
       <EnableAbsolutePathReporting>true</EnableAbsolutePathReporting>
     </AdditionalGDBSettings>
     <DebugMethod>
-      <ID>gdbstub</ID>
-      <InterfaceID>com.sysprogs.espxx.bootloader</InterfaceID>
-      <InterfaceSerialNumber>0001</InterfaceSerialNumber>
-      <Configuration xsi:type="com.visualgdb.edp.espxx.settings.gdbstub.esp32">
-        <COMPort>COM6</COMPort>
-        <StubBaudRate>74880</StubBaudRate>
-        <BootloaderBaudRate>115200</BootloaderBaudRate>
-        <BootloaderResetDelay>50</BootloaderResetDelay>
-        <BootloaderActivationSequence>!DTR;RTS;SLEEP;DTR;!RTS;SLEEP;!DTR;SLEEP</BootloaderActivationSequence>
+      <ID>openocd</ID>
+      <Configuration xsi:type="com.visualgdb.edp.openocd.settings.esp32">
+        <CommandLine>-f interface/jlink.cfg -c "adapter_khz 3000" -f target/esp32.cfg</CommandLine>
+        <ExtraParameters>
+          <Frequency xsi:nil="true" />
+          <BoostedFrequency xsi:nil="true" />
+          <ConnectUnderReset>false</ConnectUnderReset>
+        </ExtraParameters>
+        <LoadProgressGUIThreshold>131072</LoadProgressGUIThreshold>
         <ProgramMode>Enabled</ProgramMode>
-        <SuppressResetConfirmation>false</SuppressResetConfirmation>
-        <PatchBootloader>true</PatchBootloader>
+        <StartupCommands>
+          <string>set remotetimeout 60</string>
+          <string>target remote :$$SYS:GDB_PORT$$</string>
+          <string>mon gdb_breakpoint_override hard</string>
+          <string>mon reset halt</string>
+          <string>load</string>
+        </StartupCommands>
+        <ProgramFLASHUsingExternalTool>false</ProgramFLASHUsingExternalTool>
+        <PreferredGDBPort>0</PreferredGDBPort>
+        <PreferredTelnetPort>0</PreferredTelnetPort>
+        <AlwaysPassSerialNumber>false</AlwaysPassSerialNumber>
+        <SelectedCoreIndex xsi:nil="true" />
+        <LiveMemoryTimeout>5000</LiveMemoryTimeout>
+        <SuggestionLogicRevision>1</SuggestionLogicRevision>
+        <CheckFLASHSize>true</CheckFLASHSize>
         <FLASHSettings>
           <Size>size2MB</Size>
           <Frequency>freq40M</Frequency>
           <Mode>DIO</Mode>
         </FLASHSettings>
+        <PatchBootloader>true</PatchBootloader>
       </Configuration>
     </DebugMethod>
     <AutoDetectRTOS>true</AutoDetectRTOS>
