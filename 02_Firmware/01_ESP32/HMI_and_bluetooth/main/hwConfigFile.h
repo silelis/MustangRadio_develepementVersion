@@ -12,6 +12,8 @@
 #include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 #endif
 
+
+#define DEBOUNCE_TIMER_PRIORITY			0									//w ESP-IDF 5.2+ wprowadzono nowy parametr timera (prioryter timera), który we moim kodzie odpowiada za debouncowanie styków 
 #define DEBOUNCE_PARAMETERS				DEBOUNCE_PARAMETERS_100us_20x		//PLEASE choose one of: "DEBOUNCE_PARAMETERS_100us_20x" or "DEBOUNCE_PARAMETERS_275us_20x" or "DEBOUNCE_PARAMETERS_137us_40x"
 #define ENCODER_PULSED_PER_DETANT		4									//PLEASE choose one of: "4" or "2" based on rotary encoder datasheet
 #define DETANT1_GPIO_STATE				0x11								//PLEASE choose: set according to encoder datasheet
@@ -39,9 +41,9 @@
 	#endif // DEBOUNCE_PARAMETERS == 137us_50x
 
 	#if DEBOUNCE_PARAMETERS == 3
-		#define GPIO_DEBOUNCE_TIMER_RESOLUTION_HZ	10000		//DO NOT CHANGE		//10000 Hz 1 tick = 100 us
-	#define GPIO_DEBOUNCE_EQUAL						10//5 /*10*/	//DO NOT CHANGE		//5 wygląda na dobrą wartośc 10 też
-		#define GPIO_LONG_PRESS						13000		//DO NOT CHANGE
+		#define GPIO_DEBOUNCE_TIMER_RESOLUTION_HZ	20000		//DO NOT CHANGE		//10000 Hz 1 tick = 100 us
+		#define GPIO_DEBOUNCE_EQUAL					18//5 /*10*/	//DO NOT CHANGE		//5 wygląda na dobrą wartośc 10 też
+		#define GPIO_LONG_PRESS						20000		//DO NOT CHANGE
 		#define ENCODER_notFULL_DETANT_TIMEOUT		1300		//DO NOT CHCNGE		//if encoder counts less pulses than ENCODER_PULSED_PER_DETANT	
 		#endif // DEBOUNCE_PARAMETERS == 137us_50x
 #endif
