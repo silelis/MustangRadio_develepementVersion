@@ -12,6 +12,7 @@
 #include "esp_chip_info.h"
 #include "esp_flash.h"
 #include "esp_system.h"
+//#include "soc/soc_caps.h"
 #include "driver/i2c_slave.h"
 
 void app_main(void)
@@ -27,8 +28,22 @@ void app_main(void)
 		.slave_addr = 0x3C,
 	};
 
-	i2c_slave_dev_handle_t slave_handle;
-	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_slv_config, &slave_handle));
+
+	i2c_slave_dev_handle_t slave_handle, *pi2c_slave_dev_handle_t;
+	pi2c_slave_dev_handle_t = &slave_handle;
+	
+	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_slv_config, pi2c_slave_dev_handle_t));
+	
+	i2c_slave_event_callbacks_t cbs;
+	
+	uint8_t data_wr[6];
+	data_wr[0] = 'D';
+	data_wr[1] = 'a';
+	data_wr[2] = 'W';
+	data_wr[3] = 'i';
+	data_wr[4] = 'd';
+	data_wr[5] = '\n';
+	i2c_slave_transmit(*pi2c_slave_dev_handle_t, data_wr, 6, -1);
 	
 	while (true)
 	{
