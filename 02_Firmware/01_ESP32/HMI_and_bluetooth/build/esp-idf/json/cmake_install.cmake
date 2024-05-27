@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/json
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/json
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

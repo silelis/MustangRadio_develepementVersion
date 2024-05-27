@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/mbedtls/mbedtls/pkgconfig
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/pkgconfig
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

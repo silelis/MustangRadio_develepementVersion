@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/lwip
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/lwip
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

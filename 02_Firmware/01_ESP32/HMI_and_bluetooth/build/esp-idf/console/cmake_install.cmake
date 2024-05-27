@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/console
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/console
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

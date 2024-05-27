@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/bootloader_support
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/bootloader_support
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

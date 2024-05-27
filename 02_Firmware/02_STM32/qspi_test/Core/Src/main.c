@@ -151,6 +151,8 @@ int main(void)
   //result= HAL_I2C_Master_Receive(&hi2c4, 0xA0, receiveData, 8, HAL_MAX_DELAY);
  // printf("%s\r\n", map[0]);
   HAL_Delay(0x1ff);
+  result= HAL_I2C_Master_Receive(&hi2c1, 0x3C<<1, &receiveData, 6, 0xffff);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

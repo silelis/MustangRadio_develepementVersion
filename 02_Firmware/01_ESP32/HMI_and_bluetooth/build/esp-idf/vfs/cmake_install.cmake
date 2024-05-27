@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/vfs
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/vfs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

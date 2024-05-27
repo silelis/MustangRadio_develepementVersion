@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/nvs_sec_provider
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/nvs_sec_provider
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

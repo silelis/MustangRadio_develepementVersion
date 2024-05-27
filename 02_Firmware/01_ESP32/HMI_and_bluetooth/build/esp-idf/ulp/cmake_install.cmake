@@ -1,4 +1,4 @@
-# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.3/components/ulp
+# Install script for directory: C:/SysGCC/esp32/esp-idf/v5.2/components/ulp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
