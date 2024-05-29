@@ -14,7 +14,7 @@
 #include "Leds/Leds_backlight.h"
 #include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 #include "NVSeeprom/NVSeeprom.h"
-#include "i2c_slave/my_i2c_slave.h"
+
 
 
 struct hmiDisplay {

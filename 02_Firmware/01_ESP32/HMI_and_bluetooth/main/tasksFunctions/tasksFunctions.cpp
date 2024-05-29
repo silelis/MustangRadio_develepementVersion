@@ -2,6 +2,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 static QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
@@ -10,8 +22,6 @@ static hmiDisplay displayLedsColors;	//struktura zawierająca informacje na tema
 static NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
 static LEDS_BACKLIGHT *pLedDisplay;		//obiekt sterujący pracą ledów (diody i backlioght)
 static 	StepperOptoPowerOFF * pMotor;	//obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
-
-static	i2c_slave *i2cSlave;			// wskaźnik do obiektu sterujący komunikacją po i2c ESP32 (jako slave) z STM32 (jako master)
 
 /*---------------------------------------------------------------
 * Funkcja, która poowinna być wywołana jak najwcześniej, a której
@@ -39,9 +49,17 @@ void taskFunctionsStaticHandlersInit(void)
 	displayLedsColors.backlightLeds.primary.blue = 0;
 
 	//tworzenie obiektu i2cSlave
-	i2cSlave = NULL;
-	i2cSlave =	new i2c_slave();
-	assert(i2cSlave);	
+	//i2cSlave = NULL;
+	//i2cSlave =	new i2c_slave();
+	//assert(i2cSlave);	
+	
+	
+	
+
+	
+	
+	
+	
 	
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
