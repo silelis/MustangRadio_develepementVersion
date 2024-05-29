@@ -9,6 +9,4 @@ idf_component_register(
                     	NVSeeprom/NVSeeprom.cpp
                     	StepperOptoPowerOFF/StepperOptoPowerOFF.cpp
                     	a2dpSikn/a2dp_sink_demo.cpp
-                    	i2c_slave/my_i2c_slave.cpp
-                    	i2c_slave/my_i2c_slave_hw_init.c
                     INCLUDE_DIRS ".")
