@@ -13,11 +13,13 @@ public:
 	my_i2c_master();
 	~my_i2c_master();
 	esp_err_t i2cPing(uint8_t i2c_address);
-	
-protected:
 	i2c_master_bus_handle_t* phandler_i2c_bus;
 	uint16_t devicesOnBusIncrement();
 	uint16_t devicesOnBusDecrement();
+	
+protected:
+	
+
 	
 private:
 	uint16_t devicesOnBus;
