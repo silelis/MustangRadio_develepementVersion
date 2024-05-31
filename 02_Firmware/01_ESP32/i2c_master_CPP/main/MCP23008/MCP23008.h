@@ -16,10 +16,10 @@
 #define MCP23008_OLAT		0x0A		//OUTPUT LATCH REGISTER (OLAT)
 
 
-class MCP23008 :public my_i2c_master
+class MCP23008 /*:public my_i2c_master*/
 {
 public:
-	MCP23008(uint8_t i2cDeviceOpcode /*, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen*/);
+	MCP23008(uint8_t i2cDeviceOpcode, my_i2c_master* i2cMasterBus /*, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen*/);
 	~MCP23008();
 	
 	esp_err_t writeIODIR(uint8_t value);
@@ -54,4 +54,5 @@ protected:
 private:
 	//const char *TAG = "MCP23008 log:";
 	uint8_t DeviceOpcode;
+	my_i2c_master* pI2cMasterBus;
 };

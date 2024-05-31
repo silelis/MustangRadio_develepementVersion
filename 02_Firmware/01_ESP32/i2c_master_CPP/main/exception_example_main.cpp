@@ -51,12 +51,12 @@ extern "C" void app_main(void)
     cout << "app_main starting" << endl;
 
 	
-	//my_i2c_master *pmy_master;
-	//pmy_master = new my_i2c_master();
-	//pmy_master->i2cPing(0b0100000);
+	my_i2c_master *pmy_master;
+	pmy_master = new my_i2c_master();
+	pmy_master->i2cPing(0b0100000);
 	
 	MCP23008* pMCP23008;
-	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE);	
+	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master);	
 	
 	
 	
