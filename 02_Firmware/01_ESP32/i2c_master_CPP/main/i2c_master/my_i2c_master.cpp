@@ -30,7 +30,7 @@ my_i2c_master::my_i2c_master()
 esp_err_t my_i2c_master::i2cPing(uint8_t i2c_address)
 {
 	xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
-	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus/*handler_i2c_bus*/, i2c_address/*address*/, 50);
+	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus/*handler_i2c_bus*/, i2c_address/*address*/, 150);
 	xSemaphoreGive(this->xI2CMasterMutex);
 	if (ret == ESP_OK) {
 		printf("I2C slave with address 0x%x has been detected.\r\n", i2c_address);

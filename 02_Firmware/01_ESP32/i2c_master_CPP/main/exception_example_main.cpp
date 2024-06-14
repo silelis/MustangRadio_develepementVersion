@@ -58,9 +58,21 @@ extern "C" void app_main(void)
 	MCP23008* pMCP23008;
 	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master);	
 	
+
+	pMCP23008->writeIODIR(0x2);
 	
+	uint8_t retVal = 0;
+	 retVal = pMCP23008->readIODIR();
+
 	
-	
+	if (retVal == 0)
+	{
+		while (1)
+		{
+			
+		}
+			
+	}
 	while (true)
 	{
 	         
