@@ -18,7 +18,8 @@ using std::runtime_error;
 
 
 //#include "i2c_master/my_i2c_master.h"
-#include "MCP23008/MCP23008.h"
+//#include "MCP23008/MCP23008.h"
+#include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 
 
 
@@ -59,20 +60,11 @@ extern "C" void app_main(void)
 	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master);	
 	
 
-	pMCP23008->writeIODIR(0x2);
+	StepperOptoPowerOFF motor(pMCP23008);
 	
-	uint8_t retVal = 0;
-	 retVal = pMCP23008->readIODIR();
+	motor.measureSliderRange();
 
 	
-	if (retVal == 0)
-	{
-		while (1)
-		{
-			
-		}
-			
-	}
 	while (true)
 	{
 	         
