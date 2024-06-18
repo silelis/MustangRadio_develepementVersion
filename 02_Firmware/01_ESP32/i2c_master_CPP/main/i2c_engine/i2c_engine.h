@@ -3,10 +3,26 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/i2c_master.h"
+#include "driver/i2c_slave.h"
 #include "driver/i2c_types.h"
 
-#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
+//#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 
+
+class i2cEngin_slave
+{
+public:
+	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, gpio_num_t interrupt_request_io_num);
+	~i2cEngin_slave();
+protected:
+	
+	
+private:
+	
+	
+	
+};
+	
 
 class i2cEngin_master {
 public:

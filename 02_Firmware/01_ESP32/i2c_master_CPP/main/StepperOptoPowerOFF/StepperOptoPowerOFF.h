@@ -7,6 +7,7 @@
 #include "cmath"
 #include <stdio.h>
 #include <string.h>
+#include "hwConfigFile.h"
 
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0

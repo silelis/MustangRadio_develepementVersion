@@ -15,13 +15,13 @@ static i2c_master_dev_handle_t MCP23008_dev_handle;		//Type of I2C master bus de
  * Returns:
  * NONE
 *---------------------------------------------------------------*/
-MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus)
+MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint32_t scl_speed_hz)
 {
 	this->pI2cMasterBus = i2cMasterBus; //inaczej w destruktorze nie zadziałają metody z my_i2c_master
 	DeviceOpcode = 	i2cDeviceOpcode;
 	MCP23008_dev_cfg.dev_addr_length = I2C_ADDR_BIT_LEN_7;
 	MCP23008_dev_cfg.device_address = DeviceOpcode;
-	MCP23008_dev_cfg.scl_speed_hz = I2C_MASTER_SPEED;
+	MCP23008_dev_cfg.scl_speed_hz = scl_speed_hz;// I2C_MASTER_SPEED;
 	
 	
 	assert(!i2c_master_bus_add_device(*(this->pI2cMasterBus->phandler_i2c_bus)/*phandler_i2c_bus*/, &MCP23008_dev_cfg, &MCP23008_dev_handle));

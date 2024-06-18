@@ -19,7 +19,7 @@
 class MCP23008 /*:public my_i2c_master*/
 {
 public:
-	MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus /*, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen*/);
+	MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint32_t scl_speed_hz /*, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen*/);
 	~MCP23008();
 	
 	esp_err_t writeIODIR(uint8_t value);
