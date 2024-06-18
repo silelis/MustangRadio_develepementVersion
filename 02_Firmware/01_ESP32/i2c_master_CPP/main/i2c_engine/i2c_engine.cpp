@@ -4,6 +4,10 @@
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
 
+static i2c_master_bus_handle_t handler_i2c_bus_slave;
+static i2c_master_bus_config_t i2c_bus_config_slave;
+
+
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
 
@@ -23,7 +27,7 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	this->xI2CMasterMutex = xSemaphoreCreateMutex();
 	assert(this->xI2CMasterMutex);
 	xSemaphoreGive(this->xI2CMasterMutex);
-	printf("I2C master bus has been initialised on port %d.\r\n", I2C_MASTER_PORT);
+	printf("I2C master bus has been initialised on port %d.\r\n", i2c_port);
 
 }
 

@@ -16,9 +16,9 @@ using std::runtime_error;
 
 
 
-#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
+#include "hwConfigFile.h"
 #include "i2c_engine/i2c_engine.h"
-//#include "MCP23008/MCP23008.h"
+#include "MCP23008/MCP23008.h"
 #include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 
 
@@ -57,7 +57,7 @@ extern "C" void app_main(void)
 	pmy_master->i2cPing(0b0100000);
 	
 	MCP23008* pMCP23008;
-	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master);	
+	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master, I2C_MASTER_SPEED);	
 	
 
 	StepperOptoPowerOFF motor(pMCP23008);
