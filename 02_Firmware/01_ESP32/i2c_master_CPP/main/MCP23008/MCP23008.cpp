@@ -15,7 +15,7 @@ static i2c_master_dev_handle_t MCP23008_dev_handle;		//Type of I2C master bus de
  * Returns:
  * NONE
 *---------------------------------------------------------------*/
-MCP23008::MCP23008(uint8_t i2cDeviceOpcode, my_i2c_master* i2cMasterBus)
+MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus)
 {
 	this->pI2cMasterBus = i2cMasterBus; //inaczej w destruktorze nie zadziałają metody z my_i2c_master
 	DeviceOpcode = 	i2cDeviceOpcode;
