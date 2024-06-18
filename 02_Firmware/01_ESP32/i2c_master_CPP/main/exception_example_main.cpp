@@ -16,8 +16,8 @@ using std::runtime_error;
 
 
 
-
-//#include "i2c_master/my_i2c_master.h"
+#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
+#include "i2c_engine/i2c_engine.h"
 //#include "MCP23008/MCP23008.h"
 #include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 
@@ -52,8 +52,8 @@ extern "C" void app_main(void)
     cout << "app_main starting" << endl;
 
 	
-	my_i2c_master *pmy_master;
-	pmy_master = new my_i2c_master();
+	i2cEngin_master *pmy_master;
+	pmy_master = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
 	pmy_master->i2cPing(0b0100000);
 	
 	MCP23008* pMCP23008;
