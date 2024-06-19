@@ -55,7 +55,8 @@ extern "C" void app_main(void)
 	i2cEngin_master *pmy_master;
 	pmy_master = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
 	pmy_master->i2cPing(0b0100000);
-	
+
+	i2cEngin_slave *pmy_slave = new i2cEngin_slave(0, GPIO_NUM_21, GPIO_NUM_22, 0x3C, I2C_ADDR_BIT_LEN_7);
 	MCP23008* pMCP23008;
 	pMCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, pmy_master, I2C_MASTER_SPEED);	
 	
@@ -64,7 +65,6 @@ extern "C" void app_main(void)
 	
 	motor.measureSliderRange();
 
-	
 	while (true)
 	{
 	         

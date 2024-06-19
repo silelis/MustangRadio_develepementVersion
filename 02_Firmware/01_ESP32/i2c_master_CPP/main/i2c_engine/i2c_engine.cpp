@@ -19,8 +19,18 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	i2c_config_slave.scl_io_num = scl_io_num;	//GPIO_NUM_22
 	i2c_config_slave.sda_io_num = sda_io_num;	//GPIO_NUM_21
 	i2c_config_slave.slave_addr = slave_addr;	//0x3C;
-	//};
+	
+	assert(!i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
+	printf("I2C slave bus has been initialised on port %d with address %lx.\r\n", i2c_port, slave_addr);
 }
+
+i2cEngin_slave::~i2cEngin_slave()
+{
+	assert(!i2c_del_slave_device(handler_i2c_dev_slave));	
+	printf("I2C slave bus has been destructed.\r\n");
+}
+
+
 
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
@@ -85,7 +95,7 @@ i2cEngin_master::~i2cEngin_master()
 		xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
 		i2c_del_master_bus(*phandler_i2c_bus);
 		vSemaphoreDelete(this->xI2CMasterMutex);
-		printf("I2C master bus has beed destructed.\r\n");
+		printf("I2C master bus has been destructed.\r\n");
 	}
 	else
 	{
