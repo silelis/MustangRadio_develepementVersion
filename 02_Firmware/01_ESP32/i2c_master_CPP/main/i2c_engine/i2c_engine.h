@@ -12,7 +12,7 @@
 class i2cEngin_slave
 {
 public:
-	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, gpio_num_t interrupt_request_io_num);
+	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len);
 	~i2cEngin_slave();
 protected:
 	

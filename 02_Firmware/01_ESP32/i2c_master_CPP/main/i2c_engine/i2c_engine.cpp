@@ -4,9 +4,23 @@
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
 
-static i2c_master_bus_handle_t handler_i2c_bus_slave;
-static i2c_master_bus_config_t i2c_bus_config_slave;
+ 
+static i2c_slave_dev_handle_t handler_i2c_dev_slave;
+static i2c_slave_config_t i2c_config_slave;
 
+
+i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t	slave_addr_bit_len)
+{
+	//i2c_slave_config_t i2c_slv_config = {
+	i2c_config_slave.addr_bit_len =slave_addr_bit_len;	//I2C_ADDR_BIT_LEN_7;
+	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
+	i2c_config_slave.i2c_port = i2c_port;		//0
+	i2c_config_slave.send_buf_depth = 256;
+	i2c_config_slave.scl_io_num = scl_io_num;	//GPIO_NUM_22
+	i2c_config_slave.sda_io_num = sda_io_num;	//GPIO_NUM_21
+	i2c_config_slave.slave_addr = slave_addr;	//0x3C;
+	//};
+}
 
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
