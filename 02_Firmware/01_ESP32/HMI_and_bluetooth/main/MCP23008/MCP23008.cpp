@@ -1,43 +1,35 @@
-#include "MCP23008.h"
+ #include "MCP23008.h"
+//#include "i2c_engine/i2c_engine.h"
+
+static i2c_device_config_t MCP23008_dev_cfg;			//I2C device configuration.	 Musi być globalny, a nie w kalsie, bo inaczej kod nie działa. static, aby nie był widoczny poza ten plik.
+
+
+
+static i2c_master_dev_handle_t MCP23008_dev_handle;		//Type of I2C master bus device handle. Musi być globalny, a nie w kalsie, bo inaczej kod nie działa. static, aby nie był widoczny poza ten plik.
 
 /*---------------------------------------------------------------
  * Konstruktor klasy ekspandera portów GPIO przez i2c.
  * Parameters:
  * uint8_t i2cDeviceOpcode - adres MCP23008 na magistrali i2c
- * int pinSDA - pin SDA interfejsu i2c (parmetr niezbędny dla
- *              konstruktora dziedziczonego klasy i2cMaster)
- * int pinSCL - pin SCL interfejsu i2c (parmetr niezbędny
- *              dla konstruktora dziedziczonego klasy i2cMaster)
- * uint32_t i2cSpeed - prętkość transmisji i2c (parmetr niezbędny
- *               dla konstruktora dziedziczonego klasy i2cMaster)
- * size_t rxBuffLen  - wielkość bufora nadawania (parmetr niezbędny
- *               dla konstruktora dziedziczonego klasy i2cMaster)
- * size_t txBuffLen  - wielkość bufora odbioru (parmetr niezbędny
- *               dla konstruktora dziedziczonego klasy i2cMaster)
+ * my_i2c_master* i2cMasterBus - wskaźnik do obiektu obsługującego
+ *				transmisję i2c mastera
  * Returns:
  * NONE
 *---------------------------------------------------------------*/
-MCP23008::MCP23008(uint8_t i2cDeviceOpcode, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen)
-	: i2cMaster(pinSDA, pinSCL, i2cSpeed, rxBuffLen, txBuffLen)
+MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint32_t scl_speed_hz)
 {
-	//todo: get instance counter value,
-	//todo: PANIC ERROR IF I2C MASTER NOT INIOTIALISED
-	//TOTO:	BROWNOUT DETECTION
+	this->pI2cMasterBus = i2cMasterBus; //inaczej w destruktorze nie zadziałają metody z my_i2c_master
+	DeviceOpcode = 	i2cDeviceOpcode;
+	MCP23008_dev_cfg.dev_addr_length = I2C_ADDR_BIT_LEN_7;
+	MCP23008_dev_cfg.device_address = DeviceOpcode;
+	MCP23008_dev_cfg.scl_speed_hz = scl_speed_hz;// I2C_MASTER_SPEED;
 	
-	//ESP_LOGI(this->TAG, "Create MCP23008 configuration.");
-	printf("%s: Create MCP23008 configuration.\n", this->TAG);
-	if (this->geti2cInstanceCounterState() == 0)
-	{
-		//ESP_LOGE(TAG, "I2C master configuration error.");
-		printf("%s: I2C master configuration error.\n", this->TAG);
-	}
-	else
-	{
-		//TODO: i2cPing to MCP23008 w ifie
-		//this->writeBuffoLen = sizeof(this->writeBuffor);
-		//this->readBufforLen = sizeof(this->readBuffor);
-		this->DeviceOpcode = i2cDeviceOpcode;
-	}	
+	
+	assert(!i2c_master_bus_add_device(*(this->pI2cMasterBus->phandler_i2c_bus)/*phandler_i2c_bus*/, &MCP23008_dev_cfg, &MCP23008_dev_handle));
+	
+	this->pI2cMasterBus->devicesOnBusIncrement();
+	//i2cMasterBus->devicesOnBusIncrement();
+	printf("MCP23008 GPIO expander has been initialised on i2c bus with address 0x%x.\r\n", DeviceOpcode);
 }
 
 /*---------------------------------------------------------------
@@ -49,35 +41,10 @@ MCP23008::MCP23008(uint8_t i2cDeviceOpcode, int pinSDA, int pinSCL, uint32_t i2c
 *---------------------------------------------------------------*/
 MCP23008::~MCP23008()
 {
-	//ESP_LOGI(this->TAG, "MCP23008 destruction.");
-	printf("%s: MCP23008 destruction.\n", this->TAG);
-
-}
-
-/*---------------------------------------------------------------
- * Metoda buduje ramkę danych i2c (patrz dokumentacja protokołu i2c
- * w ESP-IDF), która jest wysyłana po i2c do ekspandera GPIO w celu
- * aktualizacji (zapisania) wartości w rejestrze).
- * Parameters:
- * uint8_t* data - wskaźnik do pamięci zawierający:
- *		data[0] - adres rejestru jaki ma być zapisany,
- *  		data[1] - wartość danej jaka ma być zapisana w rejestrze
- * size_t len - długość ramki danych
- * Returns:
- * esp_err_t retVal - 0x0 jeśli operacja przebiegła pomyślnie 
-*---------------------------------------------------------------*/
-esp_err_t MCP23008::writeData(uint8_t* data, size_t len)
-{
-	i2c_cmd_handle_t cmd_write = i2c_cmd_link_create();
-	i2c_master_start(cmd_write);
-	i2c_master_write_byte(cmd_write, (this->DeviceOpcode << 1) | I2C_MASTER_WRITE, I2C_MASTER_ACK);
+	assert(!i2c_master_bus_rm_device(MCP23008_dev_handle));
+	this->pI2cMasterBus->devicesOnBusDecrement();
+	printf("MCP23008 GPIO  expander with address 0x%x has been deleted from i2c bus.\r\n", DeviceOpcode);
 	
-	i2c_master_write(cmd_write, data, len, I2C_MASTER_ACK/*1*/);
-	i2c_master_stop(cmd_write);
-	
-	esp_err_t retVal = this->i2cWriteData(cmd_write);
-	i2c_cmd_link_delete(cmd_write);
-	return retVal;	
 }
 
 /*---------------------------------------------------------------
@@ -93,18 +60,28 @@ esp_err_t MCP23008::writeData(uint8_t* data, size_t len)
 *---------------------------------------------------------------*/
 esp_err_t MCP23008::readData(uint8_t* data)
 {
-	i2c_cmd_handle_t cmdRead = i2c_cmd_link_create();
-	i2c_master_start(cmdRead);
-	i2c_master_write_byte(cmdRead, (this->DeviceOpcode << 1) | I2C_MASTER_WRITE, I2C_MASTER_ACK);
-	i2c_master_write_byte(cmdRead, data[0], I2C_MASTER_NACK);
-	i2c_master_start(cmdRead);
-	i2c_master_write_byte(cmdRead, (this->DeviceOpcode << 1) | I2C_MASTER_READ, I2C_MASTER_ACK);
-	i2c_master_read_byte(cmdRead, data+1, I2C_MASTER_ACK);
-	i2c_master_stop(cmdRead);
-	
-	esp_err_t retVal = this->i2cWriteData(cmdRead);
-	i2c_cmd_link_delete(cmdRead);
-	return retVal;
+	uint8_t* write_buffer = &data[0];
+	uint8_t* read_buffer = &data[1];
+	return i2c_master_transmit_receive(MCP23008_dev_handle, write_buffer, sizeof(uint8_t), read_buffer, sizeof(uint8_t), 150);
+}
+
+
+/*---------------------------------------------------------------
+ * Metoda buduje ramkę danych i2c (patrz dokumentacja protokołu i2c
+ * w ESP-IDF), która jest wysyłana po i2c do ekspandera GPIO w celu
+ * aktualizacji (zapisania) wartości w rejestrze).
+ * Parameters:
+ * uint8_t* data - wskaźnik do pamięci zawierający:
+ *		data[0] - adres rejestru jaki ma być zapisany,
+ *  		data[1] - wartość danej jaka ma być zapisana w rejestrze
+ * size_t len - długość ramki danych
+ * Returns:
+ * esp_err_t retVal - 0x0 jeśli operacja przebiegła pomyślnie 
+*---------------------------------------------------------------*/
+esp_err_t MCP23008::writeData(uint8_t* data, size_t len)
+{
+	uint8_t* write_buffer = &data[0];	
+	return i2c_master_transmit(MCP23008_dev_handle, write_buffer, len, 150);
 }
 
 
@@ -119,7 +96,7 @@ esp_err_t MCP23008::writeIODIR(uint8_t value)
 {
 	uint8_t data[2];
 	*data = MCP23008_IODIR;
-	*(data+1) = value;
+	*(data + 1) = value;
 	return this->writeData(data, 2);
 }
 
@@ -271,7 +248,7 @@ uint8_t MCP23008::readIODIR()
 	uint8_t data[2];
 	data[0] = MCP23008_IODIR;
 	this->readData(&data[0]);
-	return *(data+1);
+	return *(data + 1);
 }
 
 /*---------------------------------------------------------------

@@ -37,36 +37,17 @@ TaskHandle_t handlerTask_backlightDisplay;
 TaskHandle_t handlerTask_stepperMotor;	
 
 
-#include "driver/i2c_slave.h"
+//#include "driver/i2c_slave.h"
 
 extern "C" void app_main(void)
 {
 	/* CAUTION */
 	//this project had been created with:
 	//- Visual Studio 2019
-	//- VisualGDB-5.6r9.msi
-	//- esp32-gcc11.2.0-r2.exe (ESP32 toolchain)
+	//- VisualGDB-6.0
+	//- esp-idf 5.2
 	/* CAUTION */
 		
-	
-	
-	i2c_slave_config_t i2c_slv_config; // = {
-	i2c_slv_config.addr_bit_len = I2C_ADDR_BIT_LEN_7;
-	i2c_slv_config.clk_source = I2C_CLK_SRC_DEFAULT;
-	i2c_slv_config.i2c_port = 0;
-	i2c_slv_config.send_buf_depth = 256;
-	i2c_slv_config.scl_io_num = GPIO_NUM_22;
-	i2c_slv_config.sda_io_num = GPIO_NUM_21;
-	i2c_slv_config.slave_addr = 0x3C;
-	//};
-
-
-	i2c_slave_dev_handle_t slave_handle, *pi2c_slave_dev_handle_t;
-	pi2c_slave_dev_handle_t = &slave_handle;
-	
-	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_slv_config, pi2c_slave_dev_handle_t));
-	
-	
 	
 	
 	init_uart();

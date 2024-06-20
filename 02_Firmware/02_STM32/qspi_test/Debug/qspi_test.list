@@ -662,10 +662,10 @@ int main(void)
  80007cc:	f006 fde0 	bl	8007390 <memset>
   HAL_StatusTypeDef result;				//1000100
   //result= HAL_I2C_IsDeviceReady(&hi2c1, 0b1010010<<1, 13, HAL_MAX_DELAY);
-  result= HAL_I2C_IsDeviceReady(&hi2c1, /*0b1000100<<1*/0x3C+1<<1, 13, HAL_MAX_DELAY);
+  result= HAL_I2C_IsDeviceReady(&hi2c1, /*0b1000100<<1*/0x3C<<1, 13, HAL_MAX_DELAY);
  80007d0:	f04f 33ff 	mov.w	r3, #4294967295
  80007d4:	220d      	movs	r2, #13
- 80007d6:	217a      	movs	r1, #122	@ 0x7a
+ 80007d6:	2178      	movs	r1, #120	@ 0x78
  80007d8:	480b      	ldr	r0, [pc, #44]	@ (8000808 <main+0x68>)
  80007da:	f001 f913 	bl	8001a04 <HAL_I2C_IsDeviceReady>
  80007de:	4603      	mov	r3, r0

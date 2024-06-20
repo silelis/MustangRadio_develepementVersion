@@ -1,4 +1,4 @@
-21:06:00 **** Incremental Build of configuration Debug for project qspi_test ****
+21:46:44 **** Incremental Build of configuration Debug for project qspi_test ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'main':
@@ -22,9 +22,6 @@ In file included from ../Core/Src/main.c:28:
 C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/string.h:33:18: note: expected 'void *' but argument is of type 'char'
    33 | void *   memset (void *, int, size_t);
       |                  ^~~~~~
-../Core/Src/main.c:148:63: warning: suggest parentheses around '+' inside '<<' [-Wparentheses]
-  148 |   result= HAL_I2C_IsDeviceReady(&hi2c1, /*0b1000100<<1*/0x3C+1<<1, 13, HAL_MAX_DELAY);
-      |                                                               ^~
 ../Core/Src/main.c:154:51: warning: passing argument 3 of 'HAL_I2C_Master_Receive' from incompatible pointer type [-Wincompatible-pointer-types]
   154 |   result= HAL_I2C_Master_Receive(&hi2c1, 0x3C<<1, &receiveData, 6, 0xffff);
       |                                                   ^~~~~~~~~~~~
@@ -52,5 +49,5 @@ Finished building: default.size.stdout
 Finished building: qspi_test.list
  
 
-21:06:02 Build Finished. 0 errors, 6 warnings. (took 1s.816ms)
+21:46:45 Build Finished. 0 errors, 5 warnings. (took 1s.292ms)
 

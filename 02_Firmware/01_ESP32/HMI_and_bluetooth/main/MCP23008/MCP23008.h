@@ -1,7 +1,7 @@
 #pragma once
 
-#include "i2c_master/my_i2c_master.h"
-#include "esp_log.h"
+
+#include "i2c_engine/i2c_engine.h"
 
 #define MCP23008_IODIR		0x00		//I/O DIRECTION (IODIR) REGISTER
 #define MCP23008_IPOL		0x01		//INPUT POLARITY (IPOL) REGISTER
@@ -16,10 +16,10 @@
 #define MCP23008_OLAT		0x0A		//OUTPUT LATCH REGISTER (OLAT)
 
 
-class MCP23008:public i2cMaster
+class MCP23008 /*:public my_i2c_master*/
 {
-	public:
-	MCP23008(uint8_t i2cDeviceOpcode, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen);
+public:
+	MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint32_t scl_speed_hz /*, int pinSDA, int pinSCL, uint32_t i2cSpeed, size_t rxBuffLen, size_t txBuffLen*/);
 	~MCP23008();
 	
 	esp_err_t writeIODIR(uint8_t value);
@@ -47,13 +47,12 @@ class MCP23008:public i2cMaster
 	uint8_t readGPIO();
 	uint8_t readOLAT();
 	
-	
-	
 protected:
 	esp_err_t writeData(uint8_t* data, size_t len);
 	esp_err_t readData(uint8_t* data);
 	
 private:
-	const char *TAG = "MCP23008 log:";
+	//const char *TAG = "MCP23008 log:";
 	uint8_t DeviceOpcode;
+	i2cEngin_master* pI2cMasterBus;
 };

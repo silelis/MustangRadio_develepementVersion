@@ -1,4 +1,5 @@
 #include "tasksFunctions.h"
+#include "i2c_engine/i2c_engine.h"
 
 
 
@@ -48,10 +49,15 @@ void taskFunctionsStaticHandlersInit(void)
 	displayLedsColors.backlightLeds.primary.green = 0;
 	displayLedsColors.backlightLeds.primary.blue = 0;
 
-	//tworzenie obiektu i2cSlave
-	//i2cSlave = NULL;
-	//i2cSlave =	new i2c_slave();
-	//assert(i2cSlave);	
+	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
+	printf("I2C slave bus init\n");
+	i2cEngin_slave *p_i2cSlave = new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS, I2C_ADDR_BIT_LEN_7);
+	assert(p_i2cSlave);
+	
+	
+	
+	
+	
 	
 	
 	
@@ -81,9 +87,22 @@ void taskFunctionsStaticHandlersInit(void)
 	assert(pLedDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
 	pLedDisplay->ledStripClearAll();
 	
+	//tworzy obiekt obsługujący szyne i2c master komunikującą się z  MCP23008
+	printf("I2C master bus init\n");
+	i2cEngin_master *p_i2cMaster = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
+	assert(p_i2cMaster);
+	// sprawdza czy MCP23008 jest dostępny na szynie i2c
+	assert(!p_i2cMaster->i2cPing(MCP23008_I2C_DEVICE_OPCODE));
+	//tworzy obiekt obsługujący transmisję danych z MCP23008
+	printf("MCP23008 on I2C master bus init\n");
+	MCP23008* p_MCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, p_i2cMaster, I2C_MASTER_SPEED);
+	assert(p_MCP23008);
+	
+	
+	
 	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
 	printf("Stepper motor and powerOFF gpio init\n");
-	assert(pMotor = new StepperOptoPowerOFF());
+	assert(pMotor = new StepperOptoPowerOFF(p_MCP23008));
 }
 
 

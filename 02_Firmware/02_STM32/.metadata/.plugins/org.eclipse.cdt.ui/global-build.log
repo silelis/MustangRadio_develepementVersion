@@ -16809,3 +16809,53 @@ Finished building: default.size.stdout
  
 Finished building: qspi_test.list
  
+21:46:44 **** Incremental Build of configuration Debug for project qspi_test ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:143:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  143 |   printf("Hello world!!!\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:29:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   28 | #include "string.h"
+  +++ |+#include <stdio.h>
+   29 | /* USER CODE END Includes */
+../Core/Src/main.c:143:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  143 |   printf("Hello world!!!\r\n");
+      |   ^~~~~~
+../Core/Src/main.c:143:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c:145:21: warning: passing argument 1 of 'memset' makes pointer from integer without a cast [-Wint-conversion]
+  145 |   memset(receiveData[0],0xff,8);
+      |          ~~~~~~~~~~~^~~
+      |                     |
+      |                     char
+In file included from ../Core/Src/main.c:28:
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/string.h:33:18: note: expected 'void *' but argument is of type 'char'
+   33 | void *   memset (void *, int, size_t);
+      |                  ^~~~~~
+../Core/Src/main.c:154:51: warning: passing argument 3 of 'HAL_I2C_Master_Receive' from incompatible pointer type [-Wincompatible-pointer-types]
+  154 |   result= HAL_I2C_Master_Receive(&hi2c1, 0x3C<<1, &receiveData, 6, 0xffff);
+      |                                                   ^~~~~~~~~~~~
+      |                                                   |
+      |                                                   char (*)[8]
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:626:97: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char (*)[8]'
+  626 | HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                        ~~~~~~~~~^~~~~
+../Core/Src/main.c:146:21: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+  146 |   HAL_StatusTypeDef result;                             //1000100
+      |                     ^~~~~~
+arm-none-eabi-g++ -o "qspi_test.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\qspi_test\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="qspi_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: qspi_test.elf
+ 
+arm-none-eabi-size  qspi_test.elf 
+arm-none-eabi-objdump -h -S qspi_test.elf  > "qspi_test.list"
+   text	   data	    bss	    dec	    hex	filename
+  31080	    108	   2228	  33416	   8288	qspi_test.elf
+Finished building: default.size.stdout
+ 
+Finished building: qspi_test.list
+ 
