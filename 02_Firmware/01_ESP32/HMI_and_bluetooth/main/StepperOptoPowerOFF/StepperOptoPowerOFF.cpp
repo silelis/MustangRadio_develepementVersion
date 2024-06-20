@@ -3,24 +3,26 @@
 /*---------------------------------------------------------------
  * Konstruktor klasy obsługującej silnik krokowy i jego krańcówki.
  * Parameters:
- * z klasy dziedzicznej: MCP23008 - są to parametry magistrali i2c,
- * zdefiniowane przez "#define".
+ * MCP23008* p_MCP23008 - obiekt sterujący pracą ekspandera GPIO
+ *						typu MCP23008
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-StepperOptoPowerOFF::StepperOptoPowerOFF()
-	: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
+StepperOptoPowerOFF::StepperOptoPowerOFF(MCP23008* pointer_MCP23008)
+	//: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
 {
-	this->writeIODIR(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
-	this->writeIPOL(0b0);
-	this->writeGPINTEN(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);		//interrupt pin is not supported
-	this->writeINTCON(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);		//interrupt pin is not supported
-	this->writeDEFVAL(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);		//interrupt pin is not supported
-	this->writeIOCON(0b00110000);															//interrupt pin is not supported
-	this->writeGPPU(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);		//only inputs pulled-up
+	pMCP23008 = pointer_MCP23008; 
+	this->pMCP23008->writeIODIR(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
+	this->pMCP23008->writeIPOL(0b0);
+	this->pMCP23008->writeGPINTEN(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK); //interrupt pin is not supported
+	this->pMCP23008->writeINTCON(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK); //interrupt pin is not supported
+	this->pMCP23008->writeDEFVAL(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK); //interrupt pin is not supported
+	this->pMCP23008->writeIOCON(0b00110000); //interrupt pin is not supported
+	this->pMCP23008->writeGPPU(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK); //only inputs pulled-up
 	
-	this->writeOLAT(0b00000000); //all GPIOs down to save energy
+	this->pMCP23008->writeOLAT(0b00000000); //all GPIOs down to save energy
 	this->motorParameters.maxPosition = 0;
+	
 	
 	//this->calibrationErrorCounter = 0; //todo:zmieni  status tego zale nie od odczytanej waro ci this->maxPosition o ile odczyta to 0 a jak nie ma tej waro ci this->maxPosition to +1
 }
@@ -34,44 +36,9 @@ StepperOptoPowerOFF::StepperOptoPowerOFF()
  *---------------------------------------------------------------*/
 StepperOptoPowerOFF::~StepperOptoPowerOFF()
 {
-	this->writeOLAT(0b00000000); //all GPIOs down to save energy
-	this->writeGPPU(0b00000000);		//pull-down enabled to save energy
+	this->pMCP23008->writeOLAT(0b00000000); //all GPIOs down to save energy
+	this->pMCP23008->writeGPPU(0b00000000); //pull-down enabled to save energy
 }
-
-/*
-esp_err_t StepperOpto::enableESP32InterruptNotification()
-{
-	uint8_t data = this->readOLAT();
-	data |= INTERRUP_REQUEST_MASK;					//set bit ONE
-	return this->writeOLAT(data);	
-}*/
-
-/*
-esp_err_t StepperOpto::disableESP32InterruptNotification()
-{
-	uint8_t data = this->readOLAT();
-	//data ^= INTERRUP_REQUEST_MASK;
-	data &= ~INTERRUP_REQUEST_MASK; //set bit ZERO
-	return this->writeOLAT(data);
-}*/
-
-/*
-esp_err_t StepperOpto::enableMuxSelect()
-{
-	uint8_t data = this->readOLAT();
-	data |= MUX_SELECT_MASK;						//set bit ONE
-	return this->writeOLAT(data);
-}*/
-	
-/*
-esp_err_t StepperOpto::disableMuxSelect()
-{
-	uint8_t data = this->readOLAT();
-	//data ^= MUX_SELECT_MASK;
-	data &= ~MUX_SELECT_MASK; //set bit ZERO
-	return this->writeOLAT(data);
-}*/
-
 
 /*---------------------------------------------------------------
  * Metoda ustawia stan włączający na sterowniku silnika krokowego
@@ -85,9 +52,9 @@ esp_err_t StepperOpto::disableMuxSelect()
  *---------------------------------------------------------------*/
 esp_err_t StepperOptoPowerOFF::enableStepperMotor()
 {
-	uint8_t data = this->readOLAT();
+	uint8_t data = this->pMCP23008->readOLAT();
 	data |= MOTOR_NOT_SLEEP_MASK;						//set bit ONE
-	esp_err_t retVal = this->writeOLAT(data);
+	esp_err_t retVal = this->pMCP23008->writeOLAT(data);
 	vTaskDelay(pdMS_TO_TICKS(20));
 	this->isStepperDriverEnabled = pdTRUE;
 	return retVal;
@@ -105,11 +72,11 @@ esp_err_t StepperOptoPowerOFF::enableStepperMotor()
  *---------------------------------------------------------------*/
 esp_err_t StepperOptoPowerOFF::disableStepperMotor()
 {
-	uint8_t data = this->readOLAT();
+	uint8_t data = this->pMCP23008->readOLAT();
 	//data ^= MOTOR_NOT_SLEEP_MASK;
 	data &= ~MOTOR_NOT_SLEEP_MASK; //set bit ZERO
 	this->isStepperDriverEnabled = pdFALSE;
-	return this->writeOLAT(data);
+	return this->pMCP23008->writeOLAT(data);
 }
 
 /*---------------------------------------------------------------
@@ -124,7 +91,7 @@ esp_err_t StepperOptoPowerOFF::disableStepperMotor()
  *---------------------------------------------------------------*/
 uint8_t  StepperOptoPowerOFF::readInputs()
 {
-	return this->readGPIO()&(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
+	return this->pMCP23008->readGPIO()&(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
 }
 
 /*---------------------------------------------------------------
@@ -208,7 +175,7 @@ void StepperOptoPowerOFF::measureSliderRange()
  *---------------------------------------------------------------*/
 esp_err_t StepperOptoPowerOFF::setDirection(bool direction)
 {
-	uint8_t data = this->readOLAT();
+	uint8_t data = this->pMCP23008->readOLAT();
 	switch ((uint8_t)direction)
 	{
 	case MOVE_BACKWARD:
@@ -221,7 +188,7 @@ esp_err_t StepperOptoPowerOFF::setDirection(bool direction)
 		break;		
 	}
 	vTaskDelay(pdMS_TO_TICKS(350));
-	return this->writeOLAT(data);
+	return this->pMCP23008->writeOLAT(data);
 }
 
 /*---------------------------------------------------------------
@@ -234,10 +201,10 @@ esp_err_t StepperOptoPowerOFF::setDirection(bool direction)
  *---------------------------------------------------------------*/
 esp_err_t StepperOptoPowerOFF::makeStep()
 {
-	uint8_t data = this->readOLAT();
+	uint8_t data = this->pMCP23008->readOLAT();
 	data ^= MOTOR_STEP_MASK;
 	vTaskDelay(pdMS_TO_TICKS(1));
-	return this->writeOLAT(data);
+	return this->pMCP23008->writeOLAT(data);
 	
 }
 
@@ -383,7 +350,7 @@ void StepperOptoPowerOFF::setValue_motorParameters(const void *src)
 
 void StepperOptoPowerOFF::radioPowerOFF(void)
 {
-	uint8_t data = this->readOLAT();
+	uint8_t data = this->pMCP23008->readOLAT();
 	data |= POWER_SUPPLU_SUSTAIN_MASK; //set bit ONE
-	/*return*/ this->writeOLAT(data);
+	/*return*/ this->pMCP23008->writeOLAT(data);
 }

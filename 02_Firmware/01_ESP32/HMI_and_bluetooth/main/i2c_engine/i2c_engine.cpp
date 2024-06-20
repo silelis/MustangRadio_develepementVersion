@@ -61,10 +61,10 @@ esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus/*handler_i2c_bus*/, i2c_address/*address*/, 150);
 	xSemaphoreGive(this->xI2CMasterMutex);
 	if (ret == ESP_OK) {
-		printf("I2C slave with address 0x%x has been detected.\r\n", i2c_address);
+		printf("I2C master have detected I2C slave device with address 0x%x.\r\n", i2c_address);
 	}
 	else {
-		printf("I2C slave with address 0x%x has NOT been detected.\r\n", i2c_address);
+		printf("I2C master HAVE NOT detected I2C slave device with address 0x%x.\r\n", i2c_address);
 	}
 	return ret;
 }

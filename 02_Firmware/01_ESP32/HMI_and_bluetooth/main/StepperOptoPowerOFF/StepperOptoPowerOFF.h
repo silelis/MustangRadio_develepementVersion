@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../MCP23008/MCP23008.h"
-#include "hwConfigFile.h"
 #include "esp_log.h"
 #include "freertos/task.h"
 #include "freertos/FreeRTOSConfig.h"
 #include "cmath"
 #include <stdio.h>
 #include <string.h>
+#include "hwConfigFile.h"
 
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0
@@ -21,21 +21,11 @@ typedef struct {
 } MotorParameters;
 
 	
-class StepperOptoPowerOFF:private MCP23008
+class StepperOptoPowerOFF//:private MCP23008
 {
 public:
-	StepperOptoPowerOFF();
+	StepperOptoPowerOFF(MCP23008* pointer_MCP23008);
 	~StepperOptoPowerOFF();
-	
-	//esp_err_t enableESP32InterruptNotification();
-	//esp_err_t disableESP32InterruptNotification();
-	
-	//esp_err_t ;		//TODO: nie wiem czy w ostatecznej wersji hardware będzie to wykorzystywane, zależy od sposobu w jaki rozwiąże przełączanie I2S
-	//esp_err_t disableMuxSelect();		//TODO: nie wiem czy w ostatecznej wersji hardware będzie to wykorzystywane, zależy od sposobu w jaki rozwiąże przełączanie I2S
-	
-
-	//esp_err_t measureSliderRange();
-	
 	void radioPowerOFF(void);
 	void measureSliderRange(void);
 	void moveXSteps(int32_t stepAmount);
@@ -55,13 +45,9 @@ private:
 	const char *TAG = "StepperOpto log:";
 	esp_err_t enableStepperMotor(); //todo: ta funkcja prywatna
 	esp_err_t disableStepperMotor(); //todo: ta funkcja prywatna
+	MCP23008* pMCP23008;
 	
 	MotorParameters motorParameters;
-	//uint16_t maxPosition;
-	//uint16_t currentPosition;
-	//uint16_t begginOffest;
-	//uint16_t endOffset;
 	uint8_t whichDirection;
 	bool isStepperDriverEnabled;
-	//uint8_t calibrationErrorCounter;
 };
