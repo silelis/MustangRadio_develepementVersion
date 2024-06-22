@@ -7,7 +7,8 @@
 #include "driver/gptimer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
-#include "comunicationProtocol.h"
+#include "./../../../03_Common/comunicationProtocol.h"
+//#include "comunicationProtocol.h"
 
 #include "freertos/task.h"
 //#include "tasksFunctions/tasksFunctions.h"

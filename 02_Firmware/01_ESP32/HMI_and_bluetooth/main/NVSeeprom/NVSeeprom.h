@@ -8,7 +8,8 @@
 #include "esp_err.h"
 #include "driver/uart.h"
 #include "hwConfigFile.h"
-#include "comunicationProtocol.h"
+#include "./../../../03_Common/comunicationProtocol.h"
+//#include "comunicationProtocol.h"
 #include <cstdint>
 #include <inttypes.h>
 

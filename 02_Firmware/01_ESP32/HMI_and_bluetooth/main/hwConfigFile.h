@@ -1,7 +1,8 @@
 #pragma once
 
 #include "hal/gpio_types.h"
-#include "comunicationProtocol.h"
+#include "./../../../03_Common/comunicationProtocol.h"
+//#include "comunicationProtocol.h"
 #include "driver/gpio.h"
 
 #define chip_ESP32_WROOM32D_DEVBOARD	0

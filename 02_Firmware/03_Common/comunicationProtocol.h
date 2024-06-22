@@ -32,7 +32,7 @@
 
 //i2c_farame
 typedef struct {
-	uint8_t frameSize;				//frameSize = sizeof(frameSize) + 	sizeof(commandGroup)+sizeof(commandData)
+	uint8_t frameSize;	  //frameSize = sizeof(frameSize) + 	sizeof(commandGroup)+sizeof(commandData)
 	uint8_t commandGroup; //aka I2C_COMMAND_GROUP
 	union dataUnion
 	{
@@ -41,3 +41,15 @@ typedef struct {
 	}commandData;
 		
 } i2cFrame;
+
+
+typedef struct
+{	   	
+	uint8_t commandGroup; //aka I2C_COMMAND_GROUP
+	uint8_t dataSize;	//sizeof(data to send)
+} i2cFrame_commonData;
+
+typedef struct {
+	i2cFrame_commonData i2cframeCommonData;
+	union keyboardUnion keyboardData;
+} i2cFrame_keyboardFrame;
