@@ -4,17 +4,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 static QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
@@ -148,9 +137,6 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 
 
 
-
-
-
 /*---------------------------------------------------------------
 * Funkcja sprawdza czy wartości znajdujące się w kolejce klawiatury
 * są poprawne (*głównie chodszi tutaj o wartości z enkoderów) i
@@ -164,25 +150,25 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 *---------------------------------------------------------------*/ 
 void keyboardQueueParametersParser(void *parameters)
 {
-	bool isQueueFeedRequirted;// = pdFALSE;
-	BaseType_t queueFeedRetVal;
-	keyboardUnion keyboardDataToParse;
-	keyboardDataToParse.array[0] = 0;
-	keyboardDataToParse.array[1] = 0;
+	bool isComunicationWithI2CMasterRequired;// = pdFALSE;
+	//BaseType_t queueFeedRetVal;
+	keyboardUnion keyboardDataToParse;		//bufor do którego będa kopiowane dane z kolejki klawiatury, i który bedzi eporzetwarzany w pętli for
+	keyboardDataToParse.array[0] = 0;		//zerowanei bufora
+	keyboardDataToParse.array[1] = 0;		//zerowanei bufora
 	i2cFrame keyboardDataToI2cTransmittQueue;
-
-	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;
+	
+	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;		//uchwyt który przekazuje fo taska parametr z funkcji MAIN (handlerQueue_MainKeyboard
 		
 	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	for (;;)
 	{
-		isQueueFeedRequirted  = pdFALSE;
-		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania 
+		isComunicationWithI2CMasterRequired  = pdFALSE; //cerowanie warunku 
+		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania, jeśli tak to kopiuje je do bufora 
 		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
 			//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
 			if ((keyboardDataToParse.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToParse.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED)) {
-				isQueueFeedRequirted  = pdTRUE;
+				isComunicationWithI2CMasterRequired  = pdTRUE;
 			}
 			
 			//sprawdza czy dane do parsowania pochodzą z enkoderów
@@ -190,12 +176,12 @@ void keyboardQueueParametersParser(void *parameters)
 			{
 				//sprawdza czy dane z enkoderów sa poprawne, tzn. czy są równie +/- encoder detant
 				if ((keyboardDataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT)) {
-					isQueueFeedRequirted  = pdTRUE;
+					isComunicationWithI2CMasterRequired  = pdTRUE;
 				}
 			}
 			
 		//jeśli dane są poprawne to następuje przesłanie danych do kolejki buffora nadawczego i2c
-			if (isQueueFeedRequirted  == pdTRUE)
+			if (isComunicationWithI2CMasterRequired  == pdTRUE)
 			{
 				keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 				memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
