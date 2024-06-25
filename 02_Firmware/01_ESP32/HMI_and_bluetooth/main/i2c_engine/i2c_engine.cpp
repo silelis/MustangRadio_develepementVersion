@@ -9,7 +9,7 @@ static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
 
-i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len)
+i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin)
 {
 	//i2c_slave_config_t i2c_slv_config = {
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;	//I2C_ADDR_BIT_LEN_7;
@@ -20,12 +20,36 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	i2c_config_slave.sda_io_num = sda_io_num;	//GPIO_NUM_21
 	i2c_config_slave.slave_addr = slave_addr;	//0x3C;
 	
+	this->i2cSlave_intRequestPin = intRequestPin;
+
+	gpio_config_t I2C_slave_IntRequestPinConfig;
+	I2C_slave_IntRequestPinConfig.intr_type = GPIO_INTR_DISABLE;
+	I2C_slave_IntRequestPinConfig.mode = GPIO_MODE_OUTPUT;
+	I2C_slave_IntRequestPinConfig.pin_bit_mask = 0x1 << this->i2cSlave_intRequestPin;
+	I2C_slave_IntRequestPinConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;
+	I2C_slave_IntRequestPinConfig.pull_up_en = GPIO_PULLUP_ENABLE;
+	assert(!gpio_config(&I2C_slave_IntRequestPinConfig));
+	this->interruptRequestReset();
+	printf("I2C slave bus interrupt request GPIO has been initialised on GPIO_num_%d.\n", this->i2cSlave_intRequestPin);
+	
 	assert(!i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
-	printf("I2C slave bus has been initialised on port %d with address %lx.\r\n", i2c_port, slave_addr);
+	printf("I2C slave bus has been initialised on port %d with address %lx.\n", i2c_port, slave_addr);
+}
+
+esp_err_t i2cEngin_slave::interruptRequestSet(void)
+{
+	return gpio_set_level(this->i2cSlave_intRequestPin, 0); //interrupt request is SET when pin is low
+}
+
+esp_err_t i2cEngin_slave::interruptRequestReset(void)
+{
+	return gpio_set_level(this->i2cSlave_intRequestPin, 1); //interrupt request is RESET when pin is high
 }
 
 i2cEngin_slave::~i2cEngin_slave()
 {
+	assert(!this->interruptRequestReset());
+	
 	assert(!i2c_del_slave_device(handler_i2c_dev_slave));	
 	printf("I2C slave bus has been destructed.\r\n");
 }

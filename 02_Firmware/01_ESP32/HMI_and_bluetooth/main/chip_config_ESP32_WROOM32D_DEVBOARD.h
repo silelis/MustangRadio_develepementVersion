@@ -16,6 +16,7 @@
 #define I2C_SLAVE_PIN_SDA				GPIO_NUM_21
 #define I2C_SLAVE_PIN_SCL				GPIO_NUM_22
 #define	I2C_SLAVE_SPEED					100000								//DO NOT CHANGE
+#define I2C_SLAVE_INTERRUP_REQUEST_PIN	GPIO_NUM_0
 
 //i2s pins assigment
 #define I2S_PIN_BCK		GPIO_NUM_26
