@@ -39,7 +39,28 @@ static const uint8_t crc8_table[256] = {
     0xE6, 0xE1, 0xE8, 0xEF, 0xFA, 0xFD, 0xF4, 0xF3};
 #endif
 
+/*---------------------------------------------------------------
+ * Oblicza sumę kontrolną danych I2C jakie są przesyłane pomiędzy
+ * stm32 i esp32.
+ * UWAGA 1: W funkcji jest stała bufferOffset o 
+ * wartości "1". Jest to spowodowane tym, że pierwszy byte 
+ * przekazywanych bufforóow to wartość obliczanej CRC, więc nie
+ * może być on brany pod uwagę, bo przy wyliczaniu poprawności
+ * danych będzie występowac bład.
+ * UWAGA 2: makro I2C_SLAVE_CRC_METHOD steruje sposobem wyliczania
+ * sumy kontrolnej. Jest to kontrolowane na etapie kompilacji,
+ * więc ważne jest aby STM32 i ESP32 posługiwały się tą samą
+ * wersją kodu źródłowego.
+ * Parameters:
+ * const void *buffer - wskaźnik (nie modyfikujacy zmiennej) do
+ *                  bufora z ktorego należy wyliczyć sumę kontrolną.
+ * size_t length - długość bufora (z uwzględnieniem pola na wartość
+ *                     CRC) z ktorego należy wyliczyć sume kontrolną.                 
+ * Returns:
+ * NONE
+ *---------------------------------------------------------------*/
 uint8_t calculate_checksum(const void *buffer, size_t length) {
+	const size_t bufferOffset = 1;        //In my solution bufferOffset is required because 1st 8 bits of buffer is uint8_t CRC field
 	const uint8_t *data = (const uint8_t *)buffer;
     
 #if I2C_SLAVE_CRC_METHOD == I2C_SLAVE_CRC_NONE
@@ -49,7 +70,7 @@ uint8_t calculate_checksum(const void *buffer, size_t length) {
 #elif I2C_SLAVE_CRC_METHOD == I2C_SLAVE_CRC_XOR
 	// Oblicza sumę kontrolną metodą XOR
 	uint8_t checksum = 0;
-	for (size_t i = 0; i < length; i++) {
+	for (size_t i = 0 + bufferOffset; i < length; i++) {
 		checksum ^= data[i];
 	}
 	return checksum;
@@ -57,7 +78,7 @@ uint8_t calculate_checksum(const void *buffer, size_t length) {
 #elif I2C_SLAVE_CRC_METHOD == I2C_SLAVE_CRC_8
 	// Oblicza CRC-8
 	uint8_t crc = 0x00; // Inicjalizuj CRC
-	for (size_t i = 0; i < length; i++) {
+	for (size_t i = 0 + bufferOffset; i < length; i++) {
 		crc = crc8_table[crc ^ data[i]];
 	}
 	return crc;
