@@ -3,7 +3,6 @@
 
 
 
-
 static QueueHandle_t handlerQueue_i2cFrameTransmittBuffer;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
@@ -138,20 +137,33 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 }
 
 
+/*---------------------------------------------------------------
+* Lokalna funkcja, ktora sprawdza czy dane otrzymane z obsługi
+* przerwania klawiatury są poprawne (chodzi głównie o dane z
+* enkodera, gdzie jeśli wartość nie jest równa +detand lub -detand
+* to nastąpił błąd debounceowania enkodera i uszkodzonych danych
+* nie warto wysyłać do MCU mastera).
+* Parameters:
+* keyboardUnion keyboardDataToCheck - unia zawierająca dane z
+*		klawiatury jakie należy sprawdziź pod kątem ich poprawności
+* Returns:
+* bool - pdTrue jeśli dane są poprawne, pdFalse jeśli dane nie są
+*		poprawne.
+*---------------------------------------------------------------*/ 
 
-static bool keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardUnion keyboardDataToParse)
+static bool keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardUnion keyboardDataToCheck)
 {
 	//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
-	if ((keyboardDataToParse.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToParse.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED))
+	if ((keyboardDataToCheck.array[0] == HMI_INPUT_BUTTON) || (keyboardDataToCheck.array[0] == HMI_INPUT_BUTTON_LONG_AND_PRESSED))
 	{
 		return pdTRUE; 
 	}
 			
 	//sprawdza czy dane do parsowania pochodzą z enkoderów
-	if ((keyboardDataToParse.array[0] == HMI_INPUT_VOLUME) || (keyboardDataToParse.array[0] == HMI_INPUT_EQUALISER))
+	if ((keyboardDataToCheck.array[0] == HMI_INPUT_VOLUME) || (keyboardDataToCheck.array[0] == HMI_INPUT_EQUALISER))
 	{
 		//sprawdza czy dane z enkoderów sa poprawne, tzn. czy są równie +/- encoder detant
-		if ((keyboardDataToParse.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToParse.encoderValue.value == -ENCODER_PULSED_PER_DETANT)) {
+		if ((keyboardDataToCheck.encoderValue.value == ENCODER_PULSED_PER_DETANT) || (keyboardDataToCheck.encoderValue.value == -ENCODER_PULSED_PER_DETANT)) {
 			return pdTRUE;
 		}
 	}
@@ -159,6 +171,25 @@ static bool keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboard
 }
 
 
+static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keyboardDataToCheck)
+{
+	printf("Queue feeding error\n");
+	if (keyboardDataToCheck.kbrdValue.input == HMI_INPUT_BUTTON)	//long press release button event
+	{
+		switch (keyboardDataToCheck.kbrdValue.value)
+		{
+		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))):			//BUT0	presses	= emergency reset
+			printf("Emergency hardware restart\n");
+			hardwarePowerOFF();
+			break;
+		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses = NVS reset + emergency reset
+			printf("Emergency NVS reset\n");
+			pSTORAGE->CAUTION_NVS_ereaseAndInit(10);
+			printf("Please restart device\n");
+			break;
+		}
+	}				
+}
 /*---------------------------------------------------------------
 * Funkcja sprawdza czy wartości znajdujące się w kolejce klawiatury
 * są poprawne (*głównie chodszi tutaj o wartości z enkoderów) i
@@ -177,50 +208,27 @@ void keyboardQueueParametersParser(void *parameters)
 	keyboardUnion keyboardDataToParse;		//bufor do którego będa kopiowane dane z kolejki klawiatury, i który bedzi eporzetwarzany w pętli for
 	keyboardDataToParse.array[0] = 0;		//zerowanei bufora
 	keyboardDataToParse.array[1] = 0;		//zerowanei bufora
-	i2cFrame keyboardDataToI2cTransmittQueue;
-	
+	//i2cFrame keyboardDataToI2cTransmittQueue;
+	i2cFrame_keyboardFrame kbrdDataToI2CSlaveTransmittQueue;
 	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;		//uchwyt który przekazuje fo taska parametr z funkcji MAIN (handlerQueue_MainKeyboard
 		
-	keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
+	//keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
+	kbrdDataToI2CSlaveTransmittQueue.i2cframeCommandHeader.dataSize = sizeof(keyboardDataToParse);
 	for (;;)
 	{
-		//isComunicationWithI2CMasterRequired  = pdFALSE; //cerowanie warunku 
-		//sprawdza czy w kolejce danych z klawiatury znajdują sie jakiekolwiek dane do parsowania, jeśli tak to kopiuje je do bufora 
 		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
-		//isComunicationWithI2CMasterRequired  = keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardDataToParse);
-		//jeśli dane są poprawne to następuje przesłanie danych do kolejki buffora nadawczego i2c
-			if (/*isComunicationWithI2CMasterRequired  == pdTRUE*/keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardDataToParse))
+			if (keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardDataToParse))		//sprawdza czy dane z przerwania klawiatury są poprawne, jeśli tak to przystępuje do ich przesłania do kolejki nadawczej I2C slave
 			{
-				keyboardDataToI2cTransmittQueue.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
-				memcpy(&keyboardDataToI2cTransmittQueue.commandData.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &keyboardDataToI2cTransmittQueue, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
+				kbrdDataToI2CSlaveTransmittQueue.i2cframeCommandHeader.CRC = (uint8_t) calculate_checksum(&keyboardDataToParse, sizeof(keyboardDataToParse));
+				memcpy(&kbrdDataToI2CSlaveTransmittQueue.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
+				if (xQueueSend(handlerQueue_i2cFrameTransmittBuffer, &kbrdDataToI2CSlaveTransmittQueue, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
 				{
-					printf("Queue feeding error\n");
-					if (keyboardDataToParse.kbrdValue.input == HMI_INPUT_BUTTON)	//long press release button event
-					{
-						switch (keyboardDataToParse.kbrdValue.value)
-						{
-						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))): //BUT0	presses
-							printf("Emergency hardware restart\n");
-							hardwarePowerOFF();
-							break;
-						case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses
-							printf("Emergency NVS reset\n");
-							pSTORAGE->CAUTION_NVS_ereaseAndInit(10);
-							printf("Please restart device\n");
-							break;
-						}	 
-					}
+					keyboardQueueParameters_isEmergencyResetRequired(keyboardDataToParse);
 				}
 				//----------------------------------------------------------------------//
-				//poniższa funkcja jkest tylko do celów debugowania poprawności programu
+				//poniższa funkcja jest tylko do celów debugowania poprawności programu
 				keyboardQueueParametersParserPrintf(keyboardDataToParse);
-				//i2cFrame daneZKolejki;
-				//xQueueReceive(handlerQueue_i2cFrameTransmittBuffer, &daneZKolejki, portMAX_DELAY);
-				//keyboardQueueParametersParserPrintf(daneZKolejki.commandData.keyboardData);	
-				//poniższa funkcja jkest tylko do celów debugowania poprawności programu
-				//----------------------------------------------------------------------//
 			}		
 		}
 	}
