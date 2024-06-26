@@ -1,7 +1,8 @@
 #pragma once
 #include "inttypes.h"
 #include "comunicationStructures.h"
-
+#include <stdio.h>
+#include <stdint.h> 
 
 #define I2C_SLAVE_ADDRESS					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
 #define I2C_SLAVE_RX_BUFFER_LEN				512
@@ -29,7 +30,7 @@
 #define NVS_KEY_BLOB_MotorParameters	"MotorParam"
 
 
-
+/*
 //i2c_farame
 typedef struct {
 	uint8_t frameSize;	  //frameSize = sizeof(frameSize) + 	sizeof(commandGroup)+sizeof(commandData)
@@ -41,6 +42,7 @@ typedef struct {
 	}commandData;
 		
 } i2cFrame;
+*/
 
 
 typedef struct
@@ -48,9 +50,9 @@ typedef struct
 	uint8_t	CRC;			//checksum for i2c farame (commandGroup+dataSize+data)
 	uint8_t commandGroup;	//aka I2C_COMMAND_GROUP
 	uint8_t dataSize;		//sizeof(data to send)
-} i2cFrame_commonData;
+} i2cFrame_commonHeader;
 
 typedef struct {
-	i2cFrame_commonData i2cframeCommonData;
+	i2cFrame_commonHeader i2cframeCommandHeader;
 	union keyboardUnion keyboardData;
 } i2cFrame_keyboardFrame;

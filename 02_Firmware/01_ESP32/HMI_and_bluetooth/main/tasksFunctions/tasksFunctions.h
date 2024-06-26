@@ -8,6 +8,7 @@
 #include "freertos/semphr.h"
 #include "esp_log.h"
 #include "./../../../03_Common/comunicationProtocol.h"
+#include "./../../../03_Common/comunication_calculate_checksum.h"
 //#include "comunicationProtocol.h"
 #include "hwConfigFile.h"
 #include "tasksFunctions.h"
