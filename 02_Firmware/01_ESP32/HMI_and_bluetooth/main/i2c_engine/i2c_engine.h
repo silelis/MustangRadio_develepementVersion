@@ -6,6 +6,7 @@
 #include "driver/i2c_slave.h"
 #include "driver/i2c_types.h"
 #include "driver/gpio.h"
+#include "hwConfigFile.h"
 
 //#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 
@@ -17,15 +18,15 @@ public:
 	~i2cEngin_slave();
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
-	
+	BaseType_t addQueueToSet(QueueHandle_t queue);
+	QueueSetHandle_t getQueuesetHandler(void) const;
 protected:
 	
 	
 private:
+	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
-	
-	
-	
+	QueueSetHandle_t handler_i2cSlaveQueueSet;
 };
 	
 
@@ -44,6 +45,6 @@ protected:
 	
 private:
 	uint16_t devicesOnBus;
-	
+	const char *TAG = "I2C MASTER log:";
 	SemaphoreHandle_t xI2CMasterMutex; //mutex which controlls access to I2C
 };

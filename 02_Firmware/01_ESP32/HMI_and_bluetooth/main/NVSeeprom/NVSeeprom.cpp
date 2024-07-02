@@ -538,10 +538,12 @@ void NVS::ereaseAndInit()
 	printf("NVS flash is eraseing...\n");
 	this->err = nvs_flash_erase();
 	printf("NVS flash erased.\n");
-	assert(!this->err);
+	//assert(!this->err);
+	ESP_ERROR_CHECK(this->err);
 	this->err = nvs_flash_init();
 	printf("NVS flash initialised.\n");
-	assert(!this->err);
+	//assert(!this->err);
+	ESP_ERROR_CHECK(this->err);
 }
 
 
@@ -557,7 +559,9 @@ NVS::~NVS()
 	//todo: commit all data if required
 	this->doCommitIfRequired();
 	nvs_close(this->nvsHandle);
-	assert(!this->err);
+	//assert(!this->err);
+	ESP_ERROR_CHECK(this->err);
 	this->err = nvs_flash_deinit();
-	assert(!this->err);
+	//assert(!this->err);
+	ESP_ERROR_CHECK(this->err);
 }

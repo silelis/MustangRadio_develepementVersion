@@ -30,12 +30,10 @@
 void init_uart();
 
 
-QueueHandle_t handlerQueue_MainKeyboard;
-TaskHandle_t handlerTask_keyboardQueueParametersParser;
 TaskHandle_t handlerTask_ledDisplay;
 TaskHandle_t handlerTask_backlightDisplay;	
 TaskHandle_t handlerTask_stepperMotor;	
-
+TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
 
 //#include "driver/i2c_slave.h"
 
@@ -48,44 +46,48 @@ extern "C" void app_main(void)
 	//- esp-idf 5.2
 	/* CAUTION */
 		
-	
+
+	QueueHandle_t handlerQueue_MainKeyboard;
+	TaskHandle_t handlerTask_keyboardQueueParametersParser;
 	
 	init_uart();
 	i2sPinsHighImpedanceEnabled();
 	
 
 	const char *main_TAG = "Main function:";
-	printf("\n\n\n\n\n\n\n\n\n\n%s: starting...\n", main_TAG);
+	printf("\n\n\n\n\n\n\n\n\n\n%s starting...\n", main_TAG);
 
 	
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
+	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
+	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
-	printf("%s: Display leds task starting\n", main_TAG);
-	assert(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
-	printf("%s: Backlight leds task starting\n", main_TAG);
-	assert(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128*7, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay));	//tworzy task dla dod podświetlenia (korzystają z WS2812)
+	printf("%s Display leds task starting\n", main_TAG);
+	configASSERT(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	printf("%s Backlight leds task starting\n", main_TAG);
+	configASSERT(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay)); //tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
 	
 	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
-	printf("%s: Buttons and encoders (aka keyboard) init\n", main_TAG);
+	printf("%s Buttons and encoders (aka keyboard) init\n", main_TAG);
 	handlerQueue_MainKeyboard = NULL;
-	handlerQueue_MainKeyboard = xQueueCreate(QueueHandlerMainKeyboard_len, sizeof(keyboardUnion));
-	assert(handlerQueue_MainKeyboard);
+	handlerQueue_MainKeyboard = xQueueCreate(MAIN_KEYBOARD_QUEUE_LEN, sizeof(keyboardUnion));
+	configASSERT(handlerQueue_MainKeyboard);
 	
 	//tworzy obiekt obsługujący klawiaturę
 	KEYBOARD *klawiatura = NULL;
-	assert(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
+	configASSERT(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
 	handlerTask_keyboardQueueParametersParser = NULL;
-	printf("%s: Keyboard queue pareser task starting\n", main_TAG);
+	printf("%s Keyboard queue pareser task starting\n", main_TAG);
 
-	assert(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	configASSERT(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 
 	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, NULL, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
-	assert(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
+	configASSERT(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
 	btstack_init();
 	btstack_main(0, NULL);

@@ -18,7 +18,6 @@
 #include "NVSeeprom/NVSeeprom.h"
 
 
-
 struct hmiDisplay {
 	colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
@@ -30,3 +29,4 @@ void keyboardQueueParametersParser(void*);
 void humanMahineDisplayLeds(void *);
 void humanMahineBacklightLeds(void *);
 void stepperMotor(void *);
+void i2cSlaveTransmit(void *);
