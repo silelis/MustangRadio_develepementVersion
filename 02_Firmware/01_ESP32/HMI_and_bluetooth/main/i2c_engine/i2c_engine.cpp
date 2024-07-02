@@ -28,12 +28,17 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	I2C_slave_IntRequestPinConfig.pin_bit_mask = 0x1 << this->i2cSlave_intRequestPin;
 	I2C_slave_IntRequestPinConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;
 	I2C_slave_IntRequestPinConfig.pull_up_en = GPIO_PULLUP_ENABLE;
-	assert(!gpio_config(&I2C_slave_IntRequestPinConfig));
+	//assert(!gpio_config(&I2C_slave_IntRequestPinConfig));
+	ESP_ERROR_CHECK(gpio_config(&I2C_slave_IntRequestPinConfig));
 	this->interruptRequestReset();
-	printf("I2C slave bus interrupt request GPIO has been initialised on GPIO_num_%d.\n", this->i2cSlave_intRequestPin);
+	printf("%s bus interrupt request GPIO has been initialised on GPIO_num_%d.\n", this->TAG , this->i2cSlave_intRequestPin);
 	
-	assert(!i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
-	printf("I2C slave bus has been initialised on port %d with address %lx.\n", i2c_port, slave_addr);
+	//assert(!i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
+	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
+	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
+	
+	this->handler_i2cSlaveQueueSet = NULL;
+	configASSERT(this->handler_i2cSlaveQueueSet = xQueueCreateSet(I2C_SLAVE_QUEUESET_COMBINED_LEN));
 }
 
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
@@ -48,13 +53,23 @@ esp_err_t i2cEngin_slave::interruptRequestReset(void)
 
 i2cEngin_slave::~i2cEngin_slave()
 {
-	assert(!this->interruptRequestReset());
+	//assert(!this->interruptRequestReset());
+	ESP_ERROR_CHECK(this->interruptRequestReset());
 	
-	assert(!i2c_del_slave_device(handler_i2c_dev_slave));	
-	printf("I2C slave bus has been destructed.\r\n");
+	//assert(!i2c_del_slave_device(handler_i2c_dev_slave));	
+	ESP_ERROR_CHECK(i2c_del_slave_device(handler_i2c_dev_slave));
+	printf("%s bus has been destructed.\r\n", this->TAG);
 }
 
+BaseType_t i2cEngin_slave::addQueueToSet(QueueHandle_t queue)
+{
+	return xQueueAddToSet(queue, this->handler_i2cSlaveQueueSet);
+}
 
+QueueSetHandle_t i2cEngin_slave::getQueuesetHandler (void) const
+{
+	return this->handler_i2cSlaveQueueSet;
+}
 
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
@@ -75,7 +90,7 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	this->xI2CMasterMutex = xSemaphoreCreateMutex();
 	assert(this->xI2CMasterMutex);
 	xSemaphoreGive(this->xI2CMasterMutex);
-	printf("I2C master bus has been initialised on port %d.\r\n", i2c_port);
+	printf("%s bus has been initialised on port %d.\r\n", this->TAG, i2c_port);
 
 }
 
@@ -85,10 +100,10 @@ esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus/*handler_i2c_bus*/, i2c_address/*address*/, 150);
 	xSemaphoreGive(this->xI2CMasterMutex);
 	if (ret == ESP_OK) {
-		printf("I2C master have detected I2C slave device with address 0x%x.\r\n", i2c_address);
+		printf("%s, master have detected I2C slave device with address 0x%x.\r\n", this->TAG, i2c_address);
 	}
 	else {
-		printf("I2C master HAVE NOT detected I2C slave device with address 0x%x.\r\n", i2c_address);
+		printf("%s master HAVE NOT detected I2C slave device with address 0x%x.\r\n", this->TAG, i2c_address);
 	}
 	return ret;
 }
@@ -119,11 +134,11 @@ i2cEngin_master::~i2cEngin_master()
 		xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
 		i2c_del_master_bus(*phandler_i2c_bus);
 		vSemaphoreDelete(this->xI2CMasterMutex);
-		printf("I2C master bus has been destructed.\r\n");
+		printf("%s bus has been destructed.\r\n", this->TAG);
 	}
 	else
 	{
-		printf("There is  %d devices on i2c master bus. You CAN NOT use object destructor \(~my_i2c_master\).\r\n", this->devicesOnBus);
+		printf("%s there is  %d devices on bus. You CAN NOT use object destructor \(~i2cEngin_master\).\r\n", this->TAG, this->devicesOnBus);
 		assert(0);
 	}
 	
