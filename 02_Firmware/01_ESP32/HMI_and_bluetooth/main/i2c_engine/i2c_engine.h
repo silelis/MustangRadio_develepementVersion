@@ -20,6 +20,7 @@ public:
 	esp_err_t interruptRequestReset(void);
 	BaseType_t addQueueToSet(QueueHandle_t queue);
 	QueueSetHandle_t getQueuesetHandler(void) const;
+	esp_err_t slaveTransmit(const uint8_t *data, int size);
 protected:
 	
 	
@@ -27,6 +28,7 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	QueueSetHandle_t handler_i2cSlaveQueueSet;
+	int tx_timeout_ms = 150;
 };
 	
 
