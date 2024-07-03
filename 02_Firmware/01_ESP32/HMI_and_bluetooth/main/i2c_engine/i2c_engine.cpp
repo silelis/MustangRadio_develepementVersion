@@ -71,6 +71,15 @@ QueueSetHandle_t i2cEngin_slave::getQueuesetHandler (void) const
 	return this->handler_i2cSlaveQueueSet;
 }
 
+esp_err_t i2cEngin_slave::slaveTransmit(const uint8_t *data, int size)
+{	esp_err_t retVal;
+	this->interruptRequestSet();
+	retVal= i2c_slave_transmit(handler_i2c_dev_slave, data, size, this->tx_timeout_ms);
+	this->interruptRequestReset();
+	return retVal;
+	#error "TUTAJ POPRAWIÆ zfobiæ zliczanie b³êdów"
+}
+
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
 
