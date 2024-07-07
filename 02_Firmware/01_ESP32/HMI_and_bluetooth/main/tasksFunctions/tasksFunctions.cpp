@@ -409,7 +409,7 @@ void i2cSlaveTransmit(void *nothing)
 		
 		if (handler_activatSetMember != NULL)
 		{
-			xQueueReceive(handler_activatSetMember, txVariable, pdMS_TO_TICKS(700));
+			xQueueReceive(handler_activatSetMember, txVariable, portMAX_DELAY);
 			memcpy(&virtual_i2cFrame_commonHeader, &txVariable, sizeof(i2cFrame_commonHeader));	//kopiowanie i2cFrame_commonHeader ze zmiennej "txVariable" do wirtualnej zmiennej virtual_i2cFrame_commonHeader, aby sprawdzić rozmiar pakietu danych
 			txVariableLen = sizeof(i2cFrame_commonHeader) + virtual_i2cFrame_commonHeader.dataSize;
 			i2cSlave_txStatus = p_i2cSlave->slaveTransmit((const uint8_t*)&txVariable, txVariableLen);
