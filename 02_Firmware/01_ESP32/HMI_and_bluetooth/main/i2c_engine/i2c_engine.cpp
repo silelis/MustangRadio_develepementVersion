@@ -77,7 +77,7 @@ esp_err_t i2cEngin_slave::slaveTransmit(const uint8_t *data, int size)
 	retVal= i2c_slave_transmit(handler_i2c_dev_slave, data, size, this->tx_timeout_ms);
 	this->interruptRequestReset();
 	return retVal;
-	#error "TUTAJ POPRAWIÆ zfobiæ zliczanie b³êdów"
+	#error "TUTAJ POPRAWIÄ† zfobiÄ‡ zliczanie bÅ‚Ä™dÃ³w"
 }
 
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
