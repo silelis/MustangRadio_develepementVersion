@@ -56,3 +56,8 @@ typedef struct {
 	i2cFrame_commonHeader i2cframeCommandHeader;
 	union keyboardUnion keyboardData;
 } i2cFrame_keyboardFrame;
+
+typedef struct{
+	size_t dataSize;
+	void *pData;	
+} i2cFrame_transmitQueue;

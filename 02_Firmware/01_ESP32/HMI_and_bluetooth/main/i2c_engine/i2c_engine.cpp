@@ -36,9 +36,40 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	//assert(!i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
+
+	//Tworzenie kolejki nadawczej
+	this->handler_transmitQueue = NULL;
+	configASSERT(this->handler_transmitQueue = xQueueCreate(this->transmitQueueSize, sizeof(i2cFrame_transmitQueue))) ;
+}
+
+esp_err_t i2cEngin_slave::transmitQueueSend(const void * pvItemToQueue, size_t itemSize)
+{
+	i2cFrame_transmitQueue dataToTransmitQueue;
+	void* pointerToData = NULL;
+	pointerToData = new char[sizeof(itemSize)];
 	
-	this->handler_i2cSlaveQueueSet = NULL;
-	configASSERT(this->handler_i2cSlaveQueueSet = xQueueCreateSet(I2C_SLAVE_QUEUESET_COMBINED_LEN));
+	assert(pointerToData);
+	if (pointerToData != NULL)
+	{
+		memcpy(pointerToData, pvItemToQueue, itemSize);
+		dataToTransmitQueue.dataSize = itemSize;
+		dataToTransmitQueue.pData = pointerToData;
+		if (xQueueSend(this->handler_transmitQueue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
+		{
+			return ESP_OK; 
+		}
+		else
+		{
+			this->transmitQueueDeleteDataFromPointer(dataToTransmitQueue);
+			//delete[] static_cast<char*>(pointerToData);
+			return ESP_FAIL;
+		}
+	}
+	else
+	{
+		return ESP_FAIL;
+	}
+	
 }
 
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
@@ -59,25 +90,53 @@ i2cEngin_slave::~i2cEngin_slave()
 	//assert(!i2c_del_slave_device(handler_i2c_dev_slave));	
 	ESP_ERROR_CHECK(i2c_del_slave_device(handler_i2c_dev_slave));
 	printf("%s bus has been destructed.\r\n", this->TAG);
+	
+	
+	//usuwanie kolejki nadawczej oraz danych, które są poinicjowane (danych, do których wskazują wskaźniki ze struktury i2cFrame_transmitQueue kolejki
+	this->transmitQueueDestruct();
 }
 
-BaseType_t i2cEngin_slave::addQueueToSet(QueueHandle_t queue)
+void i2cEngin_slave::transmitQueueDestruct(void)
 {
-	return xQueueAddToSet(queue, this->handler_i2cSlaveQueueSet);
-}
+	i2cFrame_transmitQueue tempItemToDestrouQueue;
+	BaseType_t tempQueueReceiveRetVal;
+	do
+	{
+		tempQueueReceiveRetVal = xQueueReceive(this->handler_transmitQueue, &tempItemToDestrouQueue, pdMS_TO_TICKS(1));
+		if (tempQueueReceiveRetVal == pdPASS)
+		{
+			this->transmitQueueDeleteDataFromPointer(tempItemToDestrouQueue);
+			//delete[] static_cast<char*>(tempItemToDestrouQueue.pData);	
+		}			
+	} while (tempQueueReceiveRetVal == pdPASS);
+	vQueueDelete(this->handler_transmitQueue);	
+}											 
 
-QueueSetHandle_t i2cEngin_slave::getQueuesetHandler (void) const
+void i2cEngin_slave::transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
 {
-	return this->handler_i2cSlaveQueueSet;
+	delete[] static_cast<char*>(structWithPointer.pData);	
 }
 
-esp_err_t i2cEngin_slave::slaveTransmit(const uint8_t *data, int size)
-{	esp_err_t retVal;
-	this->interruptRequestSet();
-	retVal= i2c_slave_transmit(handler_i2c_dev_slave, data, size, this->tx_timeout_ms);
-	this->interruptRequestReset();
-	return retVal;
-	#error "TUTAJ POPRAWIĆ zfobić zliczanie błędów"
+esp_err_t i2cEngin_slave::slaveTransmit()
+{
+	esp_err_t retVal =ESP_FAIL;
+	i2cFrame_transmitQueue ItemWithPointerToTransmit;
+	
+	if (pdPASS == xQueueReceive(this->handler_transmitQueue, &ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;	
+	{
+		//taskENTER_CRITICAL();
+		this->interruptRequestSet();
+		retVal= i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms);
+		if (ESP_OK == retVal)
+		{
+			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
+		}
+		//taskEXIT_CRITICAL();
+		this->transmitQueueDeleteDataFromPointer(ItemWithPointerToTransmit);
+		//delete[] static_cast<char*>(ItemWithPointerToTransmit.pData);
+		this->interruptRequestReset();
+	}
+	return retVal;	
 }
 
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
