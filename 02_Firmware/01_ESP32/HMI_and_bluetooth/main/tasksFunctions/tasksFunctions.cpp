@@ -3,7 +3,7 @@
 
 
 
-static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
+//static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
 static hmiDisplay displayLedsColors;	//struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
@@ -49,10 +49,10 @@ void taskFunctionsStaticHandlersInit(void)
 	//assert(p_i2cSlave);
 	
 	//tworzenie kolejki bufora nadawczego i2c
-	handlerQueue_i2cSlaveSetBuffer_keyboard = NULL;
-	configASSERT(handlerQueue_i2cSlaveSetBuffer_keyboard = xQueueCreate(I2C_SLAVESET_BUFFER_KEYBOARD_LEN, sizeof(i2cFrame_keyboardFrame))); 
+	//handlerQueue_i2cSlaveSetBuffer_keyboard = NULL;
+	//configASSERT(handlerQueue_i2cSlaveSetBuffer_keyboard = xQueueCreate(I2C_SLAVESET_BUFFER_KEYBOARD_LEN, sizeof(i2cFrame_keyboardFrame))); 
 	//configASSERT(handlerQueue_i2cSlaveSetBuffer_keyboard);
-	configASSERT(p_i2cSlave->addQueueToSet(handlerQueue_i2cSlaveSetBuffer_keyboard));
+	//configASSERT(p_i2cSlave->addQueueToSet(handlerQueue_i2cSlaveSetBuffer_keyboard));
 
 	
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
@@ -196,28 +196,32 @@ static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keybo
 *---------------------------------------------------------------*/ 
 void keyboardQueueParametersParser(void *parameters)
 {
+	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters; //uchwyt który przekazuje fo taska parametr z funkcji MAIN (handlerQueue_MainKeyboard
 	//bool isComunicationWithI2CMasterRequired;// = pdFALSE;
 	//BaseType_t queueFeedRetVal;
 	keyboardUnion keyboardDataToParse;		//bufor do którego będa kopiowane dane z kolejki klawiatury, i który bedzi eporzetwarzany w pętli for
-	keyboardDataToParse.array[0] = 0;		//zerowanei bufora
-	keyboardDataToParse.array[1] = 0;		//zerowanei bufora
+	//keyboardDataToParse.array[0] = 0;		//zerowanei bufora
+	//keyboardDataToParse.array[1] = 0;		//zerowanei bufora
 	i2cFrame_keyboardFrame kbrdDataToI2CSlaveTransmittQueueTemoraryVariable;
-	QueueHandle_t handlerParameterAsKeyboard = (QueueHandle_t) parameters;		//uchwyt który przekazuje fo taska parametr z funkcji MAIN (handlerQueue_MainKeyboard
 		
 	//keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
-	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(keyboardDataToParse);
+	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(keyboardUnion/*keyboardDataToParse*/);
 	for (;;)
 	{
 		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
 		{
 			if (keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardDataToParse))		//sprawdza czy dane z przerwania klawiatury są poprawne, jeśli tak to przystępuje do ich przesłania do kolejki nadawczej I2C slave
 			{
-				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.CRC = (uint8_t) calculate_checksum(&keyboardDataToParse, sizeof(keyboardDataToParse));
 				memcpy(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
-				if (xQueueSend(handlerQueue_i2cSlaveSetBuffer_keyboard, &kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
+				
+				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.CRC = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
+				//memcpy(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
+				//if (xQueueSend(handlerQueue_i2cSlaveSetBuffer_keyboard, &kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
+				if (p_i2cSlave->transmitQueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!=ESP_OK)
 				{
-					keyboardQueueParameters_isEmergencyResetRequired(keyboardDataToParse);
+					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
 				}
+				
 				//----------------------------------------------------------------------//
 				//poniższa funkcja jest tylko do celów debugowania poprawności programu
 				keyboardQueueParametersParserPrintf(keyboardDataToParse);
@@ -397,33 +401,8 @@ void stepperMotor(void *TaskParameters)
 
 void i2cSlaveTransmit(void *nothing)
 {
-	QueueSetMemberHandle_t handler_activatSetMember;		//przechowuje uchwyt do kolejki, z której należy pobrać dane do wysłania przez i2c ze slave do master
-	QueueSetHandle_t handler_QueueSet = p_i2cSlave->getQueuesetHandler();
-	char txVariable[I2C_SLAVE_TX_VARIABLE_LEN];		//Zzmienna do której wpisywabe są dane z kolejek i z której dane są wysylane za pomocą i2sEngine slave
-	size_t txVariableLen;
-	i2cFrame_commonHeader virtual_i2cFrame_commonHeader;
-	esp_err_t i2cSlave_txStatus;
 	for (;;)
 	{
-		handler_activatSetMember = xQueueSelectFromSet(handler_QueueSet, portMAX_DELAY);
-		
-		if (handler_activatSetMember != NULL)
-		{
-			xQueueReceive(handler_activatSetMember, txVariable, portMAX_DELAY);
-			memcpy(&virtual_i2cFrame_commonHeader, &txVariable, sizeof(i2cFrame_commonHeader));	//kopiowanie i2cFrame_commonHeader ze zmiennej "txVariable" do wirtualnej zmiennej virtual_i2cFrame_commonHeader, aby sprawdzić rozmiar pakietu danych
-			txVariableLen = sizeof(i2cFrame_commonHeader) + virtual_i2cFrame_commonHeader.dataSize;
-			i2cSlave_txStatus = p_i2cSlave->slaveTransmit((const uint8_t*)&txVariable, txVariableLen);
-//#error "dać ograniczenie, że jak i2c slave tx nie wysyła danych to xQueueSelectFromSet nie sprawdza czy są w kolejce dostępne dane"
-			//if (txVariableLen == sizeof(i2cFrame_keyboardFrame))
-			//	printf("tak\n");
-		}
-		
-		
-		
-		
-		
-		
-	}
-	
-	
+		p_i2cSlave->slaveTransmit();		
+	}	
 }

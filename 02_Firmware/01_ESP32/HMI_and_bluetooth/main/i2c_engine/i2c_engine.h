@@ -7,6 +7,9 @@
 #include "driver/i2c_types.h"
 #include "driver/gpio.h"
 #include "hwConfigFile.h"
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
 
 //#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 
@@ -18,17 +21,20 @@ public:
 	~i2cEngin_slave();
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
-	BaseType_t addQueueToSet(QueueHandle_t queue);
-	QueueSetHandle_t getQueuesetHandler(void) const;
-	esp_err_t slaveTransmit(const uint8_t *data, int size);
+	esp_err_t transmitQueueSend(const void * pvItemToQueue, size_t itemSize);
+	esp_err_t slaveTransmit();
 protected:
 	
 	
 private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
-	QueueSetHandle_t handler_i2cSlaveQueueSet;
-	int tx_timeout_ms = 150;
+	//QueueSetHandle_t handler_i2cSlaveQueueSet;
+	QueueHandle_t handler_transmitQueue;
+	const UBaseType_t transmitQueueSize = 20;
+	const int tx_timeout_ms = 500;
+	void transmitQueueDestruct(void);
+	void transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
 };
 	
 
