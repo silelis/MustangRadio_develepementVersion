@@ -61,6 +61,9 @@ void Error_Handler(void);
 #define dbg_UART_TX_GPIO_Port GPIOB
 #define dbg_UART_RX_Pin GPIO_PIN_15
 #define dbg_UART_RX_GPIO_Port GPIOB
+#define esp32i2cInterruptReqest_Pin GPIO_PIN_5
+#define esp32i2cInterruptReqest_GPIO_Port GPIOB
+#define esp32i2cInterruptReqest_EXTI_IRQn EXTI9_5_IRQn
 
 /* USER CODE BEGIN Private defines */
 
