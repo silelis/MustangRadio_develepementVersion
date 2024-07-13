@@ -47,7 +47,7 @@ typedef struct {
 
 typedef struct
 {	   	
-	uint8_t	CRC;			//checksum for i2c farame (commandGroup+dataSize+data)
+	uint8_t	crcSum;			//checksum for i2c farame (commandGroup+dataSize+data)
 	uint8_t commandGroup;	//aka I2C_COMMAND_GROUP
 	uint8_t dataSize;		//sizeof(data to send)
 } i2cFrame_commonHeader;

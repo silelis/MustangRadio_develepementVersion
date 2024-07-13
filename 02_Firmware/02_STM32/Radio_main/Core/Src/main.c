@@ -25,6 +25,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hwConfig/hwConfig.h"
+#include "printfRedirect.h"
+#include "tasksFunctions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,7 +94,8 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+  //printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+  initTaskFunctions();
 
   /* USER CODE END 2 */
 
@@ -112,14 +115,14 @@ int main(void)
   while (1)
   {
 
-	  if(HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin)==GPIO_PIN_RESET)
+	  /*if(HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin)==GPIO_PIN_RESET)
 	  {
 		  printf("low state\r\n");
 	  }
 	  else{
 		  printf("high state\r\n");
 	  }
-		  vTaskDelay(pdMS_TO_TICKS(1000));
+		  vTaskDelay(pdMS_TO_TICKS(1000));*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -192,6 +195,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
