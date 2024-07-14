@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "stm32h7xx_hal.h"
-#include "hwConfig/hwConfig.h"
+#include "hwConfig.h"
 #include "printfRedirect.h"
 #include "main.h"
 #include <stdio.h>

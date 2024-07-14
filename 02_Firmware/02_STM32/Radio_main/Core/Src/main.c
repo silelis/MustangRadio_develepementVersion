@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "hwConfig/hwConfig.h"
+#include "hwConfig.h"
 #include "printfRedirect.h"
 #include "tasksFunctions.h"
 /* USER CODE END Includes */
