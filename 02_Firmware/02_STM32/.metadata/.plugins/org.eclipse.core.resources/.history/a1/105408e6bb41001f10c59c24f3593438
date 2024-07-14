@@ -1,0 +1,13 @@
+#pragma once
+
+#include "hwConfig.h"
+
+#ifdef  TOOLCHAIN_ENVIRONMENT == __stm32__
+
+
+#elif
+
+
+#else
+#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
+#endif
