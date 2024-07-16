@@ -1,6 +1,7 @@
 #pragma once
 #include "inttypes.h"
 #include "comunicationStructures.h"
+//#include "i2c_slave_master_queueClass.h"
 #include <stdio.h>
 #include <stdint.h> 
 

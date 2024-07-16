@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include "./../../../03_Common/comunicationProtocol.h"
+#include "./../../../03_Common/i2c_slave_master_queueClass.h"
+
 
 //#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 
@@ -21,8 +24,9 @@ public:
 	~i2cEngin_slave();
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
-	esp_err_t transmitQueueSend(const void * pvItemToQueue, size_t itemSize);
+	//esp_err_t transmitQueueSend(const void * pvItemToQueue, size_t itemSize);
 	esp_err_t slaveTransmit();
+	i2cTraRecQueue4DynamicData* pQueueObject;
 protected:
 	
 	
@@ -30,11 +34,11 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	//QueueSetHandle_t handler_i2cSlaveQueueSet;
-	QueueHandle_t handler_transmitQueue;
+	//QueueHandle_t handler_transmitQueue;
 	const UBaseType_t transmitQueueSize = 20;
 	const int tx_timeout_ms = 500;
-	void transmitQueueDestruct(void);
-	void transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
+	//void transmitQueueDestruct(void);
+	//void transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
 };
 	
 

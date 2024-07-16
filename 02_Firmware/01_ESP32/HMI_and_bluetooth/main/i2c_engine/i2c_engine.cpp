@@ -38,11 +38,15 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	//Tworzenie kolejki nadawczej
-	this->handler_transmitQueue = NULL;
-	configASSERT(this->handler_transmitQueue = xQueueCreate(this->transmitQueueSize, sizeof(i2cFrame_transmitQueue))) ;
+	//this->handler_transmitQueue = NULL;
+	//configASSERT(this->handler_transmitQueue = xQueueCreate(this->transmitQueueSize, sizeof(i2cFrame_transmitQueue))) ;
+
+	this->pQueueObject = NULL;
+	configASSERT(this->pQueueObject = new i2cTraRecQueue4DynamicData(this->transmitQueueSize));
+
 }
 
-esp_err_t i2cEngin_slave::transmitQueueSend(const void * pvItemToQueue, size_t itemSize)
+/*esp_err_t i2cEngin_slave::transmitQueueSend(const void * pvItemToQueue, size_t itemSize)
 {
 	i2cFrame_transmitQueue dataToTransmitQueue;
 	void* pointerToData = NULL;
@@ -70,7 +74,7 @@ esp_err_t i2cEngin_slave::transmitQueueSend(const void * pvItemToQueue, size_t i
 		return ESP_FAIL;
 	}
 	
-}
+} */
 
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
 {
@@ -93,9 +97,11 @@ i2cEngin_slave::~i2cEngin_slave()
 	
 	
 	//usuwanie kolejki nadawczej oraz danych, które są poinicjowane (danych, do których wskazują wskaźniki ze struktury i2cFrame_transmitQueue kolejki
-	this->transmitQueueDestruct();
+	//this->transmitQueueDestruct();
+	delete this->pQueueObject;
 }
 
+/*
 void i2cEngin_slave::transmitQueueDestruct(void)
 {
 	i2cFrame_transmitQueue tempItemToDestrouQueue;
@@ -110,29 +116,49 @@ void i2cEngin_slave::transmitQueueDestruct(void)
 		}			
 	} while (tempQueueReceiveRetVal == pdPASS);
 	vQueueDelete(this->handler_transmitQueue);	
-}											 
+}*/											 
 
-void i2cEngin_slave::transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
+
+/*
+ void i2cEngin_slave::transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
 {
 	delete[] static_cast<char*>(structWithPointer.pData);	
-}
+} */
 
 esp_err_t i2cEngin_slave::slaveTransmit()
 {
 	esp_err_t retVal =ESP_FAIL;
 	i2cFrame_transmitQueue ItemWithPointerToTransmit;
 	
-	if (pdPASS == xQueueReceive(this->handler_transmitQueue, &ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;	
+	//TickType_t start_tick, end_tick, tick_diff; // = xTaskGetTickCount();
+	
+	//if (pdPASS == xQueueReceive(this->handler_transmitQueue, &ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;	
+	if (pdPASS == pQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
 	{
+		
 		//taskENTER_CRITICAL();
 		this->interruptRequestSet();
+		//start_tick = xTaskGetTickCount();
+		
 		retVal= i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms);
+		//ESP_ERROR_CHECK(i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms));
+		//end_tick =  xTaskGetTickCount();
 		if (ESP_OK == retVal)
 		{
 			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
+			
 		}
+		//end_tick =  xTaskGetTickCount();
+		//tick_diff= end_tick- start_tick;
 		//taskEXIT_CRITICAL();
-		this->transmitQueueDeleteDataFromPointer(ItemWithPointerToTransmit);
+		/*if ((uint32_t)pdTICKS_TO_MS(tick_diff)>= (2*this->tx_timeout_ms))
+		{
+			printf("awaria i2c");
+		} */
+		
+		this->pQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
+		//this->transmitQueueDeleteDataFromPointer(ItemWithPointerToTransmit);
+		//this->transmitQueueDeleteDataFromPointer(ItemWithPointerToTransmit);
 		//delete[] static_cast<char*>(ItemWithPointerToTransmit.pData);
 		this->interruptRequestReset();
 	}

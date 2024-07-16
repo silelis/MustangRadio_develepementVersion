@@ -217,7 +217,10 @@ void keyboardQueueParametersParser(void *parameters)
 				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
 				//memcpy(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
 				//if (xQueueSend(handlerQueue_i2cSlaveSetBuffer_keyboard, &kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
-				if (p_i2cSlave->transmitQueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!=ESP_OK)
+				//if (p_i2cSlave->transmitQueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!=ESP_OK)
+				
+				if (p_i2cSlave->pQueueObject->QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!=ESP_OK)
+				
 				{
 					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
 				}

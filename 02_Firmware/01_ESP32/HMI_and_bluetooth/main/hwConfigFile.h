@@ -1,11 +1,10 @@
 #pragma once
 
 #include "hal/gpio_types.h"
-#include "./../../../03_Common/comunicationProtocol.h"
-#include "./../../../03_Common/toolchainEnvironmentNumbers.h"
+//#include "./../../../03_Common/comunicationProtocol.h"
+//#include "./../../../03_Common/comunicationProtocol.h"
 #include "driver/gpio.h"
 
-#define TOOLCHAIN_ENVIRONMENT		__esp32__
 #define chip_ESP32_WROOM32D_DEVBOARD	0
 
 #define CHIP chip_ESP32_WROOM32D_DEVBOARD		//select Your chip/ devboard type
