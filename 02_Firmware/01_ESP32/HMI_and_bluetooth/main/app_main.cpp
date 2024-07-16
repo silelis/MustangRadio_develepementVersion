@@ -9,7 +9,6 @@
 
 //#include <iostream>
 #include "hwConfigFile.h"
-
 #include <inttypes.h>
 #include "cstdio"
 #include "driver/gpio.h"
