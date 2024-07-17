@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "stm32h7xx_hal.h"
-#include "hwConfig.h"
+#include "hwConfigFile.h"
 #include "printfRedirect.h"
 #include "main.h"
 #include <stdio.h>
@@ -18,6 +18,7 @@
 
 void initTaskFunctions(void);
 
+void esp32IntrrruptRequestCallback(void *pNothing);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 
 
