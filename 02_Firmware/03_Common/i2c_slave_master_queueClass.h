@@ -13,8 +13,10 @@
 //	#include "./../../../03_Common/comunicationProtocol.h"
 #include "../03_Common/comunicationProtocol.h"
 #elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
-
-
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "comunicationProtocol.h"
 #else
 #error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
@@ -24,8 +26,8 @@ class i2cTraRecQueue4DynamicData
 public:
 	i2cTraRecQueue4DynamicData(UBaseType_t uxQueueLength/*,   UBaseType_t uxItemSize*/);
 	~i2cTraRecQueue4DynamicData(void);
-	esp_err_t /*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize);
-	esp_err_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
+	BaseType_t /*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize);
+	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 	
 protected:

@@ -46,17 +46,31 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   //static bool esp32i2cRequestState;
 	GPIO_PinState state = 	HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin);
-	switch(state){
-  	  case I2C_SLAVE_TRANSMIT_REQUEST_STARTED:
-  		  vTaskNotifyGiveFromISR(taskHandle_esp32IntrrruptRequest, pdTRUE); //informuje task, że przyszło powiadaomienie z ESP32 i powinien odczytać dane z esp32 po slave
+
+	if (state == I2C_SLAVE_TRANSMIT_REQUEST_STARTED){
+  		BaseType_t passArg = pdTRUE;
+  		vTaskNotifyGiveFromISR(taskHandle_esp32IntrrruptRequest, &passArg); //informuje task, że przyszło powiadaomienie z ESP32 i powinien odczytać dane z esp32 po slave
+  		//break;
+	}
+	else if (state == I2C_SLAVE_TRANSMIT_REQUEST_STOPPED) {
+		  asm("nop");		//z esp32 przyszła informacja o zakończeniu obsługi komunikacji z esp32 po i2c.
+		  //TODO: tutaj powinno nastąpić oddanie semafora do szyny i2c master stm32
+		  //break;
+		//printf("halt\r\n")
+	}
+
+	/*switch((uint8_t) state){
+  	  case stateI2cStarted:
+  		BaseType_t passArg = pdTRUE;
+  		  vTaskNotifyGiveFromISR(taskHandle_esp32IntrrruptRequest, &passArg); //informuje task, że przyszło powiadaomienie z ESP32 i powinien odczytać dane z esp32 po slave
   		  break;
-  	  case I2C_SLAVE_TRANSMIT_REQUEST_STOPPED:
+  	  case stateI2cStopped:
   		  asm("nop");		//z esp32 przyszła informacja o zakończeniu obsługi komunikacji z esp32 po i2c.
   		  //TODO: tutaj powinno nastąpić oddanie semafora do szyny i2c master stm32
   		  break;
   		//printf("halt\r\n");
 
-  }
+  }*/
 
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_GPIO_EXTI_Callback could be implemented in the user file
