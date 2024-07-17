@@ -29,13 +29,15 @@ void i2cTraRecQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQue
 	delete[] static_cast<char*>(structWithPointer.pData);	
 }
 
-esp_err_t  i2cTraRecQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t xTicksToWait)
+BaseType_t  i2cTraRecQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t xTicksToWait)
 {
 	
 	return xQueueReceive(this->handler_transmitQueue, pvBuffer, xTicksToWait);
 }
 
-esp_err_t i2cTraRecQueue4DynamicData::/*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize)
+
+
+BaseType_t i2cTraRecQueue4DynamicData::/*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize)
 {
 	i2cFrame_transmitQueue dataToTransmitQueue;
 	void* pointerToData = NULL;
@@ -49,17 +51,17 @@ esp_err_t i2cTraRecQueue4DynamicData::/*transmit*/QueueSend(const void * pvItemT
 		dataToTransmitQueue.pData = pointerToData;
 		if (xQueueSend(this->handler_transmitQueue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
 		{
-			return ESP_OK; 
+			return pdTRUE;
 		}
 		else
 		{
 			this->QueueDeleteDataFromPointer(dataToTransmitQueue);
 			//delete[] static_cast<char*>(pointerToData);
-			return ESP_FAIL;
+			return pdFALSE;
 		}
 	}
 	else
 	{
-		return ESP_FAIL;
+		return pdFALSE;
 	}	
 }
