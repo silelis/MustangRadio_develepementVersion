@@ -205,6 +205,7 @@ void keyboardQueueParametersParser(void *parameters)
 	i2cFrame_keyboardFrame kbrdDataToI2CSlaveTransmittQueueTemoraryVariable;
 		
 	//keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
+	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
 	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(keyboardUnion/*keyboardDataToParse*/);
 	for (;;)
 	{
@@ -219,11 +220,12 @@ void keyboardQueueParametersParser(void *parameters)
 				//if (xQueueSend(handlerQueue_i2cSlaveSetBuffer_keyboard, &kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, pdMS_TO_TICKS(700)) == pdFAIL) //jeżeli bufor kolejki danych do nadania po i2c jest zapchany (brak komunikacji z stm32) to istnieje możliwość awaryjnego wyłączenia radio lub resetu NVS
 				//if (p_i2cSlave->transmitQueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!=ESP_OK)
 				
-				if (p_i2cSlave->pQueueObject->QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame))!= pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
+				if (p_i2cSlave->pQueueObject->QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
 				
 				{
 					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
 				}
+
 				
 				//----------------------------------------------------------------------//
 				//poniższa funkcja jest tylko do celów debugowania poprawności programu

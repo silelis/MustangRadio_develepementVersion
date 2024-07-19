@@ -110,6 +110,25 @@ rule C_STATIC_LIBRARY_LINKER____idf_efuse_RELEASE
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER____idf_esp_mm_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_mm_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER____idf_driver_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
@@ -177,6 +196,44 @@ rule C_STATIC_LIBRARY_LINKER____idf_mbedtls_RELEASE
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__everest_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking CXX static library.
+
+rule CXX_STATIC_LIBRARY_LINKER__everest_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking CXX static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__p256m_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking CXX static library.
+
+rule CXX_STATIC_LIBRARY_LINKER__p256m_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking CXX static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__mbedcrypto_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
@@ -230,6 +287,25 @@ rule C_COMPILER__mbedtls_unscanned_RELEASE
 rule CXX_STATIC_LIBRARY_LINKER__mbedtls_RELEASE
   command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_bootloader_format_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_bootloader_format_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
 
@@ -762,6 +838,25 @@ rule C_STATIC_LIBRARY_LINKER____idf_wpa_supplicant_RELEASE
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER____idf_esp_coex_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_coex_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER____idf_esp_wifi_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
@@ -1257,6 +1352,25 @@ rule C_STATIC_LIBRARY_LINKER____idf_mqtt_RELEASE
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER____idf_nvs_sec_provider_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_nvs_sec_provider_RELEASE
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER____idf_perfmon_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
@@ -1287,25 +1401,6 @@ rule C_COMPILER____idf_spiffs_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_spiffs_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_ulp_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_ulp_RELEASE
   command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
@@ -1406,6 +1501,14 @@ rule RERUN_CMAKE
   command = C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe --regenerate-during-build -SD:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth -B"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\build\VisualGDB\Tests (Release)"
   description = Re-running CMake...
   generator = 1
+
+
+#############################################
+# Rule for cleaning additional files.
+
+rule CLEAN_ADDITIONAL
+  command = C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -DCONFIG=$CONFIG -P CMakeFiles\clean_additional.cmake
+  description = Cleaning additional files...
 
 
 #############################################

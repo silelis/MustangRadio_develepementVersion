@@ -1,0 +1,19 @@
+/*
+ * freertos.h
+ *
+ *  Created on: Jul 19, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_FREERTOS_H_
+#define INC_FREERTOS_H_
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
+
+void StartDefaultTask(void *argument);
+void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+
+#endif /* INC_FREERTOS_H_ */

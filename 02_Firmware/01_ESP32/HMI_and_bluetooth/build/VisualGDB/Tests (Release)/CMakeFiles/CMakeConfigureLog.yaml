@@ -641,3 +641,147 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-jqgsbk"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-jqgsbk"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-jqgsbk'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_9766a
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -DCMAKE_HAVE_LIBC_PTHREAD  -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_9766a.dir/src.c.obj -c "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-jqgsbk/src.c"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_9766a.dir/src.c.obj -o cmTC_9766a   && cd ."
+        FAILED: cmTC_9766a 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_9766a.dir/src.c.obj -o cmTC_9766a   && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0x4): undefined reference to `pthread_create'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0x8): undefined reference to `pthread_detach'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0xc): undefined reference to `pthread_cancel'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0x10): undefined reference to `pthread_join'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0x14): undefined reference to `pthread_atfork'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj:(.literal+0x18): undefined reference to `pthread_exit'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: CMakeFiles/cmTC_9766a.dir/src.c.obj: in function `main':
+        src.c:(.text+0x1c): undefined reference to `pthread_create'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x26): undefined reference to `pthread_detach'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x30): undefined reference to `pthread_cancel'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x3c): undefined reference to `pthread_join'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x48): undefined reference to `pthread_atfork'
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: src.c:(.text+0x50): undefined reference to `pthread_exit'
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:136 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:169 (_threads_check_flag_pthread)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Check if compiler accepts -pthread"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-9zy8d3"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-9zy8d3"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "THREADS_HAVE_PTHREAD_ARG"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-9zy8d3'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_d5c2d
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address -o CMakeFiles/cmTC_d5c2d.dir/CheckForPthreads.c.obj -c "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-9zy8d3/CheckForPthreads.c"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_d5c2d.dir/CheckForPthreads.c.obj -o cmTC_d5c2d  -pthread && cd ."
+        FAILED: cmTC_d5c2d 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  CMakeFiles/cmTC_d5c2d.dir/CheckForPthreads.c.obj -o cmTC_d5c2d  -pthread && cd ."
+        xtensa-esp32-elf-gcc.exe: error: unrecognized command-line option '-pthread'
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-ehfgho"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-ehfgho"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-ehfgho'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_79f1e
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_79f1e.dir/CheckFunctionExists.c.obj -c "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-ehfgho/CheckFunctionExists.c"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_79f1e.dir/CheckFunctionExists.c.obj -o cmTC_79f1e  -lpthreads && cd ."
+        FAILED: cmTC_79f1e 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_79f1e.dir/CheckFunctionExists.c.obj -o cmTC_79f1e  -lpthreads && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: cannot find -lpthreads
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "C:/SysGCC/esp32/esp-idf/v5.2/components/mbedtls/mbedtls/CMakeLists.txt:126 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-rnbdvb"
+      binary: "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-rnbdvb"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mlongcalls -Wno-frame-address "
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake;C:/SysGCC/esp32/esp-idf/v5.2/tools/cmake/third_party"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-rnbdvb'
+        
+        Run Build Command(s): C:/SysGCC/esp32/tools/ninja/1.10.2/ninja.exe -v cmTC_4cf35
+        [1/2] C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe   -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_4cf35.dir/CheckFunctionExists.c.obj -c "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/build/VisualGDB/Tests (Release)/CMakeFiles/CMakeScratch/TryCompile-rnbdvb/CheckFunctionExists.c"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_4cf35.dir/CheckFunctionExists.c.obj -o cmTC_4cf35  -lpthread && cd ."
+        FAILED: cmTC_4cf35 
+        C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\SysGCC\\esp32\\tools\\xtensa-esp32-elf\\esp-2022r1-11.2.0\\xtensa-esp32-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_4cf35.dir/CheckFunctionExists.c.obj -o cmTC_4cf35  -lpthread && cd ."
+        c:/sysgcc/esp32/tools/xtensa-esp32-elf/esp-2022r1-11.2.0/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/11.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: cannot find -lpthread
+        collect2.exe: error: ld returned 1 exit status
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...
