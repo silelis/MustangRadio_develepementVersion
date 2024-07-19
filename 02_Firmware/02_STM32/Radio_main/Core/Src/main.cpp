@@ -25,7 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hwConfigFile.h"
-//#include "freertos.h"
+#include "freertos.h"
 #include "printfRedirect.h"
 #include "tasksFunctions.h"
 /* USER CODE END Includes */

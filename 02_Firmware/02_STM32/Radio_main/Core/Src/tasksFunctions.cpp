@@ -13,6 +13,8 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
+#include "i2c.h"
+#include <cstring>
 
 TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;
 
@@ -20,11 +22,11 @@ void esp32IntrrruptRequestCallback(void *pNothing){
 
 	//uint32_t taskNotifierVal;
 	while(1){
-		if(pdPASS == xTaskNotifyWait(0x0, 0xffff, NULL, portMAX_DELAY))
-		{
+		/*if(pdPASS ==*/ xTaskNotifyWait(0x0, 0xffff, NULL, portMAX_DELAY);/*)*/
+		/*{
 			printf("task\r\n");
 			//vTaskDelay(pdMS_TO_TICKS(1000));
-		}
+		}*/
 	};
 }
 
@@ -36,6 +38,13 @@ void initTaskFunctions(void){
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_esp32IntrrruptRequest));
+
+
+	if(HAL_I2C_IsDeviceReady(&hi2c1, I2C_SLAVE_ADDRESS<<1, 100, 5000)==HAL_OK){
+		printf("ESP32 i2c slave avaliable\r\n");
+	}
+
+
 }
 
 
@@ -45,19 +54,29 @@ void initTaskFunctions(void){
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   //static bool esp32i2cRequestState;
-	GPIO_PinState state = 	HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin);
+	//GPIO_PinState state = 	HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin);
 
-	if (state == I2C_SLAVE_TRANSMIT_REQUEST_STARTED){
+	//if (state == I2C_SLAVE_TRANSMIT_REQUEST_STARTED){
   		BaseType_t passArg = pdTRUE;
   		vTaskNotifyGiveFromISR(taskHandle_esp32IntrrruptRequest, &passArg); //informuje task, że przyszło powiadaomienie z ESP32 i powinien odczytać dane z esp32 po slave
-  		//break;
-	}
-	else if (state == I2C_SLAVE_TRANSMIT_REQUEST_STOPPED) {
-		  asm("nop");		//z esp32 przyszła informacja o zakończeniu obsługi komunikacji z esp32 po i2c.
+  		i2cFrame_transmitQueue frameFromESP;
+
+  		HAL_I2C_Master_Receive(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*) &frameFromESP.dataSize, sizeof(frameFromESP.dataSize), 500);
+  		printf("tak\r\n");
+
+  		char wartosc[5];
+  		HAL_I2C_Master_Receive(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*) &wartosc, 5, 500);
+  		i2cFrame_keyboardFrame ramkaKlawiatury;
+  		memcpy(&ramkaKlawiatury, &wartosc, 5 );
+  		printf("tak\r\n");
+
+	//}
+	//else if (state == I2C_SLAVE_TRANSMIT_REQUEST_STOPPED) {
+	//	  asm("nop");		//z esp32 przyszła informacja o zakończeniu obsługi komunikacji z esp32 po i2c.
 		  //TODO: tutaj powinno nastąpić oddanie semafora do szyny i2c master stm32
 		  //break;
 		//printf("halt\r\n")
-	}
+	//}
 
 	/*switch((uint8_t) state){
   	  case stateI2cStarted:

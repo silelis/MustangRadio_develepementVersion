@@ -15,7 +15,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;	//I2C_ADDR_BIT_LEN_7;
 	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
 	i2c_config_slave.i2c_port = i2c_port;		//0
-	i2c_config_slave.send_buf_depth = 256;
+	i2c_config_slave.send_buf_depth = 1024;
 	i2c_config_slave.scl_io_num = scl_io_num;	//GPIO_NUM_22
 	i2c_config_slave.sda_io_num = sda_io_num;	//GPIO_NUM_21
 	i2c_config_slave.slave_addr = slave_addr;	//0x3C;
