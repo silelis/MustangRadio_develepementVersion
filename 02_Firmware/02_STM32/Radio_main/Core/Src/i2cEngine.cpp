@@ -1,0 +1,21 @@
+/*
+ * i2cEngine.cpp
+ *
+ *  Created on: Jul 21, 2024
+ *      Author: dbank
+ */
+
+#include <i2cEngine.h>
+
+i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
+	// TODO Auto-generated constructor stub
+	this->p_hi2c1 =hi2c1;
+
+
+}
+
+i2cMaster::~i2cMaster() {
+	// TODO Auto-generated destructor stub
+
+}
+

@@ -43,7 +43,7 @@
 
 	#if DEBOUNCE_PARAMETERS == 3
 		#define GPIO_DEBOUNCE_TIMER_RESOLUTION_HZ	20000		//DO NOT CHANGE		//10000 Hz 1 tick = 100 us
-		#define GPIO_DEBOUNCE_EQUAL					18//5 /*10*/	//DO NOT CHANGE		//5 wygląda na dobrą wartośc 10 też
+		#define GPIO_DEBOUNCE_EQUAL					14//5 /*10*/	//DO NOT CHANGE		//5 wygląda na dobrą wartośc 10 też
 		#define GPIO_LONG_PRESS						20000		//DO NOT CHANGE
 		#define ENCODER_notFULL_DETANT_TIMEOUT		1300		//DO NOT CHCNGE		//if encoder counts less pulses than ENCODER_PULSED_PER_DETANT	
 		#endif // DEBOUNCE_PARAMETERS == 137us_50x
