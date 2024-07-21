@@ -72,6 +72,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	// convert to c++:  https://www.youtube.com/watch?v=Sk5XrgSaftk
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -96,7 +97,6 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  //printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
   initTaskFunctions();
 
   /* USER CODE END 2 */
