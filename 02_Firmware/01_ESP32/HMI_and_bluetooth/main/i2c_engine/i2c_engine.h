@@ -35,7 +35,7 @@ private:
 	gpio_num_t i2cSlave_intRequestPin;
 	//QueueSetHandle_t handler_i2cSlaveQueueSet;
 	//QueueHandle_t handler_transmitQueue;
-	const UBaseType_t transmitQueueSize = 20;
+	//const UBaseType_t transmitQueueSize = 20;
 	const int tx_timeout_ms = 500;
 	//void transmitQueueDestruct(void);
 	//void transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
