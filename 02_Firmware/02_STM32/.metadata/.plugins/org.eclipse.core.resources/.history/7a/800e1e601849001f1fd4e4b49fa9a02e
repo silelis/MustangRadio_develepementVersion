@@ -1,0 +1,53 @@
+/*
+ * i2cEngine.cpp
+ *
+ *  Created on: Jul 21, 2024
+ *      Author: dbank
+ */
+
+#include <i2cEngine.h>
+
+i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
+	// TODO Auto-generated constructor stub
+	this->p_hi2c1 =hi2c1;
+	this->pQueueReceiveObject = NULL;
+	assert(this->pQueueReceiveObject = new i2cTraRecQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+
+	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
+	this->i2cSemaphoreGive();
+	this->i2cSemaphoreTake();
+	HAL_I2C_DeInit(p_hi2c1);
+	MX_I2C1_Init();
+	//vTaskDelay(pdMS_TO_TICKS(1000));
+	printf("%s bus had been initialized.\r\n",this->TAG);
+	this->i2cSemaphoreGive();
+}
+
+
+BaseType_t i2cMaster::i2cSemaphoreTake(void){
+	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
+}
+
+BaseType_t i2cMaster::i2cSemaphoreGive(void){
+	return xSemaphoreGive(this->handle_i2cBinarySemaphore);
+}
+
+HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
+	HAL_StatusTypeDef retVal;
+	this->i2cSemaphoreTake();
+	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
+	this->i2cSemaphoreGive();
+	if(retVal==HAL_OK){
+			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit);
+	}
+	return retVal;
+}
+
+i2cMaster::~i2cMaster() {
+	// TODO Auto-generated destructor stub
+	HAL_I2C_DeInit(this->p_hi2c1);
+	this->p_hi2c1 = NULL;
+	this->i2cSemaphoreTake();
+	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
+}
+

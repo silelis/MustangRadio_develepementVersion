@@ -16,77 +16,46 @@
 #include "i2c.h"
 #include <cstring>
 #include "semphr.h"
+#include "i2cEngine.h"
+
+static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;		//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
+static SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;	//uchwyt semafora zliczającego ilość wsytąpień esp32 interrupt request i ilość odczytów danych z esp32
+static BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflow=pdFALSE;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
+
+static i2cMaster* pi2cMaster;  //wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 
 
-TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;
-
-static SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;
-
-
-
-
-void esp32IntrrruptRequestCallback(void *pNothing){
-
-
-	//uint32_t taskNotifierVal;
+static void esp32IntrrruptRequestCallback(void *pNothing){
 	while(1){
-		if (xSemaphoreTake(esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE){
+		if( uxSemaphoreGetCount(esp32IntrrruptRequest_CountingSemaphore)==ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
+			esp32InrerruptRequest_CountingSemaphoreOverflow = pdTRUE;
+			printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
+		}
+		if (xSemaphoreTake(esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE){		//czeka dopuki nie pojawi się esp32 interrupt request
 			printf("High prior task \r\n");
 		}
-
 	};
 }
 
 
-void initTaskFunctionsAdnISR(void){
-
-}
-
 void initTaskFunctions(void){
 	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
-
-	configASSERT(esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(100, 0));
-
-
+	configASSERT(esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX, 0));
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
 
-	if(HAL_I2C_IsDeviceReady(&hi2c1, I2C_SLAVE_ADDRESS<<1, 100, 5000)==HAL_OK){
-		printf("ESP32 i2c slave avaliable\r\n");
-	}
-
-
+	pi2cMaster = NULL;
+	assert(pi2cMaster = new i2cMaster(&hi2c1));
+	pi2cMaster->ping(I2C_SLAVE_ADDRESS);
 }
 
 
 
-//#define I2C_SLAVE_TRANSMIT_REQUEST_STARTED		GPIO_PIN_RESET
-//#define I2C_SLAVE_TRANSMIT_REQUEST_STOPPED		GPIO_PIN_SET
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 		xSemaphoreGiveFromISR(esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-	  //static bool esp32i2cRequestState;
-		//GPIO_PinState state = 	HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin);
-
-		//if (state == I2C_SLAVE_TRANSMIT_REQUEST_STARTED){
-			/*BaseType_t passArg = pdTRUE;
-			vTaskNotifyGiveFromISR(taskHandle_esp32IntrrruptRequest, &passArg); //informuje task, że przyszło powiadaomienie z ESP32 i powinien odczytać dane z esp32 po slave
-			i2cFrame_transmitQueue frameFromESP;
-
-			HAL_I2C_Master_Receive(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*) &frameFromESP.dataSize, sizeof(frameFromESP.dataSize), 500);
-			printf("tak\r\n");
-
-			char wartosc[5];
-			HAL_I2C_Master_Receive(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*) &wartosc, 5, 500);
-			i2cFrame_keyboardFrame ramkaKlawiatury;
-			memcpy(&ramkaKlawiatury, &wartosc, 5 );*/
-
-
-  /* NOTE: This function Should not be modified, when the callback is needed,
-           the HAL_GPIO_EXTI_Callback could be implemented in the user file
-   */
 }

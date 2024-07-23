@@ -6,6 +6,9 @@
 //#include "comunicationProtocol.h"
 //#include <iostream>
 
+#define DEFAULT_TRANSMIT_QUEUE_SIZE	20
+#define DEFAULT_RECEIVE_QUEUE_SIZE	25
+
 #ifdef  /*TOOLCHAIN_ENVIRONMENT == __esp32__ */ ESP_PLATFORM
 	#include "freertos/FreeRTOS.h"
 	#include "freertos/task.h"
@@ -29,11 +32,12 @@ public:
 	BaseType_t /*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize);
 	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
-	
+	//i2cTraRecQueue4DynamicData* pQueueReceiveObject;
 protected:
+//	const UBaseType_t transmitQueueSize = 20;
+//	const UBaseType_t receiveQueueSize = 20;
 
 private:
 	QueueHandle_t handler_transmitQueue;
-	
-	
+
 };

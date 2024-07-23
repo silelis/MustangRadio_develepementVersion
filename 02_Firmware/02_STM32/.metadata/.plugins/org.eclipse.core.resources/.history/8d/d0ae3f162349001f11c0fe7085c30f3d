@@ -1,0 +1,65 @@
+/*
+ * tasksFunctions.c
+ *
+ *  Created on: Jul 13, 2024
+ *      Author: dbank
+ */
+
+
+#include "tasksFunctions.h"
+#include "comunicationProtocol.h"
+#include "comunicationStructures.h"
+#include "comunication_calculate_checksum.h"
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "i2c.h"
+#include <cstring>
+#include "semphr.h"
+#include "i2cEngine.h"
+
+TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;
+
+static SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;
+static i2cMaster* pi2cMaster;
+
+
+
+static void esp32IntrrruptRequestCallback(void *pNothing){
+	UBaseType_t semaphoreActualVal;
+	while(1){
+		semaphoreActualVal = uxSemaphoreGetCount(esp32IntrrruptRequest_CountingSemaphore);
+		vTaskDelay(100);
+		if (xSemaphoreTake(esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE){
+			printf("High prior task \r\n");
+		}
+	};
+}
+
+
+
+void initTaskFunctions(void){
+	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+	configASSERT(esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX, 0));
+
+	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
+	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
+
+	pi2cMaster = NULL;
+	assert(pi2cMaster = new i2cMaster(&hi2c1));
+
+	pi2cMaster->ping(I2C_SLAVE_ADDRESS);
+}
+
+
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		xSemaphoreGiveFromISR(esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
+
+		xSemaphoreGiveFromISR(esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
+
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}

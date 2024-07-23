@@ -6,17 +6,21 @@
 #include <stdint.h> 
 
 #define I2C_SLAVE_ADDRESS					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define I2C_SLAVE_RX_BUFFER_LEN				512
-#define I2C_SLAVE_TX_VARIABLE_LEN			384
+//#define I2C_SLAVE_RX_BUFFER_LEN				512
+//#define I2C_SLAVE_TX_VARIABLE_LEN			384
 
 
-#define I2C_COMMAND_GROUP_SYSTEM/*PING*/	0x00
+#define I2C_COMMAND_GROUP_SYSTEM			0x00
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
 #define I2C_COMMAND_GROUP_NVS				0x02
+#define I2C_COMMAND_GROUP_LEDS				0x03
+#define I2C_COMMAND_GROUP_STEPPER			0x04
 
 
 //I2C_COMMAND_GROUP_SYSTEM				0x00
-
+#define SYSTEM_KEEPALIV					0x01
+#define SYSTEM_CRC_ERROR				0x02
+#define SYSTEM_CRC_OK					0x03
 
 //I2C_COMMAND_GROUP_KEYBOARD			0x01
 #define HMI_INPUT_BUTTON					'b'		//oznacza, że przycisk został zwolniony (po osiagnięciu czasu long press lub przed tym czasem)

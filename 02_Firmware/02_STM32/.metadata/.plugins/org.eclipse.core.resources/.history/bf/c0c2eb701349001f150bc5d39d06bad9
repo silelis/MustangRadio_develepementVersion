@@ -1,0 +1,33 @@
+/*
+ * i2cEngine.cpp
+ *
+ *  Created on: Jul 21, 2024
+ *      Author: dbank
+ */
+
+#include <i2cEngine.h>
+
+i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
+	// TODO Auto-generated constructor stub
+	this->p_hi2c1 =hi2c1;
+	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
+
+	HAL_I2C_DeInit(p_hi2c1);
+	MX_I2C1_Init();
+	//vTaskDelay(pdMS_TO_TICKS(1000));
+	printf("%s bus had been initialized.\r\n",this->TAG);
+}
+
+
+void i2cMaster::i2cSemaphoreTake(void){
+	xSemaphoreTake(this->handle_i2cBinarySemaphore, pdMS_TO_TICKS(this->blo))
+}
+void i2cMaster::i2cSemaphoreGive(void);
+
+i2cMaster::~i2cMaster() {
+	// TODO Auto-generated destructor stub
+	HAL_I2C_DeInit(this->p_hi2c1);
+	this->p_hi2c1 = NULL;
+	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
+}
+
