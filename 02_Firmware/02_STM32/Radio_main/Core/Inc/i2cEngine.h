@@ -21,7 +21,8 @@ public:
 	i2cMaster(I2C_HandleTypeDef *hi2c1);
 	virtual ~i2cMaster();
 	HAL_StatusTypeDef ping(uint16_t DevAddress_7bit);
-	i2cTraRecQueue4DynamicData* pQueueReceiveObject;
+	i2cReceiveQueue4DynamicData* pReceiveQueueObject;
+
 	//void setEsp32InterruptCounterOverflow(void);
 	//BaseType_t getEsp32InterruptCounterOverflow(void);
 protected:

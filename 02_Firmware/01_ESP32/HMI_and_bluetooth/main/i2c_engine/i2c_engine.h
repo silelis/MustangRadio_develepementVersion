@@ -26,7 +26,7 @@ public:
 	esp_err_t interruptRequestReset(void);
 	//esp_err_t transmitQueueSend(const void * pvItemToQueue, size_t itemSize);
 	esp_err_t slaveTransmit();
-	i2cTraRecQueue4DynamicData* pQueueObject;
+	i2cTransmitQueue4DynamicData* pTransmitQueueObject;
 protected:
 	
 	
