@@ -24,20 +24,33 @@
 #error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
 
-class i2cTraRecQueue4DynamicData
+class i2cTransmitQueue4DynamicData
 {
 public:
-	i2cTraRecQueue4DynamicData(UBaseType_t uxQueueLength/*,   UBaseType_t uxItemSize*/);
-	~i2cTraRecQueue4DynamicData(void);
-	BaseType_t /*transmit*/QueueSend(const void * pvItemToQueue, size_t itemSize);
+	i2cTransmitQueue4DynamicData(UBaseType_t uxQueueLength);
+	~i2cTransmitQueue4DynamicData(void);
+	BaseType_t QueueSend(const void * pvItemToQueue, size_t itemSize);
 	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
-	//i2cTraRecQueue4DynamicData* pQueueReceiveObject;
+
 protected:
-//	const UBaseType_t transmitQueueSize = 20;
-//	const UBaseType_t receiveQueueSize = 20;
+
 
 private:
 	QueueHandle_t handler_transmitQueue;
 
+};
+
+class i2cReceiveQueue4DynamicData
+{
+public:
+	i2cReceiveQueue4DynamicData(UBaseType_t uxQueueLength);
+	~i2cReceiveQueue4DynamicData(void);
+	BaseType_t QueueSend(uintptr_t* pvItemToQueue);
+	void QueueDeleteDataFromPointer(void* dataPointer);
+
+protected:
+
+private:
+	QueueHandle_t handler_receiveQueue;
 };

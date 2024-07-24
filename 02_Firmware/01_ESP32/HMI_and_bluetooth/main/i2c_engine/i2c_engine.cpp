@@ -35,8 +35,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	//Tworzenie kolejki nadawczej
-	this->pQueueObject = NULL;
-	configASSERT(this->pQueueObject = new i2cTraRecQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
+	this->pTransmitQueueObject = NULL;
+	configASSERT(this->pTransmitQueueObject = new i2cTransmitQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
 }
 
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
@@ -57,7 +57,7 @@ i2cEngin_slave::~i2cEngin_slave()
 	printf("%s bus has been destructed.\r\n", this->TAG);
 	
 	//usuwanie kolejki nadawczej oraz danych, które są poinicjowane (danych, do których wskazują wskaźniki ze struktury i2cFrame_transmitQueue kolejki
-	delete this->pQueueObject;
+	delete this->pTransmitQueueObject;
 }
 
 
@@ -66,7 +66,7 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 	esp_err_t retVal =ESP_FAIL;
 	i2cFrame_transmitQueue ItemWithPointerToTransmit;
 	
-	if (pdPASS == pQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
+	if (pdPASS == this->pTransmitQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
 	{
 		
 		this->interruptRequestSet();
@@ -78,7 +78,7 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 			
 		}
 		
-		this->pQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
+		this->pTransmitQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
 		this->interruptRequestReset();
 	}
 	return retVal;	

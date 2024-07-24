@@ -33,6 +33,11 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 		}
 		if (xSemaphoreTake(esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE){		//czeka dopuki nie pojawi się esp32 interrupt request
 			printf("High prior task \r\n");
+			size_t dataSizse;
+			HAL_I2C_Master_Receive(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*)&dataSizse, sizeof(size_t), 500);
+			char* pdymanicDataPointer = new char[dataSizse];
+			uintptr_t pdymanicDataPointer_byValue = (uintptr_t) pdymanicDataPointer;
+			pi2cMaster->pReceiveQueueObject->QueueSend(&pdymanicDataPointer_byValue);
 		}
 	};
 }
