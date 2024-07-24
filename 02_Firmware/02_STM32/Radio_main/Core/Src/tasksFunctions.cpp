@@ -38,6 +38,7 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 			char* pdymanicDataPointer = new char[dataSizse];
 			uintptr_t pdymanicDataPointer_byValue = (uintptr_t) pdymanicDataPointer;
 			pi2cMaster->pReceiveQueueObject->QueueSend(&pdymanicDataPointer_byValue);
+			#error Pociągnąć to dalej
 		}
 	};
 }

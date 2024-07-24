@@ -69,7 +69,7 @@ i2cReceiveQueue4DynamicData::i2cReceiveQueue4DynamicData(UBaseType_t uxQueueLeng
 }
 
 BaseType_t i2cReceiveQueue4DynamicData::QueueSend(uintptr_t* pvItemToQueue){
-#warning prawdzić czy przesyłane są poprawne wartości pvItemToQueue
+//#warning prawdzić czy przesyłane są poprawne wartości pvItemToQueue
 	uintptr_t receivedDataAdress= (uintptr_t) *pvItemToQueue;
 	if (xQueueSend(this->handler_receiveQueue,(const void * const)&receivedDataAdress, pdMS_TO_TICKS(700)) == pdTRUE)
 	{
@@ -80,7 +80,7 @@ BaseType_t i2cReceiveQueue4DynamicData::QueueSend(uintptr_t* pvItemToQueue){
 	}
 	else
 	{
-		this->QueueDeleteDataFromPointer((void*)receivedDataAdress)
+		this->QueueDeleteDataFromPointer((void*)receivedDataAdress);
 		return pdFALSE;
 	}
 }
@@ -93,8 +93,11 @@ void i2cReceiveQueue4DynamicData::QueueDeleteDataFromPointer(void* dataPointer){
 
 
 i2cReceiveQueue4DynamicData::~i2cReceiveQueue4DynamicData(void){
-	void* tempItemToDestrouQueue;
-	//i2cFrame_transmitQueue tempItemToDestrouQueue;
+	uintptr_t tempItemToDestrouQueue=0;
+	//xQueueReceive(handler_receiveQueue, &receivedDataAddresVAL, 500);
+	//char* pdymanicDataPointer = (char*) receivedDataAddresVAL;
+
+	//void* tempItemToDestrouQueue;
 	BaseType_t tempQueueRetVal;
 	do
 	{
@@ -102,6 +105,7 @@ i2cReceiveQueue4DynamicData::~i2cReceiveQueue4DynamicData(void){
 		if (tempQueueRetVal == pdPASS)
 		{
 			this->QueueDeleteDataFromPointer((void*)tempItemToDestrouQueue);
+			//this->QueueDeleteDataFromPointer((void*)receivedDataAdress);
 		}
 	} while (tempQueueRetVal == pdPASS);
 	vQueueDelete(this->handler_receiveQueue);
