@@ -24,11 +24,11 @@
 #error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
 
-class i2cTransmitQueue4DynamicData
+class i2cQueue4DynamicData
 {
 public:
-	i2cTransmitQueue4DynamicData(UBaseType_t uxQueueLength);
-	~i2cTransmitQueue4DynamicData(void);
+	i2cQueue4DynamicData(UBaseType_t uxQueueLength);
+	~i2cQueue4DynamicData(void);
 	BaseType_t QueueSend(const void * pvItemToQueue, size_t itemSize);
 	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
@@ -41,6 +41,8 @@ private:
 
 };
 
+
+/*
 class i2cReceiveQueue4DynamicData
 {
 public:
@@ -53,4 +55,4 @@ protected:
 
 private:
 	QueueHandle_t handler_receiveQueue;
-};
+};*/

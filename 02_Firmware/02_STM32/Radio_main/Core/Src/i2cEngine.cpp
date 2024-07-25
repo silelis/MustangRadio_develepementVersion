@@ -11,7 +11,7 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	// TODO Auto-generated constructor stub
 	this->p_hi2c1 =hi2c1;
 	this->pReceiveQueueObject = NULL;
-	configASSERT(this->pReceiveQueueObject = new i2cReceiveQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pReceiveQueueObject = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 
 //	this->esp32InterruptCounterOverflow =pdFALSE;		//reset interrupt counter overflow indicator
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
