@@ -1,14 +1,14 @@
 #include "i2c_slave_master_queueClass.h"
 
 
-i2cTransmitQueue4DynamicData::i2cTransmitQueue4DynamicData(UBaseType_t uxQueueLength)
+i2cQueue4DynamicData::i2cQueue4DynamicData(UBaseType_t uxQueueLength)
 {
 	this->handler_transmitQueue = NULL;
 	configASSERT(this->handler_transmitQueue = xQueueCreate(uxQueueLength, sizeof(i2cFrame_transmitQueue)));
 }
 
 
-i2cTransmitQueue4DynamicData::~i2cTransmitQueue4DynamicData(void)
+i2cQueue4DynamicData::~i2cQueue4DynamicData(void)
 {
 	i2cFrame_transmitQueue tempItemToDestrouQueue;
 	BaseType_t tempQueueRetVal;
@@ -23,19 +23,19 @@ i2cTransmitQueue4DynamicData::~i2cTransmitQueue4DynamicData(void)
 	vQueueDelete(this->handler_transmitQueue);
 }
 
-void i2cTransmitQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
+void i2cQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
 {
 	delete[] static_cast<char*>(structWithPointer.pData);	
 }
 
-BaseType_t  i2cTransmitQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t xTicksToWait)
+BaseType_t  i2cQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t xTicksToWait)
 {
 	
 	return xQueueReceive(this->handler_transmitQueue, pvBuffer, xTicksToWait);
 }
 
 
-BaseType_t i2cTransmitQueue4DynamicData::QueueSend(const void * pvItemToQueue, size_t itemSize)
+BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue, size_t itemSize)
 {
 	i2cFrame_transmitQueue dataToTransmitQueue;
 	void* pointerToData = NULL;
@@ -63,6 +63,8 @@ BaseType_t i2cTransmitQueue4DynamicData::QueueSend(const void * pvItemToQueue, s
 	}	
 }
 
+
+/*
 i2cReceiveQueue4DynamicData::i2cReceiveQueue4DynamicData(UBaseType_t uxQueueLength){
 	this->handler_receiveQueue = NULL;
 	configASSERT(this->handler_receiveQueue = xQueueCreate(uxQueueLength, sizeof(void*)));
@@ -110,4 +112,4 @@ i2cReceiveQueue4DynamicData::~i2cReceiveQueue4DynamicData(void){
 	} while (tempQueueRetVal == pdPASS);
 	vQueueDelete(this->handler_receiveQueue);
 
-}
+}*/

@@ -22,6 +22,7 @@
 #include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hwConfigFile.h"

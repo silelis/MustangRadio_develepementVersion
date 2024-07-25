@@ -36,7 +36,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 
 	//Tworzenie kolejki nadawczej
 	this->pTransmitQueueObject = NULL;
-	configASSERT(this->pTransmitQueueObject = new i2cTransmitQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
+	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
 }
 
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
