@@ -46,7 +46,7 @@ BaseType_t i2cMaster::i2cSemaphoreGive(void){
 HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	HAL_StatusTypeDef retVal;
 	this->i2cSemaphoreTake();
-	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
+	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit, 100, 1000);
 	this->i2cSemaphoreGive();
 	if(retVal==HAL_OK){
 			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit);

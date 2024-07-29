@@ -4,8 +4,9 @@
 //#include "i2c_slave_master_queueClass.h"
 #include <stdio.h>
 #include <stdint.h> 
+#include "hwConfigFile.h"
 
-#define I2C_SLAVE_ADDRESS					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
+#define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
 //#define I2C_SLAVE_RX_BUFFER_LEN				512
 //#define I2C_SLAVE_TX_VARIABLE_LEN			384
 
@@ -62,7 +63,17 @@ typedef struct {
 	union keyboardUnion keyboardData;
 } i2cFrame_keyboardFrame;
 
-typedef struct{
-	size_t dataSize;
-	void *pData;	
-} i2cFrame_transmitQueue;
+
+#ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
+	typedef struct{
+		uint8_t slaveDevice7bitAddress;
+		size_t dataSize;
+		void *pData;
+	} i2cFrame_transmitQueue;
+#else
+	typedef struct{
+		size_t dataSize;
+		void *pData;
+	} i2cFrame_transmitQueue;
+
+#endif
