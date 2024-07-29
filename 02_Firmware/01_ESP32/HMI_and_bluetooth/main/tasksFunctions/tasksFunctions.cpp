@@ -18,7 +18,7 @@ static i2cEngin_slave *p_i2cSlave;		//obiekt sterujący komunikacją z stm32 po 
 * zadaniem jest zainicjowanie handlerów, które sa niezbedne do
 * prawidłowego działania tasków. Handlery w obrębie includa są
 * GLOBALNE, ale jako, że mają atrybut STATIC nie są widoczna poza
-* jewgo obrębem.
+* jego obrębem.
 * Parameters:
 * NONE
 * Returns:
@@ -43,7 +43,7 @@ void taskFunctionsStaticHandlersInit(void)
 	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
 	printf("I2C slave bus init\n");
 	p_i2cSlave = nullptr;
-	assert(p_i2cSlave = 	new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN));
+	assert(p_i2cSlave = 	new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN));
 	
 	
 	//assert(p_i2cSlave);

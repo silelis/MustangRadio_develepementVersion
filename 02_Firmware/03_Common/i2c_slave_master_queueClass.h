@@ -14,14 +14,14 @@
 	#include "freertos/task.h"
 	#include "freertos/queue.h"
 //	#include "./../../../03_Common/comunicationProtocol.h"
-#include "../03_Common/comunicationProtocol.h"
+	#include "../03_Common/comunicationProtocol.h"
 #elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "comunicationProtocol.h"
+	#include "FreeRTOS.h"
+	#include "task.h"
+	#include "queue.h"
+	#include "comunicationProtocol.h"
 #else
-#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
+	#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
 
 class i2cQueue4DynamicData
