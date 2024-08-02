@@ -24,10 +24,11 @@ public:
 	i2cQueue4DynamicData* pReceiveQueueObject;
 	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
 	void while_I2C_STATE_READY(void);
+	BaseType_t i2cMasterSemaphoreTake(void);
+	BaseType_t i2cMasterSemaphoreGive(void);
 
 protected:
-	BaseType_t i2cSemaphoreTake(void);
-	BaseType_t i2cSemaphoreGive(void);
+
 
 private:
 	I2C_HandleTypeDef *p_hi2c1;						//adres interfejsu i2c po którym odbywa się komunikacja

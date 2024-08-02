@@ -1,0 +1,37 @@
+/*
+ * esp32i2sComunicationDriver.cpp
+ *
+ *  Created on: Aug 2, 2024
+ *      Author: dbank
+ */
+
+#include "esp32i2sComunicationDriver.h"
+
+esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
+	// TODO Auto-generated constructor stub
+		this->pi2cMaster = pointer_to_i2cMasterObject;
+		configASSERT(this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
+}
+
+
+
+
+
+HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
+	return this->pi2cMaster->ping(this->esp32i2cSlaveAdress);
+}
+
+void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	xSemaphoreGiveFromISR(this->esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
+
+uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit(void){
+	return this->esp32i2cSlaveAdress;
+}
+esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
+	// TODO Auto-generated destructor stub
+	#warning zrobic porzadny destruktor
+}
+

@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunication_calculate_checksum.cpp \
+../Core/Src/esp32i2sComunicationDriver.cpp \
 ../Core/Src/freertos.cpp \
 ../Core/Src/i2cEngine.cpp \
 D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/i2c_slave_master_queueClass.cpp \
@@ -41,6 +42,7 @@ C_DEPS += \
 OBJS += \
 ./Core/Src/comunication_calculate_checksum.o \
 ./Core/Src/dma.o \
+./Core/Src/esp32i2sComunicationDriver.o \
 ./Core/Src/freertos.o \
 ./Core/Src/gpio.o \
 ./Core/Src/i2c.o \
@@ -59,6 +61,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./Core/Src/comunication_calculate_checksum.d \
+./Core/Src/esp32i2sComunicationDriver.d \
 ./Core/Src/freertos.d \
 ./Core/Src/i2cEngine.d \
 ./Core/Src/i2c_slave_master_queueClass.d \
@@ -79,7 +82,7 @@ Core/Src/i2c_slave_master_queueClass.o: D:/!!!__GitHUB_repositories/MustangRadio
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/comunication_calculate_checksum.cyclo ./Core/Src/comunication_calculate_checksum.d ./Core/Src/comunication_calculate_checksum.o ./Core/Src/comunication_calculate_checksum.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/freertos.cyclo ./Core/Src/freertos.d ./Core/Src/freertos.o ./Core/Src/freertos.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/i2cEngine.cyclo ./Core/Src/i2cEngine.d ./Core/Src/i2cEngine.o ./Core/Src/i2cEngine.su ./Core/Src/i2c_slave_master_queueClass.cyclo ./Core/Src/i2c_slave_master_queueClass.d ./Core/Src/i2c_slave_master_queueClass.o ./Core/Src/i2c_slave_master_queueClass.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/printfRedirect.cyclo ./Core/Src/printfRedirect.d ./Core/Src/printfRedirect.o ./Core/Src/printfRedirect.su ./Core/Src/stm32h7xx_hal_msp.cyclo ./Core/Src/stm32h7xx_hal_msp.d ./Core/Src/stm32h7xx_hal_msp.o ./Core/Src/stm32h7xx_hal_msp.su ./Core/Src/stm32h7xx_hal_timebase_tim.cyclo ./Core/Src/stm32h7xx_hal_timebase_tim.d ./Core/Src/stm32h7xx_hal_timebase_tim.o ./Core/Src/stm32h7xx_hal_timebase_tim.su ./Core/Src/stm32h7xx_it.cyclo ./Core/Src/stm32h7xx_it.d ./Core/Src/stm32h7xx_it.o ./Core/Src/stm32h7xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32h7xx.cyclo ./Core/Src/system_stm32h7xx.d ./Core/Src/system_stm32h7xx.o ./Core/Src/system_stm32h7xx.su ./Core/Src/tasksFunctions.cyclo ./Core/Src/tasksFunctions.d ./Core/Src/tasksFunctions.o ./Core/Src/tasksFunctions.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
+	-$(RM) ./Core/Src/comunication_calculate_checksum.cyclo ./Core/Src/comunication_calculate_checksum.d ./Core/Src/comunication_calculate_checksum.o ./Core/Src/comunication_calculate_checksum.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/esp32i2sComunicationDriver.cyclo ./Core/Src/esp32i2sComunicationDriver.d ./Core/Src/esp32i2sComunicationDriver.o ./Core/Src/esp32i2sComunicationDriver.su ./Core/Src/freertos.cyclo ./Core/Src/freertos.d ./Core/Src/freertos.o ./Core/Src/freertos.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/i2cEngine.cyclo ./Core/Src/i2cEngine.d ./Core/Src/i2cEngine.o ./Core/Src/i2cEngine.su ./Core/Src/i2c_slave_master_queueClass.cyclo ./Core/Src/i2c_slave_master_queueClass.d ./Core/Src/i2c_slave_master_queueClass.o ./Core/Src/i2c_slave_master_queueClass.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/printfRedirect.cyclo ./Core/Src/printfRedirect.d ./Core/Src/printfRedirect.o ./Core/Src/printfRedirect.su ./Core/Src/stm32h7xx_hal_msp.cyclo ./Core/Src/stm32h7xx_hal_msp.d ./Core/Src/stm32h7xx_hal_msp.o ./Core/Src/stm32h7xx_hal_msp.su ./Core/Src/stm32h7xx_hal_timebase_tim.cyclo ./Core/Src/stm32h7xx_hal_timebase_tim.d ./Core/Src/stm32h7xx_hal_timebase_tim.o ./Core/Src/stm32h7xx_hal_timebase_tim.su ./Core/Src/stm32h7xx_it.cyclo ./Core/Src/stm32h7xx_it.d ./Core/Src/stm32h7xx_it.o ./Core/Src/stm32h7xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32h7xx.cyclo ./Core/Src/system_stm32h7xx.d ./Core/Src/system_stm32h7xx.o ./Core/Src/system_stm32h7xx.su ./Core/Src/tasksFunctions.cyclo ./Core/Src/tasksFunctions.d ./Core/Src/tasksFunctions.o ./Core/Src/tasksFunctions.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
 
 .PHONY: clean-Core-2f-Src
 

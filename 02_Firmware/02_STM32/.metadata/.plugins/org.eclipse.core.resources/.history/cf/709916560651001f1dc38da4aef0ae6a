@@ -1,0 +1,18 @@
+/*
+ * esp32Driver.h
+ *
+ *  Created on: Aug 2, 2024
+ *      Author: dbank
+ */
+
+#ifndef SRC_ESP32DRIVER_H_
+#define SRC_ESP32DRIVER_H_
+#include "i2cEngine.h"
+
+class esp32Driver {
+public:
+	esp32Driver(i2cMaster* pi2cMaster);
+	virtual ~esp32Driver();
+};
+
+#endif /* SRC_ESP32DRIVER_H_ */

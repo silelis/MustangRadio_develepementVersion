@@ -1,0 +1,27 @@
+/*
+ * esp32i2sComunicationDriver.h
+ *
+ *  Created on: Aug 2, 2024
+ *      Author: dbank
+ */
+
+#ifndef SRC_ESP32I2SCOMUNICATIONDRIVER_H_
+#define SRC_ESP32I2SCOMUNICATIONDRIVER_H_
+#include "i2cEngine.h"
+#include "queue.h"
+#include "task.h"
+
+class esp32_i2sComunicationDriver {
+public:
+	esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject);
+	virtual ~esp32_i2sComunicationDriver();
+
+protected:
+
+private:
+	i2cMaster* pi2cMaster;
+	SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;
+	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;
+};
+
+#endif /* SRC_ESP32I2SCOMUNICATIONDRIVER_H_ */

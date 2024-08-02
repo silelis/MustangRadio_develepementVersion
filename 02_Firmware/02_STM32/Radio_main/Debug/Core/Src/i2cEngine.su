@@ -1,8 +1,8 @@
 ../Core/Src/i2cEngine.cpp:10:1:i2cMaster::i2cMaster(I2C_HandleTypeDef*)	32	static,ignoring_inline_asm
-../Core/Src/i2cEngine.cpp:27:12:BaseType_t i2cMaster::i2cSemaphoreTake()	16	static
-../Core/Src/i2cEngine.cpp:31:12:BaseType_t i2cMaster::i2cSemaphoreGive()	16	static
+../Core/Src/i2cEngine.cpp:27:12:BaseType_t i2cMaster::i2cMasterSemaphoreTake()	16	static
+../Core/Src/i2cEngine.cpp:31:12:BaseType_t i2cMaster::i2cMasterSemaphoreGive()	16	static
 ../Core/Src/i2cEngine.cpp:35:19:HAL_StatusTypeDef i2cMaster::ping(uint16_t)	24	static
-../Core/Src/i2cEngine.cpp:46:1:i2cMaster::~i2cMaster()	24	static
-../Core/Src/i2cEngine.cpp:46:1:virtual i2cMaster::~i2cMaster()	16	static
-../Core/Src/i2cEngine.cpp:55:6:void i2cMaster::while_I2C_STATE_READY()	16	static
-../Core/Src/i2cEngine.cpp:59:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t, uint8_t*, uint16_t)	24	static
+../Core/Src/i2cEngine.cpp:50:1:i2cMaster::~i2cMaster()	24	static
+../Core/Src/i2cEngine.cpp:50:1:virtual i2cMaster::~i2cMaster()	16	static
+../Core/Src/i2cEngine.cpp:59:6:void i2cMaster::while_I2C_STATE_READY()	16	static
+../Core/Src/i2cEngine.cpp:65:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t, uint8_t*, uint16_t)	24	static
