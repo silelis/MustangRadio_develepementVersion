@@ -37,22 +37,6 @@ protected:
 
 
 private:
-	QueueHandle_t handler_transmitQueue;
+	QueueHandle_t handler_Queue;	//uchwyt do kolejki
 
 };
-
-
-/*
-class i2cReceiveQueue4DynamicData
-{
-public:
-	i2cReceiveQueue4DynamicData(UBaseType_t uxQueueLength);
-	~i2cReceiveQueue4DynamicData(void);
-	BaseType_t QueueSend(uintptr_t* pvItemToQueue);
-	void QueueDeleteDataFromPointer(void* dataPointer);
-
-protected:
-
-private:
-	QueueHandle_t handler_receiveQueue;
-};*/

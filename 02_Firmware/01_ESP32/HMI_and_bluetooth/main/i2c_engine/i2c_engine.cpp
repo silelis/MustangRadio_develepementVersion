@@ -9,6 +9,8 @@ static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
 
+
+
 i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin)
 {
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;
@@ -75,7 +77,6 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 		if (ESP_OK == retVal)
 		{
 			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
-			
 		}
 		
 		this->pTransmitQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
@@ -86,7 +87,18 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 
 
 
-
+/*---------------------------------------------------------------
+ * Konstruktor klasy odpwiadającej za komunikację ESP32 po i2c z
+ * urządzeniami i2c slave.
+ * Parameters:
+ * i2c_port_num_t i2c_port	- numer portu i2c w kontrolerze ESP32
+ * gpio_num_t sda_io_num	- numer pinu kontrolera ESP32 do którego
+ *							  przypisano sygnał SDA szyny i2c
+ * gpio_num_t scl_io_num	- numer pinu kontrolera ESP32 do którego
+ *							  przypisano sygnał SCL szyny i2c
+ * Returns:
+ * NONE
+*---------------------------------------------------------------*/
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
 
@@ -110,6 +122,14 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 
 }
 
+/*---------------------------------------------------------------
+ * Metoda pozwalająca sprawdzić czy urządzenie slave o adresie 	
+ * i2c_address jest dostępne na szynie i2c.
+ * Parameters:
+ * uint8_t i2c_address	- adres i2c urządzenia slave 8-bit 
+ * Returns:
+ * esp_err_t ret		-  ESP_OK, ESP_FAIL, etc
+*---------------------------------------------------------------*/
 esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 {
 	xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
@@ -125,24 +145,55 @@ esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 }
 
 
+/*---------------------------------------------------------------
+* Metoda rejestruje dodane do szyny i2c urządzenie typu slave.
+* Jest to metoda pomocnicza dostarczająca dane wykorzystywane
+* przy destruktorze obiektu.
+* Parameters:
+* NONE
+* Returns:
+* uint16 devicesOnBus	-  aktualna ilość urządzeń na szynie i2c
+*---------------------------------------------------------------*/
 uint16_t i2cEngin_master::devicesOnBusIncrement()
 {
 	if (this->devicesOnBus == UINT16_MAX)
 		assert(0);
+		#warning napisać jakąś leprzą pbsługę błędów
+		//TODO:	 napisać jakąś leprzą pbsługę błędów
 	else
 		this->devicesOnBus++;	
 	return this->devicesOnBus;
 }
+
+
+/*---------------------------------------------------------------
+* Metoda rejestruje usunięte z szyny i2c urządzenie typu slave.
+* Jest to metoda pomocnicza dostarczająca dane wykorzystywane
+* przy destruktorze obiektu.
+* Parameters:
+* NONE
+* Returns:
+* uint16 devicesOnBus	-  aktualna ilość urządzeń na szynie i2c
+*---------------------------------------------------------------*/
 uint16_t i2cEngin_master::devicesOnBusDecrement()
 {
 	if (this->devicesOnBus == 0)
 		assert(0);
+		#warning napisać jakąś leprzą pbsługę błędów
+		//TODO:	 napisać jakąś leprzą pbsługę błędów
 	else
 		this->devicesOnBus--;
 	return this->devicesOnBus;
 }
 
-
+/*---------------------------------------------------------------
+* Destruktor klasy odpwiadającej za komunikację ESP32 po i2c z
+* urządzeniami i2c slave.
+* Parameters:
+* NONE
+* Returns:
+* NONE
+*---------------------------------------------------------------*/
 i2cEngin_master::~i2cEngin_master()
 {
 	if (this->devicesOnBus == 0) {
