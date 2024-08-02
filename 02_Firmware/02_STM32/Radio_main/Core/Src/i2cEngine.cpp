@@ -24,17 +24,6 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	this->i2cSemaphoreGive();
 }
 
-/*
-void i2cMaster::setEsp32InterruptCounterOverflow(void){
-	printf("%s ESP32 interrupt overflow indicator overflowed.\r\n", this->TAG);
-	this->esp32InterruptCounterOverflow = pdTRUE;
-}
-
-BaseType_t i2cMaster::getEsp32InterruptCounterOverflow(void){
-	return this->esp32InterruptCounterOverflow;
-}
-*/
-
 BaseType_t i2cMaster::i2cSemaphoreTake(void){
 	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
 }

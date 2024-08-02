@@ -14,9 +14,6 @@
 #include "./../../../03_Common/i2c_slave_master_queueClass.h"
 
 
-//#include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
-
-
 class i2cEngin_slave
 {
 public:
@@ -24,21 +21,15 @@ public:
 	~i2cEngin_slave();
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
-	//esp_err_t transmitQueueSend(const void * pvItemToQueue, size_t itemSize);
 	esp_err_t slaveTransmit();
-	i2cQueue4DynamicData* pTransmitQueueObject;
+	i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
 protected:
 	
 	
 private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
-	//QueueSetHandle_t handler_i2cSlaveQueueSet;
-	//QueueHandle_t handler_transmitQueue;
-	//const UBaseType_t transmitQueueSize = 20;
 	const int tx_timeout_ms = 500;
-	//void transmitQueueDestruct(void);
-	//void transmitQueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
 };
 	
 
