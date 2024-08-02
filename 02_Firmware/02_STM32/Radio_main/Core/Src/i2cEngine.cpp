@@ -15,37 +15,41 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 //	this->esp32InterruptCounterOverflow =pdFALSE;		//reset interrupt counter overflow indicator
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
-	this->i2cSemaphoreGive();
-	this->i2cSemaphoreTake();
+	this->i2cMasterSemaphoreGive();
+	this->i2cMasterSemaphoreTake();
 	HAL_I2C_DeInit(p_hi2c1);
 	MX_I2C1_Init();
 	//vTaskDelay(pdMS_TO_TICKS(1000));
 	printf("%s bus had been initialized.\r\n",this->TAG);
-	this->i2cSemaphoreGive();
+	this->i2cMasterSemaphoreGive();
 }
 
-BaseType_t i2cMaster::i2cSemaphoreTake(void){
+BaseType_t i2cMaster::i2cMasterSemaphoreTake(void){
 	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
 }
 
-BaseType_t i2cMaster::i2cSemaphoreGive(void){
+BaseType_t i2cMaster::i2cMasterSemaphoreGive(void){
 	return xSemaphoreGive(this->handle_i2cBinarySemaphore);
 }
 
 HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	HAL_StatusTypeDef retVal;
-	this->i2cSemaphoreTake();
-	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit, 100, 1000);
-	this->i2cSemaphoreGive();
+	this->while_I2C_STATE_READY();
+	this->i2cMasterSemaphoreTake();
+	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
+	this->i2cMasterSemaphoreGive();
 	if(retVal==HAL_OK){
-			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit);
+			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
+	}
+	else{
+		printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
 	}
 	return retVal;
 }
 
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
-	this->i2cSemaphoreTake();
+	this->i2cMasterSemaphoreTake();
 	HAL_I2C_DeInit(this->p_hi2c1);
 	this->p_hi2c1 = NULL;
 	delete this->pReceiveQueueObject;
@@ -53,9 +57,12 @@ i2cMaster::~i2cMaster() {
 }
 
 void i2cMaster::while_I2C_STATE_READY(void){
+	this->i2cMasterSemaphoreTake();
 	while(HAL_I2C_GetState(this->p_hi2c1)!= HAL_I2C_STATE_READY){};
+	this->i2cMasterSemaphoreGive();
 }
 
 HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
+	this->while_I2C_STATE_READY();
 	return HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
 }
