@@ -22,9 +22,9 @@ public:
 	virtual ~i2cMaster();
 	HAL_StatusTypeDef ping(uint16_t DevAddress_7bit);
 	i2cQueue4DynamicData* pReceiveQueueObject;
+	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
+	void while_I2C_STATE_READY(void);
 
-	//void setEsp32InterruptCounterOverflow(void);
-	//BaseType_t getEsp32InterruptCounterOverflow(void);
 protected:
 	BaseType_t i2cSemaphoreTake(void);
 	BaseType_t i2cSemaphoreGive(void);
@@ -33,8 +33,6 @@ private:
 	I2C_HandleTypeDef *p_hi2c1;						//adres interfejsu i2c po którym odbywa się komunikacja
 	const char *TAG = "I2C master log:";
 	SemaphoreHandle_t handle_i2cBinarySemaphore;	//semafor blokujący zasoby do interfejsu i2c SMT'a podczas transmisji/ odbioru danych przez inny wątek
-	//BaseType_t esp32InterruptCounterOverflow;		//esp32 interrupt counter overflow indicator
-
 };
 
 #endif /* INC_I2CENGINE_H_ */

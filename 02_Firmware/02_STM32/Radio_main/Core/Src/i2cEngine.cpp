@@ -52,3 +52,10 @@ i2cMaster::~i2cMaster() {
 	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
 }
 
+void i2cMaster::while_I2C_STATE_READY(void){
+	while(HAL_I2C_GetState(this->p_hi2c1)!= HAL_I2C_STATE_READY){};
+}
+
+HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
+	return HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
+}
