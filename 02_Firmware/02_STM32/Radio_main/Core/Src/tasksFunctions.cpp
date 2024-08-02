@@ -28,7 +28,9 @@ static i2cMaster* pi2cMaster;  //wsyaźnik do obiektu służącego do komunikacj
 static void esp32IntrrruptRequestCallback(void *pNothing){
 	i2cFrame_transmitQueue tempI2CFrameReceivedFromESP32;
 	tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;
+	char* pdymanicDataPointer;
 	while(1){
+		//pdymanicDataPointer = NULL
 		if( uxSemaphoreGetCount(esp32IntrrruptRequest_CountingSemaphore)==ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
 			esp32InrerruptRequest_CountingSemaphoreOverflow = pdTRUE;
 			printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
@@ -37,26 +39,30 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 			printf("High prior task \r\n");
 
 
-//#error poprawić dodać ify i popracować nad DMA
-			//https://github.com/STMicroelectronics/STM32CubeF0/blob/4390ff6bfb693104cf97192f98c3dc9e3a7c296a/Projects/STM32F072B-Discovery/Examples/I2C/I2C_TwoBoards_ComDMA/Src/main.c
+			pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress, (uint8_t*) &tempI2CFrameReceivedFromESP32.dataSize, sizeof(size_t));
+			//HAL_I2C_Master_Receive_DMA(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) &tempI2CFrameReceivedFromESP32.dataSize, sizeof(size_t));
+			//HAL_I2C_Master_Receive(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) &tempI2CFrameReceivedFromESP32.dataSize, sizeof(size_t), 500);
+			//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){
 
-
-
-			//HAL_I2C_Master_Receive_DMA(&hi2c1, (uint16_t) I2C_SLAVE_ADDRESS<<1, (uint8_t*) &tempI2CFrameReceivedFromESP32.dataSize, sizeof(size_t));
-			HAL_I2C_Master_Receive(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) &tempI2CFrameReceivedFromESP32.dataSize, sizeof(size_t), 500);
-			char* pdymanicDataPointer = new char[tempI2CFrameReceivedFromESP32.dataSize];
-			HAL_I2C_Master_Receive(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) pdymanicDataPointer, sizeof(tempI2CFrameReceivedFromESP32.dataSize), 500);
+			//};
+			pi2cMaster->while_I2C_STATE_READY();
+			/*char**/
+			pdymanicDataPointer = new char[tempI2CFrameReceivedFromESP32.dataSize];
 			printf("1 \r\n");
-			//HAL_I2C_Master_Receive_DMA(&hi2c1, I2C_SLAVE_ADDRESS<<1, (uint8_t*) pdymanicDataPointer, sizeof(tempI2CFrameReceivedFromESP32.dataSize));
-			printf("2 \r\n");
+			if (pdymanicDataPointer!=nullptr){
+				HAL_I2C_Master_Receive_DMA(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) pdymanicDataPointer, tempI2CFrameReceivedFromESP32.dataSize);
+				//HAL_I2C_Master_Receive(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) pdymanicDataPointer, tempI2CFrameReceivedFromESP32.dataSize, 500);
+				while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+				printf("2 \r\n");
+				//tempI2CFrameReceivedFromESP32.pData = pdymanicDataPointer;
 
-			tempI2CFrameReceivedFromESP32.pData = pdymanicDataPointer;
+			}
+			else{
+				printf("error with memory allocation\r\n");
+				#warning zrobić porządną obsługę błędów
+				//TODO: zrobić porządną obsługę błędów
+			}
 
-
-
-			uintptr_t pdymanicDataPointer_byValue = (uintptr_t) pdymanicDataPointer;
-			//pi2cMaster->pReceiveQueueObject->QueueSend(&pdymanicDataPointer_byValue);
-			//#error Pociągnąć to dalej
 		}
 	};
 }
