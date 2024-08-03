@@ -33,13 +33,13 @@ void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
 	assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
 
-	//pi2cMaster->i2cMasterSemaphoreTake();
-	//assert(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit, 0xffffffff, 0xffffffff));
-	//pi2cMaster->i2cMasterSemaphoreGive();
+	pi2cMaster->i2cMasterSemaphoreTake();
 	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
-		printf("ESP32 not responding\r\n");
+		printf("ESP32 i2c bus not responding\r\n");
 	};
+	pi2cMaster->i2cMasterSemaphoreGive();
 	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+
 	pi2cMaster->while_I2C_STATE_READY();
 	pESP32->ping();
 
