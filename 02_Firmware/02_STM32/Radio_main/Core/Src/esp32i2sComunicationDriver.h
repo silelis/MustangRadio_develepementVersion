@@ -14,26 +14,31 @@
 
 class esp32_i2sComunicationDriver {
 public:
+	const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32;		//7bit address
 	esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject);
 	virtual ~esp32_i2sComunicationDriver();
-	uint8_t get_i2cSlaveAddress_7bit(void);
-	HAL_StatusTypeDef ping(void);
+	BaseType_t semaphoreTake__CountingSemaphore(void);
+
 	void incrementInterruptRequestCountingSemaphore(void); //metoda wywoływana podczas wykrycia sygnały interrupt request, aby inkrementować semafor zliczający wystąpienia
 	void isCountingSemaphoreOverflowed(void);
-	BaseType_t semaphoreTake__CountingSemaphore(void);
-	BaseType_t receiveDataFromESP32(uint8_t *pData, uint16_t Size);
+	void seteDynamicmMemeoryAlocationError();
+
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);
+	HAL_StatusTypeDef ping(void);
+	BaseType_t masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
+	void while_I2C_STATE_READY(void);
 
 protected:
 
 private:
+	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;
 	i2cMaster* pi2cMaster;												//wskaźnik do obiektu obsługuj ącego komunikację stm'a32 jako i2c master
 	SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;			//uchwyt semafora zliczającego ilość wsytąpień esp32 interrupt request i ilość odczytów danych z esp32
-	BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflow;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
-	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;
-	const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32;		//7bit address
 
+	//zmienne kontrolujące wystąpieniue błędów
+	BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflowError;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
+	BaseType_t esp32DynamicmMemeoryAlocationError;						//zmienna mówiąza o tytm, że nastąpił błąd w dynamicxznej alokacji pamięcia
 };
 
 #endif /* SRC_ESP32I2SCOMUNICATIONDRIVER_H_ */

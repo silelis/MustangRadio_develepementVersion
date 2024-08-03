@@ -20,45 +20,23 @@
 #include "esp32i2sComunicationDriver.h"
 
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;		//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
-static i2cMaster* pi2cMaster=NULL;  					//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
-static esp32_i2sComunicationDriver* pESP32=NULL; 		//wsyaźnik do obiektu obsługującego komunikację z ESP32
-
-
-
-static SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;	//////////////////// 	//uchwyt semafora zliczającego ilość wsytąpień esp32 interrupt request i ilość odczytów danych z esp32
-static BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflow=pdFALSE;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
-
-
+static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
+static i2cMaster* pi2cMaster=NULL;  								//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+static esp32_i2sComunicationDriver* pESP32=NULL; 					//wsyaźnik do obiektu obsługującego komunikację z ESP32
 
 
 void initTaskFunctions(void){
 	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
-	//////////////////////////////////////////////
-	// NIE POTRZEBNE
-	configASSERT(esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX, 0));
-	////////////////////////////////////////////////////////////
+	assert(pi2cMaster = new i2cMaster(&hi2c1));
+	assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
+	pESP32->ping();
 
+	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
+	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
 
-		//pi2cMaster = NULL;
-		assert(pi2cMaster = new i2cMaster(&hi2c1));
-		assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
-		pESP32->ping();
-
-
-		//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
-		configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
+	xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser);
 }
-
-
-
-
-
-
-
-
-
-
 
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
@@ -67,51 +45,49 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 
-
-
-
-
 static void esp32IntrrruptRequestCallback(void *pNothing){
 	i2cFrame_transmitQueue tempI2CFrameForESP32;			//
-	tempI2CFrameForESP32.slaveDevice7bitAddress = pESP32->get_i2cSlaveAddress_7bit();		//I2C_SLAVE_ADDRESS_ESP32;
-	char* pdymanicDataPointer;								//wskaźnik do dynamicznie alokowanych zmiennych, w których będą przechowywane dane otrzymane z ESP32
+	tempI2CFrameForESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
+	char* pdymanicDataPointer;															//wskaźnik do dynamicznie alokowanych zmiennych, w których będą przechowywane dane otrzymane z ESP32
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
-
-		if (pESP32->semaphoreTake__CountingSemaphore()){		//czeka dopuki nie pojawi się esp32 interrupt request
-			printf("High prior task \r\n");
-
+		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
 			pESP32->i2cMasterSemaphoreTake();
-			//pi2cMaster->i2cMasterSemaphoreTake();
-
-
-
-
-			pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrameForESP32.slaveDevice7bitAddress, (uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
-
-			pi2cMaster->while_I2C_STATE_READY();
-			/*char**/
+			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
+			pESP32->while_I2C_STATE_READY();
 			pdymanicDataPointer = new char[tempI2CFrameForESP32.dataSize];
-			printf("1 \r\n");
+			tempI2CFrameForESP32.pData = pdymanicDataPointer;
 			if (pdymanicDataPointer!=nullptr){
-				HAL_I2C_Master_Receive_DMA(&hi2c1, tempI2CFrameForESP32.slaveDevice7bitAddress<<1, (uint8_t*) pdymanicDataPointer, tempI2CFrameForESP32.dataSize);
-				//HAL_I2C_Master_Receive(&hi2c1, tempI2CFrameReceivedFromESP32.slaveDevice7bitAddress<<1, (uint8_t*) pdymanicDataPointer, tempI2CFrameReceivedFromESP32.dataSize, 500);
-				while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-				printf("2 \r\n");
-				//tempI2CFrameReceivedFromESP32.pData = pdymanicDataPointer;
-
+				pESP32->masterReceiveFromESP32_DMA((uint8_t*) pdymanicDataPointer, tempI2CFrameForESP32.dataSize);
+				pESP32->while_I2C_STATE_READY();
+				pi2cMaster->pReceiveQueueObject->QueueSend(&tempI2CFrameForESP32);
 			}
 			else{
-				printf("error with memory allocation\r\n");
-				#warning zrobić porządną obsługę błędów
-				//TODO: zrobić porządną obsługę błędów
+				pESP32->seteDynamicmMemeoryAlocationError();
+			}
+			pESP32->i2cMasterSemaphoreGive();
+		}
+	};
+}
+
+static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
+	i2cFrame_transmitQueue tempI2CReceiveFraame;
+	while(1){
+		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFraame, portMAX_DELAY)==pdPASS){
+			switch(tempI2CReceiveFraame.slaveDevice7bitAddress)
+			{
+			case I2C_SLAVE_ADDRESS_ESP32:
+				printf("ESP32\r\n");
+				break;
+			default:
+				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFraame.slaveDevice7bitAddress);
+				pi2cMaster->ping(tempI2CReceiveFraame.slaveDevice7bitAddress);
 			}
 
-			pi2cMaster->i2cMasterSemaphoreGive();
-		}
 
 
+			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFraame);
+		};
 
-
-	};
+	}
 }
