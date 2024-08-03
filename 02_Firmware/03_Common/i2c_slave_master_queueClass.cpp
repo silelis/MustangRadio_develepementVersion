@@ -35,30 +35,49 @@ BaseType_t  i2cQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t
 }
 
 
-BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue, size_t itemSize)
-{
-	i2cFrame_transmitQueue dataToTransmitQueue;
-	void* pointerToData = NULL;
-	pointerToData = new char[sizeof(itemSize)];
-	assert(pointerToData);
-	if (pointerToData != NULL)
-	{
-		memcpy(pointerToData, pvItemToQueue, itemSize);
-		dataToTransmitQueue.dataSize = itemSize;
-		dataToTransmitQueue.pData = pointerToData;
-		if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
+#ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
+	BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue){
+		if (xQueueSend(this->handler_Queue, pvItemToQueue, pdMS_TO_TICKS(700)) == pdTRUE)
 		{
 			return pdTRUE;
 		}
 		else
 		{
+			i2cFrame_transmitQueue dataToTransmitQueue;
+			memcpy(&dataToTransmitQueue, pvItemToQueue, sizeof(i2cFrame_transmitQueue));
 			this->QueueDeleteDataFromPointer(dataToTransmitQueue);
 			//delete[] static_cast<char*>(pointerToData);
 			return pdFALSE;
 		}
 	}
-	else
+
+#else
+	BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue, size_t itemSize)
 	{
-		return pdFALSE;
-	}	
-}
+		i2cFrame_transmitQueue dataToTransmitQueue;
+		void* pointerToData = NULL;
+		pointerToData = new char[sizeof(itemSize)];
+		assert(pointerToData);
+		if (pointerToData != NULL)
+		{
+			memcpy(pointerToData, pvItemToQueue, itemSize);
+			dataToTransmitQueue.dataSize = itemSize;
+			dataToTransmitQueue.pData = pointerToData;
+			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
+			{
+				return pdTRUE;
+			}
+			else
+			{
+				this->QueueDeleteDataFromPointer(dataToTransmitQueue);
+				//delete[] static_cast<char*>(pointerToData);
+				return pdFALSE;
+			}
+		}
+		else
+		{
+			return pdFALSE;
+		}	
+	}
+#endif
+

@@ -15,11 +15,13 @@
 	#include "freertos/queue.h"
 //	#include "./../../../03_Common/comunicationProtocol.h"
 	#include "../03_Common/comunicationProtocol.h"
+	#include "hwConfigFile.h"
 #elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
 	#include "FreeRTOS.h"
 	#include "task.h"
 	#include "queue.h"
 	#include "comunicationProtocol.h"
+	#include "hwConfigFile.h"
 #else
 	#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
@@ -29,7 +31,11 @@ class i2cQueue4DynamicData
 public:
 	i2cQueue4DynamicData(UBaseType_t uxQueueLength);
 	~i2cQueue4DynamicData(void);
-	BaseType_t QueueSend(const void * pvItemToQueue, size_t itemSize);
+	#ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
+		BaseType_t QueueSend(const void * pvItemToQueue);
+	#else
+		BaseType_t QueueSend(const void * pvItemToQueue, size_t itemSize);
+	#endif
 	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 

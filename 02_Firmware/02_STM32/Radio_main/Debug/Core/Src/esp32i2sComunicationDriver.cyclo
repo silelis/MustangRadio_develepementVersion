@@ -1,11 +1,12 @@
 ../Core/Src/esp32i2sComunicationDriver.cpp:10:1:esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster*)	2
-../Core/Src/esp32i2sComunicationDriver.cpp:21:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:30:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	2
-../Core/Src/esp32i2sComunicationDriver.cpp:36:9:uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:40:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:40:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:45:6:void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed()	2
-../Core/Src/esp32i2sComunicationDriver.cpp:52:12:BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:56:12:BaseType_t esp32_i2sComunicationDriver::receiveDataFromESP32(uint8_t*, uint16_t)	1
-../Core/Src/esp32i2sComunicationDriver.cpp:64:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:68:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:22:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:31:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	2
+../Core/Src/esp32i2sComunicationDriver.cpp:42:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:42:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:47:6:void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed()	2
+../Core/Src/esp32i2sComunicationDriver.cpp:54:12:BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:58:12:BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t*, uint16_t)	1
+../Core/Src/esp32i2sComunicationDriver.cpp:63:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:67:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:71:6:void esp32_i2sComunicationDriver::while_I2C_STATE_READY()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:75:6:void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError()	1

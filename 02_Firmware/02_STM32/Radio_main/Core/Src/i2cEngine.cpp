@@ -39,10 +39,10 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
 	//this->i2cMasterSemaphoreGive();
 	if(retVal==HAL_OK){
-			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
+			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
 	}
 	else{
-		printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
+		printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
 		assert(0);
 	}
 	return retVal;

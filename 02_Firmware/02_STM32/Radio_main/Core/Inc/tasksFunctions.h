@@ -23,6 +23,7 @@
 void initTaskFunctions(void);
 
 static void esp32IntrrruptRequestCallback(void *pNothing);
+static void i2cMaster_pReceiveQueueObjectParser(void *pNothing);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 
 //#ifdef __cplusplus
