@@ -34,15 +34,16 @@ BaseType_t i2cMaster::i2cMasterSemaphoreGive(void){
 
 HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	HAL_StatusTypeDef retVal;
-	this->while_I2C_STATE_READY();
-	this->i2cMasterSemaphoreTake();
+	//this->while_I2C_STATE_READY();
+	//this->i2cMasterSemaphoreTake();
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
-	this->i2cMasterSemaphoreGive();
+	//this->i2cMasterSemaphoreGive();
 	if(retVal==HAL_OK){
 			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
 	}
 	else{
 		printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit<<1);
+		assert(0);
 	}
 	return retVal;
 }
@@ -57,9 +58,9 @@ i2cMaster::~i2cMaster() {
 }
 
 void i2cMaster::while_I2C_STATE_READY(void){
-	this->i2cMasterSemaphoreTake();
+	//this->i2cMasterSemaphoreTake();
 	while(HAL_I2C_GetState(this->p_hi2c1)!= HAL_I2C_STATE_READY){};
-	this->i2cMasterSemaphoreGive();
+	//this->i2cMasterSemaphoreGive();
 }
 
 HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){

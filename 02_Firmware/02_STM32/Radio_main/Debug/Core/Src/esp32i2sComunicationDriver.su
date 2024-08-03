@@ -1,6 +1,11 @@
 ../Core/Src/esp32i2sComunicationDriver.cpp:10:1:esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster*)	24	static,ignoring_inline_asm
-../Core/Src/esp32i2sComunicationDriver.cpp:20:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	16	static
-../Core/Src/esp32i2sComunicationDriver.cpp:24:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	24	static,ignoring_inline_asm
-../Core/Src/esp32i2sComunicationDriver.cpp:30:9:uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit()	16	static
-../Core/Src/esp32i2sComunicationDriver.cpp:34:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	16	static
-../Core/Src/esp32i2sComunicationDriver.cpp:34:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:21:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	24	static
+../Core/Src/esp32i2sComunicationDriver.cpp:30:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	24	static,ignoring_inline_asm
+../Core/Src/esp32i2sComunicationDriver.cpp:36:9:uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:40:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:40:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:45:6:void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:52:12:BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:56:12:BaseType_t esp32_i2sComunicationDriver::receiveDataFromESP32(uint8_t*, uint16_t)	32	static
+../Core/Src/esp32i2sComunicationDriver.cpp:64:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake()	16	static
+../Core/Src/esp32i2sComunicationDriver.cpp:68:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive()	16	static
