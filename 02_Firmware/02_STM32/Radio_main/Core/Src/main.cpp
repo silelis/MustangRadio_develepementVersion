@@ -62,7 +62,7 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+//void delay_ms(uint32_t ms);
 /* USER CODE END 0 */
 
 /**
@@ -99,7 +99,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
+  //delay_ms(1000);
   initTaskFunctions();
 
   /* USER CODE END 2 */
@@ -198,7 +198,22 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+// Funkcja opóźniająca bez użycia globalnych zmiennych
+/*void delay_ms(uint32_t ms) {
+    uint32_t startTick = SysTick->VAL;
+    uint32_t ticks = ms * (SystemCoreClock / 1000);
+    uint32_t elapsedTicks = 0;
 
+    while (elapsedTicks < ticks) {
+        uint32_t currentTick = SysTick->VAL;
+        if (currentTick <= startTick) {
+            elapsedTicks += (startTick - currentTick);
+        } else {
+            elapsedTicks += (startTick + SysTick->LOAD - currentTick);
+        }
+        startTick = currentTick;
+    }
+}*/
 /* USER CODE END 4 */
 
 /**

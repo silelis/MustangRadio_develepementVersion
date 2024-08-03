@@ -55,14 +55,18 @@ BaseType_t  i2cQueue4DynamicData::QueueReceive(void * const pvBuffer, TickType_t
 	BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue, size_t itemSize)
 	{
 		i2cFrame_transmitQueue dataToTransmitQueue;
-		void* pointerToData = NULL;
-		pointerToData = new char[sizeof(itemSize)];
-		assert(pointerToData);
-		if (pointerToData != NULL)
+		//void* pointerToData = NULL;
+		//pointerToData = new char[sizeof(itemSize)];
+		dataToTransmitQueue.pData = new char[sizeof(itemSize)];
+		//assert(pointerToData);
+		assert(dataToTransmitQueue.pData);
+		//if (pointerToData != NULL)
+		if (dataToTransmitQueue.pData != NULL)
 		{
-			memcpy(pointerToData, pvItemToQueue, itemSize);
+			//memcpy(pointerToData, pvItemToQueue, itemSize);
+			memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
 			dataToTransmitQueue.dataSize = itemSize;
-			dataToTransmitQueue.pData = pointerToData;
+			//dataToTransmitQueue.pData = pointerToData;
 			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
 			{
 				return pdTRUE;
