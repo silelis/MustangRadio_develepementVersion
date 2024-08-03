@@ -11,6 +11,7 @@ esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i
 	// TODO Auto-generated constructor stub
 		this->pi2cMaster = pointer_to_i2cMasterObject;
 		configASSERT(this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
+		esp32InrerruptRequest_CountingSemaphoreOverflow=pdFALSE;
 }
 
 
@@ -18,7 +19,12 @@ esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i
 
 
 HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
-	return this->pi2cMaster->ping(this->esp32i2cSlaveAdress_7bit);
+	HAL_StatusTypeDef retVal;
+	this->i2cMasterSemaphoreTake();
+	this->pi2cMaster->while_I2C_STATE_READY();
+	retVal = this->pi2cMaster->ping(this->esp32i2cSlaveAdress_7bit);
+	this->i2cMasterSemaphoreGive();
+	return retVal;
 }
 
 void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
@@ -35,4 +41,31 @@ esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
 	// TODO Auto-generated destructor stub
 	#warning zrobic porzadny destruktor
 }
+
+void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed(void){
+	if( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)== this->esp32InterruptRequestCountingSemaphore_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
+		this->esp32InrerruptRequest_CountingSemaphoreOverflow= pdTRUE;
+		printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
+	}
+}
+
+BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore(void){
+	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE;
+}
+
+BaseType_t esp32_i2sComunicationDriver::receiveDataFromESP32(uint8_t *pData, uint16_t Size){
+	return this->pi2cMaster->I2C_Master_Receive_DMA(this->get_i2cSlaveAddress_7bit(), pData, Size);
+}
+
+
+BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake(void){
+	return this->pi2cMaster->i2cMasterSemaphoreTake();
+
+}
+BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive(void){
+	return this->pi2cMaster->i2cMasterSemaphoreGive();
+}
+
+
+
 
