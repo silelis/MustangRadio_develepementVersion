@@ -5,19 +5,19 @@
  *      Author: dbank
  */
 
-#ifndef SRC_ESP32I2SCOMUNICATIONDRIVER_H_
-#define SRC_ESP32I2SCOMUNICATIONDRIVER_H_
+#ifndef SRC_ESP32I2CCOMUNICATIONDRIVER_H_
+#define SRC_ESP32I2CCOMUNICATIONDRIVER_H_
 #include "i2cEngine.h"
 #include "queue.h"
 #include "task.h"
 #include "semphr.h"
 #include "comunication_calculate_checksum.h"
 
-class esp32_i2sComunicationDriver {
+class esp32_i2cComunicationDriver {
 public:
 	const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32;		//7bit address
-	esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject);
-	virtual ~esp32_i2sComunicationDriver();
+	esp32_i2cComunicationDriver(i2cMaster* pointer_to_i2cMasterObject);
+	virtual ~esp32_i2cComunicationDriver();
 	BaseType_t semaphoreTake__CountingSemaphore(void);
 
 	void incrementInterruptRequestCountingSemaphore(void); //metoda wywoływana podczas wykrycia sygnały interrupt request, aby inkrementować semafor zliczający wystąpienia
@@ -50,4 +50,4 @@ private:
 	uint16_t esp32CrcSumCounterError;
 };
 
-#endif /* SRC_ESP32I2SCOMUNICATIONDRIVER_H_ */
+#endif /* SRC_ESP32I2CCOMUNICATIONDRIVER_H_ */

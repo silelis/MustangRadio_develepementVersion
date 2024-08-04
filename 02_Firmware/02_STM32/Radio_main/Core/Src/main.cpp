@@ -26,9 +26,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "hwConfigFile.h"
+//#include "hwConfigFile.h"
 #include "freertos.h"
-#include "printfRedirect.h"
+//#include "printfRedirect.h"
 #include "tasksFunctions.h"
 /* USER CODE END Includes */
 
@@ -120,14 +120,6 @@ int main(void)
   while (1)
   {
 
-	  /*if(HAL_GPIO_ReadPin(esp32i2cInterruptReqest_GPIO_Port, esp32i2cInterruptReqest_Pin)==GPIO_PIN_RESET)
-	  {
-		  printf("low state\r\n");
-	  }
-	  else{
-		  printf("high state\r\n");
-	  }
-		  vTaskDelay(pdMS_TO_TICKS(1000));*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -198,22 +190,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-// Funkcja opóźniająca bez użycia globalnych zmiennych
-/*void delay_ms(uint32_t ms) {
-    uint32_t startTick = SysTick->VAL;
-    uint32_t ticks = ms * (SystemCoreClock / 1000);
-    uint32_t elapsedTicks = 0;
 
-    while (elapsedTicks < ticks) {
-        uint32_t currentTick = SysTick->VAL;
-        if (currentTick <= startTick) {
-            elapsedTicks += (startTick - currentTick);
-        } else {
-            elapsedTicks += (startTick + SysTick->LOAD - currentTick);
-        }
-        startTick = currentTick;
-    }
-}*/
 /* USER CODE END 4 */
 
 /**

@@ -9,7 +9,6 @@
 #include "tasksFunctions.h"
 #include "comunicationProtocol.h"
 #include "comunicationStructures.h"
-//#include "comunication_calculate_checksum.h"
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
@@ -17,17 +16,18 @@
 #include <cstring>
 #include "semphr.h"
 #include "i2cEngine.h"
-#include "esp32i2sComunicationDriver.h"
+
+#include "esp32i2cComunicationDriver.h"
 
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static i2cMaster* pi2cMaster=NULL;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
-static esp32_i2sComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
+static esp32_i2cComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
 
 
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
-	assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
+	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
 
 	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
 	pi2cMaster->i2cMasterSemaphoreTake();

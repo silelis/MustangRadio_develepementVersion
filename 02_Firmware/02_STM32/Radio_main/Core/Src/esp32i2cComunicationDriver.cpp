@@ -5,9 +5,9 @@
  *      Author: dbank
  */
 
-#include "esp32i2sComunicationDriver.h"
+#include "esp32i2cComunicationDriver.h"
 
-esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
+esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
 	// TODO Auto-generated constructor stub
 		this->pi2cMaster = pointer_to_i2cMasterObject;
 		configASSERT(this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
@@ -15,7 +15,7 @@ esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i
 		this->esp32CrcSumCounterError=0;
 }
 
-BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
+BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
 	i2cFrame_keyboardFrame tempValForCrcCalculation;					//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (abyz awsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_keyboardFrame
 	memcpy(&tempValForCrcCalculation, I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame));		//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
 	if(tempValForCrcCalculation.i2cframeCommandHeader.crcSum==calculate_checksum(I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame)))
@@ -30,7 +30,7 @@ BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
 	}
 }
 
-void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
+void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
 	if(this->isCrcSumCorreect(I2CReceivedFrame))
 	{
 		printf("CRC1 ok\r\n");
@@ -40,7 +40,7 @@ void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 }
 
 
-HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
+HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
 	HAL_StatusTypeDef retVal;
 	this->i2cMasterSemaphoreTake();
 	this->pi2cMaster->while_I2C_STATE_READY();
@@ -49,7 +49,7 @@ HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
 	return retVal;
 }
 
-void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
+void esp32_i2cComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	xSemaphoreGiveFromISR(this->esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
@@ -60,40 +60,40 @@ uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit(void){
 	return this->esp32i2cSlaveAdress_7bit;
 }*/
 
-esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
+esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
 	// TODO Auto-generated destructor stub
 	#warning zrobic porzadny destruktor
 }
 
-void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed(void){
+void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
 	if( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)== this->esp32InterruptRequestCountingSemaphore_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
 		this->esp32InrerruptRequest_CountingSemaphoreOverflowError= pdTRUE;
 		printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
 	}
 }
 
-BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore(void){
+BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
 	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE;
 }
 
-BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
+BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
 	return this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
 }
 
 
-BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake(void){
+BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
 	return this->pi2cMaster->i2cMasterSemaphoreTake();
 }
 
-BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive(void){
+BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
 	return this->pi2cMaster->i2cMasterSemaphoreGive();
 }
 
-void esp32_i2sComunicationDriver::while_I2C_STATE_READY(void){
+void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 	pi2cMaster->while_I2C_STATE_READY();
 }
 
-void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError(){
+void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
 	printf("error with memory allocation\r\n");
 }
