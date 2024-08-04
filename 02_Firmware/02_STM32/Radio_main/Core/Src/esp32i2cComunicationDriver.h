@@ -36,7 +36,8 @@ protected:
 
 
 private:
-	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame);
+	const char *TAG = "ESP32 comunication driver log:";
+	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum);
 
 
 	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;

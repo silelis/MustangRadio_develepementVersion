@@ -15,27 +15,33 @@ esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(i2cMaster* pointer_to_i
 		this->esp32CrcSumCounterError=0;
 }
 
-BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
-	i2cFrame_keyboardFrame tempValForCrcCalculation;					//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (abyz awsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_keyboardFrame
-	memcpy(&tempValForCrcCalculation, I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame));		//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
-	if(tempValForCrcCalculation.i2cframeCommandHeader.crcSum==calculate_checksum(I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame)))
+BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum){
+	if(crcSum==calculate_checksum(I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame)))
 	{
 		this->esp32CrcSumCounterError=0;
 		return pdPASS;
 	}
 	else{
 		this->esp32CrcSumCounterError++;
-		printf("ESP32 CRC sum NOT correct: %d time(s)\r\n", this->esp32CrcSumCounterError);
+		printf("%sCRC sum NOT correct: %d time(s)\r\n", this->TAG, this->esp32CrcSumCounterError);
 		return pdFAIL;
 	}
 }
 
 void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
-	if(this->isCrcSumCorreect(I2CReceivedFrame))
+	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
+	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));				//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
+	if(this->isCrcSumCorreect(I2CReceivedFrame, tempI2cFrameCommandHeader.crcSum))
 	{
-		printf("CRC1 ok\r\n");
-
-
+		switch(tempI2cFrameCommandHeader.commandGroup){
+		case I2C_COMMAND_GROUP_KEYBOARD:
+			i2cFrame_keyboardFrame tempI2cFrameKeyboard;
+			memcpy(&tempI2cFrameKeyboard,I2CReceivedFrame.pData,sizeof(i2cFrame_keyboardFrame));
+			break;
+		default:
+			printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+			assert(0);
+		}
 	}
 }
 

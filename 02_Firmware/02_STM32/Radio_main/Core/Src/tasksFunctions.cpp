@@ -91,6 +91,7 @@ static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
 			default:
 				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFrame.slaveDevice7bitAddress);
 				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
+				assert(0);
 			}
 			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
