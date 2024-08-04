@@ -9,7 +9,7 @@
 #include "tasksFunctions.h"
 #include "comunicationProtocol.h"
 #include "comunicationStructures.h"
-#include "comunication_calculate_checksum.h"
+//#include "comunication_calculate_checksum.h"
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
@@ -19,25 +19,25 @@
 #include "i2cEngine.h"
 #include "esp32i2sComunicationDriver.h"
 
-static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;		//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
+static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
-static i2cMaster* pi2cMaster=NULL;  								//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
-static esp32_i2sComunicationDriver* pESP32=NULL; 					//wsyaźnik do obiektu obsługującego komunikację z ESP32
+static i2cMaster* pi2cMaster=NULL;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+static esp32_i2sComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
 
 
 void initTaskFunctions(void){
-
-
-	//vTaskDelay(pdMS_TO_TICKS(500));
-
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
 	assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
 
+	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
 	pi2cMaster->i2cMasterSemaphoreTake();
 	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
 		printf("ESP32 i2c bus not responding\r\n");
 	};
 	pi2cMaster->i2cMasterSemaphoreGive();
+	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
+
+
 	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
 	pi2cMaster->while_I2C_STATE_READY();
@@ -59,19 +59,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 static void esp32IntrrruptRequestCallback(void *pNothing){
 	i2cFrame_transmitQueue tempI2CFrameForESP32;			//
 	tempI2CFrameForESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
-	//char* pdymanicDataPointer;															//wskaźnik do dynamicznie alokowanych zmiennych, w których będą przechowywane dane otrzymane z ESP32
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
 			pESP32->i2cMasterSemaphoreTake();
 			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
 			pESP32->while_I2C_STATE_READY();
-			//pdymanicDataPointer = new char[tempI2CFrameForESP32.dataSize];
-			//tempI2CFrameForESP32.pData = pdymanicDataPointer;
 			tempI2CFrameForESP32.pData = new char[tempI2CFrameForESP32.dataSize];
-			//if (pdymanicDataPointer!=nullptr){
 			if (tempI2CFrameForESP32.pData!=nullptr){
-				//pESP32->masterReceiveFromESP32_DMA((uint8_t*) pdymanicDataPointer, tempI2CFrameForESP32.dataSize);
 				pESP32->masterReceiveFromESP32_DMA((uint8_t*) tempI2CFrameForESP32.pData, tempI2CFrameForESP32.dataSize);
 				pESP32->while_I2C_STATE_READY();
 				pi2cMaster->pReceiveQueueObject->QueueSend(&tempI2CFrameForESP32);
@@ -85,25 +80,19 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 }
 
 static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
-	i2cFrame_transmitQueue tempI2CReceiveFraame;
+	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
-		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFraame, portMAX_DELAY)==pdPASS){
-			switch(tempI2CReceiveFraame.slaveDevice7bitAddress)
+		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
-				printf("ESP32\r\n");
+				pESP32->parseReceivedData(tempI2CReceiveFrame);
 				break;
 			default:
-				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFraame.slaveDevice7bitAddress);
-				pi2cMaster->ping(tempI2CReceiveFraame.slaveDevice7bitAddress);
+				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFrame.slaveDevice7bitAddress);
+				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
 			}
-
-
-
-			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFraame);
+			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
-
 	}
 }
-
-

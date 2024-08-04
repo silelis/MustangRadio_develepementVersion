@@ -1,12 +1,14 @@
 ../Core/Src/esp32i2sComunicationDriver.cpp:10:1:esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster*)	2
-../Core/Src/esp32i2sComunicationDriver.cpp:22:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:31:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	2
-../Core/Src/esp32i2sComunicationDriver.cpp:42:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:42:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:47:6:void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed()	2
-../Core/Src/esp32i2sComunicationDriver.cpp:54:12:BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:58:12:BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t*, uint16_t)	1
-../Core/Src/esp32i2sComunicationDriver.cpp:63:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:67:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:71:6:void esp32_i2sComunicationDriver::while_I2C_STATE_READY()	1
-../Core/Src/esp32i2sComunicationDriver.cpp:75:6:void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:18:12:BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue)	2
+../Core/Src/esp32i2sComunicationDriver.cpp:33:6:void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)	2
+../Core/Src/esp32i2sComunicationDriver.cpp:52:19:HAL_StatusTypeDef esp32_i2sComunicationDriver::ping()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:61:6:void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore()	2
+../Core/Src/esp32i2sComunicationDriver.cpp:72:1:esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:72:1:virtual esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:77:6:void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed()	2
+../Core/Src/esp32i2sComunicationDriver.cpp:84:12:BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:88:12:BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t*, uint16_t)	1
+../Core/Src/esp32i2sComunicationDriver.cpp:93:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:97:12:BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:101:6:void esp32_i2sComunicationDriver::while_I2C_STATE_READY()	1
+../Core/Src/esp32i2sComunicationDriver.cpp:105:6:void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError()	1

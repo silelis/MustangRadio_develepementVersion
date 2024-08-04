@@ -11,6 +11,7 @@
 #include "queue.h"
 #include "task.h"
 #include "semphr.h"
+#include "comunication_calculate_checksum.h"
 
 class esp32_i2sComunicationDriver {
 public:
@@ -23,22 +24,30 @@ public:
 	void isCountingSemaphoreOverflowed(void);
 	void seteDynamicmMemeoryAlocationError();
 
+
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);
 	HAL_StatusTypeDef ping(void);
 	BaseType_t masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
 	void while_I2C_STATE_READY(void);
 
+	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);
 protected:
 
+
 private:
+	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame);
+
+
 	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;
+	const uint16_t esp32CrcSumCounterError_MAX=5;
 	i2cMaster* pi2cMaster;												//wskaźnik do obiektu obsługuj ącego komunikację stm'a32 jako i2c master
 	SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;			//uchwyt semafora zliczającego ilość wsytąpień esp32 interrupt request i ilość odczytów danych z esp32
 
 	//zmienne kontrolujące wystąpieniue błędów
 	BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflowError;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
 	BaseType_t esp32DynamicmMemeoryAlocationError;						//zmienna mówiąza o tytm, że nastąpił błąd w dynamicxznej alokacji pamięcia
+	uint16_t esp32CrcSumCounterError;
 };
 
 #endif /* SRC_ESP32I2SCOMUNICATIONDRIVER_H_ */

@@ -12,11 +12,32 @@ esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i
 		this->pi2cMaster = pointer_to_i2cMasterObject;
 		configASSERT(this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
 		this->esp32DynamicmMemeoryAlocationError=this->esp32InrerruptRequest_CountingSemaphoreOverflowError=pdFALSE;
-
+		this->esp32CrcSumCounterError=0;
 }
 
+BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
+	i2cFrame_keyboardFrame tempValForCrcCalculation;					//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (abyz awsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_keyboardFrame
+	memcpy(&tempValForCrcCalculation, I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame));		//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
+	if(tempValForCrcCalculation.i2cframeCommandHeader.crcSum==calculate_checksum(I2CReceivedFrame.pData, sizeof(i2cFrame_keyboardFrame)))
+	{
+		this->esp32CrcSumCounterError=0;
+		return pdPASS;
+	}
+	else{
+		this->esp32CrcSumCounterError++;
+		printf("ESP32 CRC sum NOT correct: %d time(s)\r\n", this->esp32CrcSumCounterError);
+		return pdFAIL;
+	}
+}
+
+void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
+	if(this->isCrcSumCorreect(I2CReceivedFrame))
+	{
+		printf("CRC1 ok\r\n");
 
 
+	}
+}
 
 
 HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
