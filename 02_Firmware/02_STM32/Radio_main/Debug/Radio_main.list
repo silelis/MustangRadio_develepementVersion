@@ -23,21 +23,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   9 .ARM.attributes 0000002e  00000000  00000000  000161dc  2**0
                   CONTENTS, READONLY
- 10 .debug_info   000323f6  00000000  00000000  0001620a  2**0
+ 10 .debug_info   000323eb  00000000  00000000  0001620a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_abbrev 00005f23  00000000  00000000  00048600  2**0
+ 11 .debug_abbrev 00005f3d  00000000  00000000  000485f5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_aranges 00001ed8  00000000  00000000  0004e528  2**3
+ 12 .debug_aranges 00001ed8  00000000  00000000  0004e538  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_rnglists 000017d8  00000000  00000000  00050400  2**0
+ 13 .debug_rnglists 000017d8  00000000  00000000  00050410  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_macro  0003a16e  00000000  00000000  00051bd8  2**0
+ 14 .debug_macro  0003a166  00000000  00000000  00051be8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   0002dc9a  00000000  00000000  0008bd46  2**0
+ 15 .debug_line   0002dc94  00000000  00000000  0008bd4e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    0015243e  00000000  00000000  000b99e0  2**0
+ 16 .debug_str    0015243e  00000000  00000000  000b99e2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  0020be1e  2**0
+ 17 .comment      00000043  00000000  00000000  0020be20  2**0
                   CONTENTS, READONLY
  18 .debug_frame  00009524  00000000  00000000  0020be64  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -861,19 +861,19 @@ void MX_DMA_Init(void)
  8000b0a:	bd80      	pop	{r7, pc}
  8000b0c:	58024400 	.word	0x58024400
 
-08000b10 <_ZN27esp32_i2sComunicationDriverC1EP9i2cMaster>:
+08000b10 <_ZN27esp32_i2cComunicationDriverC1EP9i2cMaster>:
  *      Author: dbank
  */
 
-#include "esp32i2sComunicationDriver.h"
+#include "esp32i2cComunicationDriver.h"
 
-esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
+esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
  8000b10:	b580      	push	{r7, lr}
  8000b12:	b084      	sub	sp, #16
  8000b14:	af00      	add	r7, sp, #0
  8000b16:	6078      	str	r0, [r7, #4]
  8000b18:	6039      	str	r1, [r7, #0]
- 8000b1a:	4a1e      	ldr	r2, [pc, #120]	@ (8000b94 <_ZN27esp32_i2sComunicationDriverC1EP9i2cMaster+0x84>)
+ 8000b1a:	4a1e      	ldr	r2, [pc, #120]	@ (8000b94 <_ZN27esp32_i2cComunicationDriverC1EP9i2cMaster+0x84>)
  8000b1c:	687b      	ldr	r3, [r7, #4]
  8000b1e:	601a      	str	r2, [r3, #0]
  8000b20:	687b      	ldr	r3, [r7, #4]
@@ -907,7 +907,7 @@ esp32_i2sComunicationDriver::esp32_i2sComunicationDriver(i2cMaster* pointer_to_i
  8000b54:	2300      	movne	r3, #0
  8000b56:	b2db      	uxtb	r3, r3
  8000b58:	2b00      	cmp	r3, #0
- 8000b5a:	d00b      	beq.n	8000b74 <_ZN27esp32_i2sComunicationDriverC1EP9i2cMaster+0x64>
+ 8000b5a:	d00b      	beq.n	8000b74 <_ZN27esp32_i2cComunicationDriverC1EP9i2cMaster+0x64>
 
 portFORCE_INLINE static void vPortRaiseBASEPRI( void )
 {
@@ -927,7 +927,7 @@ uint32_t ulNewBASEPRI;
 }
  8000b6e:	bf00      	nop
  8000b70:	bf00      	nop
- 8000b72:	e7fd      	b.n	8000b70 <_ZN27esp32_i2sComunicationDriverC1EP9i2cMaster+0x60>
+ 8000b72:	e7fd      	b.n	8000b70 <_ZN27esp32_i2cComunicationDriverC1EP9i2cMaster+0x60>
 		this->esp32DynamicmMemeoryAlocationError=this->esp32InrerruptRequest_CountingSemaphoreOverflowError=pdFALSE;
  8000b74:	687b      	ldr	r3, [r7, #4]
  8000b76:	2200      	movs	r2, #0
@@ -949,9 +949,9 @@ uint32_t ulNewBASEPRI;
  8000b92:	bf00      	nop
  8000b94:	080143f4 	.word	0x080143f4
 
-08000b98 <_ZN27esp32_i2sComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue>:
+08000b98 <_ZN27esp32_i2cComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue>:
 
-BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
+BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame){
  8000b98:	b590      	push	{r4, r7, lr}
  8000b9a:	b087      	sub	sp, #28
  8000b9c:	af00      	add	r7, sp, #0
@@ -979,7 +979,7 @@ BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  8000bc8:	2300      	movne	r3, #0
  8000bca:	b2db      	uxtb	r3, r3
  8000bcc:	2b00      	cmp	r3, #0
- 8000bce:	d004      	beq.n	8000bda <_ZN27esp32_i2sComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x42>
+ 8000bce:	d004      	beq.n	8000bda <_ZN27esp32_i2cComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x42>
 	{
 		this->esp32CrcSumCounterError=0;
  8000bd0:	68fb      	ldr	r3, [r7, #12]
@@ -987,7 +987,7 @@ BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  8000bd4:	831a      	strh	r2, [r3, #24]
 		return pdPASS;
  8000bd6:	2301      	movs	r3, #1
- 8000bd8:	e00c      	b.n	8000bf4 <_ZN27esp32_i2sComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x5c>
+ 8000bd8:	e00c      	b.n	8000bf4 <_ZN27esp32_i2cComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x5c>
 	}
 	else{
 		this->esp32CrcSumCounterError++;
@@ -1001,7 +1001,7 @@ BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  8000be6:	68fb      	ldr	r3, [r7, #12]
  8000be8:	8b1b      	ldrh	r3, [r3, #24]
  8000bea:	4619      	mov	r1, r3
- 8000bec:	4803      	ldr	r0, [pc, #12]	@ (8000bfc <_ZN27esp32_i2sComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x64>)
+ 8000bec:	4803      	ldr	r0, [pc, #12]	@ (8000bfc <_ZN27esp32_i2cComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue+0x64>)
  8000bee:	f00f fef3 	bl	80109d8 <iprintf>
 		return pdFAIL;
  8000bf2:	2300      	movs	r3, #0
@@ -1013,9 +1013,9 @@ BaseType_t esp32_i2sComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  8000bfa:	bd90      	pop	{r4, r7, pc}
  8000bfc:	080140a0 	.word	0x080140a0
 
-08000c00 <_ZN27esp32_i2sComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue>:
+08000c00 <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue>:
 
-void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
+void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
  8000c00:	b580      	push	{r7, lr}
  8000c02:	b084      	sub	sp, #16
  8000c04:	af00      	add	r7, sp, #0
@@ -1026,7 +1026,7 @@ void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
  8000c0e:	463b      	mov	r3, r7
  8000c10:	cb0e      	ldmia	r3, {r1, r2, r3}
  8000c12:	68f8      	ldr	r0, [r7, #12]
- 8000c14:	f7ff ffc0 	bl	8000b98 <_ZN27esp32_i2sComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue>
+ 8000c14:	f7ff ffc0 	bl	8000b98 <_ZN27esp32_i2cComunicationDriver16isCrcSumCorreectE22i2cFrame_transmitQueue>
  8000c18:	4603      	mov	r3, r0
  8000c1a:	2b00      	cmp	r3, #0
  8000c1c:	bf14      	ite	ne
@@ -1034,13 +1034,11 @@ void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
  8000c20:	2300      	moveq	r3, #0
  8000c22:	b2db      	uxtb	r3, r3
  8000c24:	2b00      	cmp	r3, #0
- 8000c26:	d002      	beq.n	8000c2e <_ZN27esp32_i2sComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x2e>
+ 8000c26:	d002      	beq.n	8000c2e <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x2e>
 	{
 		printf("CRC1 ok\r\n");
- 8000c28:	4803      	ldr	r0, [pc, #12]	@ (8000c38 <_ZN27esp32_i2sComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x38>)
+ 8000c28:	4803      	ldr	r0, [pc, #12]	@ (8000c38 <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x38>)
  8000c2a:	f00f ff3d 	bl	8010aa8 <puts>
-
-
 
 
 	}
@@ -1052,10 +1050,10 @@ void esp32_i2sComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
  8000c36:	bf00      	nop
  8000c38:	080140c8 	.word	0x080140c8
 
-08000c3c <_ZN27esp32_i2sComunicationDriver4pingEv>:
+08000c3c <_ZN27esp32_i2cComunicationDriver4pingEv>:
 
 
-HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
+HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
  8000c3c:	b580      	push	{r7, lr}
  8000c3e:	b084      	sub	sp, #16
  8000c40:	af00      	add	r7, sp, #0
@@ -1063,7 +1061,7 @@ HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
 	HAL_StatusTypeDef retVal;
 	this->i2cMasterSemaphoreTake();
  8000c44:	6878      	ldr	r0, [r7, #4]
- 8000c46:	f000 f8a1 	bl	8000d8c <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreTakeEv>
+ 8000c46:	f000 f8a1 	bl	8000d8c <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreTakeEv>
 	this->pi2cMaster->while_I2C_STATE_READY();
  8000c4a:	687b      	ldr	r3, [r7, #4]
  8000c4c:	689b      	ldr	r3, [r3, #8]
@@ -1081,7 +1079,7 @@ HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
  8000c66:	73fb      	strb	r3, [r7, #15]
 	this->i2cMasterSemaphoreGive();
  8000c68:	6878      	ldr	r0, [r7, #4]
- 8000c6a:	f000 f89d 	bl	8000da8 <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreGiveEv>
+ 8000c6a:	f000 f89d 	bl	8000da8 <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreGiveEv>
 	return retVal;
  8000c6e:	7bfb      	ldrb	r3, [r7, #15]
 }
@@ -1090,9 +1088,9 @@ HAL_StatusTypeDef esp32_i2sComunicationDriver::ping(void){
  8000c74:	46bd      	mov	sp, r7
  8000c76:	bd80      	pop	{r7, pc}
 
-08000c78 <_ZN27esp32_i2sComunicationDriver42incrementInterruptRequestCountingSemaphoreEv>:
+08000c78 <_ZN27esp32_i2cComunicationDriver42incrementInterruptRequestCountingSemaphoreEv>:
 
-void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
+void esp32_i2cComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
  8000c78:	b580      	push	{r7, lr}
  8000c7a:	b084      	sub	sp, #16
  8000c7c:	af00      	add	r7, sp, #0
@@ -1110,8 +1108,8 @@ void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(voi
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
  8000c94:	68fb      	ldr	r3, [r7, #12]
  8000c96:	2b00      	cmp	r3, #0
- 8000c98:	d007      	beq.n	8000caa <_ZN27esp32_i2sComunicationDriver42incrementInterruptRequestCountingSemaphoreEv+0x32>
- 8000c9a:	4b06      	ldr	r3, [pc, #24]	@ (8000cb4 <_ZN27esp32_i2sComunicationDriver42incrementInterruptRequestCountingSemaphoreEv+0x3c>)
+ 8000c98:	d007      	beq.n	8000caa <_ZN27esp32_i2cComunicationDriver42incrementInterruptRequestCountingSemaphoreEv+0x32>
+ 8000c9a:	4b06      	ldr	r3, [pc, #24]	@ (8000cb4 <_ZN27esp32_i2cComunicationDriver42incrementInterruptRequestCountingSemaphoreEv+0x3c>)
  8000c9c:	f04f 5280 	mov.w	r2, #268435456	@ 0x10000000
  8000ca0:	601a      	str	r2, [r3, #0]
  8000ca2:	f3bf 8f4f 	dsb	sy
@@ -1124,18 +1122,18 @@ void esp32_i2sComunicationDriver::incrementInterruptRequestCountingSemaphore(voi
  8000cb2:	bf00      	nop
  8000cb4:	e000ed04 	.word	0xe000ed04
 
-08000cb8 <_ZN27esp32_i2sComunicationDriverD1Ev>:
+08000cb8 <_ZN27esp32_i2cComunicationDriverD1Ev>:
 /*
 uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit(void){
 	return this->esp32i2cSlaveAdress_7bit;
 }*/
 
-esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
+esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
  8000cb8:	b480      	push	{r7}
  8000cba:	b083      	sub	sp, #12
  8000cbc:	af00      	add	r7, sp, #0
  8000cbe:	6078      	str	r0, [r7, #4]
- 8000cc0:	4a04      	ldr	r2, [pc, #16]	@ (8000cd4 <_ZN27esp32_i2sComunicationDriverD1Ev+0x1c>)
+ 8000cc0:	4a04      	ldr	r2, [pc, #16]	@ (8000cd4 <_ZN27esp32_i2cComunicationDriverD1Ev+0x1c>)
  8000cc2:	687b      	ldr	r3, [r7, #4]
  8000cc4:	601a      	str	r2, [r3, #0]
 	// TODO Auto-generated destructor stub
@@ -1149,15 +1147,15 @@ esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
  8000cd2:	4770      	bx	lr
  8000cd4:	080143f4 	.word	0x080143f4
 
-08000cd8 <_ZN27esp32_i2sComunicationDriverD0Ev>:
-esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
+08000cd8 <_ZN27esp32_i2cComunicationDriverD0Ev>:
+esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
  8000cd8:	b580      	push	{r7, lr}
  8000cda:	b082      	sub	sp, #8
  8000cdc:	af00      	add	r7, sp, #0
  8000cde:	6078      	str	r0, [r7, #4]
 }
  8000ce0:	6878      	ldr	r0, [r7, #4]
- 8000ce2:	f7ff ffe9 	bl	8000cb8 <_ZN27esp32_i2sComunicationDriverD1Ev>
+ 8000ce2:	f7ff ffe9 	bl	8000cb8 <_ZN27esp32_i2cComunicationDriverD1Ev>
  8000ce6:	211c      	movs	r1, #28
  8000ce8:	6878      	ldr	r0, [r7, #4]
  8000cea:	f00e fe59 	bl	800f9a0 <_ZdlPvj>
@@ -1167,9 +1165,9 @@ esp32_i2sComunicationDriver::~esp32_i2sComunicationDriver() {
  8000cf4:	46bd      	mov	sp, r7
  8000cf6:	bd80      	pop	{r7, pc}
 
-08000cf8 <_ZN27esp32_i2sComunicationDriver29isCountingSemaphoreOverflowedEv>:
+08000cf8 <_ZN27esp32_i2cComunicationDriver29isCountingSemaphoreOverflowedEv>:
 
-void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed(void){
+void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
  8000cf8:	b580      	push	{r7, lr}
  8000cfa:	b082      	sub	sp, #8
  8000cfc:	af00      	add	r7, sp, #0
@@ -1188,13 +1186,13 @@ void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed(void){
  8000d16:	2300      	movne	r3, #0
  8000d18:	b2db      	uxtb	r3, r3
  8000d1a:	2b00      	cmp	r3, #0
- 8000d1c:	d005      	beq.n	8000d2a <_ZN27esp32_i2sComunicationDriver29isCountingSemaphoreOverflowedEv+0x32>
+ 8000d1c:	d005      	beq.n	8000d2a <_ZN27esp32_i2cComunicationDriver29isCountingSemaphoreOverflowedEv+0x32>
 		this->esp32InrerruptRequest_CountingSemaphoreOverflowError= pdTRUE;
  8000d1e:	687b      	ldr	r3, [r7, #4]
  8000d20:	2201      	movs	r2, #1
  8000d22:	611a      	str	r2, [r3, #16]
 		printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
- 8000d24:	4803      	ldr	r0, [pc, #12]	@ (8000d34 <_ZN27esp32_i2sComunicationDriver29isCountingSemaphoreOverflowedEv+0x3c>)
+ 8000d24:	4803      	ldr	r0, [pc, #12]	@ (8000d34 <_ZN27esp32_i2cComunicationDriver29isCountingSemaphoreOverflowedEv+0x3c>)
  8000d26:	f00f febf 	bl	8010aa8 <puts>
 	}
 }
@@ -1205,9 +1203,9 @@ void esp32_i2sComunicationDriver::isCountingSemaphoreOverflowed(void){
  8000d32:	bf00      	nop
  8000d34:	080140d4 	.word	0x080140d4
 
-08000d38 <_ZN27esp32_i2sComunicationDriver32semaphoreTake__CountingSemaphoreEv>:
+08000d38 <_ZN27esp32_i2cComunicationDriver32semaphoreTake__CountingSemaphoreEv>:
 
-BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore(void){
+BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
  8000d38:	b580      	push	{r7, lr}
  8000d3a:	b082      	sub	sp, #8
  8000d3c:	af00      	add	r7, sp, #0
@@ -1230,9 +1228,9 @@ BaseType_t esp32_i2sComunicationDriver::semaphoreTake__CountingSemaphore(void){
  8000d5e:	46bd      	mov	sp, r7
  8000d60:	bd80      	pop	{r7, pc}
 
-08000d62 <_ZN27esp32_i2sComunicationDriver26masterReceiveFromESP32_DMAEPht>:
+08000d62 <_ZN27esp32_i2cComunicationDriver26masterReceiveFromESP32_DMAEPht>:
 
-BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
+BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
  8000d62:	b580      	push	{r7, lr}
  8000d64:	b084      	sub	sp, #16
  8000d66:	af00      	add	r7, sp, #0
@@ -1256,10 +1254,10 @@ BaseType_t esp32_i2sComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
  8000d88:	46bd      	mov	sp, r7
  8000d8a:	bd80      	pop	{r7, pc}
 
-08000d8c <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreTakeEv>:
+08000d8c <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreTakeEv>:
 
 
-BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake(void){
+BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
  8000d8c:	b580      	push	{r7, lr}
  8000d8e:	b082      	sub	sp, #8
  8000d90:	af00      	add	r7, sp, #0
@@ -1276,9 +1274,9 @@ BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreTake(void){
  8000da4:	46bd      	mov	sp, r7
  8000da6:	bd80      	pop	{r7, pc}
 
-08000da8 <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreGiveEv>:
+08000da8 <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreGiveEv>:
 
-BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive(void){
+BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
  8000da8:	b580      	push	{r7, lr}
  8000daa:	b082      	sub	sp, #8
  8000dac:	af00      	add	r7, sp, #0
@@ -1295,9 +1293,9 @@ BaseType_t esp32_i2sComunicationDriver::i2cMasterSemaphoreGive(void){
  8000dc0:	46bd      	mov	sp, r7
  8000dc2:	bd80      	pop	{r7, pc}
 
-08000dc4 <_ZN27esp32_i2sComunicationDriver21while_I2C_STATE_READYEv>:
+08000dc4 <_ZN27esp32_i2cComunicationDriver21while_I2C_STATE_READYEv>:
 
-void esp32_i2sComunicationDriver::while_I2C_STATE_READY(void){
+void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
  8000dc4:	b580      	push	{r7, lr}
  8000dc6:	b082      	sub	sp, #8
  8000dc8:	af00      	add	r7, sp, #0
@@ -1314,9 +1312,9 @@ void esp32_i2sComunicationDriver::while_I2C_STATE_READY(void){
  8000ddc:	bd80      	pop	{r7, pc}
 	...
 
-08000de0 <_ZN27esp32_i2sComunicationDriver33seteDynamicmMemeoryAlocationErrorEv>:
+08000de0 <_ZN27esp32_i2cComunicationDriver33seteDynamicmMemeoryAlocationErrorEv>:
 
-void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError(){
+void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
  8000de0:	b580      	push	{r7, lr}
  8000de2:	b082      	sub	sp, #8
  8000de4:	af00      	add	r7, sp, #0
@@ -1326,7 +1324,7 @@ void esp32_i2sComunicationDriver::seteDynamicmMemeoryAlocationError(){
  8000dea:	2201      	movs	r2, #1
  8000dec:	615a      	str	r2, [r3, #20]
 	printf("error with memory allocation\r\n");
- 8000dee:	4803      	ldr	r0, [pc, #12]	@ (8000dfc <_ZN27esp32_i2sComunicationDriver33seteDynamicmMemeoryAlocationErrorEv+0x1c>)
+ 8000dee:	4803      	ldr	r0, [pc, #12]	@ (8000dfc <_ZN27esp32_i2cComunicationDriver33seteDynamicmMemeoryAlocationErrorEv+0x1c>)
  8000df0:	f00f fe5a 	bl	8010aa8 <puts>
 }
  8000df4:	bf00      	nop
@@ -3726,7 +3724,7 @@ void SystemInit (void)
 08001ad8 <_Z17initTaskFunctionsv>:
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static i2cMaster* pi2cMaster=NULL;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
-static esp32_i2sComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
+static esp32_i2cComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
 
 
 void initTaskFunctions(void){
@@ -3752,7 +3750,7 @@ void initTaskFunctions(void){
  8001b00:	211d      	movs	r1, #29
  8001b02:	484d      	ldr	r0, [pc, #308]	@ (8001c38 <_Z17initTaskFunctionsv+0x160>)
  8001b04:	f00d ff76 	bl	800f9f4 <__assert_func>
-	assert(pESP32 = new esp32_i2sComunicationDriver(pi2cMaster));
+	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
  8001b08:	201c      	movs	r0, #28
  8001b0a:	f00d ff4d 	bl	800f9a8 <_Znwj>
  8001b0e:	4603      	mov	r3, r0
@@ -3761,7 +3759,7 @@ void initTaskFunctions(void){
  8001b14:	681b      	ldr	r3, [r3, #0]
  8001b16:	4619      	mov	r1, r3
  8001b18:	4620      	mov	r0, r4
- 8001b1a:	f7fe fff9 	bl	8000b10 <_ZN27esp32_i2sComunicationDriverC1EP9i2cMaster>
+ 8001b1a:	f7fe fff9 	bl	8000b10 <_ZN27esp32_i2cComunicationDriverC1EP9i2cMaster>
  8001b1e:	4b47      	ldr	r3, [pc, #284]	@ (8001c3c <_Z17initTaskFunctionsv+0x164>)
  8001b20:	601c      	str	r4, [r3, #0]
  8001b22:	4b46      	ldr	r3, [pc, #280]	@ (8001c3c <_Z17initTaskFunctionsv+0x164>)
@@ -3827,7 +3825,7 @@ void initTaskFunctions(void){
  8001b90:	4b2a      	ldr	r3, [pc, #168]	@ (8001c3c <_Z17initTaskFunctionsv+0x164>)
  8001b92:	681b      	ldr	r3, [r3, #0]
  8001b94:	4618      	mov	r0, r3
- 8001b96:	f7ff f851 	bl	8000c3c <_ZN27esp32_i2sComunicationDriver4pingEv>
+ 8001b96:	f7ff f851 	bl	8000c3c <_ZN27esp32_i2cComunicationDriver4pingEv>
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
@@ -3925,7 +3923,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  8001c6e:	4b04      	ldr	r3, [pc, #16]	@ (8001c80 <HAL_GPIO_EXTI_Callback+0x1c>)
  8001c70:	681b      	ldr	r3, [r3, #0]
  8001c72:	4618      	mov	r0, r3
- 8001c74:	f7ff f800 	bl	8000c78 <_ZN27esp32_i2sComunicationDriver42incrementInterruptRequestCountingSemaphoreEv>
+ 8001c74:	f7ff f800 	bl	8000c78 <_ZN27esp32_i2cComunicationDriver42incrementInterruptRequestCountingSemaphoreEv>
 }
  8001c78:	bf00      	nop
  8001c7a:	3708      	adds	r7, #8
@@ -3947,18 +3945,17 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
  8001c8e:	681b      	ldr	r3, [r3, #0]
  8001c90:	791b      	ldrb	r3, [r3, #4]
  8001c92:	733b      	strb	r3, [r7, #12]
-	//char* pdymanicDataPointer;															//wskaźnik do dynamicznie alokowanych zmiennych, w których będą przechowywane dane otrzymane z ESP32
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
  8001c94:	4b27      	ldr	r3, [pc, #156]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001c96:	681b      	ldr	r3, [r3, #0]
  8001c98:	4618      	mov	r0, r3
- 8001c9a:	f7ff f82d 	bl	8000cf8 <_ZN27esp32_i2sComunicationDriver29isCountingSemaphoreOverflowedEv>
+ 8001c9a:	f7ff f82d 	bl	8000cf8 <_ZN27esp32_i2cComunicationDriver29isCountingSemaphoreOverflowedEv>
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
  8001c9e:	4b25      	ldr	r3, [pc, #148]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001ca0:	681b      	ldr	r3, [r3, #0]
  8001ca2:	4618      	mov	r0, r3
- 8001ca4:	f7ff f848 	bl	8000d38 <_ZN27esp32_i2sComunicationDriver32semaphoreTake__CountingSemaphoreEv>
+ 8001ca4:	f7ff f848 	bl	8000d38 <_ZN27esp32_i2cComunicationDriver32semaphoreTake__CountingSemaphoreEv>
  8001ca8:	4603      	mov	r3, r0
  8001caa:	2b00      	cmp	r3, #0
  8001cac:	bf14      	ite	ne
@@ -3971,7 +3968,7 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
  8001cb8:	4b1e      	ldr	r3, [pc, #120]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001cba:	681b      	ldr	r3, [r3, #0]
  8001cbc:	4618      	mov	r0, r3
- 8001cbe:	f7ff f865 	bl	8000d8c <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreTakeEv>
+ 8001cbe:	f7ff f865 	bl	8000d8c <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreTakeEv>
 			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
  8001cc2:	4b1c      	ldr	r3, [pc, #112]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001cc4:	6818      	ldr	r0, [r3, #0]
@@ -3979,19 +3976,18 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
  8001cca:	3304      	adds	r3, #4
  8001ccc:	2204      	movs	r2, #4
  8001cce:	4619      	mov	r1, r3
- 8001cd0:	f7ff f847 	bl	8000d62 <_ZN27esp32_i2sComunicationDriver26masterReceiveFromESP32_DMAEPht>
+ 8001cd0:	f7ff f847 	bl	8000d62 <_ZN27esp32_i2cComunicationDriver26masterReceiveFromESP32_DMAEPht>
 			pESP32->while_I2C_STATE_READY();
  8001cd4:	4b17      	ldr	r3, [pc, #92]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001cd6:	681b      	ldr	r3, [r3, #0]
  8001cd8:	4618      	mov	r0, r3
- 8001cda:	f7ff f873 	bl	8000dc4 <_ZN27esp32_i2sComunicationDriver21while_I2C_STATE_READYEv>
+ 8001cda:	f7ff f873 	bl	8000dc4 <_ZN27esp32_i2cComunicationDriver21while_I2C_STATE_READYEv>
 			tempI2CFrameForESP32.pData = new char[tempI2CFrameForESP32.dataSize];
  8001cde:	693b      	ldr	r3, [r7, #16]
  8001ce0:	4618      	mov	r0, r3
  8001ce2:	f00d fe72 	bl	800f9ca <_Znaj>
  8001ce6:	4603      	mov	r3, r0
  8001ce8:	617b      	str	r3, [r7, #20]
-			//if (pdymanicDataPointer!=nullptr){
 			if (tempI2CFrameForESP32.pData!=nullptr){
  8001cea:	697b      	ldr	r3, [r7, #20]
  8001cec:	2b00      	cmp	r3, #0
@@ -4003,12 +3999,12 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
  8001cf6:	693a      	ldr	r2, [r7, #16]
  8001cf8:	b292      	uxth	r2, r2
  8001cfa:	4618      	mov	r0, r3
- 8001cfc:	f7ff f831 	bl	8000d62 <_ZN27esp32_i2sComunicationDriver26masterReceiveFromESP32_DMAEPht>
+ 8001cfc:	f7ff f831 	bl	8000d62 <_ZN27esp32_i2cComunicationDriver26masterReceiveFromESP32_DMAEPht>
 				pESP32->while_I2C_STATE_READY();
  8001d00:	4b0c      	ldr	r3, [pc, #48]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001d02:	681b      	ldr	r3, [r3, #0]
  8001d04:	4618      	mov	r0, r3
- 8001d06:	f7ff f85d 	bl	8000dc4 <_ZN27esp32_i2sComunicationDriver21while_I2C_STATE_READYEv>
+ 8001d06:	f7ff f85d 	bl	8000dc4 <_ZN27esp32_i2cComunicationDriver21while_I2C_STATE_READYEv>
 				pi2cMaster->pReceiveQueueObject->QueueSend(&tempI2CFrameForESP32);
  8001d0a:	4b0b      	ldr	r3, [pc, #44]	@ (8001d38 <_ZL29esp32IntrrruptRequestCallbackPv+0xb4>)
  8001d0c:	681b      	ldr	r3, [r3, #0]
@@ -4024,13 +4020,13 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
  8001d1e:	4b05      	ldr	r3, [pc, #20]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001d20:	681b      	ldr	r3, [r3, #0]
  8001d22:	4618      	mov	r0, r3
- 8001d24:	f7ff f85c 	bl	8000de0 <_ZN27esp32_i2sComunicationDriver33seteDynamicmMemeoryAlocationErrorEv>
+ 8001d24:	f7ff f85c 	bl	8000de0 <_ZN27esp32_i2cComunicationDriver33seteDynamicmMemeoryAlocationErrorEv>
 			}
 			pESP32->i2cMasterSemaphoreGive();
  8001d28:	4b02      	ldr	r3, [pc, #8]	@ (8001d34 <_ZL29esp32IntrrruptRequestCallbackPv+0xb0>)
  8001d2a:	681b      	ldr	r3, [r3, #0]
  8001d2c:	4618      	mov	r0, r3
- 8001d2e:	f7ff f83b 	bl	8000da8 <_ZN27esp32_i2sComunicationDriver22i2cMasterSemaphoreGiveEv>
+ 8001d2e:	f7ff f83b 	bl	8000da8 <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreGiveEv>
 		pESP32->isCountingSemaphoreOverflowed();
  8001d32:	e7af      	b.n	8001c94 <_ZL29esp32IntrrruptRequestCallbackPv+0x10>
  8001d34:	2400039c 	.word	0x2400039c
@@ -4047,7 +4043,6 @@ static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
  8001d40:	af00      	add	r7, sp, #0
  8001d42:	6078      	str	r0, [r7, #4]
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
-
 	while(1){
 		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
  8001d44:	4b18      	ldr	r3, [pc, #96]	@ (8001da8 <_ZL35i2cMaster_pReceiveQueueObjectParserPv+0x6c>)
@@ -4071,18 +4066,12 @@ static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
  8001d6c:	d107      	bne.n	8001d7e <_ZL35i2cMaster_pReceiveQueueObjectParserPv+0x42>
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
-				//printf("ESP32\r\n");
 				pESP32->parseReceivedData(tempI2CReceiveFrame);
  8001d6e:	4b0f      	ldr	r3, [pc, #60]	@ (8001dac <_ZL35i2cMaster_pReceiveQueueObjectParserPv+0x70>)
  8001d70:	6818      	ldr	r0, [r3, #0]
  8001d72:	f107 030c 	add.w	r3, r7, #12
  8001d76:	cb0e      	ldmia	r3, {r1, r2, r3}
- 8001d78:	f7fe ff42 	bl	8000c00 <_ZN27esp32_i2sComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue>
-
-
-
-
-				}*/
+ 8001d78:	f7fe ff42 	bl	8000c00 <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue>
 				break;
  8001d7c:	e00b      	b.n	8001d96 <_ZL35i2cMaster_pReceiveQueueObjectParserPv+0x5a>
 			default:
@@ -4099,10 +4088,7 @@ static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
  8001d90:	4618      	mov	r0, r3
  8001d92:	f7ff fa85 	bl	80012a0 <_ZN9i2cMaster4pingEt>
 			}
-
-
-
-			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);
+			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
  8001d96:	4b04      	ldr	r3, [pc, #16]	@ (8001da8 <_ZL35i2cMaster_pReceiveQueueObjectParserPv+0x6c>)
  8001d98:	681b      	ldr	r3, [r3, #0]
  8001d9a:	6858      	ldr	r0, [r3, #4]
