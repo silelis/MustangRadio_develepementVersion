@@ -28,22 +28,7 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
 	}
 }
 
-void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
-	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
-	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));				//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
-	if(this->isCrcSumCorreect(I2CReceivedFrame, tempI2cFrameCommandHeader.crcSum))
-	{
-		switch(tempI2cFrameCommandHeader.commandGroup){
-		case I2C_COMMAND_GROUP_KEYBOARD:
-			i2cFrame_keyboardFrame tempI2cFrameKeyboard;
-			memcpy(&tempI2cFrameKeyboard,I2CReceivedFrame.pData,sizeof(i2cFrame_keyboardFrame));
-			break;
-		default:
-			printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
-			assert(0);
-		}
-	}
-}
+
 
 
 HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
@@ -68,7 +53,7 @@ uint8_t esp32_i2sComunicationDriver::get_i2cSlaveAddress_7bit(void){
 
 esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
 	// TODO Auto-generated destructor stub
-	#warning zrobic porzadny destruktor
+	#warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
 }
 
 void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
@@ -99,7 +84,38 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 	pi2cMaster->while_I2C_STATE_READY();
 }
 
+
 void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
 	printf("error with memory allocation\r\n");
+}
+
+void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
+	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
+	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));				//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
+	if(this->isCrcSumCorreect(I2CReceivedFrame, tempI2cFrameCommandHeader.crcSum))
+	{
+		switch(tempI2cFrameCommandHeader.commandGroup){
+
+		case I2C_COMMAND_GROUP_KEYBOARD:
+			parserFunction::keyboard((i2cFrame_keyboardFrame*)I2CReceivedFrame.pData);
+			break;
+		default:
+			printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+			assert(0);
+		}
+	}
+}
+
+
+
+
+namespace parserFunction{
+	void keyboard(i2cFrame_keyboardFrame* kbrdFrame){
+		kbrdFrame;
+		kbrdFrame->keyboardData.array;
+
+		//tutaj pchamy do kolejki klasy menu
+	}
+
 }

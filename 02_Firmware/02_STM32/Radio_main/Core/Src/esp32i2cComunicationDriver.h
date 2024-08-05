@@ -12,6 +12,7 @@
 #include "task.h"
 #include "semphr.h"
 #include "comunication_calculate_checksum.h"
+//#include <iostream>
 
 class esp32_i2cComunicationDriver {
 public:
@@ -49,6 +50,13 @@ private:
 	BaseType_t esp32InrerruptRequest_CountingSemaphoreOverflowError;	//zmienna informująca o tym, że nastąpiło przepełnienie "esp32IntrrruptRequest_CountingSemaphore", aka. zbyt wiele oczekujących komunikatów, co może wskazywać na błąd.
 	BaseType_t esp32DynamicmMemeoryAlocationError;						//zmienna mówiąza o tytm, że nastąpił błąd w dynamicxznej alokacji pamięcia
 	uint16_t esp32CrcSumCounterError;
+	#warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
 };
+
+
+namespace parserFunction{
+	void keyboard(i2cFrame_keyboardFrame* kbrdFrame);
+}
+
 
 #endif /* SRC_ESP32I2CCOMUNICATIONDRIVER_H_ */

@@ -85,7 +85,7 @@ struct gpioInterruptCallbackStruct				//struct which is passed to interrupts (ti
 };
 
 
-static void keyboardLongPressOnPressQueueFeeder(void *);
+/*static*/ void keyboardLongPressOnPressQueueFeeder(void *);
 
 class KEYBOARD
 {

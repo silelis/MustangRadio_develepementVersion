@@ -17,7 +17,7 @@ static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do
  * Returns:
  * NONE
  *---------------------------------------------------------------*/ 
-static void keyboardLongPressOnPressQueueFeeder(void *object)
+/*static*/ void keyboardLongPressOnPressQueueFeeder(void *object)
 {
 	KEYBOARD* instance = static_cast<KEYBOARD*>(object);
 	keyboardUnion valueToQueue;
