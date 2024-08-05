@@ -36,21 +36,6 @@
 #define NVS_KEY_BLOB_MotorParameters	"MotorParam"
 
 
-/*
-//i2c_farame
-typedef struct {
-	uint8_t frameSize;	  //frameSize = sizeof(frameSize) + 	sizeof(commandGroup)+sizeof(commandData)
-	uint8_t commandGroup; //aka I2C_COMMAND_GROUP
-	union dataUnion
-	{
-		union keyboardUnion keyboardData;
-		
-	}commandData;
-		
-} i2cFrame;
-*/
-
-
 typedef struct
 {	   	
 	uint8_t	crcSum;			//checksum for i2c farame (commandGroup+dataSize+data)

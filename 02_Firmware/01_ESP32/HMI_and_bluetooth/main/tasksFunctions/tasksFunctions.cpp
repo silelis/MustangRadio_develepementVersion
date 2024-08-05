@@ -143,7 +143,6 @@ static void keyboardQueueParametersParserPrintf(keyboardUnion DataToParse)
 * bool - pdTrue jeśli dane są poprawne, pdFalse jeśli dane nie są
 *		poprawne.
 *---------------------------------------------------------------*/ 
-
 static bool keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboardUnion keyboardDataToCheck)
 {
 	//sprawdza czy dane do parsowania pochodzą z przyciskow (short press/ long on press/ long press release)
@@ -183,6 +182,8 @@ static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keybo
 		}
 	}				
 }
+
+
 /*---------------------------------------------------------------
 * Funkcja sprawdza czy wartości znajdujące się w kolejce klawiatury
 * są poprawne (*głównie chodszi tutaj o wartości z enkoderów) i
@@ -219,10 +220,10 @@ void keyboardQueueParametersParser(void *parameters)
 				
 				if (p_i2cSlave->pTransmitQueueObject->QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
 				{
+					
+					#warning   obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive, nie wiem czy tutaj ale zrobnić
 					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
 				}
-
-				
 				//----------------------------------------------------------------------//
 				//poniższa funkcja jest tylko do celów debugowania poprawności programu
 				//keyboardQueueParametersParserPrintf(keyboardDataToParse);
@@ -245,6 +246,7 @@ void keyboardQueueParametersParser(void *parameters)
 static 	bool areEqual(const struct ws2812Color *color1, const struct ws2812Color *color2) {
 	return (bool)(memcmp(color1, color2, sizeof(struct ws2812Color)) == 0) ;
 }
+
 
 
 static void init_BacklightColors(LEDS_BACKLIGHT *ledsDisplay)
