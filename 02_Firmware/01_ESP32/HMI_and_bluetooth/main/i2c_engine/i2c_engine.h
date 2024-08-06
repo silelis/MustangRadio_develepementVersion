@@ -13,7 +13,6 @@
 #include "./../../../03_Common/comunicationProtocol.h"
 #include "./../../../03_Common/i2c_slave_master_queueClass.h"
 
-
 class i2cEngin_slave
 {
 public:
@@ -24,7 +23,6 @@ public:
 	esp_err_t slaveTransmit();
 	i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
 protected:
-	
 	
 private:
 	const char *TAG = "I2C SLAVE log:";
@@ -43,8 +41,6 @@ public:
 	uint16_t devicesOnBusDecrement();
 	
 protected:
-	
-
 	
 private:
 	uint16_t devicesOnBus;

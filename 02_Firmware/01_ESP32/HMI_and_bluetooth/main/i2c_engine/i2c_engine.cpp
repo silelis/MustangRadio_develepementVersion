@@ -1,9 +1,7 @@
 #include "i2c_engine.h"
 
-
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
-
  
 static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
@@ -54,7 +52,7 @@ esp_err_t i2cEngin_slave::interruptRequestReset(void)
 i2cEngin_slave::~i2cEngin_slave()
 {
 	ESP_ERROR_CHECK(this->interruptRequestReset());
-	
+
 	ESP_ERROR_CHECK(i2c_del_slave_device(handler_i2c_dev_slave));
 	printf("%s bus has been destructed.\r\n", this->TAG);
 	
@@ -70,15 +68,12 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 	
 	if (pdPASS == this->pTransmitQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
 	{
-		
 		this->interruptRequestSet();
-		
 		retVal= i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms);
 		if (ESP_OK == retVal)
 		{
 			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
 		}
-		
 		this->pTransmitQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
 		this->interruptRequestReset();
 	}
@@ -101,7 +96,6 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 *---------------------------------------------------------------*/
 i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num)
 {
-
 	i2c_bus_config_master.clk_source = I2C_CLK_SRC_DEFAULT;
 	i2c_bus_config_master.i2c_port = i2c_port;
 	i2c_bus_config_master.scl_io_num = scl_io_num;

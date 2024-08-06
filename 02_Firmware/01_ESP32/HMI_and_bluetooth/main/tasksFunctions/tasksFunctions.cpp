@@ -218,9 +218,21 @@ void keyboardQueueParametersParser(void *parameters)
 				
 				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
 				
-				if (p_i2cSlave->pTransmitQueueObject->QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				#warning zastanowić się jak poprawić funkcję "esp32PrepareKbrdDataAndSent_to_QueueSend" bo to proteza, która nie za bardzo mi się podoba
+				//if (p_i2cSlave->pTransmitQueueObject->esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
+				if(esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
 				{
-					
 					#warning   obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive, nie wiem czy tutaj ale zrobnić
 					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
 				}
@@ -407,5 +419,36 @@ void i2cSlaveTransmit(void *nothing)
 	for (;;)
 	{
 		p_i2cSlave->slaveTransmit();		
+	}	
+}
+
+
+static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize)
+{
+	i2cFrame_transmitQueue dataToTransmitQueue;
+	dataToTransmitQueue.pData = new char[sizeof(itemSize)];
+	assert(dataToTransmitQueue.pData);
+	if (dataToTransmitQueue.pData != NULL)
+	{
+		memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
+		dataToTransmitQueue.dataSize = itemSize;
+		///*********************/
+		/*			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
+					{
+						return pdTRUE;
+			}
+			else
+			{
+				this->QueueDeleteDataFromPointer(dataToTransmitQueue);
+				//delete[] static_cast<char*>(pointerToData);
+				return pdFALSE;
+			}	*/
+			///*********************/			
+		//return this->QueueSend(&dataToTransmitQueue);
+		return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
+	}
+	else
+	{
+		return pdFALSE;
 	}	
 }
