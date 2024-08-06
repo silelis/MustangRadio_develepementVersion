@@ -31,11 +31,11 @@ class i2cQueue4DynamicData
 public:
 	i2cQueue4DynamicData(UBaseType_t uxQueueLength);
 	~i2cQueue4DynamicData(void);
-	#ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
+	
 		BaseType_t QueueSend(const void * pvItemToQueue);
-	#else
-		BaseType_t QueueSend(const void * pvItemToQueue, size_t itemSize);
-	#endif
+//	#ifndef I2C_STM32_TO_ESP32_ROLE_MASTER
+//		BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const void * pvItemToQueue, size_t itemSize);
+//	#endif
 	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 
@@ -44,5 +44,4 @@ protected:
 
 private:
 	QueueHandle_t handler_Queue;	//uchwyt do kolejki
-
 };

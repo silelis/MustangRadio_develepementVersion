@@ -114,6 +114,7 @@ namespace parserFunction{
 	void keyboard(i2cFrame_keyboardFrame* kbrdFrame){
 		kbrdFrame;
 		kbrdFrame->keyboardData.array;
+		printf("1\r\n");
 
 		//tutaj pchamy do kolejki klasy menu
 	}
