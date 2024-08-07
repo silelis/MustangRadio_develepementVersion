@@ -8,7 +8,25 @@ static i2c_slave_config_t i2c_config_slave;
 
 
 
-
+/*---------------------------------------------------------------
+ * Konstruktor klasy odpwiadającej za komunikację ESP32 po i2c z
+ * urządzeniami i2c master.
+ * Parameters:
+ * i2c_port_num_t i2c_port	- numer portu i2c w kontrolerze ESP32
+ * gpio_num_t sda_io_num	- numer pinu kontrolera ESP32 do którego
+ *							  przypisano sygnał SDA szyny i2c
+ * gpio_num_t scl_io_num	- numer pinu kontrolera ESP32 do którego
+ *							  przypisano sygnał SCL szyny i2c
+ uint32_t slave_addr		- adres esp32 jako slave na magistrali
+							  i2c
+ i2c_addr_bit_len_t slave_addr_bit_len - długość (w bitach) adresu
+							  i2c slave
+ gpio_num_t intRequestPin   - numer GPIO w esp32, który odpowiada 
+								za zgłoszenie do slave konieczności
+								komunikacji po i2c
+ * Returns:
+ * NONE
+*---------------------------------------------------------------*/
 i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin)
 {
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;
@@ -39,16 +57,39 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
 }
 
+/*---------------------------------------------------------------
+ * Metoda informuje i2c master o tym, że esp32 (i2c slave) ma dane
+ * do wysłania. Ten sygmnał to zbocze opadające GPIO.
+ * Parameters:
+ * NONE
+ * Returns:
+ * esp_err_t 				- ESP_OK lub ESP_FAIL
+*---------------------------------------------------------------*/
 esp_err_t i2cEngin_slave::interruptRequestSet(void)
 {
-	return gpio_set_level(this->i2cSlave_intRequestPin, 0); //interrupt request is SET when pin is low
+	return gpio_set_level(this->i2cSlave_intRequestPin, 0); //interrupt request is SET when pin goes low
 }
 
+/*---------------------------------------------------------------
+ * Metoda resetująca informuję do i2c master o tym, że esp32 (i2c
+ * slave) ma dane do wysłania.
+ * Parameters:
+ * NONE
+ * Returns:
+ * esp_err_t 				- ESP_OK lub ESP_FAIL
+*---------------------------------------------------------------*/
 esp_err_t i2cEngin_slave::interruptRequestReset(void)
 {
-	return gpio_set_level(this->i2cSlave_intRequestPin, 1); //interrupt request is RESET when pin is high
+	return gpio_set_level(this->i2cSlave_intRequestPin, 1); //interrupt request is RESET when pin goes high
 }
 
+/*---------------------------------------------------------------
+ * estruktor klasy.
+ * Parameters:
+ * NONE
+ * Returns:
+ * NONE
+*---------------------------------------------------------------*/
 i2cEngin_slave::~i2cEngin_slave()
 {
 	ESP_ERROR_CHECK(this->interruptRequestReset());
@@ -60,7 +101,15 @@ i2cEngin_slave::~i2cEngin_slave()
 	delete this->pTransmitQueueObject;
 }
 
-
+/*---------------------------------------------------------------
+ * Metoda wpisuje dane do bufora nadawczego esp32 po i2c w trybie
+ * slave. Dane pobierane są z kolejki QueueReceive obiektu
+ * pTransmitQueueObject.
+ * Parameters:
+ * NONE
+ * Returns:
+ * esp_err_t 				- ESP_OK lub ESP_FAIL
+*---------------------------------------------------------------*/
 esp_err_t i2cEngin_slave::slaveTransmit()
 {
 	esp_err_t retVal =ESP_FAIL;

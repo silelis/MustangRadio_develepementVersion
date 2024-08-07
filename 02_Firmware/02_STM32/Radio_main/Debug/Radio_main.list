@@ -31,17 +31,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  13 .debug_rnglists 000017e0  00000000  00000000  00050540  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_macro  0003a166  00000000  00000000  00051d20  2**0
+ 14 .debug_macro  0003a16a  00000000  00000000  00051d20  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   0002dcc1  00000000  00000000  0008be86  2**0
+ 15 .debug_line   0002dcc1  00000000  00000000  0008be8a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    00152480  00000000  00000000  000b9b47  2**0
+ 16 .debug_str    00152480  00000000  00000000  000b9b4b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  0020bfc7  2**0
+ 17 .comment      00000043  00000000  00000000  0020bfcb  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00009544  00000000  00000000  0020c00c  2**2
+ 18 .debug_frame  00009544  00000000  00000000  0020c010  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line_str 0000008b  00000000  00000000  00215550  2**0
+ 19 .debug_line_str 0000008b  00000000  00000000  00215554  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2533,7 +2533,6 @@ BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue){
 		return pdFALSE;
  8001576:	2300      	movs	r3, #0
 	}
-}
  8001578:	4618      	mov	r0, r3
  800157a:	3718      	adds	r7, #24
  800157c:	46bd      	mov	sp, r7
