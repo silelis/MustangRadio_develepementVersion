@@ -162,7 +162,17 @@ static bool keyboardQueueParameters_isComunicationWithI2CMasterRequired(keyboard
 	return pdFALSE;
 }
 
-
+/*---------------------------------------------------------------
+* Lokalna funkcja, ktora sprawdza czy dane otrzymane z klawiatury
+* to LONG BUT_0 lub LONG BUT0+BUT6. Jeśli tak to realizowany jest
+* restart radio (bez zapisywania NVS) lub restart radio z resetem
+* NVS.
+* Parameters:
+* keyboardUnion keyboardDataToCheck - unia zawierająca dane z
+*		klawiatury jakie należy sprawdziź pod kątem ich poprawności
+* Returns:
+* NONE
+*---------------------------------------------------------------*/ 
 static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keyboardDataToCheck)
 {
 	printf("Queue feeding error\n");
@@ -243,6 +253,51 @@ void keyboardQueueParametersParser(void *parameters)
 		}
 	}
 }
+
+/*---------------------------------------------------------------
+* Funkcja statyczna (lokalna) której zadaniem jest wpisane danych
+* pochodzących z klawiatury do bufora nadawczego esp32 po i2c jako
+* slave. Dane wysyłane są do i2c master.
+* Parameters:
+* const i2cFrame_keyboardFrame * pvItemToQueue - struktura zawierająca
+							dane odczytane z klawiatury
+* size_t itemSize		- rozmiar struktury i2cFrame_keyboardFrame
+* Returns:
+* BaseType_t  - pdTrue lub pdFALSE
+*---------------------------------------------------------------*/ 
+static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize)
+{
+	i2cFrame_transmitQueue dataToTransmitQueue;
+	dataToTransmitQueue.pData = new char[sizeof(itemSize)];
+	assert(dataToTransmitQueue.pData);
+	if (dataToTransmitQueue.pData != NULL)
+	{
+		memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
+		dataToTransmitQueue.dataSize = itemSize;
+		///*********************/
+		/*			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
+					{
+						return pdTRUE;
+			}
+			else
+			{
+				this->QueueDeleteDataFromPointer(dataToTransmitQueue);
+				//delete[] static_cast<char*>(pointerToData);
+				return pdFALSE;
+			}	*/
+			///*********************/			
+		//return this->QueueSend(&dataToTransmitQueue);
+		return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
+	}
+	else
+	{
+		return pdFALSE;
+	}	
+}
+
+
+
+
 
 /*---------------------------------------------------------------
 * Funkcja statyczna (lokalna) której zadaniem jest porównanie
@@ -419,36 +474,5 @@ void i2cSlaveTransmit(void *nothing)
 	for (;;)
 	{
 		p_i2cSlave->slaveTransmit();		
-	}	
-}
-
-
-static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize)
-{
-	i2cFrame_transmitQueue dataToTransmitQueue;
-	dataToTransmitQueue.pData = new char[sizeof(itemSize)];
-	assert(dataToTransmitQueue.pData);
-	if (dataToTransmitQueue.pData != NULL)
-	{
-		memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
-		dataToTransmitQueue.dataSize = itemSize;
-		///*********************/
-		/*			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
-					{
-						return pdTRUE;
-			}
-			else
-			{
-				this->QueueDeleteDataFromPointer(dataToTransmitQueue);
-				//delete[] static_cast<char*>(pointerToData);
-				return pdFALSE;
-			}	*/
-			///*********************/			
-		//return this->QueueSend(&dataToTransmitQueue);
-		return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
-	}
-	else
-	{
-		return pdFALSE;
 	}	
 }

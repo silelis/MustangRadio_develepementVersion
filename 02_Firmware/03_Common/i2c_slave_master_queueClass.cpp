@@ -49,35 +49,3 @@ BaseType_t i2cQueue4DynamicData::QueueSend(const void * pvItemToQueue){
 		return pdFALSE;
 	}
 }
-
-//#ifndef I2C_STM32_TO_ESP32_ROLE_MASTER
-//BaseType_t i2cQueue4DynamicData::esp32PrepareKbrdDataAndSent_to_QueueSend(const void * pvItemToQueue, size_t itemSize)
-//	{
-//		i2cFrame_transmitQueue dataToTransmitQueue;
-//		dataToTransmitQueue.pData = new char[sizeof(itemSize)];
-//		assert(dataToTransmitQueue.pData);
-//		if (dataToTransmitQueue.pData != NULL)
-//		{
-//			memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
-//			dataToTransmitQueue.dataSize = itemSize;
-// ///*********************/
-// /*			if (xQueueSend(this->handler_Queue, &dataToTransmitQueue, pdMS_TO_TICKS(700)) == pdTRUE)
-//			{
-//				return pdTRUE;
-//			}
-//			else
-//			{
-//				this->QueueDeleteDataFromPointer(dataToTransmitQueue);
-//				//delete[] static_cast<char*>(pointerToData);
-//				return pdFALSE;
-//			}	*/
-//			///*********************/			
-//			return this->QueueSend(&dataToTransmitQueue);
-//		}
-//		else
-//		{
-//			return pdFALSE;
-//		}	
-//	}
-//#endif
-
