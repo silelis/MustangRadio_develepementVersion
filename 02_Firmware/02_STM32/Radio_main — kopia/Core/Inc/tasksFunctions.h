@@ -16,9 +16,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
 
 void initTaskFunctions(void);
 

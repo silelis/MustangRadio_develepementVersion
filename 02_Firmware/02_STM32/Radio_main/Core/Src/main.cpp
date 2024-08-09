@@ -29,11 +29,40 @@
 //#include "hwConfigFile.h"
 #include "freertos.h"
 //#include "printfRedirect.h"
-#include "tasksFunctions.h"
+//#include "tasksFunctions.h"
+#include "SileliS_code/tasksFunctions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+
+
+/********************************************************************
+ * @brief  [Krótki opis funkcji]
+ *
+ * [Dłuższy opis funkcji, w którym można wyjaśnić szczegóły działania,
+ *  algorytmy, przypadki brzegowe itp.]
+ *
+ * @param  [parametr1] [Typ parametru] Opis pierwszego parametru.
+ * @param  [parametr2] [Typ parametru] Opis drugiego parametru.
+ * @param  [parametr3] [Typ parametru] Opis trzeciego parametru.
+ *
+ * @return [Typ zwracanej wartości] Opis tego, co funkcja zwraca.
+ * @retval [wartość_1] Opis pierwszej możliwej wartości zwracanej.
+ * @retval [wartość_2] Opis drugiej możliwej wartości zwracanej.
+ *
+ * @note   [Dodatkowe informacje, jeśli są istotne]
+ * @warning [Ostrzeżenia dotyczące używania funkcji, jeśli istnieją]
+ *******************************************************************/
+
+
+
+
+
+
+
+
+
 
 /* USER CODE END PTD */
 
@@ -50,14 +79,18 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
+#ifdef __cplusplus
+}
+#endif
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,6 +141,7 @@ int main(void)
   osKernelInitialize();
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
+
   MX_FREERTOS_Init();
 
   /* Start scheduler */

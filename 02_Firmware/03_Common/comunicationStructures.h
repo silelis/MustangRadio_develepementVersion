@@ -11,18 +11,18 @@ struct ws2812Color
 
 union keyboardUnion
 {
-	char array[2];
+	char array[2];			//daje możliwośc odczytania danych jako zwykła tabele char (niezależnie czy są to dane z klawiatury czy enkodera)
 	struct //charUint8
 	{
-		char input;
-		int8_t value;
-	} encoderValue;
+		char input;			//informacja, z którego enkodera pochodzą dane (głośnośc czy equalizer)
+		int8_t value;		//informacja na temat kierunku rotacji prawo / lewo
+	} encoderValue;			//daje możliwość łatwego zapisania/odczytu danych dla enkoderów
 	
 	struct //charInt8
 	{
-		char input;
-		uint8_t value;
-	}kbrdValue;
+		char input;			//zzakodowana ba bitach informacja o tym, który przycisk został wciśnięty i o tym, że nastąpił long press
+		uint8_t value;		//informacja, że dane pochodzą z przycisków
+	}kbrdValue;				//daje możliwość łatwego zapisania/odczytu danych dla klawiatury
 };
 
 struct colorSet {
