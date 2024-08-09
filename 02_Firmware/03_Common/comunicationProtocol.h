@@ -4,7 +4,8 @@
 //#include "i2c_slave_master_queueClass.h"
 #include <stdio.h>
 #include <stdint.h> 
-#include "hwConfigFile.h"
+//#include "hwConfigFile.h"
+#include "SileliS_code/hwConfigFile.h"
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
 //#define I2C_SLAVE_RX_BUFFER_LEN				512
@@ -43,6 +44,8 @@ typedef struct
 	uint8_t dataSize;		//sizeof(data to send)
 } i2cFrame_commonHeader;
 
+
+
 typedef struct {
 	i2cFrame_commonHeader i2cframeCommandHeader;
 	union keyboardUnion keyboardData;
@@ -51,14 +54,14 @@ typedef struct {
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 	typedef struct{
-		uint8_t slaveDevice7bitAddress;
-		size_t dataSize;
-		void *pData;
+		uint8_t slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
+		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
+		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
 	} i2cFrame_transmitQueue;
 #else
 	typedef struct{
-		size_t dataSize;
-		void *pData;
-	} i2cFrame_transmitQueue;
+		size_t dataSize;					//jak wyżej
+		void *pData;						//jak wyżej
+	} i2cFrame_transmitQueue;				//jak wyżej
 
 #endif

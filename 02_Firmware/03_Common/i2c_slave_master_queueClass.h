@@ -21,7 +21,8 @@
 	#include "task.h"
 	#include "queue.h"
 	#include "comunicationProtocol.h"
-	#include "hwConfigFile.h"
+	//#include "hwConfigFile.h"
+	#include "SileliS_code/hwConfigFile.h"
 #else
 	#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
