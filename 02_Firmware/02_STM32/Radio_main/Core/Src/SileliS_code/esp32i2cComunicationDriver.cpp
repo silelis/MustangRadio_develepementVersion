@@ -132,7 +132,18 @@ esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
 }
 
 
-
+/********************************************************************
+ * @brief  Sprawdza czy wartość semafora zliczającego nie jest równa
+ * maksymalnej. Może to oznaczać za dużą ilość danych w buforze nadawczym
+ * esp32, które nie zostały odebrane.
+ *
+ * @param  NONE
+ *
+ * @return NONE
+ *
+ * @note   	NONE
+ * @warning NONE
+ *******************************************************************/
 void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
 	if( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)== this->esp32InterruptRequestCountingSemaphore_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
 		this->esp32InrerruptRequest_CountingSemaphoreOverflowError= pdTRUE;
@@ -140,23 +151,86 @@ void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
 	}
 }
 
+/********************************************************************
+ * @Oczekuje na semafor esp32IntrrruptRequest_CountingSemaphore i
+ * dekrementuje jego wartość
+ *
+ * @param  [NONE
+ *
+ * @return NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
 	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE;
 }
 
+/********************************************************************
+ * @brief  Odczytuje dane z esp32 (i2c slave)
+ *
+ * Sprawdza czy szyna i2c jest dostępna, a jeśli tak to pobiera dane z
+ * esp32
+ *
+ * @param  [*pData] [uint8_t] Wskaźnik do adresu pamięci pod jakim mają
+ * 			być zapisane otrzymane dane
+ * @param  [Size] [uint16_t] Ilość danych jakie mają być odczytane
+ *
+ * @return [HAL_StatusTypeDef] aka. wartość zwracana przez
+ * 			HAL_I2C_Master_Receive_DMA
+ *
+ * @note	NONE
+ * @warning	NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
 	return this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
 }
 
-
+/********************************************************************
+ * @brief  Pobiera semafor szyny i2c.
+ *
+ * Pobiera semafor szyny i2c i blokuje możliwość nadawania przez inne
+ * wątki / zadania
+ *
+ * @param  NONE
+ *
+ * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreTake
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
 	return this->pi2cMaster->i2cMasterSemaphoreTake();
 }
 
+/********************************************************************
+ * @brief  Oddaje semafor szyny i2c.
+ *
+ * Oddaje semafor szyny i2c i odblokowuje możliwość nadawania przez inne
+ * wątki / zadania
+ *
+ * @param  NONE
+ *
+ * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreGive
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
 	return this->pi2cMaster->i2cMasterSemaphoreGive();
 }
 
+
+/********************************************************************
+ * @brief  Oczekuje do czasu, aż interfejs i2c nie bedzie dostępny.
+ *
+ * [Dłuższy opis funkcji, w którym można wyjaśnić szczegóły działania,
+ *  algorytmy, przypadki brzegowe itp.]
+ *
+ * @param  NONE
+ *
+ * @return NONE
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 	pi2cMaster->while_I2C_STATE_READY();
 }
@@ -166,6 +240,7 @@ void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
 	printf("error with memory allocation\r\n");
 }
+
 
 void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
 	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
