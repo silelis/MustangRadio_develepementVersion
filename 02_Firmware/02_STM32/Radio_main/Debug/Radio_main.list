@@ -33,11 +33,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_macro  0003a0ca  00000000  00000000  00050700  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   0002d8a2  00000000  00000000  0008a7ca  2**0
+ 15 .debug_line   0002d8a1  00000000  00000000  0008a7ca  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    0015245c  00000000  00000000  000b806c  2**0
+ 16 .debug_str    0015245c  00000000  00000000  000b806b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  0020a4c8  2**0
+ 17 .comment      00000043  00000000  00000000  0020a4c7  2**0
                   CONTENTS, READONLY
  18 .debug_frame  00009544  00000000  00000000  0020a50c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -1086,9 +1086,11 @@ esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
  8000c6a:	bd80      	pop	{r7, pc}
 
 08000c6c <_ZN27esp32_i2cComunicationDriver29isCountingSemaphoreOverflowedEv>:
-
-
-
+ * @return NONE
+ *
+ * @note   	NONE
+ * @warning NONE
+ *******************************************************************/
 void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
  8000c6c:	b580      	push	{r7, lr}
  8000c6e:	b082      	sub	sp, #8
@@ -1126,7 +1128,11 @@ void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
  8000ca8:	08014154 	.word	0x08014154
 
 08000cac <_ZN27esp32_i2cComunicationDriver32semaphoreTake__CountingSemaphoreEv>:
-
+ *
+ * @param  [NONE
+ *
+ * @return NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
  8000cac:	b580      	push	{r7, lr}
  8000cae:	b082      	sub	sp, #8
@@ -1151,7 +1157,11 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
  8000cd4:	bd80      	pop	{r7, pc}
 
 08000cd6 <_ZN27esp32_i2cComunicationDriver26masterReceiveFromESP32_DMAEPht>:
-
+ * 			HAL_I2C_Master_Receive_DMA
+ *
+ * @note	NONE
+ * @warning	NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
  8000cd6:	b580      	push	{r7, lr}
  8000cd8:	b084      	sub	sp, #16
@@ -1177,8 +1187,11 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
  8000cfe:	bd80      	pop	{r7, pc}
 
 08000d00 <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreTakeEv>:
-
-
+ * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreTake
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
  8000d00:	b580      	push	{r7, lr}
  8000d02:	b082      	sub	sp, #8
@@ -1197,7 +1210,11 @@ BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
  8000d1a:	bd80      	pop	{r7, pc}
 
 08000d1c <_ZN27esp32_i2cComunicationDriver22i2cMasterSemaphoreGiveEv>:
-
+ * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreGive
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
  8000d1c:	b580      	push	{r7, lr}
  8000d1e:	b082      	sub	sp, #8
@@ -1216,6 +1233,7 @@ BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
  8000d36:	bd80      	pop	{r7, pc}
 
 08000d38 <_ZN27esp32_i2cComunicationDriver21while_I2C_STATE_READYEv>:
+
 
 void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
  8000d38:	b580      	push	{r7, lr}
@@ -1318,7 +1336,7 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 			assert(0);
  8000dce:	4b06      	ldr	r3, [pc, #24]	@ (8000de8 <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x74>)
  8000dd0:	4a06      	ldr	r2, [pc, #24]	@ (8000dec <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x78>)
- 8000dd2:	21b6      	movs	r1, #182	@ 0xb6
+ 8000dd2:	21f3      	movs	r1, #243	@ 0xf3
  8000dd4:	4806      	ldr	r0, [pc, #24]	@ (8000df0 <_ZN27esp32_i2cComunicationDriver17parseReceivedDataE22i2cFrame_transmitQueue+0x7c>)
  8000dd6:	f00e fe45 	bl	800fa64 <__assert_func>
 }
@@ -1521,8 +1539,6 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
  8000f2c:	460b      	mov	r3, r1
  8000f2e:	807b      	strh	r3, [r7, #2]
 	HAL_StatusTypeDef retVal;
-	//this->while_I2C_STATE_READY();
-	//this->i2cMasterSemaphoreTake();
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
  8000f30:	687b      	ldr	r3, [r7, #4]
  8000f32:	6898      	ldr	r0, [r3, #8]
@@ -1534,7 +1550,6 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
  8000f40:	f004 fcb6 	bl	80058b0 <HAL_I2C_IsDeviceReady>
  8000f44:	4603      	mov	r3, r0
  8000f46:	73fb      	strb	r3, [r7, #15]
-	//this->i2cMasterSemaphoreGive();
 	if(retVal==HAL_OK){
  8000f48:	7bfb      	ldrb	r3, [r7, #15]
  8000f4a:	2b00      	cmp	r3, #0
@@ -1559,7 +1574,7 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 		assert(0);
  8000f6c:	4b07      	ldr	r3, [pc, #28]	@ (8000f8c <_ZN9i2cMaster4pingEt+0x68>)
  8000f6e:	4a08      	ldr	r2, [pc, #32]	@ (8000f90 <_ZN9i2cMaster4pingEt+0x6c>)
- 8000f70:	212f      	movs	r1, #47	@ 0x2f
+ 8000f70:	212c      	movs	r1, #44	@ 0x2c
  8000f72:	4808      	ldr	r0, [pc, #32]	@ (8000f94 <_ZN9i2cMaster4pingEt+0x70>)
  8000f74:	f00e fd76 	bl	800fa64 <__assert_func>
 	}
@@ -1649,7 +1664,6 @@ void i2cMaster::while_I2C_STATE_READY(void){
  800100e:	b082      	sub	sp, #8
  8001010:	af00      	add	r7, sp, #0
  8001012:	6078      	str	r0, [r7, #4]
-	//this->i2cMasterSemaphoreTake();
 	while(HAL_I2C_GetState(this->p_hi2c1)!= HAL_I2C_STATE_READY){};
  8001014:	bf00      	nop
  8001016:	687b      	ldr	r3, [r7, #4]
@@ -1664,7 +1678,6 @@ void i2cMaster::while_I2C_STATE_READY(void){
  800102a:	b2db      	uxtb	r3, r3
  800102c:	2b00      	cmp	r3, #0
  800102e:	d1f2      	bne.n	8001016 <_ZN9i2cMaster21while_I2C_STATE_READYEv+0xa>
-	//this->i2cMasterSemaphoreGive();
 }
  8001030:	bf00      	nop
  8001032:	bf00      	nop
