@@ -10,7 +10,7 @@
 
 
 menuItem::menuItem(const char* tag) : TAG(tag) {
-	printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
+	//printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
 };
 
 void menuItem::printMenuName(void){

@@ -12,26 +12,23 @@
 radioMenus::radioMenus() {
 
 	printf("%sMain menu object had been created.\r\n", this->TAG);
-	printf("%d\r\n", this->audioDev.size());
+	this->audioDevices.menuTAG = "Menu \'AUDIO\': ";
+	//audioDevices.menuTAG = "Menu \'AUDIO\' log: ";
+	this->audioDevices.currentDevice	= this->audioDevices.deviceList.begin();
+	this->audioDevices.maxDevices		= this->audioDevices.deviceList.end();
 
 }
 
+void radioMenus::appendAudioDevices(const char* deviceName){
+	this->emplace_back(&audioDevices, deviceName);
 
+}
 
-void radioMenus::emplace_back(){
-	this->audioDev.emplace_back("si468x_DAB+");
-	printf("%d\r\n", this->audioDev.size());
+void  radioMenus::emplace_back(menuState* whichMenu,const char* deviceName){
 
-	this->audioDev.emplace_back("si468x_FM");
-	printf("%d\r\n", this->audioDev.size());
+	whichMenu->deviceList.emplace_back(deviceName);
+	printf(("%s%sDevice had been added. There is %d device(s).\r\n"),this->TAG, whichMenu->menuTAG, whichMenu->deviceList.size());
 
-	audioDevIterator  = this->audioDev.begin();
-	audioDevIterator->printMenuName();
-
-	audioDevIterator++;
-	audioDevIterator->printMenuName();
-	audioDevIterator++;
-	audioDevIterator->printMenuName();
 }
 
 

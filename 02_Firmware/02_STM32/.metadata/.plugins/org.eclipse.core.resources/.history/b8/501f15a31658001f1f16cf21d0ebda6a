@@ -1,0 +1,44 @@
+/*
+ * radioMenu.h
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_RADIOMENU_H_
+#define INC_RADIOMENU_H_
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <list>
+#include "SileliS_code/menuItem.h"
+
+
+struct device{
+	std::list<menuItem> deviceList;
+	std::list<menuItem>::iterator CurrentDevice;
+	std::list<menuItem>::iterator maxDevices;
+};
+
+class radioMenus {
+public:
+	radioMenus();
+	virtual ~radioMenus();
+
+
+	void  emplace_back();
+
+
+
+protected:
+
+private:
+	const char *TAG = "Menu log: ";
+
+	device audio;
+
+};
+
+#endif /* INC_RADIOMENU_H_ */
