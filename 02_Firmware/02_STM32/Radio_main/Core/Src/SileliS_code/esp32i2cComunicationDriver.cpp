@@ -235,13 +235,37 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 	pi2cMaster->while_I2C_STATE_READY();
 }
 
-
+/********************************************************************
+ * @brief  Metoda ustawia esp32DynamicmMemeoryAlocationError na wartość
+ * pdTrue i wypisuje na konsoli stosowny komunikat, co świwadczy o tym,
+ * że pojawił się błąd dynamicznej alokacji pamięci.
+ *
+ *
+ * @param  NONE
+ *
+ * @return NONE
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
 	printf("error with memory allocation\r\n");
 }
 
 
+/********************************************************************
+ * @brief  Metoda parsuje,a dokłądnie sprawdza z którego peryferium esp32
+ * pochodfzi otrzymana ramka danych i przekazuje tę dane (już konkretne
+ * dane) do odpowiedzialnej za odczyt funkcji z namespace "parserFunction"
+ *
+ * @param  [I2CReceivedFrame] [i2cFrame_transmitQueue] ramka danych  otrzymanych z i2c slave
+ *
+ * @return NONE
+ *
+ * @note   NONE
+ * @warning NONE
+ *******************************************************************/
 void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
 	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
 	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));				//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
@@ -263,6 +287,7 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 
 
 namespace parserFunction{
+
 	void keyboard(i2cFrame_keyboardFrame* kbrdFrame){
 		kbrdFrame;
 		kbrdFrame->keyboardData.array;

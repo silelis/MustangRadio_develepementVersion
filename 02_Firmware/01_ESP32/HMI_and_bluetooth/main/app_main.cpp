@@ -29,6 +29,28 @@
 void init_uart();
 
 
+
+/********************************************************************
+* @brief  [Krótki opis funkcji]
+*
+* [Dłuższy opis funkcji, w którym można wyjaśnić szczegóły działania,
+*  algorytmy, przypadki brzegowe itp.]
+*
+* @param  [parametr1] [Typ parametru] Opis pierwszego parametru.
+* @param  [parametr2] [Typ parametru] Opis drugiego parametru.
+* @param  [parametr3] [Typ parametru] Opis trzeciego parametru.
+*
+* @return [Typ zwracanej wartości] Opis tego, co funkcja zwraca.
+* @retval [wartość_1] Opis pierwszej możliwej wartości zwracanej.
+* @retval [wartość_2] Opis drugiej możliwej wartości zwracanej.
+*
+* @note   [Dodatkowe informacje, jeśli są istotne]
+* @warning [Ostrzeżenia dotyczące używania funkcji, jeśli istnieją]
+*******************************************************************/
+
+
+
+
 TaskHandle_t handlerTask_ledDisplay;
 TaskHandle_t handlerTask_backlightDisplay;	
 TaskHandle_t handlerTask_stepperMotor;	
