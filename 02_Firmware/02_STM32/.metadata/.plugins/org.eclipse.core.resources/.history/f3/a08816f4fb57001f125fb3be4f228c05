@@ -1,0 +1,32 @@
+/*
+ * radioMenu.cpp
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#include "SileliS_code/radioMenu.h"
+
+
+menuItem::menuItem(const char* tag) : TAG(tag) {};
+
+menuItem::~menuItem(){
+
+
+}
+
+void menuItem::print(){
+	printf("$s\r\n", this->TAG);
+}
+
+
+
+
+radioMenus::radioMenus() {
+	// TODO Auto-generated constructor stub
+}
+
+radioMenus::~radioMenus() {
+	// TODO Auto-generated destructor stub
+}
+

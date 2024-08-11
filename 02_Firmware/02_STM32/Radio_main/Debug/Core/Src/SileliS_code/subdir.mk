@@ -9,6 +9,8 @@ D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Comm
 ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp \
 ../Core/Src/SileliS_code/i2cEngine.cpp \
 D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/i2c_slave_master_queueClass.cpp \
+../Core/Src/SileliS_code/menuItem.cpp \
+../Core/Src/SileliS_code/radioMenu.cpp \
 ../Core/Src/SileliS_code/tasksFunctions.cpp 
 
 C_SRCS += \
@@ -22,7 +24,9 @@ OBJS += \
 ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o \
 ./Core/Src/SileliS_code/i2cEngine.o \
 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o \
+./Core/Src/SileliS_code/menuItem.o \
 ./Core/Src/SileliS_code/printfRedirect.o \
+./Core/Src/SileliS_code/radioMenu.o \
 ./Core/Src/SileliS_code/tasksFunctions.o 
 
 CPP_DEPS += \
@@ -30,6 +34,8 @@ CPP_DEPS += \
 ./Core/Src/SileliS_code/esp32i2cComunicationDriver.d \
 ./Core/Src/SileliS_code/i2cEngine.d \
 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.d \
+./Core/Src/SileliS_code/menuItem.d \
+./Core/Src/SileliS_code/radioMenu.d \
 ./Core/Src/SileliS_code/tasksFunctions.d 
 
 
@@ -46,7 +52,7 @@ Core/Src/SileliS_code/%.o Core/Src/SileliS_code/%.su Core/Src/SileliS_code/%.cyc
 clean: clean-Core-2f-Src-2f-SileliS_code
 
 clean-Core-2f-Src-2f-SileliS_code:
-	-$(RM) ./Core/Src/SileliS_code/comunication_calculate_checksum.cyclo ./Core/Src/SileliS_code/comunication_calculate_checksum.d ./Core/Src/SileliS_code/comunication_calculate_checksum.o ./Core/Src/SileliS_code/comunication_calculate_checksum.su ./Core/Src/SileliS_code/esp32i2cComunicationDriver.cyclo ./Core/Src/SileliS_code/esp32i2cComunicationDriver.d ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o ./Core/Src/SileliS_code/esp32i2cComunicationDriver.su ./Core/Src/SileliS_code/i2cEngine.cyclo ./Core/Src/SileliS_code/i2cEngine.d ./Core/Src/SileliS_code/i2cEngine.o ./Core/Src/SileliS_code/i2cEngine.su ./Core/Src/SileliS_code/i2c_slave_master_queueClass.cyclo ./Core/Src/SileliS_code/i2c_slave_master_queueClass.d ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o ./Core/Src/SileliS_code/i2c_slave_master_queueClass.su ./Core/Src/SileliS_code/printfRedirect.cyclo ./Core/Src/SileliS_code/printfRedirect.d ./Core/Src/SileliS_code/printfRedirect.o ./Core/Src/SileliS_code/printfRedirect.su ./Core/Src/SileliS_code/tasksFunctions.cyclo ./Core/Src/SileliS_code/tasksFunctions.d ./Core/Src/SileliS_code/tasksFunctions.o ./Core/Src/SileliS_code/tasksFunctions.su
+	-$(RM) ./Core/Src/SileliS_code/comunication_calculate_checksum.cyclo ./Core/Src/SileliS_code/comunication_calculate_checksum.d ./Core/Src/SileliS_code/comunication_calculate_checksum.o ./Core/Src/SileliS_code/comunication_calculate_checksum.su ./Core/Src/SileliS_code/esp32i2cComunicationDriver.cyclo ./Core/Src/SileliS_code/esp32i2cComunicationDriver.d ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o ./Core/Src/SileliS_code/esp32i2cComunicationDriver.su ./Core/Src/SileliS_code/i2cEngine.cyclo ./Core/Src/SileliS_code/i2cEngine.d ./Core/Src/SileliS_code/i2cEngine.o ./Core/Src/SileliS_code/i2cEngine.su ./Core/Src/SileliS_code/i2c_slave_master_queueClass.cyclo ./Core/Src/SileliS_code/i2c_slave_master_queueClass.d ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o ./Core/Src/SileliS_code/i2c_slave_master_queueClass.su ./Core/Src/SileliS_code/menuItem.cyclo ./Core/Src/SileliS_code/menuItem.d ./Core/Src/SileliS_code/menuItem.o ./Core/Src/SileliS_code/menuItem.su ./Core/Src/SileliS_code/printfRedirect.cyclo ./Core/Src/SileliS_code/printfRedirect.d ./Core/Src/SileliS_code/printfRedirect.o ./Core/Src/SileliS_code/printfRedirect.su ./Core/Src/SileliS_code/radioMenu.cyclo ./Core/Src/SileliS_code/radioMenu.d ./Core/Src/SileliS_code/radioMenu.o ./Core/Src/SileliS_code/radioMenu.su ./Core/Src/SileliS_code/tasksFunctions.cyclo ./Core/Src/SileliS_code/tasksFunctions.d ./Core/Src/SileliS_code/tasksFunctions.o ./Core/Src/SileliS_code/tasksFunctions.su
 
 .PHONY: clean-Core-2f-Src-2f-SileliS_code
 

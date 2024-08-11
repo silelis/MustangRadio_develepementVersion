@@ -1,0 +1,38 @@
+/*
+ * radioMenu.cpp
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#include "SileliS_code/radioMenu.h"
+
+
+menuItem::menuItem(const char* tag) : TAG(tag) {};
+
+menuItem::~menuItem(){
+}
+
+void menuItem::print(){
+	printf("%s\r\n", this->TAG);
+}
+
+
+
+
+radioMenus::radioMenus() {
+
+	this->audioDevices.Counter=0;
+	this->audioDevices.firstDevices=NULL;
+	this->audioDevices.currentMenu=this->audioDevices.firstDevices;
+	this->peripheryDevices.Counter = 0;
+	this->peripheryDevices.firstDevices =NULL;
+	this->peripheryDevices.currentMenu = this->peripheryDevices.firstDevices
+
+	printf("%sMain menu object had been created.\r\n", this->TAG);
+}
+
+radioMenus::~radioMenus() {
+	// TODO Auto-generated destructor stub
+}
+
