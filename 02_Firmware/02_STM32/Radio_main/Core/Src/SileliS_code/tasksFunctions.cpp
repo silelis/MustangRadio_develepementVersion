@@ -104,8 +104,10 @@ void initTaskFunctions(void){
 
 	pRadioMenu = new radioMenus();
 
-	pRadioMenu->emplace_back();
+	//pRadioMenu->emplace_back(pRadioMenu->audioDevices);
+	pRadioMenu->appendAudioDevices("SI486X_DAB+");
 
+	pRadioMenu->appendAudioDevices("FM");
 	pRadioMenu;
 
 }
