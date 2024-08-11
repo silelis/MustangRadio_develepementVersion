@@ -21,8 +21,7 @@
 	#include "task.h"
 	#include "queue.h"
 	#include "comunicationProtocol.h"
-	//#include "hwConfigFile.h"
-	#include "SileliS_code/hwConfigFile.h"
+	#include "hwConfigFile.h"
 #else
 	#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
 #endif
@@ -33,11 +32,8 @@ public:
 	i2cQueue4DynamicData(UBaseType_t uxQueueLength);
 	~i2cQueue4DynamicData(void);
 	
-		BaseType_t QueueSend(const void * pvItemToQueue);
-//	#ifndef I2C_STM32_TO_ESP32_ROLE_MASTER
-//		BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const void * pvItemToQueue, size_t itemSize);
-//	#endif
-	BaseType_t  QueueReceive(void * const pvBuffer, TickType_t xTicksToWait);
+	BaseType_t QueueSend(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue);
+	BaseType_t  QueueReceive(/*void*/i2cFrame_transmitQueue * /*const*/ pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 
 protected:

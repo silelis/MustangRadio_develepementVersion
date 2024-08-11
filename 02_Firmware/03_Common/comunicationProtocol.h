@@ -4,8 +4,7 @@
 //#include "i2c_slave_master_queueClass.h"
 #include <stdio.h>
 #include <stdint.h> 
-//#include "hwConfigFile.h"
-#include "SileliS_code/hwConfigFile.h"
+#include "hwConfigFile.h"
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
 //#define I2C_SLAVE_RX_BUFFER_LEN				512
