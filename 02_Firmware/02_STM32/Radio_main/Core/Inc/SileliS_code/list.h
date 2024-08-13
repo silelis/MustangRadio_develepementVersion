@@ -10,11 +10,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 
 // Struktura pojedynczego elementu listy
 struct Node {
-    int data;
+    uint8_t nodeIndex;
     Node* next;
 };
 
@@ -23,6 +25,7 @@ class List {
 private:
     Node* head;
     Node* current;
+    uint8_t indexCounter;
 
 public:
     // Konstruktor
@@ -32,27 +35,28 @@ public:
     ~List();
 
     // Dodawanie elementów do listy
-    void addAtBeginning(int data);
-    void addAtEnd(int data);
+    void addAtBeginning(void);
+    void addAtEnd(void);
 
     // Poruszanie się po liście
     void resetToFirst();
     void moveToNext();
-    int getCurrentElement();
+    uint8_t getCurrentElement();
     bool isAtEnd();
 
     // Usuwanie elementu z listy
-    void removeElement(int data);
+    void removeElement(uint8_t data);
 
     // Wydrukowanie elementów listy
     void printList();
 
 private:
     // Prywatna funkcja pomocnicza do tworzenia nowego węzła
-    Node* createNode(int data);
+    Node* createNode(void);
 
     // Prywatna funkcja do zwalniania pamięci
     void freeList();
+    bool canAddItem(void);
 };
 
 #endif /* INC_SILELIS_CODE_LIST_H_ */

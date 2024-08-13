@@ -1,0 +1,62 @@
+/*
+ * list.h
+ *
+ *  Created on: Aug 12, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_LIST_H_
+#define INC_SILELIS_CODE_LIST_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+
+// Struktura pojedynczego elementu listy
+struct Node {
+    uint8_t nodeIndex;
+    Node* next;
+};
+
+// Klasa List
+class List {
+private:
+    Node* head;
+    Node* current;
+    uint8_t indexCounter;
+
+public:
+    // Konstruktor
+    List();
+
+    // Destruktor
+    ~List();
+
+    // Dodawanie elementów do listy
+    void addAtBeginning(void);
+    void addAtEnd(void);
+
+    // Poruszanie się po liście
+    void resetToFirst();
+    void moveToNext();
+    uint8_t getCurrentElement();
+    bool isAtEnd();
+
+    // Usuwanie elementu z listy
+    void removeElement(int data);
+
+    // Wydrukowanie elementów listy
+    void printList();
+
+private:
+    // Prywatna funkcja pomocnicza do tworzenia nowego węzła
+    Node* createNode(void);
+
+    // Prywatna funkcja do zwalniania pamięci
+    void freeList();
+    bool canAddItem(void);
+};
+
+#endif /* INC_SILELIS_CODE_LIST_H_ */
