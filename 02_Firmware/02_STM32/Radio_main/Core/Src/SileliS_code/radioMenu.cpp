@@ -16,7 +16,7 @@ radioMenus::radioMenus() {
 	//listy wielowymiarowe dla urzadzęń audio i equalizera
 	this->pAudioDeviceList=nullptr;
 	this->pAudioDeviceList = new List();
-	assert(this->pAudioDeviceLis);
+	assert(this->pAudioDeviceList);
 }
 
 

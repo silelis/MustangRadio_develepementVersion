@@ -15,6 +15,6 @@ menuItem::menuItem(const char* tag) : TAG(tag) {
 
 
 menuItem::~menuItem(){
-	#warnig zastanowić si ę nad destruktorem
+	#warning zastanowić si ę nad destruktorem
 }
 
