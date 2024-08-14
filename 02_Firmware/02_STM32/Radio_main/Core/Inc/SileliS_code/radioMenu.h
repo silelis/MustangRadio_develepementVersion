@@ -17,26 +17,39 @@
 #include "SileliS_code/menuItem.h"
 
 
-typedef struct {
+/*typedef struct {
 	const char *menuTAG;
 	std::list<menuItem> deviceList;					//lista wszystkich urządzeń w menu
 	std::list<menuItem>::iterator currentDevice;	//iterator (wskaźnik do) aktualnego urządzenia używanego w menu
 	std::list<menuItem>::iterator maxDevices;		//ilość wszystkich urządzeń w menu
-}menuState;
+}menuState;*/
 
 class radioMenus {
 public:
 	radioMenus();
 	virtual ~radioMenus();
+	List* pAudioDeviceList;
+	List* pPeripheryDeviceList;
 
-	void appendAudioDevices(const char* deviceName);
+	//listy specjalne jednowymiarowe dla rotora volume
+	List* pVolLongList;		//długie przyciśniecie przycisku Vol
+	List* pVolShortList;		//długie przyciśniecie przycisku Vol
+	List* pVolCWList;		//długie przyciśniecie przycisku Vol
+	List* pVolCCWList;		//długie przyciśniecie przycisku Vol
+
+	//listy specjalne jednowymiarowe dla rotora equalisera
+	//List* pEquLongList;		//długie przyciśniecie przycisku Vol
+	List* pEquShortList;		//długie przyciśniecie przycisku Vol
+	List* pEquCWList;		//długie przyciśniecie przycisku Vol
+	List* pEquCCWList;		//długie przyciśniecie przycisku Vol
+
 
 protected:
-	void  emplace_back(menuState* whichMenu,const char* deviceName);		//uzupełnia listę przez użycie konstruktoora
+
 
 private:
 	const char *TAG = "Menu log: ";
-	menuState audioDevices;
+	//menuState audioDevices;
 
 	//void
 

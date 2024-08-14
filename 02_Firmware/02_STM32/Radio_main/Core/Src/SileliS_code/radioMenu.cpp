@@ -12,23 +12,11 @@
 radioMenus::radioMenus() {
 
 	printf("%sMain menu object had been created.\r\n", this->TAG);
-	this->audioDevices.menuTAG = "Menu \'AUDIO\': ";
-	//audioDevices.menuTAG = "Menu \'AUDIO\' log: ";
-	this->audioDevices.currentDevice	= this->audioDevices.deviceList.begin();
-	this->audioDevices.maxDevices		= this->audioDevices.deviceList.end();
 
-}
-
-void radioMenus::appendAudioDevices(const char* deviceName){
-	this->emplace_back(&audioDevices, deviceName);
-
-}
-
-void  radioMenus::emplace_back(menuState* whichMenu,const char* deviceName){
-
-	whichMenu->deviceList.emplace_back(deviceName);
-	printf(("%s%sDevice had been added. There is %d device(s).\r\n"),this->TAG, whichMenu->menuTAG, whichMenu->deviceList.size());
-
+	//listy wielowymiarowe dla urzadzęń audio i equalizera
+	this->pAudioDeviceList=nullptr;
+	this->pAudioDeviceList = new List();
+	assert(this->pAudioDeviceLis);
 }
 
 

@@ -18,7 +18,6 @@ public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
 	menuItem(const char* tag);
 	~menuItem();
-	void printMenuName(void);
 
 
 protected:

@@ -13,10 +13,8 @@ menuItem::menuItem(const char* tag) : TAG(tag) {
 	//printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
 };
 
-void menuItem::printMenuName(void){
-	printf("current menu is %s\r\n",this->TAG);
-}
 
 menuItem::~menuItem(){
+	#warnig zastanowić si ę nad destruktorem
 }
 

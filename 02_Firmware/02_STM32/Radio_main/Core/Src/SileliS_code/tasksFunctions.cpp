@@ -104,11 +104,21 @@ void initTaskFunctions(void){
 
 	pRadioMenu = new radioMenus();
 
-	//pRadioMenu->emplace_back(pRadioMenu->audioDevices);
-	pRadioMenu->appendAudioDevices("SI486X_DAB+");
+	assert(pRadioMenu);
+	//pRadioMenu->pDeviceList->addAtEnd();
+	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_DAB+");
+	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_FM");
+	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_AM");
+	pRadioMenu->pAudioDeviceList->addAtEnd("MP3_USB");
+	pRadioMenu->pAudioDeviceList->addAtEnd("MP3_SD");
+	pRadioMenu->pAudioDeviceList->addAtEnd("Bluetooth");
+	pRadioMenu->pAudioDeviceList->printList();
+	pRadioMenu->pAudioDeviceList->printCurrent();
 
-	pRadioMenu->appendAudioDevices("FM");
+
+
 	pRadioMenu;
+
 
 }
 
