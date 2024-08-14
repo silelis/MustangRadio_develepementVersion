@@ -16,9 +16,10 @@ List::~List() {
 }
 
 // Prywatna funkcja pomocnicza do tworzenia nowego węzła
-Node* List::createNode(void) {
-    Node* newNode = new Node;  // Alokacja pamięci dla nowego węzła
+Node* List::createNode(const char *nodeName) {
+    Node* newNode = new Node(nodeName);  // Alokacja pamięci dla nowego węzła
     if (newNode!=0){
+    	//strcpy((char *)newNode->nodeName, nodeName);
     	this->indexCounter++;
         newNode->nodeIndex = this->indexCounter;      // Ręczne przypisanie danych
         newNode->next = nullptr;   // Ręczne ustawienie wskaźnika na nullptr
@@ -38,20 +39,27 @@ bool List::canAddItem(void){
 }
 
 // Dodawanie elementu na początku listy
-void List::addAtBeginning(void) {
+void List::addAtBeginning(const char *nodeName) {
 	if (this->canAddItem()){
-	    Node* newNode = createNode();
+ 	    Node* newNode = createNode(nodeName);
+	    newNode->nodeIndex = 1;
 	    newNode->next = head;
 	    head = newNode;
+	    renumberNodes();
+	    if (this->indexCounter==1)
+	    	this->resetToFirst();
 	}
 }
 
 // Dodawanie elementu na końcu listy
-void List::addAtEnd() {
+void List::addAtEnd(const char *nodeName) {
 	if(this->canAddItem()){
-	    Node* newNode = createNode();
+	    Node* newNode = createNode(nodeName);
+	    newNode->nodeIndex=this->indexCounter;
 	    if (head == nullptr) {
 	        head = newNode;
+		    if (this->indexCounter==1)
+		    	this->resetToFirst();
 	    } else {
 	        Node* temp = head;
 	        while (temp->next != nullptr) {
@@ -84,9 +92,10 @@ void List::moveToNext() {
 // Zwrócenie aktualnego elementuisAtEnd
 uint8_t List::getCurrentElement() {
     if (current != nullptr) {
+    	printCurrent();
         return current->nodeIndex;
     } else {
-        printf("Nie ma bieżącego elementu.\n");
+        printf("Nie ma bieżącego elementu.\r\n");
         return 0;  // Można również użyć innego wskaźnika błędu
     }
 }
@@ -96,8 +105,17 @@ bool List::isAtEnd() {
     return current == nullptr;
 }
 
-// Usuwanie pierwszego wystąpienia elementu z listy
-void List::removeElement(uint8_t data) {
+// Funkcja pomocnicza do przeliczania indeksów węzłów
+void List::renumberNodes() {
+    Node* temp = head;
+    int currentIndex = 1;
+    while (temp != nullptr) {
+        temp->nodeIndex = currentIndex++;
+        temp = temp->next;
+    }
+}
+
+void List::removeElement(uint8_t indexToDelete) {
     if (head == nullptr) {
         printf("Lista jest pusta!\r\n");
         return;
@@ -106,43 +124,52 @@ void List::removeElement(uint8_t data) {
     Node* temp = head;
     Node* prev = nullptr;
 
-    if (temp != nullptr && temp->nodeIndex == data) {
-        head = temp->next;
-        if (current == temp) {
-            current = temp->next;
-        }
-        delete temp;
-        this->indexCounter--;
-        return;
-    }
-
-    while (temp != nullptr && temp->nodeIndex != data) {
+    // Przechodzimy przez listę w poszukiwaniu elementu do usunięcia
+    while (temp != nullptr && temp->nodeIndex != indexToDelete) {
         prev = temp;
         temp = temp->next;
     }
 
+    // Jeśli nie znaleziono elementu
     if (temp == nullptr) {
-        printf("Element %d nie został znaleziony na liście.\n", data);
+        printf("Element %d nie został znaleziony na liście.\r\n", indexToDelete);
         return;
     }
 
-    prev->next = temp->next;
+    // Jeśli usuwany element jest głową listy
+    if (temp == head) {
+        head = temp->next;
+    } else {
+        // Jeśli usuwany element nie jest głową listy
+        prev->next = temp->next;
+    }
+
+    // Aktualizacja wskaźnika current, jeśli wskazywał na usuwany element
     if (current == temp) {
         current = temp->next;
     }
+
+    // Usunięcie elementu
     delete temp;
     this->indexCounter--;
-#error tą funkcję bym poprawił o renumerację i tylko w jednym miejscu delete
+    // Przenumerowanie elementów w liście
+    renumberNodes();
 }
+
+
 
 // Wydrukowanie elementów listy
 void List::printList() {
     Node* temp = head;
     while (temp != nullptr) {
-        printf("%d -> ", temp->nodeIndex);
+        printf("%d -> %s \r\n", temp->nodeIndex, temp->nodeName);
         temp = temp->next;
     }
-    printf("NULL\n");
+    printf("NULL\r\n");
+}
+
+void  List::printCurrent(){
+	printf("Current node:%d -> %s \r\n", current->nodeIndex, current->nodeName);
 }
 
 // Prywatna funkcja do zwalniania pamięci zajmowanej przez listę
@@ -151,6 +178,10 @@ void List::freeList() {
     while (head != nullptr) {
         temp = head;
         head = head->next;
+
+        if (temp->pMenuOptions!=nullptr)
+        	delete temp->pMenuOptions;		//jeżeli do wskaźnika menu przypisano jakies menu to trzeba wywołać destruktor
+
         delete temp;
         this->indexCounter--;
     }

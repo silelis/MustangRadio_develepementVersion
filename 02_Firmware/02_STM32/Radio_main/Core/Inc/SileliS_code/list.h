@@ -12,21 +12,26 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-
+#include "SileliS_code/menuItem.h"
 
 // Struktura pojedynczego elementu listy
 struct Node {
-    uint8_t nodeIndex;
+	uint8_t nodeIndex;
+	const char *nodeName;
+	menuItem* pMenuOptions;
     Node* next;
+
+    Node(const char* name)
+        : nodeName(name), nodeIndex(0), next(nullptr), pMenuOptions(nullptr) {}
+
+    // Destruktor
+    ~Node() {}
+        // Brak potrzeby zwalniania pamięci dla nodeName
 };
 
 // Klasa List
 class List {
 private:
-    Node* head;
-    Node* current;
-    uint8_t indexCounter;
-
 public:
     // Konstruktor
     List();
@@ -35,8 +40,8 @@ public:
     ~List();
 
     // Dodawanie elementów do listy
-    void addAtBeginning(void);
-    void addAtEnd(void);
+    void addAtBeginning(const char *nodeName);
+    void addAtEnd(const char *nodeName);
 
     // Poruszanie się po liście
     void resetToFirst();
@@ -45,18 +50,25 @@ public:
     bool isAtEnd();
 
     // Usuwanie elementu z listy
-    void removeElement(uint8_t data);
+    void removeElement(uint8_t indexToDelete);
 
     // Wydrukowanie elementów listy
     void printList();
+    void printCurrent();
 
 private:
+    Node* head;
+    Node* current;
+    uint8_t indexCounter;
     // Prywatna funkcja pomocnicza do tworzenia nowego węzła
-    Node* createNode(void);
-
+    Node* createNode(const char *nodeName);
     // Prywatna funkcja do zwalniania pamięci
     void freeList();
+    //prywatna funkcja do sprawdzania czy można jeszcze dodać element do listy
     bool canAddItem(void);
+    //prywatna funkcja do renumeracji listy po usunięciu elementu
+    void renumberNodes(void);
+
 };
 
 #endif /* INC_SILELIS_CODE_LIST_H_ */
