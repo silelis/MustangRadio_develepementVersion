@@ -12,19 +12,31 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "comunicationStructures.h"
+#include <string.h>
+
+struct execute_t{
+	union keyboardUnion;
+	void (*funcPtr)();
+};
+
 
 class menuItem{
 public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
-	menuItem(const char* tag);
+	menuItem(const char* tag, uint8_t execFunctionArraySize);
 	~menuItem();
+	execute_t* pExecute;
+	bool createExecuteTable(void);
+	void deleteExecuteTable();
+
 
 
 protected:
 
 private:
 	const char* TAG;
-	//uint8_t menuNumber;
+	uint8_t executeTableSize;
 };
 
 

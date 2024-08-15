@@ -1,0 +1,35 @@
+/*
+ * menuItem.cpp
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#include "SileliS_code/menuItem.h"
+
+
+
+menuItem::menuItem(const char* tag) : TAG(tag) {
+	//printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
+	this->pExecute = NULL;
+
+};
+
+bool menuItem::createExecuteTable(uint8_t size){
+	if (this->pExecute==nullptr){
+		this->pExecute = new execute_t[size];
+		if (this->pExecute!=nullptr)
+			return true;
+	}
+	return false;
+}
+
+void menuItem::deleteExecuteTable(){
+	delete [] this->pExecute;
+}
+
+menuItem::~menuItem(){
+	#warning zastanowić si ę nad destruktorem
+	this->deleteExecuteTable();
+}
+
