@@ -9,12 +9,39 @@
 
 
 
-menuItem::menuItem(const char* tag) : TAG(tag) {
+menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) : TAG(tag) {
 	//printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
+	this->executeTableSize = execFunctionArraySize;
+	this->pExecute = NULL;
+	assert(this->createExecuteTable());
+
 };
 
+bool menuItem::createExecuteTable(){
+	if (this->pExecute==nullptr)
+	{
+		this->pExecute = new execute_t[this->executeTableSize];
+		if (this->pExecute!=nullptr){
+			memset(this->pExecute, 0, sizeof(execute_t)*this->executeTableSize);		//zerowanie tabeli pExecute
+			printf("%s:pExecute table had been created. Please append its functions\r\n", this->TAG);
+			return true;
+		}
+		else{
+			printf("%s:pExecute table have not been created. Dynamic allocation error had appeared\r\n", this->TAG);
+			assert(0);
+			return false;
+		}
+	}
+	printf("%s:pExecute table have not been created. pExecute pointer is not NULL.\r\n", this->TAG);
+	assert(0);
+	return false;
+}
+
+void menuItem::deleteExecuteTable(){
+	delete [] this->pExecute;
+}
 
 menuItem::~menuItem(){
-	#warning zastanowić si ę nad destruktorem
+	this->deleteExecuteTable();
 }
 
