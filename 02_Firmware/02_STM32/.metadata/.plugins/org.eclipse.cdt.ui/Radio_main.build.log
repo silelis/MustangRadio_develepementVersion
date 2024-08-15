@@ -1,17 +1,57 @@
-11:51:44 **** Incremental Build of configuration Debug for project Radio_main ****
+12:17:18 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
-arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
-   text	   data	    bss	    dec	    hex	filename
-  85740	    476	  21412	 107628	  1a46c	Radio_main.elf
-Finished building: default.size.stdout
- 
-Finished building: Radio_main.list
- 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/list.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/list.d" -MT"Core/Src/SileliS_code/list.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/list.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+In file included from ../Core/Src/SileliS_code/list.cpp:8:
+../Core/Inc/SileliS_code/list.h: In constructor 'Node::Node(const char*)':
+../Core/Inc/SileliS_code/list.h:20:21: warning: 'Node::nodeName' will be initialized after [-Wreorder]
+   20 |         const char *nodeName;
+      |                     ^~~~~~~~
+../Core/Inc/SileliS_code/list.h:19:17: warning:   'uint8_t Node::nodeIndex' [-Wreorder]
+   19 |         uint8_t nodeIndex;
+      |                 ^~~~~~~~~
+../Core/Inc/SileliS_code/list.h:24:5: warning:   when initialized here [-Wreorder]
+   24 |     Node(const char* name)
+      |     ^~~~
+../Core/Inc/SileliS_code/list.h:22:11: warning: 'Node::next' will be initialized after [-Wreorder]
+   22 |     Node* next;
+      |           ^~~~
+../Core/Inc/SileliS_code/list.h:21:19: warning:   'menuItem* Node::pMenuOptions' [-Wreorder]
+   21 |         menuItem* pMenuOptions;
+      |                   ^~~~~~~~~~~~
+../Core/Inc/SileliS_code/list.h:24:5: warning:   when initialized here [-Wreorder]
+   24 |     Node(const char* name)
+      |     ^~~~
+../Core/Src/SileliS_code/list.cpp: In member function 'Node* List::createNode(const char*)':
+../Core/Src/SileliS_code/list.cpp:29:1: warning: control reaches end of non-void function [-Wreturn-type]
+   29 | }
+      | ^
+../Core/Src/SileliS_code/radioMenu.cpp:25:10: error: #error sprawdzi\U00000107 czy przez komend\U00000119 poni\U0000017cej wykonywane jest usuni\U00000119cie execute_t* pExecute z menuItem
+   25 |         #error sprawdzić czy przez komendę poniżej wykonywane jest usunięcie execute_t* pExecute z menuItem
+      |          ^~~~~
+In file included from ../Core/Inc/SileliS_code/radioMenu.h:16,
+                 from ../Core/Src/SileliS_code/radioMenu.cpp:8:
+../Core/Inc/SileliS_code/list.h: In constructor 'Node::Node(const char*)':
+../Core/Inc/SileliS_code/list.h:20:21: warning: 'Node::nodeName' will be initialized after [-Wreorder]
+   20 |         const char *nodeName;
+      |                     ^~~~~~~~
+../Core/Inc/SileliS_code/list.h:19:17: warning:   'uint8_t Node::nodeIndex' [-Wreorder]
+   19 |         uint8_t nodeIndex;
+      |                 ^~~~~~~~~
+../Core/Inc/SileliS_code/list.h:24:5: warning:   when initialized here [-Wreorder]
+   24 |     Node(const char* name)
+      |     ^~~~
+../Core/Inc/SileliS_code/list.h:22:11: warning: 'Node::next' will be initialized after [-Wreorder]
+   22 |     Node* next;
+      |           ^~~~
+../Core/Inc/SileliS_code/list.h:21:19: warning:   'menuItem* Node::pMenuOptions' [-Wreorder]
+   21 |         menuItem* pMenuOptions;
+      |                   ^~~~~~~~~~~~
+../Core/Inc/SileliS_code/list.h:24:5: warning:   when initialized here [-Wreorder]
+   24 |     Node(const char* name)
+      |     ^~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:49: Core/Src/SileliS_code/radioMenu.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
 
-11:51:45 Build Finished. 0 errors, 0 warnings. (took 1s.164ms)
+12:17:19 Build Failed. 2 errors, 13 warnings. (took 710ms)
 

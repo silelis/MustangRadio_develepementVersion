@@ -22,5 +22,7 @@ radioMenus::radioMenus() {
 
 radioMenus::~radioMenus() {
 	// TODO Auto-generated destructor stub
+	#error sprawdzić czy przez komendę poniżej wykonywane jest usunięcie execute_t* pExecute z menuItem
+	delete this->pAudioDeviceList;
 }
 

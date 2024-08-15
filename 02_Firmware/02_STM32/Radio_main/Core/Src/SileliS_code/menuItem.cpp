@@ -14,6 +14,7 @@ menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) : TAG(tag) {
 	this->executeTableSize = execFunctionArraySize;
 	this->pExecute = NULL;
 	assert(this->createExecuteTable());
+	this->executeTableAppended=0;
 
 };
 
