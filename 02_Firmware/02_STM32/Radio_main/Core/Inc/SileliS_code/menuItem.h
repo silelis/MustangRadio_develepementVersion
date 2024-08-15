@@ -26,7 +26,7 @@ public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
 	menuItem(const char* tag, uint8_t execFunctionArraySize);
 	~menuItem();
-	execute_t* pExecute;
+
 	bool createExecuteTable(void);
 	void deleteExecuteTable();
 
@@ -36,7 +36,9 @@ protected:
 
 private:
 	const char* TAG;
+	execute_t* pExecute;
 	uint8_t executeTableSize;
+	uint8_t executeTableAppended;
 };
 
 

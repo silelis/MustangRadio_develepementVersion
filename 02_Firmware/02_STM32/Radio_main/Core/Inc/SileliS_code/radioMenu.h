@@ -30,18 +30,19 @@ public:
 	virtual ~radioMenus();
 	List* pAudioDeviceList;
 	List* pPeripheryDeviceList;
+	List* pMainMenu;		//
+
 
 	//listy specjalne jednowymiarowe dla rotora volume
-	List* pVolLongList;		//długie przyciśniecie przycisku Vol
-	List* pVolShortList;		//długie przyciśniecie przycisku Vol
-	List* pVolCWList;		//długie przyciśniecie przycisku Vol
-	List* pVolCCWList;		//długie przyciśniecie przycisku Vol
+//	List* pVolLongList;		//długie przyciśniecie przycisku Vol
+//	List* pVolShortList;		//długie przyciśniecie przycisku Vol
+//	List* pVolCWList;		//długie przyciśniecie przycisku Vol
+//	List* pVolCCWList;		//długie przyciśniecie przycisku Vol
 
 	//listy specjalne jednowymiarowe dla rotora equalisera
-	//List* pEquLongList;		//długie przyciśniecie przycisku Vol
-	List* pEquShortList;		//długie przyciśniecie przycisku Vol
-	List* pEquCWList;		//długie przyciśniecie przycisku Vol
-	List* pEquCCWList;		//długie przyciśniecie przycisku Vol
+//	List* pEquShortList;		//długie przyciśniecie przycisku Vol
+//	List* pEquCWList;		//długie przyciśniecie przycisku Vol
+//	List* pEquCCWList;		//długie przyciśniecie przycisku Vol
 
 
 protected:
