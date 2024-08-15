@@ -114,6 +114,7 @@ void initTaskFunctions(void){
 	pRadioMenu->pAudioDeviceList->addAtEnd("Bluetooth");
 	pRadioMenu->pAudioDeviceList->printList();
 	pRadioMenu->pAudioDeviceList->printCurrent();
+	delete pRadioMenu;
 
 
 
