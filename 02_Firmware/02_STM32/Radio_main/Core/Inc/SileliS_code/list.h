@@ -22,7 +22,7 @@ struct Node {
     Node* next;
 
     Node(const char* name)
-        : nodeName(name), nodeIndex(0), next(nullptr), pMenuOptions(nullptr) {}
+        :  nodeIndex(0),nodeName(name), pMenuOptions(nullptr), next(nullptr) {}
 
     // Destruktor
     ~Node() {}
@@ -46,7 +46,7 @@ public:
     // Poruszanie się po liście
     void resetToFirst();
     void moveToNext();
-    uint8_t getCurrentElement();
+    uint8_t getCurrentNodeIndex();
     bool isAtEnd();
 
     // Usuwanie elementu z listy
