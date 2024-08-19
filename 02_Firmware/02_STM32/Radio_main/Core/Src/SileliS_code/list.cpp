@@ -18,6 +18,7 @@ List::~List() {
 // Prywatna funkcja pomocnicza do tworzenia nowego węzła
 Node* List::createNode(const char *nodeName) {
     Node* newNode = new Node(nodeName);  // Alokacja pamięci dla nowego węzła
+    assert(newNode);
     if (newNode!=0){
     	//strcpy((char *)newNode->nodeName, nodeName);
     	this->indexCounter++;
@@ -25,7 +26,6 @@ Node* List::createNode(const char *nodeName) {
         newNode->next = nullptr;   // Ręczne ustawienie wskaźnika na nullptr
         return newNode;
     }
-
 }
 
 bool List::canAddItem(void){
@@ -90,7 +90,7 @@ void List::moveToNext() {
 }
 
 // Zwrócenie aktualnego elementuisAtEnd
-uint8_t List::getCurrentElement() {
+uint8_t List::getCurrentNodeIndex() {
     if (current != nullptr) {
     	printCurrent();
         return current->nodeIndex;
