@@ -16,8 +16,8 @@
 #include <string.h>
 
 struct execute_t{
-	union keyboardUnion;
-	void (*funcPtr)();
+	union keyboardUnion button;		//kod klawisza wywołujący funkcję
+	void (*functionPointer)();		//wskaźnik do funkcji jaka ma być wywołana
 };
 
 
@@ -27,22 +27,29 @@ public:
 	menuItem(const char* tag, uint8_t execFunctionArraySize);
 	~menuItem();
 
-	bool createExecuteTable(void);
-	void deleteExecuteTable();
-
-
+	void appendInit(void (*newFunc)());
+	void executeInit(void);
+	void appendDeInit(void (*newFunc)());
+	void executeDeInit(void);
 
 protected:
 
 private:
 	const char* TAG;
-	execute_t* pExecute;
-	uint8_t executeTableSize;
-	uint8_t executeTableAppended;
+	execute_t* pExecutableButtons;
+	uint8_t execFunctionArrySize;			//rozmiar tablicy execute_t
+	uint8_t execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
+	void delete_pExecutableButtonsArray(void);
+	bool create_pExecutableButtonsArray(uint8_t arraySize);
+
+
+
+	void (*Init)();
+	void (*deInit)();
+	void appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
+	void executeFunctionPointer(void (*functionPointer)());
+
 };
-
-
-
 
 
 #endif /* SRC_SILELIS_CODE_MENUITEM_H_ */
