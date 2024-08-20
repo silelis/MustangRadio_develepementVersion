@@ -15,7 +15,18 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include "radioMenu.h"
+#include "comunicationProtocol.h"
+#include "comunicationStructures.h"
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "i2c.h"
+//#include <cstring>
+#include "semphr.h"
+#include "SileliS_code/i2cEngine.h"
+#include "SileliS_code/esp32i2cComunicationDriver.h"
+#include "SileliS_code/menuItem.h"
+
 
 void initTaskFunctions(void);
 

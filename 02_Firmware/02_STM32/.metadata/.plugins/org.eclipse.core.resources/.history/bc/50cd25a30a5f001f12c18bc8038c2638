@@ -1,0 +1,76 @@
+/*
+ * list.h
+ *
+ *  Created on: Aug 12, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_LIST_H_
+#define INC_SILELIS_CODE_LIST_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include "SileliS_code/menuItem.h"
+
+// Struktura pojedynczego elementu listy
+struct Node {
+	uint8_t nodeIndex;
+	const char *nodeName;
+	menuItem* pMenuOptions;
+    Node* next;
+
+    Node(const char* name)
+        :  nodeIndex(0),nodeName(name), pMenuOptions(nullptr), next(nullptr) {}
+
+    // Destruktor
+    ~Node() {}
+        // Brak potrzeby zwalniania pamięci dla nodeName
+};
+
+// Klasa List
+class List {
+private:
+public:
+    // Konstruktor
+    List();
+
+    // Destruktor
+    ~List();
+
+    // Dodawanie elementów do listy
+    bool addAtBeginning(const char *nodeName);
+    bool addAtEnd(const char *nodeName);
+    const char* getCurrentNodeTag(void);
+    uint8_t getCurrentNodeIndex();
+
+    // Poruszanie się po liście
+    void resetToFirst();
+    void moveToNext();
+    bool isAtEnd();
+
+    // Usuwanie elementu z listy
+    void removeElement(uint8_t indexToDelete);
+
+    // Wydrukowanie elementów listy
+    void printList();
+    void printCurrent();
+
+
+private:
+    Node* head;
+    Node* current;
+    uint8_t indexCounter;
+    // Prywatna funkcja pomocnicza do tworzenia nowego węzła
+    Node* createNode(const char *nodeName);
+    // Prywatna funkcja do zwalniania pamięci
+    void freeList();
+    //prywatna funkcja do sprawdzania czy można jeszcze dodać element do listy
+    bool canAddItem(void);
+    //prywatna funkcja do renumeracji listy po usunięciu elementu
+    void renumberNodes(void);
+
+};
+
+#endif /* INC_SILELIS_CODE_LIST_H_ */

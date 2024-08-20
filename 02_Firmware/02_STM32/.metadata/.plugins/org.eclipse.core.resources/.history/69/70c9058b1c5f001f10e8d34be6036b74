@@ -1,0 +1,42 @@
+/*
+ * menuItem.cpp
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#include "SileliS_code/menuItem.h"
+
+
+
+menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
+	this->TAG = tag;
+
+	this->pExecutableButtons = nullptr;
+	this->createExecFunctions(execFunctionArraySize);
+
+
+	printf("$s: menuItem with %d executable buttons had been created. Please append functiond.\r\n", this->TAG, this->execFunctionArrySize);
+};
+
+void menuItem::deleteExecFunctions(void){
+	if (this->pExecutableButtons!=nullptr)
+		delete [] pExecutableButtons;
+}
+
+bool menuItem::createExecFunctions(uint8_t arraySize){
+	this->pExecFunction = new execute_t[arraySize];
+	assert(this->pExecFunction);
+	if (this->pExecFunction){
+		memset(this->pExecFunction, 0, sizeof(execute_t)*arraySize);
+		this->execFunctionArrySize=arraySize;
+	}
+
+
+
+}
+
+menuItem::~menuItem(){
+	this->deleteExecFunctions();
+}
+

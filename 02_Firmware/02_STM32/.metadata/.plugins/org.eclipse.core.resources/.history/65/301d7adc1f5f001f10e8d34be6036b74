@@ -1,0 +1,52 @@
+/*
+ * menuItem.h
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#ifndef SRC_SILELIS_CODE_MENUITEM_H_
+#define SRC_SILELIS_CODE_MENUITEM_H_
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "comunicationStructures.h"
+#include <string.h>
+
+struct execute_t{
+	union keyboardUnion;
+	void (*funcPtr)();
+};
+
+
+class menuItem{
+public:
+	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
+	menuItem(const char* tag, uint8_t execFunctionArraySize);
+	~menuItem();
+	//void (*funcPtr1)();
+	void appendInit(void (*newFunc)());
+	void executeInit(void);
+
+protected:
+
+private:
+	const char* TAG;
+	execute_t* pExecutableButtons;
+	void (*Init)();
+	void (*deInit)();
+	uint8_t execFunctionArrySize;			//rozmiar tablicy execute_t
+	uint8_t execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
+	void deleteExecFunctions(void);
+	bool createExecFunctions(uint8_t arraySize);
+	void appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
+	void executeFunctionPointer(void* fPointer);
+};
+
+
+
+
+
+#endif /* SRC_SILELIS_CODE_MENUITEM_H_ */

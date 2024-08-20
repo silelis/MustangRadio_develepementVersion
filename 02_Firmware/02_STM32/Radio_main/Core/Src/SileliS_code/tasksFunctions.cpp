@@ -8,29 +8,11 @@
 
 //#include "tasksFunctions.h"
 #include "SileliS_code/tasksFunctions.h"
-#include "comunicationProtocol.h"
-#include "comunicationStructures.h"
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "task.h"
-#include "i2c.h"
-#include <cstring>
-#include "semphr.h"
-//#include "i2cEngine.h"
-#include "SileliS_code/i2cEngine.h"
-
-//#include "esp32i2cComunicationDriver.h"
-#include "SileliS_code/esp32i2cComunicationDriver.h"
-#include "SileliS_code/radioMenu.h"
 
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static i2cMaster* pi2cMaster=NULL;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
-
-
-static radioMenus* pRadioMenu=NULL;
-
 
 
 
@@ -78,6 +60,16 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 }
 
 
+void testowyAppend(){
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("22222222\r\n");
+}
+
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
 	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
@@ -101,25 +93,11 @@ void initTaskFunctions(void){
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
 
+	menuItem* probne = new menuItem ("DAB+", 6);
+	probne->appendInit(testowyAppend);
+	probne->executeInit();
 
-	pRadioMenu = new radioMenus();
-
-	assert(pRadioMenu);
-	//pRadioMenu->pDeviceList->addAtEnd();
-	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_DAB+");
-	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_FM");
-	pRadioMenu->pAudioDeviceList->addAtEnd("Si468x_AM");
-	pRadioMenu->pAudioDeviceList->addAtEnd("MP3_USB");
-	pRadioMenu->pAudioDeviceList->addAtEnd("MP3_SD");
-	pRadioMenu->pAudioDeviceList->addAtEnd("Bluetooth");
-	pRadioMenu->pAudioDeviceList->printList();
-	pRadioMenu->pAudioDeviceList->printCurrent();
-	delete pRadioMenu;
-
-
-
-	pRadioMenu;
-
+	delete probne;
 
 }
 

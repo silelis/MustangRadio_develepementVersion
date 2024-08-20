@@ -1,4 +1,10 @@
 ../Core/Src/SileliS_code/menuItem.cpp:12:1:menuItem::menuItem(const char*, uint8_t)	24	static
-../Core/Src/SileliS_code/menuItem.cpp:21:6:bool menuItem::createExecuteTable()	16	static
-../Core/Src/SileliS_code/menuItem.cpp:41:6:void menuItem::deleteExecuteTable()	16	static
-../Core/Src/SileliS_code/menuItem.cpp:45:1:menuItem::~menuItem()	16	static
+../Core/Src/SileliS_code/menuItem.cpp:25:6:void menuItem::delete_pExecutableButtonsArray()	16	static
+../Core/Src/SileliS_code/menuItem.cpp:31:6:bool menuItem::create_pExecutableButtonsArray(uint8_t)	16	static
+../Core/Src/SileliS_code/menuItem.cpp:40:6:void menuItem::appendFunctionPointer(void (**)(), void (*)())	24	static
+../Core/Src/SileliS_code/menuItem.cpp:44:6:void menuItem::executeFunctionPointer(void (*)())	16	static
+../Core/Src/SileliS_code/menuItem.cpp:49:6:void menuItem::appendInit(void (*)())	16	static
+../Core/Src/SileliS_code/menuItem.cpp:53:6:void menuItem::executeInit()	16	static
+../Core/Src/SileliS_code/menuItem.cpp:57:6:void menuItem::appendDeInit(void (*)())	16	static
+../Core/Src/SileliS_code/menuItem.cpp:61:6:void menuItem::executeDeInit()	16	static
+../Core/Src/SileliS_code/menuItem.cpp:65:1:menuItem::~menuItem()	16	static

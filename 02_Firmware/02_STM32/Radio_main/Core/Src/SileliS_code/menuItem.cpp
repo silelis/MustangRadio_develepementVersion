@@ -9,40 +9,59 @@
 
 
 
-menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) : TAG(tag) {
-	//printf("%s: Empty menu had been created. Please set it up.\r\n", this->TAG);
-	this->executeTableSize = execFunctionArraySize;
-	this->pExecute = NULL;
-	assert(this->createExecuteTable());
-	this->executeTableAppended=0;
+menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
+	if (execFunctionArraySize<= UINT8_MAX){
+		this->TAG = tag;
 
+		this->Init=nullptr;
+		this->deInit = nullptr;
+
+		this->pExecutableButtons = nullptr;
+		this->create_pExecutableButtonsArray(execFunctionArraySize);
+		printf("%s: menuItem with %d executable buttons had been created. Please append functiond.\r\n", this->TAG, this->execFunctionArrySize);
+	}
 };
 
-bool menuItem::createExecuteTable(){
-	if (this->pExecute==nullptr)
-	{
-		this->pExecute = new execute_t[this->executeTableSize];
-		if (this->pExecute!=nullptr){
-			memset(this->pExecute, 0, sizeof(execute_t)*this->executeTableSize);		//zerowanie tabeli pExecute
-			printf("%s:pExecute table had been created. Please append its functions\r\n", this->TAG);
-			return true;
-		}
-		else{
-			printf("%s:pExecute table have not been created. Dynamic allocation error had appeared\r\n", this->TAG);
-			assert(0);
-			return false;
-		}
-	}
-	printf("%s:pExecute table have not been created. pExecute pointer is not NULL.\r\n", this->TAG);
-	assert(0);
-	return false;
+void menuItem::delete_pExecutableButtonsArray(void){
+	if (this->pExecutableButtons!=nullptr)
+		delete [] pExecutableButtons;
 }
 
-void menuItem::deleteExecuteTable(){
-	delete [] this->pExecute;
+
+bool menuItem::create_pExecutableButtonsArray(uint8_t arraySize){
+	this->pExecutableButtons = new execute_t[arraySize];
+	assert(this->pExecutableButtons);
+	if (this->pExecutableButtons){
+		memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+		this->execFunctionArrySize=arraySize;
+	}
+}
+
+void menuItem::appendFunctionPointer(void (**funcPtr)(), void (*newFunc)()){
+	*funcPtr = newFunc;
+}
+
+void menuItem::executeFunctionPointer(void (*functionPointer)()){
+	if (functionPointer)
+		functionPointer();
+}
+
+void menuItem::appendInit(void (*newFunc)()) {
+	appendFunctionPointer(&this->Init, newFunc);
+}
+
+void menuItem::executeInit(void){
+	this->executeFunctionPointer(this->Init);
+}
+
+void menuItem::appendDeInit(void (*newFunc)()){
+	appendFunctionPointer(&this->deInit, newFunc);
+}
+
+void menuItem::executeDeInit(void){
+	this->executeFunctionPointer(this->deInit);
 }
 
 menuItem::~menuItem(){
-	this->deleteExecuteTable();
+	this->delete_pExecutableButtonsArray();
 }
-
