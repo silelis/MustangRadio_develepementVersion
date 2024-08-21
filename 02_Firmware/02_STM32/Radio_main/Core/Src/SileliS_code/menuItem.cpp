@@ -34,7 +34,10 @@ bool menuItem::create_pExecutableButtonsArray(uint8_t arraySize){
 	if (this->pExecutableButtons){
 		memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
 		this->execFunctionArrySize=arraySize;
+		this->execFunctionArryAppended = 0;
+		return true;
 	}
+	return false;
 }
 
 void menuItem::appendFunctionPointer(void (**funcPtr)(), void (*newFunc)()){
@@ -44,6 +47,8 @@ void menuItem::appendFunctionPointer(void (**funcPtr)(), void (*newFunc)()){
 void menuItem::executeFunctionPointer(void (*functionPointer)()){
 	if (functionPointer)
 		functionPointer();
+	else
+		printf("%s: Pointer to function is empty.\r\n", this->TAG);
 }
 
 void menuItem::appendInit(void (*newFunc)()) {
@@ -64,4 +69,41 @@ void menuItem::executeDeInit(void){
 
 menuItem::~menuItem(){
 	this->delete_pExecutableButtonsArray();
+}
+
+uint8_t menuItem::searchExecFunctionForButtonSequence(keyboardUnion buttonSequence){
+	for(uint8_t i=0;i<this->execFunctionArryAppended;i++){
+		if ((this->pExecutableButtons[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
+			(this->pExecutableButtons[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
+			{
+			return i;
+			}
+	}
+	return this->execFunctionArrySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
+}
+
+bool menuItem::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
+	if (this->searchExecFunctionForButtonSequence(buttonSequence)==this->execFunctionArrySize)
+		return false;
+	return true;
+}
+
+bool menuItem::appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)()){
+	if (this->execFunctionArryAppended<this->execFunctionArrySize){
+		if(!this->isExecFunctionInButtonSequence(buttonSequence)){
+			this->pExecutableButtons[this->execFunctionArryAppended].buttonSequence=buttonSequence;
+			this->appendFunctionPointer(&this->pExecutableButtons[this->execFunctionArryAppended].functionPointer, newFunc);
+			this->execFunctionArryAppended++;
+			printf("%s: %d button(s) are appended.\r\n", this->TAG, this->execFunctionArryAppended);
+			return true;
+		}
+		else{
+			printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->TAG);
+		}
+
+	}
+	else{
+		printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->TAG);
+	}
+	return false;
 }

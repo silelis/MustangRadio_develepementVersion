@@ -16,7 +16,7 @@
 #include <string.h>
 
 struct execute_t{
-	union keyboardUnion button;		//kod klawisza wywołujący funkcję
+	keyboardUnion buttonSequence;		//kod klawisza wywołujący funkcję
 	void (*functionPointer)();		//wskaźnik do funkcji jaka ma być wywołana
 };
 
@@ -31,6 +31,9 @@ public:
 	void executeInit(void);
 	void appendDeInit(void (*newFunc)());
 	void executeDeInit(void);
+	bool appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
+
+
 
 protected:
 
@@ -49,6 +52,8 @@ private:
 	void appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
 	void executeFunctionPointer(void (*functionPointer)());
 
+	uint8_t searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
+	bool isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
 };
 
 
