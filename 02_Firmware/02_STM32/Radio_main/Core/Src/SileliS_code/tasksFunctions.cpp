@@ -70,6 +70,16 @@ void testowyAppend(){
 	printf("22222222\r\n");
 }
 
+void testowyAppend1(){
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("33333333\r\n");
+	printf("22222222\r\n");
+}
+
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
 	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
@@ -93,9 +103,28 @@ void initTaskFunctions(void){
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
 
-	menuItem* probne = new menuItem ("DAB+", 6);
-	probne->appendInit(testowyAppend);
-	probne->executeInit();
+	menuItem* probne = new menuItem ("DAB+", 3);
+	//probne->appendInit(testowyAppend);
+	//probne->executeInit();
+
+	keyboardUnion buttonSequence;
+	buttonSequence.encoderValue.input = 0x1;
+	buttonSequence.encoderValue.value = -4;
+	probne->appendExecFunctionArry(buttonSequence, testowyAppend1);
+
+	probne->pExecutableButtons[0].functionPointer();
+	buttonSequence.encoderValue.input = 0x2;
+	buttonSequence.encoderValue.value = -4;
+	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
+
+	buttonSequence.encoderValue.input = 0x2;
+	buttonSequence.encoderValue.value = -4;
+	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
+
+	buttonSequence.encoderValue.input = 0x3;
+	buttonSequence.encoderValue.value = 4;
+
+	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
 
 	delete probne;
 
