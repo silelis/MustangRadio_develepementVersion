@@ -112,10 +112,20 @@ void initTaskFunctions(void){
 	buttonSequence.encoderValue.value = -4;
 	probne->appendExecFunctionArry(buttonSequence, testowyAppend1);
 
-	probne->pExecutableButtons[0].functionPointer();
+
 	buttonSequence.encoderValue.input = 0x2;
 	buttonSequence.encoderValue.value = -4;
 	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
+	probne->executeExecutableButtons(buttonSequence);
+
+	buttonSequence.encoderValue.input = 0x1;
+	buttonSequence.encoderValue.value = -4;
+	probne->executeExecutableButtons(buttonSequence);
+
+
+	buttonSequence.encoderValue.input = 0x1;
+	buttonSequence.encoderValue.value = 4;
+	probne->executeExecutableButtons(buttonSequence);
 
 	buttonSequence.encoderValue.input = 0x2;
 	buttonSequence.encoderValue.value = -4;

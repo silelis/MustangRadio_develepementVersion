@@ -27,34 +27,30 @@ public:
 	menuItem(const char* tag, uint8_t execFunctionArraySize);
 	~menuItem();
 
-	void appendInit(void (*newFunc)());
-	void executeInit(void);
-	void appendDeInit(void (*newFunc)());
-	void executeDeInit(void);
-	bool appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
-
-
+	void	appendInit(void (*newFunc)());
+	void	executeInit(void);
+	void	appendDeInit(void (*newFunc)());
+	void	executeDeInit(void);
+	bool	executeExecutableButtons(keyboardUnion buttonSequence);
+	bool	appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
 
 protected:
+	const char*	TAG;
 
 private:
-	const char* TAG;
-	execute_t* pExecutableButtons;
-	uint8_t execFunctionArrySize;			//rozmiar tablicy execute_t
-	uint8_t execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
-	void delete_pExecutableButtonsArray(void);
-	bool create_pExecutableButtonsArray(uint8_t arraySize);
+	execute_t*	pExecutableButtons;
+	uint8_t	execFunctionArrySize;			//rozmiar tablicy execute_t
+	uint8_t	execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
+	void	delete_pExecutableButtonsArray(void);
+	bool	create_pExecutableButtonsArray(uint8_t arraySize);
 
+	void	(*Init)();
+	void	(*deInit)();
+	void	appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
+	void	executeFunctionPointer(void (*functionPointer)());
 
-
-	void (*Init)();
-	void (*deInit)();
-	void appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
-	void executeFunctionPointer(void (*functionPointer)());
-
-	uint8_t searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
-	bool isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
+	uint8_t	searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
+	bool	isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
 };
-
 
 #endif /* SRC_SILELIS_CODE_MENUITEM_H_ */

@@ -88,6 +88,18 @@ bool menuItem::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
 	return true;
 }
 
+bool menuItem::executeExecutableButtons(keyboardUnion buttonSequence){
+	uint8_t buttonSequenceArrayLocation = this->searchExecFunctionForButtonSequence(buttonSequence);
+	if(buttonSequenceArrayLocation==this->execFunctionArrySize){ //gdy zwracana wartość jest równa execFunctionArrySize to znaczy, że nie ma zapamiętanej sekwencji klawiszy
+		printf("%s: There is no buttonSequence with value of 0x%02x%02x in pExecutableButtonsaArry.\r\n", this->TAG, buttonSequence.array[0], buttonSequence.array[1]);
+		return false;
+	}
+	else{
+		this->executeFunctionPointer(this->pExecutableButtons[buttonSequenceArrayLocation].functionPointer);
+		return true;
+	}
+}
+
 bool menuItem::appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)()){
 	if (this->execFunctionArryAppended<this->execFunctionArrySize){
 		if(!this->isExecFunctionInButtonSequence(buttonSequence)){
@@ -100,7 +112,6 @@ bool menuItem::appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFun
 		else{
 			printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->TAG);
 		}
-
 	}
 	else{
 		printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->TAG);
