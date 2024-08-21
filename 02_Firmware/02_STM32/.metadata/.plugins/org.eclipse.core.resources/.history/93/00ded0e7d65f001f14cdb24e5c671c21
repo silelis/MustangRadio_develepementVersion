@@ -1,0 +1,56 @@
+/*
+ * menuItem.h
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#ifndef SRC_SILELIS_CODE_MENUITEM_H_
+#define SRC_SILELIS_CODE_MENUITEM_H_
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "comunicationStructures.h"
+#include <string.h>
+
+struct execute_t{
+	keyboardUnion buttonSequence;		//kod klawisza wywołujący funkcję
+	void (*functionPointer)();		//wskaźnik do funkcji jaka ma być wywołana
+};
+
+
+class menuItem{
+public:
+	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
+	menuItem(const char* tag, uint8_t execFunctionArraySize);
+	~menuItem();
+
+	void appendInit(void (*newFunc)());
+	void executeInit(void);
+	void appendDeInit(void (*newFunc)());
+	void executeDeInit(void);
+	bool executeExecutableButtons(keyboardUnion buttonSequence);
+	bool appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
+
+protected:
+	const char* TAG;
+
+private:
+	execute_t* pExecutableButtons;
+	uint8_t execFunctionArrySize;			//rozmiar tablicy execute_t
+	uint8_t execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
+	void delete_pExecutableButtonsArray(void);
+	bool create_pExecutableButtonsArray(uint8_t arraySize);
+
+	void (*Init)();
+	void (*deInit)();
+	void appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
+	void executeFunctionPointer(void (*functionPointer)());
+
+	uint8_t searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
+	bool isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
+};
+
+#endif /* SRC_SILELIS_CODE_MENUITEM_H_ */
