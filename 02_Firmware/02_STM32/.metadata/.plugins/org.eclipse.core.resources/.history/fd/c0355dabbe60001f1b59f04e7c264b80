@@ -1,0 +1,65 @@
+#include "SmartDevice.h"
+
+// Konstruktor domyślny
+template<typename T>
+SmartDevice<T>::SmartDevice() : ptr(nullptr) {}
+
+// Konstruktor z istniejącym wskaźnikiem
+template<typename T>
+SmartDevice<T>::SmartDevice(T* p) : ptr(p) {}
+
+// Konstruktor, który tworzy obiekt typu T przy użyciu new
+template<typename T>
+SmartDevice<T>::SmartDevice(const T& obj) : ptr(new T(obj)) {}
+
+// Destruktor
+template<typename T>
+SmartDevice<T>::~SmartDevice() {
+    delete ptr;
+}
+
+// Metoda do ustawiania wskaźnika na nowy obiekt
+template<typename T>
+void SmartDevice<T>::SetPointer(T* p) {
+    if (ptr != p) {
+        delete ptr;
+        ptr = p;
+    }
+}
+
+// Metoda do ustawiania wskaźnika na istniejący obiekt
+template<typename T>
+void SmartDevice<T>::SetPointer(T& obj) {
+    if (ptr != &obj) {
+        delete ptr; // Usuwamy obecny wskaźnik, jeśli istnieje
+        ptr = &obj; // Przypisujemy wskaźnik do istniejącego obiektu
+    }
+}
+
+// Operator dostępu do obiektu
+template<typename T>
+T& SmartDevice<T>::operator*() const {
+    return *ptr;
+}
+
+// Operator dostępu do wskaźnika
+template<typename T>
+T* SmartDevice<T>::operator->() const {
+    return ptr;
+}
+
+// Operator przenoszenia
+template<typename T>
+SmartDevice<T>::SmartDevice(SmartDevice&& other) noexcept : ptr(other.ptr) {
+    other.ptr = nullptr;
+}
+
+template<typename T>
+SmartDevice<T>& SmartDevice<T>::operator=(SmartDevice&& other) noexcept {
+    if (this != &other) {
+        delete ptr;
+        ptr = other.ptr;
+        other.ptr = nullptr;
+    }
+    return *this;
+}

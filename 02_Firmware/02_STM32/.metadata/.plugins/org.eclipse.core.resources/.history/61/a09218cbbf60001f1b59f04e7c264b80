@@ -1,0 +1,60 @@
+#include "SmartDevice.h"
+
+// Definicja domyślnego konstruktora
+template<typename T>
+SmartDevice<T>::SmartDevice() : ptr(nullptr) {}
+
+// Definicja konstruktora z wskaźnikiem
+template<typename T>
+SmartDevice<T>::SmartDevice(T* p) : ptr(p) {}
+
+// Definicja konstruktora kopiującego
+template<typename T>
+SmartDevice<T>::SmartDevice(const T& obj) : ptr(new T(obj)) {}
+
+// Definicja destruktora
+template<typename T>
+SmartDevice<T>::~SmartDevice() { delete ptr; }
+
+// Definicja metody SetPointer dla nowego obiektu
+template<typename T>
+void SmartDevice<T>::SetPointer(T* p) {
+    if (ptr != p) {
+        delete ptr;
+        ptr = p;
+    }
+}
+
+// Definicja metody SetPointer dla istniejącego obiektu
+template<typename T>
+void SmartDevice<T>::SetPointer(T& obj) {
+    if (ptr != &obj) {
+        delete ptr;
+        ptr = &obj;
+    }
+}
+
+// Definicja operatora dostępu do obiektu
+template<typename T>
+T& SmartDevice<T>::operator*() const { return *ptr; }
+
+// Definicja operatora dostępu do wskaźnika
+template<typename T>
+T* SmartDevice<T>::operator->() const { return ptr; }
+
+// Definicja operatora przenoszenia (konstruktor)
+template<typename T>
+SmartDevice<T>::SmartDevice(SmartDevice&& other) noexcept : ptr(other.ptr) {
+    other.ptr = nullptr;
+}
+
+// Definicja operatora przenoszenia (przypisanie)
+template<typename T>
+SmartDevice<T>& SmartDevice<T>::operator=(SmartDevice&& other) noexcept {
+    if (this != &other) {
+        delete ptr;
+        ptr = other.ptr;
+        other.ptr = nullptr;
+    }
+    return *this;
+}
