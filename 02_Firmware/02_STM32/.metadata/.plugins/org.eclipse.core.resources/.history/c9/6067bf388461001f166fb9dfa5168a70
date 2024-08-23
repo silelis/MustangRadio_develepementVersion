@@ -1,0 +1,148 @@
+#include "SileliS_code/List.h"
+
+// Inicjalizacja statycznych zmiennych
+List* List::head = nullptr;
+List* List::current = nullptr;
+uint8_t List::indexCounter = 0;
+
+// Konstruktor
+List::List(const char* nodeName, uint8_t execFunctionArraySize)
+    : menuItem(nodeName, execFunctionArraySize) {
+    if (nodeName) {
+        name = new char[strlen(nodeName) + 1];
+        strcpy(name, nodeName);
+    } else {
+        name = nullptr;
+    }
+}
+
+// Destruktor
+List::~List() {
+    delete[] name;
+}
+
+// Zwalnianie pamięci listy
+void List::freeList() {
+    List* temp = head;
+    while (temp) {
+        List* nextNode = temp->next;
+        delete temp;
+        temp = nextNode;
+    }
+    head = nullptr;
+    current = nullptr;
+    indexCounter = 0;
+}
+
+// Dodanie elementu na początku listy
+void List::addAtBeginning(const char* nodeName) {
+    if (!canAddItem()) return;
+
+    List* newNode = new List(nodeName, 0);
+    newNode->next = head;
+    head = newNode;
+    current = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Dodanie elementu na końcu listy
+void List::addAtEnd(const char* nodeName) {
+    if (!canAddItem()) return;
+
+    List* newNode = new List(nodeName, indexCounter++);
+    if (!head) {
+        head = newNode;
+    } else {
+        List* temp = head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+    current = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Resetowanie current do pierwszego elementu listy
+void List::resetToFirst() {
+    current = head;
+}
+
+// Przesunięcie current na następny element listy
+void List::moveToNext() {
+    if (current) {
+        current = current->next;
+    }
+}
+
+// Zwracanie indeksu aktualnego węzła
+uint8_t List::getCurrentNodeIndex() const {
+    return current ? current->index : UINT8_MAX;
+}
+
+// Sprawdzanie, czy current znajduje się na końcu listy
+bool List::isAtEnd() const {
+    return current == nullptr;
+}
+
+// Usuwanie elementu z listy
+void List::removeElement(uint8_t indexToDelete) {
+    if (!head) return;
+
+    List* temp = head;
+    List* prev = nullptr;
+
+    while (temp && temp->index != indexToDelete) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (!temp) return;
+
+    if (prev) {
+        prev->next = temp->next;
+    } else {
+        head = temp->next;
+    }
+
+    if (current == temp) {
+        current = temp->next ? temp->next : prev; // Ustaw current na następny lub poprzedni element
+    }
+
+    delete temp;
+    renumberNodes();
+}
+
+// Wydrukowanie wszystkich elementów listy
+void List::printList() const {
+    List* temp = head;
+    while (temp) {
+        std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
+        temp = temp->next;
+    }
+}
+
+// Wydrukowanie aktualnego elementu listy
+void List::printCurrent() const {
+    if (current) {
+        std::cout << "Current Node Index: " << (int)current->index << ", Name: " << (current->name ? current->name : "Unnamed") << std::endl;
+    } else {
+        std::cout << "No current node." << std::endl;
+    }
+}
+
+// Renumeracja węzłów listy
+void List::renumberNodes() {
+    List* temp = head;
+    uint8_t index = 0;
+    while (temp) {
+        temp->index = index++;
+        temp = temp->next;
+    }
+    indexCounter = index;
+}
+
+// Sprawdzanie, czy można dodać element do listy
+bool List::canAddItem() const {
+    return indexCounter < UINT8_MAX; // Maksymalna wartość uint8_t to 255, więc sprawdzamy, czy jest mniejsza niż 255
+}

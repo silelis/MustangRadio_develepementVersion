@@ -1,0 +1,20 @@
+/*
+ * List.h
+ *
+ *  Created on: Aug 23, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_LIST_H_
+#define INC_SILELIS_CODE_LIST_H_
+
+#include <SileliS_code/menuItem.h>
+
+
+class List:protected menuItem {
+public:
+	List(const char* tag, uint8_t execFunctionArraySize);
+	virtual ~List();
+};
+
+#endif /* INC_SILELIS_CODE_LIST_H_ */
