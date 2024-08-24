@@ -25,7 +25,8 @@
 #include "semphr.h"
 #include "SileliS_code/i2cEngine.h"
 #include "SileliS_code/esp32i2cComunicationDriver.h"
-#include "SileliS_code/menuItem.h"
+//#include "SileliS_code/menuItem.h"
+
 
 
 void initTaskFunctions(void);

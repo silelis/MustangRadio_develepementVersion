@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef myLIST_H
+#define myLIST_H
 
 //#include <cstdint>
 #include <stdint.h>
@@ -8,37 +8,40 @@
 #include <string.h>
 #include "SileliS_code/menuItem.h"
 
-class List:protected menuItem {
+class myList:protected menuItem {
 public:
     // Konstruktor
-    List(const char* nodeName, uint8_t execFunctionArraySize);
+    myList(const char* nodeName, uint8_t execFunctionArraySize);
 
     // Destruktor
-    ~List();
+    void deleteList();
+    ~myList();
 
     // Dodawanie elementów do listy
-    void addAtBeginning(const char* nodeName);
-    void addAtEnd(const char* nodeName);
+    void addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize);
+    void addAtEnd(const char* nodeName, uint8_t execFunctionArraySize);
 
     // Poruszanie się po liście
     void resetToFirst();
-    void moveToNext();
+    myList* moveToNext();
+    void 	moveToNextInLoop(void);
     uint8_t getCurrentNodeIndex() const;
     bool isAtEnd() const;
 
     // Usuwanie elementu z listy
-    void removeElement(uint8_t indexToDelete);
+    //void removeElement(uint8_t indexToDelete);
 
     // Wydrukowanie elementów listy
     void printList() const;
     void printCurrent() const;
 
 private:
-    char* name;      // Nazwa węzła
+    //char* name;      // Nazwa węzła
+
+    static myList* current; // Wskaźnik do aktualnego elementu listy
+    myList* next;      // Wskaźnik do następnego elementu w liście
+    static myList* head;   // Wskaźnik do pierwszego elementu listy
     uint8_t index;   // Indeks węzła
-    List* next;      // Wskaźnik do następnego elementu w liście
-    static List* head;   // Wskaźnik do pierwszego elementu listy
-    static List* current; // Wskaźnik do aktualnego elementu listy
     static uint8_t indexCounter; // Licznik indeksów
 
     // Prywatna funkcja do renumeracji węzłów
@@ -48,7 +51,8 @@ private:
     bool canAddItem() const;
 
     // Prywatna funkcja do zwalniania pamięci
-    void freeList();
+   // void freeList();
+    myList* createNode(const char *nodeName);
 };
 
 #endif // LIST_H

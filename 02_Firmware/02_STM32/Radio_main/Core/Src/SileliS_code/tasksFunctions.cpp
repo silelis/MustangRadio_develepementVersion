@@ -8,6 +8,9 @@
 
 //#include "tasksFunctions.h"
 #include "SileliS_code/tasksFunctions.h"
+#include <SileliS_code/myList.h>
+
+
 
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
@@ -60,6 +63,7 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 }
 
 
+/*
 void testowyAppend(){
 	printf("11111111\r\n");
 	printf("11111111\r\n");
@@ -78,7 +82,7 @@ void testowyAppend1(){
 	printf("11111111\r\n");
 	printf("33333333\r\n");
 	printf("22222222\r\n");
-}
+}*/
 
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
@@ -103,6 +107,37 @@ void initTaskFunctions(void){
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
 
+
+
+	myList* pList;
+	pList= new myList("Test6",6);
+
+	//pList->addAtEnd("Test2", 5);
+	pList->addAtBeginning("Test5", 5);
+	pList->addAtBeginning("Test4", 5);
+	pList->addAtBeginning("Test3", 5);
+	pList->addAtBeginning("Test2", 5);
+//	pList->addAtBeginning("Test1", 5);
+//	pList->printList();
+//	pList->addAtEnd("TestA", 5);
+//	pList->addAtBeginning("TestB", 5);
+//	pList->addAtEnd("TestC", 5);
+//	pList->addAtEnd("TestD", 5);
+//	pList->addAtEnd("TestF", 5);
+
+	printf("\r\n\r\n");
+	//pList->removeElement(3);
+	pList->printList();
+
+	pList->resetToFirst();
+	//while(1){
+	//	pList->moveToNextInLoop();
+	//}
+	pList->deleteList();
+	//delete [] pList;
+
+	myList* pList1111;
+/*
 	menuItem* probne = new menuItem ("DAB+", 3);
 	//probne->appendInit(testowyAppend);
 	//probne->executeInit();
@@ -136,7 +171,7 @@ void initTaskFunctions(void){
 
 	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
 
-	delete probne;
+	delete probne;*/
 
 }
 
