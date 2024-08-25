@@ -38,8 +38,8 @@ public:
 private:
     //char* name;      // Nazwa węzła
 
-    static myList* current; // Wskaźnik do aktualnego elementu listy
-    myList* next;      // Wskaźnik do następnego elementu w liście
+    static myList* currentListNode; // Wskaźnik do aktualnego elementu listy
+    myList* nextListNode;      // Wskaźnik do następnego elementu w liście
     static myList* head;   // Wskaźnik do pierwszego elementu listy
     uint8_t index;   // Indeks węzła
     static uint8_t indexCounter; // Licznik indeksów
