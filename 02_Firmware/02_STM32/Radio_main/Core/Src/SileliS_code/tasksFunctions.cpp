@@ -117,9 +117,12 @@ void initTaskFunctions(void){
 	pList->addAtBeginning("Test4", 5);
 	pList->addAtBeginning("Test3", 5);
 	pList->addAtBeginning("Test2", 5);
-//	pList->addAtBeginning("Test1", 5);
+	pList->addAtBeginning("Test1", 5);
 //	pList->printList();
-//	pList->addAtEnd("TestA", 5);
+	pList->addAtEnd("Test7", 5);
+	pList->addAtEnd("Test8", 5);
+	pList->addAtBeginning("Test0", 5);
+	pList->addAtBeginning("Test-1", 5);
 //	pList->addAtBeginning("TestB", 5);
 //	pList->addAtEnd("TestC", 5);
 //	pList->addAtEnd("TestD", 5);
@@ -133,7 +136,7 @@ void initTaskFunctions(void){
 	//while(1){
 	//	pList->moveToNextInLoop();
 	//}
-	pList->deleteList();
+	//pList->deleteList();
 	//delete [] pList;
 
 	myList* pList1111;
