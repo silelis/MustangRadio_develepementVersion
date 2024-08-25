@@ -27,15 +27,15 @@ public:
 	menuItem(const char* tag, uint8_t execFunctionArraySize);
 	~menuItem();
 
-	void	appendInit(void (*newFunc)());
-	void	executeInit(void);
-	void	appendDeInit(void (*newFunc)());
-	void	executeDeInit(void);
-	bool	executeExecutableButtons(keyboardUnion buttonSequence);
-	bool	appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
+	void	mI_appendInit(void (*newFunc)());
+	void	mI_executeInit(void);
+	void	mI_appendDeInit(void (*newFunc)());
+	void	mI_executeDeInit(void);
+	bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
+	bool	mI_appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)());
 
 protected:
-	const char*	TAG;
+	const char*	mI_TAG;
 
 private:
 	execute_t*	pExecutableButtons;

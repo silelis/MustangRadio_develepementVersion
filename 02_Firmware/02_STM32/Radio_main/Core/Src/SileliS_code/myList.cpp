@@ -104,8 +104,9 @@ void myList::removeElement(uint8_t indexToDelete) {
     if (!head) return;
 
     resetToFirst();
-    myList* previous = head;
+    myList* previous;// = head;
     while(current!=nullptr){
+    	previous = current;
     	printCurrent();
     	if (current->index== indexToDelete){
     		previous->next=current->next;
@@ -127,7 +128,7 @@ void myList::removeElement(uint8_t indexToDelete) {
 void myList::printList() const {
     myList* temp = head;
     while (temp){
-    	printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->TAG);
+    	printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
         //std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
         temp = temp->next;
     }
@@ -136,7 +137,7 @@ void myList::printList() const {
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
     if (current) {
-    	printf("Current Node Index: %d, Name: %s.\r\n", current->index, current->TAG);
+    	printf("Current Node Index: %d, Name: %s.\r\n", current->index, current->mI_TAG);
         //std::cout << "Current Node Index: " << (int)current->index << ", Name: " << (current->name ? current->name : "Unnamed") << std::endl;
     } else {
     	printf("No current node.\r\n");
