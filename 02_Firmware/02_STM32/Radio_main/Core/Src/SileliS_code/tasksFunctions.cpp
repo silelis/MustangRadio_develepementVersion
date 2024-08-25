@@ -8,15 +8,16 @@
 
 //#include "tasksFunctions.h"
 #include "SileliS_code/tasksFunctions.h"
-#include <SileliS_code/myList.h>
+//#include <SileliS_code/myList.h>
+#include <SileliS_code/radioMenu.h>
 
 
 
-static TaskHandle_t taskHandle_esp32IntrrruptRequest = NULL;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
-static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = NULL;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
-static i2cMaster* pi2cMaster=NULL;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
-static esp32_i2cComunicationDriver* pESP32=NULL; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
-
+static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
+static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
+static i2cMaster* pi2cMaster=nullptr;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
+static radioMenu* pRadioMenu=nullptr;
 
 
 
@@ -109,6 +110,7 @@ void initTaskFunctions(void){
 
 
 
+/*
 	myList* pList;
 	pList= new myList("Test6",6);
 
@@ -133,9 +135,11 @@ void initTaskFunctions(void){
 	pList->printList();
 
 	pList->resetToFirst();
-	//while(1){
-	//	pList->moveToNextInLoop();
-	//}
+	while(1){
+		pList->moveToNextInLoop();
+	}*/
+
+
 	//pList->deleteList();
 	//delete [] pList;
 

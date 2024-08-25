@@ -2,7 +2,7 @@
 
 // Inicjalizacja statycznych zmiennych
 myList* myList::head = nullptr;
-myList* myList::current = nullptr;
+myList* myList::currentListNode = nullptr;
 uint8_t myList::indexCounter = 0;
 
 // Konstruktor
@@ -11,8 +11,8 @@ myList::myList(const char* nodeName, uint8_t execFunctionArraySize)
 	if (head==nullptr){
 		head=this;
 	}
-	next=nullptr;
-	current=this;
+	nextListNode=nullptr;
+	currentListNode=this;
 	indexCounter++;
 	this->index = indexCounter;
 }
@@ -44,9 +44,9 @@ void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize)
     if (!canAddItem()) return;
 
     myList* newNode = new myList(nodeName, execFunctionArraySize);
-    newNode->next = head;
+    newNode->nextListNode = head;
     head = newNode;
-    current = newNode; // Ustawienie current na nowo dodany element
+    currentListNode = newNode; // Ustawienie current na nowo dodany element
     renumberNodes();
 }
 
@@ -59,43 +59,47 @@ void myList::addAtEnd(const char* nodeName, uint8_t execFunctionArraySize) {
         head = newNode;
     } else {
         myList* temp = head;
-        while (temp->next) {
-            temp = temp->next;
+        while (temp->nextListNode) {
+            temp = temp->nextListNode;
         }
-        temp->next = newNode;
+        temp->nextListNode = newNode;
     }
-    current = newNode; // Ustawienie current na nowo dodany element
+    currentListNode = newNode; // Ustawienie current na nowo dodany element
     renumberNodes();
 }
 
 // Resetowanie current do pierwszego elementu listy
 void myList::resetToFirst() {
-    current = head;
+	currentListNode = head;
 }
 
 // Przesunięcie current na następny element listy
 myList* myList::moveToNext() {
-    if (current) {
-        current = current->next;
+    if (currentListNode) {
+    	currentListNode = currentListNode->nextListNode;
     }
-    return current;
+    return currentListNode;
 }
 
 void 	myList::moveToNextInLoop(void){
+	printf("Exit from: %s\r\n",currentListNode->mI_TAG);
+	currentListNode->mI_executeDeInit();
 	if(!moveToNext())
 		resetToFirst();
-	printCurrent();
+	printf("Enter to:%s\r\n",currentListNode->mI_TAG);
+	//printCurrent();
+	currentListNode->mI_executeInit();
 }
 
 
 // Zwracanie indeksu aktualnego węzła
 uint8_t myList::getCurrentNodeIndex() const {
-    return /*current ?*/ current->index /*: UINT8_MAX*/;
+    return /*current ?*/ currentListNode->index /*: UINT8_MAX*/;
 }
 
 // Sprawdzanie, czy current znajduje się na końcu listy
 bool myList::isAtEnd() const {
-    return current == nullptr;
+    return currentListNode == nullptr;
 }
 
 /*
@@ -130,14 +134,14 @@ void myList::printList() const {
     while (temp){
     	printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
         //std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
-        temp = temp->next;
+        temp = temp->nextListNode;
     }
 }
 
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
-    if (current) {
-    	printf("Current Node Index: %d, Name: %s.\r\n", current->index, current->mI_TAG);
+    if (currentListNode) {
+    	printf("Current Node Index: %d, Name: %s.\r\n", currentListNode->index, currentListNode->mI_TAG);
         //std::cout << "Current Node Index: " << (int)current->index << ", Name: " << (current->name ? current->name : "Unnamed") << std::endl;
     } else {
     	printf("No current node.\r\n");
@@ -151,7 +155,7 @@ void myList::renumberNodes() {
     uint8_t tempIndex = 0;
     while (temp) {
         temp->index = ++tempIndex;
-        temp = temp->next;
+        temp = temp->nextListNode;
     }
     //indexCounter = index;
 }
@@ -165,13 +169,13 @@ bool myList::canAddItem() const {
 void myList::deleteList() {
     while (head != nullptr) {
         myList* temp = head;   // Zapamiętaj aktualny head
-        head = head->next;     // Przejdź do następnego elementu
+        head = head->nextListNode;     // Przejdź do następnego elementu
         delete temp;           // Usuń aktualny element	aka ~myList()
         indexCounter--;
     }
 //    if (!head){
     	//delete current;
-    	current = nullptr;  // Po usunięciu wszystkich elementów ustaw current na nullptr
+    currentListNode = nullptr;  // Po usunięciu wszystkich elementów ustaw current na nullptr
 //    	head->next = nullptr;
 
  //   }
