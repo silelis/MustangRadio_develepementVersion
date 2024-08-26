@@ -1,0 +1,46 @@
+/*
+ * radioMenu.cpp
+ *
+ *  Created on: Aug 25, 2024
+ *      Author: dbank
+ */
+
+#include <SileliS_code/radioMenu.h>
+
+radioMenu::radioMenu() {
+	// TODO Auto-generated constructor stub
+
+	queueRadioMenuKbrd = nullptr;
+	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
+	taskHandle_manageTheRadioManue = nullptr;
+
+	//tworzę menu głowne radio do pbsługi klawiszy głownych tj.  but_ON/OFF, long_but_ON/OFF,VOL_CW,VOL_CCW,but_EQU,long_but_EQU
+	this->radioMainMenu = new myList(MainMenu,5);
+
+}
+
+BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnion){
+	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnion, pdMS_TO_TICKS(700));
+}
+
+TaskHandle_t* radioMenu::getTaskHandle_tPointer(void){
+	return &taskHandle_manageTheRadioManue;
+}
+
+void	radioMenu::manageTheRadioManue(void* noThink){
+	keyboardUnion kbrdToRadioMenu;
+	while(1)
+	{
+		if(xQueueReceive(this->queueRadioMenuKbrd, &kbrdToRadioMenu, portMAX_DELAY)){
+			printf("%c 0x%02x\r\n", kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1] );
+		}
+	}
+}
+
+radioMenu::~radioMenu() {
+	// TODO Auto-generated destructor stub
+	vTaskDelete(this->taskHandle_manageTheRadioManue);
+	vQueueDelete(queueRadioMenuKbrd);
+
+}
+

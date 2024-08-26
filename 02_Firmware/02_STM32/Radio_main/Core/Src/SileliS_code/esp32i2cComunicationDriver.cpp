@@ -286,14 +286,17 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 
 
 
+extern radioMenu* pRadioMenu;
 namespace parserFunction{
 
 	void keyboard(i2cFrame_keyboardFrame* kbrdFrame){
-		kbrdFrame;
-		kbrdFrame->keyboardData.array;
-		printf("1\r\n");
 
-		#warning tutaj pchamy do kolejki klasy menu
+		pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
+//		keyboardUnion received;
+//		xQueueReceive(pRadioMenu->queueRadioMenuKbrd, received.array, portMAX_DELAY);
+//		received;
+
+//		#warning tutaj pchamy do kolejki klasy menu
 		//tutaj pchamy do kolejki klasy menu
 	}
 
