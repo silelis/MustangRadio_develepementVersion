@@ -43,7 +43,7 @@ myList::~myList() {
 void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
 
-    myList* newNode = new myList(nodeName, execFunctionArraySize);
+    assert(myList* newNode = new myList(nodeName, execFunctionArraySize));
     newNode->nextListNode = head;
     head = newNode;
     currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -54,7 +54,7 @@ void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize)
 void myList::addAtEnd(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
 
-    myList* newNode = new myList(nodeName, execFunctionArraySize);
+    assert(myList* newNode = new myList(nodeName, execFunctionArraySize));
     if (!head) {
         head = newNode;
     } else {
