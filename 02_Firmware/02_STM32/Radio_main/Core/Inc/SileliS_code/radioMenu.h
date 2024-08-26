@@ -33,7 +33,7 @@ private:
 	const char	*TAG = "Main menu log: ";
 	QueueHandle_t queueRadioMenuKbrd;	//kolejka, którza pobiera klawisze otrzymane z ESP32 i przekazuje do menuRadio
 	TaskHandle_t taskHandle_manageTheRadioManue;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
-
+	uint8_t		 peripheryMenuTimeoutCounter;			//zmienna odliczająca timeout od bezczynności klawiatury, timeout powoduje automatyczne wyjście z menu periphery
 	myList*		radioMainMenu;				//zerowe menu/lista radio obsługująca but_ON/OFF, long_but_ON/OFF,VOL_CW,VOL_CCW,but_EQU,long_but_EQU
 	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio

@@ -8,8 +8,6 @@
 #include <SileliS_code/radioMenu.h>
 
 radioMenu::radioMenu() {
-	// TODO Auto-generated constructor stub
-
 	queueRadioMenuKbrd = nullptr;
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
 	taskHandle_manageTheRadioManue = nullptr;
@@ -18,6 +16,7 @@ radioMenu::radioMenu() {
 	this->curretDevice		= nullptr;
 	this->audioDevices		= nullptr;
 	this->peripheryDevices 	= nullptr;
+	this->peripheryMenuTimeoutCounter = 0;
 
 	//tworzenie manu periphery
 	this->createMenu_peripheryDevices();
@@ -84,12 +83,11 @@ void	radioMenu::manageTheRadioManue(void* noThink){
 	keyboardUnion kbrdToRadioMenu;
 	while(1)
 	{
+		//if sprawdza czy komenda nie czeka dłużej niż portMAX_DELAY. Jeśli tak to nie robi nic
 		if(xQueueReceive(this->queueRadioMenuKbrd, &kbrdToRadioMenu, portMAX_DELAY)){
-			printf("%c 0x%02x  in hex: 0x%02x 0x%02x\r\n", kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1], kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1] );
 
-			break;
-		}
-		else{
+			//tutaj powinien być gdzieś this->peripheryMenuTimeoutCounter=0;
+			printf("%c 0x%02x  in hex: 0x%02x 0x%02x\r\n", kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1], kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1] );
 
 			break;
 		}
@@ -97,13 +95,12 @@ void	radioMenu::manageTheRadioManue(void* noThink){
 }
 
 radioMenu::~radioMenu() {
-	// TODO Auto-generated destructor stub
 	vTaskDelete(this->taskHandle_manageTheRadioManue);
 	vQueueDelete(queueRadioMenuKbrd);
 
 	delete [] this->radioMainMenu;
 	delete [] this->audioDevices;
 	delete [] this->peripheryDevices;
-	this->curretDevice=nullptr
+	this->curretDevice=nullptr;
 }
 
