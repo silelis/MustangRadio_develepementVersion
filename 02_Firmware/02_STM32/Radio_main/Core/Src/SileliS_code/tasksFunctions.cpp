@@ -20,6 +20,7 @@ static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiekt
 /*static*/ radioMenu* pRadioMenu=nullptr;
 
 
+
 static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
@@ -62,9 +63,27 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	};
 }
 
-static void manageTheRadioMenuTask(void* pvParameters){
-	pRadioMenu->manageTheRadioManue(pvParameters);
+
+/*
+void testowyAppend(){
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("22222222\r\n");
 }
+
+void testowyAppend1(){
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("11111111\r\n");
+	printf("33333333\r\n");
+	printf("22222222\r\n");
+}*/
 
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
@@ -85,22 +104,14 @@ void initTaskFunctions(void){
 	pESP32->ping();
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
-	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, 3*128+1, &taskHandle_esp32IntrrruptRequest));
+	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
 
 
-	//tworzenie obiektu obsługującego menu Radio wszystkie
-	assert(pRadioMenu = new radioMenu());
-	//tworzenie taska obsługującego przzyciski w menu radio
-	xTaskCreate(manageTheRadioMenuTask, "radioMainMenu", 3*128, NULL, 3*128, /*&(pRadioMenu->taskHandle_manageTheRadioManue)*/pRadioMenu->getTaskHandle_tPointer());
-
-
-
-
-
-
-	/*
+	assert(pRadioMenu=new radioMenu());
+	//xTaskCreate(pRadioMenu->manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &(pRadioMenu->taskHandle_manageTheRadioManue));
+/*
 	myList* pList;
 	pList= new myList("Test6",6);
 
@@ -133,7 +144,7 @@ void initTaskFunctions(void){
 	//pList->deleteList();
 	//delete [] pList;
 
-//	myList* pList1111;
+	myList* pList1111;
 /*
 	menuItem* probne = new menuItem ("DAB+", 3);
 	//probne->appendInit(testowyAppend);

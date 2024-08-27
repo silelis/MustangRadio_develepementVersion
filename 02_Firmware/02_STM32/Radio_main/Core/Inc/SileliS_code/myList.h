@@ -8,7 +8,7 @@
 #include <string.h>
 #include "SileliS_code/menuItem.h"
 
-class myList:public menuItem {
+class myList:protected menuItem {
 public:
     // Konstruktor
     myList(const char* nodeName, uint8_t execFunctionArraySize);
