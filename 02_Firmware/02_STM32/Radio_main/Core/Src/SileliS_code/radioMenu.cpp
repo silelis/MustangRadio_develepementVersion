@@ -12,95 +12,33 @@ radioMenu::radioMenu() {
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
 	taskHandle_manageTheRadioManue = nullptr;
 
-	this->radioMainMenu		= nullptr;
-	this->curretDevice		= nullptr;
-	this->audioDevices		= nullptr;
-	this->peripheryDevices 	= nullptr;
-	this->peripheryMenuTimeoutCounter = 0;
-
-	//tworzenie manu periphery
-	this->createMenu_peripheryDevices();
-	//tworzenie manu audio
-	this->createMenu_audioDevices();
-	//tworzenie manu głównego radio
-	this->createMenu_radioMainMenu();
-
-	printf("%sall menus have been initialised", this->TAG);
 }
 
-void radioMenu::createMenu_peripheryDevices(void){
-	//tworzenie manu peripheryDevices
-	assert(this->peripheryDevices = new myList("EQ1",3));
-	this->peripheryDevices->addAtEnd("EQ2", 3);
-	this->peripheryDevices->addAtEnd("EQ3", 3);
-	this->peripheryDevices->addAtEnd("EQ4", 3);
-
-	this->peripheryDevices->printList();
+BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnionSend){
+	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnionSend, pdMS_TO_TICKS(700));
 }
 
-void radioMenu::createMenu_audioDevices(void){
-	assert(this->audioDevices = new myList("De1",3));
-	this->audioDevices->addAtEnd("De2", 3);
-	this->audioDevices->addAtEnd("De3", 3);
-	this->audioDevices->addAtEnd("De4", 3);
-
-	this->audioDevices->printList();
+BaseType_t radioMenu::queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived){
+	return xQueueReceive(this->queueRadioMenuKbrd, kbrdUnionReceived, portMAX_DELAY);
 }
 
-void radioMenu::createMenu_radioMainMenu(void){
-	//tylko jedno płaskie menu, ktore zarządza pozostałymi
-	assert(this->radioMainMenu = new myList("MainMenu",5));
-	this->radioMainMenu->printList();
-	//this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, newFunc)
-	this->currentDevice_setOnAudioDevices();
-}
-
-void radioMenu::currentDevice_setOnAudioDevices(void){
-	this->curretDevice=this->audioDevices;
-}
-
-void radioMenu::currentDevice_setOnPeripheryDevices(void){
-	this->curretDevice=this->peripheryDevices;
-}
-
-void radioMenu::currentDevice_printList(void){
-	this->curretDevice->printList();
-}
-
-void radioMenu::currentDevice_prinCurrentNode(void){
-	this->curretDevice->printCurrent();
-}
-
-BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnion){
-	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnion, pdMS_TO_TICKS(700));
-}
-
-TaskHandle_t* radioMenu::getTaskHandle_tPointer(void){
-	return &taskHandle_manageTheRadioManue;
-}
-
-void	radioMenu::manageTheRadioManue(void* noThink){
-	keyboardUnion kbrdToRadioMenu;
-	while(1)
-	{
-		//if sprawdza czy komenda nie czeka dłużej niż portMAX_DELAY. Jeśli tak to nie robi nic
-		if(xQueueReceive(this->queueRadioMenuKbrd, &kbrdToRadioMenu, portMAX_DELAY)){
-
-			//tutaj powinien być gdzieś this->peripheryMenuTimeoutCounter=0;
-			printf("%c 0x%02x  in hex: 0x%02x 0x%02x\r\n", kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1], kbrdToRadioMenu.array[0],kbrdToRadioMenu.array[1] );
-
-			break;
+/*
+static void	radioMenu::manageRadioButtonsAndManue(void* noThink){
+	keyboardUnion kbrdUnionReceived;
+	while(1){
+		if(queueRadioMenuKbrdReceive(&kbrdUnionReceived)){
+			printf("2\r\n");
 		}
 	}
-}
+}*/
 
 radioMenu::~radioMenu() {
-	vTaskDelete(this->taskHandle_manageTheRadioManue);
-	vQueueDelete(queueRadioMenuKbrd);
+		vTaskDelete(this->taskHandle_manageTheRadioManue);
+		vQueueDelete(queueRadioMenuKbrd);
 
-	delete [] this->radioMainMenu;
-	delete [] this->audioDevices;
-	delete [] this->peripheryDevices;
-	this->curretDevice=nullptr;
+		delete [] this->radioMainMenu;
+		delete [] this->audioDevices;
+		delete [] this->peripheryDevices;
+		this->curretDevice=nullptr;
 }
 

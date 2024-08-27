@@ -1,0 +1,31 @@
+/*
+ * radioMenu.cpp
+ *
+ *  Created on: Aug 25, 2024
+ *      Author: dbank
+ */
+
+#include <SileliS_code/radioMenu.h>
+
+radioMenu::radioMenu() {
+	queueRadioMenuKbrd = nullptr;
+	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
+	taskHandle_manageTheRadioManue = nullptr;
+
+}
+/*
+BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnion){
+	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnion, pdMS_TO_TICKS(700));
+}
+*/
+
+radioMenu::~radioMenu() {
+		vTaskDelete(this->taskHandle_manageTheRadioManue);
+		vQueueDelete(queueRadioMenuKbrd);
+
+		delete [] this->radioMainMenu;
+		delete [] this->audioDevices;
+		delete [] this->peripheryDevices;
+		this->curretDevice=nullptr;
+}
+
