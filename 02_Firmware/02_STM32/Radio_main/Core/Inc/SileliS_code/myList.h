@@ -8,10 +8,22 @@
 #include <string.h>
 #include "SileliS_code/menuItem.h"
 
+
+class myList;  // Forward declaration
+
+struct ListHeader {
+    myList* head;                 // Wskaźnik do pierwszego elementu listy
+    myList* currentListNode;      // Wskaźnik do aktualnego elementu listy
+    uint8_t indexCounter;         // Licznik indeksów
+
+    ListHeader() : head(nullptr), currentListNode(nullptr), indexCounter(0) {}
+};
+
+
 class myList:public menuItem {
 public:
     // Konstruktor
-    myList(const char* nodeName, uint8_t execFunctionArraySize);
+    myList(ListHeader* pointerListHeader, const char* nodeName, uint8_t execFunctionArraySize);
 
     // Destruktor
     void deleteList();
@@ -45,6 +57,7 @@ private:
     uint8_t index;   // Indeks węzła
     static uint8_t indexCounter; // Licznik indeksów
 
+    ListHeader* pListHeader;
     // Prywatna funkcja do renumeracji węzłów
     void renumberNodes();
 

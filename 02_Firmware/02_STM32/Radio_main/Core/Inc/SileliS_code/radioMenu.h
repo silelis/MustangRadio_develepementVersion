@@ -23,15 +23,16 @@ public:
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
 
 protected:
-	void createDeviceMenuList_audio(void);
-	void createDeviceMenuList_periphery(void);
-	void createDeviceMenuList_mainMenu(void);
-	void setCurrentDeviceMenu_audio(void);
-	void setCurrentDeviceMenu_periphery(void);
+	//void createDeviceMenuList_audio(void);
+	//void createDeviceMenuList_periphery(void);
+	//void createDeviceMenuList_mainMenu(void);
+	//void setCurrentDeviceMenu_audio(void);
+	//void setCurrentDeviceMenu_periphery(void);
 private:
 	const char	*TAG = "Main menu log: ";
 	QueueHandle_t queueRadioMenuKbrd;	//kolejka, którza pobiera klawisze otrzymane z ESP32 i przekazuje do menuRadio
 
+	ListHeader  ListHeader_audio;
 
 	myList*		radioMainMenu;				//zerowe menu/lista radio obsługująca but_ON/OFF, long_but_ON/OFF,VOL_CW,VOL_CCW,but_EQU,long_but_EQU
 	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
