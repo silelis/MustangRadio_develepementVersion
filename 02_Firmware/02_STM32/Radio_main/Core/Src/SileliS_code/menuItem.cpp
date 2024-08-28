@@ -13,7 +13,7 @@ menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
 	if (execFunctionArraySize<= UINT8_MAX){
 		this->mI_TAG = tag;
 
-		this->Init=nullptr;
+		this->Init= nullptr;
 		this->deInit = nullptr;
 
 		this->pExecutableButtons = nullptr;

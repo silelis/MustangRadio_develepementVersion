@@ -19,14 +19,15 @@ class radioMenu {
 public:
 	radioMenu();
 	virtual ~radioMenu();
-	//TaskHandle_t taskHandle_manageTheRadioManue;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
-//	static void	manageRadioButtonsAndManue(void* noThing);
 	BaseType_t queueRadioMenuKbrdSend(const void * kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
 
-
 protected:
-
+	void createDeviceMenuList_audio(void);
+	void createDeviceMenuList_periphery(void);
+	void createDeviceMenuList_mainMenu(void);
+	void setCurrentDeviceMenu_audio(void);
+	void setCurrentDeviceMenu_periphery(void);
 private:
 	const char	*TAG = "Main menu log: ";
 	QueueHandle_t queueRadioMenuKbrd;	//kolejka, którza pobiera klawisze otrzymane z ESP32 i przekazuje do menuRadio
@@ -36,7 +37,6 @@ private:
 	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
 	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
-
 };
 
 #endif /* INC_SILELIS_CODE_RADIOMENU_H_ */

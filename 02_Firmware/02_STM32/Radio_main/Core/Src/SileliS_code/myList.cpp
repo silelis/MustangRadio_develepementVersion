@@ -12,9 +12,10 @@ myList::myList(const char* nodeName, uint8_t execFunctionArraySize)
 		head=this;
 	}
 	nextListNode=nullptr;
-	currentListNode=this;
+	//currentListNode=this;
 	indexCounter++;
 	this->index = indexCounter;
+	assert(this);
 }
 /*
 // Zwalnianie pamięci listy
@@ -42,8 +43,8 @@ myList::~myList() {
 // Dodanie elementu na początku listy
 void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
-
-    myList* newNode = new myList(nodeName, execFunctionArraySize);
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(nodeName, execFunctionArraySize));
     newNode->nextListNode = head;
     head = newNode;
     currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -54,7 +55,8 @@ void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize)
 void myList::addAtEnd(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
 
-    myList* newNode = new myList(nodeName, execFunctionArraySize);
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(nodeName, execFunctionArraySize));
     if (!head) {
         head = newNode;
     } else {
@@ -81,6 +83,11 @@ myList* myList::moveToNext() {
     return currentListNode;
 }
 
+void myList::moveToEnd(void){
+	while(!this->isAtEnd()){
+		this->moveToNext();
+	}
+}
 void 	myList::moveToNextInLoop(void){
 	printf("Exit from: %s\r\n",currentListNode->mI_TAG);
 	currentListNode->mI_executeDeInit();
@@ -99,7 +106,7 @@ uint8_t myList::getCurrentNodeIndex() const {
 
 // Sprawdzanie, czy current znajduje się na końcu listy
 bool myList::isAtEnd() const {
-    return currentListNode == nullptr;
+    return currentListNode->nextListNode == nullptr;
 }
 
 /*

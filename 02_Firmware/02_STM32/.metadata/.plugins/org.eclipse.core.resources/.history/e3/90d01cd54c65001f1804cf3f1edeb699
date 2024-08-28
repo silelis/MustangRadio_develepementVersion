@@ -1,0 +1,42 @@
+/*
+ * radioMenu.h
+ *
+ *  Created on: Aug 25, 2024
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_RADIOMENU_H_
+#define INC_SILELIS_CODE_RADIOMENU_H_
+#include "SileliS_code/myList.h"
+#include "FreeRTOSConfig.h"
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "comunicationStructures.h"
+
+
+class radioMenu {
+public:
+	radioMenu();
+	virtual ~radioMenu();
+	//TaskHandle_t taskHandle_manageTheRadioManue;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
+//	static void	manageRadioButtonsAndManue(void* noThing);
+	BaseType_t queueRadioMenuKbrdSend(const void * kbrdUnionSend);
+	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
+
+
+protected:
+
+private:
+	const char	*TAG = "Main menu log: ";
+	QueueHandle_t queueRadioMenuKbrd;	//kolejka, którza pobiera klawisze otrzymane z ESP32 i przekazuje do menuRadio
+
+
+	myList*		radioMainMenu;				//zerowe menu/lista radio obsługująca but_ON/OFF, long_but_ON/OFF,VOL_CW,VOL_CCW,but_EQU,long_but_EQU
+	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
+	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
+	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
+
+};
+
+#endif /* INC_SILELIS_CODE_RADIOMENU_H_ */
