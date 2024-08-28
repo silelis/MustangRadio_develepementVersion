@@ -15,16 +15,20 @@ radioMenu::radioMenu() {
 	this->audioDevices=nullptr;
 	this->radioMainMenu = nullptr;
 
+	this->audioDevices = new myList(&this->ListHeader_audio, "1st audio", 5);
+	this->audioDevices;
+	//this->createDeviceMenuList_audio();
+	//this->createDeviceMenuList_periphery();
+	//this->peripheryDevices->printList();
 
-	this->createDeviceMenuList_audio();
-	this->createDeviceMenuList_periphery();
-	this->peripheryDevices->printList();
-
-	this->audioDevices->printList();
-	printf("\r\n\r\n\r\n");
-	this->audioDevices->printList();
+	//this->audioDevices->printList();
+	//printf("\r\n\r\n\r\n");
+	//this->audioDevices->printList();
 }
 
+
+
+/*
 void radioMenu::createDeviceMenuList_mainMenu(void){
 
 	assert(this->radioMainMenu = new myList("MainMenu",5));
@@ -67,6 +71,8 @@ void radioMenu::setCurrentDeviceMenu_periphery(void){
 void radioMenu::setCurrentDeviceMenu_audio(void){
 	this->curretDevice=this->audioDevices;
 }
+
+*/
 BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnionSend){
 	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnionSend, pdMS_TO_TICKS(700));
 }

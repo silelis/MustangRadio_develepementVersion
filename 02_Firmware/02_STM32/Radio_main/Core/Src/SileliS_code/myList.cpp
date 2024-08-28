@@ -6,8 +6,11 @@ myList* myList::currentListNode = nullptr;
 uint8_t myList::indexCounter = 0;
 
 // Konstruktor
-myList::myList(const char* nodeName, uint8_t execFunctionArraySize)
+myList::myList(ListHeader* pointerListHeader, const char* nodeName, uint8_t execFunctionArraySize)
     : menuItem(nodeName, execFunctionArraySize) {
+	this->pListHeader = pointerListHeader;
+
+	//this->pListHeader->indexCounter++;
 	if (head==nullptr){
 		head=this;
 	}
@@ -44,7 +47,7 @@ myList::~myList() {
 void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
     myList* newNode;// = new myList(nodeName, execFunctionArraySize);
-    assert(newNode = new myList(nodeName, execFunctionArraySize));
+    assert(newNode = new myList(pListHeader, nodeName, execFunctionArraySize));
     newNode->nextListNode = head;
     head = newNode;
     currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -56,7 +59,7 @@ void myList::addAtEnd(const char* nodeName, uint8_t execFunctionArraySize) {
     if (!canAddItem()) return;
 
     myList* newNode;// = new myList(nodeName, execFunctionArraySize);
-    assert(newNode = new myList(nodeName, execFunctionArraySize));
+    assert(newNode = new myList(pListHeader, nodeName, execFunctionArraySize));
     if (!head) {
         head = newNode;
     } else {
