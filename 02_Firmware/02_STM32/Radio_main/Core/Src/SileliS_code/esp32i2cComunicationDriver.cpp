@@ -274,7 +274,7 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 		switch(tempI2cFrameCommandHeader.commandGroup){
 
 		case I2C_COMMAND_GROUP_KEYBOARD:
-			parserFunction::keyboard((i2cFrame_keyboardFrame*)I2CReceivedFrame.pData);
+			parserFunction::keyboardToRadioMeny((i2cFrame_keyboardFrame*)I2CReceivedFrame.pData);
 			break;
 		default:
 			printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
@@ -286,23 +286,10 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 
 #include "SileliS_code/radioMenu.h"
 
-extern radioMenu* pRadioMenu;
+extern radioMenu* pRadioMenu;		//from tasksFunctions.cpp
 namespace parserFunction{
-	void keyboard(i2cFrame_keyboardFrame* kbrdFrame){
-		//kbrdFrame;
-		//kbrdFrame->keyboardData.array;
-//		printf("1\r\n");
-
+	void keyboardToRadioMeny(i2cFrame_keyboardFrame* kbrdFrame){
 		pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
-
-//		keyboardUnion received;
-		//xQueueReceive(pRadioMenu->queueRadioMenuKbrd, &received.array, portMAX_DELAY);
-//		pRadioMenu->queueRadioMenuKbrdReceive(&received);
-
-//		received;
-//		received;
-//		#warning tutaj pchamy do kolejki klasy menu
-		//tutaj pchamy do kolejki klasy menu
 	}
 
 }

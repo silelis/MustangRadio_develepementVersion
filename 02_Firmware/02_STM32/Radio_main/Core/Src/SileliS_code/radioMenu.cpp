@@ -10,7 +10,7 @@
 radioMenu::radioMenu() {
 	queueRadioMenuKbrd = nullptr;
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
-	taskHandle_manageTheRadioManue = nullptr;
+	//taskHandle_manageTheRadioManue = nullptr;
 
 }
 
@@ -33,7 +33,7 @@ static void	radioMenu::manageRadioButtonsAndManue(void* noThink){
 }*/
 
 radioMenu::~radioMenu() {
-		vTaskDelete(this->taskHandle_manageTheRadioManue);
+		//vTaskDelete(this->taskHandle_manageTheRadioManue);
 		vQueueDelete(queueRadioMenuKbrd);
 
 		delete [] this->radioMainMenu;

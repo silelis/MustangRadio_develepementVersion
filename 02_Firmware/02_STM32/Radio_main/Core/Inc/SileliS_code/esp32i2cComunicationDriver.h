@@ -55,7 +55,7 @@ private:
 
 
 namespace parserFunction{
-	void keyboard(i2cFrame_keyboardFrame* kbrdFrame);
+	void keyboardToRadioMeny(i2cFrame_keyboardFrame* kbrdFrame);
 }
 
 
