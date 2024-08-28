@@ -15,6 +15,7 @@
 
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
+static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
 static i2cMaster* pi2cMaster=nullptr;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
 /*static*/ radioMenu* pRadioMenu=nullptr;
@@ -63,7 +64,16 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	};
 }
 
+static void manageRadioButtonsAndManue(void* noThing){
+	keyboardUnion receivedKeyboard;
+	while(1){
+		if(pRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
+			printf("2\r\n");
+		}
 
+	}
+
+}
 /*
 void testowyAppend(){
 	printf("11111111\r\n");
@@ -110,7 +120,7 @@ void initTaskFunctions(void){
 
 
 	assert(pRadioMenu=new radioMenu());
-	//xTaskCreate(pRadioMenu->manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &(pRadioMenu->taskHandle_manageTheRadioManue));
+	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
 /*
 	myList* pList;
 	pList= new myList("Test6",6);

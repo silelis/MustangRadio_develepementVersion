@@ -19,8 +19,8 @@ class radioMenu {
 public:
 	radioMenu();
 	virtual ~radioMenu();
-	TaskHandle_t taskHandle_manageTheRadioManue;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
-	//static void	manageRadioButtonsAndManue(void* noThink);
+	//TaskHandle_t taskHandle_manageTheRadioManue;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
+//	static void	manageRadioButtonsAndManue(void* noThing);
 	BaseType_t queueRadioMenuKbrdSend(const void * kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
 
