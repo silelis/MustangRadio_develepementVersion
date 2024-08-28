@@ -8,7 +8,7 @@
 #include <string.h>
 #include "SileliS_code/menuItem.h"
 
-class myList:protected menuItem {
+class myList:public menuItem {
 public:
     // Konstruktor
     myList(const char* nodeName, uint8_t execFunctionArraySize);
@@ -25,6 +25,7 @@ public:
     void resetToFirst();
     myList* moveToNext();
     void 	moveToNextInLoop(void);
+    void 	moveToEnd(void);
     uint8_t getCurrentNodeIndex() const;
     bool isAtEnd() const;
 

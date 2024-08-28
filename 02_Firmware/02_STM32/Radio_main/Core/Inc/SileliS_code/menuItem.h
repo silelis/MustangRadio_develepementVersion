@@ -39,8 +39,8 @@ protected:
 
 private:
 	execute_t*	pExecutableButtons;
-	uint8_t	execFunctionArrySize;			//rozmiar tablicy execute_t
-	uint8_t	execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
+	uint8_t		execFunctionArrySize;			//rozmiar tablicy execute_t
+	uint8_t		execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
 	void	delete_pExecutableButtonsArray(void);
 	bool	create_pExecutableButtonsArray(uint8_t arraySize);
 
