@@ -51,11 +51,11 @@ public:
 private:
     //char* name;      // Nazwa węzła
 
-    static myList* currentListNode; // Wskaźnik do aktualnego elementu listy
+    //static myList* currentListNode; // Wskaźnik do aktualnego elementu listy
     myList* nextListNode;      // Wskaźnik do następnego elementu w liście
-    static myList* head;   // Wskaźnik do pierwszego elementu listy
+    //static myList* head;   // Wskaźnik do pierwszego elementu listy
     uint8_t index;   // Indeks węzła
-    static uint8_t indexCounter; // Licznik indeksów
+    //static uint8_t indexCounter; // Licznik indeksów
 
     ListHeader* pListHeader;
     // Prywatna funkcja do renumeracji węzłów
