@@ -113,8 +113,7 @@ void myList::printList() const {
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
     if (this->pListHeader->currentListNode) {
-    	printf("Current Node Index: %d, Name: %s.\r\n", this->pListHeader->currentListNode->index, this->pListHeader->currentListNode->mI_TAG);
-        //std::cout << "Current Node Index: " << (int)current->index << ", Name: " << (current->name ? current->name : "Unnamed") << std::endl;
+    	printf("%s: is current device with nodde nubber. %d.\r\n", this->pListHeader->currentListNode->mI_TAG, this->pListHeader->currentListNode->index);
     } else {
     	printf("No current node.\r\n");
         //std::cout << "No current node." << std::endl;

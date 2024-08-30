@@ -21,6 +21,7 @@ radioMenu::radioMenu() {
 	this->createDeviceMenuList_mainMenu();
 
 	this->setCurrentDeviceMenu_audio();
+	this->curretDevice->printCurrent();
 }
 
 void radioMenu::createDeviceMenuList_audio(void){
@@ -33,7 +34,7 @@ void radioMenu::createDeviceMenuList_audio(void){
 	this->peripheryDevices->resetToFirst();
 	//this->audioDevices->moveToEnd();
 	//this->audioDevices->moveToNextInLoop();
-	this->audioDevices->printList();
+	//this->audioDevices->printList();
 
 	//this->setCurrentDeviceMenu_audio();
 	//this->curretDevice->printCurrent();
@@ -49,7 +50,7 @@ void radioMenu::createDeviceMenuList_periphery(void){
 	this->peripheryDevices->addAtEnd("3rd periph",3);
 
 	this->peripheryDevices->resetToFirst();
-	this->peripheryDevices->printList();
+	//this->peripheryDevices->printList();
 }
 
 void radioMenu::createDeviceMenuList_mainMenu(void){
@@ -60,10 +61,14 @@ void radioMenu::createDeviceMenuList_mainMenu(void){
 	//this->radioMainMenu->mI_appendInit(newFunc);
 	keyboardUnion buttonSequence;
 
-	//this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, newFunc);
+	buttonSequence.array[0] ='b';
+	buttonSequence.array[1] = 0x3f; // short button equaliser
+	//void	(*Init1)();
+	//Init1 = &this->menuFunction_equButShortPressed;
+	//this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, ));
 
 
-	this->radioMainMenu->printList();
+	//this->radioMainMenu->printList();
 }
 
 void radioMenu::setCurrentDeviceMenu_audio(void){
@@ -97,3 +102,7 @@ radioMenu::~radioMenu() {
 		this->curretDevice=nullptr;
 }
 
+
+void radioMenu::menuFunction_equButShortPressed(void){
+	printf("%sShort equ but presssed\r\n.", this->TAG);
+}
