@@ -42,6 +42,8 @@ private:
 	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
 	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
+
+	void 		menuFunction_equButShortPressed(void);
 };
 
 #endif /* INC_SILELIS_CODE_RADIOMENU_H_ */
