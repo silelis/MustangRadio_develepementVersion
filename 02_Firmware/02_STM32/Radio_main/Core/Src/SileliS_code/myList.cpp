@@ -21,6 +21,7 @@ myList::myList(ListHeader* pointerListHeader, const char* nodeName, uint8_t exec
 	//indexCounter++;
 	this->index = this->pListHeader->indexCounter;
 	assert(this);
+	this->pListHeader->currentListNode=this;
 }
 
 
@@ -95,6 +96,9 @@ uint8_t myList::getCurrentNodeIndex() const {
     return /*current ?*/ this->pListHeader->currentListNode->index /*: UINT8_MAX*/;
 }
 
+const char* myList::getCurrentNodeTag()/* const*/{
+	return (const char*) this->pListHeader->currentListNode->mI_TAG;
+}
 // Sprawdzanie, czy current znajduje się na końcu listy
 bool myList::isAtEnd() const {
     return this->pListHeader->currentListNode->nextListNode == nullptr;
@@ -113,7 +117,7 @@ void myList::printList() const {
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
     if (this->pListHeader->currentListNode) {
-    	printf("%s: is current device with nodde nubber. %d.\r\n", this->pListHeader->currentListNode->mI_TAG, this->pListHeader->currentListNode->index);
+    	printf("%s: is current device.\r\n", this->pListHeader->currentListNode->mI_TAG);
     } else {
     	printf("No current node.\r\n");
         //std::cout << "No current node." << std::endl;

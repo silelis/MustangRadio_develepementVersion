@@ -68,7 +68,10 @@ static void manageRadioButtonsAndManue(void* noThing){
 	keyboardUnion receivedKeyboard;
 	while(1){
 		if(pRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
-			printf("%c %x\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+			if(!pRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
+				printf("%c %x\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+			}
+
 		}
 	}
 
