@@ -40,31 +40,32 @@ bool menuItem::create_pExecutableButtonsArray(uint8_t arraySize){
 	return false;
 }
 
-void menuItem::appendFunctionPointer(void (**funcPtr)(), void (*newFunc)()){
+void menuItem::appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc){
 	*funcPtr = newFunc;
 }
 
-void menuItem::executeFunctionPointer(void (*functionPointer)()){
-	if (functionPointer)
-		functionPointer();
-	else
-		printf("%s: Pointer to function is empty.\r\n", this->mI_TAG);
+void menuItem::executeFunctionPointer(std::function<void()>* funcPtr) {
+    if (*funcPtr) {
+        (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
+    } else {
+        printf("%s: Pointer to function is empty.\r\n", this->mI_TAG);
+    }
 }
 
-void menuItem::mI_appendInit(void (*newFunc)()) {
+void menuItem::mI_appendInit(std::function<void()> newFunc) {
 	appendFunctionPointer(&this->Init, newFunc);
 }
 
 void menuItem::mI_executeInit(void){
-	this->executeFunctionPointer(this->Init);
+	this->executeFunctionPointer(&this->Init);
 }
 
-void menuItem::mI_appendDeInit(void (*newFunc)()){
+void menuItem::mI_appendDeInit(std::function<void()> newFunc){
 	appendFunctionPointer(&this->deInit, newFunc);
 }
 
 void menuItem::mI_executeDeInit(void){
-	this->executeFunctionPointer(this->deInit);
+	this->executeFunctionPointer(&this->deInit);
 }
 
 menuItem::~menuItem(){
@@ -88,33 +89,30 @@ bool menuItem::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
 	return true;
 }
 
-bool menuItem::mI_executeExecutableButtons(keyboardUnion buttonSequence){
-	uint8_t buttonSequenceArrayLocation = this->searchExecFunctionForButtonSequence(buttonSequence);
-	if(buttonSequenceArrayLocation==this->execFunctionArrySize){ //gdy zwracana wartość jest równa execFunctionArrySize to znaczy, że nie ma zapamiętanej sekwencji klawiszy
-		printf("%s: There is no buttonSequence with value of 0x%02x%02x in pExecutableButtonsaArry.\r\n", this->mI_TAG, buttonSequence.array[0], buttonSequence.array[1]);
-		return false;
-	}
-	else{
-		this->executeFunctionPointer(this->pExecutableButtons[buttonSequenceArrayLocation].functionPointer);
-		return true;
-	}
+bool menuItem::mI_executeExecutableButtons(keyboardUnion buttonSequence) {
+    uint8_t buttonSequenceArrayLocation = this->searchExecFunctionForButtonSequence(buttonSequence);
+    if (buttonSequenceArrayLocation == this->execFunctionArrySize) { // Gdy zwracana wartość jest równa execFunctionArrySize to znaczy, że nie ma zapamiętanej sekwencji klawiszy
+        printf("%s: There is no buttonSequence with value of 0x%02x (aka.%c) 0x%02x in pExecutableButtonsaArry.\r\n", this->mI_TAG, buttonSequence.array[0], buttonSequence.array[0], buttonSequence.array[1]);
+        return false;
+    } else {
+        this->executeFunctionPointer(&this->pExecutableButtons[buttonSequenceArrayLocation].functionPointer); // Użycie & przed functionPointer dla przekazania wskaźnika do std::function
+        return true;
+    }
 }
 
-bool menuItem::mI_appendExecFunctionArry(keyboardUnion buttonSequence,void (*newFunc)()){
-	if (this->execFunctionArryAppended<this->execFunctionArrySize){
-		if(!this->isExecFunctionInButtonSequence(buttonSequence)){
-			this->pExecutableButtons[this->execFunctionArryAppended].buttonSequence=buttonSequence;
-			this->appendFunctionPointer(&this->pExecutableButtons[this->execFunctionArryAppended].functionPointer, newFunc);
-			this->execFunctionArryAppended++;
-			printf("%s: %d button(s) are appended.\r\n", this->mI_TAG, this->execFunctionArryAppended);
-			return true;
-		}
-		else{
-			printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->mI_TAG);
-		}
-	}
-	else{
-		printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->mI_TAG);
-	}
-	return false;
+bool menuItem::mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc) {
+    if (this->execFunctionArryAppended < this->execFunctionArrySize) {
+        if (!this->isExecFunctionInButtonSequence(buttonSequence)) {
+            this->pExecutableButtons[this->execFunctionArryAppended].buttonSequence = buttonSequence;
+            this->appendFunctionPointer(&this->pExecutableButtons[this->execFunctionArryAppended].functionPointer, newFunc); // Bezpośrednio przekazujemy newFunc, ponieważ już jest std::function
+            this->execFunctionArryAppended++;
+            printf("%s: %d button(s) are appended.\r\n", this->mI_TAG, this->execFunctionArryAppended);
+            return true;
+        } else {
+            printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->mI_TAG);
+        }
+    } else {
+        printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->mI_TAG);
+    }
+    return false;
 }

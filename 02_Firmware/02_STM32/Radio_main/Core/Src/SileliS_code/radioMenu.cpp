@@ -26,9 +26,9 @@ radioMenu::radioMenu() {
 
 void radioMenu::createDeviceMenuList_audio(void){
 
-	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"1st audio",5));
-	this->audioDevices->addAtEnd("2nd audio",5);
-	this->audioDevices->addAtEnd("3rd audio",5);
+	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"1st audio: ",5));
+	this->audioDevices->addAtEnd("2nd audio: ",5);
+	this->audioDevices->addAtEnd("3rd audio: ",5);
 
 	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
 	this->peripheryDevices->resetToFirst();
@@ -45,9 +45,9 @@ void radioMenu::createDeviceMenuList_audio(void){
 
 void radioMenu::createDeviceMenuList_periphery(void){
 
-	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"1st periph",3));
-	this->peripheryDevices->addAtEnd("2nd periph",3);
-	this->peripheryDevices->addAtEnd("3rd periph",3);
+	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"1st periph: ",3));
+	this->peripheryDevices->addAtEnd("2nd periph: ",3);
+	this->peripheryDevices->addAtEnd("3rd periph: ",3);
 
 	this->peripheryDevices->resetToFirst();
 	//this->peripheryDevices->printList();
@@ -55,20 +55,16 @@ void radioMenu::createDeviceMenuList_periphery(void){
 
 void radioMenu::createDeviceMenuList_mainMenu(void){
 
-	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu",5));
+	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu: ",5));
 
 	//this->radioMainMenu->mI_appendDeInit(newFunc);
 	//this->radioMainMenu->mI_appendInit(newFunc);
 	keyboardUnion buttonSequence;
 
 	buttonSequence.array[0] ='b';
-	buttonSequence.array[1] = 0x3f; // short button equaliser
-	//void	(*Init1)();
-	//Init1 = &this->menuFunction_equButShortPressed;
-	//this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, ));
+	buttonSequence.array[1] = 0x3f; // short button equalizer pressed
+	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 
-
-	//this->radioMainMenu->printList();
 }
 
 void radioMenu::setCurrentDeviceMenu_audio(void){
@@ -102,7 +98,18 @@ radioMenu::~radioMenu() {
 		this->curretDevice=nullptr;
 }
 
+bool radioMenu::executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence){
+	this->radioMainMenu->mI_executeExecutableButtons(buttonSequence);
+}
 
 void radioMenu::menuFunction_equButShortPressed(void){
-	printf("%sShort equ but presssed\r\n.", this->TAG);
+	if (this->curretDevice != this->peripheryDevices){
+		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+		this->setCurrentDeviceMenu_periphery();
+		this->curretDevice->printCurrent();
+	}
+	else {
+		this->curretDevice->moveToNextInLoop();
+	}
+
 }

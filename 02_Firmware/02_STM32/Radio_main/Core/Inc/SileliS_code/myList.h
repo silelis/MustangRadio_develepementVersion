@@ -39,6 +39,7 @@ public:
     void 	moveToNextInLoop(void);
     void 	moveToEnd(void);
     uint8_t getCurrentNodeIndex() const;
+    const char* getCurrentNodeTag();// const;
     bool isAtEnd() const;
 
     // Usuwanie elementu z listy

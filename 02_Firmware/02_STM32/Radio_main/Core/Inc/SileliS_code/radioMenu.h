@@ -15,17 +15,19 @@
 #include "comunicationStructures.h"
 
 
+#include <iostream>
+#include <functional>
+
 class radioMenu {
 public:
 	radioMenu();
 	virtual ~radioMenu();
 	BaseType_t queueRadioMenuKbrdSend(const void * kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
+	bool executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence);
 
 protected:
-	void createDeviceMenuList_audio(void);
-	void createDeviceMenuList_periphery(void);
-	void createDeviceMenuList_mainMenu(void);
+
 
 	void setCurrentDeviceMenu_audio(void);
 	void setCurrentDeviceMenu_periphery(void);
@@ -42,6 +44,10 @@ private:
 	myList*		curretDevice;				//wskaźnik do obecnie obsługiwanej przesz menu listy przełącza się pomiędzy audioDevices i peripheryDevices
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
 	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
+
+	void createDeviceMenuList_audio(void);
+	void createDeviceMenuList_periphery(void);
+	void createDeviceMenuList_mainMenu(void);
 
 	void 		menuFunction_equButShortPressed(void);
 };
