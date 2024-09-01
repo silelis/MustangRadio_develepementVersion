@@ -24,7 +24,11 @@ public:
 	virtual ~radioMenu();
 	BaseType_t queueRadioMenuKbrdSend(const void * kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived);
+
 	bool executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence);
+	bool executeButtonFrom_curretDevice(keyboardUnion buttonSequence);
+
+	bool peripheryDevicesTimeoutReset(void);
 
 protected:
 
@@ -45,11 +49,14 @@ private:
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
 	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
 
+	uint8_t		peripheryDevices_menuTimeout;
+
 	void createDeviceMenuList_audio(void);
 	void createDeviceMenuList_periphery(void);
 	void createDeviceMenuList_mainMenu(void);
 
 	void 		menuFunction_equButShortPressed(void);
+	void 		menuFunction_volButShortPressed(void);
 };
 
 #endif /* INC_SILELIS_CODE_RADIOMENU_H_ */

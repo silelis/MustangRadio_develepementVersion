@@ -15,6 +15,7 @@ radioMenu::radioMenu() {
 	this->audioDevices=nullptr;
 	this->radioMainMenu = nullptr;
 
+	this->peripheryDevices_menuTimeout = 0;
 
 	this->createDeviceMenuList_periphery();
 	this->createDeviceMenuList_audio();
@@ -65,6 +66,11 @@ void radioMenu::createDeviceMenuList_mainMenu(void){
 	buttonSequence.array[1] = 0x3f; // short button equalizer pressed
 	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 
+	buttonSequence.array[0] ='b';
+	buttonSequence.array[1] = 0x7e; // short button volume pressed
+	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
+
+
 }
 
 void radioMenu::setCurrentDeviceMenu_audio(void){
@@ -99,8 +105,13 @@ radioMenu::~radioMenu() {
 }
 
 bool radioMenu::executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence){
-	this->radioMainMenu->mI_executeExecutableButtons(buttonSequence);
+	return this->radioMainMenu->mI_executeExecutableButtons(buttonSequence);
 }
+
+bool radioMenu::executeButtonFrom_curretDevice(keyboardUnion buttonSequence){
+	return this->curretDevice->mI_executeExecutableButtons(buttonSequence);
+}
+
 
 void radioMenu::menuFunction_equButShortPressed(void){
 	if (this->curretDevice != this->peripheryDevices){
@@ -112,4 +123,17 @@ void radioMenu::menuFunction_equButShortPressed(void){
 		this->curretDevice->moveToNextInLoop();
 	}
 
+}
+
+void radioMenu::menuFunction_volButShortPressed(void){
+	if (this->curretDevice != this->audioDevices){
+		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+		//this->peripheryDevices->mI_executeDeInit();
+		this->peripheryDevices->resetToFirst();
+		this->setCurrentDeviceMenu_audio();
+		this->curretDevice->printCurrent();
+	}
+	//else {
+	this->curretDevice->moveToNextInLoop();
+	//}
 }
