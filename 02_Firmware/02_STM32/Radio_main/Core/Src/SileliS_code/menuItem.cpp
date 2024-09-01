@@ -92,7 +92,7 @@ bool menuItem::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
 bool menuItem::mI_executeExecutableButtons(keyboardUnion buttonSequence) {
     uint8_t buttonSequenceArrayLocation = this->searchExecFunctionForButtonSequence(buttonSequence);
     if (buttonSequenceArrayLocation == this->execFunctionArrySize) { // Gdy zwracana wartość jest równa execFunctionArrySize to znaczy, że nie ma zapamiętanej sekwencji klawiszy
-        printf("%s: There is no buttonSequence with value of 0x%02x (aka.%c) 0x%02x in pExecutableButtonsaArry.\r\n", this->mI_TAG, buttonSequence.array[0], buttonSequence.array[0], buttonSequence.array[1]);
+        //printf("%s: There is no buttonSequence with value of 0x%02x (aka.%c) 0x%02x in pExecutableButtonsaArry.\r\n", this->mI_TAG, buttonSequence.array[0], buttonSequence.array[0], buttonSequence.array[1]);
         return false;
     } else {
         this->executeFunctionPointer(&this->pExecutableButtons[buttonSequenceArrayLocation].functionPointer); // Użycie & przed functionPointer dla przekazania wskaźnika do std::function

@@ -64,38 +64,23 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	};
 }
 
+
+
 static void manageRadioButtonsAndManue(void* noThing){
 	keyboardUnion receivedKeyboard;
 	while(1){
 		if(pRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
-			if(!pRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
-				printf("%c %x\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
-			}
 
+			if(!pRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
+				if(!pRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
+					printf("%c %x - there is binded button.\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+				}
+			}
 		}
 	}
-
-}
-/*
-void testowyAppend(){
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("22222222\r\n");
 }
 
-void testowyAppend1(){
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("11111111\r\n");
-	printf("33333333\r\n");
-	printf("22222222\r\n");
-}*/
+
 
 void initTaskFunctions(void){
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
@@ -123,75 +108,6 @@ void initTaskFunctions(void){
 
 	assert(pRadioMenu=new radioMenu());
 	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
-/*
-	myList* pList;
-	pList= new myList("Test6",6);
-
-	//pList->addAtEnd("Test2", 5);
-	pList->addAtBeginning("Test5", 5);
-	pList->addAtBeginning("Test4", 5);
-	pList->addAtBeginning("Test3", 5);
-	pList->addAtBeginning("Test2", 5);
-	pList->addAtBeginning("Test1", 5);
-//	pList->printList();
-	pList->addAtEnd("Test7", 5);
-	pList->addAtEnd("Test8", 5);
-	pList->addAtBeginning("Test0", 5);
-	pList->addAtBeginning("Test-1", 5);
-//	pList->addAtBeginning("TestB", 5);
-//	pList->addAtEnd("TestC", 5);
-//	pList->addAtEnd("TestD", 5);
-//	pList->addAtEnd("TestF", 5);
-
-	printf("\r\n\r\n");
-	//pList->removeElement(3);
-	pList->printList();
-
-	pList->resetToFirst();
-	while(1){
-		pList->moveToNextInLoop();
-	}*/
-
-
-	//pList->deleteList();
-	//delete [] pList;
-
-	myList* pList1111;
-/*
-	menuItem* probne = new menuItem ("DAB+", 3);
-	//probne->appendInit(testowyAppend);
-	//probne->executeInit();
-
-	keyboardUnion buttonSequence;
-	buttonSequence.encoderValue.input = 0x1;
-	buttonSequence.encoderValue.value = -4;
-	probne->appendExecFunctionArry(buttonSequence, testowyAppend1);
-
-
-	buttonSequence.encoderValue.input = 0x2;
-	buttonSequence.encoderValue.value = -4;
-	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
-	probne->executeExecutableButtons(buttonSequence);
-
-	buttonSequence.encoderValue.input = 0x1;
-	buttonSequence.encoderValue.value = -4;
-	probne->executeExecutableButtons(buttonSequence);
-
-
-	buttonSequence.encoderValue.input = 0x1;
-	buttonSequence.encoderValue.value = 4;
-	probne->executeExecutableButtons(buttonSequence);
-
-	buttonSequence.encoderValue.input = 0x2;
-	buttonSequence.encoderValue.value = -4;
-	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
-
-	buttonSequence.encoderValue.input = 0x3;
-	buttonSequence.encoderValue.value = 4;
-
-	probne->appendExecFunctionArry(buttonSequence, testowyAppend);
-
-	delete probne;*/
 
 }
 
