@@ -15,7 +15,17 @@ radioMenu::radioMenu() {
 	this->audioDevices=nullptr;
 	this->radioMainMenu = nullptr;
 
-	this->peripheryDevices_menuTimeout = 0;
+	this->peripheryMenu_TimeoutCounter=0;
+	this->peripheryMenu_TimeoutCounterSemaphore=NULL;
+	configASSERT(this->peripheryMenu_TimeoutCounterSemaphore = xSemaphoreCreateBinary());
+	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+
+	configASSERT(this->peripheryMenu_TaskSuspendAllowedSemaphore = xSemaphoreCreateBinary());
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+
+
+	this->peripheryMenu_taskHandle=NULL;
+
 
 	this->createDeviceMenuList_periphery();
 	this->createDeviceMenuList_audio();
@@ -87,12 +97,20 @@ BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnionSend){
 }
 
 BaseType_t radioMenu::queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived){
-	return xQueueReceive(this->queueRadioMenuKbrd, kbrdUnionReceived, portMAX_DELAY);
+	BaseType_t retVal =  xQueueReceive(this->queueRadioMenuKbrd, kbrdUnionReceived, portMAX_DELAY);
+	this->peripheryMenu_TimeoutCounterReset();
+	return  retVal;
 }
 
 radioMenu::~radioMenu() {
 		//vTaskDelete(this->taskHandle_manageTheRadioManue);
 		vQueueDelete(queueRadioMenuKbrd);
+		xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY);
+		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
+		xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
+		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
+
+		vTaskDelete(this->peripheryMenu_taskHandle);
 
 		delete [] this->radioMainMenu;
 		delete [] this->audioDevices;
@@ -118,6 +136,8 @@ void radioMenu::menuFunction_equButShortPressed(void){
 		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 		this->setCurrentDeviceMenu_periphery();
 		this->curretDevice->printCurrent();
+		this->peripheryMenu_TimeoutCounterReset();
+		vTaskResume(this->peripheryMenu_taskHandle);
 	}
 	else {
 		this->curretDevice->moveToNextInLoop();
@@ -126,14 +146,42 @@ void radioMenu::menuFunction_equButShortPressed(void){
 }
 
 void radioMenu::menuFunction_volButShortPressed(void){
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
 	if (this->curretDevice != this->audioDevices){
-		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 		//this->peripheryDevices->mI_executeDeInit();
-		this->peripheryDevices->resetToFirst();
-		this->setCurrentDeviceMenu_audio();
-		this->curretDevice->printCurrent();
+		this->menuFunction_swithPeripheryDeviceToAudioDevice();
+		vTaskSuspend(this->peripheryMenu_taskHandle);
 	}
-	//else {
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 	this->curretDevice->moveToNextInLoop();
-	//}
+}
+
+void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice(void){
+	printf("%s switch from peripheryDevices to audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+
+	this->peripheryDevices->resetToFirst();
+	this->setCurrentDeviceMenu_audio();
+	this->curretDevice->printCurrent();
+}
+
+void radioMenu::peripheryMenu_onTimeoutActions(void){
+	this->menuFunction_swithPeripheryDeviceToAudioDevice();
+}
+
+
+uint8_t radioMenu::peripheryMenu_TimeoutCounterIncrement(void){
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY) == pdTRUE){
+		uint8_t retVal = this->peripheryMenu_TimeoutCounter++;
+		xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+		return retVal;
+	}
+	return this->peripheryMenu_TimeoutCounter;
+}
+
+void radioMenu::peripheryMenu_TimeoutCounterReset(void){
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY) == pdTRUE){
+	this->peripheryMenu_TimeoutCounter++;
+	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+	}
 }

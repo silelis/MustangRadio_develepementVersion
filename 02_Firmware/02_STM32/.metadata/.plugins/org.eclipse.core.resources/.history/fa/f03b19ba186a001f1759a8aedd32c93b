@@ -1,0 +1,130 @@
+/*
+ * tasksFunctions.c
+ *
+ *  Created on: Jul 13, 2024
+ *      Author: dbank
+ */
+
+
+//#include "tasksFunctions.h"
+#include "SileliS_code/tasksFunctions.h"
+//#include <SileliS_code/myList.h>
+#include <SileliS_code/radioMenu.h>
+
+
+
+static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
+static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
+static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
+static i2cMaster* pi2cMaster=nullptr;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
+/*static*/ radioMenu* pRadioMenu=nullptr;
+
+
+
+static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
+	i2cFrame_transmitQueue tempI2CReceiveFrame;
+	while(1){
+		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
+			{
+			case I2C_SLAVE_ADDRESS_ESP32:
+				pESP32->parseReceivedData(tempI2CReceiveFrame);
+				break;
+			default:
+				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFrame.slaveDevice7bitAddress);
+				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
+				assert(0);
+			}
+			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
+		};
+	}
+}
+
+static void esp32IntrrruptRequestCallback(void *pNothing){
+	i2cFrame_transmitQueue tempI2CFrameForESP32;			//
+	tempI2CFrameForESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
+	while(1){
+		pESP32->isCountingSemaphoreOverflowed();
+		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
+			pESP32->i2cMasterSemaphoreTake();
+			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
+			pESP32->while_I2C_STATE_READY();
+			tempI2CFrameForESP32.pData = new char[tempI2CFrameForESP32.dataSize];
+			if (tempI2CFrameForESP32.pData!=nullptr){
+				pESP32->masterReceiveFromESP32_DMA((uint8_t*) tempI2CFrameForESP32.pData, tempI2CFrameForESP32.dataSize);
+				pESP32->while_I2C_STATE_READY();
+				pi2cMaster->pReceiveQueueObject->QueueSend(&tempI2CFrameForESP32);
+			}
+			else{
+				pESP32->seteDynamicmMemeoryAlocationError();
+			}
+			pESP32->i2cMasterSemaphoreGive();
+		}
+	};
+}
+
+
+void peripheryMenuTimeoutFunction(void* thing){
+	radioMenu* ptrRadioMenu = (radioMenu) thing;
+	assert(ptrRadioMenu);
+	while(1){
+		vTaskDelay(ptrRadioMenu->peripheryMenu_TimeoutTaskDelay);
+		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement()>=8){
+
+		}
+	}
+}
+
+
+
+static void manageRadioButtonsAndManue(void* noThing){
+	keyboardUnion receivedKeyboard;
+	while(1){
+		if(pRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
+
+			if(!pRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
+				if(!pRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
+					printf("%c %x - there is binded button.\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+				}
+			}
+		}
+	}
+}
+
+
+
+void initTaskFunctions(void){
+	assert(pi2cMaster = new i2cMaster(&hi2c1));
+	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
+
+	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
+	pi2cMaster->i2cMasterSemaphoreTake();
+	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
+		printf("ESP32 i2c bus not responding\r\n");
+	};
+	pi2cMaster->i2cMasterSemaphoreGive();
+	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
+
+
+	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+
+	pi2cMaster->while_I2C_STATE_READY();
+	pESP32->ping();
+
+	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
+	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
+	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
+	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
+
+
+	assert(pRadioMenu=new radioMenu());
+	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
+
+}
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+		pESP32->incrementInterruptRequestCountingSemaphore();		//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
+}

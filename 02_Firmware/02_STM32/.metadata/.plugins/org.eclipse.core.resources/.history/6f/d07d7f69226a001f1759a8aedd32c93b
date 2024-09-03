@@ -1,0 +1,185 @@
+/*
+ * radioMenu.cpp
+ *
+ *  Created on: Aug 25, 2024
+ *      Author: dbank
+ */
+
+#include <SileliS_code/radioMenu.h>
+
+radioMenu::radioMenu() {
+	queueRadioMenuKbrd = nullptr;
+	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
+
+	this->peripheryDevices = nullptr;
+	this->audioDevices=nullptr;
+	this->radioMainMenu = nullptr;
+
+	this->peripheryMenu_TimeoutCounter=0;
+	this->peripheryMenu_TimeoutCounterSemaphore=NULL;
+	configASSERT(this->peripheryMenu_TimeoutCounterSemaphore = xSemaphoreCreateBinary());
+	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+
+	configASSERT(this->peripheryMenu_TaskSuspendAllowedSemaphore = xSemaphoreCreateBinary());
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+
+
+	this->peripheryMenu_taskHandle=NULL;
+
+
+	this->createDeviceMenuList_periphery();
+	this->createDeviceMenuList_audio();
+	this->createDeviceMenuList_mainMenu();
+
+	this->setCurrentDeviceMenu_audio();
+	this->curretDevice->printCurrent();
+}
+
+void radioMenu::createDeviceMenuList_audio(void){
+
+	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"1st audio: ",5));
+	this->audioDevices->addAtEnd("2nd audio: ",5);
+	this->audioDevices->addAtEnd("3rd audio: ",5);
+
+	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
+	this->peripheryDevices->resetToFirst();
+	//this->audioDevices->moveToEnd();
+	//this->audioDevices->moveToNextInLoop();
+	//this->audioDevices->printList();
+
+	//this->setCurrentDeviceMenu_audio();
+	//this->curretDevice->printCurrent();
+}
+
+
+
+
+void radioMenu::createDeviceMenuList_periphery(void){
+
+	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"1st periph: ",3));
+	this->peripheryDevices->addAtEnd("2nd periph: ",3);
+	this->peripheryDevices->addAtEnd("3rd periph: ",3);
+
+	this->peripheryDevices->resetToFirst();
+	//this->peripheryDevices->printList();
+}
+
+void radioMenu::createDeviceMenuList_mainMenu(void){
+
+	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu: ",5));
+
+	//this->radioMainMenu->mI_appendDeInit(newFunc);
+	//this->radioMainMenu->mI_appendInit(newFunc);
+	keyboardUnion buttonSequence;
+
+	buttonSequence.array[0] ='b';
+	buttonSequence.array[1] = 0x3f; // short button equalizer pressed
+	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
+
+	buttonSequence.array[0] ='b';
+	buttonSequence.array[1] = 0x7e; // short button volume pressed
+	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
+
+
+}
+
+void radioMenu::setCurrentDeviceMenu_audio(void){
+	this->curretDevice=this->audioDevices;
+}
+
+void radioMenu::setCurrentDeviceMenu_periphery(void){
+	this->curretDevice=this->peripheryDevices;
+}
+
+
+BaseType_t radioMenu::queueRadioMenuKbrdSend(const void * kbrdUnionSend){
+	return xQueueSend(this->queueRadioMenuKbrd, kbrdUnionSend, pdMS_TO_TICKS(700));
+}
+
+BaseType_t radioMenu::queueRadioMenuKbrdReceive(keyboardUnion* kbrdUnionReceived){
+	BaseType_t retVal =  xQueueReceive(this->queueRadioMenuKbrd, kbrdUnionReceived, portMAX_DELAY);
+	this->peripheryMenu_TimeoutCounterReset();
+	return  retVal;
+}
+
+radioMenu::~radioMenu() {
+		//vTaskDelete(this->taskHandle_manageTheRadioManue);
+		vQueueDelete(queueRadioMenuKbrd);
+		xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY);
+		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
+		xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
+		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
+
+		vTaskDelete(this->peripheryMenu_taskHandle);
+
+		delete [] this->radioMainMenu;
+		delete [] this->audioDevices;
+		delete [] this->peripheryDevices;
+
+		//memset(&(this->ListHeader_audioDevices),0,sizeof(ListHeader));
+		//memset(&(this->ListHeader_peripheryDevices),0,sizeof(ListHeader));
+		//memset(&(this->ListHeader_mainMenu),0,sizeof(ListHeader));
+		this->curretDevice=nullptr;
+}
+
+bool radioMenu::executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence){
+	return this->radioMainMenu->mI_executeExecutableButtons(buttonSequence);
+}
+
+bool radioMenu::executeButtonFrom_curretDevice(keyboardUnion buttonSequence){
+	return this->curretDevice->mI_executeExecutableButtons(buttonSequence);
+}
+
+
+void radioMenu::menuFunction_equButShortPressed(void){
+	if (this->curretDevice != this->peripheryDevices){
+		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+		this->setCurrentDeviceMenu_periphery();
+		this->curretDevice->printCurrent();
+		this->peripheryMenu_TimeoutCounterReset();
+		vTaskResume(this->peripheryMenu_taskHandle);
+	}
+	else {
+		this->curretDevice->moveToNextInLoop();
+	}
+
+}
+
+void radioMenu::menuFunction_volButShortPressed(void){
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
+	if (this->curretDevice != this->audioDevices){
+		//this->peripheryDevices->mI_executeDeInit();
+		this->menuFunction_swithPeripheryDeviceToAudioDevice();
+	}
+	printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+	this->curretDevice->moveToNextInLoop();
+}
+
+void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice(void){
+	printf("%s switch from peripheryDevices to audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+
+	this->peripheryDevices->resetToFirst();
+	this->setCurrentDeviceMenu_audio();
+	this->curretDevice->printCurrent();
+}
+
+void radioMenu::peripheryMenu_onTimeoutActions(void){
+	this->menuFunction_swithPeripheryDeviceToAudioDevice();
+}
+
+
+uint8_t radioMenu::peripheryMenu_TimeoutCounterIncrement(void){
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY) == pdTRUE){
+		uint8_t retVal = this->peripheryMenu_TimeoutCounter++;
+		xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+		return retVal;
+	}
+	return this->peripheryMenu_TimeoutCounter;
+}
+
+void radioMenu::peripheryMenu_TimeoutCounterReset(void){
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY) == pdTRUE){
+	this->peripheryMenu_TimeoutCounter++;
+	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+	}
+}
