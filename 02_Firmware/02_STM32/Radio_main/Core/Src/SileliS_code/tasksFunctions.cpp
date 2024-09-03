@@ -65,14 +65,33 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 }
 
 
+void peripheryMenuTimeoutFunction(void* thing){
+	radioMenu* ptrRadioMenu = (radioMenu*) thing;
+	assert(ptrRadioMenu);
+	while(1){
+		vTaskDelay(pdMS_TO_TICKS(PERIPHERY_MENU_TIMEOUT_TASK_DELAY));
 
-static void manageRadioButtonsAndManue(void* noThing){
+		xSemaphoreTake(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
+		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement()>=6) {		//6 = 12 SECUNDS
+			//ptrRadioMenu->peripheryMenu_TimeoutCounterReset();
+			ptrRadioMenu->peripheryMenu_onTimeoutActions();
+			xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
+			vTaskSuspend(NULL);
+		}
+		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
+	}
+}
+
+
+
+static void manageRadioButtonsAndManue(void* thing){
+	radioMenu* ptrRadioMenu = (radioMenu*) thing;
+	assert(ptrRadioMenu);
 	keyboardUnion receivedKeyboard;
 	while(1){
-		if(pRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
-
-			if(!pRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
-				if(!pRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
+		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
+			if(!ptrRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
+				if(!ptrRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
 					printf("%c %x - there is binded button.\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
 				}
 			}
@@ -107,8 +126,10 @@ void initTaskFunctions(void){
 
 
 	assert(pRadioMenu=new radioMenu());
-	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, NULL, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
-
+	//tworzy task obsługujący pobieranie z kolejki klawiszy
+	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, pRadioMenu, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
+	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
+	xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle);
 }
 
 

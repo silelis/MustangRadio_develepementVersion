@@ -12,6 +12,7 @@
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
+#include "semphr.h"
 #include "comunicationStructures.h"
 
 
@@ -28,7 +29,7 @@ public:
 	bool executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence);
 	bool executeButtonFrom_curretDevice(keyboardUnion buttonSequence);
 
-	bool peripheryDevicesTimeoutReset(void);
+
 
 protected:
 
@@ -49,14 +50,25 @@ private:
 	myList*		audioDevices;				//lista wszystkich dostępnych menu urządzęń audio
 	myList*		peripheryDevices;			//lista wszystkich dostępnych do konfiguracji peryferiów
 
-	uint8_t		peripheryDevices_menuTimeout;
-
 	void createDeviceMenuList_audio(void);
 	void createDeviceMenuList_periphery(void);
 	void createDeviceMenuList_mainMenu(void);
 
 	void 		menuFunction_equButShortPressed(void);
 	void 		menuFunction_volButShortPressed(void);
+	void 		menuFunction_swithPeripheryDeviceToAudioDevice(void);
+	//friend		void manageRadioButtonsAndManue(void* thing);
+
+	uint8_t				peripheryMenu_TimeoutCounter;
+	SemaphoreHandle_t	peripheryMenu_TimeoutCounterSemaphore;
+	SemaphoreHandle_t	peripheryMenu_TaskSuspendAllowedSemaphore;
+public:
+	TaskHandle_t		peripheryMenu_taskHandle;
+private:
+	uint8_t peripheryMenu_TimeoutCounterIncrement(void);
+	void peripheryMenu_TimeoutCounterReset(void);
+	void peripheryMenu_onTimeoutActions(void);
+	friend void peripheryMenuTimeoutFunction(void* thing);
 };
 
 #endif /* INC_SILELIS_CODE_RADIOMENU_H_ */
