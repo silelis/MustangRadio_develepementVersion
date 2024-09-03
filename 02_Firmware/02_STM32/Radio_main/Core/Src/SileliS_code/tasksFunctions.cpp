@@ -68,6 +68,7 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 void peripheryMenuTimeoutFunction(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
+	bool selfSuspended = false;
 	while(1){
 		vTaskDelay(pdMS_TO_TICKS(PERIPHERY_MENU_TIMEOUT_TASK_DELAY));
 
@@ -75,10 +76,17 @@ void peripheryMenuTimeoutFunction(void* thing){
 		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement()>=6) {		//6 = 12 SECUNDS
 			//ptrRadioMenu->peripheryMenu_TimeoutCounterReset();
 			ptrRadioMenu->peripheryMenu_onTimeoutActions();
-			xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
+			//xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
 			vTaskSuspend(NULL);
+			selfSuspended = true;
 		}
-		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
+		if (selfSuspended == false){
+			xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);	//if self Suspended it means semaphore had been taken by menuFunction_equButShortPressed(void);
+		}
+		else{
+			selfSuspended = false;		//reset self Suspend notification
+		}
+
 	}
 }
 

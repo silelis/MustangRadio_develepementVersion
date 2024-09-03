@@ -1,4 +1,4 @@
-20:43:58 **** Incremental Build of configuration Debug for project Radio_main ****
+23:57:14 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j4 all 
 arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
 In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:27,
@@ -18,5 +18,5 @@ Finished building: default.size.stdout
 Finished building: Radio_main.list
  
 
-20:44:02 Build Finished. 0 errors, 1 warnings. (took 4s.238ms)
+23:57:18 Build Finished. 0 errors, 1 warnings. (took 3s.812ms)
 

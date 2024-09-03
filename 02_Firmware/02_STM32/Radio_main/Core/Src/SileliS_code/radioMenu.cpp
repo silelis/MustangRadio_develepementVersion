@@ -108,7 +108,7 @@ radioMenu::~radioMenu() {
 		xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY);
 		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
 		xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
-		vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
+		vSemaphoreDelete(this->peripheryMenu_TaskSuspendAllowedSemaphore);
 
 		vTaskDelete(this->peripheryMenu_taskHandle);
 
@@ -146,6 +146,9 @@ void radioMenu::menuFunction_equButShortPressed(void){
 }
 
 void radioMenu::menuFunction_volButShortPressed(void){
+	if (eTaskGetState(this->peripheryMenu_taskHandle)==eSuspended){
+		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);
+	}
 	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore, portMAX_DELAY);
 	if (this->curretDevice != this->audioDevices){
 		//this->peripheryDevices->mI_executeDeInit();
@@ -181,7 +184,7 @@ uint8_t radioMenu::peripheryMenu_TimeoutCounterIncrement(void){
 
 void radioMenu::peripheryMenu_TimeoutCounterReset(void){
 	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY) == pdTRUE){
-	this->peripheryMenu_TimeoutCounter++;
-	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+		this->peripheryMenu_TimeoutCounter++;
+		xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
 	}
 }
