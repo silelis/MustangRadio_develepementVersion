@@ -62,7 +62,11 @@ static void IRAM_ATTR button_isr_handler(void* arg1)
 	_gpioInterruptCallback->pbuttonsState->latchedState = 0; //////
 	
 	
-	ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
+	if (gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer) != ESP_OK) {
+		//starts debounce timer
+		KEYBOARD::gpio_intr_enableAll();
+	}
+//	ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
 }	
 
 
@@ -96,7 +100,13 @@ static void IRAM_ATTR volume_isr_handler(void* arg1)
 	_gpioInterruptCallback->pVolEncState->latchedQEM = 0;
 	_gpioInterruptCallback->pVolEncState->pulseIncrement = 0;
 	
-	ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
+	
+	
+	if (gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer) != ESP_OK) {
+		//starts debounce timer
+		KEYBOARD::gpio_intr_enableAll();
+	}
+	//ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
 }
 
 
@@ -123,13 +133,16 @@ static void IRAM_ATTR equaliser_isr_handler(void* arg1)
 	_gpioInterruptCallback->whichInput = HMI_INPUT_EQUALISER;//_gpioInterruptCallback->case_equaliserInput;
 	_gpioInterruptCallback->debounceTime = 0;
 	_gpioInterruptCallback->exitTimerInterrupt = pdTRUE;
+	
 	_gpioInterruptCallback->pEquEncState->lastState = KEYBOARD::encoderGetLevel(EquRot_A, EquRot_B);
 	_gpioInterruptCallback->pEquEncState->latchedQEM = 0;
 	_gpioInterruptCallback->pEquEncState->pulseIncrement = 0;
 
 	
-	
-	ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
+	if(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer) != ESP_OK) {		  //starts debounce timer
+		KEYBOARD::gpio_intr_enableAll();
+	}
+	//ESP_ERROR_CHECK(gptimer_start((gptimer_handle_t)_gpioInterruptCallback->pgptimer)); //starts debounce timer
 }
 
 /*---------------------------------------------------------------

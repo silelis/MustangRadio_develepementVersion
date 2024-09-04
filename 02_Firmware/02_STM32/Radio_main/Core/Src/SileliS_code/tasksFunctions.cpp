@@ -69,6 +69,7 @@ void peripheryMenuTimeoutFunction(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
 	bool selfSuspended = false;
+	vTaskSuspend(NULL);
 	while(1){
 		vTaskDelay(pdMS_TO_TICKS(PERIPHERY_MENU_TIMEOUT_TASK_DELAY));
 
