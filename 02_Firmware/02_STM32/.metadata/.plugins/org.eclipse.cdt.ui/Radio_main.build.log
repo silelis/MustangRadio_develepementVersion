@@ -1,17 +1,10 @@
-12:57:24 **** Incremental Build of configuration Debug for project Radio_main ****
+22:58:28 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j4 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
 arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 240424	    720	  27176	 268320	  41820	Radio_main.elf
+ 223976	    720	  27160	 251856	  3d7d0	Radio_main.elf
 Finished building: default.size.stdout
  
-Finished building: Radio_main.list
- 
 
-12:57:28 Build Finished. 0 errors, 0 warnings. (took 3s.586ms)
+22:58:30 Build Finished. 0 errors, 0 warnings. (took 1s.164ms)
 

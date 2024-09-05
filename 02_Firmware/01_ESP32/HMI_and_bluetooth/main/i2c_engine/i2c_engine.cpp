@@ -7,6 +7,16 @@ static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
 
+/*
+static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
+{
+	BaseType_t high_task_wakeup = pdFALSE;
+	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+	return high_task_wakeup == pdTRUE;
+}
+  */
+
 
 /*---------------------------------------------------------------
  * Konstruktor klasy odpwiadającej za komunikację ESP32 po i2c z
@@ -52,6 +62,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
+	
+	
 	//Tworzenie kolejki nadawczej
 	this->pTransmitQueueObject = NULL;
 	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));

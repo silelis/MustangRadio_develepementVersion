@@ -128,6 +128,16 @@ void initTaskFunctions(void){
 	pi2cMaster->while_I2C_STATE_READY();
 	pESP32->ping();
 
+	uint8_t dataToSend[1];
+	dataToSend[0]=9;
+
+	while(1){
+		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) dataToSend[0], sizeof(uint8_t), 2000);
+	}
+
+
+
+
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
