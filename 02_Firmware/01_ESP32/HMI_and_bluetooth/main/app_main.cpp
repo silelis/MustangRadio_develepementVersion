@@ -64,7 +64,7 @@ extern "C" void app_main(void)
 	//this project had been created with:
 	//- Visual Studio 2019
 	//- VisualGDB-6.0
-	//- esp-idf 5.2
+	//- esp-idf 5.2 ==? 5.2.2
 	/* CAUTION */
 		
 
