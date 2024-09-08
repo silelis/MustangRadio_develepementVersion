@@ -15,10 +15,14 @@
 #include "driver/i2c_slave.h"
 #include "freertos/queue.h"
 
+
+
+
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	BaseType_t high_task_wakeup = pdFALSE;
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+	//edata->buffer
 	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
 	//printf("1\n");
 	return high_task_wakeup == pdTRUE;
@@ -26,13 +30,13 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 
 void app_main(void)
 {
-	
-	
-
-	size_t 	 DATA_LENGTH = 1;
+	size_t 	 DATA_LENGTH = sizeof(uint8_t);
 
 	uint8_t *data_rd = (uint8_t *) malloc(DATA_LENGTH);
-	uint32_t size_rd = 0;
+	uint32_t size_rd = 0;	
+	
+
+
 
 	i2c_slave_config_t i2c_slv_config = {
 		.addr_bit_len = I2C_ADDR_BIT_LEN_7,
@@ -47,7 +51,7 @@ void app_main(void)
 	i2c_slave_dev_handle_t slave_handle;
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_slv_config, &slave_handle));
 
-	QueueHandle_t s_receive_queue = xQueueCreate(1, sizeof(i2c_slave_rx_done_event_data_t));
+	QueueHandle_t s_receive_queue = xQueueCreate(50, sizeof(i2c_slave_rx_done_event_data_t));
 	i2c_slave_event_callbacks_t cbs = {
 		.on_recv_done = i2c_slave_rx_done_callback,
 	};
@@ -55,10 +59,15 @@ void app_main(void)
 
 	i2c_slave_rx_done_event_data_t rx_data;
 	
+	esp_err_t retVal;
 	while (1)
 	{
-		ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, DATA_LENGTH));
+		retVal = i2c_slave_receive(slave_handle, data_rd, 6*DATA_LENGTH);
 		xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY);
+		retVal = retVal;
+		//rx_data;
+		//rx_data;
+		
 	}
 
 	ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, DATA_LENGTH));

@@ -128,11 +128,21 @@ void initTaskFunctions(void){
 	pi2cMaster->while_I2C_STATE_READY();
 	pESP32->ping();
 
-	uint8_t dataToSend[1];
-	dataToSend[0]=9;
-
+	uint8_t dataToSend[2];
+	dataToSend[0]='A';
+	dataToSend[1]='B';
+	uint8_t dataToSend1[2];
+	dataToSend1[0]='C';
+	dataToSend1[1]='D';
+	char trash[] = "Hello";
+	char start[] = "Start";
+	char trash1[] = "Hello";
+	HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash, 6*sizeof(uint8_t), 2000);
+	retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) start, 6*sizeof(uint8_t), 2000);
+	retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash1, 6*sizeof(uint8_t), 2000);
 	while(1){
-		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) dataToSend[0], sizeof(uint8_t), 2000);
+		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, dataToSend, 2*sizeof(uint8_t), 2000);
+		retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, dataToSend1, 2*sizeof(uint8_t), 2000);
 	}
 
 
