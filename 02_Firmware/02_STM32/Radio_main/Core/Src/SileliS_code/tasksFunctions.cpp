@@ -116,17 +116,28 @@ void initTaskFunctions(void){
 
 	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
 	pi2cMaster->i2cMasterSemaphoreTake();
-	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
+
+
+/*	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
 		printf("ESP32 i2c bus not responding\r\n");
-	};
+	}
+
+*/
+	;
 	pi2cMaster->i2cMasterSemaphoreGive();
 	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
 
 
 	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
-	pi2cMaster->while_I2C_STATE_READY();
-	pESP32->ping();
+//	pi2cMaster->while_I2C_STATE_READY();
+//	pESP32->ping();
+
+
+
+
+
+
 
 	uint8_t dataToSend[2];
 	dataToSend[0]='A';
@@ -134,15 +145,41 @@ void initTaskFunctions(void){
 	uint8_t dataToSend1[2];
 	dataToSend1[0]='C';
 	dataToSend1[1]='D';
-	char trash[] = "Hello";
+	char trash[] = "HelloABCDEF";
 	char start[] = "Start";
 	char trash1[] = "Hello";
-	HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash, 6*sizeof(uint8_t), 2000);
-	retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) start, 6*sizeof(uint8_t), 2000);
-	retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash1, 6*sizeof(uint8_t), 2000);
+
+	i2cFrame_transmitQueue testTransm;
+
+	testTransm.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit<<1;
+	testTransm.dataSize =sizeof(trash);
+	testTransm.pData = &trash;
+
+	void* testBuffer;
+	size_t bufferLenght = sizeof(testTransm.dataSize)+testTransm.dataSize;
+	testBuffer = new char[bufferLenght];
+
+	memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
+	memcpy(testBuffer+sizeof(size_t), testTransm.pData, testTransm.dataSize);
+
+
+	//memcpy(testBuffer, &testTransm.dataSize,(sizeof(testTransm.dataSize)+testTransm.dataSize));
+
+
+	//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash, 6*sizeof(uint8_t), 2000);
+	//retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) start, 6*sizeof(uint8_t), 2000);
+	//retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash1, 6*sizeof(uint8_t), 2000);
+
+
 	while(1){
-		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, dataToSend, 2*sizeof(uint8_t), 2000);
-		retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, dataToSend1, 2*sizeof(uint8_t), 2000);
+	//	HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
+		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
+		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+
+		HAL_Delay(2000);
+		uint8_t data;
+
 	}
 
 

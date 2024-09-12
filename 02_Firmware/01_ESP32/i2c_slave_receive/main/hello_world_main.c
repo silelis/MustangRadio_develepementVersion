@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: CC0-1.0
  */
 
+//#define SOC_I2C_SLAVE_SUPPORT_I2CRAM_ACCESS
 #include <stdio.h>
 #include <inttypes.h>
 #include "sdkconfig.h"
@@ -14,23 +15,42 @@
 #include "esp_system.h"
 #include "driver/i2c_slave.h"
 #include "freertos/queue.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 
+typedef struct {
+	size_t dataSize; //jak wyżej
+	void *pData; //jak wyżej
+} i2cFrame_transmitQueue;				//jak wyżej
 
 
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
+	i2cFrame_transmitQueue receivedFrame;
 	BaseType_t high_task_wakeup = pdFALSE;
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	//edata->buffer
+	receivedFrame.dataSize = 12; //*(size_t*)edata->buffer;
+	
+	//void* receivedData;
+	char*  receivedData = (char*) malloc(receivedFrame.dataSize) ; 
+	char* data_start = (char*)edata->buffer;// + sizeof(size_t);
+
+	//memcpy(&receivedData, (char*)edata->buffer + sizeof(size_t), receivedFrame.dataSize);
+	//memcpy(receivedData, data_start, receivedFrame.dataSize);
+	
+	
+	
 	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	//printf("1\n");
+	
+	//void* data = receivedFrame->pData;
 	return high_task_wakeup == pdTRUE;
 }
 
 void app_main(void)
 {
-	size_t 	 DATA_LENGTH = sizeof(uint8_t);
+	size_t 	 DATA_LENGTH = 4*sizeof(uint8_t);
 
 	uint8_t *data_rd = (uint8_t *) malloc(DATA_LENGTH);
 	uint32_t size_rd = 0;	
@@ -46,6 +66,7 @@ void app_main(void)
 		.scl_io_num = GPIO_NUM_22, //I2C_SLAVE_SCL_IO,
 		.sda_io_num = GPIO_NUM_21, //I2C_SLAVE_SDA_IO,
 		.slave_addr = 0x3c, //0x58,
+		
 	};
 
 	i2c_slave_dev_handle_t slave_handle;
@@ -62,9 +83,9 @@ void app_main(void)
 	esp_err_t retVal;
 	while (1)
 	{
-		retVal = i2c_slave_receive(slave_handle, data_rd, 6*DATA_LENGTH);
+		retVal = i2c_slave_receive(slave_handle, data_rd, 56);
 		xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY);
-		retVal = retVal;
+		//retVal = retVal;
 		//rx_data;
 		//rx_data;
 		
