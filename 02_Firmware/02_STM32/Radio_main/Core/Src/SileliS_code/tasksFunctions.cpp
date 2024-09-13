@@ -133,7 +133,10 @@ void initTaskFunctions(void){
 //	pi2cMaster->while_I2C_STATE_READY();
 //	pESP32->ping();
 
+	//char trash111[] = "123456789";
+	//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) trash111, 10,20000);
 
+//	HAL_Delay(7000);
 
 
 
@@ -172,13 +175,18 @@ void initTaskFunctions(void){
 
 
 	while(1){
-	//	HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
-		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
 
-		HAL_Delay(2000);
-		uint8_t data;
+		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
+		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+
+		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
+		for(uint32_t i=0; i<0xaffff; i++){
+
+		}
+		//uint8_t data;
 
 	}
 
