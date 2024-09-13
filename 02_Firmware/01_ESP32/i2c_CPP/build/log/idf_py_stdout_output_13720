@@ -1,0 +1,50 @@
+-- IDF_TARGET is not set, guessed 'esp32' from sdkconfig 'D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/sdkconfig'
+-- Found Git: C:/Program Files/Git/cmd/git.exe (found version "2.43.0.windows.1") 
+-- ccache will be used for faster recompilation
+-- The C compiler identification is GNU 13.2.0
+-- The CXX compiler identification is GNU 13.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/Espressif/tools/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Espressif/tools/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Espressif/tools/xtensa-esp-elf/esp-13.2.0_20230928/xtensa-esp-elf/bin/xtensa-esp32-elf-g++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32
+-- Project sdkconfig file D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/sdkconfig
+Loading defaults file D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/sdkconfig.defaults...
+-- Compiler supported targets: xtensa-esp-elf
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of time_t
+-- Check size of time_t - done
+-- Found Python3: C:/Espressif/python_env/idf5.2_py3.8_env/Scripts/python.exe (found version "3.8.10") found components: Interpreter 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- App "cpp_exceptions_example" version: 9cf6dc0e-dirty
+-- Adding linker script D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/build/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script C:/SysGCC/esp32/esp-idf/v5.2.2/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_bootloader_format esp_coex esp_common esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_system esp_timer esp_wifi espcoredump esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash nvs_sec_provider openthread partition_table perfmon protobuf-c protocomm pthread sdmmc soc spi_flash spiffs tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: C:/SysGCC/esp32/esp-idf/v5.2.2/components/app_trace C:/SysGCC/esp32/esp-idf/v5.2.2/components/app_update C:/SysGCC/esp32/esp-idf/v5.2.2/components/bootloader C:/SysGCC/esp32/esp-idf/v5.2.2/components/bootloader_support C:/SysGCC/esp32/esp-idf/v5.2.2/components/bt C:/SysGCC/esp32/esp-idf/v5.2.2/components/cmock C:/SysGCC/esp32/esp-idf/v5.2.2/components/console C:/SysGCC/esp32/esp-idf/v5.2.2/components/cxx C:/SysGCC/esp32/esp-idf/v5.2.2/components/driver C:/SysGCC/esp32/esp-idf/v5.2.2/components/efuse C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp-tls C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_adc C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_app_format C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_bootloader_format C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_coex C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_common C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_eth C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_event C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_gdbstub C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_hid C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_http_client C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_http_server C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_https_ota C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_https_server C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_hw_support C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_lcd C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_local_ctrl C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_mm C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_netif C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_netif_stack C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_partition C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_phy C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_pm C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_psram C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_ringbuf C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_rom C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_system C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_timer C:/SysGCC/esp32/esp-idf/v5.2.2/components/esp_wifi C:/SysGCC/esp32/esp-idf/v5.2.2/components/espcoredump C:/SysGCC/esp32/esp-idf/v5.2.2/components/esptool_py C:/SysGCC/esp32/esp-idf/v5.2.2/components/fatfs C:/SysGCC/esp32/esp-idf/v5.2.2/components/freertos C:/SysGCC/esp32/esp-idf/v5.2.2/components/hal C:/SysGCC/esp32/esp-idf/v5.2.2/components/heap C:/SysGCC/esp32/esp-idf/v5.2.2/components/http_parser C:/SysGCC/esp32/esp-idf/v5.2.2/components/idf_test C:/SysGCC/esp32/esp-idf/v5.2.2/components/ieee802154 C:/SysGCC/esp32/esp-idf/v5.2.2/components/json C:/SysGCC/esp32/esp-idf/v5.2.2/components/log C:/SysGCC/esp32/esp-idf/v5.2.2/components/lwip D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/main C:/SysGCC/esp32/esp-idf/v5.2.2/components/mbedtls C:/SysGCC/esp32/esp-idf/v5.2.2/components/mqtt C:/SysGCC/esp32/esp-idf/v5.2.2/components/newlib C:/SysGCC/esp32/esp-idf/v5.2.2/components/nvs_flash C:/SysGCC/esp32/esp-idf/v5.2.2/components/nvs_sec_provider C:/SysGCC/esp32/esp-idf/v5.2.2/components/openthread C:/SysGCC/esp32/esp-idf/v5.2.2/components/partition_table C:/SysGCC/esp32/esp-idf/v5.2.2/components/perfmon C:/SysGCC/esp32/esp-idf/v5.2.2/components/protobuf-c C:/SysGCC/esp32/esp-idf/v5.2.2/components/protocomm C:/SysGCC/esp32/esp-idf/v5.2.2/components/pthread C:/SysGCC/esp32/esp-idf/v5.2.2/components/sdmmc C:/SysGCC/esp32/esp-idf/v5.2.2/components/soc C:/SysGCC/esp32/esp-idf/v5.2.2/components/spi_flash C:/SysGCC/esp32/esp-idf/v5.2.2/components/spiffs C:/SysGCC/esp32/esp-idf/v5.2.2/components/tcp_transport C:/SysGCC/esp32/esp-idf/v5.2.2/components/ulp C:/SysGCC/esp32/esp-idf/v5.2.2/components/unity C:/SysGCC/esp32/esp-idf/v5.2.2/components/usb C:/SysGCC/esp32/esp-idf/v5.2.2/components/vfs C:/SysGCC/esp32/esp-idf/v5.2.2/components/wear_levelling C:/SysGCC/esp32/esp-idf/v5.2.2/components/wifi_provisioning C:/SysGCC/esp32/esp-idf/v5.2.2/components/wpa_supplicant C:/SysGCC/esp32/esp-idf/v5.2.2/components/xtensa
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/i2c_CPP/build
