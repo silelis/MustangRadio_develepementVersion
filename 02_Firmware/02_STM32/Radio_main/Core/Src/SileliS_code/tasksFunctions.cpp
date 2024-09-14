@@ -111,46 +111,10 @@ static void manageRadioButtonsAndManue(void* thing){
 
 
 void initTaskFunctions(void){
-	assert(pi2cMaster = new i2cMaster(&hi2c1));
-	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
-
-	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
-	pi2cMaster->i2cMasterSemaphoreTake();
 
 
-/*	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
-		printf("ESP32 i2c bus not responding\r\n");
-	}
-
-*/
-	;
-	pi2cMaster->i2cMasterSemaphoreGive();
-	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
-
-
-	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
-
-//	pi2cMaster->while_I2C_STATE_READY();
-//	pESP32->ping();
-
-	//char trash111[] = "123456789";
-	//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) trash111, 10,20000);
-
-//	HAL_Delay(7000);
-
-
-
-
-
-	uint8_t dataToSend[2];
-	dataToSend[0]='A';
-	dataToSend[1]='B';
-	uint8_t dataToSend1[2];
-	dataToSend1[0]='C';
-	dataToSend1[1]='D';
 	char trash[] = "HelloABCDEF";
-	char start[] = "Start";
-	char trash1[] = "Hello";
+
 
 	i2cFrame_transmitQueue testTransm;
 
@@ -166,22 +130,10 @@ void initTaskFunctions(void){
 	memcpy(testBuffer+sizeof(size_t), testTransm.pData, testTransm.dataSize);
 
 
-	//memcpy(testBuffer, &testTransm.dataSize,(sizeof(testTransm.dataSize)+testTransm.dataSize));
-
-
-	//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash, 6*sizeof(uint8_t), 2000);
-	//retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) start, 6*sizeof(uint8_t), 2000);
-	//retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*)  trash1, 6*sizeof(uint8_t), 2000);
-
-
 	while(1){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
 
 		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
-		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
-		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 
 		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
 		for(uint32_t i=0; i<0xfffff; i++){
@@ -192,6 +144,27 @@ void initTaskFunctions(void){
 	}
 
 
+	assert(pi2cMaster = new i2cMaster(&hi2c1));
+	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
+
+	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
+	pi2cMaster->i2cMasterSemaphoreTake();
+
+
+	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
+		printf("ESP32 i2c bus not responding\r\n");
+	}
+
+
+	;
+	pi2cMaster->i2cMasterSemaphoreGive();
+	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
+
+
+	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+
+	pi2cMaster->while_I2C_STATE_READY();
+	pESP32->ping();
 
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania

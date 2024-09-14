@@ -55,7 +55,7 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
 	this->i2cMasterSemaphoreTake();
-	HAL_I2C_DeInit(this->p_hi2c1);
+	//HAL_I2C_DeInit(this->p_hi2c1);
 	this->p_hi2c1 = NULL;
 	delete this->pReceiveQueueObject;
 	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
