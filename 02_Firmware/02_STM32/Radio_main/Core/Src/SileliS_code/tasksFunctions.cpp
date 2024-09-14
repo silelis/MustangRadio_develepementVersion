@@ -176,14 +176,15 @@ void initTaskFunctions(void){
 
 	while(1){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
+		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght,20000);
 
+		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
 		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
 		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 
 		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
-		for(uint32_t i=0; i<0xaffff; i++){
+		for(uint32_t i=0; i<0xfffff; i++){
 
 		}
 		//uint8_t data;
