@@ -16,6 +16,7 @@
 #include "semphr.h"
 #include "i2c_slave_master_queueClass.h"
 
+
 class i2cMaster {
 public:
 	i2cMaster(I2C_HandleTypeDef *hi2c1);
