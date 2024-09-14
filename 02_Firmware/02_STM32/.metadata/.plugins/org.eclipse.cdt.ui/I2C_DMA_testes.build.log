@@ -1,0 +1,43 @@
+11:03:57 **** Incremental Build of configuration Debug for project I2C_DMA_testes ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:125:22: error: 'new' undeclared (first use in this function)
+  125 |         testBuffer = new char[bufferLenght];
+      |                      ^~~
+../Core/Src/main.c:125:22: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:125:25: error: expected ';' before 'char'
+  125 |         testBuffer = new char[bufferLenght];
+      |                         ^~~~~
+      |                         ;
+../Core/Src/main.c:127:9: warning: implicit declaration of function 'memcpy' [-Wimplicit-function-declaration]
+  127 |         memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
+      |         ^~~~~~
+../Core/Src/main.c:25:1: note: include '<string.h>' or provide a declaration of 'memcpy'
+   24 | #include "gpio.h"
+  +++ |+#include <string.h>
+   25 | 
+../Core/Src/main.c:127:9: warning: incompatible implicit declaration of built-in function 'memcpy' [-Wbuiltin-declaration-mismatch]
+  127 |         memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
+      |         ^~~~~~
+../Core/Src/main.c:127:9: note: include '<string.h>' or provide a declaration of 'memcpy'
+../Core/Src/main.c:132:35: warning: unused variable 'retVal' [-Wunused-variable]
+  132 |                 HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght,20000);
+      |                                   ^~~~~~
+../Core/Src/main.c:115:14: warning: unused variable 'trash1' [-Wunused-variable]
+  115 |         char trash1[] = "Hello";
+      |              ^~~~~~
+../Core/Src/main.c:114:14: warning: unused variable 'start' [-Wunused-variable]
+  114 |         char start[] = "Start";
+      |              ^~~~~
+../Core/Src/main.c:110:17: warning: variable 'dataToSend1' set but not used [-Wunused-but-set-variable]
+  110 |         uint8_t dataToSend1[2];
+      |                 ^~~~~~~~~~~
+../Core/Src/main.c:107:17: warning: variable 'dataToSend' set but not used [-Wunused-but-set-variable]
+  107 |         uint8_t dataToSend[2];
+      |                 ^~~~~~~~~~
+make: *** [Core/Src/subdir.mk:49: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+
+11:03:57 Build Failed. 3 errors, 7 warnings. (took 408ms)
+
