@@ -18,8 +18,14 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
 	this->i2cMasterSemaphoreGive();
 	this->i2cMasterSemaphoreTake();
-	HAL_I2C_DeInit(p_hi2c1);
-	MX_I2C1_Init();
+
+
+
+	//HAL_I2C_DeInit(p_hi2c1);
+	//MX_I2C1_Init();
+
+
+
 	//vTaskDelay(pdMS_TO_TICKS(1000));
 	printf("%s bus had been initialized.\r\n",this->TAG);
 	this->i2cMasterSemaphoreGive();
