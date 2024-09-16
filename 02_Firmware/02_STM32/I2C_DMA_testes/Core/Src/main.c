@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "dma.h"
 #include "i2c.h"
 #include "usart.h"
@@ -25,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "queue.h"
 #define I2C_SLAVE_ADDRESS_ESP32	0x3C
 
 	typedef struct{
@@ -57,6 +59,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -100,53 +103,66 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-	uint8_t dataToSend[2];
-	dataToSend[0]='A';
-	dataToSend[1]='B';
-	uint8_t dataToSend1[2];
-	dataToSend1[0]='C';
-	dataToSend1[1]='D';
+
+	void* testBuffer;
+
+	QueueHandle_t handler_Queue = xQueueCreate(20, sizeof(uint8_t));
+
 	char trash[] = "HelloABCDEF";
-	char start[] = "Start";
-	char trash1[] = "Hello";
+
 
 	i2cFrame_transmitQueue testTransm;
 
-	testTransm.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32<<1;
+	testTransm.slaveDevice7bitAddress = 0x3C<<1;
 	testTransm.dataSize =sizeof(trash);
 	testTransm.pData = &trash;
 
-	void* testBuffer;
-	size_t bufferLenght = sizeof(testTransm.dataSize)+testTransm.dataSize;
-	testBuffer = malloc(bufferLenght); //new char[bufferLenght];
 
+	size_t bufferLenght = sizeof(testTransm.dataSize)+testTransm.dataSize;
+	testBuffer = malloc(bufferLenght);
 
 	memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
 	memcpy(testBuffer+sizeof(size_t), testTransm.pData, testTransm.dataSize);
-  while (1)
-  {
+
+
+	while(1){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght,20000);
 
 		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
-		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-		//HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit_DMA(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, (uint8_t*) testBuffer, bufferLenght);
-		//while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 
 		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
-//		for(uint32_t i=0; i<0xfffff; i++){
-//
-//		}
-		HAL_Delay(10);
+		for(uint32_t i=0; i<0xfffff; i++){
+
+		}
+		//uint8_t data;
+
+	}
+
+
+
+
+
+
+
+  /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
-  HAL_I2C_Master_Seq_Receive_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght, 10);
   /* USER CODE END 3 */
 }
 

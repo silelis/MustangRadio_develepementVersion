@@ -1,55 +1,10 @@
-20:51:24 **** Incremental Build of configuration Debug for project I2C_DMA_testes ****
+21:43:18 **** Incremental Build of configuration Debug for project I2C_DMA_testes ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:125:22: warning: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
-  125 |         testBuffer = malloc(bufferLenght); //new char[bufferLenght];
-      |                      ^~~~~~
-../Core/Src/main.c:25:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
-   24 | #include "gpio.h"
-  +++ |+#include <stdlib.h>
-   25 | 
-../Core/Src/main.c:125:22: warning: incompatible implicit declaration of built-in function 'malloc' [-Wbuiltin-declaration-mismatch]
-  125 |         testBuffer = malloc(bufferLenght); //new char[bufferLenght];
-      |                      ^~~~~~
-../Core/Src/main.c:125:22: note: include '<stdlib.h>' or provide a declaration of 'malloc'
-../Core/Src/main.c:128:9: warning: implicit declaration of function 'memcpy' [-Wimplicit-function-declaration]
-  128 |         memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
-      |         ^~~~~~
-../Core/Src/main.c:25:1: note: include '<string.h>' or provide a declaration of 'memcpy'
-   24 | #include "gpio.h"
-  +++ |+#include <string.h>
-   25 | 
-../Core/Src/main.c:128:9: warning: incompatible implicit declaration of built-in function 'memcpy' [-Wbuiltin-declaration-mismatch]
-  128 |         memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
-      |         ^~~~~~
-../Core/Src/main.c:128:9: note: include '<string.h>' or provide a declaration of 'memcpy'
-../Core/Src/main.c:135:35: warning: unused variable 'retVal' [-Wunused-variable]
-  135 |                 HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
-      |                                   ^~~~~~
-../Core/Src/main.c:115:14: warning: unused variable 'trash1' [-Wunused-variable]
-  115 |         char trash1[] = "Hello";
-      |              ^~~~~~
-../Core/Src/main.c:114:14: warning: unused variable 'start' [-Wunused-variable]
-  114 |         char start[] = "Start";
-      |              ^~~~~
-../Core/Src/main.c:110:17: warning: variable 'dataToSend1' set but not used [-Wunused-but-set-variable]
-  110 |         uint8_t dataToSend1[2];
-      |                 ^~~~~~~~~~~
-../Core/Src/main.c:107:17: warning: variable 'dataToSend' set but not used [-Wunused-but-set-variable]
-  107 |         uint8_t dataToSend[2];
-      |                 ^~~~~~~~~~
-arm-none-eabi-gcc -o "I2C_DMA_testes.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\I2C_DMA_testes\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="I2C_DMA_testes.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: I2C_DMA_testes.elf
- 
 arm-none-eabi-size  I2C_DMA_testes.elf 
-arm-none-eabi-objdump -h -S I2C_DMA_testes.elf  > "I2C_DMA_testes.list"
    text	   data	    bss	    dec	    hex	filename
-  43396	     96	   2448	  45940	   b374	I2C_DMA_testes.elf
+  46208	    100	  18044	  64352	   fb60	I2C_DMA_testes.elf
 Finished building: default.size.stdout
  
-Finished building: I2C_DMA_testes.list
- 
 
-20:51:25 Build Finished. 0 errors, 9 warnings. (took 1s.139ms)
+21:43:19 Build Finished. 0 errors, 0 warnings. (took 354ms)
 

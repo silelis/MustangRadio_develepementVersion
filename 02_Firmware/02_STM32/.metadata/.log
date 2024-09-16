@@ -4836,3 +4836,1114 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_reposit
 
 !ENTRY org.eclipse.core.resources 2 10035 2024-09-14 22:47:17.684
 !MESSAGE The workspace will exit with unsaved changes in this session.
+!SESSION 2024-09-14 22:48:36.392 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+
+!ENTRY org.eclipse.core.resources 2 10035 2024-09-14 22:48:38.873
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-09-14 22:48:41.950
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-09-14 22:48:41.951
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-14 22:48:47.911
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-09-14 22:49:02.362
+!MESSAGE Indexed 'Radio_main' (51 sources, 380 headers) in 14.3 sec: 44,021 declarations; 163,426 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.53%)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2024-09-14 22:51:56.927
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.debug.ui.actions.DsfResumeCommand$4$1@1df921f9): Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Connection is shut down' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2024-09-14 22:51:56.927
+!MESSAGE Connection is shut down
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 2 2 2024-09-14 22:52:05.615
+!MESSAGE ST-LINK firmware verification, Check required failed
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 2 2 2024-09-14 22:52:05.616
+!MESSAGE ST-LINK firmware verification, No latest info found: -1
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 2 2 2024-09-14 22:52:44.675
+!MESSAGE ST-LINK firmware verification, Check required failed
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 2 2 2024-09-14 22:52:44.675
+!MESSAGE ST-LINK firmware verification, No latest info found: -1
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2024-09-14 22:53:05.618
+!MESSAGE Error in final launch sequence:
+
+Failed to execute MI command:
+target remote localhost:61234
+
+Error message from debugger back end:
+localhost:61234: Connection timed out.
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to execute MI command:
+target remote localhost:61234
+
+Error message from debugger back end:
+localhost:61234: Connection timed out.
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.lang.Exception: localhost:61234: Connection timed out.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2024-09-14 22:53:05.618
+!MESSAGE Failed to execute MI command:
+target remote localhost:61234
+
+Error message from debugger back end:
+localhost:61234: Connection timed out.
+!STACK 0
+java.lang.Exception: localhost:61234: Connection timed out.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+!SESSION 2024-09-16 20:52:13.469 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-09-16 20:52:43.887
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-09-16 20:52:43.903
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-16 20:52:53.865
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.managedbuilder.core 4 0 2024-09-16 20:52:58.421
+!MESSAGE Project 'I2C_DMA_testes' is not open.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/I2C_DMA_testes)[372]: java.lang.Exception: Project 'I2C_DMA_testes' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.core.resources 4 372 2024-09-16 20:52:58.423
+!MESSAGE Project 'I2C_DMA_testes' is not open.
+!STACK 0
+java.lang.Exception: Project 'I2C_DMA_testes' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.cdt.core 4 0 2024-09-16 20:52:58.505
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: attempt to set description for a project which does not exist or not open
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.setCurrentDescription(XmlProjectDescriptionStorage.java:382)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.setLoaddedDescriptionOnLoad(XmlProjectDescriptionStorage.java:360)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:258)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.cdt.core 4 -1 2024-09-16 20:52:58.506
+!MESSAGE attempt to set description for a project which does not exist or not open
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-09-16 20:53:13.435
+!MESSAGE Indexed 'Radio_main' (51 sources, 380 headers) in 19.3 sec: 44,021 declarations; 163,418 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.53%)
+
+!ENTRY org.eclipse.cdt.make.core 4 0 2024-09-16 21:29:27.531
+!MESSAGE Project: Radio_main is closed or inaccessible!
+!STACK 1
+org.eclipse.core.runtime.CoreException: Project: Radio_main is closed or inaccessible!
+	at org.eclipse.cdt.internal.core.settings.model.ExceptionFactory.createCoreException(ExceptionFactory.java:25)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionStorage(CProjectDescriptionManager.java:888)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:425)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.createProjectDescription(CProjectDescriptionManager.java:612)
+	at org.eclipse.cdt.internal.core.CConfigBasedDescriptorManager.createProjDescriptionForDescriptor(CConfigBasedDescriptorManager.java:363)
+	at org.eclipse.cdt.internal.core.CConfigBasedDescriptorManager.findDescriptor(CConfigBasedDescriptorManager.java:333)
+	at org.eclipse.cdt.internal.core.CConfigBasedDescriptorManager.getDescriptor(CConfigBasedDescriptorManager.java:232)
+	at org.eclipse.cdt.core.CCorePlugin.getCProjectDescription(CCorePlugin.java:881)
+	at org.eclipse.cdt.make.internal.core.ProjectTargets.<init>(ProjectTargets.java:73)
+	at org.eclipse.cdt.make.internal.core.MakeTargetManager.readTargets(MakeTargetManager.java:326)
+	at org.eclipse.cdt.make.internal.core.MakeTargetManager.getTargets(MakeTargetManager.java:161)
+	at org.eclipse.cdt.make.internal.ui.MakeNavContentProvider.getContainer(MakeNavContentProvider.java:62)
+	at org.eclipse.cdt.make.internal.ui.MakeNavContentProvider.getChildren(MakeNavContentProvider.java:53)
+	at org.eclipse.ui.internal.navigator.extensions.SafeDelegateTreeContentProvider.getChildren(SafeDelegateTreeContentProvider.java:98)
+	at org.eclipse.ui.internal.navigator.extensions.SafeDelegateTreeContentProvider.getChildren(SafeDelegateTreeContentProvider.java:241)
+	at org.eclipse.ui.internal.navigator.extensions.SafeDelegateTreeContentProvider.getChildren(SafeDelegateTreeContentProvider.java:96)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceContentProvider$1.run(NavigatorContentServiceContentProvider.java:160)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceContentProvider.internalGetChildren(NavigatorContentServiceContentProvider.java:146)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceContentProvider.getChildren(NavigatorContentServiceContentProvider.java:132)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.getRawChildren(AbstractTreeViewer.java:1448)
+	at org.eclipse.jface.viewers.TreeViewer.getRawChildren(TreeViewer.java:351)
+	at org.eclipse.jface.viewers.StructuredViewer.getFilteredChildren(StructuredViewer.java:850)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.getSortedChildren(AbstractTreeViewer.java:655)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.updateChildren(AbstractTreeViewer.java:2781)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.internalRefreshStruct(AbstractTreeViewer.java:1995)
+	at org.eclipse.jface.viewers.TreeViewer.internalRefreshStruct(TreeViewer.java:688)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.internalRefresh(AbstractTreeViewer.java:1964)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.internalRefresh(AbstractTreeViewer.java:1921)
+	at org.eclipse.ui.navigator.CommonViewer.internalRefresh(CommonViewer.java:530)
+	at org.eclipse.jface.viewers.StructuredViewer.lambda$3(StructuredViewer.java:1491)
+	at org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1397)
+	at org.eclipse.jface.viewers.TreeViewer.preservingSelection(TreeViewer.java:366)
+	at org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1358)
+	at org.eclipse.jface.viewers.StructuredViewer.refresh(StructuredViewer.java:1491)
+	at org.eclipse.jface.viewers.ColumnViewer.refresh(ColumnViewer.java:538)
+	at org.eclipse.ui.navigator.CommonViewer.refresh(CommonViewer.java:349)
+	at org.eclipse.ui.navigator.CommonViewer.refresh(CommonViewer.java:493)
+	at org.eclipse.cdt.ui.CElementContentProvider$RefreshElement.refresh(CElementContentProvider.java:367)
+	at org.eclipse.cdt.ui.CElementContentProvider.lambda$1(CElementContentProvider.java:450)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2024-09-16 21:29:27.531
+!MESSAGE Project: Radio_main is closed or inaccessible!
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2024-09-16 21:35:37.250
+!MESSAGE Error in final launch sequence:
+
+Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\I2C_DMA_testes\\Debug\\I2C_DMA_testes.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\I2C_DMA_testes\\Debug\\I2C_DMA_testes.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Contains: Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\I2C_DMA_testes\\Debug\\I2C_DMA_testes.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+java.lang.Exception: You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+!SUBENTRY 1 org.eclipse.cdt.dsf 4 10004 2024-09-16 21:35:37.250
+!MESSAGE Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\I2C_DMA_testes\\Debug\\I2C_DMA_testes.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!SUBENTRY 2 org.eclipse.cdt.dsf.gdb 4 10004 2024-09-16 21:35:37.250
+!MESSAGE Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\I2C_DMA_testes\\Debug\\I2C_DMA_testes.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!STACK 0
+java.lang.Exception: You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+
+!ENTRY org.eclipse.cdt.managedbuilder.core 4 0 2024-09-16 21:36:22.703
+!MESSAGE Project 'Radio_main' is not open.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/Radio_main)[372]: java.lang.Exception: Project 'Radio_main' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.core.resources 4 372 2024-09-16 21:36:22.703
+!MESSAGE Project 'Radio_main' is not open.
+!STACK 0
+java.lang.Exception: Project 'Radio_main' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.cdt.managedbuilder.core 4 0 2024-09-16 21:36:22.716
+!MESSAGE Project 'Radio_main' is not open.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/Radio_main)[372]: java.lang.Exception: Project 'Radio_main' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.core.resources 4 372 2024-09-16 21:36:22.716
+!MESSAGE Project 'Radio_main' is not open.
+!STACK 0
+java.lang.Exception: Project 'Radio_main' is not open.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:186)
+	at org.eclipse.core.internal.resources.Project.getDescription(Project.java:430)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.cacheNaturesIdsUsedOnCache(ConfigurationDataProvider.java:383)
+	at org.eclipse.cdt.managedbuilder.internal.dataprovider.ConfigurationDataProvider.loadConfiguration(ConfigurationDataProvider.java:580)
+	at org.eclipse.cdt.internal.core.settings.model.CConfigurationDescriptionCache.loadData(CConfigurationDescriptionCache.java:139)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescription.loadDatas(CProjectDescription.java:199)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.loadProjectDescription(XmlProjectDescriptionStorage.java:509)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:239)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.cdt.core 4 0 2024-09-16 21:36:22.725
+!MESSAGE Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: attempt to set description for a project which does not exist or not open
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.setCurrentDescription(XmlProjectDescriptionStorage.java:382)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.setLoaddedDescriptionOnLoad(XmlProjectDescriptionStorage.java:360)
+	at org.eclipse.cdt.internal.core.settings.model.xml.XmlProjectDescriptionStorage.getProjectDescription(XmlProjectDescriptionStorage.java:258)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescriptionInternal(CProjectDescriptionManager.java:426)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:408)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:402)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.getProjectDescription(CProjectDescriptionManager.java:395)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.isNewStyleProject(CProjectDescriptionManager.java:2464)
+	at org.eclipse.cdt.core.model.CoreModel.isNewStyleProject(CoreModel.java:1457)
+	at org.eclipse.cdt.ui.newui.ManageConfigSelector.getProjects(ManageConfigSelector.java:104)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.hasManagedCdtProjectSelection(HasManagedCdtProjectSelection.java:43)
+	at org.eclipse.cdt.internal.ui.workingsets.HasManagedCdtProjectSelection.test(HasManagedCdtProjectSelection.java:33)
+	at org.eclipse.core.internal.expressions.Property.test(Property.java:65)
+	at org.eclipse.core.expressions.TestExpression.evaluate(TestExpression.java:107)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:79)
+	at org.eclipse.ui.internal.services.EvaluationReference.evaluate(EvaluationReference.java:109)
+	at org.eclipse.ui.internal.services.EvaluationReference.changed(EvaluationReference.java:103)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:105)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:358)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:374)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.deactivate(EclipseContext.java:681)
+	at org.eclipse.e4.ui.workbench.renderers.swt.MenuManagerHideProcessor.lambda$1(MenuManagerHideProcessor.java:144)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SUBENTRY 1 org.eclipse.cdt.core 4 -1 2024-09-16 21:36:22.726
+!MESSAGE attempt to set description for a project which does not exist or not open
+
+!ENTRY org.eclipse.ui 4 0 2024-09-16 22:11:55.148
+!MESSAGE Unhandled event loop exception
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.ui.IWorkbenchPage.getWorkbenchWindow()" because the return value of "org.eclipse.ui.IViewSite.getPage()" is null
+	at org.eclipse.debug.internal.ui.actions.breakpoints.EnableBreakpointsAction.lambda$0(EnableBreakpointsAction.java:246)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.block(ModalContext.java:166)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:368)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:470)
+	at org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog.run(ProgressMonitorJobsDialog.java:230)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.disconnectFromWorkspace(IDEWorkbenchAdvisor.java:559)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$2.run(IDEWorkbenchAdvisor.java:366)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.postShutdown(IDEWorkbenchAdvisor.java:387)
+	at org.eclipse.ui.internal.Workbench.shutdown(Workbench.java:3037)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1150)
+	at org.eclipse.ui.internal.Workbench.lambda$4(Workbench.java:1418)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1418)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1394)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1718)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1745)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1745)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1754)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:570)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:102)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:102)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4273)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1066)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1090)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1075)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:269)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1550)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4746)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3657)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.ui 4 0 2024-09-16 22:11:55.150
+!MESSAGE Unhandled event loop exception
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.ui.IWorkbenchPage.getWorkbenchWindow()" because the return value of "org.eclipse.ui.IViewSite.getPage()" is null
+	at org.eclipse.debug.internal.ui.actions.breakpoints.EnableBreakpointsAction.lambda$0(EnableBreakpointsAction.java:246)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.block(ModalContext.java:166)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:368)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:470)
+	at org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog.run(ProgressMonitorJobsDialog.java:230)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.disconnectFromWorkspace(IDEWorkbenchAdvisor.java:559)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$2.run(IDEWorkbenchAdvisor.java:366)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.postShutdown(IDEWorkbenchAdvisor.java:387)
+	at org.eclipse.ui.internal.Workbench.shutdown(Workbench.java:3037)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1150)
+	at org.eclipse.ui.internal.Workbench.lambda$4(Workbench.java:1418)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1418)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1394)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1718)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1745)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1745)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1754)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:570)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:102)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:102)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4273)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1066)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1090)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1075)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:269)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1550)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4746)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3657)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+!SESSION 2024-09-16 22:15:37.652 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-09-16 22:16:00.403
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-09-16 22:16:00.404
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-16 22:16:06.982
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-09-16 22:16:22.410
+!MESSAGE Indexed 'Radio_main' (51 sources, 380 headers) in 14 sec: 44,021 declarations; 163,426 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.53%)
+
+!ENTRY org.eclipse.ui 4 0 2024-09-16 22:16:48.767
+!MESSAGE Unhandled event loop exception
+!STACK 0
+org.eclipse.swt.SWTException: Widget is disposed
+	at org.eclipse.swt.SWT.error(SWT.java:4918)
+	at org.eclipse.swt.SWT.error(SWT.java:4833)
+	at org.eclipse.swt.SWT.error(SWT.java:4804)
+	at org.eclipse.swt.widgets.Widget.error(Widget.java:450)
+	at org.eclipse.swt.widgets.Widget.checkWidget(Widget.java:369)
+	at org.eclipse.swt.widgets.Widget.getData(Widget.java:515)
+	at com.st.stm32cube.ide.mcu.sfrview.ui.SfrView$SfrTabFolder.getTabInfo(SfrView.java:822)
+	at com.st.stm32cube.ide.mcu.sfrview.ui.SfrView$10.run(SfrView.java:1459)
+	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
+	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:172)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.block(ModalContext.java:166)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:368)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:470)
+	at org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog.run(ProgressMonitorJobsDialog.java:230)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.disconnectFromWorkspace(IDEWorkbenchAdvisor.java:559)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$2.run(IDEWorkbenchAdvisor.java:366)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.postShutdown(IDEWorkbenchAdvisor.java:387)
+	at org.eclipse.ui.internal.Workbench.shutdown(Workbench.java:3037)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1150)
+	at org.eclipse.ui.internal.Workbench.lambda$4(Workbench.java:1418)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1418)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1394)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1718)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1745)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1745)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1754)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:570)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:102)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:102)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4273)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1066)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1090)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1075)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:269)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1550)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4746)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3657)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.core.jobs 4 2 2024-09-16 22:16:48.774
+!MESSAGE An internal error occurred during: "Debugger Update Job".
+!STACK 0
+java.lang.NullPointerException: Cannot read the array length because "expanded[0]" is null
+	at com.st.stm32cube.ide.mcu.sfrview.ui.SfrView.getVisibleSfrRegisters(SfrView.java:1470)
+	at com.st.stm32cube.ide.mcu.sfrview.ui.SfrView.updateData(SfrView.java:1816)
+	at com.st.stm32cube.ide.mcu.debug.ui.views.AbstractCubeIdeDebugView$UpdateJob.run(AbstractCubeIdeDebugView.java:77)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.workbench 4 0 2024-09-16 22:16:48.893
+!MESSAGE An internal error has occurred.
+!STACK 0
+org.eclipse.swt.SWTException: Widget is disposed
+	at org.eclipse.swt.SWT.error(SWT.java:4918)
+	at org.eclipse.swt.SWT.error(SWT.java:4833)
+	at org.eclipse.swt.SWT.error(SWT.java:4804)
+	at org.eclipse.swt.widgets.Widget.error(Widget.java:450)
+	at org.eclipse.swt.widgets.Widget.checkWidget(Widget.java:369)
+	at org.eclipse.swt.widgets.Tree.getSelection(Tree.java:3552)
+	at org.eclipse.jface.viewers.TreeViewer.getSelection(TreeViewer.java:232)
+	at org.eclipse.jface.viewers.TreeViewer.setSelection(TreeViewer.java:309)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.setSelectionToWidget(AbstractTreeViewer.java:2671)
+	at org.eclipse.jface.viewers.AbstractTreeViewer.setSelectionToWidget(AbstractTreeViewer.java:3135)
+	at org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1404)
+	at org.eclipse.jface.viewers.TreeViewer.preservingSelection(TreeViewer.java:366)
+	at org.eclipse.jface.viewers.StructuredViewer.preservingSelection(StructuredViewer.java:1358)
+	at org.eclipse.jface.viewers.StructuredViewer.refresh(StructuredViewer.java:1468)
+	at org.eclipse.jface.viewers.ColumnViewer.refresh(ColumnViewer.java:526)
+	at org.eclipse.cdt.debug.internal.ui.views.executables.ExecutablesContentProvider$1.runInUIThread(ExecutablesContentProvider.java:132)
+	at org.eclipse.ui.progress.UIJob.lambda$0(UIJob.java:148)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.block(ModalContext.java:166)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:368)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:470)
+	at org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog.run(ProgressMonitorJobsDialog.java:230)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.disconnectFromWorkspace(IDEWorkbenchAdvisor.java:559)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor$2.run(IDEWorkbenchAdvisor.java:366)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.postShutdown(IDEWorkbenchAdvisor.java:387)
+	at org.eclipse.ui.internal.Workbench.shutdown(Workbench.java:3037)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1150)
+	at org.eclipse.ui.internal.Workbench.lambda$4(Workbench.java:1418)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1418)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1394)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1718)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1745)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1745)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1754)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:570)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:102)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:102)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4273)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1066)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1090)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1075)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:269)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1550)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4746)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:508)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4845)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:340)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1478)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2305)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5039)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3657)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 0 2024-09-16 22:16:49.363
+!MESSAGE Unexpected error loading extension: org.eclipse.equinox.p2.metadata.repository.compositeRepository
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.equinox.internal.p2.repository.Transport.download(java.net.URI, java.io.OutputStream, org.eclipse.core.runtime.IProgressMonitor)" because the return value of "org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getTransport()" is null
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.handleRemoteIndexFile(AbstractRepositoryManager.java:742)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadIndexFile(AbstractRepositoryManager.java:736)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:678)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:110)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:105)
+	at org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository.addChild(CompositeMetadataRepository.java:161)
+	at org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository.<init>(CompositeMetadataRepository.java:93)
+	at org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepositoryFactory.load(CompositeMetadataRepositoryFactory.java:124)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.factoryLoad(MetadataRepositoryManager.java:63)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:791)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:689)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:110)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:105)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker.getAvailableRepositories(UpdateChecker.java:152)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker.checkForUpdates(UpdateChecker.java:130)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker$UpdateCheckThread.run(UpdateChecker.java:78)
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2024-09-16 22:16:49.365
+!MESSAGE No repository found at https://sw-center.st.com/stm32cubeide/updatesite1.
+
+!ENTRY org.eclipse.equinox.p2.updatechecker 4 0 2024-09-16 22:16:49.365
+!MESSAGE Exception in update check thread
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.equinox.internal.p2.repository.Transport.download(java.net.URI, java.io.OutputStream, org.eclipse.core.runtime.IProgressMonitor)" because the return value of "org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getTransport()" is null
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.handleRemoteIndexFile(AbstractRepositoryManager.java:742)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadIndexFile(AbstractRepositoryManager.java:736)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:678)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:110)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:105)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker.getAvailableRepositories(UpdateChecker.java:152)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker.checkForUpdates(UpdateChecker.java:130)
+	at org.eclipse.equinox.internal.p2.updatechecker.UpdateChecker$UpdateCheckThread.run(UpdateChecker.java:78)
+
+!ENTRY org.eclipse.core.jobs 4 2 2024-09-16 22:16:49.610
+!MESSAGE An internal error occurred during: "Execute Debug Command".
+!STACK 0
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: The application has not been initialized.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:119)
+	at org.eclipse.core.internal.runtime.InternalPlatform.assertInitialized(InternalPlatform.java:183)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getAdapterManager(InternalPlatform.java:204)
+	at org.eclipse.core.runtime.Platform.getAdapterManager(Platform.java:662)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.getAdapter(GdbLaunch.java:454)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.disconnect(GdbLaunch.java:338)
+	at org.eclipse.debug.internal.core.commands.DisconnectCommand.execute(DisconnectCommand.java:35)
+	at org.eclipse.debug.internal.core.commands.ForEachCommand.doExecute(ForEachCommand.java:36)
+	at org.eclipse.debug.core.commands.AbstractDebugCommand$1.run(AbstractDebugCommand.java:215)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 2 2 2024-09-16 22:16:49.939
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+
+!ENTRY org.eclipse.core.jobs 2 2 2024-09-16 22:16:49.940
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.debug.core.DebugPlugin$EventDispatchJob
