@@ -7,7 +7,7 @@
 //#include <iostream>
 
 #define DEFAULT_TRANSMIT_QUEUE_SIZE	20
-#define DEFAULT_RECEIVE_QUEUE_SIZE	25
+#define DEFAULT_RECEIVE_QUEUE_SIZE	20
 
 #ifdef  /*TOOLCHAIN_ENVIRONMENT == __esp32__ */ ESP_PLATFORM
 	#include "freertos/FreeRTOS.h"
