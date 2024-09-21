@@ -1,0 +1,47 @@
+/*
+ * myPrintfTask.cpp
+ *
+ *  Created on: Sep 21, 2024
+ *      Author: dbank
+ */
+
+#include <myPrintfTask.h>
+
+myPrintfTask::myPrintfTask(UART_HandleTypeDef* huart, UBaseType_t printfTaskQueueLength):i2cQueue4DynamicData(printfTaskQueueLength) {
+	// TODO Auto-generated constructor stub
+	this->pHuart = huart;
+}
+
+myPrintfTask::~myPrintfTask() {
+	// TODO Auto-generated destructor stub
+}
+
+
+// Funkcja myPrintf, która zapisuje sformatowany tekst pod wskaźnikiem
+BaseType_t myPrintfTask::myPrintf(const char *format, ...) {
+	i2cFrame_transmitQueue itemToPront;
+
+	itemToPront.keyboardData.
+	va_list args;
+    va_start(args, format);
+
+    // Najpierw określamy długość wynikowego sformatowanego ciągu
+    int length = vsnprintf(NULL, 0, format, args);
+
+    // Resetujemy va_list, aby móc go użyć ponownie
+    va_end(args);
+    va_start(args, format);
+
+    // Alokujemy odpowiednią ilość pamięci
+    char *buffer = (char*)malloc((length + 1) * sizeof(char));
+
+    if (buffer != NULL) {
+        // Właściwe formatowanie do bufora
+        vsnprintf(buffer, length + 1, format, args);
+    }
+
+    // Zwalniamy zasoby
+    va_end(args);
+
+    return buffer;  // Zwracamy wskaźnik na sformatowany ciąg
+}

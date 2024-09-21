@@ -1,0 +1,20 @@
+/*
+ * myPrintfTask.cpp
+ *
+ *  Created on: Sep 21, 2024
+ *      Author: dbank
+ */
+
+#include <myPrintfTask.h>
+
+myPrintfTask::myPrintfTask(UART_HandleTypeDef* huart, UBaseType_t printfTaskQueueLength) {
+	// TODO Auto-generated constructor stub
+	this->pHuart = huart;
+
+
+}
+
+myPrintfTask::~myPrintfTask() {
+	// TODO Auto-generated destructor stub
+}
+

@@ -33,6 +33,7 @@ public:
 	~i2cQueue4DynamicData(void);
 	
 	BaseType_t QueueSend(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue);
+	BaseType_t QueueSendFromISR(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t  QueueReceive(/*void*/i2cFrame_transmitQueue * /*const*/ pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 

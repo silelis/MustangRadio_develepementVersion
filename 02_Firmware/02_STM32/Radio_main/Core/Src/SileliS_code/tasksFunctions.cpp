@@ -13,13 +13,15 @@
 
 
 
-static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;				//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
+static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;					//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
-static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;		//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
-static i2cMaster* pi2cMaster=nullptr;  										//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;						//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
+static TaskHandle_t taskHandle_PrintfTask=nullptr;								//uchwyt do taska kontrolujący wyświetlaniekomunikatów na uart
+
+static i2cMaster* pi2cMaster=nullptr;  											//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
 /*static*/ radioMenu* pRadioMenu=nullptr;
-
+myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisanie komunikatow na konsolę
 
 
 static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
@@ -108,12 +110,24 @@ static void manageRadioButtonsAndManue(void* thing){
 	}
 }
 
+static void printfTask(void* noThing){
+	i2cFrame_transmitQueue itemToPrint;
+	pPrintf->feedPrintf("Radio firmware version: %.2f", FW_VERSION);
+	while(1){
+		if(pPrintf->QueueReceive(&itemToPrint, portMAX_DELAY)==pdTRUE){
+			pPrintf->myPrintf(itemToPrint);
+			pPrintf->QueueDeleteDataFromPointer(itemToPrint);
+		}
+	}
+}
 
 
-void initTaskFunctions(void){
+
+static void initTaskFunctions(void){
 
 
-	char trash[] = "HelloABCDEF";
+
+	/*char trash[] = "HelloABCDEF";
 
 
 	i2cFrame_transmitQueue testTransm;
@@ -141,7 +155,7 @@ void initTaskFunctions(void){
 		}
 		//uint8_t data;
 
-	}
+	}*/
 
 
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
@@ -161,7 +175,7 @@ void initTaskFunctions(void){
 	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
 
 
-	printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+	//printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
 	pi2cMaster->while_I2C_STATE_READY();
 	pESP32->ping();
@@ -175,11 +189,29 @@ void initTaskFunctions(void){
 
 	assert(pRadioMenu=new radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
-	xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, pRadioMenu, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/);
+	configASSERT(xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, pRadioMenu, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/));
 	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
-	xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle);
+	configASSERT(xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle));
 }
 
+
+static TaskHandle_t taskHandle_initTaskFunctions=nullptr;						//uchwyt do taska (jodnorazowo wywolanego), który uruchamia całą konfigurację, trzeba tak to zrobić, aby printf działąło w tasku (task printf musi sie uruchomić  przed wszystkimi)
+static void startUpTask_initTaskFunctions(void* noThing){
+	vTaskDelay(pdMS_TO_TICKS(2500));
+	initTaskFunctions();
+	vTaskDelete(taskHandle_initTaskFunctions);
+}
+
+
+void startUpTask(void* noThing){
+	//printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+	assert(pPrintf= new myPrintfTask(&huart1, 15));
+
+	assert(xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask));
+	//pPrintf->feedPrintf("Radio main firmware version: %.2f\r\n", FW_VERSION);
+	//tworzy task (JEDNORAZOWY), który wywołuje funkcję inicjalizacji calego sprzętu (inaczej nie dalo się zaimplementować printf działającego w tasku
+	assert(xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions));
+}
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {

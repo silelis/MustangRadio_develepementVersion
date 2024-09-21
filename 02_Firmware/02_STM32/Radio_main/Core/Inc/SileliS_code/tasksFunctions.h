@@ -26,15 +26,16 @@
 #include "SileliS_code/i2cEngine.h"
 #include "SileliS_code/esp32i2cComunicationDriver.h"
 //#include "SileliS_code/menuItem.h"
+#include "SileliS_code/myPrintfTask.h"
 
 
 
-void initTaskFunctions(void);
+//void initTaskFunctions(void);
 
 //static void esp32IntrrruptRequestCallback(void *pNothing);
 //static void i2cMaster_pReceiveQueueObjectParser(void *pNothing);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-
+void startUpTask(void* noThing);
 //#ifdef __cplusplus
 //}
 //#endif

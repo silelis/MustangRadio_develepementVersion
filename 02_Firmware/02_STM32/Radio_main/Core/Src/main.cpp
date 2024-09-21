@@ -133,7 +133,8 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   //delay_ms(1000);
-  initTaskFunctions();
+  //initTaskFunctions();
+  startUpTask(NULL);
 
   /* USER CODE END 2 */
 
