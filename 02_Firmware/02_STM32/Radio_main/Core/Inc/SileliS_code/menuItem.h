@@ -14,10 +14,9 @@
 #include <stdbool.h>
 #include "comunicationStructures.h"
 #include <string.h>
-
 #include <iostream>
 #include <functional>
-
+#include "SileliS_code/myPrintfTask.h"
 
 struct execute_t{
 	keyboardUnion buttonSequence;		//kod klawisza wywołujący funkcję

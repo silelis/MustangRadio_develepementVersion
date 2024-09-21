@@ -14220,3 +14220,1410 @@ Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
+23:44:16 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:27,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:44:53 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:11:8: error: 'myPrintfTask' does not name a type
+   11 | extern myPrintfTask* pPrintf;
+      |        ^~~~~~~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:45:39 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:29,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:29,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:11:8: error: 'myPrintfTask' does not name a type
+   11 | extern myPrintfTask* pPrintf;
+      |        ^~~~~~~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:46:37 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myPrintfTask.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myPrintfTask.d" -MT"Core/Src/SileliS_code/myPrintfTask.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myPrintfTask.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:29,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'BaseType_t myPrintfTask::feedPrintf(const char*, ...)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:30:44: warning: converting to non-pointer type 'uint8_t' {aka 'unsigned char'} from NULL [-Wconversion-null]
+   30 |         itemToPrint.slaveDevice7bitAddress=NULL;
+      |                                            ^~~~
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'HAL_StatusTypeDef myPrintfTask::myPrintf(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:63:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   63 | }
+      | ^
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:11:8: error: 'myPrintfTask' does not name a type
+   11 | extern myPrintfTask* pPrintf;
+      |        ^~~~~~~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+../Core/Src/SileliS_code/tasksFunctions.cpp: In function 'void i2cMaster_pReceiveQueueObjectParser(void*)':
+../Core/Src/SileliS_code/tasksFunctions.cpp:37:33: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   37 |                                 pPrintf->feedPrintf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).", tempI2CReceiveFrame.slaveDevice7bitAddress);
+      |                                 ^~~~~~~
+      |                                 printf
+../Core/Src/SileliS_code/tasksFunctions.cpp: In function 'void manageRadioButtonsAndManue(void*)':
+../Core/Src/SileliS_code/tasksFunctions.cpp:109:41: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  109 |                                         pPrintf->feedPrintf("%c %x - there is binded button.", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+      |                                         ^~~~~~~
+      |                                         printf
+../Core/Src/SileliS_code/tasksFunctions.cpp: In function 'void printfTask(void*)':
+../Core/Src/SileliS_code/tasksFunctions.cpp:118:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  118 |         pPrintf->feedPrintf("Radio firmware version: %.2f", FW_VERSION);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/tasksFunctions.cpp: In function 'void initTaskFunctions()':
+../Core/Src/SileliS_code/tasksFunctions.cpp:173:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  173 |                 pPrintf->feedPrintf("ESP32 i2c bus not responding...");
+      |                 ^~~~~~~
+      |                 printf
+In file included from C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/sys/reent.h:458,
+                 from C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:60,
+                 from ../Core/Inc/SileliS_code/myPrintfTask.h:11,
+                 from ../Core/Inc/SileliS_code/tasksFunctions.h:11:
+../Core/Src/SileliS_code/tasksFunctions.cpp: In function 'void startUpTask(void*)':
+../Core/Src/SileliS_code/tasksFunctions.cpp:212:16: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  212 |         assert(pPrintf= new myPrintfTask(&huart1, 15));
+      |                ^~~~~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/tasksFunctions.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:47:06 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myPrintfTask.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myPrintfTask.d" -MT"Core/Src/SileliS_code/myPrintfTask.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myPrintfTask.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:29,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:29,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'BaseType_t myPrintfTask::feedPrintf(const char*, ...)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:27:44: warning: converting to non-pointer type 'uint8_t' {aka 'unsigned char'} from NULL [-Wconversion-null]
+   27 |         itemToPrint.slaveDevice7bitAddress=NULL;
+      |                                            ^~~~
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'HAL_StatusTypeDef myPrintfTask::myPrintf(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:60:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   60 | }
+      | ^
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:11:8: error: 'myPrintfTask' does not name a type
+   11 | extern myPrintfTask* pPrintf;
+      |        ^~~~~~~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:47:48 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:30,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:30,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:53:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   53 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Inc/SileliS_code/tasksFunctions.h:12:15: error: redefinition of 'myPrintfTask* pPrintf'
+   12 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:11:
+../Core/Inc/SileliS_code/myPrintfTask.h:32:15: note: 'myPrintfTask* pPrintf' previously defined here
+   32 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+make: *** [Core/Src/subdir.mk:58: Core/Src/main.o] Error 1
+../Core/Inc/SileliS_code/tasksFunctions.h:12:15: error: redefinition of 'myPrintfTask* pPrintf'
+   12 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:11:
+../Core/Inc/SileliS_code/myPrintfTask.h:32:15: note: 'myPrintfTask* pPrintf' previously defined here
+   32 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:11:8: error: 'myPrintfTask' does not name a type
+   11 | extern myPrintfTask* pPrintf;
+      |        ^~~~~~~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue, uint8_t)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:71:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   71 |                 pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:152:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  152 |                 pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError()':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:256:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  256 |         pPrintf->feedPrintf("error with memory allocation.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:284:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  284 |                         pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/tasksFunctions.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/esp32i2cComunicationDriver.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:49:19 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+../Core/Src/SileliS_code/tasksFunctions.cpp:24:15: error: redefinition of 'myPrintfTask* pPrintf'
+   24 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:16:
+../Core/Inc/SileliS_code/myPrintfTask.h:32:15: note: 'myPrintfTask* pPrintf' previously defined here
+   32 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/tasksFunctions.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:49:32 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:22:8: note: 'struct execute_t' declared here
+   22 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+../Core/Src/SileliS_code/tasksFunctions.cpp:24:15: error: redefinition of 'myPrintfTask* pPrintf'
+   24 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/i2cEngine.h:18,
+                 from ../Core/Inc/SileliS_code/tasksFunctions.h:27:
+../Core/Inc/SileliS_code/myPrintfTask.h:32:15: note: 'myPrintfTask* pPrintf' previously defined here
+   32 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/tasksFunctions.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:49:44 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:21:8: note: 'struct execute_t' declared here
+   21 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/tasksFunctions.cpp:24:15: error: redefinition of 'myPrintfTask* pPrintf'
+   24 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/i2cEngine.h:18,
+                 from ../Core/Inc/SileliS_code/tasksFunctions.h:27:
+../Core/Inc/SileliS_code/myPrintfTask.h:32:15: note: 'myPrintfTask* pPrintf' previously defined here
+   32 | myPrintfTask* pPrintf=nullptr;                                                                                  //pointer do taska obsługuącego pisanie komunikatow na konsolę
+      |               ^~~~~~~
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/tasksFunctions.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:50:20 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myPrintfTask.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myPrintfTask.d" -MT"Core/Src/SileliS_code/myPrintfTask.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myPrintfTask.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:132:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
+  132 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+      |          ^~~~~~~
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
+                 from ../Core/Src/main.cpp:33:
+../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:54:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
+   54 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
+      |          ^~~~~~~
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'BaseType_t myPrintfTask::feedPrintf(const char*, ...)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:27:44: warning: converting to non-pointer type 'uint8_t' {aka 'unsigned char'} from NULL [-Wconversion-null]
+   27 |         itemToPrint.slaveDevice7bitAddress=NULL;
+      |                                            ^~~~
+../Core/Src/SileliS_code/myPrintfTask.cpp: In member function 'HAL_StatusTypeDef myPrintfTask::myPrintf(i2cFrame_transmitQueue)':
+../Core/Src/SileliS_code/myPrintfTask.cpp:60:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   60 | }
+      | ^
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:21:8: note: 'struct execute_t' declared here
+   21 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_equButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:137:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  137 |                 pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_volButShortPressed()':
+../Core/Src/SileliS_code/radioMenu.cpp:161:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  161 |         pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/radioMenu.cpp: In member function 'void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice()':
+../Core/Src/SileliS_code/radioMenu.cpp:167:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  167 |         pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/radioMenu.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:50:53 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:21:8: note: 'struct execute_t' declared here
+   21 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::moveToNextInLoop()':
+../Core/Src/SileliS_code/myList.cpp:85:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   85 |         pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printList() const':
+../Core/Src/SileliS_code/myList.cpp:114:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  114 |         pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp: In member function 'void myList::printCurrent() const':
+../Core/Src/SileliS_code/myList.cpp:124:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  124 |         pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/myList.cpp:127:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  127 |         pPrintf->feedPrintf("No current node.");
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/myList.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:51:16 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/menuItem.cpp: In constructor 'menuItem::menuItem(const char*, uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:22:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   22 |                 pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
+      |                 ^~~~~~~
+      |                 printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:36:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   36 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:21:8: note: 'struct execute_t' declared here
+   21 | struct execute_t{
+      |        ^~~~~~~~~
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'void menuItem::executeFunctionPointer(std::function<void()>*)':
+../Core/Src/SileliS_code/menuItem.cpp:53:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   53 |         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::mI_appendExecFunctionArry(keyboardUnion, std::function<void()>)':
+../Core/Src/SileliS_code/menuItem.cpp:112:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  112 |             pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:116:13: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  116 |             pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
+      |             ^~~~~~~
+      |             printf
+../Core/Src/SileliS_code/menuItem.cpp:120:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+  120 |         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+      |         ^~~~~~~
+      |         printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/menuItem.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:51:27 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/menuItem.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/menuItem.d" -MT"Core/Src/SileliS_code/menuItem.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/menuItem.o"
+../Core/Src/SileliS_code/i2cEngine.cpp: In constructor 'i2cMaster::i2cMaster(I2C_HandleTypeDef*)':
+../Core/Src/SileliS_code/i2cEngine.cpp:31:9: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   31 |         pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
+      |         ^~~~~~~
+      |         printf
+../Core/Src/SileliS_code/i2cEngine.cpp: In member function 'HAL_StatusTypeDef i2cMaster::ping(uint16_t)':
+../Core/Src/SileliS_code/i2cEngine.cpp:48:25: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   48 |                         pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                         ^~~~~~~
+      |                         printf
+../Core/Src/SileliS_code/i2cEngine.cpp:52:17: error: 'pPrintf' was not declared in this scope; did you mean 'printf'?
+   52 |                 pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
+      |                 ^~~~~~~
+      |                 printf
+make: *** [Core/Src/SileliS_code/subdir.mk:52: Core/Src/SileliS_code/i2cEngine.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/SileliS_code/menuItem.cpp: In member function 'bool menuItem::create_pExecutableButtonsArray(uint8_t)':
+../Core/Src/SileliS_code/menuItem.cpp:37:23: warning: 'void* memset(void*, int, size_t)' clearing an object of type 'struct execute_t' with no trivial copy-assignment; use assignment or value-initialization instead [-Wclass-memaccess]
+   37 |                 memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
+      |                 ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/SileliS_code/menuItem.cpp:8:
+../Core/Inc/SileliS_code/menuItem.h:21:8: note: 'struct execute_t' declared here
+   21 | struct execute_t{
+      |        ^~~~~~~~~
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+23:51:41 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/i2cEngine.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/i2cEngine.d" -MT"Core/Src/SileliS_code/i2cEngine.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/i2cEngine.o"
+arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Radio_main.elf
+ 
+arm-none-eabi-size  Radio_main.elf 
+arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
+   text	   data	    bss	    dec	    hex	filename
+ 239392	    720	  27192	 267304	  41428	Radio_main.elf
+Finished building: default.size.stdout
+ 
+Finished building: Radio_main.list
+ 
+23:51:57 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-size  Radio_main.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 239392	    720	  27192	 267304	  41428	Radio_main.elf
+Finished building: default.size.stdout
+ 

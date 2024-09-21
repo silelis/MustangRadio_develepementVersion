@@ -15,7 +15,7 @@
 #include "task.h"
 #include "semphr.h"
 #include "i2c_slave_master_queueClass.h"
-
+#include "SileliS_code/myPrintfTask.h"
 
 class i2cMaster {
 public:

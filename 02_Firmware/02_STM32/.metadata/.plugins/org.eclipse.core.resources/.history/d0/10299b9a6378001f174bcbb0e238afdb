@@ -1,0 +1,164 @@
+#include "SileliS_code/myList.h"
+
+// Inicjalizacja statycznych zmiennych
+//myList* myList::head = nullptr;
+//myList* myList::currentListNode = nullptr;
+//uint8_t myList::indexCounter = 0;
+
+// Konstruktor
+myList::myList(ListHeader* pointerListHeader, const char* nodeName, uint8_t execFunctionArraySize)
+    : menuItem(nodeName, execFunctionArraySize) {
+	this->pListHeader = pointerListHeader;
+
+	//this->pListHeader->indexCounter++;
+
+	if (this->pListHeader->head==nullptr){
+		this->pListHeader->head=this;
+	}
+	nextListNode=nullptr;
+	//currentListNode=this;
+	this->pListHeader->indexCounter++;
+	//indexCounter++;
+	this->index = this->pListHeader->indexCounter;
+	assert(this);
+	this->pListHeader->currentListNode=this;
+}
+
+
+// Destruktor
+myList::~myList() {
+//	if(head==nullptr)
+//		return;
+}
+
+// Dodanie elementu na początku listy
+void myList::addAtBeginning(const char* nodeName, uint8_t execFunctionArraySize) {
+    if (!canAddItem()) return;
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(pListHeader, nodeName, execFunctionArraySize));
+    newNode->nextListNode = this->pListHeader->head;
+    this->pListHeader->head = newNode;
+    this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Dodanie elementu na końcu listy
+void myList::addAtEnd(const char* nodeName, uint8_t execFunctionArraySize) {
+    if (!canAddItem()) return;
+
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(pListHeader, nodeName, execFunctionArraySize));
+    if (!this->pListHeader->head) {
+    	this->pListHeader->head = newNode;
+    } else {
+        myList* temp = this->pListHeader->head;
+        while (temp->nextListNode) {
+            temp = temp->nextListNode;
+        }
+        temp->nextListNode = newNode;
+    }
+
+    this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Resetowanie current do pierwszego elementu listy
+void myList::resetToFirst() {
+	this->pListHeader->currentListNode = this->pListHeader->head;
+}
+
+// Przesunięcie current na następny element listy
+myList* myList::moveToNext() {
+    if (this->pListHeader->currentListNode) {
+    	this->pListHeader->currentListNode = this->pListHeader->currentListNode->nextListNode;
+    }
+    return this->pListHeader->currentListNode;
+}
+
+void myList::moveToEnd(void){
+	while(!this->isAtEnd()){
+		this->moveToNext();
+	}
+}
+void 	myList::moveToNextInLoop(void){
+	//printf("Exit from: %s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+	this->pListHeader->currentListNode->mI_executeDeInit();
+	if(!moveToNext())
+		resetToFirst();
+	//printf("Enter to:%s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Enter to:%s",this->pListHeader->currentListNode->mI_TAG);
+	//printCurrent();
+	this->pListHeader->currentListNode->mI_executeInit();
+}
+
+
+// Zwracanie indeksu aktualnego węzła
+uint8_t myList::getCurrentNodeIndex() const {
+    return /*current ?*/ this->pListHeader->currentListNode->index /*: UINT8_MAX*/;
+}
+
+const char* myList::getCurrentNodeTag()/* const*/{
+	return (const char*) this->pListHeader->currentListNode->mI_TAG;
+}
+// Sprawdzanie, czy current znajduje się na końcu listy
+bool myList::isAtEnd() const {
+    return this->pListHeader->currentListNode->nextListNode == nullptr;
+}
+
+// Wydrukowanie wszystkich elementów listy
+void myList::printList() const {
+    myList* temp = this->pListHeader->head;
+    while (temp){
+    	//printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+    	pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+        //std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
+        temp = temp->nextListNode;
+    }
+}
+
+// Wydrukowanie aktualnego elementu listy
+void myList::printCurrent() const {
+    if (this->pListHeader->currentListNode) {
+    	//printf("%s: is current device.\r\n", this->pListHeader->currentListNode->mI_TAG);
+    	pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+    } else {
+    	//printf("No current node.\r\n");
+    	pPrintf->feedPrintf("No current node.");
+        //std::cout << "No current node." << std::endl;
+    }
+}
+
+// Renumeracja węzłów listy
+void myList::renumberNodes() {
+    myList* temp = this->pListHeader->head;
+    uint8_t tempIndex = 0;
+    while (temp) {
+        temp->index = ++tempIndex;
+        temp = temp->nextListNode;
+    }
+    //indexCounter = index;
+}
+
+// Sprawdzanie, czy można dodać element do listy
+bool myList::canAddItem() const {
+    return this->pListHeader->indexCounter < UINT8_MAX; // Maksymalna wartość uint8_t to 255, więc sprawdzamy, czy jest mniejsza niż 255
+}
+
+
+void myList::deleteList() {
+    while (this->pListHeader->head != nullptr) {
+        myList* temp = this->pListHeader->head;   // Zapamiętaj aktualny head
+        this->pListHeader->head = this->pListHeader->head->nextListNode;     // Przejdź do następnego elementu
+        delete temp;           // Usuń aktualny element	aka ~myList()
+        this->pListHeader->indexCounter--;
+    }
+//    if (!head){
+    	//delete current;
+    this->pListHeader->currentListNode = nullptr;  // Po usunięciu wszystkich elementów ustaw current na nullptr
+//    	head->next = nullptr;
+
+ //   }
+
+}
+

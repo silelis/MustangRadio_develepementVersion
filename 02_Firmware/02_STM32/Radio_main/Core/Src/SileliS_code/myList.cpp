@@ -1,5 +1,7 @@
 #include "SileliS_code/myList.h"
 
+extern myPrintfTask* pPrintf;
+
 // Inicjalizacja statycznych zmiennych
 //myList* myList::head = nullptr;
 //myList* myList::currentListNode = nullptr;
@@ -81,11 +83,13 @@ void myList::moveToEnd(void){
 	}
 }
 void 	myList::moveToNextInLoop(void){
-	printf("Exit from: %s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	//printf("Exit from: %s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
 	this->pListHeader->currentListNode->mI_executeDeInit();
 	if(!moveToNext())
 		resetToFirst();
-	printf("Enter to:%s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	//printf("Enter to:%s\r\n",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Enter to:%s",this->pListHeader->currentListNode->mI_TAG);
 	//printCurrent();
 	this->pListHeader->currentListNode->mI_executeInit();
 }
@@ -108,7 +112,8 @@ bool myList::isAtEnd() const {
 void myList::printList() const {
     myList* temp = this->pListHeader->head;
     while (temp){
-    	printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+    	//printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+    	pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
         //std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
         temp = temp->nextListNode;
     }
@@ -117,9 +122,11 @@ void myList::printList() const {
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
     if (this->pListHeader->currentListNode) {
-    	printf("%s: is current device.\r\n", this->pListHeader->currentListNode->mI_TAG);
+    	//printf("%s: is current device.\r\n", this->pListHeader->currentListNode->mI_TAG);
+    	pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
     } else {
-    	printf("No current node.\r\n");
+    	//printf("No current node.\r\n");
+    	pPrintf->feedPrintf("No current node.");
         //std::cout << "No current node." << std::endl;
     }
 }

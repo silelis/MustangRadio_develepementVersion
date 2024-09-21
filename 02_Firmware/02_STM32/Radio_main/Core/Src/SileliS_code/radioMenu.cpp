@@ -7,6 +7,8 @@
 
 #include <SileliS_code/radioMenu.h>
 
+extern myPrintfTask* pPrintf;
+
 radioMenu::radioMenu() {
 	queueRadioMenuKbrd = nullptr;
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
@@ -133,7 +135,8 @@ bool radioMenu::executeButtonFrom_curretDevice(keyboardUnion buttonSequence){
 
 void radioMenu::menuFunction_equButShortPressed(void){
 	if (this->curretDevice != this->peripheryDevices){
-		printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+		//printf("%s switch to peripheryDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+		pPrintf->feedPrintf("%s switch to peripheryDevices.", this->radioMainMenu->getCurrentNodeTag());
 		this->setCurrentDeviceMenu_periphery();
 		this->curretDevice->printCurrent();
 		this->peripheryMenu_TimeoutCounterReset();
@@ -156,13 +159,14 @@ void radioMenu::menuFunction_volButShortPressed(void){
 		vTaskSuspend(this->peripheryMenu_taskHandle);
 	}
 	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
-	printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+	//printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+	pPrintf->feedPrintf("%s switch to next audioDevices.", this->radioMainMenu->getCurrentNodeTag());
 	this->curretDevice->moveToNextInLoop();
 }
 
 void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice(void){
-	printf("%s switch from peripheryDevices to audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
-
+	//printf("%s switch from peripheryDevices to audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
+	pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.", this->radioMainMenu->getCurrentNodeTag());
 	this->peripheryDevices->resetToFirst();
 	this->setCurrentDeviceMenu_audio();
 	this->curretDevice->printCurrent();

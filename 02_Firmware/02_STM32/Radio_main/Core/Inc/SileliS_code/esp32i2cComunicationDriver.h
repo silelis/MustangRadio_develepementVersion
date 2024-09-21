@@ -13,6 +13,7 @@
 #include "semphr.h"
 #include "comunication_calculate_checksum.h"
 //#include <iostream>
+#include "SileliS_code/myPrintfTask.h"
 
 class esp32_i2cComunicationDriver {
 public:

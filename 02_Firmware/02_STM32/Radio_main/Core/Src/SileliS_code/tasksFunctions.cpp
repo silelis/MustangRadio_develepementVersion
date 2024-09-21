@@ -24,6 +24,7 @@ static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiekt
 myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisanie komunikatow na konsolę
 
 
+
 static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
@@ -34,7 +35,10 @@ static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
 				pESP32->parseReceivedData(tempI2CReceiveFrame);
 				break;
 			default:
-				printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFrame.slaveDevice7bitAddress);
+				//printf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).\r\n", tempI2CReceiveFrame.slaveDevice7bitAddress);
+				pPrintf->feedPrintf("i2cMaster_pReceiveQueueObjectParser: Unknown i2c slave address: 0x%x (7bit).", tempI2CReceiveFrame.slaveDevice7bitAddress);
+
+
 				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
 				assert(0);
 			}
@@ -103,7 +107,8 @@ static void manageRadioButtonsAndManue(void* thing){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
 			if(!ptrRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
 				if(!ptrRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
-					printf("%c %x - there is binded button.\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+					//printf("%c %x - there is binded button.\r\n", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+					pPrintf->feedPrintf("%c %x - there is binded button.", receivedKeyboard.array[0], receivedKeyboard.array[1]);
 				}
 			}
 		}
@@ -166,7 +171,8 @@ static void initTaskFunctions(void){
 
 
 	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
-		printf("ESP32 i2c bus not responding\r\n");
+		//printf("ESP32 i2c bus not responding\r\n");
+		pPrintf->feedPrintf("ESP32 i2c bus not responding...");
 	}
 
 
