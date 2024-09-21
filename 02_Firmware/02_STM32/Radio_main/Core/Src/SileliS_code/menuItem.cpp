@@ -7,6 +7,7 @@
 
 #include "SileliS_code/menuItem.h"
 
+extern myPrintfTask* pPrintf;
 
 
 menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
@@ -18,7 +19,8 @@ menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
 
 		this->pExecutableButtons = nullptr;
 		this->create_pExecutableButtonsArray(execFunctionArraySize);
-		printf("%s: menuItem with %d executable buttons had been created. Please append functiond.\r\n", this->mI_TAG, this->execFunctionArrySize);
+		//printf("%s: menuItem with %d executable buttons had been created. Please append functiond.\r\n", this->mI_TAG, this->execFunctionArrySize);
+		pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
 	}
 };
 
@@ -48,7 +50,8 @@ void menuItem::executeFunctionPointer(std::function<void()>* funcPtr) {
     if (*funcPtr) {
         (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
     } else {
-        printf("%s: Pointer to function is empty.\r\n", this->mI_TAG);
+        //printf("%s: Pointer to function is empty.\r\n", this->mI_TAG);
+        pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
     }
 }
 
@@ -106,13 +109,16 @@ bool menuItem::mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::func
             this->pExecutableButtons[this->execFunctionArryAppended].buttonSequence = buttonSequence;
             this->appendFunctionPointer(&this->pExecutableButtons[this->execFunctionArryAppended].functionPointer, newFunc); // Bezpośrednio przekazujemy newFunc, ponieważ już jest std::function
             this->execFunctionArryAppended++;
-            printf("%s: %d button(s) are appended.\r\n", this->mI_TAG, this->execFunctionArryAppended);
+            //printf("%s: %d button(s) are appended.\r\n", this->mI_TAG, this->execFunctionArryAppended);
+            pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
             return true;
         } else {
-            printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->mI_TAG);
+            //printf("%s: Button sequence had already been appended in pExecutableButtonsaArry.\r\n", this->mI_TAG);
+            pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
         }
     } else {
-        printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->mI_TAG);
+       // printf("%s: pExecutableButtonsaArry have not been appended. Array is full.\r\n", this->mI_TAG);
+        pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
     }
     return false;
 }

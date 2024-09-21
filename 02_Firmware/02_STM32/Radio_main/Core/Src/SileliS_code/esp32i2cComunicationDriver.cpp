@@ -8,7 +8,7 @@
 //#include "esp32i2cComunicationDriver.h"
 #include "SileliS_code/esp32i2cComunicationDriver.h"
 
-
+extern myPrintfTask* pPrintf;
 /********************************************************************
  * @brief  Konstruktor klasy esp32_i2cComunicationDriver
  *
@@ -67,7 +67,8 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
 	}
 	else{
 		this->esp32CrcSumCounterError++;
-		printf("%sCRC sum NOT correct: %d time(s)\r\n", this->TAG, this->esp32CrcSumCounterError);
+		//printf("%sCRC sum NOT correct: %d time(s)\r\n", this->TAG, this->esp32CrcSumCounterError);
+		pPrintf->feedPrintf("%sCRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
 		return pdFAIL;
 	}
 }
@@ -147,7 +148,8 @@ esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
 void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
 	if( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)== this->esp32InterruptRequestCountingSemaphore_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
 		this->esp32InrerruptRequest_CountingSemaphoreOverflowError= pdTRUE;
-		printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
+		//printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
+		pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
 	}
 }
 
@@ -250,7 +252,8 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
  *******************************************************************/
 void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
-	printf("error with memory allocation\r\n");
+	//printf("error with memory allocation\r\n");
+	pPrintf->feedPrintf("error with memory allocation.");
 }
 
 
@@ -277,7 +280,8 @@ void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CRe
 			parserFunction::keyboardToRadioMeny((i2cFrame_keyboardFrame*)I2CReceivedFrame.pData);
 			break;
 		default:
-			printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+			//printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+			pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
 			assert(0);
 		}
 	}

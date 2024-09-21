@@ -8,6 +8,7 @@
 #ifndef INC_TASKSFUNCTIONS_H_
 #define INC_TASKSFUNCTIONS_H_
 
+
 #include <stdint.h>
 #include "stm32h7xx_hal.h"
 #include "hwConfigFile.h"
@@ -27,7 +28,6 @@
 #include "SileliS_code/esp32i2cComunicationDriver.h"
 //#include "SileliS_code/menuItem.h"
 #include "SileliS_code/myPrintfTask.h"
-
 
 
 //void initTaskFunctions(void);

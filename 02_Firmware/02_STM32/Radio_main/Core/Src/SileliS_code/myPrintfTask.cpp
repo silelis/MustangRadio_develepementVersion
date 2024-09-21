@@ -7,6 +7,7 @@
 
 #include "SileliS_code/myPrintfTask.h"
 
+
 myPrintfTask::myPrintfTask(UART_HandleTypeDef* huart, UBaseType_t printfTaskQueueLength):i2cQueue4DynamicData(printfTaskQueueLength) {
 	// TODO Auto-generated constructor stub
 	this->pHuart = huart;

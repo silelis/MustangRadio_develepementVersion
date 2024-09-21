@@ -8,6 +8,8 @@
 //#include <i2cEngine.h>
 #include "SileliS_code/i2cEngine.h"
 
+extern myPrintfTask* pPrintf;
+
 i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	// TODO Auto-generated constructor stub
 	this->p_hi2c1 =hi2c1;
@@ -27,7 +29,8 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 
 	//vTaskDelay(pdMS_TO_TICKS(1000));
-	printf("%s bus had been initialized.\r\n",this->TAG);
+	//printf("%s bus had been initialized.\r\n",this->TAG);
+	pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
 	this->i2cMasterSemaphoreGive();
 }
 
@@ -43,10 +46,12 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	HAL_StatusTypeDef retVal;
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
 	if(retVal==HAL_OK){
-			printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
+			//printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
+			pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
 	}
 	else{
-		printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
+		//printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
+		pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
 		assert(0);
 	}
 	return retVal;
