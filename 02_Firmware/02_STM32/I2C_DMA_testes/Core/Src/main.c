@@ -34,6 +34,11 @@
 		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
 		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
 	} i2cFrame_transmitQueue;
+
+	void* testBuffer;
+
+
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,6 +71,40 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* myPrintf(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+
+    // Najpierw określamy długość wynikowego sformatowanego ciągu
+    int length = vsnprintf(NULL, 0, format, args);
+
+    // Resetujemy va_list, aby móc go użyć ponownie
+    va_end(args);
+    va_start(args, format);
+
+    // Alokujemy odpowiednią ilość pamięci
+    char *buffer = (char*)malloc((length + 1) * sizeof(char));
+
+    if (buffer != NULL) {
+        // Właściwe formatowanie do bufora
+        vsnprintf(buffer, length + 1, format, args);
+    }
+
+    // Zwalniamy zasoby
+    va_end(args);
+
+    return buffer;  // Zwracamy wskaźnik na sformatowany ciąg
+}
+
+
+
+
 
 /* USER CODE END 0 */
 
@@ -105,7 +144,13 @@ int main(void)
 
 
 
-	void* testBuffer;
+  char* buffer_1;
+
+  buffer_1 = myPrintf("tata %d\r\n", 1);
+
+  size_t lenght =sizeof(buffer_1);
+  HAL_UART_Transmit(&huart1, buffer_1, lenght, 200);
+
 
 	QueueHandle_t handler_Queue = xQueueCreate(20, sizeof(uint8_t));
 

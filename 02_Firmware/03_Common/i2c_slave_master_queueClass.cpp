@@ -133,3 +133,19 @@ BaseType_t i2cQueue4DynamicData::QueueSend(/*const*/ /*void*/i2cFrame_transmitQu
 		return pdFALSE;
 	}
 }
+
+BaseType_t i2cQueue4DynamicData::QueueSendFromISR(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue){
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	//xQueueSendFromISR(pvItemToQueue, &xHigherPriorityTaskWoken);
+	//xQueueSendFromISR(this->handler_Queue, pvItemToQueue,&xHigherPriorityTaskWoken);
+	if (xQueueSendFromISR(this->handler_Queue, pvItemToQueue,&xHigherPriorityTaskWoken) == pdTRUE)
+	{
+		return pdTRUE;
+	}
+	else
+	{
+		this->QueueDeleteDataFromPointer(*pvItemToQueue);
+		//delete[] static_cast<char*>(pointerToData);
+		return pdFALSE;
+	}
+}
