@@ -25,7 +25,7 @@ myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisan
 
 
 
-static void i2cMaster_pReceiveQueueObjectParser(void *pNothing){
+static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
 		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
@@ -53,6 +53,8 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
+
+
 			pESP32->i2cMasterSemaphoreTake();
 			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
 			pESP32->while_I2C_STATE_READY();
@@ -190,7 +192,7 @@ static void initTaskFunctions(void){
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
-	configASSERT(xTaskCreate(i2cMaster_pReceiveQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
+	configASSERT(xTaskCreate(i2cMaster_pReceivedQueueObjectParser, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMaster_pReceiveQueueObjectParser));
 
 
 	assert(pRadioMenu=new radioMenu());

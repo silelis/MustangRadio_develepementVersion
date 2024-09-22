@@ -34,11 +34,6 @@
 		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
 		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
 	} i2cFrame_transmitQueue;
-
-	void* testBuffer;
-
-
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -72,40 +67,6 @@ void MX_FREERTOS_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-
-char* myPrintf(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-
-    // Najpierw określamy długość wynikowego sformatowanego ciągu
-    int length = vsnprintf(NULL, 0, format, args);
-
-    // Resetujemy va_list, aby móc go użyć ponownie
-    va_end(args);
-    va_start(args, format);
-
-    // Alokujemy odpowiednią ilość pamięci
-    char *buffer = (char*)malloc((length + 1) * sizeof(char));
-
-    if (buffer != NULL) {
-        // Właściwe formatowanie do bufora
-        vsnprintf(buffer, length + 1, format, args);
-    }
-
-    // Zwalniamy zasoby
-    va_end(args);
-
-    return buffer;  // Zwracamy wskaźnik na sformatowany ciąg
-}
-
-
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -125,7 +86,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  // Wyłączenie I-Cache (cache instrukcji)
+  //SCB_DisableICache();
 
+  // Wyłączenie D-Cache (cache danych)
+  //SCB_DisableDCache();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -144,13 +109,7 @@ int main(void)
 
 
 
-  char* buffer_1;
-
-  buffer_1 = myPrintf("tata %d\r\n", 1);
-
-  size_t lenght =sizeof(buffer_1);
-  HAL_UART_Transmit(&huart1, buffer_1, lenght, 200);
-
+	void* testBuffer;
 
 	QueueHandle_t handler_Queue = xQueueCreate(20, sizeof(uint8_t));
 
@@ -174,8 +133,8 @@ int main(void)
 	while(1){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 
-		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
-
+		//HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
+		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght, 200);
 		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
 		for(uint32_t i=0; i<0xfffff; i++){
 
