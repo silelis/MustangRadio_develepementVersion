@@ -95,6 +95,27 @@ esp_err_t i2cEngin_slave::interruptRequestReset(void)
 	return gpio_set_level(this->i2cSlave_intRequestPin, 1); //interrupt request is RESET when pin goes high
 }
 
+
+
+
+/*---------------------------------------------------------------
+* Metoda poprzez pierwszy sygnał interrupt request (pusty) informuje
+* master i2c, że szyna i2c jest zainicjowana.
+* Parameters:
+* NONE
+* Returns:
+* NONE
+*---------------------------------------------------------------*/
+void i2cEngin_slave::esp32i2cBusInitialised(void)
+{
+	this->interruptRequestSet();
+	vTaskDelay(pdMS_TO_TICKS(100));
+	this->interruptRequestReset();
+}
+
+
+
+
 /*---------------------------------------------------------------
  * estruktor klasy.
  * Parameters:
@@ -263,3 +284,4 @@ i2cEngin_master::~i2cEngin_master()
 		assert(0);
 	}	
 }
+

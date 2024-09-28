@@ -113,7 +113,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
- HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -142,7 +142,6 @@ int main(void)
   osKernelInitialize();
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
-
   MX_FREERTOS_Init();
 
   /* Start scheduler */
