@@ -25,6 +25,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+extern I2C_HandleTypeDef hi2c1;
+#define I2C_SLAVE_ADDRESS_ESP32	0x3C
+
+	typedef struct{
+		uint8_t slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
+		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
+		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
+	} i2cFrame_transmitQueue;
+
+
 
 /* USER CODE END Includes */
 
@@ -107,6 +117,45 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+
+
+  void* testBuffer;
+
+  	QueueHandle_t handler_Queue = xQueueCreate(20, sizeof(uint8_t));
+
+  	char trash[] = "HelloABCDEF";
+
+
+  	i2cFrame_transmitQueue testTransm;
+
+  	testTransm.slaveDevice7bitAddress = 0x3C<<1;
+  	testTransm.dataSize =sizeof(trash);
+  	testTransm.pData = &trash;
+
+
+  	size_t bufferLenght = sizeof(testTransm.dataSize)+testTransm.dataSize;
+  	testBuffer = malloc(bufferLenght);
+
+  	memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
+  	memcpy(testBuffer+sizeof(size_t), testTransm.pData, testTransm.dataSize);
+
+
+  	while(1){
+  		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+
+  		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
+
+  		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
+  		for(uint32_t i=0; i<0xfffff; i++){
+
+  		}
+  		//uint8_t data;
+
+  	}
+
+
+
+
   /* USER CODE END RTOS_THREADS */
 
 }

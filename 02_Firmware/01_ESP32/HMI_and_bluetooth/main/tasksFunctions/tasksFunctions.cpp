@@ -471,6 +471,7 @@ void stepperMotor(void *TaskParameters)
 
 void i2cSlaveTransmit(void *nothing)
 {
+	p_i2cSlave->esp32i2cBusInitialised();			//informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 	for (;;)
 	{
 		p_i2cSlave->slaveTransmit();		

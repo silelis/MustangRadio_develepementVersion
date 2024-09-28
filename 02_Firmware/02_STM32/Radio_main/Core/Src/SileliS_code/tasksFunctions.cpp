@@ -12,7 +12,7 @@
 #include <SileliS_code/radioMenu.h>
 
 
-
+static bool esp32I2cInitialised = false;	//zmienna sprawdza czy esp32 zainiclował interfejs i2c
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;					//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;						//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
@@ -132,39 +132,6 @@ static void printfTask(void* noThing){
 
 static void initTaskFunctions(void){
 
-
-
-	/*char trash[] = "HelloABCDEF";
-
-
-	i2cFrame_transmitQueue testTransm;
-
-	testTransm.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit<<1;
-	testTransm.dataSize =sizeof(trash);
-	testTransm.pData = &trash;
-
-	void* testBuffer;
-	size_t bufferLenght = sizeof(testTransm.dataSize)+testTransm.dataSize;
-	testBuffer = new char[bufferLenght];
-
-	memcpy(testBuffer,&testTransm.dataSize, sizeof(testTransm.dataSize));
-	memcpy(testBuffer+sizeof(size_t), testTransm.pData, testTransm.dataSize);
-
-
-	while(1){
-		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-
-		HAL_StatusTypeDef retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) testBuffer, bufferLenght);
-
-		//pętla opóźniająca jest potrzebna między kolejnymi przesyłkami
-		for(uint32_t i=0; i<0xfffff; i++){
-
-		}
-		//uint8_t data;
-
-	}*/
-
-
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
 	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
 
@@ -205,7 +172,14 @@ static void initTaskFunctions(void){
 
 static TaskHandle_t taskHandle_initTaskFunctions=nullptr;						//uchwyt do taska (jodnorazowo wywolanego), który uruchamia całą konfigurację, trzeba tak to zrobić, aby printf działąło w tasku (task printf musi sie uruchomić  przed wszystkimi)
 static void startUpTask_initTaskFunctions(void* noThing){
-	vTaskDelay(pdMS_TO_TICKS(2500));
+
+	//czeka, aż esp32 wyśle pierwszy sygnał interrupt request (pusty bez danych), wtedy wiadomo, że komunikacja jest zainicjowana.
+	while(esp32I2cInitialised==false){
+		pPrintf->feedPrintf("waiting for esp32 i2c bus to be initialized.");		//sygnałem o inicjalizacji jest pierwsze Interrupt request HIGH to LOW to HIGH
+		vTaskDelay(pdMS_TO_TICKS(150));
+	}
+
+	//vTaskDelay(pdMS_TO_TICKS(2500));
 	initTaskFunctions();
 	vTaskDelete(taskHandle_initTaskFunctions);
 }
@@ -216,6 +190,7 @@ void startUpTask(void* noThing){
 	assert(pPrintf= new myPrintfTask(&huart1, 15));
 
 	assert(xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask));
+
 	//pPrintf->feedPrintf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 	//tworzy task (JEDNORAZOWY), który wywołuje funkcję inicjalizacji calego sprzętu (inaczej nie dalo się zaimplementować printf działającego w tasku
 	assert(xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions));
@@ -223,5 +198,12 @@ void startUpTask(void* noThing){
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+	if(esp32I2cInitialised==false){
+		esp32I2cInitialised=true;
+		//printf("f\r\n");
+	}
+	else{
 		pESP32->incrementInterruptRequestCountingSemaphore();		//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
+	}
+
 }
