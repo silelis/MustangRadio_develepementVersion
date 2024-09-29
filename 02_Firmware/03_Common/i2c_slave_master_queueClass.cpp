@@ -140,6 +140,7 @@ BaseType_t i2cQueue4DynamicData::QueueSendFromISR(/*const*/ /*void*/i2cFrame_tra
 	//xQueueSendFromISR(this->handler_Queue, pvItemToQueue,&xHigherPriorityTaskWoken);
 	if (xQueueSendFromISR(this->handler_Queue, pvItemToQueue,&xHigherPriorityTaskWoken) == pdTRUE)
 	{
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		return pdTRUE;
 	}
 	else

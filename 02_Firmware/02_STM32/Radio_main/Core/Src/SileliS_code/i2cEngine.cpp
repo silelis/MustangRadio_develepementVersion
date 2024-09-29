@@ -13,8 +13,22 @@ extern myPrintfTask* pPrintf;
 i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	// TODO Auto-generated constructor stub
 	this->p_hi2c1 =hi2c1;
-	this->pReceiveQueueObject = NULL;
-	configASSERT(this->pReceiveQueueObject = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	this->pI2C_fromSlaveReceiveDataQueue = NULL;
+	this->pI2C_toSlaveTransmitDataQueue = NULL;
+	this->pI2C_whichSlaveToReadQueue = NULL;
+
+
+
+	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+
+
+
+
+	//this->createI2C_DataObject(this->pI2C_fromSlaveReceiveDataQueue);
+	//this->createI2C_DataObject(this->pI2C_toSlaveTransmitDataQueue);
+	//this->createI2C_DataObject(this->pI2C_whichSlaveToReadQueue);
 
 //	this->esp32InterruptCounterOverflow =pdFALSE;		//reset interrupt counter overflow indicator
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
@@ -33,6 +47,10 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
 	this->i2cMasterSemaphoreGive();
 }
+
+/*void i2cMaster::createI2C_DataObject(i2cQueue4DynamicData* queueToCreate){
+	configASSERT(queueToCreate = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+}*/
 
 BaseType_t i2cMaster::i2cMasterSemaphoreTake(void){
 	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
@@ -62,7 +80,9 @@ i2cMaster::~i2cMaster() {
 	this->i2cMasterSemaphoreTake();
 	//HAL_I2C_DeInit(this->p_hi2c1);
 	this->p_hi2c1 = NULL;
-	delete this->pReceiveQueueObject;
+	delete this->pI2C_fromSlaveReceiveDataQueue;
+	delete this->pI2C_toSlaveTransmitDataQueue;
+	delete this->pI2C_whichSlaveToReadQueue;
 	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
 }
 

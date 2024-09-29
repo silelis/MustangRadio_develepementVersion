@@ -44,7 +44,7 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
         // Właściwe formatowanie do bufora
         vsnprintf(buffer, itemToPrint.dataSize, format, args);
         itemToPrint.pData = buffer;
-        retVal =this->QueueSendFromISR(&itemToPrint);
+        retVal =this->QueueSend/*FromISR*/(&itemToPrint);
     }
 
     // Zwalniamy zasoby
@@ -54,7 +54,10 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
 }
 
 HAL_StatusTypeDef myPrintfTask::myPrintf(i2cFrame_transmitQueue itemToPrint) {
+	//HAL_UART_Transmit_DMA(this->pHuart, (const uint8_t*) itemToPrint.pData, itemToPrint.dataSize);
 	HAL_UART_Transmit(this->pHuart, (const uint8_t*) itemToPrint.pData, itemToPrint.dataSize, 150);
 	HAL_UART_Transmit(this->pHuart, (const uint8_t*) "\r\n", 2, 150);
+	//HAL_UART_Transmit_DMA(this->pHuart, (const uint8_t*) "\r\n", 2);
+
 	this->QueueDeleteDataFromPointer(itemToPrint);
 }
