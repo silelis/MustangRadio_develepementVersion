@@ -66,7 +66,7 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 
 	while(1){
 		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&tempI2CFrame, portMAX_DELAY)==pdPASS){
-			//pi2cMaster->i2cMasterSemaphoreTake();
+			pi2cMaster->i2cMasterSemaphoreTake();
 			//pi2cMaster->while_I2C_STATE_READY();
 			switch ((char)tempI2CFrame.slaveDevice7bitAddress){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
@@ -82,7 +82,7 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 
 				I2CFrameToReadFromESP32=tempI2CFrame;
 
-				pESP32->i2cMasterSemaphoreTake();
+				//pESP32->i2cMasterSemaphoreTake();
 				pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromESP32.dataSize, sizeof(size_t));
 				pESP32->while_I2C_STATE_READY();
 				I2CFrameToReadFromESP32.pData = new char[I2CFrameToReadFromESP32.dataSize];
