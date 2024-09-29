@@ -17,7 +17,7 @@
 
 class esp32_i2cComunicationDriver {
 public:
-	const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32;		//7bit address
+	static const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32;		//7bit address
 	esp32_i2cComunicationDriver(i2cMaster* pointer_to_i2cMasterObject);
 	virtual ~esp32_i2cComunicationDriver();
 	BaseType_t semaphoreTake__CountingSemaphore(void);
@@ -42,7 +42,7 @@ private:
 	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum);
 
 
-	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 21;
+	const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 25;
 	const uint16_t esp32CrcSumCounterError_MAX=5;
 	i2cMaster* pi2cMaster;												//wskaźnik do obiektu obsługuj ącego komunikację stm'a32 jako i2c master
 	SemaphoreHandle_t esp32IntrrruptRequest_CountingSemaphore;			//uchwyt semafora zliczającego ilość wsytąpień esp32 interrupt request i ilość odczytów danych z esp32

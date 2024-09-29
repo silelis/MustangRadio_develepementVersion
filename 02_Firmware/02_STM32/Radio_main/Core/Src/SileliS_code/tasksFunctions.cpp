@@ -13,6 +13,7 @@
 
 
 static bool esp32I2cInitialised = false;	//zmienna sprawdza czy esp32 zainiclował interfejs i2c
+static TaskHandle_t taskHandle_i2cFromSlaveReceiveDataTask= nullptr;	//task obsługujący czytanie danych z urządzeń slave i2c
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;					//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;						//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
@@ -20,18 +21,24 @@ static TaskHandle_t taskHandle_PrintfTask=nullptr;								//uchwyt do taska kont
 
 static i2cMaster* pi2cMaster=nullptr;  											//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=nullptr; 							//wsyaźnik do obiektu obsługującego komunikację z ESP32
-/*static*/ radioMenu* pRadioMenu=nullptr;
+radioMenu* pRadioMenu=nullptr;
 myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisanie komunikatow na konsolę
+
+
 
 
 
 static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
-		if(pi2cMaster->pReceiveQueueObject->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
 			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
+
+
+
+
 				pESP32->parseReceivedData(tempI2CReceiveFrame);
 				break;
 			default:
@@ -42,32 +49,114 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
 				assert(0);
 			}
-			pi2cMaster->pReceiveQueueObject->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
+			pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
 	}
 }
 
+
+static void i2cFromSlaveReceiveDataTask(void *pNothing){
+	i2cFrame_transmitQueue tempI2CFrame;
+
+	i2cFrame_transmitQueue I2CFrameToReadFromESP32;
+
+
+
+
+
+	while(1){
+		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&tempI2CFrame, portMAX_DELAY)==pdPASS){
+			//pi2cMaster->i2cMasterSemaphoreTake();
+			//pi2cMaster->while_I2C_STATE_READY();
+			switch ((char)tempI2CFrame.slaveDevice7bitAddress){
+				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
+					/*pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrame.slaveDevice7bitAddress, (uint8_t*)&tempI2CFrame.dataSize, sizeof(size_t));
+					//pi2cMaster->while_I2C_STATE_READY();
+					vTaskDelay(pdMS_TO_TICKS(15));
+					tempI2CFrame.pData = new char[tempI2CFrame.dataSize];
+					if (tempI2CFrame.pData!=nullptr){
+						pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrame.slaveDevice7bitAddress, (uint8_t*)tempI2CFrame.pData, tempI2CFrame.dataSize);
+						//pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&tempI2CFrame);
+
+					}*/
+
+				I2CFrameToReadFromESP32=tempI2CFrame;
+
+				pESP32->i2cMasterSemaphoreTake();
+				pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromESP32.dataSize, sizeof(size_t));
+				pESP32->while_I2C_STATE_READY();
+				I2CFrameToReadFromESP32.pData = new char[I2CFrameToReadFromESP32.dataSize];
+				if (I2CFrameToReadFromESP32.pData!=nullptr){
+
+
+					pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromESP32.pData, I2CFrameToReadFromESP32.dataSize);
+					pESP32->while_I2C_STATE_READY();
+					pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromESP32);
+
+
+
+
+					//tempI2CFrame=I2CFrameToReadFromESP32;
+
+				}
+				else{
+					pESP32->seteDynamicmMemeoryAlocationError();
+				}
+				pESP32->i2cMasterSemaphoreGive();
+
+
+
+
+
+
+
+					break;
+				default:
+					pPrintf->feedPrintf("I2C slave address not recognised.");
+					assert(0);
+			}
+			if (I2CFrameToReadFromESP32.pData!=nullptr){
+				//pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&tempI2CFrame);
+			}
+			else{
+				pPrintf->feedPrintf("error with memory allocation.");
+				assert(0);
+			}
+			//pi2cMaster->i2cMasterSemaphoreGive();
+		}
+	}
+}
+
+
 static void esp32IntrrruptRequestCallback(void *pNothing){
-	i2cFrame_transmitQueue tempI2CFrameForESP32;			//
-	tempI2CFrameForESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
+	i2cFrame_transmitQueue I2CFrameToReadFromESP32;			//
+	I2CFrameToReadFromESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
+	I2CFrameToReadFromESP32.dataSize=0;
+	I2CFrameToReadFromESP32.pData=nullptr;
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
+			pi2cMaster->pI2C_whichSlaveToReadQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);
 
 
-			pESP32->i2cMasterSemaphoreTake();
-			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &tempI2CFrameForESP32.dataSize, sizeof(size_t));
+
+
+
+/*			pESP32->i2cMasterSemaphoreTake();
+			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromESP32.dataSize, sizeof(size_t));
 			pESP32->while_I2C_STATE_READY();
-			tempI2CFrameForESP32.pData = new char[tempI2CFrameForESP32.dataSize];
-			if (tempI2CFrameForESP32.pData!=nullptr){
-				pESP32->masterReceiveFromESP32_DMA((uint8_t*) tempI2CFrameForESP32.pData, tempI2CFrameForESP32.dataSize);
+			I2CFrameToReadFromESP32.pData = new char[I2CFrameToReadFromESP32.dataSize];
+			if (I2CFrameToReadFromESP32.pData!=nullptr){
+
+
+				pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromESP32.pData, I2CFrameToReadFromESP32.dataSize);
 				pESP32->while_I2C_STATE_READY();
-				pi2cMaster->pReceiveQueueObject->QueueSend(&tempI2CFrameForESP32);
+				pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromESP32);
 			}
 			else{
 				pESP32->seteDynamicmMemeoryAlocationError();
 			}
-			pESP32->i2cMasterSemaphoreGive();
+			pESP32->i2cMasterSemaphoreGive();*/
 		}
 	};
 }
@@ -99,8 +188,6 @@ void peripheryMenuTimeoutFunction(void* thing){
 	}
 }
 
-
-
 static void manageRadioButtonsAndManue(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
@@ -117,18 +204,6 @@ static void manageRadioButtonsAndManue(void* thing){
 	}
 }
 
-static void printfTask(void* noThing){
-	i2cFrame_transmitQueue itemToPrint;
-	pPrintf->feedPrintf("Radio firmware version: %.2f", FW_VERSION);
-	while(1){
-		if(pPrintf->QueueReceive(&itemToPrint, portMAX_DELAY)==pdTRUE){
-			pPrintf->myPrintf(itemToPrint);
-			pPrintf->QueueDeleteDataFromPointer(itemToPrint);
-		}
-	}
-}
-
-
 
 static void initTaskFunctions(void){
 
@@ -139,13 +214,11 @@ static void initTaskFunctions(void){
 	pi2cMaster->i2cMasterSemaphoreTake();
 
 
-	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
-		//printf("ESP32 i2c bus not responding\r\n");
-		pPrintf->feedPrintf("ESP32 i2c bus not responding...");
-	}
+//	while(HAL_I2C_IsDeviceReady(&hi2c1, pESP32->esp32i2cSlaveAdress_7bit<<1, 10000, 10000) != HAL_OK){
+//		//printf("ESP32 i2c bus not responding\r\n");
+//		pPrintf->feedPrintf("ESP32 i2c bus not responding...");
+//	}
 
-
-	;
 	pi2cMaster->i2cMasterSemaphoreGive();
 	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
 
@@ -155,6 +228,9 @@ static void initTaskFunctions(void){
 	pi2cMaster->while_I2C_STATE_READY();
 	pESP32->ping();
 
+
+	//tworzenie taska czytającego dane po I2C ze slave
+	configASSERT(xTaskCreate(i2cFromSlaveReceiveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cFromSlaveReceiveDataTask));
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));
@@ -184,6 +260,16 @@ static void startUpTask_initTaskFunctions(void* noThing){
 	vTaskDelete(taskHandle_initTaskFunctions);
 }
 
+static void printfTask(void* noThing){
+	i2cFrame_transmitQueue itemToPrint;
+	pPrintf->feedPrintf("Radio firmware version: %.2f", FW_VERSION);
+	while(1){
+		if(pPrintf->QueueReceive(&itemToPrint, portMAX_DELAY)==pdTRUE){
+			pPrintf->myPrintf(itemToPrint);
+			pPrintf->QueueDeleteDataFromPointer(itemToPrint);
+		}
+	}
+}
 
 void startUpTask(void* noThing){
 	//printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
@@ -200,7 +286,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(esp32I2cInitialised==false){
 		esp32I2cInitialised=true;
-		//printf("f\r\n");
 	}
 	else{
 		pESP32->incrementInterruptRequestCountingSemaphore();		//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
