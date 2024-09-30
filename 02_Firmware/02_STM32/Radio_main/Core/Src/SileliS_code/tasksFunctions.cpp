@@ -56,73 +56,34 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 
 
 static void i2cFromSlaveReceiveDataTask(void *pNothing){
-	i2cFrame_transmitQueue tempI2CFrame;
-
-	i2cFrame_transmitQueue I2CFrameToReadFromESP32;
-
-
-
-
+	i2cFrame_transmitQueue I2CFrameToReadFromSlave;
 
 	while(1){
-		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&tempI2CFrame, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&I2CFrameToReadFromSlave, portMAX_DELAY)==pdPASS){
 			pi2cMaster->i2cMasterSemaphoreTake();
 			//pi2cMaster->while_I2C_STATE_READY();
-			switch ((char)tempI2CFrame.slaveDevice7bitAddress){
+			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
-					/*pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrame.slaveDevice7bitAddress, (uint8_t*)&tempI2CFrame.dataSize, sizeof(size_t));
-					//pi2cMaster->while_I2C_STATE_READY();
-					vTaskDelay(pdMS_TO_TICKS(15));
-					tempI2CFrame.pData = new char[tempI2CFrame.dataSize];
-					if (tempI2CFrame.pData!=nullptr){
-						pi2cMaster->I2C_Master_Receive_DMA(tempI2CFrame.slaveDevice7bitAddress, (uint8_t*)tempI2CFrame.pData, tempI2CFrame.dataSize);
-						//pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&tempI2CFrame);
-
-					}*/
-
-				I2CFrameToReadFromESP32=tempI2CFrame;
-
-				//pESP32->i2cMasterSemaphoreTake();
-				pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromESP32.dataSize, sizeof(size_t));
-				pESP32->while_I2C_STATE_READY();
-				I2CFrameToReadFromESP32.pData = new char[I2CFrameToReadFromESP32.dataSize];
-				if (I2CFrameToReadFromESP32.pData!=nullptr){
-
-
-					pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromESP32.pData, I2CFrameToReadFromESP32.dataSize);
-					pESP32->while_I2C_STATE_READY();
-					pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromESP32);
-
-
-
-
-					//tempI2CFrame=I2CFrameToReadFromESP32;
-
-				}
-				else{
-					pESP32->seteDynamicmMemeoryAlocationError();
-				}
-				pESP32->i2cMasterSemaphoreGive();
-
-
-
-
-
-
-
+					pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
+					I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
+					if (I2CFrameToReadFromSlave.pData!=nullptr){
+						pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
+						pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
+					}
+					else{
+						pESP32->seteDynamicmMemeoryAlocationError();
+						assert(0);
+					}
 					break;
 				default:
 					pPrintf->feedPrintf("I2C slave address not recognised.");
 					assert(0);
 			}
-			if (I2CFrameToReadFromESP32.pData!=nullptr){
-				//pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&tempI2CFrame);
-			}
-			else{
+			pESP32->i2cMasterSemaphoreGive();
+			if (I2CFrameToReadFromSlave.pData==nullptr){
 				pPrintf->feedPrintf("error with memory allocation.");
 				assert(0);
 			}
-			//pi2cMaster->i2cMasterSemaphoreGive();
 		}
 	}
 }
@@ -137,26 +98,6 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
 			pi2cMaster->pI2C_whichSlaveToReadQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);
-
-
-
-
-
-/*			pESP32->i2cMasterSemaphoreTake();
-			pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromESP32.dataSize, sizeof(size_t));
-			pESP32->while_I2C_STATE_READY();
-			I2CFrameToReadFromESP32.pData = new char[I2CFrameToReadFromESP32.dataSize];
-			if (I2CFrameToReadFromESP32.pData!=nullptr){
-
-
-				pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromESP32.pData, I2CFrameToReadFromESP32.dataSize);
-				pESP32->while_I2C_STATE_READY();
-				pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromESP32);
-			}
-			else{
-				pESP32->seteDynamicmMemeoryAlocationError();
-			}
-			pESP32->i2cMasterSemaphoreGive();*/
 		}
 	};
 }
