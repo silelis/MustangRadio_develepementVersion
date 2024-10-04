@@ -104,11 +104,11 @@ extern "C" void app_main(void)
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s Keyboard queue pareser task starting\n", main_TAG);
 
-	configASSERT(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	configASSERT(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY+1, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
 
 	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, NULL, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
-	configASSERT(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY + 2, &handlerTask_stepperMotor, TASK_TO_CORE1));
+	configASSERT(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY+1, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
 	btstack_init();
 	btstack_main(0, NULL);
