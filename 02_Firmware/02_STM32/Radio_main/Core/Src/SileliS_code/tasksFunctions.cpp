@@ -66,13 +66,17 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
 
 
+				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
 
-				pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
+
+
+
+				/*pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
 					I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
 					if (I2CFrameToReadFromSlave.pData!=nullptr){
 						pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
 						pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
-					}
+					}*/
 
 
 
@@ -85,7 +89,7 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 					pPrintf->feedPrintf("I2C slave address not recognized.");
 					assert(0);
 			}
-			pESP32->i2cMasterSemaphoreGive();
+			pi2cMaster->i2cMasterSemaphoreGive();
 			if (I2CFrameToReadFromSlave.pData==nullptr){
 				pPrintf->feedPrintf("error with memory allocation.");
 				assert(0);
@@ -173,7 +177,7 @@ static void initTaskFunctions(void){
 	//printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
 	pi2cMaster->while_I2C_STATE_READY();
-	pESP32->ping();
+	//pESP32->ping();
 
 
 	//tworzenie taska czytającego dane po I2C ze slave

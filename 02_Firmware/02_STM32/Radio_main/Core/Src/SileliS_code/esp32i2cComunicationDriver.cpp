@@ -90,14 +90,14 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  * 			HAL_I2C_GetState
  * @warning NONE
  *******************************************************************/
-HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
+/*HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
 	HAL_StatusTypeDef retVal;
 	this->i2cMasterSemaphoreTake();
 	this->pi2cMaster->while_I2C_STATE_READY();
 	retVal = this->pi2cMaster->ping(this->esp32i2cSlaveAdress_7bit);
 	this->i2cMasterSemaphoreGive();
 	return retVal;
-}
+}*/
 
 /********************************************************************
  * @brief  Zlicza ilość wywołań przerwania od esp32 informującego, że
@@ -167,6 +167,30 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
 	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE;
 }
 
+
+
+
+BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue* dataFrame){
+	uint8_t dataSize;
+	//this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->dataSize, sizeof(size_t));
+	//this->masterReceiveFromESP32_DMA((uint8_t*) &dataSize, sizeof(size_t));
+	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
+	//dataFrame->dataSize=dataSize;
+	dataFrame->pData = new char[dataFrame->dataSize];
+	if (dataFrame->pData!=nullptr){
+		this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
+		this->pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(dataFrame);
+	}
+
+
+
+	//pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
+	//I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
+	//if (I2CFrameToReadFromSlave.pData!=nullptr){
+	//	pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
+	//	pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
+	//}
+}
 /********************************************************************
  * @brief  Odczytuje dane z esp32 (i2c slave)
  *
@@ -203,9 +227,9 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
+/*BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
 	return this->pi2cMaster->i2cMasterSemaphoreTake();
-}
+}*/
 
 /********************************************************************
  * @brief  Oddaje semafor szyny i2c.
@@ -220,9 +244,9 @@ BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
+/*BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
 	return this->pi2cMaster->i2cMasterSemaphoreGive();
-}
+}*/
 
 
 /********************************************************************

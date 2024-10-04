@@ -27,10 +27,11 @@ public:
 	//void seteDynamicmMemeoryAlocationError();
 
 
-	BaseType_t i2cMasterSemaphoreTake(void);
-	BaseType_t i2cMasterSemaphoreGive(void);
-	HAL_StatusTypeDef ping(void);
-	BaseType_t masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
+	//BaseType_t i2cMasterSemaphoreTake(void);
+	//BaseType_t i2cMasterSemaphoreGive(void);
+	//HAL_StatusTypeDef ping(void);
+	BaseType_t masterReceiveData(i2cFrame_transmitQueue* dataFrame);
+
 	void while_I2C_STATE_READY(void);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);
@@ -38,6 +39,7 @@ protected:
 
 
 private:
+	BaseType_t masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
 	const char *TAG = "ESP32 communication driver log:";
 	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum);
 
