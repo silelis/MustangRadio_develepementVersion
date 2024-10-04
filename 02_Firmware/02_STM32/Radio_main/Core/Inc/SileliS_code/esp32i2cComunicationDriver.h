@@ -24,7 +24,7 @@ public:
 
 	void incrementInterruptRequestCountingSemaphore(void); //metoda wywoływana podczas wykrycia sygnały interrupt request, aby inkrementować semafor zliczający wystąpienia
 	void isCountingSemaphoreOverflowed(void);
-	void seteDynamicmMemeoryAlocationError();
+	//void seteDynamicmMemeoryAlocationError();
 
 
 	BaseType_t i2cMasterSemaphoreTake(void);

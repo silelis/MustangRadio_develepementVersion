@@ -184,7 +184,10 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
  * @warning	NONE
  *******************************************************************/
 BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
-	return this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
+
+	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
+	vTaskDelay(pdMS_TO_TICKS(7));
+	return retVal;
 }
 
 /********************************************************************
@@ -252,11 +255,11 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
+/*void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
 	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
 	//printf("error with memory allocation\r\n");
 	pPrintf->feedPrintf("error with memory allocation.");
-}
+}*/
 
 
 /********************************************************************

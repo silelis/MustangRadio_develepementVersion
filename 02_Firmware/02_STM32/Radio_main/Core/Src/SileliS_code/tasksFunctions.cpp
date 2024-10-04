@@ -64,19 +64,25 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 			//pi2cMaster->while_I2C_STATE_READY();
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
-					pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
+
+
+
+				pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
 					I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
 					if (I2CFrameToReadFromSlave.pData!=nullptr){
 						pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
 						pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
 					}
-					else{
+
+
+
+					/*else{
 						pESP32->seteDynamicmMemeoryAlocationError();
 						assert(0);
-					}
+					}*/
 					break;
 				default:
-					pPrintf->feedPrintf("I2C slave address not recognised.");
+					pPrintf->feedPrintf("I2C slave address not recognized.");
 					assert(0);
 			}
 			pESP32->i2cMasterSemaphoreGive();
