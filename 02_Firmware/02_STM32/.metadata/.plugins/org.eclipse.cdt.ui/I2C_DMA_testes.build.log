@@ -1,17 +1,10 @@
-21:03:53 **** Incremental Build of configuration Debug for project I2C_DMA_testes ****
+13:57:10 **** Incremental Build of configuration Debug for project I2C_DMA_testes ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
-arm-none-eabi-gcc -o "I2C_DMA_testes.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\I2C_DMA_testes\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="I2C_DMA_testes.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: I2C_DMA_testes.elf
- 
 arm-none-eabi-size  I2C_DMA_testes.elf 
-arm-none-eabi-objdump -h -S I2C_DMA_testes.elf  > "I2C_DMA_testes.list"
    text	   data	    bss	    dec	    hex	filename
   49332	    100	  18748	  68180	  10a54	I2C_DMA_testes.elf
 Finished building: default.size.stdout
  
-Finished building: I2C_DMA_testes.list
- 
 
-21:03:54 Build Finished. 0 errors, 0 warnings. (took 1s.567ms)
+13:57:10 Build Finished. 0 errors, 0 warnings. (took 376ms)
 
