@@ -7,7 +7,28 @@ static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
 
-
+/*---------------------------------------------------------------
+ * Funkcja statyczna callbacku po zkończeniu dobiuru danych z i2c
+ * master.
+ * Parameters:
+ * i2c_slave_dev_handle_t channel	- uchwyt do i2c slave bus (do
+ * 						interfejsu i2c)
+ * const i2c_slave_rx_done_event_data_t *edata - Struktura zdarzeń
+ *						używana w trybie slave I2C
+ * void *user_data - Dane użytkownika, które zostaną bezpośrednio
+ *						przekazane do funkcji (callback), w tych 
+ *						danych zostanią zapisane informacje 
+ *						otrzymane z i2c master 
+ * Returns:
+ * bool				- ESP_OK: Pomyślne ustawienie funkcji 
+ *					zwrotnych (callback) transakcji I2C
+ *					ESP_ERR_INVALID_ARG: Ustawienie funkcji
+ *					 zwrotnych transakcji I2C nie powiodło się z
+ * 					 powodu nieprawidłowego argumentu
+ *					ESP_FAIL: Ustawienie funkcji zwrotnych 
+ *					transakcji I2C nie powiodło się z powodu innego
+ *					błędu
+*---------------------------------------------------------------*/
 static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	i2cFrame_transmitQueue tempReceivedFrame;

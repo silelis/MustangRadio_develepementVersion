@@ -466,6 +466,20 @@ void stepperMotor(void *TaskParameters)
 	}
 }
 
+
+/*---------------------------------------------------------------
+* Funkcja, której zadaniem jest wysyłanie danych po i2c do master.
+* Na samym początku funkcja wysyła do i2c master sygnał
+* esp32i2cBusInitialised (po raz pierwszy interrupt request) co 
+* oznacza, że ESP32 przeszedl bootowanie. Rodzaj synchronizacji 
+* pomiędzy procesorami, bez której może nastapić niewałaściwa praca
+* sysetmu (np. master zacznie za wcześnie nadawać do slave, atem bez
+* inicjalizacji wejdzie w pętlę restartów).
+* Parameters:
+* void *nothing - nie przyjmuje nic
+* Returns:
+* NONE 
+*---------------------------------------------------------------*/ 
 void i2cSlaveTransmit(void *nothing)
 {
 	p_i2cSlave->esp32i2cBusInitialised();			//informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
@@ -475,7 +489,14 @@ void i2cSlaveTransmit(void *nothing)
 	}	
 }
 
-
+/*---------------------------------------------------------------
+* Funkcja, której zadaniem jest odebranie danych z i2c i ich
+* przekazanie do taska parsującego te dane.
+* Parameters:
+* void *nothing - nie przyjmuje nic
+* Returns:
+* NONE 
+*---------------------------------------------------------------*/ 
 void  i2cSlaveReceive(void *nothing)
 { 
 	i2cFrame_transmitQueue tempI2cFaremeToParser;										//tymczasowa ramka danych, ktoa będzie przekazywana do kolejki taska parsera danych
