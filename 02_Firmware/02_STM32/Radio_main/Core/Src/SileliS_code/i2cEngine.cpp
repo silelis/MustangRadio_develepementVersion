@@ -19,9 +19,9 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 
 
-	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
 
 
 

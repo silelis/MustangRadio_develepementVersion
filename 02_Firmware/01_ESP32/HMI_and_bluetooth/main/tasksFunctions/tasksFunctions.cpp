@@ -5,6 +5,7 @@
 
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
+//static QueueHandle_t i2cReceivedDataQueue;					//wskaźnik do kolejki przechowującej dane odczytane z i2c slave (przez callback) po zakończeniu nadawania przez i2c master
 
 static hmiDisplay displayLedsColors;	//struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 static NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
@@ -39,20 +40,16 @@ void taskFunctionsStaticHandlersInit(void)
 	displayLedsColors.backlightLeds.primary.blue = 0;
 	
 		
-	
+
 	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
 	printf("I2C slave bus init\n");
 	p_i2cSlave = nullptr;
 	assert(p_i2cSlave = 	new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN));
 	
 	
-	//assert(p_i2cSlave);
 	
-	//tworzenie kolejki bufora nadawczego i2c
-	//handlerQueue_i2cSlaveSetBuffer_keyboard = NULL;
-	//configASSERT(handlerQueue_i2cSlaveSetBuffer_keyboard = xQueueCreate(I2C_SLAVESET_BUFFER_KEYBOARD_LEN, sizeof(i2cFrame_keyboardFrame))); 
-	//configASSERT(handlerQueue_i2cSlaveSetBuffer_keyboard);
-	//configASSERT(p_i2cSlave->addQueueToSet(handlerQueue_i2cSlaveSetBuffer_keyboard));
+	
+
 
 	
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
@@ -476,4 +473,29 @@ void i2cSlaveTransmit(void *nothing)
 	{
 		p_i2cSlave->slaveTransmit();		
 	}	
+}
+
+
+void  i2cSlaveReceive(void *nothing)
+{ 
+	i2cFrame_transmitQueue tempI2cFaremeToParser;										//tymczasowa ramka danych, ktoa będzie przekazywana do kolejki taska parsera danych
+	uint8_t *bufferForI2cReceivedData = new uint8_t[ESP32_I2C_RECEIVE_DATA_LENGTH];   //bufor do którego odczytywane są dane przesłane po i2c
+	assert(bufferForI2cReceivedData);
+	
+
+	p_i2cSlave->i2cSlaveReceiveFromCallback(bufferForI2cReceivedData);
+	while (1)
+	{
+		if (p_i2cSlave->pReceivedQueueObject->QueueReceive(&tempI2cFaremeToParser, portMAX_DELAY) == pdPASS)
+		{
+			p_i2cSlave->i2cSlaveReceiveFromCallback(bufferForI2cReceivedData);
+			
+			
+			
+			printf("%s\r\n", (char*)   tempI2cFaremeToParser.pData);
+			delete[]tempI2cFaremeToParser.pData;
+		}
+		
+	}
+	
 }

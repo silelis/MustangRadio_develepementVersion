@@ -150,3 +150,11 @@ BaseType_t i2cQueue4DynamicData::QueueSendFromISR(/*const*/ /*void*/i2cFrame_tra
 		return pdFALSE;
 	}
 }
+
+
+
+
+QueueHandle_t i2cQueue4DynamicData::returnHandlerQueue(void)
+{
+	return this->handler_Queue;
+}

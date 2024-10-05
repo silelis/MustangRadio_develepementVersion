@@ -7,15 +7,37 @@ static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
 
-/*
-static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
+
+static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
+	i2cFrame_transmitQueue tempReceivedFrame;
 	BaseType_t high_task_wakeup = pdFALSE;
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	return high_task_wakeup == pdTRUE;
+	tempReceivedFrame.dataSize = *(size_t*)edata->buffer;
+	
+	//void* receivedData;
+	char*  receivedData = new char[tempReceivedFrame.dataSize]; //(char*) malloc(receivedFrame.dataSize); 
+	char* data_start = (char*)edata->buffer + sizeof(size_t);
+	
+	memcpy(receivedData, data_start, tempReceivedFrame.dataSize);
+	tempReceivedFrame.pData =  receivedData;
+	
+	//xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+	if (xQueueSendFromISR((QueueHandle_t)user_data/*receive_queue*/, &tempReceivedFrame, &high_task_wakeup) == pdFAIL)
+	{
+		delete[]tempReceivedFrame.pData;
+		assert(0);
+	}
+	if (high_task_wakeup == pdTRUE) {
+		portYIELD_FROM_ISR();
+		return pdTRUE;
+	}
+	//void* data = receivedFrame->pData;
+	return pdFALSE;
 }
-  */
+
+
+
 
 
 /*---------------------------------------------------------------
@@ -63,10 +85,23 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	
+
+	
 	
 	//Tworzenie kolejki nadawczej
 	this->pTransmitQueueObject = NULL;
-	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
+	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(ESP32_DEFAULT_TRANSMIT_QUEUE_SIZE));
+	
+	//Tworzenie kolejki nodbiorczej
+	this->pReceivedQueueObject = NULL;
+	configASSERT(this->pReceivedQueueObject = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
+	
+	//rejestracja callbacka i2c reveive finished
+	i2c_slave_event_callbacks_t cbs; // = {
+	cbs.on_recv_done = i2cSlaveReceive_finishedCallback; //,
+	//};
+	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->pReceivedQueueObject->returnHandlerQueue()));
+	printf("%s reveive callback has been initialised.\n", this->TAG);
 }
 
 /*---------------------------------------------------------------
@@ -162,6 +197,13 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 	return retVal;	
 }
 
+
+
+
+esp_err_t i2cEngin_slave::i2cSlaveReceiveFromCallback(uint8_t *data)
+{
+	return i2c_slave_receive(handler_i2c_dev_slave, data, ESP32_DEFAULT_RECEIVE_QUEUE_SIZE);
+}
 
 
 /*---------------------------------------------------------------
@@ -284,4 +326,3 @@ i2cEngin_master::~i2cEngin_master()
 		assert(0);
 	}	
 }
-

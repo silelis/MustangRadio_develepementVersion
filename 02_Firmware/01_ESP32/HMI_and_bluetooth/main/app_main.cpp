@@ -54,8 +54,11 @@ void init_uart();
 TaskHandle_t handlerTask_ledDisplay;
 TaskHandle_t handlerTask_backlightDisplay;	
 TaskHandle_t handlerTask_stepperMotor;	
-TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
-
+TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave do i2c master
+TaskHandle_t handlerTask_i2cSlaveReceive;	//uchwyt do taska obsługującego odbiór danych przesłanych przez i2c master do i2c slave
+	
+	
+	
 //#include "driver/i2c_slave.h"
 
 extern "C" void app_main(void)
@@ -82,7 +85,13 @@ extern "C" void app_main(void)
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
+	
+	
+	//tworzenie zadania obsługującego wysyłanie danych do i2c Master
 	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
+	//tworzenie zadania obsługującego pobieranie danych wysyłanych przez i2c Master
+	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveReceive));
+	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s Display leds task starting\n", main_TAG);
