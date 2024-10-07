@@ -1,12 +1,15 @@
 #include "i2c_engine.h"
-
+#include "soc/i2c_reg.h"
+//#include "soc/i2c_periph.h"
+#include "soc/i2c_struct.h"
+#include "hal/i2c_ll.h"
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
  
 static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
-
+extern i2c_dev_t I2C0;
 /*---------------------------------------------------------------
  * Funkcja statyczna callbacku po zkończeniu dobiuru danych z i2c
  * master.
@@ -36,6 +39,27 @@ static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t ch
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
 	tempReceivedFrame.dataSize = *(size_t*)edata->buffer;
 	
+	//I2C_LL_SLAVE_RX_EVENT_INTR  (I2C_TRANS_COMPLETE_INT_ENA_M|I2C_RX_REC_FULL_INT_ST_M)
+	//I2C_LL_SLAVE_RX_INT(I2C_RXFIFO_FULL_INT_ENA_M | I2C_TRANS_COMPLETE_INT_ENA_M)
+	
+
+	//			 i2c_struct.h  i2c_reg.h
+	//#define I2C_LL_GET_HW(i2c_num)        (((i2c_num) == 0) ? &I2C0 : &I2C1)
+	i2c_dev_t* whichDev = I2C_LL_GET_HW(0);
+	i2c_ll_get_interrupt_status_reg(whichDev);
+	//									receive		TRANSM
+	//I2C0.int_ena.trans_complete;		//1			1
+	//I2C0.int_ena.rx_rec_full;			//1			1
+	I2C0.int_status.trans_complete;		//0			1
+	I2C0.int_status.rx_rec_full;		//
+	//I2C0.int_status.rx_rec_full;		//0			0
+	I2C0.int_raw.rx_fifo_full;			//1			0
+	//I2C0.int_raw.tx_fifo_empty;			//1			1
+	//I2C0.int_raw.tx_send_empty;			//0			0
+	//I2C0.int_raw.slave_tran_comp;		//1			1
+	I2C0.int_raw.trans_complete;		//0			1
+	//I2C0.int_ena.rx_fifo_full;			//0			0
+	//I2C0.fifo_data.data;
 	//void* receivedData;
 	char*  receivedData = new char[tempReceivedFrame.dataSize]; //(char*) malloc(receivedFrame.dataSize); 
 	char* data_start = (char*)edata->buffer + sizeof(size_t);
@@ -123,6 +147,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	//};
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->pReceivedQueueObject->returnHandlerQueue()));
 	printf("%s reveive callback has been initialised.\n", this->TAG);
+	//I2C0.int_status.slave_tran_comp;
+	//I2C0.int_status.slave_tran_comp;
 }
 
 /*---------------------------------------------------------------
