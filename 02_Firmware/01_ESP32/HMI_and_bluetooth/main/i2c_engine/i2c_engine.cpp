@@ -3,13 +3,22 @@
 //#include "soc/i2c_periph.h"
 #include "soc/i2c_struct.h"
 #include "hal/i2c_ll.h"
+#include "hwConfigFile.h"
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
  
 static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
-extern i2c_dev_t I2C0;
+#if I2C_SLAVE_PORT==0
+	#define I2C_BASE_PORT_REGISTER		I2C0 
+#elif I2C_SLAVE_PORT==1
+	#define I2C_BASE_PORT_REGISTER 		I2C1
+#else
+	#error Zle zdefiniowany port i2c
+#endif // 
+
+extern i2c_dev_t I2C_BASE_PORT_REGISTER;
 /*---------------------------------------------------------------
  * Funkcja statyczna callbacku po zkończeniu dobiuru danych z i2c
  * master.
@@ -45,22 +54,25 @@ static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t ch
 
 	//			 i2c_struct.h  i2c_reg.h
 	//#define I2C_LL_GET_HW(i2c_num)        (((i2c_num) == 0) ? &I2C0 : &I2C1)
-	i2c_dev_t* whichDev = I2C_LL_GET_HW(0);
-	i2c_ll_get_interrupt_status_reg(whichDev);
-	//									receive		TRANSM
-	//I2C0.int_ena.trans_complete;		//1			1
-	//I2C0.int_ena.rx_rec_full;			//1			1
-	I2C0.int_status.trans_complete;		//0			1
-	I2C0.int_status.rx_rec_full;		//
-	//I2C0.int_status.rx_rec_full;		//0			0
-	I2C0.int_raw.rx_fifo_full;			//1			0
-	//I2C0.int_raw.tx_fifo_empty;			//1			1
-	//I2C0.int_raw.tx_send_empty;			//0			0
-	//I2C0.int_raw.slave_tran_comp;		//1			1
-	I2C0.int_raw.trans_complete;		//0			1
-	//I2C0.int_ena.rx_fifo_full;			//0			0
+	//i2c_dev_t* whichDev = I2C_LL_GET_HW(0);
+	//i2c_ll_get_interrupt_status_reg(whichDev);
+	
+	//													receive		TRANSM
+	//I2C0.int_ena.trans_complete;						//1			1
+	//I2C0.int_ena.rx_rec_full;							//1			1
+	I2C_BASE_PORT_REGISTER.int_status.trans_complete;	//0			1
+	I2C_BASE_PORT_REGISTER.int_status.rx_rec_full;		//
+	//I2C0.int_status.rx_rec_full;						//0			0
+	I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full;		//1			0
+	//I2C0.int_raw.tx_fifo_empty;						//1			1
+	//I2C0.int_raw.tx_send_empty;						//0			0
+	//I2C0.int_raw.slave_tran_comp;						//1			1
+	I2C_BASE_PORT_REGISTER.int_raw.trans_complete;		//0			1
+	//I2C0.int_ena.rx_fifo_full;						//0			0
 	//I2C0.fifo_data.data;
 	//void* receivedData;
+	
+	
 	char*  receivedData = new char[tempReceivedFrame.dataSize]; //(char*) malloc(receivedFrame.dataSize); 
 	char* data_start = (char*)edata->buffer + sizeof(size_t);
 	
