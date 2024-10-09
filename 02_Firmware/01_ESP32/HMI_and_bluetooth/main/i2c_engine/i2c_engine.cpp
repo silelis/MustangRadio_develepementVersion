@@ -43,54 +43,48 @@ extern i2c_dev_t I2C_BASE_PORT_REGISTER;
 *---------------------------------------------------------------*/
 static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
-	i2cFrame_transmitQueue tempReceivedFrame;
-	BaseType_t high_task_wakeup = pdFALSE;
-	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	tempReceivedFrame.dataSize = *(size_t*)edata->buffer;
-	
-	//I2C_LL_SLAVE_RX_EVENT_INTR  (I2C_TRANS_COMPLETE_INT_ENA_M|I2C_RX_REC_FULL_INT_ST_M)
-	//I2C_LL_SLAVE_RX_INT(I2C_RXFIFO_FULL_INT_ENA_M | I2C_TRANS_COMPLETE_INT_ENA_M)
-	
-
-	//			 i2c_struct.h  i2c_reg.h
-	//#define I2C_LL_GET_HW(i2c_num)        (((i2c_num) == 0) ? &I2C0 : &I2C1)
-	//i2c_dev_t* whichDev = I2C_LL_GET_HW(0);
-	//i2c_ll_get_interrupt_status_reg(whichDev);
-	
+	//Warunki rejestru I2C dla przerwania od odbioru i wysyłania danych
 	//													receive		TRANSM
 	//I2C0.int_ena.trans_complete;						//1			1
 	//I2C0.int_ena.rx_rec_full;							//1			1
-	I2C_BASE_PORT_REGISTER.int_status.trans_complete;	//0			1
-	I2C_BASE_PORT_REGISTER.int_status.rx_rec_full;		//
+			//I2C_BASE_PORT_REGISTER.int_status.trans_complete;	//0			1
+	//I2C_BASE_PORT_REGISTER.int_status.rx_rec_full;	//0			0
 	//I2C0.int_status.rx_rec_full;						//0			0
-	I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full;		//1			0
+			//I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full;		//1			0
 	//I2C0.int_raw.tx_fifo_empty;						//1			1
 	//I2C0.int_raw.tx_send_empty;						//0			0
 	//I2C0.int_raw.slave_tran_comp;						//1			1
-	I2C_BASE_PORT_REGISTER.int_raw.trans_complete;		//0			1
+			//I2C_BASE_PORT_REGISTER.int_raw.trans_complete;		//0			1
 	//I2C0.int_ena.rx_fifo_full;						//0			0
 	//I2C0.fifo_data.data;
 	//void* receivedData;
-	
-	
-	char*  receivedData = new char[tempReceivedFrame.dataSize]; //(char*) malloc(receivedFrame.dataSize); 
-	char* data_start = (char*)edata->buffer + sizeof(size_t);
-	
-	memcpy(receivedData, data_start, tempReceivedFrame.dataSize);
-	tempReceivedFrame.pData =  receivedData;
-	
-	//xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	if (xQueueSendFromISR((QueueHandle_t)user_data/*receive_queue*/, &tempReceivedFrame, &high_task_wakeup) == pdFAIL)
+	if ((I2C_BASE_PORT_REGISTER.int_status.trans_complete == 0) && (I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full == 1))	//sprawdza czy przerwanie pochodzi od I2C slave receive data
 	{
-		delete[]tempReceivedFrame.pData;
-		assert(0);
+		i2cFrame_transmitQueue tempReceivedFrame;
+		BaseType_t high_task_wakeup = pdFALSE;
+
+		tempReceivedFrame.dataSize = *(size_t*)edata->buffer; //na samym początku danych wysyłanych przez I2C master znajduje się informacja (size_t) o wielkości/ długości ramki danych (bo te w zależności od obsługiwanego peryferium mogą mieć inną długość). Jest to wielkości bufora jaki trzeba dynamicznie przydzielić na otrzymane dane
+	
+		char*  receivedData = new char[tempReceivedFrame.dataSize];
+		char* data_start = (char*)edata->buffer + sizeof(size_t);		//ustala wskaźnik na początek ramki danych, przesuwa go o size_t
+	
+		memcpy(receivedData, data_start, tempReceivedFrame.dataSize);		//kopiwanie ramki danych do dynamicznie utworzonego buforu
+		tempReceivedFrame.pData =  receivedData;
+	
+		if (xQueueSendFromISR((QueueHandle_t)user_data/*receive_queue*/, &tempReceivedFrame, &high_task_wakeup) == pdFAIL)
+		{
+			delete[]tempReceivedFrame.pData;
+			assert(0);
+		}
+		if (high_task_wakeup == pdTRUE) {
+			portYIELD_FROM_ISR();
+			return pdTRUE;
+		}
+		//void* data = receivedFrame->pData;
+		//return pdFALSE;		
 	}
-	if (high_task_wakeup == pdTRUE) {
-		portYIELD_FROM_ISR();
-		return pdTRUE;
-	}
-	//void* data = receivedFrame->pData;
-	return pdFALSE;
+	return pdFALSE;	
+
 }
 
 
@@ -141,10 +135,6 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
-	
-
-	
-	
 	//Tworzenie kolejki nadawczej
 	this->pTransmitQueueObject = NULL;
 	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(ESP32_DEFAULT_TRANSMIT_QUEUE_SIZE));
@@ -159,8 +149,6 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	//};
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->pReceivedQueueObject->returnHandlerQueue()));
 	printf("%s reveive callback has been initialised.\n", this->TAG);
-	//I2C0.int_status.slave_tran_comp;
-	//I2C0.int_status.slave_tran_comp;
 }
 
 /*---------------------------------------------------------------
@@ -258,7 +246,14 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 
 
 
-
+/*---------------------------------------------------------------
+* Metoda za pomocą której po przerwaniu z i2c slave receive z
+* bufora odbiorczego I2C odbierane są dane.
+* Parameters:
+* NONE
+* Returns:
+* esp_err_t 				- ESP_OK lub ESP_FAIL
+*---------------------------------------------------------------*/
 esp_err_t i2cEngin_slave::i2cSlaveReceiveFromCallback(uint8_t *data)
 {
 	return i2c_slave_receive(handler_i2c_dev_slave, data, ESP32_DEFAULT_RECEIVE_QUEUE_SIZE);
