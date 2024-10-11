@@ -26,12 +26,8 @@ public:
 	void isCountingSemaphoreOverflowed(void);
 	//void seteDynamicmMemeoryAlocationError();
 
-
-	//BaseType_t i2cMasterSemaphoreTake(void);
-	//BaseType_t i2cMasterSemaphoreGive(void);
-	//HAL_StatusTypeDef ping(void);
 	BaseType_t masterReceiveData(i2cFrame_transmitQueue* dataFrame);
-
+	void i2cComunicationHoldTime(void);
 	void while_I2C_STATE_READY(void);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);

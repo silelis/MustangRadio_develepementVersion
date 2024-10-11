@@ -26,6 +26,7 @@ public:
 	i2cQueue4DynamicData* pI2C_toSlaveTransmitDataQueue;			//kolejka przechowująca dane jakie mają zostać wysłane do slave i2c
 	i2cQueue4DynamicData* pI2C_whichSlaveToReadQueue;				//kolejka przechowująca informacje o tym, z ktorego slave należy przeczytać daneodczycie danych ze slave
 	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
+	HAL_StatusTypeDef I2C_Master_Transmit_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
 	void while_I2C_STATE_READY(void);
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);
