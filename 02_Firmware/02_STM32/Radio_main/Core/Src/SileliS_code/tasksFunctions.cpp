@@ -79,6 +79,10 @@ static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 
 	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_commonHeader)+sizeof(keyboardUnion);
 
+	if (I2CFrameToSendTolave.dataSize>ESP32_DEFAULT_RECEIVE_QUEUE_SIZE){
+		assert(0);
+	}
+
 	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_keyboardFrame);
 
 	klawiatura.i2cframeCommandHeader.crcSum=calculate_checksum(&klawiatura,I2CFrameToSendTolave.dataSize);
@@ -91,19 +95,31 @@ static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 
 
 
+
+
 	while(1){
-		if(pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueReceive(&I2CFrameToSendTolave, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueReceive(&I2CFrameToSendTolave, portMAX_DELAY)==pdPASS)
+		{
 			HAL_StatusTypeDef retVal;
 			pi2cMaster->i2cMasterSemaphoreTake();
-			retVal= pi2cMaster->I2C_Master_Transmit_DMA(I2CFrameToSendTolave.slaveDevice7bitAddress, (uint8_t*) I2CFrameToSendTolave.pData, I2CFrameToSendTolave.dataSize);
-			if (I2CFrameToSendTolave.slaveDevice7bitAddress == I2C_SLAVE_ADDRESS_ESP32){
-				pESP32->i2cComunicationHoldTime();
+
+			if (I2CFrameToSendTolave.dataSize<=ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH){		//jeżeli wielkość danych do wysłania nie przekracza maksymalnych dopuszczalnych przez I2C slave
+
+				retVal= pi2cMaster->I2C_Master_Transmit_DMA(I2CFrameToSendTolave.slaveDevice7bitAddress, (uint8_t*) I2CFrameToSendTolave.pData, I2CFrameToSendTolave.dataSize);
+				if (I2CFrameToSendTolave.slaveDevice7bitAddress == I2C_SLAVE_ADDRESS_ESP32){
+					pESP32->i2cComunicationHoldTime();
+				}
+				if(retVal!=HAL_OK){
+					pPrintf->feedPrintf("i2cMaster: Unable to send data to slave 0x%X. Error value 0x%x.", I2CFrameToSendTolave.slaveDevice7bitAddress, retVal );
+					pi2cMaster->ping(I2CFrameToSendTolave.slaveDevice7bitAddress);
+				}
 			}
-			if(retVal!=HAL_OK){
-				pPrintf->feedPrintf("i2cMaster: Unable to send data to slave 0x%X. Error value 0x%x.", I2CFrameToSendTolave.slaveDevice7bitAddress, retVal );
-				pi2cMaster->ping(I2CFrameToSendTolave.slaveDevice7bitAddress);
-			}
-			//#error sprawdzić czy działa niszczenie danych
+
+
+
+
+
+			#warning sprawdzić czy działa niszczenie danych
 			pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueDeleteDataFromPointer(I2CFrameToSendTolave);		//usuwa dane po wyslaniu (niezależnie od rezultatu)
 			pi2cMaster->i2cMasterSemaphoreGive();
 		}
