@@ -59,14 +59,14 @@ typedef struct {
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 	typedef struct{
-		uint8_t slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
-		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
-		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
+		uint8_t	slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
+		size_t	dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
+		void	*pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
 	} i2cFrame_transmitQueue;
 #else
 	typedef struct{
-		size_t dataSize;					//jak wyżej
-		void *pData;						//jak wyżej
-	} i2cFrame_transmitQueue;				//jak wyżej
+		size_t	dataSize;					//jak wyżej	tylko dla ESP32
+		void	*pData;						//jak wyżej	tylko dla ESP32
+	} i2cFrame_transmitQueue;
 
 #endif
