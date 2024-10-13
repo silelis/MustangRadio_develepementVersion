@@ -100,5 +100,7 @@ HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, ui
 HAL_StatusTypeDef i2cMaster::I2C_Master_Transmit_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
 	//HAL_StatusTypeDef retVal;
 	this->while_I2C_STATE_READY();
-	return HAL_I2C_Master_Transmit_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
+	/*retVal =*/ return HAL_I2C_Master_Transmit_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
+	//this->while_I2C_STATE_READY();
+	//return retVal;
 }

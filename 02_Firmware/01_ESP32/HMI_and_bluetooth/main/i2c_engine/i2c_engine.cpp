@@ -4,6 +4,7 @@
 #include "soc/i2c_struct.h"
 #include "hal/i2c_ll.h"
 #include "hwConfigFile.h"
+#include "./../../../03_Common/comunicationProtocol.h"
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
  
@@ -58,15 +59,20 @@ static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t ch
 	//I2C0.int_ena.rx_fifo_full;						//0			0
 	//I2C0.fifo_data.data;
 	//void* receivedData;
-	if ((I2C_BASE_PORT_REGISTER.int_status.trans_complete == 0) && (I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full == 1))	//sprawdza czy przerwanie pochodzi od I2C slave receive data
+	if ((I2C_BASE_PORT_REGISTER.int_status.trans_complete == 0) /*&& (I2C_BASE_PORT_REGISTER.int_raw.rx_fifo_full == 1)*/)	//sprawdza czy przerwanie pochodzi od I2C slave receive data
 	{
 		i2cFrame_transmitQueue tempReceivedFrame;
 		BaseType_t high_task_wakeup = pdFALSE;
+		
+		i2cFrame_commonHeader* virtualReceivedDataHeader; //potrzebne, aby odczytać wielkość otrzymanych danych
+		virtualReceivedDataHeader = (i2cFrame_commonHeader*)edata->buffer; 
+		
+		
 
-		tempReceivedFrame.dataSize = *(size_t*)edata->buffer; //na samym początku danych wysyłanych przez I2C master znajduje się informacja (size_t) o wielkości/ długości ramki danych (bo te w zależności od obsługiwanego peryferium mogą mieć inną długość). Jest to wielkości bufora jaki trzeba dynamicznie przydzielić na otrzymane dane
+		tempReceivedFrame.dataSize = virtualReceivedDataHeader->dataSize + sizeof(i2cFrame_commonHeader);					//ustala wielkość otrzymanej ramki jej wielkość to  nagłówek  sizeof(i2cFrame_commonHeader)+ wilekość samych danych zapisana w 	  i2cFrame_commonHeader* virtualReceivedDataHeader->dataSize
 	
 		char*  receivedData = new char[tempReceivedFrame.dataSize];
-		char* data_start = (char*)edata->buffer + sizeof(size_t);		//ustala wskaźnik na początek ramki danych, przesuwa go o size_t
+		char* data_start = (char*)edata->buffer /*+ sizeof(size_t)*/;		//ustala wskaźnik na początek ramki danych, przesuwa go o size_t
 	
 		memcpy(receivedData, data_start, tempReceivedFrame.dataSize);		//kopiwanie ramki danych do dynamicznie utworzonego buforu
 		tempReceivedFrame.pData =  receivedData;
@@ -256,7 +262,7 @@ esp_err_t i2cEngin_slave::slaveTransmit()
 *---------------------------------------------------------------*/
 esp_err_t i2cEngin_slave::i2cSlaveReceiveFromCallback(uint8_t *data)
 {
-	return i2c_slave_receive(handler_i2c_dev_slave, data, ESP32_DEFAULT_RECEIVE_QUEUE_SIZE);
+	return i2c_slave_receive(handler_i2c_dev_slave, data, ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH);
 }
 
 

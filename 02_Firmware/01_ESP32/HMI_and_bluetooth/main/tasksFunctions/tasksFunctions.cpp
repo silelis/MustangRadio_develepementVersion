@@ -500,7 +500,7 @@ void i2cSlaveTransmit(void *nothing)
 void  i2cSlaveReceive(void *nothing)
 { 
 	i2cFrame_transmitQueue tempI2cFaremeToParser;										//tymczasowa ramka danych, ktoa będzie przekazywana do kolejki taska parsera danych
-	uint8_t *bufferForI2cReceivedData = new uint8_t[ESP32_I2C_RECEIVE_DATA_LENGTH];   //bufor do którego odczytywane są dane przesłane po i2c
+	uint8_t *bufferForI2cReceivedData = new uint8_t[ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH]; //bufor do którego odczytywane są dane przesłane po i2c
 	assert(bufferForI2cReceivedData);
 	
 
