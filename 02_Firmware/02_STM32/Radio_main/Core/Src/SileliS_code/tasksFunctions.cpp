@@ -58,6 +58,39 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 
 static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 	i2cFrame_transmitQueue I2CFrameToSendTolave;
+
+
+
+
+
+
+
+	I2CFrameToSendTolave.slaveDevice7bitAddress=I2C_SLAVE_ADDRESS_ESP32;
+
+	i2cFrame_keyboardFrame klawiatura;
+
+	//klawiatura.i2cframeCommandHeader.crcSum=0;
+	klawiatura.i2cframeCommandHeader.dataSize=sizeof(keyboardUnion);
+
+
+	klawiatura.i2cframeCommandHeader.commandGroup=I2C_COMMAND_GROUP_KEYBOARD;
+	klawiatura.keyboardData.array[0]='A';
+	klawiatura.keyboardData.array[1]='C';
+
+	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_commonHeader)+sizeof(keyboardUnion);
+
+	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_keyboardFrame);
+
+	klawiatura.i2cframeCommandHeader.crcSum=calculate_checksum(&klawiatura,I2CFrameToSendTolave.dataSize);
+
+	I2CFrameToSendTolave.pData=&klawiatura;
+
+	pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueSend(&I2CFrameToSendTolave);
+
+
+
+
+
 	while(1){
 		if(pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueReceive(&I2CFrameToSendTolave, portMAX_DELAY)==pdPASS){
 			HAL_StatusTypeDef retVal;
@@ -70,7 +103,7 @@ static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 				pPrintf->feedPrintf("i2cMaster: Unable to send data to slave 0x%X. Error value 0x%x.", I2CFrameToSendTolave.slaveDevice7bitAddress, retVal );
 				pi2cMaster->ping(I2CFrameToSendTolave.slaveDevice7bitAddress);
 			}
-			#error sprawdzić czy działa niszczenie danych
+			//#error sprawdzić czy działa niszczenie danych
 			pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueDeleteDataFromPointer(I2CFrameToSendTolave);		//usuwa dane po wyslaniu (niezależnie od rezultatu)
 			pi2cMaster->i2cMasterSemaphoreGive();
 		}
