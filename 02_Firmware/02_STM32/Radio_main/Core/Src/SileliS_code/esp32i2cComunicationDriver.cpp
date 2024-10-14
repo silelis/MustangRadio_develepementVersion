@@ -181,16 +181,8 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
 		this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
 		this->pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(dataFrame);
 	}
-
-
-
-	//pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
-	//I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
-	//if (I2CFrameToReadFromSlave.pData!=nullptr){
-	//	pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
-	//	pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
-	//}
 }
+
 /********************************************************************
  * @brief  Odczytuje dane z esp32 (i2c slave)
  *
