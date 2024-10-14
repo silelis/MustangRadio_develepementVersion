@@ -106,6 +106,8 @@ static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 			if (I2CFrameToSendTolave.dataSize<=ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH){		//jeżeli wielkość danych do wysłania nie przekracza maksymalnych dopuszczalnych przez I2C slave
 
 				retVal= pi2cMaster->I2C_Master_Transmit_DMA(I2CFrameToSendTolave.slaveDevice7bitAddress, (uint8_t*) I2CFrameToSendTolave.pData, I2CFrameToSendTolave.dataSize);
+				#warning TODO:dodać nadawanie sekwencyjne dla si468x
+				//HAL_I2C_Master_Seq_Transmit_DMA(hi2c, DevAddress, pData, Size, XferOptions)
 				if (I2CFrameToSendTolave.slaveDevice7bitAddress == I2C_SLAVE_ADDRESS_ESP32){
 					pESP32->i2cComunicationHoldTime();
 				}
@@ -114,10 +116,6 @@ static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
 					pi2cMaster->ping(I2CFrameToSendTolave.slaveDevice7bitAddress);
 				}
 			}
-
-
-
-
 
 			#warning sprawdzić czy działa niszczenie danych
 			pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueDeleteDataFromPointer(I2CFrameToSendTolave);		//usuwa dane po wyslaniu (niezależnie od rezultatu)
@@ -133,29 +131,10 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 	while(1){
 		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&I2CFrameToReadFromSlave, portMAX_DELAY)==pdPASS){
 			pi2cMaster->i2cMasterSemaphoreTake();
-			//pi2cMaster->while_I2C_STATE_READY();
+			//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
-
-
-				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
-
-
-
-
-				/*pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
-					I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
-					if (I2CFrameToReadFromSlave.pData!=nullptr){
-						pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
-						pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
-					}*/
-
-
-
-					/*else{
-						pESP32->seteDynamicmMemeoryAlocationError();
-						assert(0);
-					}*/
+					pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
 					break;
 				default:
 					pPrintf->feedPrintf("I2C slave address not recognized.");
@@ -163,6 +142,7 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 			}
 			pi2cMaster->i2cMasterSemaphoreGive();
 			if (I2CFrameToReadFromSlave.pData==nullptr){
+				//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
 				pPrintf->feedPrintf("error with memory allocation.");
 				assert(0);
 			}
@@ -177,6 +157,7 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	I2CFrameToReadFromESP32.dataSize=0;
 	I2CFrameToReadFromESP32.pData=nullptr;
 	while(1){
+		//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
 			pi2cMaster->pI2C_whichSlaveToReadQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);

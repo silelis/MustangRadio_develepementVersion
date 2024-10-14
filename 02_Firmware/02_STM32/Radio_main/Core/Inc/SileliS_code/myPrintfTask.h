@@ -22,7 +22,7 @@ public:
 	myPrintfTask(UART_HandleTypeDef* huart, UBaseType_t printfTaskQueueLength);
 	virtual ~myPrintfTask();
 	BaseType_t feedPrintf(const char *format, ...);
-	HAL_StatusTypeDef myPrintf(i2cFrame_transmitQueue itemToPrint);
+	void myPrintf(i2cFrame_transmitQueue itemToPrint);
 
 
 private:
