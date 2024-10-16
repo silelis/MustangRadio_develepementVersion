@@ -13,9 +13,6 @@
 #include "./../../../03_Common/comunicationProtocol.h"
 #include "./../../../03_Common/i2c_slave_master_queueClass.h"
 
-
-
-
 class i2cEngin_slave
 {
 public:
@@ -24,10 +21,7 @@ public:
 
 	esp_err_t slaveTransmit();
 	i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
-	i2cQueue4DynamicData* pReceivedQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych odbieranych po i2c przez ESP32 (jako slave) do smt32
 	void esp32i2cBusInitialised(void);
-	esp_err_t i2cSlaveReceiveFromCallback(uint8_t*d);
-	
 protected:
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);

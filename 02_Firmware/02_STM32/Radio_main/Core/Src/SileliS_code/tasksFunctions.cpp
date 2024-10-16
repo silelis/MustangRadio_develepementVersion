@@ -14,7 +14,6 @@
 
 static bool esp32I2cInitialised = false;	//zmienna sprawdza czy esp32 zainiclował interfejs i2c
 static TaskHandle_t taskHandle_i2cFromSlaveReceiveDataTask= nullptr;	//task obsługujący czytanie danych z urządzeń slave i2c
-static TaskHandle_t taskHandle_i2cMasterToSlaveTransmitDataTask= nullptr;	//task obsługujący wysyłanie danych do i2c slave
 static TaskHandle_t taskHandle_esp32IntrrruptRequest = nullptr;					//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMaster_pReceiveQueueObjectParser = nullptr;	//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;						//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
@@ -56,85 +55,35 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 }
 
 
-static void i2cMasterToSlaveTransmitDataTask(void *pNothing){
-	i2cFrame_transmitQueue I2CFrameToSendTolave;
-
-
-
-
-
-
-
-	I2CFrameToSendTolave.slaveDevice7bitAddress=I2C_SLAVE_ADDRESS_ESP32;
-
-	i2cFrame_keyboardFrame klawiatura;
-
-	//klawiatura.i2cframeCommandHeader.crcSum=0;
-	klawiatura.i2cframeCommandHeader.dataSize=sizeof(keyboardUnion);
-
-
-	klawiatura.i2cframeCommandHeader.commandGroup=I2C_COMMAND_GROUP_KEYBOARD;
-	klawiatura.keyboardData.array[0]='A';
-	klawiatura.keyboardData.array[1]='C';
-
-	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_commonHeader)+sizeof(keyboardUnion);
-
-	if (I2CFrameToSendTolave.dataSize>ESP32_DEFAULT_RECEIVE_QUEUE_SIZE){
-		assert(0);
-	}
-
-	I2CFrameToSendTolave.dataSize=sizeof(i2cFrame_keyboardFrame);
-
-	klawiatura.i2cframeCommandHeader.crcSum=calculate_checksum(&klawiatura,I2CFrameToSendTolave.dataSize);
-
-	I2CFrameToSendTolave.pData=&klawiatura;
-
-	pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueSend(&I2CFrameToSendTolave);
-
-
-
-
-
-
-
-	while(1){
-		if(pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueReceive(&I2CFrameToSendTolave, portMAX_DELAY)==pdPASS)
-		{
-			HAL_StatusTypeDef retVal;
-			pi2cMaster->i2cMasterSemaphoreTake();
-
-			if (I2CFrameToSendTolave.dataSize<=ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH){		//jeżeli wielkość danych do wysłania nie przekracza maksymalnych dopuszczalnych przez I2C slave
-
-				retVal= pi2cMaster->I2C_Master_Transmit_DMA(I2CFrameToSendTolave.slaveDevice7bitAddress, (uint8_t*) I2CFrameToSendTolave.pData, I2CFrameToSendTolave.dataSize);
-				#warning TODO:dodać nadawanie sekwencyjne dla si468x
-				//HAL_I2C_Master_Seq_Transmit_DMA(hi2c, DevAddress, pData, Size, XferOptions)
-				if (I2CFrameToSendTolave.slaveDevice7bitAddress == I2C_SLAVE_ADDRESS_ESP32){
-					pESP32->i2cComunicationHoldTime();
-				}
-				if(retVal!=HAL_OK){
-					pPrintf->feedPrintf("i2cMaster: Unable to send data to slave 0x%X. Error value 0x%x.", I2CFrameToSendTolave.slaveDevice7bitAddress, retVal );
-					pi2cMaster->ping(I2CFrameToSendTolave.slaveDevice7bitAddress);
-				}
-			}
-
-			#warning sprawdzić czy działa niszczenie danych
-			pi2cMaster->pI2C_toSlaveTransmitDataQueue->QueueDeleteDataFromPointer(I2CFrameToSendTolave);		//usuwa dane po wyslaniu (niezależnie od rezultatu)
-			pi2cMaster->i2cMasterSemaphoreGive();
-		}
-	}
-}
-
-
 static void i2cFromSlaveReceiveDataTask(void *pNothing){
 	i2cFrame_transmitQueue I2CFrameToReadFromSlave;
 
 	while(1){
 		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&I2CFrameToReadFromSlave, portMAX_DELAY)==pdPASS){
 			pi2cMaster->i2cMasterSemaphoreTake();
-			//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
+			//pi2cMaster->while_I2C_STATE_READY();
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress){
 				case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
-					pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
+
+
+				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
+
+
+
+
+				/*pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
+					I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
+					if (I2CFrameToReadFromSlave.pData!=nullptr){
+						pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
+						pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
+					}*/
+
+
+
+					/*else{
+						pESP32->seteDynamicmMemeoryAlocationError();
+						assert(0);
+					}*/
 					break;
 				default:
 					pPrintf->feedPrintf("I2C slave address not recognized.");
@@ -142,7 +91,6 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 			}
 			pi2cMaster->i2cMasterSemaphoreGive();
 			if (I2CFrameToReadFromSlave.pData==nullptr){
-				//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
 				pPrintf->feedPrintf("error with memory allocation.");
 				assert(0);
 			}
@@ -157,7 +105,6 @@ static void esp32IntrrruptRequestCallback(void *pNothing){
 	I2CFrameToReadFromESP32.dataSize=0;
 	I2CFrameToReadFromESP32.pData=nullptr;
 	while(1){
-		//TUTAJ nie kasujemy buffora pData, bo tutaj pobieramy dane z i2c slave do kolejki
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
 			pi2cMaster->pI2C_whichSlaveToReadQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);
@@ -235,10 +182,6 @@ static void initTaskFunctions(void){
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(xTaskCreate(i2cFromSlaveReceiveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cFromSlaveReceiveDataTask));
-
-	//tworzenie taska wysyłającego dane do slave I2C z master
-	configASSERT(xTaskCreate(i2cMasterToSlaveTransmitDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+2, &taskHandle_i2cMasterToSlaveTransmitDataTask));
-
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32IntrrruptRequestCallback, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32IntrrruptRequest));

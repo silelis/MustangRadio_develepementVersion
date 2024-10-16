@@ -6,9 +6,8 @@
 //#include "comunicationProtocol.h"
 //#include <iostream>
 
-#define ESP32_DEFAULT_TRANSMIT_QUEUE_SIZE	25
-#define ESP32_DEFAULT_RECEIVE_QUEUE_SIZE	25
-//#define	ESP32_I2C_RECEIVE_DATA_LENGTH		512
+#define DEFAULT_TRANSMIT_QUEUE_SIZE	20
+#define DEFAULT_RECEIVE_QUEUE_SIZE	20
 
 #ifdef  /*TOOLCHAIN_ENVIRONMENT == __esp32__ */ ESP_PLATFORM
 	#include "freertos/FreeRTOS.h"
@@ -36,8 +35,7 @@ public:
 	BaseType_t QueueSend(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t QueueSendFromISR(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t  QueueReceive(/*void*/i2cFrame_transmitQueue * /*const*/ pvBuffer, TickType_t xTicksToWait);
-	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);
-	QueueHandle_t returnHandlerQueue(void);
+	void QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer);	
 
 protected:
 

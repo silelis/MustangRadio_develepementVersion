@@ -43,7 +43,7 @@ static const uint8_t crc8_table[256] = {
  * stm32 i esp32.
  * UWAGA 1: W funkcji jest stała bufferOffset o 
  * wartości "1". Jest to spowodowane tym, że pierwszy byte 
- * przekazywanych bufforów to wartość obliczanej CRC, więc nie
+ * przekazywanych bufforóow to wartość obliczanej CRC, więc nie
  * może być on brany pod uwagę, bo przy wyliczaniu poprawności
  * danych będzie występowac bład.
  * UWAGA 2: makro I2C_SLAVE_CRC_METHOD steruje sposobem wyliczania

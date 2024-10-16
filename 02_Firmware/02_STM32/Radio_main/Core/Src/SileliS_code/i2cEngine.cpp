@@ -19,9 +19,9 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 
 
-	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(ESP32_DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 
 
 
@@ -91,16 +91,9 @@ void i2cMaster::while_I2C_STATE_READY(void){
 }
 
 HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
-	//HAL_StatusTypeDef retVal;
+	HAL_StatusTypeDef retVal;
 	this->while_I2C_STATE_READY();
-	return HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
-	//return retVal;
-}
+	retVal = HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
 
-HAL_StatusTypeDef i2cMaster::I2C_Master_Transmit_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
-	//HAL_StatusTypeDef retVal;
-	this->while_I2C_STATE_READY();
-	/*retVal =*/ return HAL_I2C_Master_Transmit_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
-	//this->while_I2C_STATE_READY();
-	//return retVal;
+	return retVal;
 }

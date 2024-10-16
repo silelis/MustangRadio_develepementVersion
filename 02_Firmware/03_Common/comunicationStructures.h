@@ -25,8 +25,6 @@ union keyboardUnion
 	}kbrdValue;				//daje możliwość łatwego zapisania/odczytu danych dla klawiatury
 };
 
-
-
 struct colorSet {
 	struct ws2812Color primary;
 	struct ws2812Color secondary;

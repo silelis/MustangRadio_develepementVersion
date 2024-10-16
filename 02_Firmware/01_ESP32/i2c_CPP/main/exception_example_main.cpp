@@ -58,7 +58,7 @@ typedef struct {
 } i2cFrame_transmitQueue;				//jak wyżej
 
 
-static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
+static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	i2cFrame_transmitQueue receivedFrame;
 	BaseType_t high_task_wakeup = pdFALSE;
@@ -68,22 +68,23 @@ static IRAM_ATTR bool i2cSlaveReceive_finishedCallback(i2c_slave_dev_handle_t ch
 	//void* receivedData;
 	char*  receivedData = new char[receivedFrame.dataSize]; //(char*) malloc(receivedFrame.dataSize); 
 	char* data_start = (char*)edata->buffer + sizeof(size_t);
+
+	//memcpy(&receivedData, (char*)edata->buffer + sizeof(size_t), receivedFrame.dataSize);
+	//memcpy(receivedData, data_start, receivedFrame.dataSize);
 	
 	memcpy(receivedData, data_start, receivedFrame.dataSize);
+	
 	receivedFrame.pData =  receivedData;
 	
 	//xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	if (xQueueSendFromISR((QueueHandle_t)user_data/*receive_queue*/, &receivedFrame, &high_task_wakeup) == pdFAIL)
+	if (xQueueSendFromISR(receive_queue, &receivedFrame, &high_task_wakeup) == pdFAIL)
 	{
 		delete[]receivedFrame.pData;
 		assert(0);
 	}
-	if (high_task_wakeup == pdTRUE) {
-		portYIELD_FROM_ISR();
-		return pdTRUE;
-	}
+	
 //void* data = receivedFrame->pData;
-	return pdFALSE;
+	return high_task_wakeup == pdTRUE;
 }
 
 
@@ -92,10 +93,10 @@ extern "C" void app_main(void)
     cout << "app_main starting" << endl;
 
 	
-	size_t 	 DATA_LENGTH = 512;//4*sizeof(uint8_t);
+	size_t 	 DATA_LENGTH = 4*sizeof(uint8_t);
 
 	uint8_t *data_rd = (uint8_t *) malloc(DATA_LENGTH);
-	//uint32_t size_rd = 0;	
+	uint32_t size_rd = 0;	
 	
 
 
@@ -119,14 +120,14 @@ extern "C" void app_main(void)
 	i2c_slave_dev_handle_t slave_handle;
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_slv_config, &slave_handle));
 
-
-	QueueHandle_t i2cReceivedDataQueue = xQueueCreate(50, sizeof(i2cFrame_transmitQueue));
+	//QueueHandle_t s_receive_queue = xQueueCreate(50, sizeof(i2c_slave_rx_done_event_data_t));
+	QueueHandle_t s_receive_queue = xQueueCreate(50, sizeof(i2cFrame_transmitQueue));
 	
 	
 	i2c_slave_event_callbacks_t cbs = {
-		.on_recv_done = i2cSlaveReceive_finishedCallback,
+		.on_recv_done = i2c_slave_rx_done_callback,
 	};
-	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, i2cReceivedDataQueue));
+	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, s_receive_queue));
 
 	i2cFrame_transmitQueue rx_data;
 	//char* receivedString;
@@ -135,12 +136,28 @@ extern "C" void app_main(void)
 	while (1)
 	{
 		//retVal = i2c_slave_receive(slave_handle, data_rd, 512);
-		if (xQueueReceive(i2cReceivedDataQueue, &rx_data, portMAX_DELAY) == pdPASS) {
+		if (xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY) == pdPASS) {
 			i2c_slave_receive(slave_handle, data_rd, 512);
 			printf("%s\r\n", (char*)   rx_data.pData);
 			delete[]rx_data.pData;
+			
 		}
 	}
 
+	
+	
+	
+  //  try {
+  //      /* This will succeed */
+   //     Throwing obj1(42);
+    //
+    //    /* This will throw an exception */
+  //      Throwing obj2(0);
+  //
+  //      cout << "This will not be printed" << endl;
+  //  } catch (const runtime_error &e) {
+  //      cout << "Exception caught: " << e.what() << endl;
+  //  }
 
+    cout << "app_main done" << endl;
 }
