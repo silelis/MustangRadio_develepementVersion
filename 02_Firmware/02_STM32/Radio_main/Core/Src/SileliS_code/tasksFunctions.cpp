@@ -173,7 +173,6 @@ static void initTaskFunctions(void){
 	pi2cMaster->i2cMasterSemaphoreGive();
 	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
 
-
 	//printf("Radio main firmware version: %.2f\r\n", FW_VERSION);
 
 	pi2cMaster->while_I2C_STATE_READY();
