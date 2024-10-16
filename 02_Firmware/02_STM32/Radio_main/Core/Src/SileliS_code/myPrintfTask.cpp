@@ -24,7 +24,7 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
 	BaseType_t retVal = pdFALSE;
 	i2cFrame_transmitQueue itemToPrint;
 
-	//itemToPrint.slaveDevice7bitAddress=NULL;
+	itemToPrint.slaveDevice7bitAddress=NULL;
 	va_list args;
     va_start(args, format);
 
@@ -53,7 +53,7 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
     return retVal;  // Zwracamy wskaźnik na sformatowany ciąg
 }
 
-void myPrintfTask::myPrintf(i2cFrame_transmitQueue itemToPrint) {
+HAL_StatusTypeDef myPrintfTask::myPrintf(i2cFrame_transmitQueue itemToPrint) {
 	//HAL_UART_Transmit_DMA(this->pHuart, (const uint8_t*) itemToPrint.pData, itemToPrint.dataSize);
 	HAL_UART_Transmit(this->pHuart, (const uint8_t*) itemToPrint.pData, itemToPrint.dataSize, 150);
 	HAL_UART_Transmit(this->pHuart, (const uint8_t*) "\r\n", 2, 150);

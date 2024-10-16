@@ -74,7 +74,6 @@ i2cQueue4DynamicData::~i2cQueue4DynamicData(void)
  *******************************************************************/
 void i2cQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
 {
-	#warning TODO: Tutaj zrobić sprawdzanie czy adres jest do zmiennej dynamicznej czy const bo dla si468x firmware może być z const
 	delete[] static_cast<char*>(structWithPointer.pData);	
 }
 
@@ -150,12 +149,4 @@ BaseType_t i2cQueue4DynamicData::QueueSendFromISR(/*const*/ /*void*/i2cFrame_tra
 		//delete[] static_cast<char*>(pointerToData);
 		return pdFALSE;
 	}
-}
-
-
-
-
-QueueHandle_t i2cQueue4DynamicData::returnHandlerQueue(void)
-{
-	return this->handler_Queue;
 }

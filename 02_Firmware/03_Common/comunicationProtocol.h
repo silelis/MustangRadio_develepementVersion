@@ -6,8 +6,8 @@
 #include <stdint.h> 
 #include "hwConfigFile.h"
 
-#define I2C_SLAVE_ADDRESS_ESP32							0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define	ESP32_I2C_RECEIVE_DATA_BUFFER_LENGTH			512+sizeof(i2cFrame_commonHeader)		//max. wielkośc bufora przechowującego dane od przerwania danych odczytanych z i2c slave receive
+#define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
+
 
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
 
@@ -58,16 +58,15 @@ typedef struct {
 
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
-	/*typedef*/ struct i2cFrame_transmitQueue{
-		uint8_t	slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
-		size_t	dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
-		void	*pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
-		i2cFrame_transmitQueue() : slaveDevice7bitAddress(0), dataSize(0), pData(nullptr) {}
-	} /*i2cFrame_transmitQueue*/;
+	typedef struct{
+		uint8_t slaveDevice7bitAddress;		//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
+		size_t dataSize;					//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
+		void *pData;						//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
+	} i2cFrame_transmitQueue;
 #else
 	typedef struct{
-		size_t	dataSize;					//jak wyżej	tylko dla ESP32
-		void	*pData;						//jak wyżej	tylko dla ESP32
-	} i2cFrame_transmitQueue;
+		size_t dataSize;					//jak wyżej
+		void *pData;						//jak wyżej
+	} i2cFrame_transmitQueue;				//jak wyżej
 
 #endif
