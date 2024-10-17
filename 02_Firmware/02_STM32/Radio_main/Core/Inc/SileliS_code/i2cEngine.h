@@ -22,16 +22,19 @@ public:
 	i2cMaster(I2C_HandleTypeDef *hi2c1);
 	virtual ~i2cMaster();
 	HAL_StatusTypeDef ping(uint16_t DevAddress_7bit);
-	i2cQueue4DynamicData* pI2C_fromSlaveReceiveDataQueue;			//kolejka przechowująca otrzymane z i2c slave dane, ktore przekazywane są do parsowania
-	i2cQueue4DynamicData* pI2C_toSlaveTransmitDataQueue;			//kolejka przechowująca dane jakie mają zostać wysłane do slave i2c
-	i2cQueue4DynamicData* pI2C_whichSlaveToReadQueue;				//kolejka przechowująca informacje o tym, z ktorego slave należy przeczytać dane (przechowuje adres i2c slave do odczytu)
+	BaseType_t  setI2cAdressToAdressQueue(uint16_t DevAddress_7bit);
+	BaseType_t  getI2cAdressFromAdressQueue(i2cFrame_transmitQueue* I2CFrameWithAdressOfSlaveToRead);
+
+	i2cQueue4DynamicData* pI2C_MasterReceiveFromSlave_DataQueue;			//kolejka przechowująca otrzymane z i2c slave dane, ktore przekazywane są do parsowania
+	i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;			//kolejka przechowująca dane jakie mają zostać wysłane do slave i2c
+
 	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
 	void while_I2C_STATE_READY(void);
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);
 
 protected:
-
+	i2cQueue4DynamicData* pI2C_MasterInitialiseReadFromSlave_AdressessQueue; //kolejka przechowująca informacje o tym, z ktorego slave należy przeczytać dane (przechowuje adres i2c slave do odczytu)
 
 private:
 	I2C_HandleTypeDef *p_hi2c1;						//adres interfejsu i2c po którym odbywa się komunikacja

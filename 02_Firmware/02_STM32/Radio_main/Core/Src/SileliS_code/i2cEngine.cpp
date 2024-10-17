@@ -13,15 +13,15 @@ extern myPrintfTask* pPrintf;
 i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	// TODO Auto-generated constructor stub
 	this->p_hi2c1 =hi2c1;
-	this->pI2C_fromSlaveReceiveDataQueue = NULL;
-	this->pI2C_toSlaveTransmitDataQueue = NULL;
-	this->pI2C_whichSlaveToReadQueue = NULL;
+	this->pI2C_MasterReceiveFromSlave_DataQueue = NULL;
+	this->pI2C_MasterTransmitToSlave_DataQueue = NULL;
+	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = NULL;
 
 
 
-	configASSERT(this->pI2C_fromSlaveReceiveDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_toSlaveTransmitDataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_whichSlaveToReadQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterReceiveFromSlave_DataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterTransmitToSlave_DataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 
 
 
@@ -75,14 +75,28 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	return retVal;
 }
 
+//ustawia addres i2c slave jaki ma być czytany i przestła go do kolejki-> taska odpowiedzialnego za odczyt danych ze slave
+BaseType_t  i2cMaster::setI2cAdressToAdressQueue(uint16_t DevAddress_7bit){
+	i2cFrame_transmitQueue I2CFrameWithAdressOfSlaveToRead;
+	I2CFrameWithAdressOfSlaveToRead.slaveDevice7bitAddress = DevAddress_7bit;
+	return this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueSendFromISR(&I2CFrameWithAdressOfSlaveToRead);
+}
+
+
+//w tasku odpowiedzialnym za odczyt danych z i2c slave poiera adres z kolejki
+BaseType_t  i2cMaster::getI2cAdressFromAdressQueue(i2cFrame_transmitQueue* I2CFrameWithAdressOfSlaveToRead){
+	return this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueReceive(I2CFrameWithAdressOfSlaveToRead, portMAX_DELAY);
+}
+
+
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
 	this->i2cMasterSemaphoreTake();
 	//HAL_I2C_DeInit(this->p_hi2c1);
 	this->p_hi2c1 = NULL;
-	delete this->pI2C_fromSlaveReceiveDataQueue;
-	delete this->pI2C_toSlaveTransmitDataQueue;
-	delete this->pI2C_whichSlaveToReadQueue;
+	delete this->pI2C_MasterReceiveFromSlave_DataQueue;
+	delete this->pI2C_MasterTransmitToSlave_DataQueue;
+	delete this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue;
 	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
 }
 
