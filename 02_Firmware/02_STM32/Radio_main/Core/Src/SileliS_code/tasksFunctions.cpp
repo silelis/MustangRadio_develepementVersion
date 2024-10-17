@@ -31,7 +31,7 @@ myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisan
 static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
-		if(pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
 			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
@@ -49,7 +49,7 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
 				assert(0);
 			}
-			pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
+			pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
 	}
 }
@@ -59,7 +59,8 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 	i2cFrame_transmitQueue I2CFrameToReadFromSlave;
 
 	while(1){
-		if(pi2cMaster->pI2C_whichSlaveToReadQueue->QueueReceive(&I2CFrameToReadFromSlave, portMAX_DELAY)==pdPASS){
+		//if(pi2cMaster->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueReceive(&I2CFrameToReadFromSlave, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->getI2cAdressFromAdressQueue(&I2CFrameToReadFromSlave)==pdPASS){
 			pi2cMaster->i2cMasterSemaphoreTake();
 			//pi2cMaster->while_I2C_STATE_READY();
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress){
@@ -100,14 +101,15 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 
 
 static void esp32IntrrruptRequestCallback(void *pNothing){
-	i2cFrame_transmitQueue I2CFrameToReadFromESP32;			//
-	I2CFrameToReadFromESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
-	I2CFrameToReadFromESP32.dataSize=0;
-	I2CFrameToReadFromESP32.pData=nullptr;
+	//i2cFrame_transmitQueue I2CFrameToReadFromESP32;			//
+	//I2CFrameToReadFromESP32.slaveDevice7bitAddress = pESP32->esp32i2cSlaveAdress_7bit;		//I2C_SLAVE_ADDRESS_ESP32;
+	//I2CFrameToReadFromESP32.dataSize=0;
+	//I2CFrameToReadFromESP32.pData=nullptr;
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()){								//czeka dopuki nie pojawi się esp32 interrupt request
-			pi2cMaster->pI2C_whichSlaveToReadQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);
+			pi2cMaster->setI2cAdressToAdressQueue(pESP32->esp32i2cSlaveAdress_7bit);
+			//pi2cMaster->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueSendFromISR(&I2CFrameToReadFromESP32);
 		}
 	};
 }
