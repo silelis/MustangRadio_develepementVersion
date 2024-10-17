@@ -89,6 +89,22 @@ BaseType_t  i2cMaster::getI2cAdressFromAdressQueue(i2cFrame_transmitQueue* I2CFr
 }
 
 
+//metoda przesuwa otrzymane z i2c slave dane to kolejki taska parsera
+BaseType_t  i2cMaster::passReceivedI2cDataToParsingQueue(i2cFrame_transmitQueue* I2CFrameToParsingTask){
+	return this->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(I2CFrameToParsingTask);
+}
+
+//metoda pozwala na pobranie z kolejki parsera (przez taks parsera)  danych do parsowania
+BaseType_t  i2cMaster::takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueue* I2CFrameToParsing){
+	return this->pI2C_MasterReceiveFromSlave_DataQueue->QueueReceive(I2CFrameToParsing, portMAX_DELAY);
+}
+
+//po zakończeniu parsowania należy zwolnić dynamicznie alokowane dane
+void		i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue I2CFrameWithPointerToDelete){
+	this->pI2C_MasterReceiveFromSlave_DataQueue->QueueDeleteDataFromPointer(I2CFrameWithPointerToDelete);
+}
+
+
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
 	this->i2cMasterSemaphoreTake();
