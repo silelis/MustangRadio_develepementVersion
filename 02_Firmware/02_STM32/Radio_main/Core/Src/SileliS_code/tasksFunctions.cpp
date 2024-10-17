@@ -31,7 +31,8 @@ myPrintfTask* pPrintf=nullptr;											//pointer do taska obsługuącego pisan
 static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
-		if(pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+		//if(pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueReceive(&tempI2CReceiveFrame, portMAX_DELAY)==pdPASS){
+		if(pi2cMaster->takeReceivedI2cDataFromParsingQueue(&tempI2CReceiveFrame)==pdPASS){
 			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
@@ -49,7 +50,8 @@ static void i2cMaster_pReceivedQueueObjectParser(void *pNothing){
 				pi2cMaster->ping(tempI2CReceiveFrame.slaveDevice7bitAddress);
 				assert(0);
 			}
-			pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
+			pi2cMaster->deleteAlocatedDataAfterParsing(tempI2CReceiveFrame);
+			//pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueDeleteDataFromPointer(tempI2CReceiveFrame);			//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
 	}
 }
@@ -91,7 +93,11 @@ static void i2cFromSlaveReceiveDataTask(void *pNothing){
 					assert(0);
 			}
 			pi2cMaster->i2cMasterSemaphoreGive();
-			if (I2CFrameToReadFromSlave.pData==nullptr){
+			if (I2CFrameToReadFromSlave.pData!=nullptr){
+				//pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(&I2CFrameToReadFromSlave);
+				pi2cMaster->passReceivedI2cDataToParsingQueue(&I2CFrameToReadFromSlave);
+			}
+			else if (I2CFrameToReadFromSlave.pData==nullptr){
 				pPrintf->feedPrintf("error with memory allocation.");
 				assert(0);
 			}

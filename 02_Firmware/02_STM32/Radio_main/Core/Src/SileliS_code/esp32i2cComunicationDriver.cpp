@@ -179,7 +179,7 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
 	dataFrame->pData = new char[dataFrame->dataSize];
 	if (dataFrame->pData!=nullptr){
 		this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
-		this->pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(dataFrame);
+		//this->pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(dataFrame);		//to powinno być w tasku
 	}
 
 
