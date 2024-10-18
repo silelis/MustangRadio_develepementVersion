@@ -23,34 +23,14 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	configASSERT(this->pI2C_MasterTransmitToSlave_DataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 
-
-
-
-	//this->createI2C_DataObject(this->pI2C_fromSlaveReceiveDataQueue);
-	//this->createI2C_DataObject(this->pI2C_toSlaveTransmitDataQueue);
-	//this->createI2C_DataObject(this->pI2C_whichSlaveToReadQueue);
-
-//	this->esp32InterruptCounterOverflow =pdFALSE;		//reset interrupt counter overflow indicator
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
 	this->i2cMasterSemaphoreGive();
 	this->i2cMasterSemaphoreTake();
 
-
-
-	//HAL_I2C_DeInit(p_hi2c1);
-	//MX_I2C1_Init();
-
-
-
-	//vTaskDelay(pdMS_TO_TICKS(1000));
-	//printf("%s bus had been initialized.\r\n",this->TAG);
 	pPrintf->feedPrintf("%s bus had been initialized.",this->TAG);
 	this->i2cMasterSemaphoreGive();
 }
 
-/*void i2cMaster::createI2C_DataObject(i2cQueue4DynamicData* queueToCreate){
-	configASSERT(queueToCreate = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-}*/
 
 BaseType_t i2cMaster::i2cMasterSemaphoreTake(void){
 	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
@@ -64,11 +44,9 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit){
 	HAL_StatusTypeDef retVal;
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit<<1, 100, 1000);
 	if(retVal==HAL_OK){
-			//printf("%s i2c slave avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
 			pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
 	}
 	else{
-		//printf("%s i2c slave NOT avaliable on address: 0x%x (7bit).\r\n", this->TAG, DevAddress_7bit/*<<1*/);
 		pPrintf->feedPrintf("%s i2c slave NOT avaliable on address: 0x%x (7bit).", this->TAG, DevAddress_7bit/*<<1*/);
 		assert(0);
 	}
@@ -108,7 +86,6 @@ void		i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue I2CFrameW
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
 	this->i2cMasterSemaphoreTake();
-	//HAL_I2C_DeInit(this->p_hi2c1);
 	this->p_hi2c1 = NULL;
 	delete this->pI2C_MasterReceiveFromSlave_DataQueue;
 	delete this->pI2C_MasterTransmitToSlave_DataQueue;

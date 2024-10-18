@@ -29,7 +29,6 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
     va_start(args, format);
 
     // Najpierw określamy długość wynikowego sformatowanego ciągu
-    //int length = vsnprintf(NULL, 0, format, args);
     itemToPrint.dataSize=vsnprintf(NULL, 0, format, args)+1;
     // Resetujemy va_list, aby móc go użyć ponownie
     va_end(args);

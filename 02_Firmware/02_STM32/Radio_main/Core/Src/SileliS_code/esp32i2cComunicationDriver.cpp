@@ -76,29 +76,6 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
 }
 
 
-
-/********************************************************************
- * @brief  Metoda, która sprawdza czy esp32 jest dostępny na szynie i2c.
- *
- * @param  [NONE
- *
- * @return [HAL_StatusTypeDef]
- * @retval [  HAL_OK ] Jeśli esp32 jest na szynie i2c
- * @retval [HAL_ERROR ] Jeśłi esp32 nie ma na szynie i2c
- *
- * @note   W praktyce metoda ta jest odwołaniem do funkcji
- * 			HAL_I2C_GetState
- * @warning NONE
- *******************************************************************/
-/*HAL_StatusTypeDef esp32_i2cComunicationDriver::ping(void){
-	HAL_StatusTypeDef retVal;
-	this->i2cMasterSemaphoreTake();
-	this->pi2cMaster->while_I2C_STATE_READY();
-	retVal = this->pi2cMaster->ping(this->esp32i2cSlaveAdress_7bit);
-	this->i2cMasterSemaphoreGive();
-	return retVal;
-}*/
-
 /********************************************************************
  * @brief  Zlicza ilość wywołań przerwania od esp32 informującego, że
  * ma dane do wysłania.
@@ -181,16 +158,8 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
 		this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
 		//this->pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(dataFrame);		//to powinno być w tasku
 	}
-
-
-
-	//pESP32->masterReceiveFromESP32_DMA((uint8_t*) &I2CFrameToReadFromSlave.dataSize, sizeof(size_t));
-	//I2CFrameToReadFromSlave.pData = new char[I2CFrameToReadFromSlave.dataSize];
-	//if (I2CFrameToReadFromSlave.pData!=nullptr){
-	//	pESP32->masterReceiveFromESP32_DMA((uint8_t*) I2CFrameToReadFromSlave.pData, I2CFrameToReadFromSlave.dataSize);
-	//	pi2cMaster->pI2C_fromSlaveReceiveDataQueue->QueueSend(&I2CFrameToReadFromSlave);
-	//}
 }
+
 /********************************************************************
  * @brief  Odczytuje dane z esp32 (i2c slave)
  *
@@ -214,39 +183,6 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
 	return retVal;
 }
 
-/********************************************************************
- * @brief  Pobiera semafor szyny i2c.
- *
- * Pobiera semafor szyny i2c i blokuje możliwość nadawania przez inne
- * wątki / zadania
- *
- * @param  NONE
- *
- * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreTake
- *
- * @note   NONE
- * @warning NONE
- *******************************************************************/
-/*BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreTake(void){
-	return this->pi2cMaster->i2cMasterSemaphoreTake();
-}*/
-
-/********************************************************************
- * @brief  Oddaje semafor szyny i2c.
- *
- * Oddaje semafor szyny i2c i odblokowuje możliwość nadawania przez inne
- * wątki / zadania
- *
- * @param  NONE
- *
- * @return [BaseType_t] Zwraca wartośc funkcji xSemaphoreGive
- *
- * @note   NONE
- * @warning NONE
- *******************************************************************/
-/*BaseType_t esp32_i2cComunicationDriver::i2cMasterSemaphoreGive(void){
-	return this->pi2cMaster->i2cMasterSemaphoreGive();
-}*/
 
 
 /********************************************************************
@@ -267,26 +203,6 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 }
 
 /********************************************************************
- * @brief  Metoda ustawia esp32DynamicmMemeoryAlocationError na wartość
- * pdTrue i wypisuje na konsoli stosowny komunikat, co świwadczy o tym,
- * że pojawił się błąd dynamicznej alokacji pamięci.
- *
- *
- * @param  NONE
- *
- * @return NONE
- *
- * @note   NONE
- * @warning NONE
- *******************************************************************/
-/*void esp32_i2cComunicationDriver::seteDynamicmMemeoryAlocationError(){
-	this->esp32DynamicmMemeoryAlocationError=pdTRUE;
-	//printf("error with memory allocation\r\n");
-	pPrintf->feedPrintf("error with memory allocation.");
-}*/
-
-
-/********************************************************************
  * @brief  Metoda parsuje,a dokłądnie sprawdza z którego peryferium esp32
  * pochodfzi otrzymana ramka danych i przekazuje tę dane (już konkretne
  * dane) do odpowiedzialnej za odczyt funkcji z namespace "parserFunction"
@@ -301,8 +217,6 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
 void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
 	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
 	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));
-
-
 
 	//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
 	if(this->isCrcSumCorreect(I2CReceivedFrame, tempI2cFrameCommandHeader.crcSum))
