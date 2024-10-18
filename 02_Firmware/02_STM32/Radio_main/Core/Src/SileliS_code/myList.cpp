@@ -2,25 +2,16 @@
 
 extern myPrintfTask* pPrintf;
 
-// Inicjalizacja statycznych zmiennych
-//myList* myList::head = nullptr;
-//myList* myList::currentListNode = nullptr;
-//uint8_t myList::indexCounter = 0;
-
 // Konstruktor
 myList::myList(ListHeader* pointerListHeader, const char* nodeName, uint8_t execFunctionArraySize)
     : menuItem(nodeName, execFunctionArraySize) {
 	this->pListHeader = pointerListHeader;
 
-	//this->pListHeader->indexCounter++;
-
 	if (this->pListHeader->head==nullptr){
 		this->pListHeader->head=this;
 	}
 	nextListNode=nullptr;
-	//currentListNode=this;
 	this->pListHeader->indexCounter++;
-	//indexCounter++;
 	this->index = this->pListHeader->indexCounter;
 	assert(this);
 	this->pListHeader->currentListNode=this;
@@ -83,14 +74,11 @@ void myList::moveToEnd(void){
 	}
 }
 void 	myList::moveToNextInLoop(void){
-	//printf("Exit from: %s\r\n",this->pListHeader->currentListNode->mI_TAG);
 	pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
 	this->pListHeader->currentListNode->mI_executeDeInit();
 	if(!moveToNext())
 		resetToFirst();
-	//printf("Enter to:%s\r\n",this->pListHeader->currentListNode->mI_TAG);
 	pPrintf->feedPrintf("Enter to:%s",this->pListHeader->currentListNode->mI_TAG);
-	//printCurrent();
 	this->pListHeader->currentListNode->mI_executeInit();
 }
 
@@ -112,9 +100,7 @@ bool myList::isAtEnd() const {
 void myList::printList() const {
     myList* temp = this->pListHeader->head;
     while (temp){
-    	//printf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
     	pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
-        //std::cout << "Node Index: " << (int)temp->index << ", Name: " << (temp->name ? temp->name : "Unnamed") << std::endl;
         temp = temp->nextListNode;
     }
 }
@@ -122,12 +108,9 @@ void myList::printList() const {
 // Wydrukowanie aktualnego elementu listy
 void myList::printCurrent() const {
     if (this->pListHeader->currentListNode) {
-    	//printf("%s: is current device.\r\n", this->pListHeader->currentListNode->mI_TAG);
     	pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
     } else {
-    	//printf("No current node.\r\n");
     	pPrintf->feedPrintf("No current node.");
-        //std::cout << "No current node." << std::endl;
     }
 }
 
@@ -139,7 +122,6 @@ void myList::renumberNodes() {
         temp->index = ++tempIndex;
         temp = temp->nextListNode;
     }
-    //indexCounter = index;
 }
 
 // Sprawdzanie, czy można dodać element do listy
@@ -155,12 +137,7 @@ void myList::deleteList() {
         delete temp;           // Usuń aktualny element	aka ~myList()
         this->pListHeader->indexCounter--;
     }
-//    if (!head){
-    	//delete current;
     this->pListHeader->currentListNode = nullptr;  // Po usunięciu wszystkich elementów ustaw current na nullptr
-//    	head->next = nullptr;
-
- //   }
 
 }
 
