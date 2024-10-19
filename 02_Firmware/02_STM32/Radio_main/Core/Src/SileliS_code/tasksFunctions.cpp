@@ -14,6 +14,7 @@
 
 static bool esp32I2cInitialised = false;											//zmienna sprawdza czy esp32 zainiclował interfejs i2c
 static TaskHandle_t taskHandle_i2cMasterReceiveFromSlaveDataTask= nullptr;			//task obsługujący czytanie danych z urządzeń slave i2c
+static TaskHandle_t taskHandle_i2cMasterTransmitToSlaveDataTask= nullptr;			//task wysyła dane do i2c slave
 static TaskHandle_t taskHandle_esp32I2cIntrrruptRequest = nullptr;					//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
 static TaskHandle_t taskHandle_i2cMasterParseReceivedData = nullptr;				//uchwyt taska obsługującego parsowanie kolejki odbiorczej pi2cMaster->pReceiveQueueObject
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;							//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
@@ -48,6 +49,17 @@ static void i2cMasterParseReceivedData(void *pNothing){
 			}
 			pi2cMaster->deleteAlocatedDataAfterParsing(tempI2CReceiveFrame);	//BARDZO WAŻNA FUNKCJA, po parsowaniu otrzymanego z i2c pakiedy danych, który jest przetrzymywany pod zmienną alokowaną dynamicznie niszczy tą zmienną. Ta funkcja, w tym miejscu zapobiega wyciekom pamięci!!!!!
 		};
+	}
+}
+
+static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
+	while(1){
+		vTaskDelay(pdMS_TO_TICKS(3000));
+		pi2cMaster->i2cMasterSemaphoreTake();
+		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY);
+		HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
+		pi2cMaster->i2cMasterSemaphoreGive();
+
 	}
 }
 
@@ -147,6 +159,10 @@ static void initTaskFunctions(void){
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
+	configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
+
+
+
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(xTaskCreate(esp32I2cIntrrruptRequest, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32I2cIntrrruptRequest));
