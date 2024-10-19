@@ -75,8 +75,9 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing){
 
 
 				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
-
-
+				//HAL_I2C_Master_Seq_Receive_DMA(hi2c, DevAddress, pData, Size, I2C_FIRST_FRAME)
+				//HAL_I2C_Master_Seq_Receive_DMA(hi2c, DevAddress, pData, Size, I2C_NEXT_FRAME)
+				//HAL_I2C_Master_Seq_Receive_DMA(hi2c, DevAddress, pData, Size, I2C_LAST_FRAME)
 				break;
 			default:
 				pPrintf->feedPrintf("I2C slave address not recognized.");
@@ -159,7 +160,7 @@ static void initTaskFunctions(void){
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
-	configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
+	//configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
 
 
 
