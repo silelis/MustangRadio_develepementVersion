@@ -7,7 +7,7 @@
 #include "hwConfigFile.h"
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define ESP32_I2C_Receive_Buffer_LEN			UINT8_MAX
+#define ESP32_I2C_Receive_Buffer_LEN			512+sizeof(i2cFrame_commonHeader)
 
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
 
@@ -46,7 +46,7 @@ typedef struct
 {	   	
 	uint8_t	crcSum;			//checksum for i2c farame (commandGroup+dataSize+data)
 	uint8_t commandGroup;	//aka I2C_COMMAND_GROUP
-	uint8_t dataSize;		//sizeof(data to send)
+	size_t /*uint8_t*/ dataSize;		//sizeof(data to send)
 } i2cFrame_commonHeader;
 
 
