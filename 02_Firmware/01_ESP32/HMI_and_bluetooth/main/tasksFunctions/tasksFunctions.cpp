@@ -477,10 +477,3 @@ void i2cSlaveTransmit(void *nothing)
 		p_i2cSlave->slaveTransmit();		
 	}	
 }
-
-
-
-void i2cSlaveReceive(void *nothing)
-{			
-	p_i2cSlave->i2cSlaveReceive();
-}
