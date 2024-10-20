@@ -31,6 +31,7 @@ public:
 	//BaseType_t i2cMasterSemaphoreGive(void);
 	//HAL_StatusTypeDef ping(void);
 	BaseType_t masterReceiveData(i2cFrame_transmitQueue* dataFrame);
+	BaseType_t masterReceiveSeqData(i2cFrame_transmitQueue* dataFrame);
 
 	void while_I2C_STATE_READY(void);
 
@@ -40,6 +41,7 @@ protected:
 
 private:
 	BaseType_t masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
+	BaseType_t masterReceiveFromESP32_SeqDMA(uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 	const char *TAG = "ESP32 communication driver log:";
 	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum);
 

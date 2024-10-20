@@ -2650,7 +2650,7 @@ org.eclipse.core.runtime.CoreException: Setup exceptions
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 !SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2024-10-18 21:22:25.901
 !MESSAGE Setup exceptions
-!SESSION 2024-10-19 20:41:47.299 -----------------------------------------------
+!SESSION 2024-10-20 18:15:18.922 -----------------------------------------------
 eclipse.buildId=Version 1.15.1
 java.version=17.0.8.1
 java.vendor=Eclipse Adoptium
@@ -2658,18 +2658,18 @@ BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
 Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
 
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-10-19 20:42:03.941
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-10-20 18:15:25.095
 !MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
 
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-19 20:42:03.958
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-20 18:15:25.097
 !MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
 
-!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-19 20:42:13.244
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-20 18:15:31.975
 !MESSAGE Started RMI Server, listening on port 41337
 
-!ENTRY org.eclipse.cdt.core 1 0 2024-10-19 20:42:30.571
-!MESSAGE Indexed 'Radio_main' (52 sources, 383 headers) in 17.1 sec: 44,083 declarations; 163,751 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
-!SESSION 2024-10-19 21:21:03.001 -----------------------------------------------
+!ENTRY org.eclipse.cdt.core 1 0 2024-10-20 18:15:49.771
+!MESSAGE Indexed 'Radio_main' (52 sources, 383 headers) in 17.5 sec: 44,083 declarations; 163,751 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
+!SESSION 2024-10-20 21:35:02.829 -----------------------------------------------
 eclipse.buildId=Version 1.15.1
 java.version=17.0.8.1
 java.vendor=Eclipse Adoptium
@@ -2677,63 +2677,14 @@ BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
 Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
 
-!ENTRY org.eclipse.core.resources 2 10035 2024-10-19 21:21:07.252
-!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
-
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-10-19 21:21:22.093
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-10-20 21:35:24.223
 !MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
 
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-19 21:21:22.110
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-20 21:35:24.237
 !MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
 
-!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-19 21:21:32.434
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-20 21:35:34.673
 !MESSAGE Started RMI Server, listening on port 41337
 
-!ENTRY org.eclipse.cdt.core 1 0 2024-10-19 21:21:52.125
-!MESSAGE Indexed 'Radio_main' (52 sources, 383 headers) in 19.4 sec: 44,086 declarations; 163,768 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
-
-!ENTRY org.eclipse.core.jobs 4 2 2024-10-19 22:41:46.289
-!MESSAGE An internal error occurred during: "Execute Debug Command".
-!STACK 0
-org.eclipse.core.runtime.AssertionFailedException: assertion failed: The application has not been initialized.
-	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:119)
-	at org.eclipse.core.internal.runtime.InternalPlatform.assertInitialized(InternalPlatform.java:183)
-	at org.eclipse.core.internal.runtime.InternalPlatform.getAdapterManager(InternalPlatform.java:204)
-	at org.eclipse.core.runtime.Platform.getAdapterManager(Platform.java:662)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.getAdapter(GdbLaunch.java:454)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.disconnect(GdbLaunch.java:338)
-	at org.eclipse.debug.internal.core.commands.DisconnectCommand.execute(DisconnectCommand.java:35)
-	at org.eclipse.debug.internal.core.commands.ForEachCommand.doExecute(ForEachCommand.java:36)
-	at org.eclipse.debug.core.commands.AbstractDebugCommand$1.run(AbstractDebugCommand.java:215)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.core.jobs 2 2 2024-10-19 22:41:46.672
-!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
-!SESSION 2024-10-19 22:42:30.884 -----------------------------------------------
-eclipse.buildId=Version 1.15.1
-java.version=17.0.8.1
-java.vendor=Eclipse Adoptium
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
-Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
-Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
-
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-10-19 22:42:47.482
-!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
-
-!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-10-19 22:42:47.492
-!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
-
-!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-10-19 22:42:54.257
-!MESSAGE Started RMI Server, listening on port 41337
-
-!ENTRY org.eclipse.cdt.core 1 0 2024-10-19 22:43:10.355
-!MESSAGE Indexed 'Radio_main' (52 sources, 383 headers) in 15.8 sec: 44,086 declarations; 163,782 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
-
-!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-10-19 22:44:37.046
-!MESSAGE Error - No active DSF-Session. tmpSessionId = 0 (contextManager row 121)
-
-!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-10-19 22:44:37.046
-!MESSAGE Existing sessions are:
-
-!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-10-19 22:44:37.046
-!MESSAGE 1
+!ENTRY org.eclipse.cdt.core 1 0 2024-10-20 21:35:55.477
+!MESSAGE Indexed 'Radio_main' (52 sources, 383 headers) in 20.5 sec: 44,083 declarations; 163,751 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
