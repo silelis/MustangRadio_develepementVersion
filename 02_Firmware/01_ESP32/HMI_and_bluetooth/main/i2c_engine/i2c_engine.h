@@ -29,6 +29,7 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;
+	QueueHandle_t s_receive_queue;
 };
 	
 
