@@ -23,27 +23,44 @@
 #define ESP32_SLAVE_RECEIVE_BUFFER_LEN			20
 
 #include "soc/i2c_struct.h"
+#include "hal/i2c_hal.h"
+#if SOC_I2C_SUPPORTED
+#include "hal/i2c_ll.h"
+#endif
 
 
 i2c_slave_dev_handle_t slave_handle;
 QueueHandle_t s_receive_queue;	
+TaskHandle_t handlerTask_i2cSlaveReceive; //uchwyt do taska obsługującego wysyłanie danych z i2c slave to i2c master
 TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
 extern i2c_dev_t I2C0;
 uint32_t rx_fifo_end_addrLast;
+i2c_dev_t I2C0_last;
+i2c_hal_context_t *hal1;
+bool rxToEsp32 = pdFALSE;
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	BaseType_t high_task_wakeup = pdFALSE;
+	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+
 	if (I2C0.int_status.trans_complete == 0)
 	{
-		
 		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
-		{	
-			rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
-			
-			QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-			xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-			
+		{
+			rxToEsp32 = pdTRUE;
 		}
+		else
+		{
+			rxToEsp32 = pdFALSE;
+		}
+		
+	}
+	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	
+	if (high_task_wakeup == pdTRUE) {
+		// Wybudź zadanie o wyższym priorytecie
+		portYIELD_FROM_ISR(high_task_wakeup);
 	}
 	return high_task_wakeup == pdTRUE;
 }
@@ -61,6 +78,19 @@ esp_err_t interruptRequestReset(void)
 	return gpio_set_level(GPIO_NUM_0, 1); //interrupt request is RESET when pin goes high
 }
 
+void i2cSlaveTransmit(void* nothink)
+{		vTaskDelay(pdMS_TO_TICKS(5000));
+	while (1)
+	{
+		
+		interruptRequestSet();
+		vTaskDelay(pdMS_TO_TICKS(2));
+		interruptRequestReset();
+		vTaskDelay(pdMS_TO_TICKS(5000));
+	}
+	
+	
+}
 
 void i2cSlaveReceive(void* nothink)
 {
@@ -74,22 +104,24 @@ void i2cSlaveReceive(void* nothink)
 	i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 	while (1)
 	{
-		//memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);	
+		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);	
 		
 		if (xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
 		{
-			
-			if (data_rd[0] != 0)
+			if (rxToEsp32==pdTRUE)
+			//if (data_rd[0] != 0)
 			{
 				printf("%s\n", data_rd);
+			}
+			else
+			{
+				printf("Not to me\n");	
 			}
 			//ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, 6));
 			//printf("%s\r\n", data_rd);
 			i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 		}
-		
 
-	
 	}
 }
 
@@ -123,15 +155,16 @@ void app_main(void)
 	//i2c_config_slave.intr_priority  = 0;
 	
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &slave_handle));
-	
-	
+
 	s_receive_queue = xQueueCreate(1, sizeof(i2c_slave_rx_done_event_data_t));
 	i2c_slave_event_callbacks_t cbs = {
 		.on_recv_done = i2c_slave_rx_done_callback,
 	};
 	
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, s_receive_queue));
-	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY + 1, &handlerTask_i2cSlaveTransmit));
+	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveReceive));
+	
+	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
 	
 	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	vTaskDelay(pdMS_TO_TICKS(1200));
