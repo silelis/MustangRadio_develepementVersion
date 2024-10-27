@@ -1,0 +1,155 @@
+/*
+ * SPDX-FileCopyrightText: 2010-2022 Espressif Systems (Shanghai) CO LTD
+ *
+ * SPDX-License-Identifier: CC0-1.0
+ */
+
+#include <stdio.h>
+#include <inttypes.h>
+#include "sdkconfig.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_chip_info.h"
+#include "esp_flash.h"
+#include "esp_system.h"
+#include "driver/gpio.h"
+#include "driver/i2c_slave.h"
+#include "driver/i2c_types.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define I2C_SLAVE_ADDRESS_ESP32					0x3C
+#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			20
+
+#include "soc/i2c_struct.h"
+
+
+i2c_slave_dev_handle_t slave_handle;
+QueueHandle_t s_receive_queue;	
+TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
+extern i2c_dev_t I2C0;
+//uint32_t rx_fifo_end_addrLast;
+static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
+{
+	BaseType_t high_task_wakeup = pdFALSE;
+	if (I2C0.int_status.trans_complete == 0)
+	{
+		
+	//	if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
+	//	{	
+			//rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+			
+			QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+			xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+			
+	//	}
+	//	else
+	//	{
+	//		return pdFALSE;
+	//	}
+
+	//}
+	//else
+	//{
+	//	return pdFALSE;
+	}
+	return high_task_wakeup == pdTRUE;
+}
+
+
+
+
+esp_err_t interruptRequestSet(void)
+{
+	return gpio_set_level(GPIO_NUM_0, 0); //interrupt request is SET when pin goes low
+}
+
+esp_err_t interruptRequestReset(void)
+{
+	return gpio_set_level(GPIO_NUM_0, 1); //interrupt request is RESET when pin goes high
+}
+
+
+void i2cSlaveReceive(void* nothink)
+{
+	//uint8_t *data_rd = (uint8_t *) malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+	//uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+	
+	uint8_t* data_rd = (uint8_t *) malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN);// malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN * sizeof(uint8_t));
+	//memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+	uint32_t size_rd = 0;
+	i2c_slave_rx_done_event_data_t rx_data;
+	i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+	while (1)
+	{
+		//memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);	
+		
+		if (xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
+		{
+			
+			if (data_rd[0] != 0)
+			{
+				printf("%s\n", data_rd);
+			}
+			//ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, 6));
+			//printf("%s\r\n", data_rd);
+			i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+		}
+		
+
+	
+	}
+}
+
+
+
+
+void app_main(void)
+{
+    printf("Hello world!\n");
+	
+
+
+	gpio_config_t I2C_slave_IntRequestPinConfig;
+	I2C_slave_IntRequestPinConfig.intr_type = GPIO_INTR_DISABLE;
+	I2C_slave_IntRequestPinConfig.mode = GPIO_MODE_OUTPUT;
+	I2C_slave_IntRequestPinConfig.pin_bit_mask = 1<<GPIO_NUM_0;
+	I2C_slave_IntRequestPinConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	I2C_slave_IntRequestPinConfig.pull_up_en = GPIO_PULLUP_ENABLE; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	interruptRequestReset(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!							
+	ESP_ERROR_CHECK(gpio_config(&I2C_slave_IntRequestPinConfig)); //KOLEJNOŚĆ!!!!!!!
+	
+	static i2c_slave_config_t i2c_config_slave;	
+	i2c_config_slave.addr_bit_len =  I2C_ADDR_BIT_LEN_7;
+	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
+	i2c_config_slave.i2c_port = 0;
+	i2c_config_slave.send_buf_depth = 1024;
+	i2c_config_slave.scl_io_num = GPIO_NUM_22;
+	i2c_config_slave.sda_io_num = GPIO_NUM_21;
+	i2c_config_slave.slave_addr = I2C_SLAVE_ADDRESS_ESP32;
+	//i2c_config_slave.intr_priority  = 0;
+	
+	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &slave_handle));
+	
+	
+	s_receive_queue = xQueueCreate(1, sizeof(i2c_slave_rx_done_event_data_t));
+	i2c_slave_event_callbacks_t cbs = {
+		.on_recv_done = i2c_slave_rx_done_callback,
+	};
+	
+	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, s_receive_queue));
+	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY + 1, &handlerTask_i2cSlaveTransmit));
+	
+	//rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	vTaskDelay(pdMS_TO_TICKS(1200));
+	interruptRequestReset(); //ustawiam wyjście na wysokie przed inicjalizacją GPIO, aby nie wywołać niepotrzebnie interrupt request
+	vTaskDelay(pdMS_TO_TICKS(200));
+	interruptRequestSet();
+	
+
+	while (1)
+	{
+	}
+}

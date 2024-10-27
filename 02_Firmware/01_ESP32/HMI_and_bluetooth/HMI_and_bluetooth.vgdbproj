@@ -128,7 +128,6 @@
       <EnableFastUpToDateCheck>true</EnableFastUpToDateCheck>
       <ESPIDFExtension>
         <IDFCheckout>
-          <Version>v5.2.2</Version>
           <Subdirectory>esp-idf/v5.2.2</Subdirectory>
           <Type>ESPIDF</Type>
         </IDFCheckout>
@@ -137,7 +136,9 @@
         <UseCCache>true</UseCCache>
         <DeviceID>ESP32</DeviceID>
       </ESPIDFExtension>
+      <DetectMissingSolutionConfigurations>false</DetectMissingSolutionConfigurations>
     </ProjectModeSettings>
+    <LoadCMakePresets>false</LoadCMakePresets>
   </Build>
   <CustomBuild>
     <PreSyncActions />

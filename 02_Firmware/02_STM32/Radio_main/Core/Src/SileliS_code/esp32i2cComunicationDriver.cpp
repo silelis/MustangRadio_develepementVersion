@@ -145,21 +145,10 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
 }
 
 
-BaseType_t esp32_i2cComunicationDriver::masterReceiveSeqData(i2cFrame_transmitQueue* dataFrame){
-	//this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
-	this->masterReceiveFromESP32_SeqDMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t), I2C_LAST_FRAME);
-	//dataFrame->dataSize=dataSize;
-	dataFrame->pData = new char[dataFrame->dataSize];
-	if (dataFrame->pData!=nullptr){
-		//this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
-		this->masterReceiveFromESP32_SeqDMA((uint8_t*) dataFrame->pData, dataFrame->dataSize, I2C_LAST_FRAME);
-		//this->pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(dataFrame);		//to powinno być w tasku
-	}
-}
 
 
 BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue* dataFrame){
-	//uint8_t dataSize;
+	uint8_t dataSize;
 	//this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->dataSize, sizeof(size_t));
 	//this->masterReceiveFromESP32_DMA((uint8_t*) &dataSize, sizeof(size_t));
 	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
@@ -194,14 +183,6 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
 	return retVal;
 }
 
-BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_SeqDMA(uint8_t *pData, uint16_t Size, uint32_t XferOptions){
-
-	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Seq_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size, XferOptions);
-	if (XferOptions==I2C_LAST_FRAME){
-		vTaskDelay(pdMS_TO_TICKS(7));
-	}
-	return retVal;
-}
 
 
 /********************************************************************
