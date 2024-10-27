@@ -58,10 +58,10 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 	}
 	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	
-	if (high_task_wakeup == pdTRUE) {
+	/*if (high_task_wakeup == pdTRUE) {
 		// Wybudź zadanie o wyższym priorytecie
 		portYIELD_FROM_ISR(high_task_wakeup);
-	}
+	}	  */
 	return high_task_wakeup == pdTRUE;
 }
 
@@ -156,7 +156,7 @@ void app_main(void)
 	
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &slave_handle));
 
-	s_receive_queue = xQueueCreate(1, sizeof(i2c_slave_rx_done_event_data_t));
+	s_receive_queue = xQueueCreate(10, sizeof(i2c_slave_rx_done_event_data_t));	  //!!!!!!!!!!!długość kolejki
 	i2c_slave_event_callbacks_t cbs = {
 		.on_recv_done = i2c_slave_rx_done_callback,
 	};

@@ -87,10 +87,11 @@ void taskSendFake(void *nothink){
 	while(1){
 		xSemaphoreTake(i2c_semap, portMAX_DELAY);
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-
+		vTaskDelay(pdMS_TO_TICKS(35));
 		  //retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6, 2000);
 		  retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6);
 		  HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+		  vTaskDelay(pdMS_TO_TICKS(35));
 		  while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 		  xSemaphoreGive(i2c_semap);
 		  vTaskDelay(pdMS_TO_TICKS(1200));
@@ -106,9 +107,11 @@ void taskSend(void *nothink){
 	while(1){
 		xSemaphoreTake(i2c_semap, portMAX_DELAY);
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+		vTaskDelay(pdMS_TO_TICKS(35));
 		  //retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6, 2000);
 		  retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
 		  HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+		  vTaskDelay(pdMS_TO_TICKS(35));
 		  while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 		  xSemaphoreGive(i2c_semap);
 		  vTaskDelay(pdMS_TO_TICKS(500));
