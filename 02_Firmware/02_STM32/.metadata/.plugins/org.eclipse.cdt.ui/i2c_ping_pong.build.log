@@ -1,10 +1,71 @@
-12:15:52 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+14:16:40 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
 make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:91:85: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit' differ in signedness [-Wpointer-sign]
+   91 |                   retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6, 2000);
+      |                                                                                     ^~~~~~~
+      |                                                                                     |
+      |                                                                                     char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:624:98: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  624 | HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                         ~~~~~~~~~^~~~~
+../Core/Src/main.c:92:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+   92 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 5, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:86:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   86 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:107:88: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit' differ in signedness [-Wpointer-sign]
+  107 |                   retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6, 2000);
+      |                                                                                        ^~~~~~~
+      |                                                                                        |
+      |                                                                                        char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:624:98: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  624 | HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                         ~~~~~~~~~^~~~~
+../Core/Src/main.c:108:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  108 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:103:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  103 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:155:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  155 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: i2c_ping_pong.elf
+ 
 arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
    text	   data	    bss	    dec	    hex	filename
-  42536	     96	   3600	  46232	   b498	i2c_ping_pong.elf
+  55348	    100	  21388	  76836	  12c24	i2c_ping_pong.elf
 Finished building: default.size.stdout
  
+Finished building: i2c_ping_pong.list
+ 
 
-12:15:53 Build Finished. 0 errors, 0 warnings. (took 927ms)
+14:16:41 Build Finished. 0 errors, 7 warnings. (took 1s.315ms)
 
