@@ -27,6 +27,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
+/* USER CODE BEGIN Includes */
+//#include "hwConfigFile.h"
+#include "freertos.h"
+#include <semphr.h>
+//#include "printfRedirect.h"
+//#include "tasksFunctions.h"
+//#include "SileliS_code/tasksFunctions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,7 +69,7 @@ void MX_FREERTOS_Init(void);
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C
 
 static bool esp32I2cInitialised = false;
-
+SemaphoreHandle_t i2c_semap;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(esp32I2cInitialised==false){
@@ -72,6 +79,39 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		//
 	}
 
+}
+static TaskHandle_t taskHandle_taskSendFake;
+static TaskHandle_t taskHandle_taskSend;
+void taskSendFake(void *nothink){
+	HAL_StatusTypeDef retVal;
+	while(1){
+		xSemaphoreTake(i2c_semap, portMAX_DELAY);
+		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+
+		  retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6, 2000);
+		  HAL_UART_Transmit(&huart1, "FAKE\r\n", 5, 200);
+		  xSemaphoreGive(i2c_semap);
+		  vTaskDelay(pdMS_TO_TICKS(1200));
+		  /*for(uint32_t i=0;i<0xffffff;i++){
+
+		  }*/
+	}
+}
+
+
+void taskSend(void *nothink){
+	HAL_StatusTypeDef retVal;
+	while(1){
+		xSemaphoreTake(i2c_semap, portMAX_DELAY);
+		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
+		  retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6, 2000);
+		  HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+		  xSemaphoreGive(i2c_semap);
+		  vTaskDelay(pdMS_TO_TICKS(500));
+		  /*for(uint32_t i=0;i<0xffffff;i++){
+
+		  }*/
+	}
 }
 
 /* USER CODE END 0 */
@@ -110,30 +150,16 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
+
   while(esp32I2cInitialised!=true){
 	  HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
   }
-  HAL_UART_Transmit(&huart1, "ESP_init\r\n", 10, 200);
-  for(uint32_t i=0;i<0xffffff;i++){
+  i2c_semap = xSemaphoreCreateBinary();
+  xSemaphoreGive(i2c_semap);
+  xTaskCreate(taskSend, "i2cSend", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_taskSend);
+  xTaskCreate(taskSendFake, "i2cSendFake", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_taskSendFake);
 
-  }
 
-  HAL_StatusTypeDef retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6, 2000);
-  HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
-  while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-  for(uint32_t i=0;i<0xffffff;i++){
-
-  }
-  retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6, 2000);
-  HAL_UART_Transmit(&huart1, "Transmition2\r\n", 14, 200);
-  while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
-  retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Da1id", 6, 2000);
-  HAL_UART_Transmit(&huart1, "Transmition3\r\n", 14, 200);
-
-  while(1)
-  {
-	  retVal = retVal+1;
-  }
   /* USER CODE END 2 */
 
   /* Init scheduler */

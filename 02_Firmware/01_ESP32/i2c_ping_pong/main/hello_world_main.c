@@ -29,30 +29,21 @@ i2c_slave_dev_handle_t slave_handle;
 QueueHandle_t s_receive_queue;	
 TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
 extern i2c_dev_t I2C0;
-//uint32_t rx_fifo_end_addrLast;
+uint32_t rx_fifo_end_addrLast;
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	BaseType_t high_task_wakeup = pdFALSE;
 	if (I2C0.int_status.trans_complete == 0)
 	{
 		
-	//	if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
-	//	{	
-			//rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
+		{	
+			rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 			
 			QueueHandle_t receive_queue = (QueueHandle_t)user_data;
 			xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
 			
-	//	}
-	//	else
-	//	{
-	//		return pdFALSE;
-	//	}
-
-	//}
-	//else
-	//{
-	//	return pdFALSE;
+		}
 	}
 	return high_task_wakeup == pdTRUE;
 }
@@ -142,7 +133,7 @@ void app_main(void)
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, s_receive_queue));
 	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY + 1, &handlerTask_i2cSlaveTransmit));
 	
-	//rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	vTaskDelay(pdMS_TO_TICKS(1200));
 	interruptRequestReset(); //ustawiam wyjście na wysokie przed inicjalizacją GPIO, aby nie wywołać niepotrzebnie interrupt request
 	vTaskDelay(pdMS_TO_TICKS(200));
