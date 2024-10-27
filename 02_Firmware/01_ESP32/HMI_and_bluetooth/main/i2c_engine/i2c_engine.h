@@ -1,4 +1,4 @@
-#pragma once
+#pragma once;e
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -22,6 +22,9 @@ public:
 	esp_err_t slaveTransmit();
 	i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
 	void esp32i2cBusInitialised(void);
+	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
+	void i2cSlaveReceive(void);
+	
 protected:
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
@@ -29,7 +32,6 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;
-	QueueHandle_t s_receive_queue;
 };
 	
 
