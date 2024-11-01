@@ -79,14 +79,14 @@ esp_err_t interruptRequestReset(void)
 }
 
 void i2cSlaveTransmit(void* nothink)
-{		vTaskDelay(pdMS_TO_TICKS(5000));
+{		//vTaskDelay(pdMS_TO_TICKS(5000));
 	while (1)
 	{
 		
 		interruptRequestSet();
 		vTaskDelay(pdMS_TO_TICKS(2));
 		interruptRequestReset();
-		vTaskDelay(pdMS_TO_TICKS(5000));
+		vTaskDelay(pdMS_TO_TICKS(2500));
 	}
 	
 	
@@ -164,13 +164,14 @@ void app_main(void)
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(slave_handle, &cbs, s_receive_queue));
 	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveReceive));
 	
-	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
-	
+
 	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	vTaskDelay(pdMS_TO_TICKS(1200));
 	interruptRequestReset(); //ustawiam wyjście na wysokie przed inicjalizacją GPIO, aby nie wywołać niepotrzebnie interrupt request
 	vTaskDelay(pdMS_TO_TICKS(200));
 	interruptRequestSet();
+	
+	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
 	
 
 	while (1)
