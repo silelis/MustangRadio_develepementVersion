@@ -67,6 +67,9 @@ void MX_FREERTOS_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C
+#define I2C_SLAVE_ADDRESS_FAKE					0x3d
+SemaphoreHandle_t CountingSemaphore;
+
 
 static bool esp32I2cInitialised = false;
 SemaphoreHandle_t i2c_semap;
@@ -76,7 +79,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		esp32I2cInitialised=true;
 	}
 	else{
-		//
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		xSemaphoreGiveFromISR(CountingSemaphore, &xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
 
 }
@@ -89,7 +94,7 @@ void taskSendFake(void *nothink){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
 		vTaskDelay(pdMS_TO_TICKS(35));
 		  //retVal = HAL_I2C_Master_Transmit(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6, 2000);
-		  retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32, "Dawid", 6);
+		  retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
 		  HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
 		  vTaskDelay(pdMS_TO_TICKS(35));
 		  while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY){};
@@ -161,6 +166,8 @@ int main(void)
   while(esp32I2cInitialised!=true){
 	  HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
   }
+
+  CountingSemaphore = xSemaphoreCreateCounting(20, 0);
   i2c_semap = xSemaphoreCreateBinary();
   xSemaphoreGive(i2c_semap);
   xTaskCreate(taskSend, "i2cSend", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_taskSend);

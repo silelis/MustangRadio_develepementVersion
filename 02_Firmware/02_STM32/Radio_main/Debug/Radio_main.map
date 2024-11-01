@@ -381,7 +381,7 @@ C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.external
 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-memchr.o)
                               C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libstdc++_nano.a(cow-string-inst.o) (memchr)
 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-memcpy-stub.o)
-                              ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o (memcpy)
+                              ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o (memcpy)
 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-strlen.o)
                               C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libstdc++_nano.a(locale.o) (strlen)
 C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libm_a-s_nan.o)
@@ -26340,50 +26340,50 @@ LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a
 LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/thumb/v7e-m+dp/hard\libgcc.a
 
-.debug_info     0x00000000    0x48633
+.debug_info     0x00000000    0x48653
  .debug_info    0x00000000      0x137 ./Core/Src/SileliS_code/comunication_calculate_checksum.o
- .debug_info    0x00000137     0x4206 ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o
- .debug_info    0x0000433d     0x2bce ./Core/Src/SileliS_code/i2cEngine.o
- .debug_info    0x00006f0b      0xbb4 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o
- .debug_info    0x00007abf     0x4a2b ./Core/Src/SileliS_code/menuItem.o
- .debug_info    0x0000c4ea     0x4762 ./Core/Src/SileliS_code/myList.o
- .debug_info    0x00010c4c     0x289f ./Core/Src/SileliS_code/myPrintfTask.o
- .debug_info    0x000134eb      0x7eb ./Core/Src/SileliS_code/printfRedirect.o
- .debug_info    0x00013cd6     0x6889 ./Core/Src/SileliS_code/radioMenu.o
- .debug_info    0x0001a55f     0x4f32 ./Core/Src/SileliS_code/tasksFunctions.o
- .debug_info    0x0001f491      0x82c ./Core/Src/dma.o
- .debug_info    0x0001fcbd      0x3e0 ./Core/Src/freertos.o
- .debug_info    0x0002009d      0x97b ./Core/Src/gpio.o
- .debug_info    0x00020a18     0x1474 ./Core/Src/i2c.o
- .debug_info    0x00021e8c     0x2b02 ./Core/Src/main.o
- .debug_info    0x0002498e      0x81d ./Core/Src/stm32h7xx_hal_msp.o
- .debug_info    0x000251ab     0x109b ./Core/Src/stm32h7xx_hal_timebase_tim.o
- .debug_info    0x00026246      0xf8b ./Core/Src/stm32h7xx_it.o
- .debug_info    0x000271d1      0x6a3 ./Core/Src/syscalls.o
- .debug_info    0x00027874      0x168 ./Core/Src/sysmem.o
- .debug_info    0x000279dc      0xc73 ./Core/Src/system_stm32h7xx.o
- .debug_info    0x0002864f     0x147c ./Core/Src/usart.o
- .debug_info    0x00029acb       0x30 ./Core/Startup/startup_stm32h7a3ritx.o
- .debug_info    0x00029afb     0x13f1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
- .debug_info    0x0002aeec     0x108e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
- .debug_info    0x0002bf7a      0xb67 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
- .debug_info    0x0002cae1      0xb2b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
- .debug_info    0x0002d60c     0x22a1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
- .debug_info    0x0002f8ad      0xc64 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
- .debug_info    0x00030511      0xef7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
- .debug_info    0x00031408      0xea1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
- .debug_info    0x000322a9     0x11fd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
- .debug_info    0x000334a6     0x2bae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
- .debug_info    0x00036054     0x18c1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
- .debug_info    0x00037915     0x4b32 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
- .debug_info    0x0003c447      0xfbf ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
- .debug_info    0x0003d406     0x4405 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
- .debug_info    0x0004180b      0x2af ./Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_info    0x00041aba     0x1b79 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_info    0x00043633     0x29df ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_info    0x00046012     0x1b50 ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
- .debug_info    0x00047b62      0x5fc ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
- .debug_info    0x0004815e      0x4d5 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_info    0x00000137     0x4226 ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o
+ .debug_info    0x0000435d     0x2bce ./Core/Src/SileliS_code/i2cEngine.o
+ .debug_info    0x00006f2b      0xbb4 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o
+ .debug_info    0x00007adf     0x4a2b ./Core/Src/SileliS_code/menuItem.o
+ .debug_info    0x0000c50a     0x4762 ./Core/Src/SileliS_code/myList.o
+ .debug_info    0x00010c6c     0x289f ./Core/Src/SileliS_code/myPrintfTask.o
+ .debug_info    0x0001350b      0x7eb ./Core/Src/SileliS_code/printfRedirect.o
+ .debug_info    0x00013cf6     0x6889 ./Core/Src/SileliS_code/radioMenu.o
+ .debug_info    0x0001a57f     0x4f32 ./Core/Src/SileliS_code/tasksFunctions.o
+ .debug_info    0x0001f4b1      0x82c ./Core/Src/dma.o
+ .debug_info    0x0001fcdd      0x3e0 ./Core/Src/freertos.o
+ .debug_info    0x000200bd      0x97b ./Core/Src/gpio.o
+ .debug_info    0x00020a38     0x1474 ./Core/Src/i2c.o
+ .debug_info    0x00021eac     0x2b02 ./Core/Src/main.o
+ .debug_info    0x000249ae      0x81d ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_info    0x000251cb     0x109b ./Core/Src/stm32h7xx_hal_timebase_tim.o
+ .debug_info    0x00026266      0xf8b ./Core/Src/stm32h7xx_it.o
+ .debug_info    0x000271f1      0x6a3 ./Core/Src/syscalls.o
+ .debug_info    0x00027894      0x168 ./Core/Src/sysmem.o
+ .debug_info    0x000279fc      0xc73 ./Core/Src/system_stm32h7xx.o
+ .debug_info    0x0002866f     0x147c ./Core/Src/usart.o
+ .debug_info    0x00029aeb       0x30 ./Core/Startup/startup_stm32h7a3ritx.o
+ .debug_info    0x00029b1b     0x13f1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_info    0x0002af0c     0x108e ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_info    0x0002bf9a      0xb67 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_info    0x0002cb01      0xb2b ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_info    0x0002d62c     0x22a1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
+ .debug_info    0x0002f8cd      0xc64 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
+ .debug_info    0x00030531      0xef7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_info    0x00031428      0xea1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_info    0x000322c9     0x11fd ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_info    0x000334c6     0x2bae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_info    0x00036074     0x18c1 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_info    0x00037935     0x4b32 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_info    0x0003c467      0xfbf ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_info    0x0003d426     0x4405 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+ .debug_info    0x0004182b      0x2af ./Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_info    0x00041ada     0x1b79 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_info    0x00043653     0x29df ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_info    0x00046032     0x1b50 ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
+ .debug_info    0x00047b82      0x5fc ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+ .debug_info    0x0004817e      0x4d5 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
 .debug_abbrev   0x00000000     0x866d
  .debug_abbrev  0x00000000       0xb4 ./Core/Src/SileliS_code/comunication_calculate_checksum.o
@@ -26898,92 +26898,92 @@ LOAD C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x00034c64      0xa8a ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_line    0x000356ee      0x9cc ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
-.debug_str      0x00000000   0x15914a
+.debug_str      0x00000000   0x159148
  .debug_str     0x00000000     0x7bb2 ./Core/Src/SileliS_code/comunication_calculate_checksum.o
                                0x7dd8 (size before relaxing)
- .debug_str     0x00007bb2   0x13e3d0 ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o
-                             0x146b0d (size before relaxing)
- .debug_str     0x00145f82      0xc1c ./Core/Src/SileliS_code/i2cEngine.o
-                             0x1436c2 (size before relaxing)
- .debug_str     0x00146b9e      0x138 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o
-                               0xf79f (size before relaxing)
- .debug_str     0x00146cd6      0xe89 ./Core/Src/SileliS_code/menuItem.o
-                             0x14653b (size before relaxing)
- .debug_str     0x00147b5f      0x39b ./Core/Src/SileliS_code/myList.o
-                             0x14626a (size before relaxing)
- .debug_str     0x00147efa      0x3bb ./Core/Src/SileliS_code/myPrintfTask.o
-                             0x1428dc (size before relaxing)
- .debug_str     0x001482b5      0x383 ./Core/Src/SileliS_code/printfRedirect.o
+ .debug_str     0x00007bb2   0x13e3ce ./Core/Src/SileliS_code/esp32i2cComunicationDriver.o
+                             0x146b12 (size before relaxing)
+ .debug_str     0x00145f80      0xc1c ./Core/Src/SileliS_code/i2cEngine.o
+                             0x1436c0 (size before relaxing)
+ .debug_str     0x00146b9c      0x138 ./Core/Src/SileliS_code/i2c_slave_master_queueClass.o
+                               0xf79d (size before relaxing)
+ .debug_str     0x00146cd4      0xe89 ./Core/Src/SileliS_code/menuItem.o
+                             0x146539 (size before relaxing)
+ .debug_str     0x00147b5d      0x39b ./Core/Src/SileliS_code/myList.o
+                             0x146268 (size before relaxing)
+ .debug_str     0x00147ef8      0x3bb ./Core/Src/SileliS_code/myPrintfTask.o
+                             0x1428da (size before relaxing)
+ .debug_str     0x001482b3      0x383 ./Core/Src/SileliS_code/printfRedirect.o
                              0x1399d6 (size before relaxing)
- .debug_str     0x00148638     0x25a9 ./Core/Src/SileliS_code/radioMenu.o
-                             0x149341 (size before relaxing)
- .debug_str     0x0014abe1      0x36f ./Core/Src/SileliS_code/tasksFunctions.o
-                             0x147928 (size before relaxing)
- .debug_str     0x0014af50      0x94a ./Core/Src/dma.o
+ .debug_str     0x00148636     0x25a9 ./Core/Src/SileliS_code/radioMenu.o
+                             0x14933f (size before relaxing)
+ .debug_str     0x0014abdf      0x36f ./Core/Src/SileliS_code/tasksFunctions.o
+                             0x147926 (size before relaxing)
+ .debug_str     0x0014af4e      0x94a ./Core/Src/dma.o
                              0x1397e2 (size before relaxing)
- .debug_str     0x0014b89a     0x10d3 ./Core/Src/freertos.o
+ .debug_str     0x0014b898     0x10d3 ./Core/Src/freertos.o
                              0x13dca5 (size before relaxing)
- .debug_str     0x0014c96d       0x9d ./Core/Src/gpio.o
+ .debug_str     0x0014c96b       0x9d ./Core/Src/gpio.o
                              0x139874 (size before relaxing)
- .debug_str     0x0014ca0a      0x3d4 ./Core/Src/i2c.o
+ .debug_str     0x0014ca08      0x3d4 ./Core/Src/i2c.o
                              0x13a2b0 (size before relaxing)
- .debug_str     0x0014cdde      0x564 ./Core/Src/main.o
-                             0x1440ee (size before relaxing)
- .debug_str     0x0014d342       0x2c ./Core/Src/stm32h7xx_hal_msp.o
+ .debug_str     0x0014cddc      0x564 ./Core/Src/main.o
+                             0x1440ec (size before relaxing)
+ .debug_str     0x0014d340       0x2c ./Core/Src/stm32h7xx_hal_msp.o
                              0x1397d2 (size before relaxing)
- .debug_str     0x0014d36e       0xf7 ./Core/Src/stm32h7xx_hal_timebase_tim.o
+ .debug_str     0x0014d36c       0xf7 ./Core/Src/stm32h7xx_hal_timebase_tim.o
                              0x139ea6 (size before relaxing)
- .debug_str     0x0014d465      0x18c ./Core/Src/stm32h7xx_it.o
+ .debug_str     0x0014d463      0x18c ./Core/Src/stm32h7xx_it.o
                              0x139aac (size before relaxing)
- .debug_str     0x0014d5f1     0x1b3c ./Core/Src/syscalls.o
+ .debug_str     0x0014d5ef     0x1b3c ./Core/Src/syscalls.o
                                0x9925 (size before relaxing)
- .debug_str     0x0014f12d       0x6b ./Core/Src/sysmem.o
+ .debug_str     0x0014f12b       0x6b ./Core/Src/sysmem.o
                                0x613d (size before relaxing)
- .debug_str     0x0014f198      0x306 ./Core/Src/system_stm32h7xx.o
+ .debug_str     0x0014f196      0x306 ./Core/Src/system_stm32h7xx.o
                              0x1391ef (size before relaxing)
- .debug_str     0x0014f49e       0xa8 ./Core/Src/usart.o
+ .debug_str     0x0014f49c       0xa8 ./Core/Src/usart.o
                              0x13a268 (size before relaxing)
- .debug_str     0x0014f546       0x44 ./Core/Startup/startup_stm32h7a3ritx.o
+ .debug_str     0x0014f544       0x44 ./Core/Startup/startup_stm32h7a3ritx.o
                                  0xa7 (size before relaxing)
- .debug_str     0x0014f58a      0x7ae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
+ .debug_str     0x0014f588      0x7ae ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.o
                              0x13a0c3 (size before relaxing)
- .debug_str     0x0014fd38      0x351 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
+ .debug_str     0x0014fd36      0x351 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.o
                              0x139b0b (size before relaxing)
- .debug_str     0x00150089      0x8a7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
+ .debug_str     0x00150087      0x8a7 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.o
                              0x13991e (size before relaxing)
- .debug_str     0x00150930       0xef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
+ .debug_str     0x0015092e       0xef ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.o
                              0x1391a0 (size before relaxing)
- .debug_str     0x00150a1f      0xd42 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
+ .debug_str     0x00150a1d      0xd42 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.o
                              0x13a24a (size before relaxing)
- .debug_str     0x00151761       0xb8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
+ .debug_str     0x0015175f       0xb8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.o
                              0x1395e5 (size before relaxing)
- .debug_str     0x00151819      0x74f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
+ .debug_str     0x00151817      0x74f ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.o
                              0x139725 (size before relaxing)
- .debug_str     0x00151f68      0x1f8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
+ .debug_str     0x00151f66      0x1f8 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.o
                              0x1395c8 (size before relaxing)
- .debug_str     0x00152160      0x605 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
+ .debug_str     0x0015215e      0x605 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.o
                              0x139a5d (size before relaxing)
- .debug_str     0x00152765      0xe65 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
+ .debug_str     0x00152763      0xe65 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.o
                              0x13a335 (size before relaxing)
- .debug_str     0x001535ca      0x684 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
+ .debug_str     0x001535c8      0x684 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.o
                              0x139ce2 (size before relaxing)
- .debug_str     0x00153c4e      0x9b9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
+ .debug_str     0x00153c4c      0x9b9 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.o
                              0x13a0f8 (size before relaxing)
- .debug_str     0x00154607      0x266 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
+ .debug_str     0x00154605      0x266 ./Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.o
                              0x139697 (size before relaxing)
- .debug_str     0x0015486d     0x1ce2 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+ .debug_str     0x0015486b     0x1ce2 ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
                              0x1410dd (size before relaxing)
- .debug_str     0x0015654f      0x12d ./Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_str     0x0015654d      0x12d ./Middlewares/Third_Party/FreeRTOS/Source/list.o
                                0xabbc (size before relaxing)
- .debug_str     0x0015667c      0x852 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_str     0x0015667a      0x852 ./Middlewares/Third_Party/FreeRTOS/Source/queue.o
                                0xc6fc (size before relaxing)
- .debug_str     0x00156ece     0x1168 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_str     0x00156ecc     0x1168 ./Middlewares/Third_Party/FreeRTOS/Source/tasks.o
                                0xd5f0 (size before relaxing)
- .debug_str     0x00158036      0x5af ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
+ .debug_str     0x00158034      0x5af ./Middlewares/Third_Party/FreeRTOS/Source/timers.o
                                0xcf4d (size before relaxing)
- .debug_str     0x001585e5      0x841 ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+ .debug_str     0x001585e3      0x841 ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
                                0xa4f3 (size before relaxing)
- .debug_str     0x00158e26      0x324 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_str     0x00158e24      0x324 ./Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
                                0xb4fe (size before relaxing)
 
 .comment        0x00000000       0x43
