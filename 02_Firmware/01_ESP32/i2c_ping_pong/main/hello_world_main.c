@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C
 #define ESP32_SLAVE_RECEIVE_BUFFER_LEN			20
@@ -28,6 +29,9 @@
 #include "hal/i2c_ll.h"
 #endif
 
+int losuj_od_1_do_20() {
+	return rand() % 20 + 1;
+}
 
 i2c_slave_dev_handle_t slave_handle;
 QueueHandle_t s_receive_queue;	
@@ -79,14 +83,16 @@ esp_err_t interruptRequestReset(void)
 }
 
 void i2cSlaveTransmit(void* nothink)
-{		//vTaskDelay(pdMS_TO_TICKS(5000));
+{		vTaskDelay(pdMS_TO_TICKS(500));
+	size_t len = 9;
 	while (1)
 	{
-		
+		i2c_slave_transmit(slave_handle, (const uint8_t*) &len, sizeof(size_t), 10000);
+		i2c_slave_transmit(slave_handle, (const uint8_t*) "Received\n", 9, 10000);
 		interruptRequestSet();
 		vTaskDelay(pdMS_TO_TICKS(2));
 		interruptRequestReset();
-		vTaskDelay(pdMS_TO_TICKS(2500));
+		vTaskDelay(pdMS_TO_TICKS(losuj_od_1_do_20()*100));
 	}
 	
 	
@@ -119,9 +125,9 @@ void i2cSlaveReceive(void* nothink)
 			}
 			//ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, 6));
 			//printf("%s\r\n", data_rd);
-			i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+			//i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 		}
-
+		i2c_slave_receive(slave_handle, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 	}
 }
 
@@ -131,7 +137,7 @@ void i2cSlaveReceive(void* nothink)
 void app_main(void)
 {
     printf("Hello world!\n");
-	
+	srand(time(NULL)); // Inicjalizacja generatora losowego
 
 
 	gpio_config_t I2C_slave_IntRequestPinConfig;
@@ -171,7 +177,7 @@ void app_main(void)
 	vTaskDelay(pdMS_TO_TICKS(200));
 	interruptRequestSet();
 	
-	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveTransmit));
+	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveTransmit));
 	
 
 	while (1)

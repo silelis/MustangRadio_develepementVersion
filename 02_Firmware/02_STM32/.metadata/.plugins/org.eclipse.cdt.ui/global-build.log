@@ -20531,3 +20531,670 @@ Finished building: default.size.stdout
  
 Finished building: i2c_ping_pong.list
  
+20:37:53 **** Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-size  Radio_main.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 244688	    720	  27200	 272608	  428e0	Radio_main.elf
+Finished building: default.size.stdout
+ 
+20:37:54 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:100:68: error: expected expression before ',' token
+  100 |                         retVal = HAL_I2C_Master_Receive_DMA(&hi2c1,, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) recData, 9);
+      |                                                                    ^
+../Core/Src/main.c:69:65: warning: passing argument 3 of 'HAL_I2C_Master_Receive_DMA' makes pointer from integer without a cast [-Wint-conversion]
+   69 | #define I2C_SLAVE_ADDRESS_ESP32                                 0x3C
+      |                                                                 ^~~~
+      |                                                                 |
+      |                                                                 int
+../Core/Src/main.c:100:70: note: in expansion of macro 'I2C_SLAVE_ADDRESS_ESP32'
+  100 |                         retVal = HAL_I2C_Master_Receive_DMA(&hi2c1,, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) recData, 9);
+      |                                                                      ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:666:101: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'int'
+  666 | HAL_StatusTypeDef HAL_I2C_Master_Receive_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                            ~~~~~~~~~^~~~~
+../Core/Src/main.c:100:34: error: too few arguments to function 'HAL_I2C_Master_Receive_DMA'
+  100 |                         retVal = HAL_I2C_Master_Receive_DMA(&hi2c1,, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) recData, 9);
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:666:19: note: declared here
+  666 | HAL_StatusTypeDef HAL_I2C_Master_Receive_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:103:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  103 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:104:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  104 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:118:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  118 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:119:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  119 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:112:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  112 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:138:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  138 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:139:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  139 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:132:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  132 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  188 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:90:21: warning: 'taskHandle_taskReceive' defined but not used [-Wunused-variable]
+   90 | static TaskHandle_t taskHandle_taskReceive;
+      |                     ^~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+20:38:16 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:103:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  103 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:104:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  104 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:118:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  118 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:119:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  119 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:112:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  112 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:138:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  138 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:139:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  139 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:132:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  132 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  188 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:90:21: warning: 'taskHandle_taskReceive' defined but not used [-Wunused-variable]
+   90 | static TaskHandle_t taskHandle_taskReceive;
+      |                     ^~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: i2c_ping_pong.elf
+ 
+arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
+   text	   data	    bss	    dec	    hex	filename
+  61416	    100	  21396	  82912	  143e0	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+Finished building: i2c_ping_pong.list
+ 
+20:40:04 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-size  i2c_ping_pong.elf 
+   text	   data	    bss	    dec	    hex	filename
+  61416	    100	  21396	  82912	  143e0	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+20:41:40 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-size  i2c_ping_pong.elf 
+   text	   data	    bss	    dec	    hex	filename
+  61416	    100	  21396	  82912	  143e0	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+20:43:59 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:103:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  103 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:104:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  104 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:118:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  118 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:119:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  119 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:112:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  112 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:138:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  138 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:139:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  139 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:132:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  132 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  188 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: i2c_ping_pong.elf
+ 
+arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
+   text	   data	    bss	    dec	    hex	filename
+  62256	    100	  21396	  83752	  14728	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+Finished building: i2c_ping_pong.list
+ 
+20:48:45 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:103:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  103 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:104:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  104 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:118:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  118 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:119:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  119 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:112:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  112 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:138:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  138 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:139:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  139 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:132:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  132 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  188 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: i2c_ping_pong.elf
+ 
+arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
+   text	   data	    bss	    dec	    hex	filename
+  62256	    100	  21396	  83752	  14728	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+Finished building: i2c_ping_pong.list
+ 
+20:55:34 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:101:128: error: expected ')' before ';' token
+  101 |                         retVal = HAL_I2C_Master_Receive_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*) &len, sizeof(size_t);
+      |                                                            ~                                                                   ^
+      |                                                                                                                                )
+../Core/Src/main.c:110:51: error: expected ';' before '}' token
+  110 |                         xSemaphoreGive(i2c_semap);
+      |                                                   ^
+      |                                                   ;
+  111 |                 }
+      |                 ~                                  
+../Core/Src/main.c:94:14: warning: unused variable 'recData' [-Wunused-variable]
+   94 |         char recData[250];
+      |              ^~~~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:123:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  123 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:124:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  124 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:117:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  117 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:143:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  143 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:144:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  144 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:137:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  137 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:193:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  193 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+20:56:02 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:108:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  108 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:109:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  109 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:93:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   93 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:123:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  123 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:124:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  124 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:117:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  117 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:143:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  143 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:144:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  144 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:137:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  137 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:193:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  193 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: i2c_ping_pong.elf
+ 
+arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
+   text	   data	    bss	    dec	    hex	filename
+  62304	    100	  21396	  83800	  14758	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+Finished building: i2c_ping_pong.list
+ 
+20:56:09 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-size  i2c_ping_pong.elf 
+   text	   data	    bss	    dec	    hex	filename
+  62304	    100	  21396	  83800	  14758	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+21:00:08 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'losuj_od_1_do_20':
+../Core/Src/main.c:94:12: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+   94 |     return rand() % 20 + 1;
+      |            ^~~~
+../Core/Src/main.c: In function 'taskReceive':
+../Core/Src/main.c:113:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  113 |                         HAL_UART_Transmit(&huart1, recData, 9, 200);
+      |                                                    ^~~~~~~
+      |                                                    |
+      |                                                    char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:463,
+                 from ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:114:52: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  114 |                         HAL_UART_Transmit(&huart1, "\r", 1, 200);
+      |                                                    ^~~~
+      |                                                    |
+      |                                                    char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:98:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+   98 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSendFake':
+../Core/Src/main.c:128:90: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  128 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_FAKE<<1, "Dawid", 6);
+      |                                                                                          ^~~~~~~
+      |                                                                                          |
+      |                                                                                          char *
+In file included from ../Core/Inc/stm32h7xx_hal_conf.h:367:
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:129:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  129 |                   HAL_UART_Transmit(&huart1, "FAKE\r\n", 6, 200);
+      |                                              ^~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:122:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  122 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'taskSend':
+../Core/Src/main.c:148:91: warning: pointer targets in passing argument 3 of 'HAL_I2C_Master_Transmit_DMA' differ in signedness [-Wpointer-sign]
+  148 |                   retVal =HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, "Dawid", 6);
+      |                                                                                           ^~~~~~~
+      |                                                                                           |
+      |                                                                                           char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:664:102: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  664 | HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData,
+      |                                                                                             ~~~~~~~~~^~~~~
+../Core/Src/main.c:149:46: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  149 |                   HAL_UART_Transmit(&huart1, "Transmition1\r\n", 14, 200);
+      |                                              ^~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c:142:27: warning: variable 'retVal' set but not used [-Wunused-but-set-variable]
+  142 |         HAL_StatusTypeDef retVal;
+      |                           ^~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:196:3: warning: implicit declaration of function 'srand' [-Wimplicit-function-declaration]
+  196 |   srand(time(NULL)); // Inicjalizacja generatora losowego
+      |   ^~~~~
+../Core/Src/main.c:199:38: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  199 |           HAL_UART_Transmit(&huart1, "1\r\n", 3, 200);
+      |                                      ^~~~~~~
+      |                                      |
+      |                                      char *
+../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:1637:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
+ 1637 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "i2c_ping_pong.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\i2c_ping_pong\STM32H7A3RITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_ping_pong.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(libc_a-gettimeofdayr.o): in function `_gettimeofday_r':
+(.text._gettimeofday_r+0xe): warning: _gettimeofday is not implemented and will always fail
+Finished building target: i2c_ping_pong.elf
+ 
+arm-none-eabi-size  i2c_ping_pong.elf 
+arm-none-eabi-objdump -h -S i2c_ping_pong.elf  > "i2c_ping_pong.list"
+   text	   data	    bss	    dec	    hex	filename
+  67180	    112	  21416	  88708	  15a84	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
+Finished building: i2c_ping_pong.list
+ 
+21:01:04 **** Incremental Build of configuration Debug for project i2c_ping_pong ****
+make -j16 all 
+arm-none-eabi-size  i2c_ping_pong.elf 
+   text	   data	    bss	    dec	    hex	filename
+  67180	    112	  21416	  88708	  15a84	i2c_ping_pong.elf
+Finished building: default.size.stdout
+ 
