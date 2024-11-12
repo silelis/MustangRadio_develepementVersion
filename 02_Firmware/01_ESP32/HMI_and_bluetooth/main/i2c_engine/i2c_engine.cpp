@@ -9,24 +9,25 @@ static i2c_slave_config_t i2c_config_slave;
 
 
 //uint16_t interruptReceivedDataLen = 0;
-//#include "soc/i2c_struct.h"
-//extern i2c_dev_t I2C0;
+#include "soc/i2c_struct.h"
+extern i2c_dev_t I2C0;
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
-{
+{	
+	BaseType_t high_task_wakeup = pdFALSE;
 	//if (I2C0.int_status.trans_complete == 0)
 	//{	
-		BaseType_t high_task_wakeup = pdFALSE;
+		
 		QueueHandle_t receive_queue = (QueueHandle_t)user_data;
 		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
 		//interruptReceivedDataLen = 6;
-		return high_task_wakeup == pdTRUE;
+		
 	//}
 	//else
 	//{
 	//	interruptReceivedDataLen = 0;
 	//	return pdFALSE;
 	//}
-
+	return high_task_wakeup == pdTRUE;
 }
 
 
@@ -68,7 +69,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;
 	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
 	i2c_config_slave.i2c_port = i2c_port;
-	i2c_config_slave.send_buf_depth = 1024;
+	i2c_config_slave.send_buf_depth = 3*ESP32_SLAVE_RECEIVE_BUFFER_LEN; //1024;
+	
 	i2c_config_slave.scl_io_num = scl_io_num;
 	i2c_config_slave.sda_io_num = sda_io_num;
 	i2c_config_slave.slave_addr = slave_addr;
@@ -91,8 +93,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	
 
 	//Tworzenie kolejki nadawczej
-	this->pTransmitQueueObject = NULL;
-	configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
+	//this->pTransmitQueueObject = NULL;
+	//configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
 	
 	//Tworzenie kolejki odbiorczej
 	configASSERT(this->s_receive_queue = xQueueCreate(10, sizeof(i2c_slave_rx_done_event_data_t))) ;
@@ -114,15 +116,19 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	uint32_t size_rd = 0;
 	i2c_slave_rx_done_event_data_t rx_data;
 	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
+	this->esp32i2cBusInitialised(); //informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 	while (1)
 	{
 		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);		
-		xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY);	
-		if (data_rd[0] != 0)
+		if (xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY)==pdTRUE)
 		{
-			printf("%s\r\n", data_rd);
+			if (data_rd[0] != 0)
+			{
+				printf("%s\r\n", data_rd);
+			}
+			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
 		}
-		ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
+
 	
 	}
 }
@@ -188,7 +194,7 @@ i2cEngin_slave::~i2cEngin_slave()
 	printf("%s bus has been destructed.\r\n", this->TAG);
 	
 	//usuwanie kolejki nadawczej oraz danych, które są poinicjowane (danych, do których wskazują wskaźniki ze struktury i2cFrame_transmitQueue kolejki
-	delete this->pTransmitQueueObject;
+	//delete this->pTransmitQueueObject;
 }
 
 /*---------------------------------------------------------------
@@ -200,23 +206,46 @@ i2cEngin_slave::~i2cEngin_slave()
  * Returns:
  * esp_err_t 				- ESP_OK lub ESP_FAIL
 *---------------------------------------------------------------*/
-esp_err_t i2cEngin_slave::slaveTransmit()
+//esp_err_t i2cEngin_slave::slaveTransmit()
+//{
+//	esp_err_t retVal =ESP_FAIL;
+//	i2cFrame_transmitQueue ItemWithPointerToTransmit;
+//	
+//	if (pdPASS == this->pTransmitQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
+//	{
+//		
+//		
+//		retVal = this->slaveTransmit(ItemWithPointerToTransmit);
+//						/*
+//		retVal= i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms);
+//		if (ESP_OK == retVal)
+//		{
+//			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
+//		}
+//		
+//		this->interruptRequestSet();
+//		this->interruptRequestReset();
+//		this->pTransmitQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);		*/
+//			
+//	}
+//	return retVal;	
+//}
+
+
+
+esp_err_t i2cEngin_slave::slaveTransmit(i2cFrame_transmitQueue ItemWithPointer)
 {
-	esp_err_t retVal =ESP_FAIL;
-	i2cFrame_transmitQueue ItemWithPointerToTransmit;
-	
-	if (pdPASS == this->pTransmitQueueObject->QueueReceive(&ItemWithPointerToTransmit, portMAX_DELAY)) //kolejka zawiera dane;
+	esp_err_t retVal = ESP_FAIL;
+	retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointer.dataSize, sizeof(ItemWithPointer.dataSize), this->tx_timeout_ms);
+	if (ESP_OK == retVal)
 	{
-		this->interruptRequestSet();
-		retVal= i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &ItemWithPointerToTransmit.dataSize, sizeof(ItemWithPointerToTransmit.dataSize), this->tx_timeout_ms);
-		if (ESP_OK == retVal)
-		{
-			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointerToTransmit.pData, ItemWithPointerToTransmit.dataSize, this->tx_timeout_ms);
-		}
-		this->pTransmitQueueObject->QueueDeleteDataFromPointer(ItemWithPointerToTransmit);
-		this->interruptRequestReset();
+		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) ItemWithPointer.pData, ItemWithPointer.dataSize, this->tx_timeout_ms);
 	}
-	return retVal;	
+		
+	this->interruptRequestSet();
+	this->interruptRequestReset();
+	delete[] static_cast<char*>(ItemWithPointer.pData);
+	return retVal;
 }
 
 

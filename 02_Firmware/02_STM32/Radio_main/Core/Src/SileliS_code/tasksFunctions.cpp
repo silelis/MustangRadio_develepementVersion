@@ -159,7 +159,7 @@ static void initTaskFunctions(void){
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
-	configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
+	//configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
 
 
 

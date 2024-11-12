@@ -19,8 +19,11 @@ public:
 	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin);
 	~i2cEngin_slave();
 
-	esp_err_t slaveTransmit();
-	i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
+	
+	esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
+	
+	//esp_err_t slaveTransmit(void);
+	//i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
 	void esp32i2cBusInitialised(void);
 	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
 	void i2cSlaveReceive(void);

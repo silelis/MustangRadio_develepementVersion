@@ -37,11 +37,19 @@ i2c_slave_dev_handle_t slave_handle;
 QueueHandle_t s_receive_queue;	
 TaskHandle_t handlerTask_i2cSlaveReceive; //uchwyt do taska obsługującego wysyłanie danych z i2c slave to i2c master
 TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
-extern i2c_dev_t I2C0;
+extern volatile i2c_dev_t I2C0;
+
 uint32_t rx_fifo_end_addrLast;
-i2c_dev_t I2C0_last;
-i2c_hal_context_t *hal1;
-bool rxToEsp32 = pdFALSE;
+//i2c_dev_t I2C0_last;
+//i2c_hal_context_t *hal1;
+
+enum i2cCallbackState
+{
+	recpeptionNotToMe,
+	recpeptionToMe,
+	transmition
+};
+enum i2cCallbackState rxToEsp32 = recpeptionNotToMe;
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {
 	BaseType_t high_task_wakeup = pdFALSE;
@@ -52,13 +60,17 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 	{
 		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
 		{
-			rxToEsp32 = pdTRUE;
+			rxToEsp32 = recpeptionToMe;
 		}
 		else
 		{
-			rxToEsp32 = pdFALSE;
+			rxToEsp32 = recpeptionNotToMe;
 		}
 		
+	}
+	else
+	{
+		rxToEsp32 = transmition;	
 	}
 	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	
@@ -114,14 +126,43 @@ void i2cSlaveReceive(void* nothink)
 		
 		if (xQueueReceive(s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
 		{
-			if (rxToEsp32==pdTRUE)
+			I2C0.int_status.trans_complete;
+			I2C0.int_raw.slave_tran_comp;
+
+			//slave_handle wysyła dane do Master
+			I2C0.int_raw.trans_complete;// = 1; slave_handle wysyła dane do Master
+			
+			
+			//I2C0.status_reg.slave_rw; //=1; slave_handle wysyła dane do Master
+			//I2C0.int_raw.tx_send_empty; //=1 slave_handle wysyła dane do Master
+			
+			 //fake
+			I2C0.int_raw.trans_complete; //=0
+			
+			I2C0.int_status.trans_complete;	 //=0
+			I2C0.int_raw.slave_tran_comp;	 //=1
+			I2C0.fifo_st.rx_fifo_end_addr;//bez zmian	
+			I2C0.status_reg.tx_fifo_cnt;//sie zmieniło	 o 1
+			
+			//transmition
+			I2C0.int_raw.trans_complete; //=0
+			
+			I2C0.int_status.trans_complete; //=0
+			I2C0.int_raw.slave_tran_comp; //=1
+			I2C0.fifo_st.rx_fifo_end_addr; //wzrasta
+			
+			if (rxToEsp32 == recpeptionToMe)
 			//if (data_rd[0] != 0)
 			{
 				printf("%s\n", data_rd);
 			}
-			else
+			else if (rxToEsp32 == recpeptionNotToMe)
 			{
 				printf("Not to me\n");	
+			}
+			else if (rxToEsp32 ==transmition)
+			{
+				printf("Transmititng\n");	 
 			}
 			//ESP_ERROR_CHECK(i2c_slave_receive(slave_handle, data_rd, 6));
 			//printf("%s\r\n", data_rd);
@@ -181,6 +222,6 @@ void app_main(void)
 	
 
 	while (1)
-	{
-	}
+{
+	} 
 }

@@ -287,7 +287,12 @@ static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboa
 			}	*/
 			///*********************/			
 		//return this->QueueSend(&dataToTransmitQueue);
-		return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
+		//return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
+		//return p_i2cSlave->slaveTransmit(dataToTransmitQueue);
+		if (p_i2cSlave->slaveTransmit(dataToTransmitQueue) == ESP_OK)
+			return pdTRUE;
+		else
+			return pdFALSE;		
 	}
 	else
 	{
@@ -469,18 +474,18 @@ void stepperMotor(void *TaskParameters)
 	}
 }
 
-void i2cSlaveTransmit(void *nothing)
-{
-	p_i2cSlave->esp32i2cBusInitialised();			//informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
-	for (;;)
-	{
-		p_i2cSlave->slaveTransmit();		
-	}	
-}
+//void i2cSlaveTransmit(void *nothing)
+//{
+//	p_i2cSlave->esp32i2cBusInitialised();			//informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
+//	for (;;)
+//	{
+//		p_i2cSlave->slaveTransmit();		
+//	}	
+//}
 
 
 
 void i2cSlaveReceive(void *nothing)
-{			
+{	
 	p_i2cSlave->i2cSlaveReceive();
 }

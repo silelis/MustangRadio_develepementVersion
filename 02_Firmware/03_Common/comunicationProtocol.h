@@ -7,7 +7,7 @@
 #include "hwConfigFile.h"
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define ESP32_I2C_Receive_Buffer_LEN			512+sizeof(i2cFrame_commonHeader)
+#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			512+sizeof(i2cFrame_commonHeader)
 
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
 
