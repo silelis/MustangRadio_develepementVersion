@@ -59,7 +59,6 @@ static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY);
 		HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
 		pi2cMaster->i2cMasterSemaphoreGive();
-
 	}
 }
 
@@ -158,8 +157,8 @@ static void initTaskFunctions(void){
 	pi2cMaster->while_I2C_STATE_READY();
 
 	//tworzenie taska czytającego dane po I2C ze slave
-	configASSERT(xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
-	//configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY+5, &taskHandle_i2cMasterTransmitToSlaveDataTask));
+	configASSERT(xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY/*+1*/, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
+	configASSERT(xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY/*+5*/, &taskHandle_i2cMasterTransmitToSlaveDataTask));
 
 
 
@@ -172,7 +171,7 @@ static void initTaskFunctions(void){
 
 	assert(pRadioMenu=new radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
-	configASSERT(xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 3*128, pRadioMenu, tskIDLE_PRIORITY, &/*(pRadioMenu->*/taskHandle_manageTheRadioManue/*)*/));
+	configASSERT(xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue));
 	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
 	configASSERT(xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle));
 }

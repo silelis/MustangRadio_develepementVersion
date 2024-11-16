@@ -8,25 +8,50 @@ static i2c_slave_config_t i2c_config_slave;
 
 
 
-//uint16_t interruptReceivedDataLen = 0;
+
 #include "soc/i2c_struct.h"
 extern i2c_dev_t I2C0;
+
+uint32_t rx_fifo_end_addrLast;
+enum i2cCallbackState
+{
+	recpeptionNotToMe,
+	recpeptionToMe,
+	transmition
+};
+enum i2cCallbackState rxToEsp32 = recpeptionNotToMe;
+
+static uint8_t data_rd[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {	
 	BaseType_t high_task_wakeup = pdFALSE;
+	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+
 	//if (I2C0.int_status.trans_complete == 0)
-	//{	
+	if (I2C0.status_reg.slave_rw == 0)
+	{
+		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
+		{
+			rxToEsp32 = recpeptionToMe;
+		}
+		else
+		{
+			rxToEsp32 = recpeptionNotToMe;
+		}
 		
-		QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-		//interruptReceivedDataLen = 6;
-		
-	//}
-	//else
-	//{
-	//	interruptReceivedDataLen = 0;
-	//	return pdFALSE;
-	//}
+	}
+	else
+	{
+		rxToEsp32 = transmition;	
+	}
+	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	
+	/*if (high_task_wakeup == pdTRUE) {
+		// Wybudź zadanie o wyższym priorytecie
+		portYIELD_FROM_ISR(high_task_wakeup);
+	}	  */
 	return high_task_wakeup == pdTRUE;
 }
 
@@ -102,15 +127,18 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 		.on_recv_done = i2c_slave_rx_done_callback,
 	};
 	
+	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->s_receive_queue));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
+
 }
 
 
 void i2cEngin_slave::i2cSlaveReceive(void)
 {
 	//uint8_t *data_rd = (uint8_t *) malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN);
-	uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+	//uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 	
 	memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 	uint32_t size_rd = 0;
@@ -119,16 +147,26 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	this->esp32i2cBusInitialised(); //informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 	while (1)
 	{
-		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);		
+		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+		
 		if (xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY)==pdTRUE)
 		{
-			if (data_rd[0] != 0)
+			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
+			if (rxToEsp32 == recpeptionToMe)
 			{
-				printf("%s\r\n", data_rd);
+				printf("%s\n", data_rd);
 			}
-			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
+			else if (rxToEsp32 == recpeptionNotToMe)
+			{
+				printf("Not to me\n");	
+			}
+			else if (rxToEsp32 ==transmition)
+			{
+				printf("T\n");	 
+			}
+			//ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 		}
-
+		
 	
 	}
 }

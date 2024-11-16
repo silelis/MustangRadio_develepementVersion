@@ -84,7 +84,7 @@ extern "C" void app_main(void)
 	taskFunctionsStaticHandlersInit();
 	
 	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+1, &handlerTask_i2cSlaveTransmit));
-	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_i2cSlaveReceive));
+	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 8, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveReceive));
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s Display leds task starting\n", main_TAG);
