@@ -154,7 +154,7 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
 	//this->masterReceiveFromESP32_DMA((uint8_t*) &dataSize, sizeof(size_t));
 	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
 	//dataFrame->dataSize=dataSize;
-	//vTaskDelay(pdMS_TO_TICKS(150));
+	//vTaskDelay(pdMS_TO_TICKS(25));
 	dataFrame->pData = new char[dataFrame->dataSize];
 	if (dataFrame->pData!=nullptr){
 		retVal =this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
