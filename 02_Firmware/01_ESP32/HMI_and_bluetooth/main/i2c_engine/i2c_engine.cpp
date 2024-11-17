@@ -21,7 +21,7 @@ enum i2cCallbackState
 };
 enum i2cCallbackState rxToEsp32 = recpeptionNotToMe;
 
-static uint8_t data_rd[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+//static uint8_t data_rd[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 
 static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
 {	
@@ -138,7 +138,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 void i2cEngin_slave::i2cSlaveReceive(void)
 {
 	//uint8_t *data_rd = (uint8_t *) malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN);
-	//uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+	uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 	
 	memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 	uint32_t size_rd = 0;
