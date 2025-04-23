@@ -1,7 +1,7 @@
 #ifndef myLIST_H
 #define myLIST_H
 
-//#include <cstdint>
+
 #include <stdint.h>
 //#include <iostream>
 //#include <cstring>
@@ -12,8 +12,8 @@
 class myList;  // Forward declaration
 
 struct ListHeader {
-    myList* head;                 // Wskaźnik do pierwszego elementu listy
-    myList* currentListNode;      // Wskaźnik do aktualnego elementu listy
+    myList* head;                 // Wskaźnik do pierwszego elementu listy (pierwszego elementu menu)
+    myList* currentListNode;      // Wskaźnik do aktualnego elementu listy (aktualnego elementu menu)
     uint8_t indexCounter;         // Licznik indeksów
 
     ListHeader() : head(nullptr), currentListNode(nullptr), indexCounter(0) {}
