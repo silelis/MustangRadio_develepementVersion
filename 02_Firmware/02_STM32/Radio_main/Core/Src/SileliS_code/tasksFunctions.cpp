@@ -136,7 +136,8 @@ static void manageRadioButtonsAndManue(void* thing){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
 			if(!ptrRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
 				if(!ptrRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
-					pPrintf->feedPrintf("%c %x - there is binded button.", receivedKeyboard.array[0], receivedKeyboard.array[1]);
+					pPrintf->feedPrintf("%s %c %x - there is no binded button.", ptrRadioMenu->getCurrentNodeTag(), receivedKeyboard.array[0], receivedKeyboard.array[1]);
+					//pPrintf->feedPrintf("%c %x - there is no binded button.", receivedKeyboard.array[0], receivedKeyboard.array[1]);
 				}
 			}
 		}

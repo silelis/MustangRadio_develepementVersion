@@ -72,17 +72,22 @@ void radioMenu::createDeviceMenuList_mainMenu(void){
 
 	//this->radioMainMenu->mI_appendDeInit(newFunc);
 	//this->radioMainMenu->mI_appendInit(newFunc);
-	keyboardUnion buttonSequence;
+	//keyboardUnion buttonSequence;
+	//buttonSequence.array[0] ='b';
+	//buttonSequence.array[1] = 0x3f; // short button equalizer pressed
+	//this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 
-	buttonSequence.array[0] ='b';
-	buttonSequence.array[1] = 0x3f; // short button equalizer pressed
-	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
+	// bind short button equalizer pressed in mainMenu
+	this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x3f}}, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
+	// bind short button volume pressed in mainMenu
+	this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x7e}}, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
+	// bind long button volume pressed in mainMenu
 
-	buttonSequence.array[0] ='b';
-	buttonSequence.array[1] = 0x7e; // short button volume pressed
-	this->radioMainMenu->mI_appendExecFunctionArry(buttonSequence, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
+	// bind vol+ in mainMenu
 
+	// bind vol- in mainMenu
 
+	// bind long reset sequence
 }
 
 void radioMenu::setCurrentDeviceMenu_audio(void){
@@ -122,7 +127,14 @@ radioMenu::~radioMenu() {
 		//memset(&(this->ListHeader_peripheryDevices),0,sizeof(ListHeader));
 		//memset(&(this->ListHeader_mainMenu),0,sizeof(ListHeader));
 		this->curretDevice=nullptr;
+
+		//this->curretDevice->getCurrentNodeTag()
 }
+
+const char* radioMenu::getCurrentNodeTag()/* const*/{
+	return (const char*) this->curretDevice->getCurrentNodeTag();
+}
+
 
 bool radioMenu::executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence){
 	return this->radioMainMenu->mI_executeExecutableButtons(buttonSequence);

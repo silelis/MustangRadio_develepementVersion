@@ -91,6 +91,7 @@ uint8_t myList::getCurrentNodeIndex() const {
 const char* myList::getCurrentNodeTag()/* const*/{
 	return (const char*) this->pListHeader->currentListNode->mI_TAG;
 }
+
 // Sprawdzanie, czy current znajduje się na końcu listy
 bool myList::isAtEnd() const {
     return this->pListHeader->currentListNode->nextListNode == nullptr;

@@ -28,7 +28,7 @@ public:
 
 	bool executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence);
 	bool executeButtonFrom_curretDevice(keyboardUnion buttonSequence);
-
+	const char* getCurrentNodeTag();// const;
 
 
 protected:

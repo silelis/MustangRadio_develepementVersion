@@ -114,6 +114,7 @@ bool menuItem::mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::func
         }
     } else {
         pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
+        assert(0);
     }
     return false;
 }
