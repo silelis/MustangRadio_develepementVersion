@@ -1,0 +1,17 @@
+/*
+ * keyboardToFunction.cpp
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#include <SileliS_code/keyboardToFunction.h>
+
+keyboardToFunction::keyboardToFunction() {
+	memset(this->ExecutableButtons,NULL, sizeof(_execute_t)*execFunctionArraySize);
+}
+
+keyboardToFunction::~keyboardToFunction() {
+	// TODO Auto-generated destructor stub
+}
+

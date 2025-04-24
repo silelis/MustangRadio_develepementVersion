@@ -1,0 +1,35 @@
+/*
+ * keyboardToFunction.cpp
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#include <SileliS_code/keyboardToFunction.h>
+
+keyboardToFunction::keyboardToFunction() {
+	memset(this->ExecutableButtons,NULL, sizeof(ExecutableButtons));
+	this->execFunctionArryAppended=0;
+}
+
+uint8_t	keyboardToFunction::searchExecFunctionForButtonSequence(keyboardUnion buttonSequence){
+	for(uint8_t i=0;i<this->execFunctionArryAppended;i++){
+		if ((this->ExecutableButtons[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
+			(this->ExecutableButtons[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
+			{
+			return i;
+			}
+	}
+	return this->execFunctionArraySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
+}
+
+bool keyboardToFunction::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
+	if (this->searchExecFunctionForButtonSequence(buttonSequence)==this->execFunctionArraySize)
+		return false;
+	return true;
+}
+
+keyboardToFunction::~keyboardToFunction() {
+	// TODO Auto-generated destructor stub
+}
+
