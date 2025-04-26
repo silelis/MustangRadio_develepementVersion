@@ -1,0 +1,45 @@
+/*
+ * keyboardToFunction.h
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_KEYBOARDTOFUNCTION_H_
+#define INC_SILELIS_CODE_KEYBOARDTOFUNCTION_H_
+#include <iostream>
+#include <functional>
+#include "comunicationStructures.h"
+#include <string.h>
+#include "SileliS_code/myPrintfTask.h"
+
+struct _execute_t{
+	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
+	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
+};
+
+const uint8_t execFunctionArraySize = 18;
+
+class keyboardToFunction {
+public:
+	keyboardToFunction();
+	virtual ~keyboardToFunction();
+	//bool	mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc);
+	//bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
+
+//private:
+	uint8_t	searchButtonSequenceInExecutableButtons(keyboardUnion buttonSequence);
+	bool	isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
+	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
+	void	executeFunctionPointer(std::function<void()>* funcPtr);
+	void	buildExecutableButtonsTable(void);
+
+protected:
+
+private:
+	//const uint8_t execFunctionArraySize = 18;
+	//uint8_t		execFunctionArryAppended;
+	_execute_t	ExecutableButtons[execFunctionArraySize];
+};
+
+#endif /* INC_SILELIS_CODE_KEYBOARDTOFUNCTION_H_ */

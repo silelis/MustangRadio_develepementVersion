@@ -10,45 +10,46 @@
 extern myPrintfTask* pPrintf;
 
 keyboardToFunction::keyboardToFunction() {
-	memset(this->ExecutableButtons,NULL, sizeof(ExecutableButtons));
+	memset(this->ExecutableButtonsArray,0, sizeof(ExecutableButtonsArray));
 	//this->execFunctionArryAppended=0;
+	this->buildExecutableButtonsArray();
 }
 
-void keyboardToFunction::buildExecutableButtonsTable(void){
-	this->ExecutableButtons[0]={{'b',0x7E},NULL};	//poweroff pressed
-	this->ExecutableButtons[1]={{'b',0xfe},NULL};	//long poweroff release
-	this-ExecutableButtons[2]={{NULL,NULL},NULL};
-	this-ExecutableButtons[3]={{NULL,NULL},NULL};
-	this-ExecutableButtons[4]={{NULL,NULL},NULL};
-	this-ExecutableButtons[5]={{NULL,NULL},NULL};
-	this-ExecutableButtons[6]={{NULL,NULL},NULL};
-	this-ExecutableButtons[7]={{NULL,NULL},NULL};
-	this-ExecutableButtons[8]={{NULL,NULL},NULL};
-	this-ExecutableButtons[9]={{NULL,NULL},NULL};
-	this-ExecutableButtons[10]={{NULL,NULL},NULL};
-	this-ExecutableButtons[11]={{NULL,NULL},NULL};
-	this-ExecutableButtons[12]={{NULL,NULL},NULL};
-	this-ExecutableButtons[13]={{NULL,NULL},NULL};
-	this-ExecutableButtons[14]={{NULL,NULL},NULL};
-	this-ExecutableButtons[15]={{NULL,NULL},NULL};
-	this-ExecutableButtons[16]={{NULL,NULL},NULL};
-	this-ExecutableButtons[17]={{NULL,NULL},NULL};
-	this-ExecutableButtons[18]={{NULL,NULL},NULL};
+void keyboardToFunction::buildExecutableButtonsArray(void){
+	this->ExecutableButtonsArray[0]={{'b',0x7E},NULL};	//poweroff pressed
+	this->ExecutableButtonsArray[1]={{'b',0xfe},NULL};	//long poweroff release
+	this->ExecutableButtonsArray[2]={{0,0},NULL};
+	this->ExecutableButtonsArray[3]={{0,0},NULL};
+	this->ExecutableButtonsArray[4]={{0,0},NULL};
+	this->ExecutableButtonsArray[5]={{0,0},NULL};
+	this->ExecutableButtonsArray[6]={{0,0},NULL};
+	this->ExecutableButtonsArray[7]={{0,0},NULL};
+	this->ExecutableButtonsArray[8]={{0,0},NULL};
+	this->ExecutableButtonsArray[9]={{0,0},NULL};
+	this->ExecutableButtonsArray[10]={{0,0},NULL};
+	this->ExecutableButtonsArray[11]={{0,0},NULL};
+	this->ExecutableButtonsArray[12]={{0,0},NULL};
+	this->ExecutableButtonsArray[13]={{0,0},NULL};
+	this->ExecutableButtonsArray[14]={{0,0},NULL};
+	this->ExecutableButtonsArray[15]={{0,0},NULL};
+	this->ExecutableButtonsArray[16]={{0,0},NULL};
+	this->ExecutableButtonsArray[17]={{0,0},NULL};
+	//this->ExecutableButtons[18]={{0,0},NULL};
 
 }
-uint8_t	keyboardToFunction::searchExecFunctionForButtonSequence(keyboardUnion buttonSequence){
-	for(uint8_t i=0;i<this->execFunctionArraySize/*execFunctionArryAppended*/;i++){
-		if ((this->ExecutableButtons[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
-			(this->ExecutableButtons[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
+uint8_t	keyboardToFunction::searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence){
+	for(uint8_t i=0;i<execFunctionArraySize;i++){
+		if ((ExecutableButtonsArray[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
+			(ExecutableButtonsArray[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
 			{
 			return i;
 			}
 	}
-	return this->execFunctionArraySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
+	return execFunctionArraySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
 }
 
-bool keyboardToFunction::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
-	if (this->searchExecFunctionForButtonSequence(buttonSequence)==this->execFunctionArraySize)
+bool keyboardToFunction::isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence){
+	if (this->searchButtonSequenceInExecutableButtonsArray(buttonSequence)==execFunctionArraySize)
 		return false;
 	return true;
 }

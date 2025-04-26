@@ -1,0 +1,72 @@
+/*
+ * keyboardToFunction.cpp
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#include <SileliS_code/keyboardToFunction.h>
+
+extern myPrintfTask* pPrintf;
+
+keyboardToFunction::keyboardToFunction() {
+	memset(this->ExecutableButtons,0, sizeof(ExecutableButtons));
+	//this->execFunctionArryAppended=0;
+	this->buildExecutableButtonsTable();
+}
+
+void keyboardToFunction::buildExecutableButtonsTable(void){
+	this->ExecutableButtons[0]={{'b',0x7E},NULL};	//poweroff pressed
+	this->ExecutableButtons[1]={{'b',0xfe},NULL};	//long poweroff release
+	this->ExecutableButtons[2]={{0,0},NULL};
+	this->ExecutableButtons[3]={{0,0},NULL};
+	this->ExecutableButtons[4]={{0,0},NULL};
+	this->ExecutableButtons[5]={{0,0},NULL};
+	this->ExecutableButtons[6]={{0,0},NULL};
+	this->ExecutableButtons[7]={{0,0},NULL};
+	this->ExecutableButtons[8]={{0,0},NULL};
+	this->ExecutableButtons[9]={{0,0},NULL};
+	this->ExecutableButtons[10]={{0,0},NULL};
+	this->ExecutableButtons[11]={{0,0},NULL};
+	this->ExecutableButtons[12]={{0,0},NULL};
+	this->ExecutableButtons[13]={{0,0},NULL};
+	this->ExecutableButtons[14]={{0,0},NULL};
+	this->ExecutableButtons[15]={{0,0},NULL};
+	this->ExecutableButtons[16]={{0,0},NULL};
+	this->ExecutableButtons[17]={{0,0},NULL};
+	//this->ExecutableButtons[18]={{0,0},NULL};
+
+}
+uint8_t	keyboardToFunction::searchExecFunctionForButtonSequence(keyboardUnion buttonSequence){
+	for(uint8_t i=0;i<execFunctionArraySize;i++){
+		if ((ExecutableButtons[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
+			(ExecutableButtons[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
+			{
+			return i;
+			}
+	}
+	return execFunctionArraySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
+}
+
+bool keyboardToFunction::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
+	if (this->searchExecFunctionForButtonSequence(buttonSequence)==execFunctionArraySize)
+		return false;
+	return true;
+}
+
+void keyboardToFunction::appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc){
+	*funcPtr = newFunc;
+}
+
+void keyboardToFunction::executeFunctionPointer(std::function<void()>* funcPtr){
+    if (*funcPtr) {
+        (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
+    } else {
+        pPrintf->feedPrintf("%s: Pointer to function is empty.", "TAG_NAME_HERE");
+    }
+}
+
+keyboardToFunction::~keyboardToFunction() {
+	// TODO Auto-generated destructor stub
+}
+

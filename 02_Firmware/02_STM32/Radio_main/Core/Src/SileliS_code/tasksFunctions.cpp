@@ -128,12 +128,20 @@ void peripheryMenuTimeoutFunction(void* thing){
 	}
 }
 
+keyboardToFunction* pKeyboardToFunction = new keyboardToFunction();
+uint8_t sequence;
+
 static void manageRadioButtonsAndManue(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
 	keyboardUnion receivedKeyboard;
+
+
 	while(1){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
+
+			sequence = pKeyboardToFunction->searchButtonSequenceInExecutableButtonsArray(receivedKeyboard);
+
 			if(!ptrRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
 				if(!ptrRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){
 					pPrintf->feedPrintf("%s %c %x - there is no binded button.", ptrRadioMenu->getCurrentNodeTag(), receivedKeyboard.array[0], receivedKeyboard.array[1]);

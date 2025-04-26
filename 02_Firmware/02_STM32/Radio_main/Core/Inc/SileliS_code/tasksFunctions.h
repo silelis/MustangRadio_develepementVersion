@@ -28,7 +28,7 @@
 #include "SileliS_code/esp32i2cComunicationDriver.h"
 //#include "SileliS_code/menuItem.h"
 #include "SileliS_code/myPrintfTask.h"
-
+#include "SileliS_code/keyboardToFunction.h"
 
 //void initTaskFunctions(void);
 
