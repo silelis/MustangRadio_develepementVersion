@@ -18,6 +18,8 @@ struct _execute_t{
 	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
 };
 
+const uint8_t execFunctionArraySize = 18;
+
 class keyboardToFunction {
 public:
 	keyboardToFunction();
@@ -26,18 +28,19 @@ public:
 	//bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
 
 //private:
-	uint8_t	searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
-	bool	isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
+	uint8_t	searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
+	bool	isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
+	void	buildExecutableButtonsArray(void);
+
 	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
 	void	executeFunctionPointer(std::function<void()>* funcPtr);
-	void	buildExecutableButtonsTable(void);
+
 
 protected:
 
 private:
-	static const uint8_t execFunctionArraySize = 18;
-	//uint8_t		execFunctionArryAppended;
-	_execute_t	ExecutableButtons[execFunctionArraySize];
+
+	_execute_t	ExecutableButtonsArray[execFunctionArraySize];
 };
 
 #endif /* INC_SILELIS_CODE_KEYBOARDTOFUNCTION_H_ */
