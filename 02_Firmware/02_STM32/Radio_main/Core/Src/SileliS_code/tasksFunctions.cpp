@@ -140,7 +140,12 @@ static void manageRadioButtonsAndManue(void* thing){
 	while(1){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
 
-			sequence = pKeyboardToFunction->searchButtonSequenceInExecutableButtonsArray(receivedKeyboard);
+			//uint8_t sequence;
+			//bool isInSequence;
+			//sequence = pKeyboardToFunction->searchButtonSequenceInExecutableButtonsArray(receivedKeyboard);
+			//isInSequence= pKeyboardToFunction->isButtonSequenceInExecutableButtonsArray(receivedKeyboard);
+			//pKeyboardToFunction->executeButtonFunction(receivedKeyboard);
+
 
 			if(!ptrRadioMenu->executeButtonFrom_radioMainMenu(receivedKeyboard)){
 				if(!ptrRadioMenu->executeButtonFrom_curretDevice(receivedKeyboard)){

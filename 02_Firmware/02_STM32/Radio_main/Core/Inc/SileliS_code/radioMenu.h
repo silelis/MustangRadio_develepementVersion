@@ -14,12 +14,14 @@
 #include "task.h"
 #include "semphr.h"
 #include "comunicationStructures.h"
+#include "SileliS_code/keyboardToFunction.h"
 
 
 #include <iostream>
 #include <functional>
 
-class radioMenu {
+class radioMenu: public keyboardToFunction {
+
 public:
 	radioMenu();
 	virtual ~radioMenu();
