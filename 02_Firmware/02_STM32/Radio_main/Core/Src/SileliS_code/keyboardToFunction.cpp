@@ -16,8 +16,8 @@ keyboardToFunction::keyboardToFunction() {
 }
 
 void keyboardToFunction::buildExecutableButtonsArrayEmpty(void){
-	this->ExecutableButtonsArray[0]={{'b',0x7E},NULL};	//poweroff pressed
-	this->ExecutableButtonsArray[1]={{'b',0xfe},NULL};	//long poweroff release
+	this->ExecutableButtonsArray[0]={{'b',0x7E},nullptr};	//poweroff pressed   //std::function<void()>{};
+	this->ExecutableButtonsArray[1]={{'b',0xfe},nullptr};	//long poweroff release
 	this->ExecutableButtonsArray[2]={{0,0},NULL};
 	this->ExecutableButtonsArray[3]={{0,0},NULL};
 	this->ExecutableButtonsArray[4]={{0,0},NULL};
@@ -54,11 +54,11 @@ bool keyboardToFunction::executeButtonFunction(keyboardUnion buttonSequence){
 		this->noButtonInArrayMessage(buttonSequence);
 		return false;
 	}
-	if (this->ExecutableButtonsArray[whichPosition].functionPointer==NULL){
+	if (!this->ExecutableButtonsArray[whichPosition].functionPointer){//== nullptr){
 		pPrintf->feedPrintf("%s %c %x - there is no function binded for this button.", "PASS TAG HERE"/*ptrRadioMenu->getCurrentNodeTag()*/, buttonSequence.array[0], buttonSequence.array[1]);
 		return false;
 	}
-	this->ExecutableButtonsArray[whichPosition].functionPointer;
+	this->ExecutableButtonsArray[whichPosition].functionPointer();
 	return true;
 }
 
@@ -100,7 +100,9 @@ bool keyboardToFunction::appendButtonArrayWithFunctionPointer(keyboardUnion butt
 	this->ExecutableButtonsArray[whichPosition].functionPointer = newFunc;
 	return true;
 }
+
 /*
+ *
 void keyboardToFunction::executeFunctionPointer(std::function<void()>* funcPtr){
     if (*funcPtr) {
         (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
