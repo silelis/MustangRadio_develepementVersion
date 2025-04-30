@@ -80,10 +80,11 @@ void radioMenu::createDeviceMenuList_mainMenu(void){
 	// bind short button equalizer pressed in mainMenu
 
 
-	this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x3f}}, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
+	//this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x3f}}, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 	// bind short button volume pressed in mainMenu
 	this->appendButtonArrayWithFunctionPointer({{'b', 0x7e}}, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
-	this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x7e}}, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
+
+	//this->radioMainMenu->mI_appendExecFunctionArry({{'b', 0x7e}}, std::bind(&radioMenu::menuFunction_volButShortPressed, this));
 	// bind long button volume pressed in mainMenu
 
 	// bind vol+ in mainMenu

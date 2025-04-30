@@ -16,6 +16,7 @@
 struct _execute_t{
 	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
 	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
+
 };
 
 const uint8_t EXECUTALBE_BUTTONS_ARRAY_SIZE = 18;
@@ -36,6 +37,7 @@ public:
 //	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
 	bool	appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence, std::function<void()> newFunc);
 	bool	appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray, std::function<void()> newFunc);
+
 	//void	executeFunctionPointer(std::function<void()>* funcPtr);
 
 
