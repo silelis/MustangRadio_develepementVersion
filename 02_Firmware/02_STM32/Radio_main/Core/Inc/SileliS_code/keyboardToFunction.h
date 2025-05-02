@@ -25,8 +25,6 @@ class keyboardToFunction {
 public:
 	keyboardToFunction();
 	virtual ~keyboardToFunction();
-	//bool	mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc);
-	//bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
 
 //private:
 	uint8_t	searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
@@ -34,18 +32,13 @@ public:
 	void	buildExecutableButtonsArrayEmpty(void);
 	bool	executeButtonFunction(keyboardUnion buttonSequence);
 
-//	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
 	bool	appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence, std::function<void()> newFunc);
 	bool	appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray, std::function<void()> newFunc);
 
-	//void	executeFunctionPointer(std::function<void()>* funcPtr);
-
-
 protected:
+	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 
 private:
-
-	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 	void noButtonInArrayMessage(keyboardUnion buttonSequence);
 };
 

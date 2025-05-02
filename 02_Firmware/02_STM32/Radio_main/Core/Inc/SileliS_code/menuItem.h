@@ -17,6 +17,8 @@
 #include <iostream>
 #include <functional>
 #include "SileliS_code/myPrintfTask.h"
+#include "SileliS_code/keyboardToFunction.h"
+
 
 struct execute_t{
 	keyboardUnion buttonSequence;		//kod klawisza wywołujący funkcję
@@ -27,41 +29,42 @@ struct execute_t{
 class menuItem{
 public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
-	menuItem(const char* tag, uint8_t execFunctionArraySize);
+	menuItem(const char* tag, _execute_t *ExecutableButtonsArray);
 	~menuItem();
 
-	//void	mI_appendInit(void (*newFunc)());
-	void	mI_appendInit(std::function<void()> newFunc);
-	void	mI_executeInit(void);
-	//void	mI_appendDeInit(void (*newFunc)());
-	void	mI_appendDeInit(std::function<void()> newFunc);
-	void	mI_executeDeInit(void);
-	bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
-	bool	mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc);
+//	void	mI_appendInit(std::function<void()> newFunc);
+//	void	mI_executeInit(void);
+//	void	mI_appendDeInit(std::function<void()> newFunc);
+//	void	mI_executeDeInit(void);
+
+	void	mi_bindInit(void (*new_init)(void*));
+	void	mi_bindDeInit(void (*new_init)(void*));
+	void	mi_bindBackInit(void (*new_init)(void*));
+	void 	mi_execInit(void*);
+	void 	mi_execDeInit(void*);
+	void 	mi_execBackInit(void*);
+
 
 protected:
 	const char*	mI_TAG;
 
 private:
-	execute_t*	pExecutableButtons;
-	uint8_t		execFunctionArrySize;			//rozmiar tablicy execute_t
-	uint8_t		execFunctionArryAppended;		//aktualna ilość par klawisze + funkcja, jakiew zostały appendowane do execute_t
-	void	delete_pExecutableButtonsArray(void);
-	bool	create_pExecutableButtonsArray(uint8_t arraySize);
+//	std::function<void()> Init;
+//	std::function<void()> deInit;
+	void (*cInit)(void*) = nullptr;
+	void (*cBackInit)(void*)= nullptr;
+	void (*cDeInit)(void*)= nullptr;
 
-	//void	(*Init)();
-	//void	(*deInit)();
+	void	mi_bindFunction(void (**target)(void*), void (*new_func)(void*));
+	void 	mi_execFunction(void (*callback)(void*), void* context);
+	_execute_t	*pExecutableButtonsArray;		//pointer to executable button arrayi in radioMeny class
 
 
-	std::function<void()> Init;
-	std::function<void()> deInit;
 
-	//void	appendFunctionPointer(void (**funcPtr)(), void (*newFunc)());
-	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
-	void	executeFunctionPointer(std::function<void()>* funcPtr);
+//	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
+//	void	executeFunctionPointer(std::function<void()>* funcPtr);
 
-	uint8_t	searchExecFunctionForButtonSequence(keyboardUnion buttonSequence);
-	bool	isExecFunctionInButtonSequence(keyboardUnion buttonSequence);
+
 };
 
 #endif /* SRC_SILELIS_CODE_MENUITEM_H_ */
