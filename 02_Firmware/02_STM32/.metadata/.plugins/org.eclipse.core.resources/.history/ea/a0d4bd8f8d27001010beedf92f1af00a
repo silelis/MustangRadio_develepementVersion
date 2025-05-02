@@ -1,0 +1,61 @@
+/*
+ * menuItem.cpp
+ *
+ *  Created on: Aug 11, 2024
+ *      Author: dbank
+ */
+
+#include "SileliS_code/menuItem.h"
+
+extern myPrintfTask* pPrintf;
+
+
+menuItem::menuItem(const char* tag, _execute_t *ExecutableButtonsArray) {
+//	if (execFunctionArraySize<= UINT8_MAX){
+		this->mI_TAG = tag;
+
+		this->Init= nullptr;
+		this->deInit = nullptr;
+		this->pExecutableButtonsArray = ExecutableButtonsArray;
+		pPrintf->feedPrintf("%s: menuItem had been created.", this->mI_TAG);
+//	}
+};
+
+void	menuItem::mi_bindInit(void (*new_init)(void*)){
+	if (new_init!=nullptr)
+		this->cInit = new_init;
+}
+
+
+
+void menuItem::appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc){
+	*funcPtr = newFunc;
+}
+
+void menuItem::executeFunctionPointer(std::function<void()>* funcPtr) {
+    if (*funcPtr) {
+        (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
+    } else {
+        pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
+    }
+}
+
+void menuItem::mI_appendInit(std::function<void()> newFunc) {
+	appendFunctionPointer(&this->Init, newFunc);
+}
+
+void menuItem::mI_executeInit(void){
+	this->executeFunctionPointer(&this->Init);
+}
+
+void menuItem::mI_appendDeInit(std::function<void()> newFunc){
+	appendFunctionPointer(&this->deInit, newFunc);
+}
+
+void menuItem::mI_executeDeInit(void){
+	this->executeFunctionPointer(&this->deInit);
+}
+
+menuItem::~menuItem(){
+//	this->delete_pExecutableButtonsArray();
+}

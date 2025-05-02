@@ -18,7 +18,7 @@ keyboardToFunction::keyboardToFunction() {
 void keyboardToFunction::buildExecutableButtonsArrayEmpty(void){
 	this->ExecutableButtonsArray[0]={{'b',0x7E},nullptr};	//poweroff pressed   //std::function<void()>{};
 	this->ExecutableButtonsArray[1]={{'b',0xfe},nullptr};	//long poweroff release
-	this->ExecutableButtonsArray[2]={{0,0},NULL};
+	this->ExecutableButtonsArray[2]={{'b',0x3f},nullptr};
 	this->ExecutableButtonsArray[3]={{0,0},NULL};
 	this->ExecutableButtonsArray[4]={{0,0},NULL};
 	this->ExecutableButtonsArray[5]={{0,0},NULL};

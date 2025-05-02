@@ -10,111 +10,110 @@
 extern myPrintfTask* pPrintf;
 
 
-menuItem::menuItem(const char* tag, uint8_t execFunctionArraySize) {
-	if (execFunctionArraySize<= UINT8_MAX){
+menuItem::menuItem(const char* tag, _execute_t *ExecutableButtonsArray) {
+//	if (execFunctionArraySize<= UINT8_MAX){
 		this->mI_TAG = tag;
 
-		this->Init= nullptr;
-		this->deInit = nullptr;
-
-		this->pExecutableButtons = nullptr;
-		this->create_pExecutableButtonsArray(execFunctionArraySize);
-		//printf("%s: menuItem with %d executable buttons had been created. Please append functiond.\r\n", this->mI_TAG, this->execFunctionArrySize);
-		pPrintf->feedPrintf("%s: menuItem with %d executable buttons had been created. Please append functiond.", this->mI_TAG, this->execFunctionArrySize);
-	}
+		//this->Init= nullptr;
+		//this->deInit = nullptr;
+		this->pExecutableButtonsArray = ExecutableButtonsArray;
+		pPrintf->feedPrintf("%s: menuItem had been created.", this->mI_TAG);
+//	}
 };
 
-void menuItem::delete_pExecutableButtonsArray(void){
-	if (this->pExecutableButtons!=nullptr)
-		delete [] pExecutableButtons;
+/*
+void menuItem::mi_bindInit(void (*new_init)(void*)){
+	if (new_init!=nullptr)
+		this->cInit = new_init;
+}
+
+void menuItem::	mi_bindDeInit(void (*new_init)(void*)){
+	if (new_init!=nullptr)
+		this->cDeInit= new_init;
+}
+
+void menuItem::	mi_bindBackInit(void (*new_init)(void*)){
+	if (new_init!=nullptr)
+		this->cBackInit= new_init;
+}*/
+
+void menuItem::mi_bindInit(void (*new_init)(void*)) {
+	this->mi_bindFunction(&this->cInit, new_init);
+}
+
+void menuItem::mi_bindDeInit(void (*new_init)(void*)) {
+	this->mi_bindFunction(&this->cDeInit, new_init);
+}
+
+void menuItem::mi_bindBackInit(void (*new_init)(void*)) {
+	this->mi_bindFunction(&this->cBackInit, new_init);
+}
+
+void menuItem::mi_bindFunction(void (**target)(void*), void (*new_func)(void*)) {
+    if (new_func != nullptr && target != nullptr) {
+        *target = new_func;
+    }
 }
 
 
-bool menuItem::create_pExecutableButtonsArray(uint8_t arraySize){
-	this->pExecutableButtons = new execute_t[arraySize];
-	assert(this->pExecutableButtons);
-	if (this->pExecutableButtons){
-		memset(this->pExecutableButtons, 0, sizeof(execute_t)*arraySize);
-		this->execFunctionArrySize=arraySize;
-		this->execFunctionArryAppended = 0;
-		return true;
-	}
-	return false;
+
+
+void menuItem::mi_execInit(void* context = nullptr) {
+	this->mi_execFunction(this->cInit, context);
 }
 
+void menuItem::mi_execDeInit(void* context = nullptr) {
+	this->mi_execFunction(this->cDeInit, context);
+}
+
+void menuItem::mi_execBackInit(void* context = nullptr) {
+	this->mi_execFunction(this->cBackInit, context);
+}
+
+
+void menuItem::mi_execFunction(void (*callback)(void*), void* context = nullptr) {
+    if (callback != nullptr) {
+        callback(context);
+    }
+}
+
+
+/*
 void menuItem::appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc){
 	*funcPtr = newFunc;
-}
+}*/
 
+
+/*
 void menuItem::executeFunctionPointer(std::function<void()>* funcPtr) {
     if (*funcPtr) {
         (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
     } else {
         pPrintf->feedPrintf("%s: Pointer to function is empty.", this->mI_TAG);
     }
-}
+}*/
 
+/*
 void menuItem::mI_appendInit(std::function<void()> newFunc) {
 	appendFunctionPointer(&this->Init, newFunc);
-}
+}*/
 
+/*
 void menuItem::mI_executeInit(void){
 	this->executeFunctionPointer(&this->Init);
-}
+}*/
 
+
+/*
 void menuItem::mI_appendDeInit(std::function<void()> newFunc){
 	appendFunctionPointer(&this->deInit, newFunc);
 }
 
 void menuItem::mI_executeDeInit(void){
 	this->executeFunctionPointer(&this->deInit);
-}
+}*/
+
 
 menuItem::~menuItem(){
-	this->delete_pExecutableButtonsArray();
-}
-
-uint8_t menuItem::searchExecFunctionForButtonSequence(keyboardUnion buttonSequence){
-	for(uint8_t i=0;i<this->execFunctionArryAppended;i++){
-		if ((this->pExecutableButtons[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
-			(this->pExecutableButtons[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
-			{
-			return i;
-			}
-	}
-	return this->execFunctionArrySize;		//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
-}
-
-bool menuItem::isExecFunctionInButtonSequence(keyboardUnion buttonSequence){
-	if (this->searchExecFunctionForButtonSequence(buttonSequence)==this->execFunctionArrySize)
-		return false;
-	return true;
-}
-
-bool menuItem::mI_executeExecutableButtons(keyboardUnion buttonSequence) {
-    uint8_t buttonSequenceArrayLocation = this->searchExecFunctionForButtonSequence(buttonSequence);
-    if (buttonSequenceArrayLocation == this->execFunctionArrySize) { // Gdy zwracana wartość jest równa execFunctionArrySize to znaczy, że nie ma zapamiętanej sekwencji klawiszy
-        return false;
-    } else {
-        this->executeFunctionPointer(&this->pExecutableButtons[buttonSequenceArrayLocation].functionPointer); // Użycie & przed functionPointer dla przekazania wskaźnika do std::function
-        return true;
-    }
-}
-
-bool menuItem::mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc) {
-    if (this->execFunctionArryAppended < this->execFunctionArrySize) {
-        if (!this->isExecFunctionInButtonSequence(buttonSequence)) {
-            this->pExecutableButtons[this->execFunctionArryAppended].buttonSequence = buttonSequence;
-            this->appendFunctionPointer(&this->pExecutableButtons[this->execFunctionArryAppended].functionPointer, newFunc); // Bezpośrednio przekazujemy newFunc, ponieważ już jest std::function
-            this->execFunctionArryAppended++;
-            pPrintf->feedPrintf("%s: %d button(s) are appended.", this->mI_TAG, this->execFunctionArryAppended);
-            return true;
-        } else {
-            pPrintf->feedPrintf("%s: Button sequence had already been appended in pExecutableButtonsaArry.", this->mI_TAG);
-        }
-    } else {
-        pPrintf->feedPrintf("%s: pExecutableButtonsaArry have not been appended. Array is full.", this->mI_TAG);
-        assert(0);
-    }
-    return false;
+//	this->delete_pExecutableButtonsArray();
 }
