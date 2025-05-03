@@ -12,14 +12,12 @@
 #include "comunicationStructures.h"
 #include <string.h>
 #include "SileliS_code/myPrintfTask.h"
-
+#include "SileliS_code/keyboardToFunction_buttonDefinitions.h"
 struct _execute_t{
 	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
 	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
 
 };
-
-const uint8_t EXECUTALBE_BUTTONS_ARRAY_SIZE = 18;
 
 class keyboardToFunction {
 public:
