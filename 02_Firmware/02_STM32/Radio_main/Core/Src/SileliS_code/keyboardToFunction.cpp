@@ -16,10 +16,10 @@ keyboardToFunction::keyboardToFunction() {
 }
 
 void keyboardToFunction::buildExecutableButtonsArrayEmpty(void){
-	this->ExecutableButtonsArray[0]={{'b',0x7E},nullptr};	//poweroff pressed   //std::function<void()>{};
-	this->ExecutableButtonsArray[1]={{'b',0xfe},nullptr};	//long poweroff release
-	this->ExecutableButtonsArray[2]={{'b',0x3f},nullptr};
-	this->ExecutableButtonsArray[3]={{0,0},NULL};
+	this->ExecutableButtonsArray[0]={POWER_ON_OFF_SHORT_PRESS,	nullptr};	//poweroff pressed   //std::function<void()>{};
+	this->ExecutableButtonsArray[1]={POWER_ON_OFF_LONG_RELEASED,nullptr};	//long poweroff release
+	this->ExecutableButtonsArray[2]={EQUALIZER_SHORT_PRESS,		nullptr};
+	this->ExecutableButtonsArray[3]={EQUALIZER_LONG_RELEASED,	nullptr};		//EQUALIZER_LONG_RELEASED
 	this->ExecutableButtonsArray[4]={{0,0},NULL};
 	this->ExecutableButtonsArray[5]={{0,0},NULL};
 	this->ExecutableButtonsArray[6]={{0,0},NULL};
@@ -55,7 +55,7 @@ bool keyboardToFunction::executeButtonFunction(keyboardUnion buttonSequence){
 		return false;
 	}
 	if (!this->ExecutableButtonsArray[whichPosition].functionPointer){//== nullptr){
-		pPrintf->feedPrintf("%s %c %x - there is no function binded for this button.", "PASS TAG HERE"/*ptrRadioMenu->getCurrentNodeTag()*/, buttonSequence.array[0], buttonSequence.array[1]);
+		pPrintf->feedPrintf("%c %x - there is no function binded for this button.", buttonSequence.array[0], buttonSequence.array[1]);
 		return false;
 	}
 	this->ExecutableButtonsArray[whichPosition].functionPointer();
@@ -86,7 +86,7 @@ void keyboardToFunction::appendFunctionPointer(std::function<void()>* funcPtr, s
 }*/
 
 void keyboardToFunction::noButtonInArrayMessage(keyboardUnion buttonSequence){
-	pPrintf->feedPrintf("%s %c %x - there is no button in array.", "PASS TAG HERE"/*ptrRadioMenu->getCurrentNodeTag()*/, buttonSequence.array[0], buttonSequence.array[1]);
+	pPrintf->feedPrintf("%c %x - there is no button in array.", buttonSequence.array[0], buttonSequence.array[1]);
 }
 
 bool keyboardToFunction::appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence, std::function<void()> newFunc){
