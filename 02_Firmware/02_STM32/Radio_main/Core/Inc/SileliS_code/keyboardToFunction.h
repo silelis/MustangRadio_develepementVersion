@@ -13,6 +13,7 @@
 #include <string.h>
 #include "SileliS_code/myPrintfTask.h"
 #include "SileliS_code/keyboardToFunction_buttonDefinitions.h"
+
 struct _execute_t{
 	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
 	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
@@ -21,7 +22,7 @@ struct _execute_t{
 
 class keyboardToFunction {
 public:
-	keyboardToFunction();
+	keyboardToFunction(_execute_t*	ExecutableButtonsArray);
 	virtual ~keyboardToFunction();
 
 //private:
@@ -34,7 +35,8 @@ public:
 	bool	appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray, std::function<void()> newFunc);
 
 protected:
-	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+//	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+	_execute_t	*pExecutableButtonsArray;
 
 private:
 	void noButtonInArrayMessage(keyboardUnion buttonSequence);

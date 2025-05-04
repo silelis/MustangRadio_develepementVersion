@@ -20,6 +20,12 @@
 #include <iostream>
 #include <functional>
 
+struct radioMegaStruct{
+	struct {
+		_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+	}control;
+};
+
 class radioMenu: public keyboardToFunction {
 
 public:

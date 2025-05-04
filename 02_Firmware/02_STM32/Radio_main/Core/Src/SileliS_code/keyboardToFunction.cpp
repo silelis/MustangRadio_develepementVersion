@@ -9,14 +9,24 @@
 
 extern myPrintfTask* pPrintf;
 
-keyboardToFunction::keyboardToFunction() {
-	memset(this->ExecutableButtonsArray,0, sizeof(EXECUTALBE_BUTTONS_ARRAY_SIZE));
-	//this->execFunctionArryAppended=0;
+keyboardToFunction::keyboardToFunction(_execute_t*	ExecutableButtonsArray) {
+	this->pExecutableButtonsArray = ExecutableButtonsArray;
+
+
+//	memset(this->ExecutableButtonsArray,0, sizeof(EXECUTALBE_BUTTONS_ARRAY_SIZE));
+//	this->execFunctionArryAppended=0;
+//	this->buildExecutableButtonsArrayEmpty();
+
+
+	//this->pExecutableButtonsArray = ExecutableButtonsArray;
+
+
+//	memset(this->pExecutableButtonsArray,0, sizeof(EXECUTALBE_BUTTONS_ARRAY_SIZE));
 	this->buildExecutableButtonsArrayEmpty();
 }
 
 void keyboardToFunction::buildExecutableButtonsArrayEmpty(void){
-	this->ExecutableButtonsArray[0]={POWER_ON_OFF_SHORT_PRESS,	nullptr};	//poweroff pressed   //std::function<void()>{};
+/*	this->ExecutableButtonsArray[0]={POWER_ON_OFF_SHORT_PRESS,	nullptr};	//poweroff pressed   //std::function<void()>{};
 	this->ExecutableButtonsArray[1]={POWER_ON_OFF_LONG_RELEASED,nullptr};	//long poweroff release
 	this->ExecutableButtonsArray[2]={EQUALIZER_SHORT_PRESS,		nullptr};
 	this->ExecutableButtonsArray[3]={EQUALIZER_LONG_RELEASED,	nullptr};		//EQUALIZER_LONG_RELEASED
@@ -34,12 +44,33 @@ void keyboardToFunction::buildExecutableButtonsArrayEmpty(void){
 	this->ExecutableButtonsArray[15]={{0,0},NULL};
 	this->ExecutableButtonsArray[16]={{0,0},NULL};
 	this->ExecutableButtonsArray[17]={{0,0},NULL};
+	//this->ExecutableButtons[18]={{0,0},NULL};*/
+
+
+	this->pExecutableButtonsArray[0]={POWER_ON_OFF_SHORT_PRESS,	nullptr};	//poweroff pressed   //std::function<void()>{};
+	this->pExecutableButtonsArray[1]={POWER_ON_OFF_LONG_RELEASED,nullptr};	//long poweroff release
+	this->pExecutableButtonsArray[2]={EQUALIZER_SHORT_PRESS,		nullptr};
+	this->pExecutableButtonsArray[3]={EQUALIZER_LONG_RELEASED,	nullptr};		//EQUALIZER_LONG_RELEASED
+	this->pExecutableButtonsArray[4]={{0,0},NULL};
+	this->pExecutableButtonsArray[5]={{0,0},NULL};
+	this->pExecutableButtonsArray[6]={{0,0},NULL};
+	this->pExecutableButtonsArray[7]={{0,0},NULL};
+	this->pExecutableButtonsArray[8]={{0,0},NULL};
+	this->pExecutableButtonsArray[9]={{0,0},NULL};
+	this->pExecutableButtonsArray[10]={{0,0},NULL};
+	this->pExecutableButtonsArray[11]={{0,0},NULL};
+	this->pExecutableButtonsArray[12]={{0,0},NULL};
+	this->pExecutableButtonsArray[13]={{0,0},NULL};
+	this->pExecutableButtonsArray[14]={{0,0},NULL};
+	this->pExecutableButtonsArray[15]={{0,0},NULL};
+	this->pExecutableButtonsArray[16]={{0,0},NULL};
+	this->pExecutableButtonsArray[17]={{0,0},NULL};
 	//this->ExecutableButtons[18]={{0,0},NULL};
 }
 uint8_t	keyboardToFunction::searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence){
 	for(uint8_t i=0;i<EXECUTALBE_BUTTONS_ARRAY_SIZE;i++){
-		if ((ExecutableButtonsArray[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
-			(ExecutableButtonsArray[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
+		if ((this->pExecutableButtonsArray[i].buttonSequence.kbrdValue.input == buttonSequence.kbrdValue.input) &&
+			(this->pExecutableButtonsArray[i].buttonSequence.kbrdValue.value == buttonSequence.kbrdValue.value))
 			{
 			return i;
 			}
@@ -54,11 +85,11 @@ bool keyboardToFunction::executeButtonFunction(keyboardUnion buttonSequence){
 		this->noButtonInArrayMessage(buttonSequence);
 		return false;
 	}
-	if (!this->ExecutableButtonsArray[whichPosition].functionPointer){//== nullptr){
+	if (!this->pExecutableButtonsArray[whichPosition].functionPointer){//== nullptr){
 		pPrintf->feedPrintf("%c %x - there is no function binded for this button.", buttonSequence.array[0], buttonSequence.array[1]);
 		return false;
 	}
-	this->ExecutableButtonsArray[whichPosition].functionPointer();
+	this->pExecutableButtonsArray[whichPosition].functionPointer();
 	return true;
 }
 
@@ -68,7 +99,7 @@ bool keyboardToFunction::appendButtonArrayWithFunctionPointer(uint8_t buttonPlac
 		pPrintf->feedPrintf("%s You are trying to bind ExecutableButtonsArray[%d] but array size is ExecutableButtonsArray[%d]", "PASS TAG HERE", buttonPlaceInArray,EXECUTALBE_BUTTONS_ARRAY_SIZE);
 		return false;
 	}
-	this->ExecutableButtonsArray[buttonPlaceInArray].functionPointer = newFunc;
+	this->pExecutableButtonsArray[buttonPlaceInArray].functionPointer = newFunc;
 	return true;
 
 }
@@ -97,7 +128,7 @@ bool keyboardToFunction::appendButtonArrayWithFunctionPointer(keyboardUnion butt
 		//assert(0);
 		return false;
 	}
-	this->ExecutableButtonsArray[whichPosition].functionPointer = newFunc;
+	this->pExecutableButtonsArray[whichPosition].functionPointer = newFunc;
 	return true;
 }
 
