@@ -1,0 +1,148 @@
+#include "SileliS_code/myList.h"
+
+extern myPrintfTask* pPrintf;
+
+// Konstruktor
+myList::myList(ListHeader* pointerListHeader, const char* nodeName, _execute_t*ExecutableButtonsArray)
+    : menuItem(nodeName, ExecutableButtonsArray/*, execFunctionArraySize*/) {
+	this->pListHeader = pointerListHeader;
+
+	if (this->pListHeader->head==nullptr){
+		this->pListHeader->head=this;
+	}
+	nextListNode=nullptr;
+	this->pListHeader->indexCounter++;
+	this->index = this->pListHeader->indexCounter;
+	assert(this);
+	this->pListHeader->currentListNode=this;
+}
+
+
+// Destruktor
+myList::~myList() {
+//	if(head==nullptr)
+//		return;
+}
+
+// Dodanie elementu na początku listy
+void myList::addAtBeginning(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+    if (!canAddItem()) return;
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(pListHeader, nodeName, ExecutableButtonsArray /*execFunctionArraySize*/));
+    newNode->nextListNode = this->pListHeader->head;
+    this->pListHeader->head = newNode;
+    this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Dodanie elementu na końcu listy
+void myList::addAtEnd(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+    if (!canAddItem()) return;
+
+    myList* newNode;// = new myList(nodeName, execFunctionArraySize);
+    assert(newNode = new myList(pListHeader, nodeName, ExecutableButtonsArray /*execFunctionArraySize*/));
+    if (!this->pListHeader->head) {
+    	this->pListHeader->head = newNode;
+    } else {
+        myList* temp = this->pListHeader->head;
+        while (temp->nextListNode) {
+            temp = temp->nextListNode;
+        }
+        temp->nextListNode = newNode;
+    }
+
+    this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
+    renumberNodes();
+}
+
+// Resetowanie current do pierwszego elementu listy
+void myList::resetToFirst() {
+	this->pListHeader->currentListNode = this->pListHeader->head;
+}
+
+// Przesunięcie current na następny element listy
+myList* myList::moveToNext() {
+    if (this->pListHeader->currentListNode) {
+    	this->pListHeader->currentListNode = this->pListHeader->currentListNode->nextListNode;
+    }
+    return this->pListHeader->currentListNode;
+}
+
+void myList::moveToEnd(void){
+	while(!this->isAtEnd()){
+		this->moveToNext();
+	}
+}
+void 	myList::moveToNextInLoop(void){
+	pPrintf->feedPrintf("Exit from %d: %s", this->pListHeader->currentListNode->index,this->pListHeader->currentListNode->mI_TAG);
+	//this->pListHeader->currentListNode->mI_executeDeInit();
+	this->pListHeader->currentListNode->mi_execDeInit(NULL);
+
+	if(!moveToNext())
+		resetToFirst();
+	pPrintf->feedPrintf("Enter to %d:%s", this->pListHeader->currentListNode->index,this->pListHeader->currentListNode->mI_TAG);
+
+	//this->pListHeader->currentListNode->mI_executeInit();
+	this->pListHeader->currentListNode->mi_execInit(NULL);
+}
+
+
+// Zwracanie indeksu aktualnego węzła
+uint8_t myList::getCurrentNodeIndex() const {
+    return /*current ?*/ this->pListHeader->currentListNode->index /*: UINT8_MAX*/;
+}
+
+const char* myList::getCurrentNodeTag()/* const*/{
+	return (const char*) this->pListHeader->currentListNode->mI_TAG;
+}
+
+// Sprawdzanie, czy current znajduje się na końcu listy
+bool myList::isAtEnd() const {
+    return this->pListHeader->currentListNode->nextListNode == nullptr;
+}
+
+// Wydrukowanie wszystkich elementów listy
+void myList::printList() const {
+    myList* temp = this->pListHeader->head;
+    while (temp){
+    	pPrintf->feedPrintf("Node Index: %d, Name: %s.\r\n", temp->index, temp->mI_TAG);
+        temp = temp->nextListNode;
+    }
+}
+
+// Wydrukowanie aktualnego elementu listy
+void myList::printCurrent() const {
+    if (this->pListHeader->currentListNode) {
+    	pPrintf->feedPrintf("%s: is current device.", this->pListHeader->currentListNode->mI_TAG);
+    } else {
+    	pPrintf->feedPrintf("No current node.");
+    }
+}
+
+// Renumeracja węzłów listy
+void myList::renumberNodes() {
+    myList* temp = this->pListHeader->head;
+    uint8_t tempIndex = 0;
+    while (temp) {
+        temp->index = ++tempIndex;
+        temp = temp->nextListNode;
+    }
+}
+
+// Sprawdzanie, czy można dodać element do listy
+bool myList::canAddItem() const {
+    return this->pListHeader->indexCounter < UINT8_MAX; // Maksymalna wartość uint8_t to 255, więc sprawdzamy, czy jest mniejsza niż 255
+}
+
+
+void myList::deleteList() {
+    while (this->pListHeader->head != nullptr) {
+        myList* temp = this->pListHeader->head;   // Zapamiętaj aktualny head
+        this->pListHeader->head = this->pListHeader->head->nextListNode;     // Przejdź do następnego elementu
+        delete temp;           // Usuń aktualny element	aka ~myList()
+        this->pListHeader->indexCounter--;
+    }
+    this->pListHeader->currentListNode = nullptr;  // Po usunięciu wszystkich elementów ustaw current na nullptr
+
+}
+

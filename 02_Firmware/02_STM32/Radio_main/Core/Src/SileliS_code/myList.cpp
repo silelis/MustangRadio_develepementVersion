@@ -74,13 +74,14 @@ void myList::moveToEnd(void){
 	}
 }
 void 	myList::moveToNextInLoop(void){
-	pPrintf->feedPrintf("Exit from: %s",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Exit from %d: %s", this->pListHeader->currentListNode->index,this->pListHeader->currentListNode->mI_TAG);
 	//this->pListHeader->currentListNode->mI_executeDeInit();
 	this->pListHeader->currentListNode->mi_execDeInit(NULL);
 
 	if(!moveToNext())
 		resetToFirst();
-	pPrintf->feedPrintf("Enter to:%s",this->pListHeader->currentListNode->mI_TAG);
+	pPrintf->feedPrintf("Enter to %d: %s", this->pListHeader->currentListNode->index,this->pListHeader->currentListNode->mI_TAG);
+
 	//this->pListHeader->currentListNode->mI_executeInit();
 	this->pListHeader->currentListNode->mi_execInit(NULL);
 }

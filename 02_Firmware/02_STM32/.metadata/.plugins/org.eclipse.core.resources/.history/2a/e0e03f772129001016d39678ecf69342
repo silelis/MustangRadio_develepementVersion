@@ -12,35 +12,34 @@
 #include "comunicationStructures.h"
 #include <string.h>
 #include "SileliS_code/myPrintfTask.h"
+#include "SileliS_code/keyboardToFunction_buttonDefinitions.h"
 
 struct _execute_t{
 	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
 	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
-};
 
-const uint8_t execFunctionArraySize = 18;
+};
 
 class keyboardToFunction {
 public:
-	keyboardToFunction();
+	keyboardToFunction(_execute_t	*ExecutableButtonsArray);
 	virtual ~keyboardToFunction();
-	//bool	mI_appendExecFunctionArry(keyboardUnion buttonSequence, std::function<void()> newFunc);
-	//bool	mI_executeExecutableButtons(keyboardUnion buttonSequence);
 
 //private:
 	uint8_t	searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
 	bool	isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
-	void	buildExecutableButtonsArray(void);
+	void	buildExecutableButtonsArrayEmpty(void);
+	bool	executeButtonFunction(keyboardUnion buttonSequence);
 
-	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
-	void	executeFunctionPointer(std::function<void()>* funcPtr);
-
+	bool	appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence, std::function<void()> newFunc);
+	bool	appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray, std::function<void()> newFunc);
 
 protected:
+	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+	_execute_t	*pExecutableButtonsArray;
 
 private:
-
-	_execute_t	ExecutableButtonsArray[execFunctionArraySize];
+	void noButtonInArrayMessage(keyboardUnion buttonSequence);
 };
 
 #endif /* INC_SILELIS_CODE_KEYBOARDTOFUNCTION_H_ */

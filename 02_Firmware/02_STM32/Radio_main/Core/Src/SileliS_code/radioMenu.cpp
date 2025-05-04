@@ -9,7 +9,10 @@
 
 extern myPrintfTask* pPrintf;
 
-radioMenu::radioMenu() {
+radioMegaStruct radioStruct;
+
+
+radioMenu::radioMenu() :keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
 	queueRadioMenuKbrd = nullptr;
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
 
@@ -39,9 +42,12 @@ radioMenu::radioMenu() {
 
 void radioMenu::createDeviceMenuList_audio(void){
 
-	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"1st audio: ", this->ExecutableButtonsArray));
-	this->audioDevices->addAtEnd("2nd audio: ",this->ExecutableButtonsArray);
-	this->audioDevices->addAtEnd("3rd audio: ",this->ExecutableButtonsArray);
+	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"FM", this->pExecutableButtonsArray));
+	this->audioDevices->addAtEnd("AM",pExecutableButtonsArray);
+	this->audioDevices->addAtEnd("DAB+",pExecutableButtonsArray);
+	this->audioDevices->addAtEnd("Player",this->pExecutableButtonsArray);
+	this->audioDevices->addAtEnd("Bluetooth",this->pExecutableButtonsArray);
+	this->audioDevices->addAtEnd("Aux",this->pExecutableButtonsArray);
 
 	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
 	this->peripheryDevices->resetToFirst();
@@ -58,9 +64,9 @@ void radioMenu::createDeviceMenuList_audio(void){
 
 void radioMenu::createDeviceMenuList_periphery(void){
 
-	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"1st periph: ",this->ExecutableButtonsArray));
-	this->peripheryDevices->addAtEnd("2nd periph: ",this->ExecutableButtonsArray);
-	this->peripheryDevices->addAtEnd("3rd periph: ",this->ExecutableButtonsArray);
+	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"1st periph: ",this->pExecutableButtonsArray));
+	this->peripheryDevices->addAtEnd("2nd periph: ",this->pExecutableButtonsArray);
+	this->peripheryDevices->addAtEnd("3rd periph: ",this->pExecutableButtonsArray);
 
 	this->peripheryDevices->resetToFirst();
 	//this->peripheryDevices->printList();
@@ -68,7 +74,7 @@ void radioMenu::createDeviceMenuList_periphery(void){
 
 void radioMenu::createDeviceMenuList_mainMenu(void){
 
-	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu: ",this->ExecutableButtonsArray));
+	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu: ",this->pExecutableButtonsArray));
 
 	this->appendButtonArrayWithFunctionPointer({{'b', 0x3f}}, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 
