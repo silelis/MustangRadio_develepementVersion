@@ -1,28 +1,78 @@
-22:00:07 **** Incremental Build of configuration Debug for project Radio_main ****
+22:11:39 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/keyboardToFunction.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/keyboardToFunction.d" -MT"Core/Src/SileliS_code/keyboardToFunction.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/keyboardToFunction.o"
+arm-none-eabi-g++ "../Core/Src/SileliS_code/myList.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/myList.d" -MT"Core/Src/SileliS_code/myList.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/myList.o"
+In file included from ../Core/Src/SileliS_code/myList.cpp:1:
+../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
+   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                                                      
+../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
+   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                                     
+../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
+   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                               
+../Core/Src/SileliS_code/myList.cpp:7:50: warning: "/*" within comment [-Wcomment]
+    7 |     : menuItem(nodeName/*, ExecutableButtonsArray/*, execFunctionArraySize*/) {
+      |                                                   
+../Core/Src/SileliS_code/myList.cpp:28:88: warning: "/*" within comment [-Wcomment]
+   28 | void myList::addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+      |                                                                                         
+../Core/Src/SileliS_code/myList.cpp:31:81: warning: "/*" within comment [-Wcomment]
+   31 |     assert(newNode = new myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
+      |                                                                                  
+../Core/Src/SileliS_code/myList.cpp:39:82: warning: "/*" within comment [-Wcomment]
+   39 | void myList::addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+      |                                                                                   
+../Core/Src/SileliS_code/myList.cpp:43:81: warning: "/*" within comment [-Wcomment]
+   43 |     assert(newNode = new myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
+      |                                                                                  
 arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: Radio_main.elf
  
 arm-none-eabi-size  Radio_main.elf 
 arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 245960	    720	  42920	 289600	  46b40	Radio_main.elf
+ 245792	    720	  42920	 289432	  46a98	Radio_main.elf
 Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
-22:00:12 **** Incremental Build of configuration Debug for project Radio_main ****
+22:11:46 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-size  Radio_main.elf 
    text	   data	    bss	    dec	    hex	filename
- 245960	    720	  42920	 289600	  46b40	Radio_main.elf
+ 245792	    720	  42920	 289432	  46a98	Radio_main.elf
 Finished building: default.size.stdout
  
-22:03:28 **** Incremental Build of configuration Debug for project Radio_main ****
+22:12:00 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-size  Radio_main.elf 
    text	   data	    bss	    dec	    hex	filename
- 245960	    720	  42920	 289600	  46b40	Radio_main.elf
+ 245792	    720	  42920	 289432	  46a98	Radio_main.elf
 Finished building: default.size.stdout
+ 
+22:24:42 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
+In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
+                 from ../Core/Src/SileliS_code/radioMenu.cpp:8:
+../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
+   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                                                      
+../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
+   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                                     
+../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
+   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+      |                                                                               
+arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Radio_main.elf
+ 
+arm-none-eabi-size  Radio_main.elf 
+arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
+   text	   data	    bss	    dec	    hex	filename
+ 245984	    720	  42920	 289624	  46b58	Radio_main.elf
+Finished building: default.size.stdout
+ 
+Finished building: Radio_main.list
  
