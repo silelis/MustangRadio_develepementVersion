@@ -29,7 +29,7 @@ struct execute_t{
 class menuItem{
 public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
-	menuItem(const char* tag, _execute_t *ExecutableButtonsArray);
+	menuItem(const char* tag/*, _execute_t *ExecutableButtonsArray*/);
 	~menuItem();
 
 //	void	mI_appendInit(std::function<void()> newFunc);
@@ -57,7 +57,7 @@ private:
 
 	void	mi_bindFunction(void (**target)(void*), void (*new_func)(void*));
 	void 	mi_execFunction(void (*callback)(void*), void* context);
-	_execute_t	*pExecutableButtonsArray;		//pointer to executable button arrayi in radioMeny class
+	/*_execute_t	*pExecutableButtonsArray;		//pointer to executable button arrayi in radioMeny class*/
 
 
 

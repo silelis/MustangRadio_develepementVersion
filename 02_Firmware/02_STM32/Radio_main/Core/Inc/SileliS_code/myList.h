@@ -24,15 +24,15 @@ struct ListHeader {
 class myList:public menuItem {
 public:
     // Konstruktor
-    myList(ListHeader* pointerListHeader, const char* nodeName, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+    myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
 
     // Destruktor
     void deleteList();
     ~myList();
 
     // Dodawanie elementów do listy
-    void addAtBeginning(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-    void addAtEnd(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+    void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+    void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
 
     // Poruszanie się po liście
     void resetToFirst();

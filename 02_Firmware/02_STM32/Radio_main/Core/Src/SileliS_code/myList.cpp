@@ -3,8 +3,8 @@
 extern myPrintfTask* pPrintf;
 
 // Konstruktor
-myList::myList(ListHeader* pointerListHeader, const char* nodeName, _execute_t*ExecutableButtonsArray)
-    : menuItem(nodeName, ExecutableButtonsArray/*, execFunctionArraySize*/) {
+myList::myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray*/)
+    : menuItem(nodeName/*, ExecutableButtonsArray/*, execFunctionArraySize*/) {
 	this->pListHeader = pointerListHeader;
 
 	if (this->pListHeader->head==nullptr){
@@ -25,10 +25,10 @@ myList::~myList() {
 }
 
 // Dodanie elementu na początku listy
-void myList::addAtBeginning(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+void myList::addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
     if (!canAddItem()) return;
     myList* newNode;// = new myList(nodeName, execFunctionArraySize);
-    assert(newNode = new myList(pListHeader, nodeName, ExecutableButtonsArray /*execFunctionArraySize*/));
+    assert(newNode = new myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
     newNode->nextListNode = this->pListHeader->head;
     this->pListHeader->head = newNode;
     this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -36,11 +36,11 @@ void myList::addAtBeginning(const char* nodeName, _execute_t *ExecutableButtonsA
 }
 
 // Dodanie elementu na końcu listy
-void myList::addAtEnd(const char* nodeName, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+void myList::addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
     if (!canAddItem()) return;
 
     myList* newNode;// = new myList(nodeName, execFunctionArraySize);
-    assert(newNode = new myList(pListHeader, nodeName, ExecutableButtonsArray /*execFunctionArraySize*/));
+    assert(newNode = new myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
     if (!this->pListHeader->head) {
     	this->pListHeader->head = newNode;
     } else {

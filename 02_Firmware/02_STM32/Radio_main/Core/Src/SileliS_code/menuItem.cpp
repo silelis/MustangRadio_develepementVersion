@@ -10,13 +10,13 @@
 extern myPrintfTask* pPrintf;
 
 
-menuItem::menuItem(const char* tag, _execute_t *ExecutableButtonsArray) {
+menuItem::menuItem(const char* tag/*, _execute_t *ExecutableButtonsArray*/) {
 //	if (execFunctionArraySize<= UINT8_MAX){
 		this->mI_TAG = tag;
 
 		//this->Init= nullptr;
 		//this->deInit = nullptr;
-		this->pExecutableButtonsArray = ExecutableButtonsArray;
+		/*this->pExecutableButtonsArray = ExecutableButtonsArray;*/
 		pPrintf->feedPrintf("%s: menuItem had been created.", this->mI_TAG);
 //	}
 };
