@@ -15,16 +15,10 @@
 #include "semphr.h"
 #include "comunicationStructures.h"
 #include "SileliS_code/keyboardToFunction.h"
-
-
 #include <iostream>
 #include <functional>
+#include "SileliS_code/radioMegaStruct.h"
 
-struct radioMegaStruct{
-	struct {
-		_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
-	}control;
-};
 
 class radioMenu: public keyboardToFunction {
 
