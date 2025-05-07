@@ -1,4 +1,4 @@
-21:48:19 **** Incremental Build of configuration Debug for project Radio_main ****
+22:09:09 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
 arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
@@ -16,7 +16,7 @@ In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
    56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
       |          ^~~~~~~
 In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/radioMenu.cpp:8:
+                 from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:241:
 ../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
    27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
       |                                                                                                      
@@ -27,7 +27,7 @@ In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
    35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
       |                                                                               
 In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:241:
+                 from ../Core/Src/SileliS_code/radioMenu.cpp:8:
 ../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
    27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
       |                                                                                                      
@@ -58,11 +58,11 @@ Finished building target: Radio_main.elf
 arm-none-eabi-size  Radio_main.elf 
 arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 245984	    720	  43016	 289720	  46bb8	Radio_main.elf
+ 246064	    720	  43024	 289808	  46c10	Radio_main.elf
 Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
 
-21:48:22 Build Finished. 0 errors, 13 warnings. (took 2s.581ms)
+22:09:12 Build Finished. 0 errors, 13 warnings. (took 2s.655ms)
 

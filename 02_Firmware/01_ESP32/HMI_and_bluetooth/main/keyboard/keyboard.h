@@ -7,7 +7,8 @@
 #include "driver/gptimer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
-#include "./../../../03_Common/comunicationProtocol.h"
+#include "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunicationProtocol.h"
+//#include "./../../../03_Common/comunicationProtocol.h"
 //#include "comunicationProtocol.h"
 
 #include "freertos/task.h"
