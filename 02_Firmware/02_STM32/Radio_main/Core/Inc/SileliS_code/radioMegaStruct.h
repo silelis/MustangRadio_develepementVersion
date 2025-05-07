@@ -7,6 +7,7 @@
 
 #ifndef INC_SILELIS_CODE_RADIOMEGASTRUCT_H_
 #define INC_SILELIS_CODE_RADIOMEGASTRUCT_H_
+#include "comunicationStructures.h"
 
 
 /*
@@ -59,6 +60,8 @@ struct radioMegaStruct{
 			colorSet equaliserLed;
 			colorSet errorLed;
 			colorSet backlightLeds;
+			uint8_t	backlightLedsFrom=0;
+			uint8_t backlightLedsTo=LED_DISPLAY_LEDS_QUANTITY-3;
 		}leds;
 		struct{
 			uint16_t beginOffest;	//ilość kroków od początku jaka jest potrzebna do odmierzenia, aby wskazówka była na początku skali

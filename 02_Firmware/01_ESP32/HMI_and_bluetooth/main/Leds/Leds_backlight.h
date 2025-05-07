@@ -3,6 +3,7 @@
 #include "led_strip.h"
 #include "esp_log.h"
 
+#define LED_DISPLAY_BLINK_TIME	1000
 
 class LEDS_BACKLIGHT
 {

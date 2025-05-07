@@ -1,6 +1,7 @@
 #pragma once
 #include "inttypes.h"
 
+#define LED_DISPLAY_LEDS_QUANTITY	11	//from 0 to LED_DISPLAY_LEDS_QUANTITY-3 are background, last 3 are menu leds
 struct ws2812Color
 {
 	uint8_t red;
