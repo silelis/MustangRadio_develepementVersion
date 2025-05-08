@@ -9,6 +9,27 @@ struct ws2812Color
 	uint8_t blue;
 };
 
+struct colorSet {
+	struct ws2812Color primary;
+	struct ws2812Color secondary;
+};
+
+struct hmiLeds{		//struktura zawierająca informacje o stanie ledów wykorzystywana podczas komunikacji między master a slave
+	colorSet	sourceLed;
+	colorSet	equaliserLed;
+	colorSet	errorLed;
+	colorSet	backlightLeds;
+	uint8_t		backlightLedsFrom=0;
+	uint8_t		backlightLedsTo=LED_DISPLAY_LEDS_QUANTITY-3;
+};
+
+typedef struct {		//struktura zawierająca informacje o stanie ledów wykorzystywana podczas komunikacji między master a slave
+	uint16_t beginOffest;
+	uint16_t endOffset;
+	uint16_t maxPosition;
+	uint16_t currentPosition;
+
+} MotorParameters;
 
 union keyboardUnion
 {
@@ -26,7 +47,4 @@ union keyboardUnion
 	}kbrdValue;				//daje możliwość łatwego zapisania/odczytu danych dla klawiatury
 };
 
-struct colorSet {
-	struct ws2812Color primary;
-	struct ws2812Color secondary;
-};
+
