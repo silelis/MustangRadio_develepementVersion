@@ -1,0 +1,36 @@
+/*
+ * ledsController.h
+ *
+ *  Created on: May 14, 2025
+ *      Author: dbank
+ */
+
+#ifndef LEDSCONTROLLER_H_
+#define LEDSCONTROLLER_H_
+
+#include "comunicationStructures.h"
+
+
+
+class ledsController {
+public:
+	ledsController(hmiLeds* leds);
+	virtual ~ledsController();
+
+private:
+	enum ledEnum{
+		sourceLed,
+		equaliserLed,
+		errorLed,
+		backlightLeds
+	};
+
+	hmiLeds* pLeds;
+
+	void setLedColors(ledEnum whichLed, ws2812Color primary, ws2812Color secondary);
+
+
+
+};
+
+#endif /* LEDSCONTROLLER_H_ */

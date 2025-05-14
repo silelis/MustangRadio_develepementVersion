@@ -19,7 +19,6 @@
 #include <functional>
 #include "SileliS_code/radioMegaStruct.h"
 
-
 class radioMenu: public keyboardToFunction {
 
 public:
