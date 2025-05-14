@@ -7,10 +7,15 @@
 
 #include <SileliS_code/radioMenu.h>
 
+
+
 extern myPrintfTask* pPrintf;
 
 radioMegaStruct radioStruct;
 
+#include "SileliS_code/ledsController.h"
+
+ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds);
 
 radioMenu::radioMenu() :keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
 	queueRadioMenuKbrd = nullptr;
