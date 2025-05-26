@@ -138,8 +138,11 @@ void ledsController::setLedBacklighCleaned(void){
 	this->setLedBacklightAllWithColor(COLOR_BLACK);
 }
 
-void setLedAllCleaned(void){
-
+void ledsController::setLedAllCleaned(void){
+	this->setLedSourceCleaned();
+	this->setLedEqualiserCleaned();
+	this->setLedErrorCleaned();
+	this->setLedBacklighCleaned();
 }
 
 ledsController::~ledsController() {
