@@ -10,6 +10,8 @@
 #include "SileliS_code/tasksFunctions.h"
 //#include <SileliS_code/myList.h>
 #include <SileliS_code/radioMenu.h>
+#include "SileliS_code/ledsController.h"
+
 
 
 static bool esp32I2cInitialised = false;											//zmienna sprawdza czy esp32 zainiclował interfejs i2c
@@ -20,7 +22,7 @@ static TaskHandle_t taskHandle_i2cMasterParseReceivedData = nullptr;				//uchwyt
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;							//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
 static TaskHandle_t taskHandle_PrintfTask=nullptr;									//uchwyt do taska kontrolujący wyświetlaniekomunikatów na uart
 
-static i2cMaster* pi2cMaster=nullptr;  												//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+/*static*/ i2cMaster* pi2cMaster=nullptr;  												//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=nullptr; 								//wsyaźnik do obiektu obsługującego komunikację z ESP32
 radioMenu* pRadioMenu=nullptr;
 myPrintfTask* pPrintf=nullptr;														//pointer do taska obsługuącego pisanie komunikatow na konsolę
@@ -28,7 +30,7 @@ myPrintfTask* pPrintf=nullptr;														//pointer do taska obsługuącego pi
 
 
 
-
+//task parsujący otrzymane z i2c slave dane (przełącza parsowanie po adresie slave z jakiego dane zostały otrzymane
 static void i2cMasterParseReceivedData(void *pNothing){
 	i2cFrame_transmitQueue tempI2CReceiveFrame;
 	while(1){
@@ -52,6 +54,7 @@ static void i2cMasterParseReceivedData(void *pNothing){
 	}
 }
 
+//task sprawdzajacy czy w kolejce nadawania danych i2c znajdują się jakieś dane do wysłania i jeśli tak to wysyła te dane do slave
 static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 	while(1){
 		vTaskDelay(pdMS_TO_TICKS(3000));
@@ -62,7 +65,7 @@ static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 	}
 }
 
-
+//task sprawdza czy w kolejce do odczytu z i2c slave znajdują sie dane do odczytu i jesli takie sa to rozpoczyna komunikację w celu odczytu tych danych
 static void i2cMasterReceiveFromSlaveDataTask(void *pNothing){
 	i2cFrame_transmitQueue I2CFrameToReadFromSlave;
 
@@ -93,7 +96,8 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing){
 	}
 }
 
-
+//jeśli hmi (ESP32) ma jakieś dane do wyslania to najpierw ustawia linie INTIREQ na poziom niski. To 2 STM32 uruchamia to przerwanie, które callback
+// funkcja HAL_GPIO_EXTI_Callback podnosi wartość semafora zliczajacego dane do doczytania z ESP32, a ta funkcja odczytuje te dane i zmniejsza wartośc semafora
 static void esp32I2cIntrrruptRequest(void *pNothing){
 	while(1){
 		pESP32->isCountingSemaphoreOverflowed();
@@ -103,7 +107,7 @@ static void esp32I2cIntrrruptRequest(void *pNothing){
 	};
 }
 
-
+// funkcja której zadaniem jest odmierzenie czasu timeout. Czas ten liczony jest jako czas bezczynny w menu equalizera. Po domierzeniu czasu timeout (bezczynności) radio samo wychodzi z menu equalizaera do menu urządzenia odtwarzającego.
 void peripheryMenuTimeoutFunction(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
@@ -124,17 +128,37 @@ void peripheryMenuTimeoutFunction(void* thing){
 		else{
 			selfSuspended = false;		//reset self Suspend notification
 		}
-
 	}
 }
 
-//keyboardToFunction* pKeyboardToFunction = new keyboardToFunction();
-//uint8_t sequence;
-
+//glówna funkcja radio inicjalizująca menu i podmenu i obslugę klawiszy
 static void manageRadioButtonsAndManue(void* thing){
 	radioMenu* ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
 	keyboardUnion receivedKeyboard;
+
+
+
+
+
+
+
+
+extern radioMegaStruct radioStruct;
+ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
+hmiLeds.setLedSourceWithColor(COLOR_RED);
+hmiLeds.sendDataToI2cTransmitQueue();
+
+
+
+
+
+
+
+
+
+
+
 	while(1){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
 			ptrRadioMenu->executeButtonFunction(receivedKeyboard);
@@ -146,6 +170,7 @@ static void manageRadioButtonsAndManue(void* thing){
 static void initTaskFunctions(void){
 
 	assert(pi2cMaster = new i2cMaster(&hi2c1));
+
 	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
 
 	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32

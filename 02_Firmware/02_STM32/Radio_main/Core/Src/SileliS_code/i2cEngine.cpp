@@ -177,3 +177,7 @@ HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, ui
 
 	return retVal;
 }
+
+i2cQueue4DynamicData* i2cMaster::getTransmitQueue(){
+	return pI2C_MasterTransmitToSlave_DataQueue;
+}
