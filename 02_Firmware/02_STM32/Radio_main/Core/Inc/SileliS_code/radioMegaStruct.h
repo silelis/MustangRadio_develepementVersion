@@ -8,7 +8,7 @@
 #ifndef INC_SILELIS_CODE_RADIOMEGASTRUCT_H_
 #define INC_SILELIS_CODE_RADIOMEGASTRUCT_H_
 #include "comunicationStructures.h"
-
+#include "SileliS_code/keyboardToFunction.h"
 
 /*
 Radio FM (Frequency Modulation)

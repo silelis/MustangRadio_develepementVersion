@@ -57,6 +57,13 @@ typedef struct {
 	union keyboardUnion keyboardData;
 } i2cFrame_keyboardFrame;
 
+typedef struct {
+	i2cFrame_commonHeader i2cframeCommandHeader;
+	struct hmiLeds ledsData;
+} i2cFrame_hmiLeds;
+
+
+
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 	/*typedef*/ struct i2cFrame_transmitQueue{

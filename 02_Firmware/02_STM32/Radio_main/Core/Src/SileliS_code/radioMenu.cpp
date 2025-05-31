@@ -6,16 +6,17 @@
  */
 
 #include <SileliS_code/radioMenu.h>
-
+//#include "SileliS_code/i2cEngine.h"
 
 
 extern myPrintfTask* pPrintf;
+//extern i2cMaster* pi2cMaster;
 
 radioMegaStruct radioStruct;
 
-#include "SileliS_code/ledsController.h"
 
-ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds);
+
+
 
 radioMenu::radioMenu() :keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
 	queueRadioMenuKbrd = nullptr;

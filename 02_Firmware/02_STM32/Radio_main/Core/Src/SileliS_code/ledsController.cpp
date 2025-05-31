@@ -7,10 +7,12 @@
 
 #include "SileliS_code/ledsController.h"
 
-ledsController::ledsController(hmiLeds* leds) {
+ledsController::ledsController(hmiLeds* leds, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue) {
 	// TODO Auto-generated constructor stub
 	this->pLeds = leds;
+	this->pI2C_MasterTransmitToSlave_DataQueue = MasterTransmitToSlave_DataQueue;
 //	this->setLedBlinking(sourceLed, this->color.Red, this->color.Black);
+	this->setLedAllCleaned();
 }
 
 void ledsController::setLedColors(ledEnum whichLed, ws2812Color primary, ws2812Color secondary){
@@ -144,6 +146,27 @@ void ledsController::setLedAllCleaned(void){
 	this->setLedErrorCleaned();
 	this->setLedBacklighCleaned();
 }
+BaseType_t ledsController::sendDataToI2cTransmitQueue(){
+
+		//tworzy ramke do przesłania
+		i2cFrame_hmiLeds hmiLedsToSend;
+		hmiLedsToSend.i2cframeCommandHeader.commandGroup = I2C_COMMAND_GROUP_LEDS;
+		hmiLedsToSend.i2cframeCommandHeader.dataSize = sizeof(hmiLeds);
+		//kopiuje dane z radioMegaStruct do ramki
+		memcpy(&hmiLedsToSend.ledsData, this->pLeds, sizeof(hmiLeds));
+		hmiLedsToSend.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&hmiLedsToSend, sizeof(i2cFrame_hmiLeds));
+
+		//tworzy ramkę komunikacujną do przesłania
+		i2cFrame_transmitQueue dataToTransmitQueue;
+		dataToTransmitQueue.pData = malloc(sizeof(i2cFrame_hmiLeds));
+		assert(dataToTransmitQueue.pData);
+		dataToTransmitQueue.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;
+		dataToTransmitQueue.dataSize = sizeof(i2cFrame_hmiLeds);
+		memcpy(dataToTransmitQueue.pData, &hmiLedsToSend, dataToTransmitQueue.dataSize);
+		return this->pI2C_MasterTransmitToSlave_DataQueue->QueueSend(&dataToTransmitQueue);
+}
+
+
 
 ledsController::~ledsController() {
 	// TODO Auto-generated destructor stub

@@ -8,6 +8,10 @@
 #define LEDSCONTROLLER_H_
 
 #include "comunicationStructures.h"
+#include "comunicationProtocol.h"
+#include "i2c_slave_master_queueClass.h"
+#include "SileliS_code/radioMegaStruct.h"
+#include "comunication_calculate_checksum.h"
 
 #define COLOR_RED 	{128, 0, 0}
 #define COLOR_GREEN 	{0, 128, 0}
@@ -15,12 +19,11 @@
 #define COLOR_BLACK 	{0, 0, 0}
 #define COLOR_WHITE 	{128, 128, 128}
 
-
 class ledsController {
 public:
 
 
-    ledsController(hmiLeds* leds);
+    ledsController(hmiLeds* leds, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue);
     virtual ~ledsController();
 
     void setLedSourceBlinking(ws2812Color primary, ws2812Color secondary);
@@ -43,6 +46,8 @@ public:
 
     void setLedAllCleaned(void);
 
+    BaseType_t sendDataToI2cTransmitQueue();
+
 protected:
     enum ledEnum {
         sourceLed,
@@ -59,6 +64,7 @@ private:
     hmiLeds* pLeds;
 
     void setLedColors(ledEnum whichLed, ws2812Color primary, ws2812Color secondary);
+    i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;
 
 };
 #endif /* LEDSCONTROLLER_H_ */

@@ -1,14 +1,15 @@
-D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunicationProtocol.h:66:4:i2cFrame_transmitQueue::i2cFrame_transmitQueue()	1
-../Core/Src/SileliS_code/i2cEngine.cpp:13:1:i2cMaster::i2cMaster(I2C_HandleTypeDef*)	4
-../Core/Src/SileliS_code/i2cEngine.cpp:48:12:BaseType_t i2cMaster::i2cMasterSemaphoreTake()	1
-../Core/Src/SileliS_code/i2cEngine.cpp:66:12:BaseType_t i2cMaster::i2cMasterSemaphoreGive()	1
-../Core/Src/SileliS_code/i2cEngine.cpp:83:19:HAL_StatusTypeDef i2cMaster::ping(uint16_t)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:113:13:BaseType_t i2cMaster::setI2cAdressToAdressQueue(uint16_t)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:137:13:BaseType_t i2cMaster::getI2cAdressFromAdressQueue(i2cFrame_transmitQueue*)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:143:13:BaseType_t i2cMaster::passReceivedI2cDataToParsingQueue(i2cFrame_transmitQueue*)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:148:13:BaseType_t i2cMaster::takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueue*)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:153:7:void i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue)	1
-../Core/Src/SileliS_code/i2cEngine.cpp:158:1:i2cMaster::~i2cMaster()	4
-../Core/Src/SileliS_code/i2cEngine.cpp:158:1:virtual i2cMaster::~i2cMaster()	1
-../Core/Src/SileliS_code/i2cEngine.cpp:168:6:void i2cMaster::while_I2C_STATE_READY()	2
-../Core/Src/SileliS_code/i2cEngine.cpp:172:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t, uint8_t*, uint16_t)	1
+D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunicationProtocol.h:73:4:i2cFrame_transmitQueue::i2cFrame_transmitQueue()	1
+../Core/Src/SileliS_code/i2cEngine.cpp:14:1:i2cMaster::i2cMaster(I2C_HandleTypeDef*)	4
+../Core/Src/SileliS_code/i2cEngine.cpp:49:12:BaseType_t i2cMaster::i2cMasterSemaphoreTake()	1
+../Core/Src/SileliS_code/i2cEngine.cpp:67:12:BaseType_t i2cMaster::i2cMasterSemaphoreGive()	1
+../Core/Src/SileliS_code/i2cEngine.cpp:84:19:HAL_StatusTypeDef i2cMaster::ping(uint16_t)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:114:13:BaseType_t i2cMaster::setI2cAdressToAdressQueue(uint16_t)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:138:13:BaseType_t i2cMaster::getI2cAdressFromAdressQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:144:13:BaseType_t i2cMaster::passReceivedI2cDataToParsingQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:149:13:BaseType_t i2cMaster::takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:154:7:void i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:159:1:i2cMaster::~i2cMaster()	4
+../Core/Src/SileliS_code/i2cEngine.cpp:159:1:virtual i2cMaster::~i2cMaster()	1
+../Core/Src/SileliS_code/i2cEngine.cpp:169:6:void i2cMaster::while_I2C_STATE_READY()	2
+../Core/Src/SileliS_code/i2cEngine.cpp:173:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t, uint8_t*, uint16_t)	1
+../Core/Src/SileliS_code/i2cEngine.cpp:181:23:i2cQueue4DynamicData* i2cMaster::getTransmitQueue()	1
