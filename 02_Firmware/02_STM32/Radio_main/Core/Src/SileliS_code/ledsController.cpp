@@ -7,6 +7,7 @@
 
 #include "SileliS_code/ledsController.h"
 
+
 ledsController::ledsController(hmiLeds* leds, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue) {
 	// TODO Auto-generated constructor stub
 	this->pLeds = leds;

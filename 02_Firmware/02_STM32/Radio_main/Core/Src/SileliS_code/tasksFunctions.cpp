@@ -63,6 +63,7 @@ static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 				case pESP32->esp32i2cSlaveAdress_7bit:
 					pESP32->masterTransmitData(&transmitFrame);	//ta funkcja nie działa
 
+					//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
 					//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)&transmitFrame.pData, transmitFrame.dataSize);
 					break;
 				default:
@@ -72,7 +73,7 @@ static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 			pi2cMaster->i2cMasterSemaphoreGive();
 
 			if (transmitFrame.pData!=nullptr){
-				pi2cMaster->passReceivedI2cDataToParsingQueue(&transmitFrame);
+				pi2cMaster->deleteAlocatedDataAfterParsing(transmitFrame);
 			}
 			else if (transmitFrame.pData==nullptr){
 				pPrintf->feedPrintf("error with memory allocation.");
@@ -80,8 +81,6 @@ static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
 			}
 		}
 
-
-		//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
 
 	}
 }
@@ -166,6 +165,7 @@ static void manageRadioButtonsAndManue(void* thing){
 
 
 extern radioMegaStruct radioStruct;
+
 ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
 hmiLeds.setLedSourceWithColor(COLOR_RED);
 hmiLeds.sendDataToI2cTransmitQueue();

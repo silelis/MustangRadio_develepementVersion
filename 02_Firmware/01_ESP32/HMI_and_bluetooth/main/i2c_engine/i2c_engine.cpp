@@ -12,6 +12,58 @@ static i2c_slave_config_t i2c_config_slave;
 #include "soc/i2c_struct.h"
 extern i2c_dev_t I2C0;
 
+
+#include "driver/i2c.h"
+//----------------------------------------------
+// Enumy i zmienne globalne (z volatile dla ISR)
+//----------------------------------------------
+typedef enum {
+	recpeptionNotToMe, // 0 - dane nie były do ESP32
+	recpeptionToMe, // 1 - ESP32 odebrało dane
+	transmition         // 2 - ESP32 wysłało dane
+} i2cCallbackState;
+
+volatile static i2cCallbackState rxToEsp32 = recpeptionNotToMe;
+volatile static uint32_t rx_fifo_end_addrLast = 0;
+
+
+//----------------------------------------------
+// Callback dla zdarzeń I2C Slave
+//----------------------------------------------
+static IRAM_ATTR bool i2c_slave_rx_done_callback(
+    i2c_slave_dev_handle_t channel,
+	const i2c_slave_rx_done_event_data_t *edata,
+	void *user_data) {
+	BaseType_t high_task_wakeup = pdFALSE;
+	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
+
+	// 1. Sprawdź kierunek transmisji
+	if (I2C0.status_reg.slave_rw == 0) {
+		// Master -> Slave (ESP32 odbiera)
+		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr) {
+			rxToEsp32 = recpeptionToMe; // Nowe dane dla ESP32
+		}
+		else {
+			rxToEsp32 = recpeptionNotToMe; // Dane były dla innego slave'a
+		}
+		rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	} 
+	else {
+		// Slave -> Master (ESP32 wysyła)
+		rxToEsp32 = transmition;
+	}
+
+	// 2. Wyślij zdarzenie do kolejki (z zabezpieczeniem przed NULL)
+	if (receive_queue != NULL && edata != NULL) {
+		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+	}
+
+	return high_task_wakeup == pdTRUE;
+}
+
+
+
+/*
 uint32_t rx_fifo_end_addrLast;
 enum i2cCallbackState
 {
@@ -27,7 +79,9 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 {	
 	BaseType_t high_task_wakeup = pdFALSE;
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+	//if (receive_queue != NULL) {
+		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+	//}
 
 	//if (I2C0.int_status.trans_complete == 0)
 	if (I2C0.status_reg.slave_rw == 0)
@@ -48,26 +102,12 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 	}
 	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
 	
-	/*if (high_task_wakeup == pdTRUE) {
-		// Wybudź zadanie o wyższym priorytecie
-		portYIELD_FROM_ISR(high_task_wakeup);
-	}	  */
 	return high_task_wakeup == pdTRUE;
-}
+}	*/	
 
 
 
 
-
-/*
-static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
-{
-	BaseType_t high_task_wakeup = pdFALSE;
-	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	return high_task_wakeup == pdTRUE;
-}
-  */
 
 
 /*---------------------------------------------------------------

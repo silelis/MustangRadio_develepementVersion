@@ -14,9 +14,9 @@ extern myPrintfTask* pPrintf;
 i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 	// TODO Auto-generated constructor stub
 	this->p_hi2c1 =hi2c1;
-	this->pI2C_MasterReceiveFromSlave_DataQueue = NULL;
-	this->pI2C_MasterTransmitToSlave_DataQueue = NULL;
-	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = NULL;
+	this->pI2C_MasterReceiveFromSlave_DataQueue = nullptr;
+	this->pI2C_MasterTransmitToSlave_DataQueue = nullptr;
+	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = nullptr;
 
 
 
