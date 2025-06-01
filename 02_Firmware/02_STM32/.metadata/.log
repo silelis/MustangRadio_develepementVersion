@@ -7165,3 +7165,75 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_reposit
 
 !ENTRY org.eclipse.cdt.core 1 0 2025-06-01 12:25:35.203
 !MESSAGE Indexed 'Radio_main' (54 sources, 387 headers) in 14.6 sec: 44,338 declarations; 164,228 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
+!SESSION 2025-06-01 14:23:58.780 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-06-01 14:24:30.716
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-06-01 14:24:30.727
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-06-01 14:24:45.733
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-06-01 14:25:11.151
+!MESSAGE Indexed 'Radio_main' (54 sources, 387 headers) in 25.1 sec: 44,338 declarations; 164,223 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
+!SESSION 2025-06-01 21:39:43.435 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-06-01 21:39:51.433
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-06-01 21:39:51.437
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-06-01 21:40:01.928
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-06-01 21:40:25.762
+!MESSAGE Indexed 'Radio_main' (54 sources, 387 headers) in 23.5 sec: 44,338 declarations; 164,224 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
+
+!ENTRY org.eclipse.cdt.dsf 4 10001 2025-06-01 21:40:56.833
+!MESSAGE Target not available.
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2025-06-01 22:04:03.694
+!MESSAGE Program file does not exist
+!STACK 0
+java.io.FileNotFoundException: D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2025-06-01 22:04:03.694
+!MESSAGE D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+!STACK 0
+java.io.FileNotFoundException: D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

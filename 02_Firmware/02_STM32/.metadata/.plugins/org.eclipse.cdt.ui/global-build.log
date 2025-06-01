@@ -1,54 +1,4 @@
-12:10:32 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
-In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:56:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |          ^~~~~~~
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:111:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
-  111 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
-      |          ^~~~~~~
-In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:245:
-../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
-   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                                      
-../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
-   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                     
-../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
-   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                               
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue*)':
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:161:17: warning: unused variable 'dataSize' [-Wunused-variable]
-  161 |         uint8_t dataSize;
-      |                 ^~~~~~~~
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
-arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
-   text	   data	    bss	    dec	    hex	filename
- 247728	    720	  43024	 291472	  47290	Radio_main.elf
-Finished building: default.size.stdout
- 
-Finished building: Radio_main.list
- 
-12:10:59 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-size  Radio_main.elf 
-   text	   data	    bss	    dec	    hex	filename
- 247728	    720	  43024	 291472	  47290	Radio_main.elf
-Finished building: default.size.stdout
- 
-12:12:01 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-size  Radio_main.elf 
-   text	   data	    bss	    dec	    hex	filename
- 247728	    720	  43024	 291472	  47290	Radio_main.elf
-Finished building: default.size.stdout
- 
-12:14:11 **** Incremental Build of configuration Debug for project Radio_main ****
+22:25:58 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
 In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
@@ -73,26 +23,33 @@ Finished building target: Radio_main.elf
 arm-none-eabi-size  Radio_main.elf 
 arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
+ 247640	    720	  43024	 291384	  47238	Radio_main.elf
 Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
-12:15:01 **** Incremental Build of configuration Debug for project Radio_main ****
+22:26:11 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-size  Radio_main.elf 
    text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
+ 247640	    720	  43024	 291384	  47238	Radio_main.elf
 Finished building: default.size.stdout
  
-12:17:09 **** Incremental Build of configuration Debug for project Radio_main ****
+22:26:40 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-size  Radio_main.elf 
    text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
+ 247640	    720	  43024	 291384	  47238	Radio_main.elf
 Finished building: default.size.stdout
  
-12:18:43 **** Incremental Build of configuration Debug for project Radio_main ****
+22:28:15 **** Incremental Build of configuration Debug for project Radio_main ****
+make -j16 all 
+arm-none-eabi-size  Radio_main.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 247640	    720	  43024	 291384	  47238	Radio_main.elf
+Finished building: default.size.stdout
+ 
+22:29:49 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
 In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
@@ -117,141 +74,15 @@ Finished building target: Radio_main.elf
 arm-none-eabi-size  Radio_main.elf 
 arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
-Finished building: default.size.stdout
- 
-Finished building: Radio_main.list
- 
-12:20:19 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-size  Radio_main.elf 
-   text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
-Finished building: default.size.stdout
- 
-12:22:32 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
-In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:56:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |          ^~~~~~~
-In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:12:
-../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
-   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                                      
-../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
-   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                     
-../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
-   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                               
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
-arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
-   text	   data	    bss	    dec	    hex	filename
- 247632	    720	  43024	 291376	  47230	Radio_main.elf
-Finished building: default.size.stdout
- 
-Finished building: Radio_main.list
- 
-12:26:31 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
-arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
-In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:56:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |          ^~~~~~~
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:111:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
-  111 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
-      |          ^~~~~~~
-In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:28,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:10:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:56:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |          ^~~~~~~
-In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:12:
-../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
-   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                                      
-../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
-   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                     
-../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
-   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                               
-In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:245:
-../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
-   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                                      
-../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
-   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                     
-../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
-   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                               
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue*)':
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:161:17: warning: unused variable 'dataSize' [-Wunused-variable]
-  161 |         uint8_t dataSize;
-      |                 ^~~~~~~~
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
-arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
-   text	   data	    bss	    dec	    hex	filename
  247728	    720	  43024	 291472	  47290	Radio_main.elf
 Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
-12:27:21 **** Incremental Build of configuration Debug for project Radio_main ****
+22:30:28 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
 arm-none-eabi-size  Radio_main.elf 
    text	   data	    bss	    dec	    hex	filename
  247728	    720	  43024	 291472	  47290	Radio_main.elf
 Finished building: default.size.stdout
- 
-12:28:20 **** Incremental Build of configuration Debug for project Radio_main ****
-make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/esp32i2cComunicationDriver.d" -MT"Core/Src/SileliS_code/esp32i2cComunicationDriver.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/esp32i2cComunicationDriver.o"
-In file included from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:9:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:56:10: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   56 |         #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |          ^~~~~~~
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:111:10: warning: #warning zrobic porzadny destruktor np. w destruktorze ma wy\U00000142\U00000105czy \U00000107 si\U00000119 radio [-Wcpp]
-  111 |         #warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
-      |          ^~~~~~~
-In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:245:
-../Core/Inc/SileliS_code/myList.h:27:101: warning: "/*" within comment [-Wcomment]
-   27 |     myList(ListHeader* pointerListHeader, const char* nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                                      
-../Core/Inc/SileliS_code/myList.h:34:84: warning: "/*" within comment [-Wcomment]
-   34 |     void addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                                     
-../Core/Inc/SileliS_code/myList.h:35:78: warning: "/*" within comment [-Wcomment]
-   35 |     void addAtEnd(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
-      |                                                                               
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp: In member function 'BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue*)':
-../Core/Src/SileliS_code/esp32i2cComunicationDriver.cpp:161:17: warning: unused variable 'dataSize' [-Wunused-variable]
-  161 |         uint8_t dataSize;
-      |                 ^~~~~~~~
-arm-none-eabi-g++ -o "Radio_main.elf" @"objects.list"   -mcpu=cortex-m7 -T"D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\STM32H7A3RITX_FLASH.ld" -Wl,-Map="Radio_main.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: Radio_main.elf
- 
-arm-none-eabi-size  Radio_main.elf 
-arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
-   text	   data	    bss	    dec	    hex	filename
- 247728	    720	  43024	 291472	  47290	Radio_main.elf
-Finished building: default.size.stdout
- 
-Finished building: Radio_main.list
  
