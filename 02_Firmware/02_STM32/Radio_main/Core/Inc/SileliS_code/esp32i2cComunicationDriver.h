@@ -31,7 +31,7 @@ public:
 	//BaseType_t i2cMasterSemaphoreGive(void);
 	//HAL_StatusTypeDef ping(void);
 	BaseType_t masterReceiveData(i2cFrame_transmitQueue* dataFrame);
-
+	BaseType_t masterTransmitData(i2cFrame_transmitQueue* dataFrame);
 	void while_I2C_STATE_READY(void);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);

@@ -158,7 +158,7 @@ BaseType_t ledsController::sendDataToI2cTransmitQueue(){
 
 		//tworzy ramkę komunikacujną do przesłania
 		i2cFrame_transmitQueue dataToTransmitQueue;
-		dataToTransmitQueue.pData = malloc(sizeof(i2cFrame_hmiLeds));
+		dataToTransmitQueue.pData = new i2cFrame_hmiLeds[1];//malloc(sizeof(i2cFrame_hmiLeds));
 		assert(dataToTransmitQueue.pData);
 		dataToTransmitQueue.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;
 		dataToTransmitQueue.dataSize = sizeof(i2cFrame_hmiLeds);
