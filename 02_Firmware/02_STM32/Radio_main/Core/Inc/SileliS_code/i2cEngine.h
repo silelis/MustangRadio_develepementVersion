@@ -27,6 +27,7 @@ public:
 
 	BaseType_t  passReceivedI2cDataToParsingQueue(i2cFrame_transmitQueue* I2CFrameToParsingTask);
 	BaseType_t  takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueue* I2CFrameToParsing);
+	BaseType_t  takeTransmitI2cDataToI2C_buffer(i2cFrame_transmitQueue* I2CBufferToTransmit);
 	void		deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue I2CFrameWithPointerToDelete);
 
 	i2cQueue4DynamicData* getTransmitQueue();
@@ -34,6 +35,7 @@ public:
 	//i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;			//kolejka przechowująca dane jakie mają zostać wysłane do slave i2c
 
 	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
+	HAL_StatusTypeDef I2C_Master_Transmite_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size);
 	void while_I2C_STATE_READY(void);
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);

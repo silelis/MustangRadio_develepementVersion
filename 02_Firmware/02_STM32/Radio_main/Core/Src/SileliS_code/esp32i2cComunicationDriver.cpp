@@ -145,20 +145,24 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
 }
 
 
+BaseType_t esp32_i2cComunicationDriver::masterTransmitData(i2cFrame_transmitQueue* dataFrame){
+
+
+	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Transmite_DMA(this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData, dataFrame->dataSize);
+	vTaskDelay(pdMS_TO_TICKS(7));
+	return retVal;
+}
+
+
 
 
 BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue* dataFrame){
 	BaseType_t retVal = pdFAIL;
 	uint8_t dataSize;
-	//this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->dataSize, sizeof(size_t));
-	//this->masterReceiveFromESP32_DMA((uint8_t*) &dataSize, sizeof(size_t));
 	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
-	//dataFrame->dataSize=dataSize;
-	//vTaskDelay(pdMS_TO_TICKS(25));
 	dataFrame->pData = new char[dataFrame->dataSize];
 	if (dataFrame->pData!=nullptr){
 		retVal =this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
-		//this->pi2cMaster->pI2C_MasterReceiveFromSlave_DataQueue->QueueSend(dataFrame);		//to powinno być w tasku
 	}
 	return retVal;
 }

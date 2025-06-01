@@ -22,7 +22,7 @@ static TaskHandle_t taskHandle_i2cMasterParseReceivedData = nullptr;				//uchwyt
 static TaskHandle_t taskHandle_manageTheRadioManue=nullptr;							//uchwyt do taska przetwarzajacego dane z klawiatury i przekazującego go go radioMenu
 static TaskHandle_t taskHandle_PrintfTask=nullptr;									//uchwyt do taska kontrolujący wyświetlaniekomunikatów na uart
 
-/*static*/ i2cMaster* pi2cMaster=nullptr;  												//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
+i2cMaster* pi2cMaster=nullptr;  												//wsyaźnik do obiektu służącego do komunikacji stm32 po i2c jako master
 static esp32_i2cComunicationDriver* pESP32=nullptr; 								//wsyaźnik do obiektu obsługującego komunikację z ESP32
 radioMenu* pRadioMenu=nullptr;
 myPrintfTask* pPrintf=nullptr;														//pointer do taska obsługuącego pisanie komunikatow na konsolę
@@ -38,8 +38,6 @@ static void i2cMasterParseReceivedData(void *pNothing){
 			switch(tempI2CReceiveFrame.slaveDevice7bitAddress)
 			{
 			case I2C_SLAVE_ADDRESS_ESP32:
-
-
 				pESP32->parseReceivedData(tempI2CReceiveFrame);
 				break;
 			default:
@@ -56,12 +54,35 @@ static void i2cMasterParseReceivedData(void *pNothing){
 
 //task sprawdzajacy czy w kolejce nadawania danych i2c znajdują się jakieś dane do wysłania i jeśli tak to wysyła te dane do slave
 static void  i2cMasterTransmitToSlaveDataTask(void *pNothing){
+	i2cFrame_transmitQueue transmitFrame;
 	while(1){
 		vTaskDelay(pdMS_TO_TICKS(3000));
-		pi2cMaster->i2cMasterSemaphoreTake();
-		while(HAL_I2C_GetState(&hi2c1)!= HAL_I2C_STATE_READY);
-		HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
-		pi2cMaster->i2cMasterSemaphoreGive();
+		if (pi2cMaster->takeTransmitI2cDataToI2C_buffer(&transmitFrame)==pdTRUE){
+			pi2cMaster->i2cMasterSemaphoreTake();
+			switch (transmitFrame.slaveDevice7bitAddress){
+				case pESP32->esp32i2cSlaveAdress_7bit:
+					pESP32->masterTransmitData(&transmitFrame);	//ta funkcja nie działa
+
+					//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)&transmitFrame.pData, transmitFrame.dataSize);
+					break;
+				default:
+					pPrintf->feedPrintf("I2C slave address not recognized.");
+					assert(0);
+			}
+			pi2cMaster->i2cMasterSemaphoreGive();
+
+			if (transmitFrame.pData!=nullptr){
+				pi2cMaster->passReceivedI2cDataToParsingQueue(&transmitFrame);
+			}
+			else if (transmitFrame.pData==nullptr){
+				pPrintf->feedPrintf("error with memory allocation.");
+				assert(0);
+			}
+		}
+
+
+		//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
+
 	}
 }
 

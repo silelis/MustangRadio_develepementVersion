@@ -150,6 +150,13 @@ BaseType_t  i2cMaster::takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueu
 	return this->pI2C_MasterReceiveFromSlave_DataQueue->QueueReceive(I2CFrameToParsing, portMAX_DELAY);
 }
 
+//metoda pobiera z kolejki danych do transmisji so I2C slave dane jakie mają być wysłane
+BaseType_t  i2cMaster::takeTransmitI2cDataToI2C_buffer(i2cFrame_transmitQueue* I2CBufferToTransmit){
+	return this->pI2C_MasterTransmitToSlave_DataQueue->QueueReceive(I2CBufferToTransmit, portMAX_DELAY);
+}
+
+
+
 //po zakończeniu parsowania należy zwolnić dynamicznie alokowane dane
 void		i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue I2CFrameWithPointerToDelete){
 	this->pI2C_MasterReceiveFromSlave_DataQueue->QueueDeleteDataFromPointer(I2CFrameWithPointerToDelete);
@@ -171,12 +178,20 @@ void i2cMaster::while_I2C_STATE_READY(void){
 }
 
 HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
-	HAL_StatusTypeDef retVal;
+	//HAL_StatusTypeDef retVal;
 	this->while_I2C_STATE_READY();
-	retVal = HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
+	return HAL_I2C_Master_Receive_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
 
-	return retVal;
+	//return retVal;
 }
+
+HAL_StatusTypeDef i2cMaster::I2C_Master_Transmite_DMA(uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size){
+	//HAL_StatusTypeDef retVal;
+	this->while_I2C_STATE_READY();
+	return HAL_I2C_Master_Transmit_DMA(this->p_hi2c1, DevAddress_7bit<<1, pData, Size);
+}
+
+
 
 i2cQueue4DynamicData* i2cMaster::getTransmitQueue(){
 	return pI2C_MasterTransmitToSlave_DataQueue;
