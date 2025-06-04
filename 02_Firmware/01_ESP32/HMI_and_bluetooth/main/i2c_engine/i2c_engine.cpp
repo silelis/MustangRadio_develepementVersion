@@ -185,6 +185,9 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	i2c_slave_rx_done_event_data_t rx_data;
 	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
 	this->esp32i2cBusInitialised(); //informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
+	
+	i2cFrame_commonHeader* fakeCommHeader = (i2cFrame_commonHeader*)data_rd;	//potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
+	
 	while (1)
 	{
 		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
@@ -194,15 +197,17 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 			if (rxToEsp32 == recpeptionToMe)
 			{
-				printf("%s\n", data_rd);
+				//printf("Data len is%s\n", data_rd);
+				//printf("I2C rec. len:%d\n", fakeCommHeader->dataSize);
+				printf("I2C rec\n");
 			}
 			else if (rxToEsp32 == recpeptionNotToMe)
 			{
-				printf("Not to me\n");	
+				printf("I2C n2m\n");	
 			}
 			else if (rxToEsp32 ==transmition)
 			{
-				printf("T\n");	 
+				printf("I2C tra\n");	 
 			}
 			//ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 		}

@@ -149,7 +149,7 @@ BaseType_t esp32_i2cComunicationDriver::masterTransmitData(i2cFrame_transmitQueu
 
 
 	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Transmite_DMA(this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData, dataFrame->dataSize);
-	vTaskDelay(pdMS_TO_TICKS(7));
+	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
 	return retVal;
 }
 
@@ -186,7 +186,7 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
 BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
 
 	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
-	vTaskDelay(pdMS_TO_TICKS(7));
+	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
 	return retVal;
 }
 
