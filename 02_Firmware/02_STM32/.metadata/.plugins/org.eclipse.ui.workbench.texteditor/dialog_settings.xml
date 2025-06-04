@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="pI2C_MasterInitialiseReadFromSlave_AdressessQueue"/>
+		<item key="selection" value="vTaskDelay(pdMS_TO_TICKS(7));"/>
 		<list key="findhistory">
+			<item value="vTaskDelay(pdMS_TO_TICKS(7));"/>
+			<item value="i2cMasterParseReceivedData"/>
+			<item value="case"/>
 			<item value="pI2C_MasterInitialiseReadFromSlave_AdressessQueue"/>
 			<item value="sendDataToI2cTransmitQueue"/>
 			<item value="pI2C_MasterTransmitToSlave_DataQueue"/>
@@ -20,9 +23,6 @@
 			<item value="esp32I2cIntrrruptRequest"/>
 			<item value="radioMenu"/>
 			<item value="pi2cMaster"/>
-			<item value="i2c_slave_master_queueClass.h"/>
-			<item value="setLedSourceCleaned"/>
-			<item value="i2cMasterReceiveFromSlaveDataTask"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
