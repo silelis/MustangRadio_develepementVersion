@@ -19,7 +19,8 @@
 
 
 struct hmiDisplay {
-	colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
+	//colorSet sourceLed, equaliserLed, errorLed, backlightLeds;
+	hmiLeds leds;
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
 };
 

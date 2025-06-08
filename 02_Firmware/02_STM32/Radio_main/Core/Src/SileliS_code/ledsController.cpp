@@ -28,9 +28,9 @@ void ledsController::setLedColors(ledEnum whichLed, ws2812Color primary, ws2812C
 	        case errorLed:
 	        	pSetLed=&this->pLeds->errorLed;
 	            break;
-	        case backlightLeds:
-	        	pSetLed=&this->pLeds->backlightLeds;
-	            break;
+//	        case backlightLeds:
+//	        	pSetLed=&this->pLeds->backlightLeds;
+//	            break;
 	    }
 	pSetLed->primary=primary;
 	pSetLed->secondary=secondary;
@@ -97,18 +97,18 @@ void ledsController::setLedErrorCleaned(void){
 	this->setLedErrorWithColor(COLOR_BLACK);
 }
 
-//OK
+/*
 void ledsController::setLedBacklightAllBlinking(ws2812Color primary, ws2812Color secondary){
 	this->setLedBacklightInRangeBlinking(primary, secondary, BACKLIGHT_LED_FROM, BACKLIGHT_LED_TO);
-}
+}*/
 
-//OK
+/*
 void ledsController::setLedBacklightAllWithColor(ws2812Color color){
 	this->setLedBacklightInRangeWithColor(color, BACKLIGHT_LED_FROM, BACKLIGHT_LED_TO);
-}
+}*/
 
 
-//OK
+/*
 void ledsController::setLedBacklightInRangeBlinking(ws2812Color primary, ws2812Color secondary, uint8_t from, uint8_t to){
 	this->setLedBlinking(backlightLeds, primary, secondary);
 	if (from>to){
@@ -129,23 +129,23 @@ void ledsController::setLedBacklightInRangeBlinking(ws2812Color primary, ws2812C
 	}
 	pLeds->backlightLedsFrom=from;
 	pLeds->backlightLedsTo=to;
-}
+}*/
 
-//OK
+/*
 void ledsController::setLedBacklightInRangeWithColor(ws2812Color color, uint8_t from, uint8_t to){
 	this->setLedBacklightInRangeBlinking(color, color, from, to);
-}
+}*/
 
-//OK
+/*
 void ledsController::setLedBacklighCleaned(void){
 	this->setLedBacklightAllWithColor(COLOR_BLACK);
-}
+}*/
 
 void ledsController::setLedAllCleaned(void){
 	this->setLedSourceCleaned();
 	this->setLedEqualiserCleaned();
 	this->setLedErrorCleaned();
-	this->setLedBacklighCleaned();
+//	this->setLedBacklighCleaned();
 }
 BaseType_t ledsController::sendDataToI2cTransmitQueue(){
 

@@ -63,52 +63,6 @@ static IRAM_ATTR bool i2c_slave_rx_done_callback(
 
 
 
-/*
-uint32_t rx_fifo_end_addrLast;
-enum i2cCallbackState
-{
-	recpeptionNotToMe,
-	recpeptionToMe,
-	transmition
-};
-enum i2cCallbackState rxToEsp32 = recpeptionNotToMe;
-
-//static uint8_t data_rd[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
-
-static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data)
-{	
-	BaseType_t high_task_wakeup = pdFALSE;
-	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
-	//if (receive_queue != NULL) {
-		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
-	//}
-
-	//if (I2C0.int_status.trans_complete == 0)
-	if (I2C0.status_reg.slave_rw == 0)
-	{
-		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
-		{
-			rxToEsp32 = recpeptionToMe;
-		}
-		else
-		{
-			rxToEsp32 = recpeptionNotToMe;
-		}
-		
-	}
-	else
-	{
-		rxToEsp32 = transmition;	
-	}
-	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
-	
-	return high_task_wakeup == pdTRUE;
-}	*/	
-
-
-
-
-
 
 /*---------------------------------------------------------------
  * Konstruktor klasy odpwiadającej za komunikację ESP32 po i2c z

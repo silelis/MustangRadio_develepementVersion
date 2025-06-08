@@ -13,9 +13,9 @@
 #include "SileliS_code/radioMegaStruct.h"
 #include "comunication_calculate_checksum.h"
 
-#define COLOR_RED 	{128, 0, 0}
+#define COLOR_RED 		{128, 0, 0}
 #define COLOR_GREEN 	{0, 128, 0}
-#define COLOR_BLUE 	{0, 0, 128}
+#define COLOR_BLUE 		{0, 0, 128}
 #define COLOR_BLACK 	{0, 0, 0}
 #define COLOR_WHITE 	{128, 128, 128}
 
@@ -38,11 +38,11 @@ public:
     void setLedErrorWithColor(ws2812Color color);
     void setLedErrorCleaned(void);
 
-    void setLedBacklightAllBlinking(ws2812Color primary, ws2812Color secondary);
-    void setLedBacklightAllWithColor(ws2812Color color);
-    void setLedBacklightInRangeBlinking(ws2812Color primary, ws2812Color secondary, uint8_t from, uint8_t to);
-    void setLedBacklightInRangeWithColor(ws2812Color color, uint8_t from, uint8_t to);
-    void setLedBacklighCleaned(void);
+ //   void setLedBacklightAllBlinking(ws2812Color primary, ws2812Color secondary);
+ //   void setLedBacklightAllWithColor(ws2812Color color);
+ //   void setLedBacklightInRangeBlinking(ws2812Color primary, ws2812Color secondary, uint8_t from, uint8_t to);
+ //   void setLedBacklightInRangeWithColor(ws2812Color color, uint8_t from, uint8_t to);
+ //   void setLedBacklighCleaned(void);
 
     void setLedAllCleaned(void);
 
@@ -52,8 +52,8 @@ protected:
     enum ledEnum {
         sourceLed,
         equaliserLed,
-        errorLed,
-        backlightLeds
+        errorLed//,
+        //backlightLeds
     };
     void setLedBlinking(ledEnum whichLed, ws2812Color primary, ws2812Color secondary);
     void setLedWithColor(ledEnum whichLed, ws2812Color color);
