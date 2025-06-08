@@ -14,16 +14,16 @@ struct colorSet {
 	struct ws2812Color secondary;
 };
 
-#define	BACKLIGHT_LED_FROM	0
-#define	BACKLIGHT_LED_TO	LED_DISPLAY_LEDS_QUANTITY-3
+//#define	BACKLIGHT_LED_FROM	0
+//#define	BACKLIGHT_LED_TO	LED_DISPLAY_LEDS_QUANTITY-3
 
 struct hmiLeds{		//struktura zawierająca informacje o stanie ledów wykorzystywana podczas komunikacji między master a slave
 	colorSet	sourceLed;
 	colorSet	equaliserLed;
 	colorSet	errorLed;
-	colorSet	backlightLeds;
-	uint8_t		backlightLedsFrom=BACKLIGHT_LED_FROM;
-	uint8_t		backlightLedsTo=BACKLIGHT_LED_TO;
+	//colorSet	backlightLeds;
+	//uint8_t		backlightLedsFrom=BACKLIGHT_LED_FROM;
+	//uint8_t		backlightLedsTo=BACKLIGHT_LED_TO;
 };
 
 typedef struct {		//struktura zawierająca informacje o stanie ledów wykorzystywana podczas komunikacji między master a slave
