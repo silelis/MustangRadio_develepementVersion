@@ -21,6 +21,13 @@ LEDS_BACKLIGHT::LEDS_BACKLIGHT(/*led_strip_rmt_config_t rtmConfig,*/ int gpioNum
 	/* LED strip initialization with the GPIO and pixels number*/
 
 	
+	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
+	this->handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
+	configASSERT(this->handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary()); //tworzy mutex dla podświetlenia
+	//xSemaphoreGive(this->handlerMutex_ledDisplay_Backlight);
+	this->SemaphoreGive();
+	
+	
 	
 	this->errorLedAddress = maxLed - 1;
 	this->equaliserLedAddress = maxLed - 2;
@@ -46,6 +53,16 @@ LEDS_BACKLIGHT::LEDS_BACKLIGHT(/*led_strip_rmt_config_t rtmConfig,*/ int gpioNum
 	this->ledStripRefresh();
 }
 
+BaseType_t LEDS_BACKLIGHT::SemaphoreGive(void)
+{
+	return xSemaphoreGive(this->handlerMutex_ledDisplay_Backlight);
+}
+
+BaseType_t LEDS_BACKLIGHT::SemaphoreTake(TickType_t xTicksToWait)
+{
+	return xSemaphoreTake(this->handlerMutex_ledDisplay_Backlight, xTicksToWait);	
+}
+
 /*---------------------------------------------------------------
  * Metoda czyści (wygasza) wszystkie diody.
  * Parameters:
@@ -64,16 +81,24 @@ esp_err_t LEDS_BACKLIGHT::ledStripClearAll()
 /*---------------------------------------------------------------
  * Metoda ustawia kolor na diodzie source (źródło dźwięku)
  * Parameters:
- * uint32_t red - kolor czerwony (0-255)
- * uint32_t green - kolor czerwony (0-255)
- * uint32_t blue - kolor czerwony (0-255)
+ * struct ws2812Color colorSet - uint32_t red - kolor czerwony
+ *								(0-255)
+ *								 uint32_t green - kolor czerwony
+ *								 (0-255)
+ *								 uint32_t blue - kolor czerwony
+ *								 (0-255)
  * Returns:
  * esp_err_t (esp_err_t aka retval) - wynik operacji (0x00 operacja
  *           przebiegła poprawnie)
 *---------------------------------------------------------------*/
-esp_err_t LEDS_BACKLIGHT::ledStripSet_sourceLed(uint32_t red, uint32_t green, uint32_t blue)
+
+esp_err_t LEDS_BACKLIGHT::ledStripSet_sourceLed(struct ws2812Color colorSet)
 {
-	return led_strip_set_pixel(this->ledStrip, this->sourceLedAddress, red, green, blue);
+	return led_strip_set_pixel(this->ledStrip,
+		this->sourceLedAddress,
+		(uint32_t) colorSet.red,
+		(uint32_t) colorSet.green,
+		(uint32_t) colorSet.blue);
 }
 
 
@@ -81,31 +106,45 @@ esp_err_t LEDS_BACKLIGHT::ledStripSet_sourceLed(uint32_t red, uint32_t green, ui
  * Metoda ustawia kolor na diodzie equaliser (dioda sygnalizująca
  * aktualne menu ustawień radio)
  * Parameters:
- * uint32_t red - kolor czerwony (0-255)
- * uint32_t green - kolor czerwony (0-255)
- * uint32_t blue - kolor czerwony (0-255)
+ * struct ws2812Color colorSet - uint32_t red - kolor czerwony
+ *								(0-255)
+ *								 uint32_t green - kolor czerwony
+ *								 (0-255)
+ *								 uint32_t blue - kolor czerwony
+ *								 (0-255)
  * Returns:
  * NONE
 *---------------------------------------------------------------*/
-esp_err_t LEDS_BACKLIGHT::ledStripSet_equaliserLed(uint32_t red, uint32_t green, uint32_t blue)
+esp_err_t LEDS_BACKLIGHT::ledStripSet_equaliserLed(struct ws2812Color colorSet)
 {
-	return led_strip_set_pixel(this->ledStrip, this->equaliserLedAddress, red, green, blue);
+	return led_strip_set_pixel(this->ledStrip,
+		this->equaliserLedAddress,
+		(uint32_t) colorSet.red,
+		(uint32_t) colorSet.green,
+		(uint32_t) colorSet.blue);
 }
 
 
 /*---------------------------------------------------------------
  * Metoda ustawia kolor na diodzie sygnalizacji błędu.
  * Parameters:
- * uint32_t red - kolor czerwony (0-255)
- * uint32_t green - kolor czerwony (0-255)
- * uint32_t blue - kolor czerwony (0-255)
+ * struct ws2812Color colorSet - uint32_t red - kolor czerwony
+ *								(0-255)
+ *								 uint32_t green - kolor czerwony
+ *								 (0-255)
+ *								 uint32_t blue - kolor czerwony
+ *								 (0-255)
  * Returns:
  * esp_err_t (esp_err_t aka retval) - wynik operacji (0x00 operacja
  *           przebiegła poprawnie)
 *---------------------------------------------------------------*/
-esp_err_t LEDS_BACKLIGHT::ledStripSet_errorLed(uint32_t red, uint32_t green, uint32_t blue)
+esp_err_t LEDS_BACKLIGHT::ledStripSet_errorLed(struct ws2812Color colorSet)
 {
-	return led_strip_set_pixel(this->ledStrip, this->errorLedAddress, red, green, blue);
+	return led_strip_set_pixel(this->ledStrip,
+		this->errorLedAddress,
+		(uint32_t) colorSet.red,
+		(uint32_t) colorSet.green,
+		(uint32_t) colorSet.blue);
 }
 
 
@@ -113,19 +152,26 @@ esp_err_t LEDS_BACKLIGHT::ledStripSet_errorLed(uint32_t red, uint32_t green, uin
  * Metoda ustawia kolor podświetlenia (wszystkie diody
  * podświetlenia na raz).
  * Parameters:
- * uint32_t red - kolor czerwony (0-255)
- * uint32_t green - kolor czerwony (0-255)
- * uint32_t blue - kolor czerwony (0-255)
+ * struct ws2812Color colorSet - uint32_t red - kolor czerwony
+ *								(0-255)
+ *								 uint32_t green - kolor czerwony
+ *								 (0-255)
+ *								 uint32_t blue - kolor czerwony
+ *								 (0-255)
  * Returns:
  * esp_err_t (esp_err_t aka retval) - wynik operacji (0x00 operacja
  *           przebiegła poprawnie)
 *---------------------------------------------------------------*/
-esp_err_t LEDS_BACKLIGHT::ledStripSet_backlightLeds(uint32_t red, uint32_t green, uint32_t blue)
+esp_err_t LEDS_BACKLIGHT::ledStripSet_backlightLeds(struct ws2812Color colorSet)
 {
 	esp_err_t retVal = ESP_FAIL;
 	for (int8_t i = 0; i < this->sourceLedAddress; i++)
 	{
-		retVal = led_strip_set_pixel(this->ledStrip, i, red, green, blue);
+		retVal = led_strip_set_pixel(this->ledStrip,
+			i,
+			(uint32_t) colorSet.red,
+			(uint32_t) colorSet.green,
+			(uint32_t) colorSet.blue);
 		if (retVal != ESP_OK)
 		{
 			break;
@@ -162,4 +208,18 @@ LEDS_BACKLIGHT::~LEDS_BACKLIGHT()
 	this->ledStripRefresh();
 	ESP_ERROR_CHECK(led_strip_clear(this->ledStrip));
 	ESP_ERROR_CHECK(led_strip_del(this->ledStrip));
+}
+
+/*---------------------------------------------------------------
+* Metoda której zadaniem jest porównanie
+* wartości kolorów primary i secondary diody led 
+* Parameters:
+* const struct colorSet *ledColors - wskaźnik do diody led
+* Returns:
+* bool - TRUE jeżeli kolory sa sobie równe, FALSE jeżeli kolory
+*				nie są sobie równe.	  
+*---------------------------------------------------------------*/
+bool LEDS_BACKLIGHT::areEqual(const struct colorSet *ledColors) {
+	//return (bool)(memcmp(&ledColors->, color2, sizeof(struct ws2812Color)) == 0) ;
+	return memcmp(&ledColors->primary, &ledColors->secondary, sizeof(struct ws2812Color)) == 0;
 }

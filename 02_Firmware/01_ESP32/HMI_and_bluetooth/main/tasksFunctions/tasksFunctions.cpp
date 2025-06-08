@@ -4,9 +4,8 @@
 
 
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
-static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
+//static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
-static hmiDisplay displayLedsColors;	//struktura zawierająca informacje na temat wszystkich stanów (kolorów) diód w wyświetlaczu
 static NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
 static LEDS_BACKLIGHT *pLedDisplay;		//obiekt sterujący pracą ledów (diody i backlioght)
 static 	StepperOptoPowerOFF * pMotor;	//obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
@@ -26,15 +25,7 @@ static i2cEngin_slave *p_i2cSlave;		//obiekt sterujący komunikacją z stm32 po 
  *---------------------------------------------------------------*/ 
 void taskFunctionsStaticHandlersInit(void)
 {
-	displayLedsColors.leds.errorLed.primary			= { 128, 0, 0 };
-	displayLedsColors.leds.errorLed.secondary		= { 0, 0, 0 };	
-	
-	displayLedsColors.leds.sourceLed.primary		= { 0, 0, 0 };	
-	displayLedsColors.leds.sourceLed.secondary		= { 0, 0, 0 };	
-	
-	displayLedsColors.leds.equaliserLed.primary		= { 0, 0, 0 };	
-	displayLedsColors.leds.equaliserLed.secondary	= { 0, 0, 0 };
-	
+
 	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
 	printf("I2C slave bus init\n");
 	p_i2cSlave = nullptr;
@@ -50,10 +41,22 @@ void taskFunctionsStaticHandlersInit(void)
 	//configASSERT(p_i2cSlave->addQueueToSet(handlerQueue_i2cSlaveSetBuffer_keyboard));
 
 	
+	
+	
+	
+	
+	
+	
+/*
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
 	configASSERT(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary()); //tworzy mutex dla podświetlenia
 	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);	
+*/
+	
+	
+	
+	
 	
 	//tworzy obiekt obsługujący NVS flash radio
 	printf("NVS storage init\n");
@@ -296,33 +299,14 @@ static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboa
 }
 
 
-
-
-
-/*---------------------------------------------------------------
-* Funkcja statyczna (lokalna) której zadaniem jest porównanie
-* wartości dwóch kolorów diód led (== nie odnosi sie do tego typu
-* danych).
-* Parameters:
-* const struct ws2812Color *color1 - pierwszy kolor do porównania
-* const struct ws2812Color *color2 - drugi kolor do porównania
-* Returns:
-* bool - TRUE jeżeli kolory sa sobie równe, FALSE jeżeli kolory
-*				nie są sobie równe.	  
-*---------------------------------------------------------------*/ 
-static 	bool areEqual(const struct ws2812Color *color1, const struct ws2812Color *color2) {
-	return (bool)(memcmp(color1, color2, sizeof(struct ws2812Color)) == 0) ;
-}
-
 void humanMahineBacklightLeds(void *lnothing)
 {
 	colorSet baclightLedsLocal;
 	baclightLedsLocal.primary = { 120, 120, 120 };
 		
-	xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-	pLedDisplay->ledStripSet_backlightLeds((uint32_t) baclightLedsLocal.primary.red,
-		(uint32_t) baclightLedsLocal.primary.green,
-		(uint32_t) baclightLedsLocal.primary.blue);
+	//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
+	pLedDisplay->SemaphoreTake(portMAX_DELAY);
+	pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.primary);
 	pLedDisplay->ledStripRefresh();
 	
 	if (baclightLedsLocal.primary.red <= 127)
@@ -350,55 +334,65 @@ void humanMahineBacklightLeds(void *lnothing)
 	{
 		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue - 35;
 	}
-	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);	
+	//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+	pLedDisplay->SemaphoreGive();
 	
 	
 		
 	for (;;)
 	{
 		vTaskSuspend(NULL);
-		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		pLedDisplay->ledStripSet_backlightLeds((uint32_t) baclightLedsLocal.secondary.red,
-			(uint32_t) baclightLedsLocal.secondary.green,
-			(uint32_t) baclightLedsLocal.secondary.blue);
+		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
+		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+		pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.secondary);
 		pLedDisplay->ledStripRefresh();
-		xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+		//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+		pLedDisplay->SemaphoreGive();
 		vTaskDelay(pdMS_TO_TICKS(150));
 		
-		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		pLedDisplay->ledStripSet_backlightLeds((uint32_t) baclightLedsLocal.primary.red,
-			(uint32_t) baclightLedsLocal.primary.green,
-			(uint32_t) baclightLedsLocal.primary.blue);
+		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
+		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+		pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.primary);
 		pLedDisplay->ledStripRefresh();
-		xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+		//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+		pLedDisplay->SemaphoreGive();
 	}
 }
 
-	   void humanMahineDisplayLeds(void *nothiong)
+void humanMahineDisplayLeds(void *nothiong)
 {
+	hmiLeds ledsLocal;
+	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
+	
+	ledsLocal.errorLed.primary = { 128, 0, 0 };
+	ledsLocal.errorLed.secondary = { 0, 0, 0 };	
+	
+	ledsLocal.sourceLed.primary = { 0, 0, 0 };	
+	ledsLocal.sourceLed.secondary = { 0, 0, 0 };	
+	
+	ledsLocal.equaliserLed.primary = { 0, 0, 0 };	
+	ledsLocal.equaliserLed.secondary = { 0, 0, 0 };
+	
+	
 	uint8_t ledsPrimarySecondary = 0;
 	for (;;)
 	{
-		xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		
-		if (areEqual(&displayLedsColors.leds.equaliserLed.primary, &displayLedsColors.leds.equaliserLed.secondary)&&
-					areEqual(&displayLedsColors.leds.errorLed.primary, &displayLedsColors.leds.errorLed.secondary)&&
-					areEqual(&displayLedsColors.leds.sourceLed.primary, &displayLedsColors.leds.sourceLed.secondary))		//if all leds primary == secondary
+		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
+		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+			
+			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
+				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
+				pLedDisplay->areEqual(&ledsLocal.sourceLed))		//if all leds primary == secondary
 		{
 											
-			pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.leds.equaliserLed.primary.red,
-				(uint32_t) displayLedsColors.leds.equaliserLed.primary.green,
-				(uint32_t) displayLedsColors.leds.equaliserLed.primary.blue);
-			pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.leds.errorLed.primary.red,
-				(uint32_t) displayLedsColors.leds.errorLed.primary.green,
-				(uint32_t) displayLedsColors.leds.errorLed.primary.blue);
-			pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.leds.sourceLed.primary.red,
-				(uint32_t) displayLedsColors.leds.sourceLed.primary.green,
-				(uint32_t) displayLedsColors.leds.sourceLed.primary.blue);
+			pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
+			pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
+			pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);
 			pLedDisplay->ledStripRefresh();
 
 			
-			xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+			pLedDisplay->SemaphoreGive();
 			vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
 		}
 		else		
@@ -407,34 +401,23 @@ void humanMahineBacklightLeds(void *lnothing)
 			switch (ledsPrimarySecondary)
 			{
 			case 0:
-				pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.leds.equaliserLed.primary.red,
-					(uint32_t) displayLedsColors.leds.equaliserLed.primary.green,
-					(uint32_t) displayLedsColors.leds.equaliserLed.primary.blue);
-				pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.leds.errorLed.primary.red,
-					(uint32_t) displayLedsColors.leds.errorLed.primary.green,
-					(uint32_t) displayLedsColors.leds.errorLed.primary.blue);
-				pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.leds.sourceLed.primary.red,
-					(uint32_t) displayLedsColors.leds.sourceLed.primary.green,
-					(uint32_t) displayLedsColors.leds.sourceLed.primary.blue);
+				pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
+				pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
+				pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);
 				ledsPrimarySecondary = 1; //next time leds flip to secondary color
 				break;
 			case 1:
-				pLedDisplay->ledStripSet_equaliserLed((uint32_t) displayLedsColors.leds.equaliserLed.secondary.red,
-					(uint32_t) displayLedsColors.leds.equaliserLed.secondary.green,
-					(uint32_t) displayLedsColors.leds.equaliserLed.secondary.blue);
-				pLedDisplay->ledStripSet_errorLed((uint32_t) displayLedsColors.leds.errorLed.secondary.red,
-					(uint32_t) displayLedsColors.leds.errorLed.secondary.green,
-					(uint32_t) displayLedsColors.leds.errorLed.secondary.blue);
-				pLedDisplay->ledStripSet_sourceLed((uint32_t) displayLedsColors.leds.sourceLed.secondary.red,
-					(uint32_t) displayLedsColors.leds.sourceLed.secondary.green,
-					(uint32_t) displayLedsColors.leds.sourceLed.secondary.blue);
+				pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.secondary);
+				pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.secondary);
+				pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.secondary);
 				ledsPrimarySecondary = 0; //next time leds flip to primary color
 				break;
 				
 			}
 			
 			pLedDisplay->ledStripRefresh();
-			xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+			pLedDisplay->SemaphoreGive();
 			vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));													//wait 1s till change color
 		}
 	}
