@@ -28,6 +28,7 @@ public:
 	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
 	void i2cSlaveReceive(void);
 	
+	
 protected:
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
@@ -35,6 +36,7 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;
+	i2cQueue4DynamicData* i2cSlaveReceiveDataToDataParserQueue;
 };
 	
 
