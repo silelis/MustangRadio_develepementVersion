@@ -107,6 +107,8 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	printf("%s bus interrupt request GPIO has been initialised on GPIO_num_%d.\n", this->TAG , this->i2cSlave_intRequestPin);
 	
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
+	
+	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(15));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	
@@ -131,17 +133,15 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 
 void i2cEngin_slave::i2cSlaveReceive(void)
 {
-	//uint8_t *data_rd = (uint8_t *) malloc(ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 	uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 	
-	memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
-	uint32_t size_rd = 0;
+	//uint32_t size_rd = 0;
 	i2c_slave_rx_done_event_data_t rx_data;
 	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
 	this->esp32i2cBusInitialised(); //informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 	
 	i2cFrame_commonHeader* fakeCommHeader = (i2cFrame_commonHeader*)data_rd;	//potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
-	
+	i2cFrame_transmitQueue tempFrameToParserQueue;
 	while (1)
 	{
 		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
@@ -151,19 +151,23 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 			if (rxToEsp32 == recpeptionToMe)
 			{
+				void* tempData = static_cast<void*>(new char[fakeCommHeader->dataSize]);
+				if (tempData != nullptr)
+				{
+					tempFrameToParserQueue.dataSize = fakeCommHeader->dataSize;
+					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
+					tempFrameToParserQueue.pData = tempData;
+					
+					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); //funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
+				}
+				else
+				{
+					assert(0);
+				}
 				//printf("Data len is%s\n", data_rd);
 				//printf("I2C rec. len:%d\n", fakeCommHeader->dataSize);
 				printf("I2C rec\n");
-			}
-			else if (rxToEsp32 == recpeptionNotToMe)
-			{
-				printf("I2C n2m\n");	
-			}
-			else if (rxToEsp32 ==transmition)
-			{
-				printf("I2C tra\n");	 
-			}
-			//ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
+			}	
 		}
 		
 	
