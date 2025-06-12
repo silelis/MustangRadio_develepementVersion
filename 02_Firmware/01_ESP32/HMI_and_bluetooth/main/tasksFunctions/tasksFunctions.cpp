@@ -471,7 +471,7 @@ void i2cReceivedDataParser(void *nothing)
 			//sprawdzanie czy CRC ma poprawną wartość
 			fakeCommHeader = (i2cFrame_commonHeader*)parsingData.pData;
 			
-			crcSumCalculated = calculate_checksum(fakeCommHeader, sizeof(i2cFrame_hmiLeds)/*fakeCommHeader->dataSize*/);
+			crcSumCalculated = calculate_checksum(fakeCommHeader, fakeCommHeader->dataSize);
 			if (crcSumCalculated == fakeCommHeader->crcSum)
 			{
 				//CRC sum correct - data correct
