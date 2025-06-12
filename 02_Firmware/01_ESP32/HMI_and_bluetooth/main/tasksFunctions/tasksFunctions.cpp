@@ -84,6 +84,8 @@ void taskFunctionsStaticHandlersInit(void)
 	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
 	printf("Stepper motor and powerOFF gpio init\n");
 	assert(pMotor = new StepperOptoPowerOFF(p_MCP23008));
+	
+	
 }
 
 
@@ -447,7 +449,39 @@ void stepperMotor(void *TaskParameters)
 	}
 }
 
+//Funkcja tasku zajmującego się odbieraniem otrzymanych przez i2c slave danych i przesyłaniem do kolejki danych.
+// Dane trafiają do funkcji parsera i2c.
 void i2cSlaveReceive(void *nothing)
 {	
 	p_i2cSlave->i2cSlaveReceive();
+}
+
+//Funkcja zajmuje się parsowaniem otrzymanych z i2cSlaveReceive danych
+void i2cReceivedDataParser(void *nothing)
+{	
+	i2cFrame_transmitQueue parsingData;
+	//parsingData.pData=nullptr_t;
+	i2cFrame_commonHeader* fakeCommHeader; 
+	uint8_t	crcSumCalculated;
+	
+	for (;;)
+	{
+		if(p_i2cSlave->i2cSlaveReceiveDataToDataParserQueue->QueueReceive(&parsingData, portMAX_DELAY)==pdTRUE)
+		{
+			//sprawdzanie czy CRC ma poprawną wartość
+			fakeCommHeader = (i2cFrame_commonHeader*)parsingData.pData;
+			crcSumCalculated = calculate_checksum(fakeCommHeader, fakeCommHeader->dataSize);
+			if (crcSumCalculated == fakeCommHeader->crcSum)
+			{
+				//CRC sum correct - data correct
+			}
+			else
+			{
+				//CRC sum NOT correct - data corrupted
+				p_i2cSlave->i2cSlaveReceiveDataToDataParserQueue->QueueDeleteDataFromPointer(parsingData);	
+			}
+			
+			
+		}
+	}
 }

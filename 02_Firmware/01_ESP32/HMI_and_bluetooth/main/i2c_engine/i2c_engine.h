@@ -15,6 +15,7 @@
 
 class i2cEngin_slave
 {
+	friend void i2cReceivedDataParser(void *nothing);
 public:
 	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin);
 	~i2cEngin_slave();
@@ -41,6 +42,7 @@ private:
 	
 
 class i2cEngin_master {
+
 public:
 	i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num);
 	~i2cEngin_master();
