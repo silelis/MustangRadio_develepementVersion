@@ -56,7 +56,7 @@ TaskHandle_t handlerTask_backlightDisplay;
 TaskHandle_t handlerTask_stepperMotor;	
 //TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
 TaskHandle_t handlerTask_i2cSlaveReceive; //uchwyt do taska obsługającego odbieranie danych z i2c slave to i2c master
-
+TaskHandle_t handlerTask_i2cReceivedDataParser; //uchwyt do taska obsługającego parsowanie otrzymanych z i2c danych
 //#include "driver/i2c_slave.h"
 
 extern "C" void app_main(void)
@@ -92,8 +92,6 @@ extern "C" void app_main(void)
 	printf("%s Backlight leds task starting\n", main_TAG);
 	configASSERT(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay)); //tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
-	
-	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
 	printf("%s Buttons and encoders (aka keyboard) init\n", main_TAG);
 	handlerQueue_MainKeyboard = NULL;
@@ -108,10 +106,11 @@ extern "C" void app_main(void)
 
 	configASSERT(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard/*&taskParameters_keyboardQueueParametersParserTask*/, tskIDLE_PRIORITY+1, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
 	
-
 	//assert(xTaskCreate(stepperMotor, "Stepper morot", 2048, NULL, tskIDLE_PRIORITY+2, &handlerTask_stepperMotor));
 	configASSERT(xTaskCreatePinnedToCore(stepperMotor, "Stepper morot", 3048, NULL, tskIDLE_PRIORITY+1, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
+	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 1, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
+	
 	btstack_init();
 	btstack_main(0, NULL);
 	btstack_run_loop_execute();

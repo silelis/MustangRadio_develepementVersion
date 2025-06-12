@@ -108,7 +108,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	
-	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(15));
+	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(20));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	
@@ -131,6 +131,16 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 }
 
 
+
+/*---------------------------------------------------------------
+ * Metoda działa wewnątrz taska "i2cSlaveReceive" i jej zadanie
+ * jest przesyłanie (przez kolejkę) otrzymanych z i2c master
+ * danych do taska zajmującego się parsowaniem otrzymanych danych.
+ * Parameters:
+ * NONE
+ * Returns:
+ * NONE
+*---------------------------------------------------------------*/
 void i2cEngin_slave::i2cSlaveReceive(void)
 {
 	uint8_t *data_rd =  new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
@@ -158,6 +168,17 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
 					
+					
+/*				
+#include "./../../../03_Common/comunication_calculate_checksum.h"
+					
+					
+					uint8_t	crcSumCalculated;
+					crcSumCalculated = calculate_checksum(data_rd, fakeCommHeader->dataSize);
+					*/
+					
+					
+				
 					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); //funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
 				}
 				else
@@ -166,7 +187,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 				}
 				//printf("Data len is%s\n", data_rd);
 				//printf("I2C rec. len:%d\n", fakeCommHeader->dataSize);
-				printf("I2C rec\n");
+				//printf("I2C rec\n");
 			}	
 		}
 		
