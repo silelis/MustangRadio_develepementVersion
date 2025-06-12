@@ -217,7 +217,7 @@ void keyboardQueueParametersParser(void *parameters)
 		
 	//keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
-	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(keyboardUnion/*keyboardDataToParse*/);
+	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(i2cFrame_keyboardFrame /*keyboardUnion*/ /*keyboardDataToParse*/);
 	for (;;)
 	{
 		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
@@ -470,7 +470,8 @@ void i2cReceivedDataParser(void *nothing)
 		{
 			//sprawdzanie czy CRC ma poprawną wartość
 			fakeCommHeader = (i2cFrame_commonHeader*)parsingData.pData;
-			crcSumCalculated = calculate_checksum(fakeCommHeader, fakeCommHeader->dataSize);
+			
+			crcSumCalculated = calculate_checksum(fakeCommHeader, sizeof(i2cFrame_hmiLeds)/*fakeCommHeader->dataSize*/);
 			if (crcSumCalculated == fakeCommHeader->crcSum)
 			{
 				//CRC sum correct - data correct
