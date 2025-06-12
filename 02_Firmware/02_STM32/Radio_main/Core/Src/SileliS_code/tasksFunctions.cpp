@@ -168,11 +168,11 @@ extern radioMegaStruct radioStruct;
 
 
 
-/*
+
 ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
 hmiLeds.setLedSourceWithColor(COLOR_RED);
 hmiLeds.sendDataToI2cTransmitQueue();
-*/
+
 
 
 

@@ -88,7 +88,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	i2c_config_slave.addr_bit_len =slave_addr_bit_len;
 	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
 	i2c_config_slave.i2c_port = i2c_port;
-	i2c_config_slave.send_buf_depth = 3*ESP32_SLAVE_RECEIVE_BUFFER_LEN; //1024;
+	i2c_config_slave.send_buf_depth = 2*ESP32_SLAVE_RECEIVE_BUFFER_LEN; //1024;
 	
 	i2c_config_slave.scl_io_num = scl_io_num;
 	i2c_config_slave.sda_io_num = sda_io_num;
@@ -147,7 +147,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	
 	//uint32_t size_rd = 0;
 	i2c_slave_rx_done_event_data_t rx_data;
-	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, 6));
+	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 	this->esp32i2cBusInitialised(); //informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 	
 	i2cFrame_commonHeader* fakeCommHeader = (i2cFrame_commonHeader*)data_rd;	//potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
@@ -164,6 +164,11 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 				void* tempData = static_cast<void*>(new char[fakeCommHeader->dataSize]);
 				if (tempData != nullptr)
 				{
+					
+					
+					
+					i2cFrame_hmiLeds tempToDelete;
+					
 					tempFrameToParserQueue.dataSize = fakeCommHeader->dataSize;
 					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
