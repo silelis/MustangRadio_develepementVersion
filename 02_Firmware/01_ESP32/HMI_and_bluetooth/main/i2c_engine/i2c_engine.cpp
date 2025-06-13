@@ -127,10 +127,25 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->s_receive_queue));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
+	
+	this->i2cMasterCrcSumCounterErrorReset();
 
 }
 
 
+BaseType_t i2cEngin_slave::i2cMasterCrcSumCounterErrorIncrement(void)
+{
+	this->i2cMasterCrcSumCounterError++;
+	if (this->i2cMasterCrcSumCounterError > 7)
+	{
+		return pdFALSE;
+	}
+	return pdTRUE;
+}
+void i2cEngin_slave::i2cMasterCrcSumCounterErrorReset(void)
+{
+	this->i2cMasterCrcSumCounterError = 0;
+}
 
 /*---------------------------------------------------------------
  * Metoda działa wewnątrz taska "i2cSlaveReceive" i jej zadanie
@@ -164,26 +179,13 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 				void* tempData = static_cast<void*>(new char[fakeCommHeader->dataSize]);
 				if (tempData != nullptr)
 				{
-					
-					
-					
-					i2cFrame_hmiLeds tempToDelete;
+								
+					//i2cFrame_hmiLeds tempToDelete;
 					
 					tempFrameToParserQueue.dataSize = fakeCommHeader->dataSize;
 					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
-					
-					
-/*				
-#include "./../../../03_Common/comunication_calculate_checksum.h"
-					
-					
-					uint8_t	crcSumCalculated;
-					crcSumCalculated = calculate_checksum(data_rd, fakeCommHeader->dataSize);
-					*/
-					
-					
-				
+			
 					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); //funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
 				}
 				else

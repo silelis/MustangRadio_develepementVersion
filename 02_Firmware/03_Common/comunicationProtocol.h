@@ -8,11 +8,9 @@
 
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			40+sizeof(i2cFrame_commonHeader)
+#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			52		//wygląda na to, że 52 to max
 
 #define I2C_COMMAND_GROUP_KEYBOARD			0x01
-
-
 //I2C_COMMAND_GROUP_KEYBOARD			0x01
 #define HMI_INPUT_BUTTON					'b'		//oznacza, że przycisk został zwolniony (po osiagnięciu czasu long press lub przed tym czasem)
 #define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, że przycisk jest nadal wciśnięty po osiagnięciu czasu long press 
