@@ -28,6 +28,8 @@ public:
 	void esp32i2cBusInitialised(void);
 	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
 	void i2cSlaveReceive(void);
+	BaseType_t i2cMasterCrcSumCounterErrorIncrement(void);
+	void i2cMasterCrcSumCounterErrorReset(void);
 	
 	
 protected:
@@ -38,6 +40,9 @@ private:
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;
 	i2cQueue4DynamicData* i2cSlaveReceiveDataToDataParserQueue;
+	
+	uint16_t i2cMasterCrcSumCounterError;
+	//const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 25;
 };
 	
 

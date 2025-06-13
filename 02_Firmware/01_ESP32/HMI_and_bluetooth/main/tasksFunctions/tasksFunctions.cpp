@@ -475,10 +475,29 @@ void i2cReceivedDataParser(void *nothing)
 			if (crcSumCalculated == fakeCommHeader->crcSum)
 			{
 				//CRC sum correct - data correct
+				p_i2cSlave->i2cMasterCrcSumCounterErrorReset();
+				switch (fakeCommHeader->commandGroup)
+				{
+					//case I2C_COMMAND_GROUP_KEYBOARD:	0x01
+					//	break;
+					case I2C_COMMAND_GROUP_NVS: //0x02
+						assert(0);
+						break;
+					case I2C_COMMAND_GROUP_LEDS:	//0x03
+						assert(0);
+						break;
+					case I2C_COMMAND_GROUP_STEPPER:		//0x04
+						assert(0);
+						break;
+					default:
+						//nie wiadomo do jakiej "commandGroup" należą dane więc jest jakiś bład trzeba je usunąć, aby nie było przepełnienia pamięci
+						p_i2cSlave->i2cSlaveReceiveDataToDataParserQueue->QueueDeleteDataFromPointer(parsingData);	
+						assert(0);
+				}
 			}
 			else
 			{
-				//CRC sum NOT correct - data corrupted
+				assert(p_i2cSlave->i2cMasterCrcSumCounterErrorIncrement());	//tutaj powinien być reset radio jak będzie za dużo błędow
 				p_i2cSlave->i2cSlaveReceiveDataToDataParserQueue->QueueDeleteDataFromPointer(parsingData);	
 			}
 			
