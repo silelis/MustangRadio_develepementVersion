@@ -305,6 +305,7 @@ void humanMahineBacklightLeds(void *lnothing)
 {
 	colorSet baclightLedsLocal;
 	baclightLedsLocal.primary = { 120, 120, 120 };
+	const uint8_t COLOR_DIFFERENCE = 50;
 		
 	//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
 	pLedDisplay->SemaphoreTake(portMAX_DELAY);
@@ -313,28 +314,28 @@ void humanMahineBacklightLeds(void *lnothing)
 	
 	if (baclightLedsLocal.primary.red <= 127)
 	{
-		baclightLedsLocal.secondary.red = baclightLedsLocal.primary.red + 25;
+		baclightLedsLocal.secondary.red = baclightLedsLocal.primary.red + COLOR_DIFFERENCE;
 	}
 	else
 	{
-		baclightLedsLocal.secondary.red = baclightLedsLocal.primary.red - 25;
+		baclightLedsLocal.secondary.red = baclightLedsLocal.primary.red - COLOR_DIFFERENCE;
 	}
 	if (baclightLedsLocal.primary.green <= 127)
 	{
-		baclightLedsLocal.secondary.green = baclightLedsLocal.primary.green + 25;
+		baclightLedsLocal.secondary.green = baclightLedsLocal.primary.green + COLOR_DIFFERENCE;
 	}
 	else
 	{
-		baclightLedsLocal.secondary.green = baclightLedsLocal.primary.green - 25;
+		baclightLedsLocal.secondary.green = baclightLedsLocal.primary.green - COLOR_DIFFERENCE;
 	}
 	
 	if (baclightLedsLocal.primary.blue <= 127)
 	{
-		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue + 25;
+		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue + COLOR_DIFFERENCE;
 	}
 	else
 	{
-		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue - 35;
+		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue - COLOR_DIFFERENCE;
 	}
 	//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 	pLedDisplay->SemaphoreGive();
@@ -367,7 +368,7 @@ void humanMahineDisplayLeds(void *nothiong)
 	const uint16_t blinkTime = LED_DISPLAY_BLINK_TIME;
 	
 	ledsLocal.errorLed.primary = { 128, 0, 0 };
-	ledsLocal.errorLed.secondary = { 0, 0, 0 };	
+	ledsLocal.errorLed.secondary = {0, 0, 0 };	
 	
 	ledsLocal.sourceLed.primary = { 0, 0, 0 };	
 	ledsLocal.sourceLed.secondary = { 0, 0, 0 };	
@@ -393,23 +394,23 @@ void humanMahineDisplayLeds(void *nothiong)
 		
 		pLedDisplay->SemaphoreTake(portMAX_DELAY);
 			
-//			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
-//				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
-//				pLedDisplay->areEqual(&ledsLocal.sourceLed))		//if all leds primary == secondary
-//		{
-//			pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);								
-//			pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
-//			pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
+			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
+				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
+				pLedDisplay->areEqual(&ledsLocal.sourceLed))		//if all leds primary == secondary
+		{
+			pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);								
+			pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
+			pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
 
-//			pLedDisplay->ledStripRefresh();
+			pLedDisplay->ledStripRefresh();
 
 			
-//			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-//			pLedDisplay->SemaphoreGive();
-//			//vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
-//		}
-//		else		
-//		{																										//if at least one led primary != secondary
+			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+			pLedDisplay->SemaphoreGive();
+			vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
+		}
+		else		
+		{																										//if at least one led primary != secondary
 			
 			switch (ledsPrimarySecondary)
 			{
@@ -435,7 +436,7 @@ void humanMahineDisplayLeds(void *nothiong)
 			
 			
 			//vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));													//wait 1s till change color
-//		}
+		}
 	}
 }
 
@@ -501,6 +502,7 @@ void i2cReceivedDataParser(void *nothing)
 					case I2C_COMMAND_GROUP_LEDS:	//0x03
 						pLedDisplay->QueueSendDataToLedTask(&parsingData);
 						pLedDisplay->blinkTimeMultiplierSetMaxValue();	//jeżeli jest mryganie to natychniast zostanie przerwana petla opóźniajaca
+						vTaskResume(handlerTask_ledDisplay);
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
 						assert(0);
