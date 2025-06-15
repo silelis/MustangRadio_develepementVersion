@@ -9,6 +9,8 @@ idf_component_register(
                     	StepperOptoPowerOFF/StepperOptoPowerOFF.cpp
                     	a2dpSikn/a2dp_sink_demo.cpp
                     	i2c_engine/i2c_engine.cpp
-                    	../../../03_Common/i2c_slave_master_queueClass.cpp
-                    	../../../03_Common/comunication_calculate_checksum.cpp
+                    	common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.cpp
+                    	common/comunicationProtocol/comunicationProtocol.cpp
+                    	common/comunicationStructures/comunicationStructures.cpp
+                    	common/comunication_calculate_checksum/comunication_calculate_checksum.cpp
                     INCLUDE_DIRS ".")

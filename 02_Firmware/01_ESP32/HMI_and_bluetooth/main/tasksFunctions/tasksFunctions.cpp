@@ -377,28 +377,39 @@ void humanMahineDisplayLeds(void *nothiong)
 	
 	
 	uint8_t ledsPrimarySecondary = 0;
+	i2cFrame_transmitQueue tempBuffer;
+	i2cFrame_hmiLeds* tempHmiLedsFrame;
 	for (;;)
 	{
 		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
+		if (pLedDisplay->QueueReceiveFormI2cParsingTask(&tempBuffer, pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME)) == pdTRUE)
+		{
+			tempHmiLedsFrame = (i2cFrame_hmiLeds*) tempBuffer.pData; 
+			memcpy(&ledsLocal, &tempHmiLedsFrame->ledsData, sizeof(hmiLeds));
+			pLedDisplay->QueueDeleteDataFormI2cParsingTask(tempBuffer);
+		}
+		
+		
+		
 		pLedDisplay->SemaphoreTake(portMAX_DELAY);
 			
-			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
-				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
-				pLedDisplay->areEqual(&ledsLocal.sourceLed))		//if all leds primary == secondary
-		{
-											
-			pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
-			pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
-			pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);
-			pLedDisplay->ledStripRefresh();
+//			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
+//				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
+//				pLedDisplay->areEqual(&ledsLocal.sourceLed))		//if all leds primary == secondary
+//		{
+//			pLedDisplay->ledStripSet_sourceLed(ledsLocal.sourceLed.primary);								
+//			pLedDisplay->ledStripSet_equaliserLed(ledsLocal.equaliserLed.primary);
+//			pLedDisplay->ledStripSet_errorLed(ledsLocal.errorLed.primary);
+
+//			pLedDisplay->ledStripRefresh();
 
 			
-			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-			pLedDisplay->SemaphoreGive();
-			vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
-		}
-		else		
-		{																										//if at least one led primary != secondary
+//			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
+//			pLedDisplay->SemaphoreGive();
+//			//vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
+//		}
+//		else		
+//		{																										//if at least one led primary != secondary
 			
 			switch (ledsPrimarySecondary)
 			{
@@ -418,10 +429,13 @@ void humanMahineDisplayLeds(void *nothiong)
 			}
 			
 			pLedDisplay->ledStripRefresh();
-			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 			pLedDisplay->SemaphoreGive();
-			vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));													//wait 1s till change color
-		}
+			pLedDisplay->blinkTimeDelayLoop();
+			
+			
+			
+			//vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));													//wait 1s till change color
+//		}
 	}
 }
 
@@ -459,6 +473,7 @@ void i2cSlaveReceive(void *nothing)
 //Funkcja zajmuje się parsowaniem otrzymanych z i2cSlaveReceive danych
 void i2cReceivedDataParser(void *nothing)
 {	
+	extern TaskHandle_t handlerTask_ledDisplay;
 	i2cFrame_transmitQueue parsingData;
 	//parsingData.pData=nullptr_t;
 	i2cFrame_commonHeader* fakeCommHeader; 
@@ -484,7 +499,8 @@ void i2cReceivedDataParser(void *nothing)
 						assert(0);
 						break;
 					case I2C_COMMAND_GROUP_LEDS:	//0x03
-						assert(0);
+						pLedDisplay->QueueSendDataToLedTask(&parsingData);
+						pLedDisplay->blinkTimeMultiplierSetMaxValue();	//jeżeli jest mryganie to natychniast zostanie przerwana petla opóźniajaca
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
 						assert(0);
