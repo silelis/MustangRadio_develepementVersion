@@ -16,6 +16,7 @@
 LEDS_BACKLIGHT::LEDS_BACKLIGHT(/*led_strip_rmt_config_t rtmConfig,*/ int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel)
 {
 	
+	configASSERT(this->ParserDataToLedsDataQueue = new i2cQueue4DynamicData(4));
 	//ESP_LOGI(TAG, "Leds and background light configuration");
 	printf("%s: Leds and background light configuration\n", TAG);
 	/* LED strip initialization with the GPIO and pixels number*/
@@ -222,4 +223,44 @@ LEDS_BACKLIGHT::~LEDS_BACKLIGHT()
 bool LEDS_BACKLIGHT::areEqual(const struct colorSet *ledColors) {
 	//return (bool)(memcmp(&ledColors->, color2, sizeof(struct ws2812Color)) == 0) ;
 	return memcmp(&ledColors->primary, &ledColors->secondary, sizeof(struct ws2812Color)) == 0;
+}
+
+BaseType_t LEDS_BACKLIGHT::QueueSendDataToLedTask(i2cFrame_transmitQueue * pvItemToQueue)
+{
+	return this->ParserDataToLedsDataQueue->QueueSend(pvItemToQueue);
+}
+	
+BaseType_t LEDS_BACKLIGHT::QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait)
+{
+	return this->ParserDataToLedsDataQueue->QueueReceive(pvBuffer, xTicksToWait);
+}
+
+void LEDS_BACKLIGHT::QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer)
+{
+	this->ParserDataToLedsDataQueue->QueueDeleteDataFromPointer(structWithPointer);	
+}
+
+
+void LEDS_BACKLIGHT::blinkTimeMultiplierReset(void)
+{
+	this->blinkTimeMultiplier = 0;
+}
+void LEDS_BACKLIGHT::blinkTimeMultiplierIncrement(void)
+{
+	this->blinkTimeMultiplier++;
+}
+
+void LEDS_BACKLIGHT::blinkTimeMultiplierSetMaxValue(void)
+{
+	this->blinkTimeMultiplier = LED_DISPLAY_BLINK_TIME_MULTIPLIER;	
+}
+
+void LEDS_BACKLIGHT::blinkTimeDelayLoop(void) {
+	this->blinkTimeMultiplierReset();
+	do
+	{
+		vTaskDelay(pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME));
+		this->blinkTimeMultiplierIncrement();
+	} while (this->blinkTimeMultiplier < LED_DISPLAY_BLINK_TIME_MULTIPLIER);
+	
 }

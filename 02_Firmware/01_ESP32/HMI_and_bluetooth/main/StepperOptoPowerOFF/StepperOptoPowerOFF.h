@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "hwConfigFile.h"
-#include "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunicationStructures.h"
+//#include "D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/03_Common/comunicationStructures.h"
+#include "common/comunicationStructures/comunicationStructures.h"
 //#include "./../../../03_Common/comunicationStructures.h"
 //#include "comunicationStructures.h"
 

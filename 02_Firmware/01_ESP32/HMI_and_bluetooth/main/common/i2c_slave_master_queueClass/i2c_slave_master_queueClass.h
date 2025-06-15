@@ -13,9 +13,8 @@
 	#include "freertos/FreeRTOS.h"
 	#include "freertos/task.h"
 	#include "freertos/queue.h"
-//	#include "./../../../03_Common/comunicationProtocol.h"
-	#include "../03_Common/comunicationProtocol.h"
-	#include "hwConfigFile.h"
+	#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common\comunicationProtocol\comunicationProtocol.cpp"
+	#include "../../hwConfigFile.h"
 #elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
 	#include "FreeRTOS.h"
 	#include "task.h"

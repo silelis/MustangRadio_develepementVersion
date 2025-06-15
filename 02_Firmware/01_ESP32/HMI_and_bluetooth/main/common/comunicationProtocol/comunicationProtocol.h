@@ -1,10 +1,22 @@
 #pragma once
 #include "inttypes.h"
-#include "comunicationStructures.h"
-//#include "i2c_slave_master_queueClass.h"
+//#include "comunicationStructures.h"
+
+#ifdef  /*TOOLCHAIN_ENVIRONMENT == __esp32__ */ ESP_PLATFORM
+	#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common\comunicationStructures/comunicationStructures.h"
+	//#include "hwConfigFile.h"
+	#include "../../hwConfigFile.h"
+#elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
+	//#include "common/comunicationStructures/comunicationStructures.h"
+	#include "comunicationStructures/comunicationStructures.h"
+	#include "hwConfigFile.h"
+#else
+	#error "TOOLCHAIN_ENVIRONMENT which is unknown!!!!"
+#endif
+
 #include <stdio.h>
 #include <stdint.h> 
-#include "hwConfigFile.h"
+
 
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx

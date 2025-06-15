@@ -1,4 +1,4 @@
-#pragma once;e
+#pragma once
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -10,8 +10,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-#include "./../../../03_Common/comunicationProtocol.h"
-#include "./../../../03_Common/i2c_slave_master_queueClass.h"
+//#include "./../../../03_Common/comunicationProtocol.h"
+//#include "./../../../03_Common/i2c_slave_master_queueClass.h"
+#include "common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
+#include "common/comunicationProtocol/comunicationProtocol.h"
 
 class i2cEngin_slave
 {
