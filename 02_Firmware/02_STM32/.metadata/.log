@@ -8293,3 +8293,121 @@ org.eclipse.core.runtime.AssertionFailedException: assertion failed: The applica
 
 !ENTRY org.eclipse.core.jobs 2 2 2025-06-15 20:51:44.874
 !MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2025-06-16 21:03:55.772 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Framework arguments:  D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\.cproject
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-06-16 21:04:22.498
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-06-16 21:04:22.519
+!MESSAGE Log4j2 initialized with config file D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-06-16 21:04:35.250
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-06-16 21:05:01.640
+!MESSAGE Indexed 'Radio_main' (56 sources, 387 headers) in 26.1 sec: 44,298 declarations; 164,138 references; 3 unresolved inclusions; 298 syntax errors; 1,096 unresolved names (0.52%)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2025-06-16 21:19:27.507
+!MESSAGE Program file does not exist
+!STACK 0
+java.io.FileNotFoundException: D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2025-06-16 21:19:27.509
+!MESSAGE D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+!STACK 0
+java.io.FileNotFoundException: D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\02_STM32\Radio_main\Debug\Radio_main.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-06-16 21:20:40.199
+!MESSAGE Error in final launch sequence:
+
+Setup exceptions
+!STACK 1
+org.eclipse.core.runtime.CoreException: Setup exceptions
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-06-16 21:20:40.199
+!MESSAGE Setup exceptions
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-06-16 21:27:45.225
+!MESSAGE Error in final launch sequence:
+
+Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\Radio_main\\Debug\\Radio_main.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\Radio_main\\Debug\\Radio_main.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1040)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1243)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Contains: Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\Radio_main\\Debug\\Radio_main.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+java.lang.Exception: You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+!SUBENTRY 1 org.eclipse.cdt.dsf 4 10004 2025-06-16 21:27:45.225
+!MESSAGE Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\Radio_main\\Debug\\Radio_main.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!SUBENTRY 2 org.eclipse.cdt.dsf.gdb 4 10004 2025-06-16 21:27:45.225
+!MESSAGE Failed to execute MI command:
+load D:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\02_STM32\\Radio_main\\Debug\\Radio_main.elf 
+
+Error message from debugger back end:
+You can't do that when your target is `exec'
+!STACK 0
+java.lang.Exception: You can't do that when your target is `exec'
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)

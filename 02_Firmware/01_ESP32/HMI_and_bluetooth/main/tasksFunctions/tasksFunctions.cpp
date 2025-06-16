@@ -379,14 +379,16 @@ void humanMahineDisplayLeds(void *nothiong)
 	
 	uint8_t ledsPrimarySecondary = 0;
 	i2cFrame_transmitQueue tempBuffer;
-	i2cFrame_hmiLeds* tempHmiLedsFrame;
+	
 	for (;;)
 	{
 		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
 		if (pLedDisplay->QueueReceiveFormI2cParsingTask(&tempBuffer, pdMS_TO_TICKS(LED_DISPLAY_BLINK_TIME)) == pdTRUE)
 		{
-			tempHmiLedsFrame = (i2cFrame_hmiLeds*) tempBuffer.pData; 
-			memcpy(&ledsLocal, &tempHmiLedsFrame->ledsData, sizeof(hmiLeds));
+			//i2cFrame_hmiLeds* tempHmiLedsFrame;
+			//tempHmiLedsFrame = (i2cFrame_hmiLeds*) tempBuffer.pData; 
+			//memcpy(&ledsLocal, &tempHmiLedsFrame->ledsData, sizeof(hmiLeds));
+			memcpy(&ledsLocal, tempBuffer.pData + sizeof(i2cFrame_commonHeader), sizeof(hmiLeds));
 			pLedDisplay->QueueDeleteDataFormI2cParsingTask(tempBuffer);
 		}
 		
