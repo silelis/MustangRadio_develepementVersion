@@ -26,14 +26,6 @@ struct hmiLeds{		//struktura zawierająca informacje o stanie ledów wykorzystyw
 	//uint8_t		backlightLedsTo=BACKLIGHT_LED_TO;
 };
 
-typedef struct {		//struktura zawierająca informacje o stanie ledów wykorzystywana podczas komunikacji między master a slave
-	uint16_t beginOffest;
-	uint16_t endOffset;
-	uint16_t maxPosition;
-	uint16_t currentPosition;
-
-} MotorParameters;
-
 union keyboardUnion
 {
 	char array[2];			//daje możliwośc odczytania danych jako zwykła tabele char (niezależnie czy są to dane z klawiatury czy enkodera)
@@ -50,4 +42,16 @@ union keyboardUnion
 	}kbrdValue;				//daje możliwość łatwego zapisania/odczytu danych dla klawiatury
 };
 
+typedef float StepperPositionInPercents;
+
+union stepperUnion{
+	bool stepperCalibration;		//MOTOR_SUBCOMMAND_CALIBRATION
+	uint16_t gotoPosition;			//MOTOR_SUBCOMMAND_GOTO_ABSOLUT, MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS - position to which motor should move
+	struct{
+		bool direction;				//0 negative, 1 positive
+		uint16_t steps;
+	}moveBy;						//MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT, MOTOR_SUBCOMMAND_MOVE_BY_BOARDER - steps - how many steps motor should move
+									//												 direction -  0 negative move, 1 positive move
+	StepperPositionInPercents percents;	//MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT, MOTOR_SUBCOMMAND_PERCENTS_BOARDER
+};
 

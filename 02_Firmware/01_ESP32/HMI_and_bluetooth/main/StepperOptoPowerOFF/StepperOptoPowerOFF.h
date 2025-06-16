@@ -16,14 +16,13 @@
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0
 
-/*
-typedef struct {
+
+typedef struct {		//struktura zawieraj¹ca informacje o stanie ledów wykorzystywana podczas komunikacji miêdzy master a slave
 	uint16_t beginOffest;
 	uint16_t endOffset;
 	uint16_t maxPosition;
 	uint16_t currentPosition;
-
-} MotorParameters;	  */
+} MotorParameters;
 
 	
 class StepperOptoPowerOFF//:private MCP23008

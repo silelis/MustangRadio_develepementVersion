@@ -158,7 +158,7 @@ static void manageRadioButtonsAndManue(void* thing){
 	keyboardUnion receivedKeyboard;
 
 //przykład dzialania LEDów
-/*
+
 extern radioMegaStruct radioStruct;
 ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
 hmiLeds.setLedAllCleaned();
@@ -168,7 +168,7 @@ vTaskDelay(pdMS_TO_TICKS(2000));
 hmiLeds.setLedAllCleaned();
 hmiLeds.setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
 hmiLeds.sendDataToI2cTransmitQueue();
-*/
+
 
 	while(1){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){

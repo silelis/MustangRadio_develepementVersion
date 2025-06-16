@@ -56,7 +56,7 @@ struct radioMegaStruct{
 
 	struct {
 		hmiLeds leds;
-		MotorParameters motorParameters;
+		StepperPositionInPercents stepperPositionInPercents;
 	}humanMachineInterface;
 
 	struct{
