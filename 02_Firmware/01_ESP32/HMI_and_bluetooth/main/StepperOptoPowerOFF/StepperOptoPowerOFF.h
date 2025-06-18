@@ -22,6 +22,8 @@ typedef struct {		//struktura zawieraj¹ca informacje o stanie ledów wykorzystywa
 	uint16_t endOffset;
 	uint16_t maxPosition;
 	uint16_t currentPosition;
+	uint16_t gotoPosition=0;
+	BaseType_t isCalibrated;
 } MotorParameters;
 
 	
@@ -38,12 +40,18 @@ public:
 	void moveTo_xPercentIncludeOffset(float xPercent);
 	MotorParameters getValue_motorParameters();
 	void setValue_motorParameters(const void *src);
+	BaseType_t isCalibrated(void);
+	BaseType_t isPositionReached(void);
 				
 
 protected:
 	esp_err_t setDirection(bool direction);
 	esp_err_t makeStep();
-	uint8_t  readInputs();	
+	uint8_t  readInputs();
+	void calibrationSet(void);
+	void calibrationReset(void);
+
+	
 	
 private:
 	const char *TAG = "StepperOpto log:";

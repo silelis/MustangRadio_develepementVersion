@@ -30,7 +30,7 @@ void taskFunctionsStaticHandlersInit(void);
 void keyboardQueueParametersParser(void*);
 void humanMahineDisplayLeds(void *);
 void humanMahineBacklightLeds(void *);
-void stepperMotor(void *);
+void stepperMotorDataParser(void *);
 void i2cSlaveTransmit(void *);
 void i2cSlaveReceive(void *);
 void i2cReceivedDataParser(void *nothing);
