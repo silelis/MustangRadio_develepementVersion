@@ -22,7 +22,7 @@ StepperOptoPowerOFF::StepperOptoPowerOFF(MCP23008* pointer_MCP23008)
 	
 	this->pMCP23008->writeOLAT(0b00000000); //all GPIOs down to save energy
 	this->motorParameters.maxPosition = 0;
-	
+	this->calibrationReset();
 	
 	//this->calibrationErrorCounter = 0; //todo:zmieni  status tego zale nie od odczytanej waro ci this->maxPosition o ile odczyta to 0 a jak nie ma tej waro ci this->maxPosition to +1
 }
@@ -163,6 +163,7 @@ void StepperOptoPowerOFF::measureSliderRange()
 	}
 	this->motorParameters.beginOffest = 0;
 	this->motorParameters.endOffset = this->motorParameters.maxPosition;
+	this->calibrationSet();
 }
 
 /*---------------------------------------------------------------
@@ -353,4 +354,32 @@ void StepperOptoPowerOFF::radioPowerOFF(void)
 	uint8_t data = this->pMCP23008->readOLAT();
 	data |= POWER_SUPPLU_SUSTAIN_MASK; //set bit ONE
 	/*return*/ this->pMCP23008->writeOLAT(data);
+}
+
+void StepperOptoPowerOFF::calibrationSet(void)
+{
+	this->motorParameters.isCalibrated = pdTRUE;
+}
+
+void StepperOptoPowerOFF::calibrationReset(void)
+{
+	this->motorParameters.isCalibrated = pdFALSE;
+}
+
+BaseType_t StepperOptoPowerOFF::isCalibrated(void)
+{
+	return this->motorParameters.isCalibrated;
+}
+
+BaseType_t StepperOptoPowerOFF::isPositionReached(void)
+{
+	if (this->motorParameters.gotoPosition == this->motorParameters.currentPosition)
+	{
+		return pdTRUE;
+	}
+	else
+	{
+		return pdFALSE;		
+	}
+	
 }

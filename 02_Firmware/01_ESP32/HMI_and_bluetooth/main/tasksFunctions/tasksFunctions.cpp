@@ -442,9 +442,32 @@ void humanMahineDisplayLeds(void *nothiong)
 	}
 }
 
-
-void stepperMotor(void *TaskParameters)
+static void stepperMotorCalibration(void* nothing)
 {
+	for (;;)
+	{
+		pMotor->measureSliderRange();
+	}
+}
+
+static void stepperMotorMove(void* nothing)
+{
+	for (;;)
+	{
+		
+	}
+}
+
+void stepperMotorDataParser(void *TaskParameters)
+{
+	
+	TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
+	TaskHandle_t handlerTask_stepperMotorMove = NULL;
+	 ;
+	
+	//	configASSERT(xTaskCreatePinnedToCore(stepperMotorDataParser, "StepMotParser", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotor, TASK_TO_CORE1));
+	
+	
 	//NVS * pStorage;
 //	StepperOpto * pMotor=NULL;
 //	assert(pMotor = new StepperOpto());
@@ -459,9 +482,43 @@ void stepperMotor(void *TaskParameters)
 	//pMotor->setValue_motorParameters(&test);
 	for (;;)
 	{
-		pMotor->measureSliderRange();
+		if (pMotor->isCalibrated() == pdFALSE)
+		{
+			// Sprawdź, czy task nie istnieje lub został usunięty
+			if (handlerTask_stepperMotorCalibration == NULL || eTaskGetState(handlerTask_stepperMotorCalibration) == eDeleted)
+			{
+				configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
+			}
+		}
+		else
+		{
+			// Usuń task, jeśli istnieje
+			if (handlerTask_stepperMotorCalibration != NULL && eTaskGetState(handlerTask_stepperMotorCalibration) != eDeleted)
+			{
+				vTaskDelete(handlerTask_stepperMotorCalibration);
+				handlerTask_stepperMotorCalibration = NULL;
+			}
+			if (handlerTask_stepperMotorMove == NULL || eTaskGetState(handlerTask_stepperMotorMove) == eDeleted)
+			{
+				configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
+			}
+			else
+			{
+				if (pMotor->isPositionReached())
+				{
+					vTaskDelete(handlerTask_stepperMotorMove);
+					handlerTask_stepperMotorMove = NULL;	
+				}
+			} 
+		}
+		
 		//vTaskPrioritySet(NULL, tskIDLE_PRIORITY);
-		vTaskSuspend(NULL);
+		
+		if (handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL)
+		{
+			vTaskSuspend(NULL);
+		}
+		
 
 	}
 }
@@ -476,6 +533,7 @@ void i2cSlaveReceive(void *nothing)
 //Funkcja zajmuje się parsowaniem otrzymanych z i2cSlaveReceive danych
 void i2cReceivedDataParser(void *nothing)
 {	
+	extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
 	extern TaskHandle_t handlerTask_ledDisplay;
 	i2cFrame_transmitQueue parsingData;
 	//parsingData.pData=nullptr_t;
@@ -508,6 +566,8 @@ void i2cReceivedDataParser(void *nothing)
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
 						assert(0);
+						
+						vTaskResume(handlerTask_stepperMotorDataPasrser);
 						break;
 					default:
 						//nie wiadomo do jakiej "commandGroup" należą dane więc jest jakiś bład trzeba je usunąć, aby nie było przepełnienia pamięci
