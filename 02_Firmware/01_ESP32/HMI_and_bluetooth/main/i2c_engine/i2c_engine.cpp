@@ -348,7 +348,8 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	this->xI2CMasterMutex = NULL;
 	this->xI2CMasterMutex = xSemaphoreCreateMutex();
 	assert(this->xI2CMasterMutex);
-	xSemaphoreGive(this->xI2CMasterMutex);
+	//xSemaphoreGive(this->xI2CMasterMutex);
+	this->semaphoreGive();
 	printf("%s bus has been initialised on port %d.\r\n", this->TAG, i2c_port);
 
 }
@@ -363,9 +364,11 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 *---------------------------------------------------------------*/
 esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 {
-	xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
+	//xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
+	this->semaphoreTake();
 	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus, i2c_address, 150);
-	xSemaphoreGive(this->xI2CMasterMutex);
+	//xSemaphoreGive(this->xI2CMasterMutex);
+	this->semaphoreGive();
 	if (ret == ESP_OK) {
 		printf("%s, master have detected I2C slave device with address 0x%x.\r\n", this->TAG, i2c_address);
 	}
@@ -428,7 +431,8 @@ uint16_t i2cEngin_master::devicesOnBusDecrement()
 i2cEngin_master::~i2cEngin_master()
 {
 	if (this->devicesOnBus == 0) {
-		xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
+		//xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
+		this->semaphoreTake();
 		i2c_del_master_bus(*phandler_i2c_bus);
 		vSemaphoreDelete(this->xI2CMasterMutex);
 		printf("%s bus has been destructed.\r\n", this->TAG);
@@ -440,3 +444,11 @@ i2cEngin_master::~i2cEngin_master()
 	}	
 }
 
+BaseType_t i2cEngin_master::semaphoreTake(void)
+{
+	return xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
+}
+BaseType_t i2cEngin_master::semaphoreGive(void)
+{
+	return xSemaphoreGive(this->xI2CMasterMutex);
+}

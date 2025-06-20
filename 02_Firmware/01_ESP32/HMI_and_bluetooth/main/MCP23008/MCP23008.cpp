@@ -62,7 +62,10 @@ esp_err_t MCP23008::readData(uint8_t* data)
 {
 	uint8_t* write_buffer = &data[0];
 	uint8_t* read_buffer = &data[1];
-	return i2c_master_transmit_receive(MCP23008_dev_handle, write_buffer, sizeof(uint8_t), read_buffer, sizeof(uint8_t), 150);
+	pI2cMasterBus->semaphoreTake();
+	esp_err_t retVal=  i2c_master_transmit_receive(MCP23008_dev_handle, write_buffer, sizeof(uint8_t), read_buffer, sizeof(uint8_t), 150);
+	pI2cMasterBus->semaphoreGive();
+	return retVal;
 }
 
 
@@ -80,8 +83,11 @@ esp_err_t MCP23008::readData(uint8_t* data)
 *---------------------------------------------------------------*/
 esp_err_t MCP23008::writeData(uint8_t* data, size_t len)
 {
-	uint8_t* write_buffer = &data[0];	
-	return i2c_master_transmit(MCP23008_dev_handle, write_buffer, len, 150);
+	uint8_t* write_buffer = &data[0];
+	pI2cMasterBus->semaphoreTake();
+	esp_err_t retVal = i2c_master_transmit(MCP23008_dev_handle, write_buffer, len, 150);
+	pI2cMasterBus->semaphoreGive();
+	return retVal;
 }
 
 

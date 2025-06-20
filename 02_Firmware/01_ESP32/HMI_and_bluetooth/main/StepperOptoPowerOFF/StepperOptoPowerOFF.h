@@ -22,7 +22,7 @@ typedef struct {		//struktura zawieraj¹ca informacje o stanie ledów wykorzystywa
 	uint16_t endOffset;
 	uint16_t maxPosition;
 	uint16_t currentPosition;
-	uint16_t gotoPosition=0;
+	uint16_t volatileDestinationPosition = 0;
 	BaseType_t isCalibrated;
 } MotorParameters;
 
@@ -33,7 +33,7 @@ public:
 	StepperOptoPowerOFF(MCP23008* pointer_MCP23008);
 	~StepperOptoPowerOFF();
 	void radioPowerOFF(void);
-	void measureSliderRange(void);
+	void measureSliderRange(uint16_t begginOffset, uint16_t endOffset);
 	void moveXSteps(int32_t stepAmount);
 	void moveTo_xPosition(uint16_t xPosition);
 	void moveTo_xPercent(float xPercent);
@@ -42,6 +42,7 @@ public:
 	void setValue_motorParameters(const void *src);
 	BaseType_t isCalibrated(void);
 	BaseType_t isPositionReached(void);
+	void moveToVolatileDestinationPosition(void);
 				
 
 protected:

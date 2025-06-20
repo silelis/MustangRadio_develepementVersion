@@ -75,10 +75,11 @@ extern "C" void app_main(void)
 	init_uart();
 	i2sPinsHighImpedanceEnabled();
 	
+	
+	
 
 	const char *main_TAG = "Main function:";
 	printf("\n\n\n\n\n\n\n\n\n\n%s starting...\n", main_TAG);
-
 	
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
