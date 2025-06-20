@@ -57,6 +57,8 @@ public:
 	i2c_master_bus_handle_t* phandler_i2c_bus;
 	uint16_t devicesOnBusIncrement();
 	uint16_t devicesOnBusDecrement();
+	BaseType_t semaphoreTake(void);
+	BaseType_t semaphoreGive(void);
 	
 protected:
 	

@@ -76,7 +76,9 @@ esp_err_t StepperOptoPowerOFF::disableStepperMotor()
 	//data ^= MOTOR_NOT_SLEEP_MASK;
 	data &= ~MOTOR_NOT_SLEEP_MASK; //set bit ZERO
 	this->isStepperDriverEnabled = pdFALSE;
-	return this->pMCP23008->writeOLAT(data);
+	esp_err_t retVal = this->pMCP23008->writeOLAT(data);
+	vTaskDelay(pdMS_TO_TICKS(20));
+	return retVal;
 }
 
 /*---------------------------------------------------------------
@@ -104,7 +106,7 @@ uint8_t  StepperOptoPowerOFF::readInputs()
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOptoPowerOFF::measureSliderRange()
+void StepperOptoPowerOFF::measureSliderRange(uint16_t begginOffset, uint16_t endOffset)
 {
 	uint8_t inputsStates;
 	//uint16_t measuredMaxPosition = 0;
@@ -161,8 +163,16 @@ void StepperOptoPowerOFF::measureSliderRange()
 			break;
 		} 
 	}
-	this->motorParameters.beginOffest = 0;
-	this->motorParameters.endOffset = this->motorParameters.maxPosition;
+	this->motorParameters.beginOffest = begginOffset;
+	if (endOffset==UINT16_MAX)
+	{
+		this->motorParameters.endOffset = this->motorParameters.maxPosition;
+	}
+	else
+	{
+		this->motorParameters.endOffset = endOffset;
+	}
+	//vTaskDelay(1000);
 	this->calibrationSet();
 }
 
@@ -188,8 +198,10 @@ esp_err_t StepperOptoPowerOFF::setDirection(bool direction)
 		this->whichDirection = MOVE_FORWARD;
 		break;		
 	}
+	//vTaskDelay(pdMS_TO_TICKS(350));
+	esp_err_t retVal = this->pMCP23008->writeOLAT(data);
 	vTaskDelay(pdMS_TO_TICKS(350));
-	return this->pMCP23008->writeOLAT(data);
+	return retVal;
 }
 
 /*---------------------------------------------------------------
@@ -235,7 +247,7 @@ void StepperOptoPowerOFF::moveXSteps(int32_t stepAmount)
 		inputData = this->readInputs();
 		if (this->whichDirection == MOVE_BACKWARD)
 		{
-			if (!(inputData & SENSOR_VOL_SIDE_MASK))
+			if ((inputData & SENSOR_VOL_SIDE_MASK))
 			{
 				stepAmount = 0; //osi gni to lewy czujnik, nie mo na dalej i c do ty u
 				this->motorParameters.currentPosition = 0; //zerowanie pozycji na wszelki wypadek
@@ -249,7 +261,7 @@ void StepperOptoPowerOFF::moveXSteps(int32_t stepAmount)
 		}
 		else if (this->whichDirection == MOVE_FORWARD)
 		{
-			if (!(inputData & SENSOR_EQU_SIDE_MASK))
+			if ((inputData & SENSOR_EQU_SIDE_MASK))
 			{
 				stepAmount = 0;
 				this->motorParameters.currentPosition = this->motorParameters.maxPosition;
@@ -285,6 +297,71 @@ void StepperOptoPowerOFF::moveTo_xPosition(uint16_t xPosition)
 	stepAmount = (int32_t)xPosition - (int32_t)this->motorParameters.currentPosition;
 	this->moveXSteps(stepAmount);
 }
+
+void StepperOptoPowerOFF::moveToVolatileDestinationPosition(void)
+{
+	
+	uint8_t lastDirection = 3;
+	this->enableStepperMotor();
+	uint8_t inputsStates;
+	for (;;)
+	{
+		if (this->motorParameters.volatileDestinationPosition < this->motorParameters.currentPosition)
+		{
+			if (lastDirection != MOVE_BACKWARD)
+			{
+				//this->whichDirection = MOVE_BACKWARD;
+				lastDirection = MOVE_BACKWARD;
+				this->setDirection(MOVE_BACKWARD);
+			}
+		}
+		if (this->motorParameters.volatileDestinationPosition > this->motorParameters.currentPosition)
+		{
+			if (lastDirection != MOVE_FORWARD)
+			{
+				//this->whichDirection = MOVE_FORWARD;
+				lastDirection = MOVE_FORWARD;
+				this->setDirection(MOVE_FORWARD);
+			}
+	
+		}
+		if (this->motorParameters.currentPosition != this->motorParameters.volatileDestinationPosition)
+		{
+			//this->setDirection(lastDirection);
+			inputsStates = this->readInputs();
+			switch (this->whichDirection)
+			{
+			case MOVE_BACKWARD:
+				this->motorParameters.currentPosition--;
+				break;
+			case MOVE_FORWARD:
+				this->motorParameters.currentPosition++;
+				break;
+			}
+			this->makeStep();
+		
+		}
+		else
+		{
+			this->disableStepperMotor();
+		}
+	}
+}
+
+
+BaseType_t StepperOptoPowerOFF::isPositionReached(void)
+{
+	if (this->motorParameters.volatileDestinationPosition == this->motorParameters.currentPosition)
+	{
+		this->disableStepperMotor();
+		return pdTRUE;
+	}
+	else
+	{
+		return pdFALSE;		
+	}
+}
+
 
 /*---------------------------------------------------------------
  * Przesuwa karetkę silnika krokowego do pozycji x%, mierzonej w
@@ -369,17 +446,4 @@ void StepperOptoPowerOFF::calibrationReset(void)
 BaseType_t StepperOptoPowerOFF::isCalibrated(void)
 {
 	return this->motorParameters.isCalibrated;
-}
-
-BaseType_t StepperOptoPowerOFF::isPositionReached(void)
-{
-	if (this->motorParameters.gotoPosition == this->motorParameters.currentPosition)
-	{
-		return pdTRUE;
-	}
-	else
-	{
-		return pdFALSE;		
-	}
-	
 }

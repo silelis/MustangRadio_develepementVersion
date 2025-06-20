@@ -96,6 +96,12 @@ typedef struct {
 
 
 //I2C_COMMAND_GROUP_NVS					0x02
+#define NVS_KEY_IS_INITIALISED			(const char[]){0x01,0x01}
+#define NVS_KEY_MOTOR_BEGIN_OFFSET		(const char[]){0x01,0x02}
+#define NVS_KEY_MOTOR_END_OFFSET				(const char[]){0x01,0x03}
+
+
+#define NVS_KEY_IS_INITIALISED_ANSWER   "YES"
 #define NVS_KEY_i8_test					"test"
 #define NVS_KEY_BLOB_MotorParameters	"MotorParam"
 

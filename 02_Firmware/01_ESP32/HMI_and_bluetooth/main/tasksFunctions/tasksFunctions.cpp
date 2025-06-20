@@ -2,7 +2,6 @@
 #include "i2c_engine/i2c_engine.h"
 
 
-
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 //static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
@@ -443,10 +442,23 @@ void humanMahineDisplayLeds(void *nothiong)
 }
 
 static void stepperMotorCalibration(void* nothing)
-{
+{	uint16_t beginOffest;
+	uint16_t endOffset;
+	
+	if(pSTORAGE->get_u16(NVS_KEY_MOTOR_BEGIN_OFFSET, &beginOffest)!= ESP_OK){
+		beginOffest = 0;
+	} 	
+	if (esp_err_t retVal1 = pSTORAGE->get_u16(NVS_KEY_MOTOR_END_OFFSET, &endOffset) != ESP_OK)
+	{
+		endOffset = UINT16_MAX;	
+	}
 	for (;;)
 	{
-		pMotor->measureSliderRange();
+		if (pMotor->isCalibrated() == pdFALSE)
+		{
+			pMotor->measureSliderRange(beginOffest, endOffset);
+		}
+		
 	}
 }
 
@@ -454,6 +466,10 @@ static void stepperMotorMove(void* nothing)
 {
 	for (;;)
 	{
+		if (pMotor->isPositionReached() != pdTRUE)
+		{
+			pMotor->moveToVolatileDestinationPosition();
+		}
 		
 	}
 }
@@ -463,23 +479,8 @@ void stepperMotorDataParser(void *TaskParameters)
 	
 	TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
 	TaskHandle_t handlerTask_stepperMotorMove = NULL;
-	 ;
-	
-	//	configASSERT(xTaskCreatePinnedToCore(stepperMotorDataParser, "StepMotParser", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotor, TASK_TO_CORE1));
-	
-	
-	//NVS * pStorage;
-//	StepperOpto * pMotor=NULL;
-//	assert(pMotor = new StepperOpto());
-	
-	//pStorage->get_blob(NVS_KEY_BLOB_MotorParameters, pMotor->)
 
-	//MotorParameters test;
-	//test.beginOffest = 1;
-	//test.currentPosition = 2;
-	//test.endOffset = 50;
-	//test.maxPosition = 5000;
-	//pMotor->setValue_motorParameters(&test);
+
 	for (;;)
 	{
 		if (pMotor->isCalibrated() == pdFALSE)
@@ -495,6 +496,7 @@ void stepperMotorDataParser(void *TaskParameters)
 			// Usuń task, jeśli istnieje
 			if (handlerTask_stepperMotorCalibration != NULL && eTaskGetState(handlerTask_stepperMotorCalibration) != eDeleted)
 			{
+				vTaskDelay(pdMS_TO_TICKS(1000));
 				vTaskDelete(handlerTask_stepperMotorCalibration);
 				handlerTask_stepperMotorCalibration = NULL;
 			}
@@ -506,6 +508,7 @@ void stepperMotorDataParser(void *TaskParameters)
 			{
 				if (pMotor->isPositionReached())
 				{
+					//vTaskDelay(pdMS_TO_TICKS(1000));
 					vTaskDelete(handlerTask_stepperMotorMove);
 					handlerTask_stepperMotorMove = NULL;	
 				}
