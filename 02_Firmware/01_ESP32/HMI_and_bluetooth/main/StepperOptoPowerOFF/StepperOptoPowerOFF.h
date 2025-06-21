@@ -12,6 +12,7 @@
 #include "common/comunicationStructures/comunicationStructures.h"
 //#include "./../../../03_Common/comunicationStructures.h"
 //#include "comunicationStructures.h"
+#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
 
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0
@@ -43,14 +44,17 @@ public:
 	BaseType_t isCalibrated(void);
 	BaseType_t isPositionReached(void);
 	void moveToVolatileDestinationPosition(void);
-				
+	BaseType_t QueueSendDataToMotorDataQueue(i2cFrame_transmitQueue * pvItemToQueue);
+	BaseType_t QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait);
+	void QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer);
+	void calibrationReset(void);			
 
 protected:
 	esp_err_t setDirection(bool direction);
 	esp_err_t makeStep();
 	uint8_t  readInputs();
 	void calibrationSet(void);
-	void calibrationReset(void);
+	
 
 	
 	
@@ -63,4 +67,5 @@ private:
 	MotorParameters motorParameters;
 	uint8_t whichDirection;
 	bool isStepperDriverEnabled;
+	i2cQueue4DynamicData* ParserDataToStepperMotorDataQueue;
 };

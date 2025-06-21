@@ -480,9 +480,49 @@ void stepperMotorDataParser(void *TaskParameters)
 	TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
 	TaskHandle_t handlerTask_stepperMotorMove = NULL;
 
-
+	i2cFrame_transmitQueue tempBuffer;
+	i2cFrame_stepper loclaStepperMotorFrame;
 	for (;;)
 	{
+		if (pMotor->QueueReceiveFormI2cParsingTask(&tempBuffer, pdMS_TO_TICKS(100)) == pdTRUE)
+		{
+			memcpy(&loclaStepperMotorFrame, tempBuffer.pData, sizeof(i2cFrame_stepper));
+			pMotor->QueueDeleteDataFormI2cParsingTask(tempBuffer);
+			
+			switch (loclaStepperMotorFrame.stepperSubcommand)
+			{
+			case MOTOR_SUBCOMMAND_CALIBRATION:			//0x00
+				pMotor->calibrationReset();	
+				break;
+//			case MOTOR_SUBCOMMAND_GOTO_ABSOLUT:		//0x01
+//				break;
+//			case MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS:	//0x02
+//				break;
+//			case MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT:		//0x03
+//				break;
+//			case MOTOR_SUBCOMMAND_MOVE_BY_BOARDER:		//0x04
+//				break;
+//			case MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT:	//0x05
+//				break;
+//			case MOTOR_SUBCOMMAND_PERCENTS_BOARDER:	//0x06
+//				break;
+			case MOTOR_SUBCOMMAND_POWER_OFF:		//0x07
+				printf("Radio is goint to power off in:/r/n");
+				for(int i = 10 ; i-- ; i = 0)
+				{
+					printf("%d second(s).../n/r", i);
+					vTaskDelay(pdTICKS_TO_MS(1000));
+				}
+				pMotor->radioPowerOFF();
+				break;
+			default:
+				assert(0);
+			}
+			
+			
+		}
+		
+		
 		if (pMotor->isCalibrated() == pdFALSE)
 		{
 			// Sprawdź, czy task nie istnieje lub został usunięty
@@ -536,8 +576,8 @@ void i2cSlaveReceive(void *nothing)
 //Funkcja zajmuje się parsowaniem otrzymanych z i2cSlaveReceive danych
 void i2cReceivedDataParser(void *nothing)
 {	
-	extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
-	extern TaskHandle_t handlerTask_ledDisplay;
+	
+	
 	i2cFrame_transmitQueue parsingData;
 	//parsingData.pData=nullptr_t;
 	i2cFrame_commonHeader* fakeCommHeader; 
@@ -563,13 +603,14 @@ void i2cReceivedDataParser(void *nothing)
 						assert(0);
 						break;
 					case I2C_COMMAND_GROUP_LEDS:	//0x03
+						extern TaskHandle_t handlerTask_ledDisplay;
 						pLedDisplay->QueueSendDataToLedTask(&parsingData);
 						pLedDisplay->blinkTimeMultiplierSetMaxValue();	//jeżeli jest mryganie to natychniast zostanie przerwana petla opóźniajaca
 						vTaskResume(handlerTask_ledDisplay);
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
-						assert(0);
-						
+						extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
+						pMotor->QueueSendDataToMotorDataQueue(&parsingData);
 						vTaskResume(handlerTask_stepperMotorDataPasrser);
 						break;
 					default:
