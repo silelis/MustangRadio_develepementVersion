@@ -306,29 +306,52 @@ void StepperOptoPowerOFF::moveToVolatileDestinationPosition(void)
 	uint8_t inputsStates;
 	for (;;)
 	{
-		if (this->motorParameters.volatileDestinationPosition < this->motorParameters.currentPosition)
+		
 		{
-			if (lastDirection != MOVE_BACKWARD)
+			//określa w którym kierunku powinien poruszać się motor - w kierunku ujemnym
+			if (this->motorParameters.volatileDestinationPosition < this->motorParameters.currentPosition)
 			{
-				//this->whichDirection = MOVE_BACKWARD;
-				lastDirection = MOVE_BACKWARD;
-				this->setDirection(MOVE_BACKWARD);
+				if (lastDirection != MOVE_BACKWARD)
+				{
+					lastDirection = MOVE_BACKWARD;
+					this->setDirection(MOVE_BACKWARD);
+				}
+			}
+			//określa w którym kierunku powinien poruszać się motor - w kierunku dodatnim
+			if (this->motorParameters.volatileDestinationPosition > this->motorParameters.currentPosition)
+			{
+				if (lastDirection != MOVE_FORWARD)
+				{
+					lastDirection = MOVE_FORWARD;
+					this->setDirection(MOVE_FORWARD);
+				}
+			}	
+			
+		}
+
+		
+		{
+			//czyta wejscia i sprawdza czy krańcówki nie zostały osignięte
+			inputsStates = this->readInputs();
+			
+			//jeśli osiągnięto 0 to koryguje wartość obecnej pozycji na 0
+			if (!(inputsStates & SENSOR_VOL_SIDE_MASK))
+			{
+				this->motorParameters.currentPosition = 0;
+			}
+			
+			//jeśli osiagnieto max to koryguje warośc obecnej pozycji na max
+			if (!(inputsStates & SENSOR_EQU_SIDE_MASK))
+			{
+				this->motorParameters.currentPosition =  this->motorParameters.maxPosition;
 			}
 		}
-		if (this->motorParameters.volatileDestinationPosition > this->motorParameters.currentPosition)
-		{
-			if (lastDirection != MOVE_FORWARD)
-			{
-				//this->whichDirection = MOVE_FORWARD;
-				lastDirection = MOVE_FORWARD;
-				this->setDirection(MOVE_FORWARD);
-			}
-	
-		}
+		
+		 	
+
+		 //osprawdza czy motor osiągnął zadaną pozycję
 		if (this->motorParameters.currentPosition != this->motorParameters.volatileDestinationPosition)
 		{
-			//this->setDirection(lastDirection);
-			inputsStates = this->readInputs();
 			switch (this->whichDirection)
 			{
 			case MOVE_BACKWARD:
@@ -341,6 +364,7 @@ void StepperOptoPowerOFF::moveToVolatileDestinationPosition(void)
 			this->makeStep();
 		
 		}
+		//jeśli pozycja osiągnięta to wyłącza steronik silnika krokowego
 		else
 		{
 			this->disableStepperMotor();

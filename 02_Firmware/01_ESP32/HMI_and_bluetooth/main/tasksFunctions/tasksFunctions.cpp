@@ -496,7 +496,7 @@ void stepperMotorDataParser(void *TaskParameters)
 			// Usuń task, jeśli istnieje
 			if (handlerTask_stepperMotorCalibration != NULL && eTaskGetState(handlerTask_stepperMotorCalibration) != eDeleted)
 			{
-				vTaskDelay(pdMS_TO_TICKS(1000));
+				//vTaskDelay(pdMS_TO_TICKS(1000));
 				vTaskDelete(handlerTask_stepperMotorCalibration);
 				handlerTask_stepperMotorCalibration = NULL;
 			}
