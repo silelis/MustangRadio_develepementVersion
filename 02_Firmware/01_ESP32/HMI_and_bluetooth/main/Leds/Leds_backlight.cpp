@@ -209,6 +209,7 @@ LEDS_BACKLIGHT::~LEDS_BACKLIGHT()
 	this->ledStripRefresh();
 	ESP_ERROR_CHECK(led_strip_clear(this->ledStrip));
 	ESP_ERROR_CHECK(led_strip_del(this->ledStrip));
+	delete this->ParserDataToLedsDataQueue;
 }
 
 /*---------------------------------------------------------------

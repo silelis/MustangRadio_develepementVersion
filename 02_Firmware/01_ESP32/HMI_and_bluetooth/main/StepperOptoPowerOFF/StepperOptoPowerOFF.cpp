@@ -11,6 +11,8 @@
 StepperOptoPowerOFF::StepperOptoPowerOFF(MCP23008* pointer_MCP23008)
 	//: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
 {
+	configASSERT(this->ParserDataToStepperMotorDataQueue = new i2cQueue4DynamicData(4));
+	
 	pMCP23008 = pointer_MCP23008; 
 	this->pMCP23008->writeIODIR(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);
 	this->pMCP23008->writeIPOL(0b0);
@@ -38,6 +40,7 @@ StepperOptoPowerOFF::~StepperOptoPowerOFF()
 {
 	this->pMCP23008->writeOLAT(0b00000000); //all GPIOs down to save energy
 	this->pMCP23008->writeGPPU(0b00000000); //pull-down enabled to save energy
+	delete this->ParserDataToStepperMotorDataQueue;
 }
 
 /*---------------------------------------------------------------
@@ -470,4 +473,21 @@ void StepperOptoPowerOFF::calibrationReset(void)
 BaseType_t StepperOptoPowerOFF::isCalibrated(void)
 {
 	return this->motorParameters.isCalibrated;
+}
+
+
+
+BaseType_t StepperOptoPowerOFF::QueueSendDataToMotorDataQueue(i2cFrame_transmitQueue * pvItemToQueue)
+{
+	return this->ParserDataToStepperMotorDataQueue->QueueSend(pvItemToQueue);
+}
+	
+BaseType_t StepperOptoPowerOFF::QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait)
+{
+	return this->ParserDataToStepperMotorDataQueue->QueueReceive(pvBuffer, xTicksToWait);
+}
+
+void StepperOptoPowerOFF::QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer)
+{
+	this->ParserDataToStepperMotorDataQueue->QueueDeleteDataFromPointer(structWithPointer);	
 }
