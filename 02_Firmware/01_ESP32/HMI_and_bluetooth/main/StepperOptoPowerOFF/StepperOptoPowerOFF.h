@@ -33,7 +33,8 @@ class StepperOptoPowerOFF//:private MCP23008
 public:
 	StepperOptoPowerOFF(MCP23008* pointer_MCP23008);
 	~StepperOptoPowerOFF();
-	void radioPowerOFF(void);
+	void radioPowerOff(void);
+	void radioPowerOffInSecond(uint8_t seconds);
 	void measureSliderRange(uint16_t begginOffset, uint16_t endOffset);
 	void moveXSteps(int32_t stepAmount);
 	void moveTo_xPosition(uint16_t xPosition);
@@ -47,7 +48,13 @@ public:
 	BaseType_t QueueSendDataToMotorDataQueue(i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer);
-	void calibrationReset(void);			
+	void calibrationReset(void);
+	void volatileDestinationBy_GotoAbsolutRange(uint16_t gotoPosition);
+	void volatileDestinationBy_GotoBoardertRange(uint16_t gotoPosition);
+	void volatileDestinationBy_MoveByAbsoluteRange(int32_t steps);
+	void volatileDestinationBy_MoveByBoarderRange(int32_t steps);
+	void volatileDestinationBy_PercentageAbsoluteRange(float percentage);
+	void volatileDestinationBy_PercentageBoarderRange(float percentage);
 
 protected:
 	esp_err_t setDirection(bool direction);
