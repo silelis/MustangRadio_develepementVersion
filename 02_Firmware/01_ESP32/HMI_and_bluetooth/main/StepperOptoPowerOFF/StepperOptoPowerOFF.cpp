@@ -453,12 +453,25 @@ void StepperOptoPowerOFF::setValue_motorParameters(const void *src)
 	memcpy(&this->motorParameters, src, sizeof(this->motorParameters));
 }
 
-void StepperOptoPowerOFF::radioPowerOFF(void)
+void StepperOptoPowerOFF::radioPowerOff(void)
 {
 	uint8_t data = this->pMCP23008->readOLAT();
 	data |= POWER_SUPPLU_SUSTAIN_MASK; //set bit ONE
 	/*return*/ this->pMCP23008->writeOLAT(data);
 }
+
+void StepperOptoPowerOFF::radioPowerOffInSecond(uint8_t seconds)
+{
+	printf("Radio is going to power off in:/r/n");
+	for (uint8_t i = seconds; i--; i = 0)
+	{
+		printf("%d second(s).../n/r", i);
+		vTaskDelay(pdTICKS_TO_MS(1000));
+	}
+	this->radioPowerOff();
+}
+
+
 
 void StepperOptoPowerOFF::calibrationSet(void)
 {
@@ -490,4 +503,75 @@ BaseType_t StepperOptoPowerOFF::QueueReceiveFormI2cParsingTask(i2cFrame_transmit
 void StepperOptoPowerOFF::QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer)
 {
 	this->ParserDataToStepperMotorDataQueue->QueueDeleteDataFromPointer(structWithPointer);	
+}
+
+
+
+
+void StepperOptoPowerOFF::volatileDestinationBy_GotoAbsolutRange(uint16_t gotoPosition)
+{
+	if (gotoPosition > this->motorParameters.maxPosition) {
+		gotoPosition = this->motorParameters.maxPosition;
+	}	
+	this->motorParameters.volatileDestinationPosition =  gotoPosition;
+}
+
+void StepperOptoPowerOFF::volatileDestinationBy_GotoBoardertRange(uint16_t gotoPosition)
+{
+	uint16_t boarderRandge = this->motorParameters.endOffset - this->motorParameters.beginOffest;
+	if (gotoPosition > boarderRandge)
+	{
+		gotoPosition = boarderRandge;
+	}
+	this->motorParameters.volatileDestinationPosition = this->motorParameters.beginOffest + gotoPosition;
+}
+
+void StepperOptoPowerOFF::volatileDestinationBy_MoveByAbsoluteRange(int32_t steps) {
+	int32_t finalDestination;
+	finalDestination = (int32_t) this->motorParameters.currentPosition + steps;
+	
+	if (finalDestination > (int32_t) this->motorParameters.maxPosition)
+	{
+		finalDestination = 	(int32_t) this->motorParameters.maxPosition;
+	}
+	if (finalDestination < 0)
+	{
+		finalDestination = 0;
+	}
+	this->motorParameters.volatileDestinationPosition = (uint16_t) finalDestination;
+}
+
+
+void StepperOptoPowerOFF::volatileDestinationBy_MoveByBoarderRange(int32_t steps) {
+	
+	int32_t boarderRandge = (int32_t) this->motorParameters.endOffset - (int32_t) this->motorParameters.beginOffest;
+	
+	int32_t finalDestination;
+	finalDestination = (int32_t) this->motorParameters.currentPosition + steps;
+	
+	if (finalDestination > boarderRandge)
+	{
+		finalDestination = boarderRandge;
+	}
+	if (finalDestination < 0)
+	{
+		finalDestination = 0;
+	}
+	this->motorParameters.volatileDestinationPosition = this->motorParameters.beginOffest + (uint16_t) finalDestination;
+
+}
+
+
+void StepperOptoPowerOFF::volatileDestinationBy_PercentageAbsoluteRange(float percentage)
+{
+	float finalDestination;
+	finalDestination = ((float) this->motorParameters.maxPosition * percentage)/(float)100;
+	this->motorParameters.volatileDestinationPosition =  (uint16_t)roundf(finalDestination);
+}
+void StepperOptoPowerOFF::volatileDestinationBy_PercentageBoarderRange(float percentage) {
+	float boarderRandge	= (float)  this->motorParameters.endOffset - this->motorParameters.beginOffest;
+	float finalDestination;
+	finalDestination = ((float) boarderRandge * percentage) / (float)100;
+	
+	this->motorParameters.volatileDestinationPosition =  this->motorParameters.beginOffest +  (uint16_t)roundf(finalDestination);
 }

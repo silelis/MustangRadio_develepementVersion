@@ -96,10 +96,10 @@ void taskFunctionsStaticHandlersInit(void)
 * Returns:
 * NONE
 *---------------------------------------------------------------*/ 
-static void hardwarePowerOFF(void)
-{
-	pMotor->radioPowerOFF();
-}
+//static void hardwarePowerOFF(void)
+//{
+//	pMotor->radioPowerOFF();
+//}
 
 /*---------------------------------------------------------------
 * Lokalna funkcja potrzebna na etapie programownaia. Poprzez tę 
@@ -181,7 +181,8 @@ static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keybo
 		{
 		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))):			//BUT0	presses	= emergency reset
 			printf("Emergency hardware restart\n");
-			hardwarePowerOFF();
+			//hardwarePowerOFF();
+			pMotor->radioPowerOff();
 			break;
 		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses = NVS reset + emergency reset
 			printf("Emergency NVS reset\n");
@@ -227,17 +228,7 @@ void keyboardQueueParametersParser(void *parameters)
 				
 				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
 				#warning zastanowić się jak poprawić funkcję "esp32PrepareKbrdDataAndSent_to_QueueSend" bo to proteza, która nie za bardzo mi się podoba
 				//if (p_i2cSlave->pTransmitQueueObject->esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
 				if(esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
@@ -494,32 +485,30 @@ void stepperMotorDataParser(void *TaskParameters)
 			case MOTOR_SUBCOMMAND_CALIBRATION:			//0x00
 				pMotor->calibrationReset();	
 				break;
-//			case MOTOR_SUBCOMMAND_GOTO_ABSOLUT:		//0x01
-//				break;
-//			case MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS:	//0x02
-//				break;
-//			case MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT:		//0x03
-//				break;
-//			case MOTOR_SUBCOMMAND_MOVE_BY_BOARDER:		//0x04
-//				break;
-//			case MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT:	//0x05
-//				break;
-//			case MOTOR_SUBCOMMAND_PERCENTS_BOARDER:	//0x06
-//				break;
+			case MOTOR_SUBCOMMAND_GOTO_ABSOLUT:		//0x01
+				pMotor->volatileDestinationBy_GotoAbsolutRange(loclaStepperMotorFrame.stepperData.gotoPosition);
+				break;
+			case MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS:	//0x02
+				pMotor->volatileDestinationBy_GotoBoardertRange(loclaStepperMotorFrame.stepperData.gotoPosition);
+				break;
+			case MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT:		//0x03
+				pMotor->volatileDestinationBy_MoveByAbsoluteRange(loclaStepperMotorFrame.stepperData.moveBy);	
+				break;
+			case MOTOR_SUBCOMMAND_MOVE_BY_BOARDER:		//0x04
+				pMotor->volatileDestinationBy_MoveByBoarderRange(loclaStepperMotorFrame.stepperData.moveBy);	
+				break;
+			case MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT:	//0x05
+				pMotor->volatileDestinationBy_PercentageAbsoluteRange(loclaStepperMotorFrame.stepperData.percents);	
+				break;
+			case MOTOR_SUBCOMMAND_PERCENTS_BOARDER:	//0x06
+				pMotor->volatileDestinationBy_PercentageBoarderRange(loclaStepperMotorFrame.stepperData.percents);
+				break;
 			case MOTOR_SUBCOMMAND_POWER_OFF:		//0x07
-				printf("Radio is goint to power off in:/r/n");
-				for(int i = 10 ; i-- ; i = 0)
-				{
-					printf("%d second(s).../n/r", i);
-					vTaskDelay(pdTICKS_TO_MS(1000));
-				}
-				pMotor->radioPowerOFF();
+				pMotor->radioPowerOffInSecond(loclaStepperMotorFrame.stepperData.radioRestartCountdown);
 				break;
 			default:
 				assert(0);
-			}
-			
-			
+			}	
 		}
 		
 		
