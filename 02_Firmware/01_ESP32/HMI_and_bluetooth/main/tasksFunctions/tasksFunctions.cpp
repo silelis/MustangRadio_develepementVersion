@@ -179,12 +179,14 @@ static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keybo
 	{
 		switch (keyboardDataToCheck.kbrdValue.value)
 		{
-		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))):			//BUT0	presses	= emergency reset
+		case (0xfe):			//BUT0	long presses = musi być taki sam jak w keyboardToFunction_buttonDefinitions.h STM32 dla POWER_ON_OFF_LONG_PRESS
+		//case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))):			//BUT0	presses	= emergency reset aka {'B', 0xfe}
 			printf("Emergency hardware restart\n");
 			//hardwarePowerOFF();
 			pMotor->radioPowerOff();
 			break;
-		case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0) & ~(1 << 6))): //BUT0+BUT6 presses = NVS reset + emergency reset
+		case (0xa3):			// BUT2_BUT3_BUT4_EQUALIZER_LONG_RELEASED = musi być taki sam jak w keyboardToFunction_buttonDefinitions.h STM32 dla RESET_TO_DEFAULT 
+			//case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 2) & ~(1 << 3) & ~(1 << 4) & ~(1 << 6))): //BUT0+BUT6 presses = NVS reset + emergency reset  aka {'b', 0xa3}     BUT2_BUT3_BUT4_EQUALIZER_LONG_RELEASED
 			printf("Emergency NVS reset\n");
 			pSTORAGE->CAUTION_NVS_ereaseAndInit(10);
 			printf("Please restart device\n");
