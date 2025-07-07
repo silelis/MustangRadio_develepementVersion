@@ -1,0 +1,32 @@
+/*
+ * StepperOptoPowerOFF.h
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_STEPPEROPTOPOWEROFF_H_
+#define INC_SILELIS_CODE_STEPPEROPTOPOWEROFF_H_
+
+//#include "comunicationStructures.h"
+#include "comunicationProtocol.h"
+#include "i2c_slave_master_queueClass.h"
+//#include "SileliS_code/radioMegaStruct.h"
+#include "comunication_calculate_checksum.h"
+
+
+class StepperOptoPowerOFF {
+public:
+	StepperOptoPowerOFF(stepperMotorStruct* stepperMotorData, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue);
+	virtual ~StepperOptoPowerOFF();
+
+protected:
+
+private:
+	stepperMotorStruct* pStepperMotorData;
+	i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;
+	//i2cFrame_stepper stepperComunicationFrame;
+
+};
+
+#endif /* INC_SILELIS_CODE_STEPPEROPTOPOWEROFF_H_ */

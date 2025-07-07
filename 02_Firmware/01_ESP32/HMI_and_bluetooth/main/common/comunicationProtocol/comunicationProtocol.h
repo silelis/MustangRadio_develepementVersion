@@ -84,8 +84,9 @@ typedef struct {
 
 typedef struct {
 	i2cFrame_commonHeader i2cframeCommandHeader;
-	uint8_t stepperSubcommand;
-	union stepperUnion stepperData;
+	//uint8_t stepperSubcommand;
+	//union stepperUnion stepperData;
+	struct stepperMotorStruct stepperData;
 }i2cFrame_stepper;
 
 //I2C_COMMAND_GROUP_SYSTEM				0x00
