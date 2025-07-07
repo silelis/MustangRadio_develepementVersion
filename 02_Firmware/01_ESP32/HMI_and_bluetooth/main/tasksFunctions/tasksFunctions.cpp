@@ -482,31 +482,31 @@ void stepperMotorDataParser(void *TaskParameters)
 			memcpy(&loclaStepperMotorFrame, tempBuffer.pData, sizeof(i2cFrame_stepper));
 			pMotor->QueueDeleteDataFormI2cParsingTask(tempBuffer);
 			
-			switch (loclaStepperMotorFrame.stepperSubcommand)
+			switch (loclaStepperMotorFrame.stepperData.stepperSubcommand)
 			{
 			case MOTOR_SUBCOMMAND_CALIBRATION:			//0x00
 				pMotor->calibrationReset();	
 				break;
 			case MOTOR_SUBCOMMAND_GOTO_ABSOLUT:		//0x01
-				pMotor->volatileDestinationBy_GotoAbsolutRange(loclaStepperMotorFrame.stepperData.gotoPosition);
+				pMotor->volatileDestinationBy_GotoAbsolutRange(loclaStepperMotorFrame.stepperData.stepperUnion.gotoPosition);
 				break;
 			case MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS:	//0x02
-				pMotor->volatileDestinationBy_GotoBoardertRange(loclaStepperMotorFrame.stepperData.gotoPosition);
+				pMotor->volatileDestinationBy_GotoBoardertRange(loclaStepperMotorFrame.stepperData.stepperUnion.gotoPosition);
 				break;
 			case MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT:		//0x03
-				pMotor->volatileDestinationBy_MoveByAbsoluteRange(loclaStepperMotorFrame.stepperData.moveBy);	
+				pMotor->volatileDestinationBy_MoveByAbsoluteRange(loclaStepperMotorFrame.stepperData.stepperUnion.moveBy);	
 				break;
 			case MOTOR_SUBCOMMAND_MOVE_BY_BOARDER:		//0x04
-				pMotor->volatileDestinationBy_MoveByBoarderRange(loclaStepperMotorFrame.stepperData.moveBy);	
+				pMotor->volatileDestinationBy_MoveByBoarderRange(loclaStepperMotorFrame.stepperData.stepperUnion.moveBy);	
 				break;
 			case MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT:	//0x05
-				pMotor->volatileDestinationBy_PercentageAbsoluteRange(loclaStepperMotorFrame.stepperData.percents);	
+				pMotor->volatileDestinationBy_PercentageAbsoluteRange(loclaStepperMotorFrame.stepperData.stepperUnion.percents);	
 				break;
 			case MOTOR_SUBCOMMAND_PERCENTS_BOARDER:	//0x06
-				pMotor->volatileDestinationBy_PercentageBoarderRange(loclaStepperMotorFrame.stepperData.percents);
+				pMotor->volatileDestinationBy_PercentageBoarderRange(loclaStepperMotorFrame.stepperData.stepperUnion.percents);
 				break;
 			case MOTOR_SUBCOMMAND_POWER_OFF:		//0x07
-				pMotor->radioPowerOffInSecond(loclaStepperMotorFrame.stepperData.radioRestartCountdown);
+				pMotor->radioPowerOffInSecond(loclaStepperMotorFrame.stepperData.stepperUnion.radioRestartCountdown);
 				break;
 			default:
 				assert(0);
