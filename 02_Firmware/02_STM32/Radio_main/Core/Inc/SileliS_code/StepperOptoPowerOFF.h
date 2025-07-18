@@ -20,13 +20,26 @@ public:
 	StepperOptoPowerOFF(stepperMotorStruct* stepperMotorData, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue);
 	virtual ~StepperOptoPowerOFF();
 
+	void setMotorCalibration(void);
+	void setMotorGotoAbsolut(uint16_t gotoPosition);
+	void setMotorGotoInBoarders(uint16_t gotoPosition);
+	void setMotorMoveByAbsolute(int32_t moveBy);
+	void setMotorMoveByBoarders(int32_t moveBy);
+	void setMotorPercentsAbsolut(StepperPositionInPercents percents);
+	void setMotorPercentsBoarders(StepperPositionInPercents percents);
+	void setRadioPowerOff(uint8_t radioRestartCountdown);
+
 protected:
 
 private:
 	stepperMotorStruct* pStepperMotorData;
 	i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;
 	//i2cFrame_stepper stepperComunicationFrame;
+	BaseType_t sendDataToI2cTransmitQueue();
 
 };
+
+
+
 
 #endif /* INC_SILELIS_CODE_STEPPEROPTOPOWEROFF_H_ */

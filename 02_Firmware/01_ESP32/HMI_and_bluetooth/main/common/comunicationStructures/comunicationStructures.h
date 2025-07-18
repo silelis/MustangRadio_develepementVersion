@@ -49,12 +49,7 @@ struct stepperMotorStruct{
 	union {
 		bool stepperCalibration;		//MOTOR_SUBCOMMAND_CALIBRATION
 		uint16_t gotoPosition;			//MOTOR_SUBCOMMAND_GOTO_ABSOLUT, MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS - position to which motor should move
-		int32_t moveBy;
-	//	struct{
-	//		bool direction;				//0 negative, 1 positive
-	//		uint16_t steps;
-	//	}moveBy;						//MOTOR_SUBCOMMAND_MOVE_BY_ABSOLUT, MOTOR_SUBCOMMAND_MOVE_BY_BOARDER - steps - how many steps motor should move
-										//												 direction -  0 negative move, 1 positive move
+		int32_t moveBy;								//												 direction -  0 negative move, 1 positive move
 		StepperPositionInPercents percents;	//MOTOR_SUBCOMMAND_PERCENTS_ABSOLUT, MOTOR_SUBCOMMAND_PERCENTS_BOARDER
 		uint8_t radioRestartCountdown;
 	}stepperUnion;
