@@ -1,18 +1,10 @@
-22:53:14 **** Incremental Build of configuration Debug for project Radio_main ****
+22:32:42 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/StepperOptoPowerOFF.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunication_calculate_checksum" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationProtocol" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationStructures" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/i2c_slave_master_queueClass" -ID:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/StepperOptoPowerOFF.d" -MT"Core/Src/SileliS_code/StepperOptoPowerOFF.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/StepperOptoPowerOFF.o"
-../Core/Src/SileliS_code/StepperOptoPowerOFF.cpp:37:2: error: invalid preprocessing directive #ERROR
-   37 | #ERROR DOKOÅ?CZY Ä† TO
-      |  ^~~~~
-../Core/Src/SileliS_code/StepperOptoPowerOFF.cpp:57:1: error: unterminated comment
-   57 | /*
-      | ^
-../Core/Src/SileliS_code/StepperOptoPowerOFF.cpp: In member function 'BaseType_t StepperOptoPowerOFF::sendDataToI2cTransmitQueue()':
-../Core/Src/SileliS_code/StepperOptoPowerOFF.cpp:51:40: error: 'hmiLedsToSend' was not declared in this scope
-   51 |         dataToTransmitQueue.dataSize = hmiLedsToSend.i2cframeCommandHeader.dataSize/*sizeof(i2cFrame_hmiLeds)*/;
-      |                                        ^~~~~~~~~~~~~
-make: *** [Core/Src/SileliS_code/subdir.mk:65: Core/Src/SileliS_code/StepperOptoPowerOFF.o] Error 1
-"make -j16 all" terminated with exit code 2. Build might be incomplete.
+arm-none-eabi-size  Radio_main.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 247936	    720	  43016	 291672	  47358	Radio_main.elf
+Finished building: default.size.stdout
+ 
 
-22:53:14 Build Failed. 4 errors, 0 warnings. (took 562ms)
+22:32:42 Build Finished. 0 errors, 0 warnings. (took 459ms)
 

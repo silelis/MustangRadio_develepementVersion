@@ -20,9 +20,9 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 
 
-	configASSERT(this->pI2C_MasterReceiveFromSlave_DataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_MasterTransmitToSlave_DataQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterReceiveFromSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterTransmitToSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
 
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
 	this->i2cMasterSemaphoreGive();

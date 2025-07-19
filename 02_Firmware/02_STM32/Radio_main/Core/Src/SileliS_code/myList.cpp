@@ -28,7 +28,7 @@ myList::~myList() {
 void myList::addAtBeginning(const char* nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
     if (!canAddItem()) return;
     myList* newNode;// = new myList(nodeName, execFunctionArraySize);
-    assert(newNode = new myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
+    assert(newNode = new (std::nothrow) myList(pListHeader, nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
     newNode->nextListNode = this->pListHeader->head;
     this->pListHeader->head = newNode;
     this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element

@@ -11,7 +11,8 @@
 //#include <SileliS_code/myList.h>
 #include <SileliS_code/radioMenu.h>
 #include "SileliS_code/ledsController.h"
-
+#include "SileliS_code/StepperOptoPowerOFF.h"
+#include <new>
 
 
 static bool esp32I2cInitialised = false;											//zmienna sprawdza czy esp32 zainiclował interfejs i2c
@@ -161,6 +162,9 @@ static void manageRadioButtonsAndManue(void* thing){
 
 extern radioMegaStruct radioStruct;
 ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
+StepperOptoPowerOFF stepperMotor = StepperOptoPowerOFF(&radioStruct.humanMachineInterface.stepperMotorData, pi2cMaster->getTransmitQueue());
+
+/*
 hmiLeds.setLedAllCleaned();
 hmiLeds.setLedSourceWithColor(COLOR_RED);
 hmiLeds.sendDataToI2cTransmitQueue();
@@ -168,7 +172,9 @@ vTaskDelay(pdMS_TO_TICKS(2000));
 hmiLeds.setLedAllCleaned();
 hmiLeds.setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
 hmiLeds.sendDataToI2cTransmitQueue();
+*/
 
+stepperMotor.setMotorCalibration();
 
 	while(1){
 		if(ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)){
@@ -180,9 +186,9 @@ hmiLeds.sendDataToI2cTransmitQueue();
 
 static void initTaskFunctions(void){
 
-	assert(pi2cMaster = new i2cMaster(&hi2c1));
+	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1));
 
-	assert(pESP32 = new esp32_i2cComunicationDriver(pi2cMaster));
+	assert(pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster));
 
 	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
 	pi2cMaster->i2cMasterSemaphoreTake();
@@ -204,7 +210,7 @@ static void initTaskFunctions(void){
 	configASSERT(xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMasterParseReceivedData));
 
 
-	assert(pRadioMenu=new radioMenu());
+	assert(pRadioMenu=new (std::nothrow) radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
 	configASSERT(xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue));
 	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
@@ -238,7 +244,7 @@ static void printfTask(void* noThing){
 }
 
 void startUpTask(void* noThing){
-	assert(pPrintf= new myPrintfTask(&huart1, 15));
+	assert(pPrintf= new (std::nothrow) myPrintfTask(&huart1, 15));
 
 	assert(xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask));
 
