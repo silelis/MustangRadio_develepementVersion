@@ -36,7 +36,7 @@ BaseType_t myPrintfTask::feedPrintf(const char *format, ...) {
 
     // Alokujemy odpowiednią ilość pamięci
    // char *buffer = (char*)malloc((length) * sizeof(char));
-    char *buffer = new char[itemToPrint.dataSize];
+    char *buffer = new (std::nothrow) char[itemToPrint.dataSize];
     assert(buffer);
 
     if (buffer != NULL) {

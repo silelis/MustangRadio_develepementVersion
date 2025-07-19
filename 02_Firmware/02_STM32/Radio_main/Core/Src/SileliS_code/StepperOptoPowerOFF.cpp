@@ -6,6 +6,7 @@
  */
 
 #include <SileliS_code/StepperOptoPowerOFF.h>
+#include <new>
 
 StepperOptoPowerOFF::StepperOptoPowerOFF(stepperMotorStruct* stepperMotorData, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue)
 {
@@ -30,35 +31,26 @@ BaseType_t StepperOptoPowerOFF::sendDataToI2cTransmitQueue(){
 	memcpy(&stepperToSend.stepperData, this->pStepperMotorData, sizeof(stepperMotorStruct));
 	stepperToSend.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&stepperToSend, stepperToSend.i2cframeCommandHeader.dataSize);
 	//tworzy ramkę komunikacujną do przesłania
-
-
-
-
-#ERROR DOKOŃCZY Ć TO
-
-	//tworzy ramke do przesłania
-	//i2cFrame_hmiLeds hmiLedsToSend;
-	//hmiLedsToSend.i2cframeCommandHeader.commandGroup = I2C_COMMAND_GROUP_LEDS;
-	//hmiLedsToSend.i2cframeCommandHeader.dataSize = sizeof(i2cFrame_hmiLeds);
-	//kopiuje dane z radioMegaStruct do ramki
-	//memcpy(&hmiLedsToSend.ledsData, this->pLeds, sizeof(hmiLeds));
-	//hmiLedsToSend.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&hmiLedsToSend, hmiLedsToSend.i2cframeCommandHeader.dataSize/*sizeof(i2cFrame_hmiLeds)*/);
-	//tworzy ramkę komunikacujną do przesłania
 	i2cFrame_transmitQueue dataToTransmitQueue;
-	dataToTransmitQueue.pData = new i2cFrame_hmiLeds; //new i2cFrame_hmiLeds[1];//malloc(sizeof(i2cFrame_hmiLeds));
-	assert(dataToTransmitQueue.pData);
-	dataToTransmitQueue.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;
-	dataToTransmitQueue.dataSize = hmiLedsToSend.i2cframeCommandHeader.dataSize/*sizeof(i2cFrame_hmiLeds)*/;
-	memcpy(dataToTransmitQueue.pData, &hmiLedsToSend, dataToTransmitQueue.dataSize);
-	return this->pI2C_MasterTransmitToSlave_DataQueue->QueueSend(&dataToTransmitQueue);
+	dataToTransmitQueue.pData = new (std::nothrow) i2cFrame_stepper;
+	if (dataToTransmitQueue.pData!=nullptr){
+		dataToTransmitQueue.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;
+		dataToTransmitQueue.dataSize = stepperToSend.i2cframeCommandHeader.dataSize;
+		memcpy(dataToTransmitQueue.pData, &stepperToSend, dataToTransmitQueue.dataSize);
+		return this->pI2C_MasterTransmitToSlave_DataQueue->QueueSend(&dataToTransmitQueue);
+	}
+	else{
+		assert(dataToTransmitQueue.pData);
+		return pdFALSE;
+	}
 }
 
 
-/*
+
 void StepperOptoPowerOFF::setMotorCalibration(void){
 	this->pStepperMotorData->stepperSubcommand = MOTOR_SUBCOMMAND_CALIBRATION;
 	this->pStepperMotorData->stepperUnion.stepperCalibration =1;
-
+	this->sendDataToI2cTransmitQueue();
 }
 
 void setMotorGotoAbsolut(uint16_t gotoPosition);

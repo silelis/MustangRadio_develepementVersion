@@ -48,7 +48,7 @@ radioMenu::radioMenu() :keyboardToFunction(radioStruct.control.ExecutableButtons
 
 void radioMenu::createDeviceMenuList_audio(void){
 
-	assert(this->audioDevices = new myList(&(this->ListHeader_audioDevices),"FM"/*, this->pExecutableButtonsArray*/));
+	assert(this->audioDevices = new (std::nothrow) myList(&(this->ListHeader_audioDevices),"FM"/*, this->pExecutableButtonsArray*/));
 	this->audioDevices->addAtEnd("DAB+"/*,pExecutableButtonsArray*/);
 	this->audioDevices->addAtEnd("AM"/*,pExecutableButtonsArray*/);
 	this->audioDevices->addAtEnd("Bluetooth"/*,this->pExecutableButtonsArray*/);
@@ -71,7 +71,7 @@ void radioMenu::createDeviceMenuList_audio(void){
 
 void radioMenu::createDeviceMenuList_periphery(void){
 
-	assert(this->peripheryDevices = new myList(&(this->ListHeader_peripheryDevices),"Antena"/*,this->pExecutableButtonsArray*/));
+	assert(this->peripheryDevices = new (std::nothrow) myList(&(this->ListHeader_peripheryDevices),"Antena"/*,this->pExecutableButtonsArray*/));
 	this->peripheryDevices->addAtEnd("Treble"/*,this->pExecutableButtonsArray*/);
 	this->peripheryDevices->addAtEnd("Midle"/*,this->pExecutableButtonsArray*/);
 	this->peripheryDevices->addAtEnd("Bass"/*,this->pExecutableButtonsArray*/);
@@ -88,7 +88,7 @@ void radioMenu::createDeviceMenuList_periphery(void){
 
 void radioMenu::createDeviceMenuList_mainMenu(void){
 
-	assert(this->radioMainMenu = new myList(&(this->ListHeader_mainMenu),"MainMenu: "/*,this->pExecutableButtonsArray*/));
+	assert(this->radioMainMenu = new (std::nothrow) myList(&(this->ListHeader_mainMenu),"MainMenu: "/*,this->pExecutableButtonsArray*/));
 
 	this->appendButtonArrayWithFunctionPointer({{'b', 0x3f}}, std::bind(&radioMenu::menuFunction_equButShortPressed, this));
 
