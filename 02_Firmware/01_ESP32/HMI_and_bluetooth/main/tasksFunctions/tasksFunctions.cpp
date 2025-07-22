@@ -434,6 +434,10 @@ void humanMahineDisplayLeds(void *nothiong)
 	}
 }
 
+
+static TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
+static TaskHandle_t handlerTask_stepperMotorMove = NULL;
+
 static void stepperMotorCalibration(void* nothing)
 {	uint16_t beginOffest;
 	uint16_t endOffset;
@@ -445,6 +449,7 @@ static void stepperMotorCalibration(void* nothing)
 	{
 		endOffset = UINT16_MAX;	
 	}
+	vTaskSuspend(handlerTask_stepperMotorCalibration);
 	for (;;)
 	{
 		if (pMotor->isCalibrated() == pdFALSE)
@@ -457,6 +462,7 @@ static void stepperMotorCalibration(void* nothing)
 
 static void stepperMotorMove(void* nothing)
 {
+	vTaskSuspend(handlerTask_stepperMotorMove);
 	for (;;)
 	{
 		if (pMotor->isPositionReached() != pdTRUE)
@@ -467,12 +473,12 @@ static void stepperMotorMove(void* nothing)
 	}
 }
 
+
 void stepperMotorDataParser(void *TaskParameters)
 {
+	configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
+	configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
 	
-	TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
-	TaskHandle_t handlerTask_stepperMotorMove = NULL;
-
 	i2cFrame_transmitQueue tempBuffer;
 	i2cFrame_stepper loclaStepperMotorFrame;
 	for (;;)
@@ -514,41 +520,42 @@ void stepperMotorDataParser(void *TaskParameters)
 		}
 		
 		
+		//sprawdza czy slider jest skalibrowany (jeśli NIE TO:)
 		if (pMotor->isCalibrated() == pdFALSE)
 		{
-			// Sprawdź, czy task nie istnieje lub został usunięty
-			if (handlerTask_stepperMotorCalibration == NULL || eTaskGetState(handlerTask_stepperMotorCalibration) == eDeleted)
+			// Sprawdź, czy task kalibracji nie jest zawieszony															
+			if (eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended)
 			{
-				configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
+				vTaskResume(handlerTask_stepperMotorCalibration);
 			}
 		}
+		//jeśli sloder jest skalibrowant to:
 		else
 		{
-			// Usuń task, jeśli istnieje
-			if (handlerTask_stepperMotorCalibration != NULL && eTaskGetState(handlerTask_stepperMotorCalibration) != eDeleted)
+			// jeśli taks kalibracji jest aktywny to go zawiesza
+			if (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended)
 			{
-				//vTaskDelay(pdMS_TO_TICKS(1000));
-				vTaskDelete(handlerTask_stepperMotorCalibration);
-				handlerTask_stepperMotorCalibration = NULL;
+				vTaskSuspend(handlerTask_stepperMotorCalibration);
 			}
-			if (handlerTask_stepperMotorMove == NULL || eTaskGetState(handlerTask_stepperMotorMove) == eDeleted)
+			//jeśli task kalibracji jest zawieszony to startuje z taskiem poruszania się slidera
+			if (eTaskGetState(handlerTask_stepperMotorMove) == eSuspended)
 			{
-				configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
+				vTaskResume(handlerTask_stepperMotorMove);
 			}
+			//jeśli task slidera jest aktywny
 			else
 			{
+				//sprawdza czy pozycja docelowa slidera została osiągnięta
 				if (pMotor->isPositionReached())
 				{
-					//vTaskDelay(pdMS_TO_TICKS(1000));
-					vTaskDelete(handlerTask_stepperMotorMove);
-					handlerTask_stepperMotorMove = NULL;	
+					vTaskSuspend(handlerTask_stepperMotorMove);
 				}
 			} 
 		}
 		
-		//vTaskPrioritySet(NULL, tskIDLE_PRIORITY);
-		
-		if (handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL)
+		//sprawdza czy moża zawiesić task parsera
+		if (pMotor->isCalibrated() == pdTRUE && pMotor->isPositionReached() && eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended /*handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL*/)
+			
 		{
 			vTaskSuspend(NULL);
 		}
