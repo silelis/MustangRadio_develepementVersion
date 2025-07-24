@@ -529,36 +529,44 @@ void stepperMotorDataParser(void *TaskParameters)
 				vTaskResume(handlerTask_stepperMotorCalibration);
 			}
 		}
-		//jeśli sloder jest skalibrowant to:
-		else
+		else if ((pMotor->isCalibrated() == pdTRUE) && (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended))
 		{
-			// jeśli taks kalibracji jest aktywny to go zawiesza
-			if (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended)
-			{
-				vTaskSuspend(handlerTask_stepperMotorCalibration);
-			}
-			//jeśli task kalibracji jest zawieszony to startuje z taskiem poruszania się slidera
+			vTaskSuspend(handlerTask_stepperMotorCalibration);
+		}
+//jeśli sloder jest skalibrowant to:
+		else if ((pMotor->isCalibrated() == pdTRUE) && !pMotor->isPositionReached())
+		{
+			//			// jeśli taks kalibracji jest aktywny to go zawiesza
+			//			if (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended)
+			//			{
+			//				vTaskSuspend(handlerTask_stepperMotorCalibration);
+			//			}
+						//jeśli task kalibracji jest zawieszony to startuje z taskiem poruszania się slidera
 			if (eTaskGetState(handlerTask_stepperMotorMove) == eSuspended)
 			{
 				vTaskResume(handlerTask_stepperMotorMove);
 			}
 			//jeśli task slidera jest aktywny
-			else
-			{
-				//sprawdza czy pozycja docelowa slidera została osiągnięta
-				if (pMotor->isPositionReached())
-				{
-					vTaskSuspend(handlerTask_stepperMotorMove);
-				}
-			} 
+//			else
+//			{
+//				//sprawdza czy pozycja docelowa slidera została osiągnięta
+//				if (pMotor->isPositionReached())
+//				{
+//					vTaskSuspend(handlerTask_stepperMotorMove);
+//				}
+//			} 
+		}
+		else if ((pMotor->isCalibrated() == pdTRUE) && pMotor->isPositionReached()&&(eTaskGetState(handlerTask_stepperMotorMove) != eSuspended))
+		{
+			vTaskSuspend(handlerTask_stepperMotorMove);
 		}
 		
 		//sprawdza czy moża zawiesić task parsera
-		if (pMotor->isCalibrated() == pdTRUE && pMotor->isPositionReached() && eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended /*handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL*/)
-			
-		{
-			vTaskSuspend(NULL);
-		}
+//		if (pMotor->isCalibrated() == pdTRUE && pMotor->isPositionReached() && eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended /*handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL*/)
+//			
+//		{
+//			vTaskSuspend(NULL);
+//		}
 		
 
 	}
@@ -609,7 +617,7 @@ void i2cReceivedDataParser(void *nothing)
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
 						extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
 						pMotor->QueueSendDataToMotorDataQueue(&parsingData);
-						vTaskResume(handlerTask_stepperMotorDataPasrser);
+//						vTaskResume(handlerTask_stepperMotorDataPasrser);
 						break;
 					default:
 						//nie wiadomo do jakiej "commandGroup" należą dane więc jest jakiś bład trzeba je usunąć, aby nie było przepełnienia pamięci
