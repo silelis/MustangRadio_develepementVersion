@@ -58,8 +58,11 @@ esp_err_t StepperOptoPowerOFF::enableStepperMotor()
 	uint8_t data = this->pMCP23008->readOLAT();
 	data |= MOTOR_NOT_SLEEP_MASK;						//set bit ONE
 	esp_err_t retVal = this->pMCP23008->writeOLAT(data);
+	if (retVal == ESP_OK)
+	{
+		this->isStepperDriverEnabled = pdTRUE;
+	}
 	vTaskDelay(pdMS_TO_TICKS(20));
-	this->isStepperDriverEnabled = pdTRUE;
 	return retVal;
 }
 
@@ -78,8 +81,12 @@ esp_err_t StepperOptoPowerOFF::disableStepperMotor()
 	uint8_t data = this->pMCP23008->readOLAT();
 	//data ^= MOTOR_NOT_SLEEP_MASK;
 	data &= ~MOTOR_NOT_SLEEP_MASK; //set bit ZERO
-	this->isStepperDriverEnabled = pdFALSE;
 	esp_err_t retVal = this->pMCP23008->writeOLAT(data);
+	if (retVal == ESP_OK)
+	{
+		this->isStepperDriverEnabled = pdFALSE;
+	}
+		
 	vTaskDelay(pdMS_TO_TICKS(20));
 	return retVal;
 }
