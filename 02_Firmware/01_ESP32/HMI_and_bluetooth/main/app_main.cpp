@@ -110,7 +110,7 @@ extern "C" void app_main(void)
 	assert(xTaskCreate(stepperMotorDataParser, "Stepper morot", 128 * 20, NULL, tskIDLE_PRIORITY, &handlerTask_stepperMotorDataPasrser));
 	//configASSERT(xTaskCreatePinnedToCore(stepperMotorDataParser, "StepMotParser", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
-	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 1, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
+	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
 	
 	btstack_init();
 	btstack_main(0, NULL);

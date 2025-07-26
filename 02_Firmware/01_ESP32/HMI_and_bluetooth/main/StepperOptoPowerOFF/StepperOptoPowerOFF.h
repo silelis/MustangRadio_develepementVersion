@@ -48,6 +48,8 @@ public:
 	BaseType_t QueueSendDataToMotorDataQueue(i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer);
+	UBaseType_t QueueMessagesWaiting(void);
+	
 	void calibrationReset(void);
 	void volatileDestinationBy_GotoAbsolutRange(uint16_t gotoPosition);
 	void volatileDestinationBy_GotoBoardertRange(uint16_t gotoPosition);
