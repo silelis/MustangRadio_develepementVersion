@@ -241,6 +241,12 @@ void LEDS_BACKLIGHT::QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue st
 	this->ParserDataToLedsDataQueue->QueueDeleteDataFromPointer(structWithPointer);	
 }
 
+UBaseType_t LEDS_BACKLIGHT::QueueMessagesWaiting(void)
+{
+	return this->ParserDataToLedsDataQueue->QueueMessagesWaiting();
+}
+
+
 
 void LEDS_BACKLIGHT::blinkTimeMultiplierReset(void)
 {

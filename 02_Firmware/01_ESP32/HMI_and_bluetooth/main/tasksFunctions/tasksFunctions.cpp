@@ -401,7 +401,12 @@ void humanMahineDisplayLeds(void *nothiong)
 			
 			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
 			pLedDisplay->SemaphoreGive();
-			vTaskSuspend(NULL);																					//all primary == secondary so suspend this task
+			if (pLedDisplay->QueueMessagesWaiting() == 0)
+			{
+				extern TaskHandle_t handlerTask_ledDisplay;
+				//vTaskSuspend(NULL); //all primary == secondary so suspend this task
+				vTaskSuspend(handlerTask_ledDisplay);
+			}
 		}
 		else		
 		{																										//if at least one led primary != secondary
@@ -518,6 +523,22 @@ void stepperMotorDataParser(void *TaskParameters)
 				assert(0);
 			}	
 		}
+		else
+		{
+			//sprawdza czy praca tasku zostałą zakończona
+			if (
+				eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended && pMotor->isCalibrated() &&
+				eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && pMotor->isPositionReached()) {
+				//na wszelki wypadek sprawdza czy w kolejce do tasku nie ma żadnych nowych danych
+				if (pMotor->QueueMessagesWaiting() == 0)
+				{
+					extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
+					//vTaskSuspend(NULL);
+					//				vTaskSuspend(handlerTask_stepperMotorDataPasrser);
+				}
+			}
+		}
+
 		
 		
 		//sprawdza czy slider jest skalibrowany (jeśli NIE TO:)
@@ -529,46 +550,21 @@ void stepperMotorDataParser(void *TaskParameters)
 				vTaskResume(handlerTask_stepperMotorCalibration);
 			}
 		}
-		else if ((pMotor->isCalibrated() == pdTRUE) && (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended))
+		else //((pMotor->isCalibrated() == pdTRUE)
 		{
-			vTaskSuspend(handlerTask_stepperMotorCalibration);
-		}
-//jeśli sloder jest skalibrowant to:
-		else if ((pMotor->isCalibrated() == pdTRUE) && !pMotor->isPositionReached())
-		{
-			//			// jeśli taks kalibracji jest aktywny to go zawiesza
-			//			if (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended)
-			//			{
-			//				vTaskSuspend(handlerTask_stepperMotorCalibration);
-			//			}
-						//jeśli task kalibracji jest zawieszony to startuje z taskiem poruszania się slidera
-			if (eTaskGetState(handlerTask_stepperMotorMove) == eSuspended)
+			if (eTaskGetState(handlerTask_stepperMotorCalibration) != eSuspended)
+			{
+				vTaskSuspend(handlerTask_stepperMotorCalibration);
+			}
+			else if (!pMotor->isPositionReached() && eTaskGetState(handlerTask_stepperMotorMove) == eSuspended)
 			{
 				vTaskResume(handlerTask_stepperMotorMove);
 			}
-			//jeśli task slidera jest aktywny
-//			else
-//			{
-//				//sprawdza czy pozycja docelowa slidera została osiągnięta
-//				if (pMotor->isPositionReached())
-//				{
-//					vTaskSuspend(handlerTask_stepperMotorMove);
-//				}
-//			} 
+			else if (pMotor->isPositionReached() && (eTaskGetState(handlerTask_stepperMotorMove) != eSuspended))
+			{
+				vTaskSuspend(handlerTask_stepperMotorMove);
+			}		
 		}
-		else if ((pMotor->isCalibrated() == pdTRUE) && pMotor->isPositionReached()&&(eTaskGetState(handlerTask_stepperMotorMove) != eSuspended))
-		{
-			vTaskSuspend(handlerTask_stepperMotorMove);
-		}
-		
-		//sprawdza czy moża zawiesić task parsera
-//		if (pMotor->isCalibrated() == pdTRUE && pMotor->isPositionReached() && eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended /*handlerTask_stepperMotorCalibration == NULL && handlerTask_stepperMotorMove == NULL*/)
-//			
-//		{
-//			vTaskSuspend(NULL);
-//		}
-		
-
 	}
 }
 
@@ -615,9 +611,9 @@ void i2cReceivedDataParser(void *nothing)
 						vTaskResume(handlerTask_ledDisplay);
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
-						extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
+						//extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
 						pMotor->QueueSendDataToMotorDataQueue(&parsingData);
-//						vTaskResume(handlerTask_stepperMotorDataPasrser);
+						//vTaskResume(handlerTask_stepperMotorDataPasrser);
 						break;
 					default:
 						//nie wiadomo do jakiej "commandGroup" należą dane więc jest jakiś bład trzeba je usunąć, aby nie było przepełnienia pamięci

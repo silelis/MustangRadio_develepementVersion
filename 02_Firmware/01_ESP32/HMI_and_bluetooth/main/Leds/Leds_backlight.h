@@ -30,6 +30,8 @@ public:
 	BaseType_t QueueSendDataToLedTask(i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer);
+	UBaseType_t QueueMessagesWaiting(void);
+	
 	void blinkTimeMultiplierSetMaxValue(void);
 	void blinkTimeDelayLoop(void);
 protected:

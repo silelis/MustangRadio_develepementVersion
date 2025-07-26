@@ -312,7 +312,7 @@ void StepperOptoPowerOFF::moveToVolatileDestinationPosition(void)
 {
 	
 	uint8_t lastDirection = 3;
-	this->enableStepperMotor();
+//	this->enableStepperMotor();
 	uint8_t inputsStates;
 	for (;;)
 	{
@@ -370,6 +370,10 @@ void StepperOptoPowerOFF::moveToVolatileDestinationPosition(void)
 			case MOVE_FORWARD:
 				this->motorParameters.currentPosition++;
 				break;
+			}
+			if (this->isStepperDriverEnabled != pdTRUE)
+			{
+				this->enableStepperMotor();	
 			}
 			this->makeStep();
 		
@@ -512,7 +516,10 @@ void StepperOptoPowerOFF::QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQue
 	this->ParserDataToStepperMotorDataQueue->QueueDeleteDataFromPointer(structWithPointer);	
 }
 
-
+UBaseType_t StepperOptoPowerOFF::QueueMessagesWaiting(void)
+{
+	return this->ParserDataToStepperMotorDataQueue->QueueMessagesWaiting();
+}
 
 
 void StepperOptoPowerOFF::volatileDestinationBy_GotoAbsolutRange(uint16_t gotoPosition)

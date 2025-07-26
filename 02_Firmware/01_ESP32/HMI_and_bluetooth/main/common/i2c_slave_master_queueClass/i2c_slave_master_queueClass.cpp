@@ -102,6 +102,12 @@ BaseType_t  i2cQueue4DynamicData::QueueReceive(/*void*/i2cFrame_transmitQueue * 
 }
 
 
+UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void)
+{
+	return uxQueueMessagesWaiting(this->handler_Queue);
+}
+
+
 /********************************************************************
  * @brief  Wysyła odebrane z i2c slave dane do kolejki butora odbiorczego
  * i2c.
