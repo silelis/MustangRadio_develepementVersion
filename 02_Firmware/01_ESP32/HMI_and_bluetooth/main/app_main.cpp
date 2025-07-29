@@ -22,6 +22,8 @@
 //#include "Leds/Leds_backlight.h"
 //#include "StepperOpto/StepperOptoPowerOFF.h"
 #include "tasksFunctions/tasksFunctions.h"
+#include "tasksFunctions/tasksFunctionsLeds.h"
+#include "tasksFunctions/tasksFunctionsStepperMotor.h"
 //#include "NVSeeprom/NVSeeprom.h"
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
 
