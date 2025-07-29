@@ -1,13 +1,15 @@
 #include "tasksFunctions.h"
+#include "tasksFunctions/tasksFunctionsLeds.h"
+#include "tasksFunctions/tasksFunctionsStepperMotor.h"
 #include "i2c_engine/i2c_engine.h"
 
 
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 //static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);
 
-static NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
-static LEDS_BACKLIGHT *pLedDisplay;		//obiekt sterujący pracą ledów (diody i backlioght)
-static 	StepperOptoPowerOFF * pMotor;	//obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
+/*static*/ NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
+//extern LEDS_BACKLIGHT *pLedDisplay;		//obiekt sterujący pracą ledów (diody i backlioght)
+//static 	StepperOptoPowerOFF * pMotor;	//obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
 static i2cEngin_slave *p_i2cSlave;		//obiekt sterujący komunikacją z stm32 po szynie i2c
 
 
@@ -292,7 +294,7 @@ static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboa
 	}	
 }
 
-
+/*
 void humanMahineBacklightLeds(void *lnothing)
 {
 	colorSet baclightLedsLocal;
@@ -438,8 +440,9 @@ void humanMahineDisplayLeds(void *nothiong)
 		}
 	}
 }
+ */
 
-
+/*
 static TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
 static TaskHandle_t handlerTask_stepperMotorMove = NULL;
 
@@ -567,6 +570,10 @@ void stepperMotorDataParser(void *TaskParameters)
 		}
 	}
 }
+
+ */
+
+
 
 //Funkcja tasku zajmującego się odbieraniem otrzymanych przez i2c slave danych i przesyłaniem do kolejki danych.
 // Dane trafiają do funkcji parsera i2c.

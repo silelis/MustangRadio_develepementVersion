@@ -14,8 +14,8 @@
 #include "hwConfigFile.h"
 #include "tasksFunctions.h"
 #include "keyboard/keyboard.h"
-#include "Leds/Leds_backlight.h"
-#include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
+//#include "Leds/Leds_backlight.h"
+//#include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
 #include "NVSeeprom/NVSeeprom.h"
 
    /*
@@ -26,11 +26,13 @@ struct hmiDisplay {
 };	   */
 
 
+extern NVS* pSTORAGE; //obiekt zapisuj¹cy i czytaj¹cy dane z NCS ESP32
+
 void taskFunctionsStaticHandlersInit(void);
 void keyboardQueueParametersParser(void*);
-void humanMahineDisplayLeds(void *);
-void humanMahineBacklightLeds(void *);
-void stepperMotorDataParser(void *);
+//void humanMahineDisplayLeds(void *);
+//void humanMahineBacklightLeds(void *);
+//void stepperMotorDataParser(void *);
 void i2cSlaveTransmit(void *);
 void i2cSlaveReceive(void *);
 void i2cReceivedDataParser(void *nothing);
