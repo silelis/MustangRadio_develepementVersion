@@ -164,7 +164,7 @@ extern radioMegaStruct radioStruct;
 ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
 StepperOptoPowerOFF stepperMotor = StepperOptoPowerOFF(&radioStruct.humanMachineInterface.stepperMotorData, pi2cMaster->getTransmitQueue());
 
-/*
+
 hmiLeds.setLedAllCleaned();
 hmiLeds.setLedSourceWithColor(COLOR_RED);
 hmiLeds.sendDataToI2cTransmitQueue();
@@ -172,7 +172,7 @@ vTaskDelay(pdMS_TO_TICKS(2000));
 hmiLeds.setLedAllCleaned();
 hmiLeds.setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
 hmiLeds.sendDataToI2cTransmitQueue();
-*/
+
 
 stepperMotor.setMotorCalibration();
 

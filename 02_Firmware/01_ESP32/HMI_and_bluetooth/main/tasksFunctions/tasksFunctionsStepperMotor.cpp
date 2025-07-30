@@ -1,8 +1,8 @@
 #include "tasksFunctions/tasksFunctionsStepperMotor.h"
+#include "tasksFunctions/tasksFunctionsStorage.h"
 #include "tasksFunctions/tasksFunctions.h"		//tutaj jest extern NVS* pSTORAGE; //obiekt zapisuj¹cy i czytaj¹cy dane z NCS ESP32
 
 StepperOptoPowerOFF * pMotor; //obiekt steruj¹cy prac¹ silnika krokowego, jego krañcówej i power off radia
-
 
 static TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
 static TaskHandle_t handlerTask_stepperMotorMove = NULL;
@@ -53,7 +53,7 @@ void stepperMotorDataParser(void *TaskParameters)
 	i2cFrame_stepper loclaStepperMotorFrame;
 	for (;;)
 	{
-		if (pMotor->QueueReceiveFormI2cParsingTask(&tempBuffer, pdMS_TO_TICKS(100)) == pdTRUE)
+		if (pMotor->QueueReceiveFormI2cParsingTask(&tempBuffer, pdMS_TO_TICKS(10)) == pdTRUE)
 		{
 			memcpy(&loclaStepperMotorFrame, tempBuffer.pData, sizeof(i2cFrame_stepper));
 			pMotor->QueueDeleteDataFormI2cParsingTask(tempBuffer);

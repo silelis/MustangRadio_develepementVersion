@@ -16,7 +16,7 @@
 #include "keyboard/keyboard.h"
 //#include "Leds/Leds_backlight.h"
 //#include "StepperOptoPowerOFF/StepperOptoPowerOFF.h"
-#include "NVSeeprom/NVSeeprom.h"
+//#include "NVSeeprom/NVSeeprom.h"
 
    /*
 struct hmiDisplay {
@@ -26,7 +26,7 @@ struct hmiDisplay {
 };	   */
 
 
-extern NVS* pSTORAGE; //obiekt zapisuj¹cy i czytaj¹cy dane z NCS ESP32
+
 
 void taskFunctionsStaticHandlersInit(void);
 void keyboardQueueParametersParser(void*);
