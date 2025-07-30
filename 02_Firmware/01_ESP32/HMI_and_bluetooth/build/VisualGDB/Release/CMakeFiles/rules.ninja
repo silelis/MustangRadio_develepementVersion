@@ -17,7 +17,7 @@
 rule C_COMPILER__cpp_exceptions_example.2eelf_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -25,7 +25,7 @@ rule C_COMPILER__cpp_exceptions_example.2eelf_unscanned_RELEASE
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__cpp_exceptions_example.2eelf_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $FLAGS $LINK_FLAGS @$RSP_FILE -o $TARGET_FILE  && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $FLAGS $LINK_FLAGS @$RSP_FILE -o $TARGET_FILE  && $POST_BUILD"
   description = Linking CXX executable $TARGET_FILE
   rspfile = $RSP_FILE
   rspfile_content = $in $LINK_PATH $LINK_LIBRARIES
@@ -46,7 +46,7 @@ rule CUSTOM_COMMAND
 rule ASM_COMPILER____idf_xtensa_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -56,7 +56,7 @@ rule ASM_COMPILER____idf_xtensa_unscanned_RELEASE
 rule C_COMPILER____idf_xtensa_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -64,7 +64,7 @@ rule C_COMPILER____idf_xtensa_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_xtensa_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -72,75 +72,18 @@ rule C_STATIC_LIBRARY_LINKER____idf_xtensa_RELEASE
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER____idf_esp_ringbuf_unscanned_RELEASE
+rule C_COMPILER____idf_esp_driver_gpio_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
 #############################################
 # Rule for linking C static library.
 
-rule C_STATIC_LIBRARY_LINKER____idf_esp_ringbuf_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_efuse_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_efuse_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_esp_mm_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_esp_mm_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_driver_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_driver_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_gpio_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -151,7 +94,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_driver_RELEASE
 rule C_COMPILER____idf_esp_pm_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -159,7 +102,7 @@ rule C_COMPILER____idf_esp_pm_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_pm_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -170,7 +113,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_pm_RELEASE
 rule ASM_COMPILER____idf_mbedtls_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -180,7 +123,7 @@ rule ASM_COMPILER____idf_mbedtls_unscanned_RELEASE
 rule C_COMPILER____idf_mbedtls_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -188,7 +131,7 @@ rule C_COMPILER____idf_mbedtls_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_mbedtls_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -199,7 +142,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_mbedtls_RELEASE
 rule C_COMPILER__everest_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -207,7 +150,7 @@ rule C_COMPILER__everest_unscanned_RELEASE
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__everest_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -218,7 +161,7 @@ rule CXX_STATIC_LIBRARY_LINKER__everest_RELEASE
 rule C_COMPILER__p256m_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -226,7 +169,7 @@ rule C_COMPILER__p256m_unscanned_RELEASE
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__p256m_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -237,7 +180,7 @@ rule CXX_STATIC_LIBRARY_LINKER__p256m_RELEASE
 rule C_COMPILER__mbedcrypto_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -245,7 +188,7 @@ rule C_COMPILER__mbedcrypto_unscanned_RELEASE
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__mbedcrypto_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   rspfile = $RSP_FILE
   rspfile_content = $in $LINK_PATH $LINK_LIBRARIES
@@ -258,7 +201,7 @@ rule CXX_STATIC_LIBRARY_LINKER__mbedcrypto_RELEASE
 rule C_COMPILER__mbedx509_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -266,7 +209,7 @@ rule C_COMPILER__mbedx509_unscanned_RELEASE
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__mbedx509_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -277,7 +220,7 @@ rule CXX_STATIC_LIBRARY_LINKER__mbedx509_RELEASE
 rule C_COMPILER__mbedtls_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -285,27 +228,8 @@ rule C_COMPILER__mbedtls_unscanned_RELEASE
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__mbedtls_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_esp_bootloader_format_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_esp_bootloader_format_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
 
@@ -315,7 +239,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_bootloader_format_RELEASE
 rule C_COMPILER____idf_esp_app_format_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -323,7 +247,7 @@ rule C_COMPILER____idf_esp_app_format_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_app_format_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -331,37 +255,18 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_app_format_RELEASE
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER____idf_bootloader_support_unscanned_RELEASE
+rule C_COMPILER____idf_esp_bootloader_format_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
 #############################################
 # Rule for linking C static library.
 
-rule C_STATIC_LIBRARY_LINKER____idf_bootloader_support_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_esp_partition_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_esp_partition_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+rule C_STATIC_LIBRARY_LINKER____idf_esp_bootloader_format_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -372,7 +277,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_partition_RELEASE
 rule C_COMPILER____idf_app_update_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -380,7 +285,83 @@ rule C_COMPILER____idf_app_update_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_app_update_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_partition_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_partition_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_efuse_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_efuse_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_bootloader_support_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_bootloader_support_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_mm_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_mm_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -391,7 +372,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_app_update_RELEASE
 rule C_COMPILER____idf_spi_flash_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -399,26 +380,7 @@ rule C_COMPILER____idf_spi_flash_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_spi_flash_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_pthread_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_pthread_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -429,7 +391,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_pthread_RELEASE
 rule ASM_COMPILER____idf_esp_system_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -439,7 +401,7 @@ rule ASM_COMPILER____idf_esp_system_unscanned_RELEASE
 rule C_COMPILER____idf_esp_system_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -447,198 +409,7 @@ rule C_COMPILER____idf_esp_system_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_system_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling ASM files.
-
-rule ASM_COMPILER____idf_esp_rom_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building ASM object $out
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_esp_rom_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_esp_rom_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_hal_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_hal_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_log_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_log_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_heap_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_heap_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_soc_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_soc_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_esp_hw_support_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_esp_hw_support_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling ASM files.
-
-rule ASM_COMPILER____idf_freertos_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building ASM object $out
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_freertos_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_freertos_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_newlib_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_newlib_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling CXX files.
-
-rule CXX_COMPILER____idf_cxx_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building CXX object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_cxx_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -649,7 +420,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_cxx_RELEASE
 rule C_COMPILER____idf_esp_common_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -657,7 +428,217 @@ rule C_COMPILER____idf_esp_common_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_common_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling ASM files.
+
+rule ASM_COMPILER____idf_esp_rom_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building ASM object $out
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_rom_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_rom_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_hal_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_hal_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_log_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_log_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_heap_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_heap_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_soc_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_soc_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_hw_support_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_hw_support_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling ASM files.
+
+rule ASM_COMPILER____idf_freertos_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building ASM object $out
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_freertos_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_freertos_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_newlib_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_newlib_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_pthread_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_pthread_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER____idf_cxx_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_cxx_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -668,7 +649,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_common_RELEASE
 rule C_COMPILER____idf_esp_timer_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -676,7 +657,64 @@ rule C_COMPILER____idf_esp_timer_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_timer_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_gptimer_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_gptimer_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_ringbuf_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_ringbuf_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_uart_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_uart_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -687,7 +725,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_timer_RELEASE
 rule C_COMPILER____idf_app_trace_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -695,7 +733,7 @@ rule C_COMPILER____idf_app_trace_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_app_trace_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -706,7 +744,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_app_trace_RELEASE
 rule C_COMPILER____idf_esp_event_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -714,7 +752,7 @@ rule C_COMPILER____idf_esp_event_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_event_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -725,7 +763,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_event_RELEASE
 rule CXX_COMPILER____idf_nvs_flash_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -733,7 +771,273 @@ rule CXX_COMPILER____idf_nvs_flash_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_nvs_flash_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_pcnt_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_pcnt_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_spi_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_spi_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_mcpwm_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_mcpwm_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_i2s_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_i2s_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_sdmmc_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_sdmmc_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_sdmmc_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_sdmmc_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_sdspi_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_sdspi_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_sdio_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_sdio_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_dac_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_dac_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_rmt_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_rmt_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_sdm_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_sdm_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_i2c_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_i2c_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_ledc_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_ledc_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_driver_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_driver_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -744,7 +1048,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_nvs_flash_RELEASE
 rule C_COMPILER____idf_esp_phy_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -752,7 +1056,26 @@ rule C_COMPILER____idf_esp_phy_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_phy_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_vfs_console_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_vfs_console_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -763,7 +1086,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_phy_RELEASE
 rule C_COMPILER____idf_vfs_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -771,7 +1094,7 @@ rule C_COMPILER____idf_vfs_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_vfs_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -782,7 +1105,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_vfs_RELEASE
 rule C_COMPILER____idf_lwip_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -790,7 +1113,7 @@ rule C_COMPILER____idf_lwip_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_lwip_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -801,7 +1124,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_lwip_RELEASE
 rule C_COMPILER____idf_esp_netif_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -809,7 +1132,7 @@ rule C_COMPILER____idf_esp_netif_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_netif_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -820,7 +1143,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_netif_RELEASE
 rule C_COMPILER____idf_wpa_supplicant_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -828,7 +1151,7 @@ rule C_COMPILER____idf_wpa_supplicant_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_wpa_supplicant_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   rspfile = $RSP_FILE
   rspfile_content = $in $LINK_PATH $LINK_LIBRARIES
@@ -841,7 +1164,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_wpa_supplicant_RELEASE
 rule C_COMPILER____idf_esp_coex_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -849,7 +1172,7 @@ rule C_COMPILER____idf_esp_coex_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_coex_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -860,7 +1183,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_coex_RELEASE
 rule C_COMPILER____idf_esp_wifi_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -868,7 +1191,7 @@ rule C_COMPILER____idf_esp_wifi_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_wifi_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -879,7 +1202,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_wifi_RELEASE
 rule ASM_COMPILER____idf_bt_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -889,7 +1212,7 @@ rule ASM_COMPILER____idf_bt_unscanned_RELEASE
 rule C_COMPILER____idf_bt_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -897,7 +1220,7 @@ rule C_COMPILER____idf_bt_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_bt_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -908,7 +1231,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_bt_RELEASE
 rule C_COMPILER____idf_unity_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -916,7 +1239,7 @@ rule C_COMPILER____idf_unity_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_unity_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -927,7 +1250,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_unity_RELEASE
 rule C_COMPILER____idf_cmock_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -935,7 +1258,7 @@ rule C_COMPILER____idf_cmock_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_cmock_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -946,7 +1269,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_cmock_RELEASE
 rule C_COMPILER____idf_console_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -954,7 +1277,7 @@ rule C_COMPILER____idf_console_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_console_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -965,7 +1288,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_console_RELEASE
 rule C_COMPILER____idf_http_parser_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -973,7 +1296,7 @@ rule C_COMPILER____idf_http_parser_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_http_parser_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -984,7 +1307,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_http_parser_RELEASE
 rule C_COMPILER____idf_esp-tls_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -992,7 +1315,7 @@ rule C_COMPILER____idf_esp-tls_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp-tls_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1003,7 +1326,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp-tls_RELEASE
 rule C_COMPILER____idf_esp_adc_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1011,7 +1334,26 @@ rule C_COMPILER____idf_esp_adc_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_adc_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_driver_cam_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_driver_cam_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1022,7 +1364,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_adc_RELEASE
 rule C_COMPILER____idf_esp_eth_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1030,7 +1372,7 @@ rule C_COMPILER____idf_esp_eth_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_eth_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1041,7 +1383,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_eth_RELEASE
 rule ASM_COMPILER____idf_esp_gdbstub_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -1051,7 +1393,7 @@ rule ASM_COMPILER____idf_esp_gdbstub_unscanned_RELEASE
 rule C_COMPILER____idf_esp_gdbstub_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1059,7 +1401,7 @@ rule C_COMPILER____idf_esp_gdbstub_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_gdbstub_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1070,7 +1412,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_gdbstub_RELEASE
 rule C_COMPILER____idf_esp_hid_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1078,7 +1420,7 @@ rule C_COMPILER____idf_esp_hid_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_hid_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1089,7 +1431,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_hid_RELEASE
 rule C_COMPILER____idf_tcp_transport_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1097,7 +1439,7 @@ rule C_COMPILER____idf_tcp_transport_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_tcp_transport_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1108,7 +1450,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_tcp_transport_RELEASE
 rule C_COMPILER____idf_esp_http_client_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1116,7 +1458,7 @@ rule C_COMPILER____idf_esp_http_client_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_http_client_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1127,7 +1469,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_http_client_RELEASE
 rule C_COMPILER____idf_esp_http_server_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1135,7 +1477,7 @@ rule C_COMPILER____idf_esp_http_server_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_http_server_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1146,7 +1488,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_http_server_RELEASE
 rule C_COMPILER____idf_esp_https_ota_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1154,7 +1496,26 @@ rule C_COMPILER____idf_esp_https_ota_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_https_ota_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER____idf_esp_https_server_unscanned_RELEASE
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_https_server_RELEASE
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1165,7 +1526,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_https_ota_RELEASE
 rule C_COMPILER____idf_esp_lcd_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1173,7 +1534,7 @@ rule C_COMPILER____idf_esp_lcd_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_lcd_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1184,7 +1545,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_lcd_RELEASE
 rule C_COMPILER____idf_protobuf-c_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1192,7 +1553,7 @@ rule C_COMPILER____idf_protobuf-c_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_protobuf-c_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1203,7 +1564,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_protobuf-c_RELEASE
 rule C_COMPILER____idf_protocomm_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1211,7 +1572,7 @@ rule C_COMPILER____idf_protocomm_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_protocomm_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1222,7 +1583,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_protocomm_RELEASE
 rule C_COMPILER____idf_esp_local_ctrl_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1230,7 +1591,7 @@ rule C_COMPILER____idf_esp_local_ctrl_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_esp_local_ctrl_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1241,7 +1602,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_local_ctrl_RELEASE
 rule C_COMPILER____idf_espcoredump_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1249,7 +1610,7 @@ rule C_COMPILER____idf_espcoredump_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_espcoredump_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1260,7 +1621,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_espcoredump_RELEASE
 rule CXX_COMPILER____idf_wear_levelling_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -1268,26 +1629,7 @@ rule CXX_COMPILER____idf_wear_levelling_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_wear_levelling_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
-  description = Linking C static library $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER____idf_sdmmc_unscanned_RELEASE
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C static library.
-
-rule C_STATIC_LIBRARY_LINKER____idf_sdmmc_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1298,7 +1640,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_sdmmc_RELEASE
 rule C_COMPILER____idf_fatfs_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1306,7 +1648,7 @@ rule C_COMPILER____idf_fatfs_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_fatfs_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1317,7 +1659,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_fatfs_RELEASE
 rule C_COMPILER____idf_json_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1325,7 +1667,7 @@ rule C_COMPILER____idf_json_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_json_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1336,7 +1678,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_json_RELEASE
 rule C_COMPILER____idf_mqtt_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1344,7 +1686,7 @@ rule C_COMPILER____idf_mqtt_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_mqtt_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1355,7 +1697,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_mqtt_RELEASE
 rule C_COMPILER____idf_nvs_sec_provider_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1363,7 +1705,7 @@ rule C_COMPILER____idf_nvs_sec_provider_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_nvs_sec_provider_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1374,7 +1716,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_nvs_sec_provider_RELEASE
 rule C_COMPILER____idf_perfmon_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1382,7 +1724,7 @@ rule C_COMPILER____idf_perfmon_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_perfmon_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1393,7 +1735,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_perfmon_RELEASE
 rule C_COMPILER____idf_spiffs_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1401,7 +1743,7 @@ rule C_COMPILER____idf_spiffs_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_spiffs_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1412,7 +1754,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_spiffs_RELEASE
 rule C_COMPILER____idf_wifi_provisioning_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1420,7 +1762,7 @@ rule C_COMPILER____idf_wifi_provisioning_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_wifi_provisioning_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1431,7 +1773,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_wifi_provisioning_RELEASE
 rule CXX_COMPILER____idf_main_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -1439,7 +1781,7 @@ rule CXX_COMPILER____idf_main_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_main_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1450,7 +1792,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_main_RELEASE
 rule C_COMPILER____idf_btstack_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1458,7 +1800,7 @@ rule C_COMPILER____idf_btstack_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_btstack_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS @$RSP_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   rspfile = $RSP_FILE
   rspfile_content = $in $LINK_PATH $LINK_LIBRARIES
@@ -1471,7 +1813,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_btstack_RELEASE
 rule C_COMPILER____idf_espressif__led_strip_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -1481,7 +1823,7 @@ rule C_COMPILER____idf_espressif__led_strip_unscanned_RELEASE
 rule CXX_COMPILER____idf_espressif__led_strip_unscanned_RELEASE
   depfile = $DEP_FILE
   deps = gcc
-  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = ccache ${LAUNCHER}${CODE_CHECK}C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-g++.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -1489,7 +1831,7 @@ rule CXX_COMPILER____idf_espressif__led_strip_unscanned_RELEASE
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER____idf_espressif__led_strip_RELEASE
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Users\dbank\AppData\Local\VisualGDB\CMake\bin\cmake.exe -E rm -f $TARGET_FILE && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\SysGCC\esp32\tools\xtensa-esp-elf\esp-13.2.0_20240530\xtensa-esp-elf\bin\xtensa-esp32-elf-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -1515,7 +1857,7 @@ rule CLEAN_ADDITIONAL
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = C:\SysGCC\esp32\tools\ninja\1.10.2\ninja.exe $FILE_ARG -t clean $TARGETS
+  command = C:\SysGCC\esp32\tools\ninja\1.11.1\ninja.exe $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -1523,6 +1865,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = C:\SysGCC\esp32\tools\ninja\1.10.2\ninja.exe -t targets
+  command = C:\SysGCC\esp32\tools\ninja\1.11.1\ninja.exe -t targets
   description = All primary targets available:
 

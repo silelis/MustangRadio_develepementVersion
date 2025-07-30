@@ -15,4 +15,5 @@ idf_component_register(
                     	common/comunication_calculate_checksum/comunication_calculate_checksum.cpp
                     	tasksFunctions/tasksFunctionsLeds.cpp
                     	tasksFunctions/tasksFunctionsStepperMotor.cpp
+                    	tasksFunctions/tasksFunctionsStorage.cpp
                     INCLUDE_DIRS ".")
