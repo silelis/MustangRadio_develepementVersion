@@ -271,7 +271,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 					{
 						_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->latchedState | LONG_PRESS_BIT_MASK; // set "1" in LONG_PRESS_BIT_MASK aka 0b10000000 means long button press
 						xTaskResumeFromISR(_gpioInterruptCallback->taskHandler_onPeriodLongButtonPressNotification); //Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
-						vTaskResume(handlerTask_keyboardLongPressOnPressQueueFeeder);
+						xTaskResumeFromISR/*vTaskResume*/(handlerTask_keyboardLongPressOnPressQueueFeeder);
 					}
 				}
 			}		
