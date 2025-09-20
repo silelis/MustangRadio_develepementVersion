@@ -23,7 +23,10 @@ public:
 	~i2cEngin_slave();
 
 	
-	esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
+//	esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
+	esp_err_t i2cSlaveTransmit(void);
+	
+	
 	
 	//esp_err_t slaveTransmit(void);
 	//i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
@@ -32,6 +35,7 @@ public:
 	void i2cSlaveReceive(void);
 	BaseType_t i2cMasterCrcSumCounterErrorIncrement(void);
 	void i2cMasterCrcSumCounterErrorReset(void);
+	BaseType_t i2cSendDataToTransisionQueue(i2cFrame_transmitQueue* tempFrameToParserQueue);
 	
 	
 protected:
@@ -42,6 +46,7 @@ private:
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;
 	i2cQueue4DynamicData* i2cSlaveReceiveDataToDataParserQueue;
+	i2cQueue4DynamicData* i2cSlaveTransmitDataQueue;
 	
 	uint16_t i2cMasterCrcSumCounterError;
 	//const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 25;

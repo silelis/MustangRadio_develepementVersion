@@ -88,12 +88,14 @@ extern "C" void app_main(void)
 	
 	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+1, &handlerTask_i2cSlaveTransmit));
 	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 10, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveReceive));
+	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 10, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveReceive));
+	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s Display leds task starting\n", main_TAG);
-	configASSERT(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	configASSERT(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
 	printf("%s Backlight leds task starting\n", main_TAG);
-	configASSERT(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 7, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay)); //tworzy task dla dod podświetlenia (korzystają z WS2812)
+	configASSERT(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay)); //tworzy task dla dod podświetlenia (korzystają z WS2812)
 	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
 	printf("%s Buttons and encoders (aka keyboard) init\n", main_TAG);
