@@ -1,0 +1,74 @@
+Guru Meditation Error: Core  0 panic'ed (Interrupt wdt timeout on CPU0).
+
+Core  0 register dump:
+PC      : 0x40094a49  PS      : 0x00060a35  A0      : 0x800869dc  A1      : 0x3ffbf340
+A2      : 0x3ffd6e40  A3      : 0xffffffff  A4      : 0x0000001c  A5      : 0x00060a23
+A6      : 0x00000001  A7      : 0x0000cdcd  A8      : 0x00060a23  A9      : 0xb33fffff
+A10     : 0x00000000  A11     : 0x3ffbf340  A12     : 0x00000000  A13     : 0x3ffbf370
+A14     : 0x3ffd6ed8  A15     : 0x3ffd6e70  SAR     : 0x00000020  EXCCAUSE: 0x00000005
+EXCVADDR: 0x00000000  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0xffffffff
+Core  0 was running in ISR context:
+EPC1    : 0x400d3b57  EPC2    : 0x00000000  EPC3    : 0x4000bff0  EPC4    : 0x40094b64
+
+
+Backtrace: 0x40094a46:0x3ffbf340 0x400869d9:0x3ffbf370 0x40086a2b:0x3ffbf3a0 0x40086a5c:0x3ffbf3c0 0x400826fd:0x3ffbf3f0 0x40083cb1:0x3ffbf410 0x40082708:0x3ffda180 0x40094bd3:0x3ffda190 0x400ffa16:0x3ffda1b0 0x400dabda:0x3ffda1d0 0x400d9446:0x3ffda200 0x400d96dd:0x3ffda230 0x400948ea:0x3ffda260
+
+
+Core  1 register dump:
+PC      : 0x4009198e  PS      : 0x00060735  A0      : 0x800d395e  A1      : 0x3ffd65b0
+A2      : 0x00000000  A3      : 0x00000001  A4      : 0x80094bd6  A5      : 0x3ffd64e0
+A6      : 0x00000003  A7      : 0x00060023  A8      : 0x800f72de  A9      : 0x3ffd6580
+A10     : 0x00000000  A11     : 0x00000001  A12     : 0x80094bd6  A13     : 0x3ffd64c0
+A14     : 0x00000003  A15     : 0x3ffbd980  SAR     : 0x00000000  EXCCAUSE: 0x00000005
+EXCVADDR: 0x00000000  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000
+
+
+Backtrace: 0x4009198b:0x3ffd65b0 0x400d395b:0x3ffd65d0 0x40095685:0x3ffd65f0 0x400948ea:0x3ffd6610
+
+
+Core  1 register dump:
+PC      : 0x4009198e  PS      : 0x00060735  A0      : 0x800d395e  A1      : 0x3ffd65b0
+A2      : 0x00000000  A3      : 0x00000001  A4      : 0x80094bd6  A5      : 0x3ffd64e0
+A6      : 0x00000003  A7      : 0x00060023  A8      : 0x800f72de  A9      : 0x3ffd6580
+A10     : 0x00000000  A11     : 0x00000001  A12     : 0x80094bd6  A13     : 0x3ffd64c0
+A14     : 0x00000003  A15     : 0x3ffbd980  SAR     : 0x00000000  EXCCAUSE: 0x00000005
+EXCVADDR: 0x00000000  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000
+
+
+Backtrace: 0x4009198b:0x3ffd65b0 0x400d395b:0x3ffd65d0 0x40095685:0x3ffd65f0 0x400948ea:0x3ffd6610
+0x4009198b: xt_utils_wait_for_intr at C:/SysGCC/esp32/esp-idf/v5.3.1/components/xtensa/include/xt_utils.h:82
+ (inlined by) esp_cpu_wait_for_intr at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_hw_support/cpu.c:55
+0x400d395b: esp_vApplicationIdleHook at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_system/freertos_hooks.c:58
+0x40095685: prvIdleTask at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/tasks.c:4344 (discriminator 1)
+0x400948ea: vPortTaskWrapper at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:134
+
+
+
+Core  0 register dump:
+PC      : 0x40094a49  PS      : 0x00060a35  A0      : 0x800869dc  A1      : 0x3ffbf340
+A2      : 0x3ffd6e40  A3      : 0xffffffff  A4      : 0x0000001c  A5      : 0x00060a23
+A6      : 0x00000001  A7      : 0x0000cdcd  A8      : 0x00060a23  A9      : 0xb33fffff
+A10     : 0x00000000  A11     : 0x3ffbf340  A12     : 0x00000000  A13     : 0x3ffbf370
+A14     : 0x3ffd6ed8  A15     : 0x3ffd6e70  SAR     : 0x00000020  EXCCAUSE: 0x00000005
+EXCVADDR: 0x00000000  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0xffffffff
+Core  0 was running in ISR context:
+EPC1    : 0x400d3b57  EPC2    : 0x00000000  EPC3    : 0x4000bff0  EPC4    : 0x40094b64
+
+
+Backtrace: 0x40094a46:0x3ffbf340 0x400869d9:0x3ffbf370 0x40086a2b:0x3ffbf3a0 0x40086a5c:0x3ffbf3c0 0x400826fd:0x3ffbf3f0 0x40083cb1:0x3ffbf410 0x40082708:0x3ffda180 0x40094bd3:0x3ffda190 0x400ffa16:0x3ffda1b0 0x400dabda:0x3ffda1d0 0x400d9446:0x3ffda200 0x400d96dd:0x3ffda230 0x400948ea:0x3ffda260
+0x40094a46: spinlock_acquire at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_hw_support/include/spinlock.h:111
+ (inlined by) xPortEnterCriticalTimeout at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:474
+0x400869d9: vPortEnterCritical at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:567
+ (inlined by) s_i2c_handle_tx_fifo_wm at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_driver_i2c/i2c_slave.c:104
+0x40086a2b: s_slave_fifo_isr_handler at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_driver_i2c/i2c_slave.c:131
+0x40086a5c: s_slave_isr_handle_default at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_driver_i2c/i2c_slave.c:172
+0x400826fd: shared_intr_isr at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_hw_support/intr_alloc.c:445
+0x40083cb1: _xt_lowint1 at C:/SysGCC/esp32/esp-idf/v5.3.1/components/xtensa/xtensa_vectors.S:1240
+0x40082708: shared_intr_isr at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_hw_support/intr_alloc.c:454
+0x40094bd3: vPortClearInterruptMaskFromISR at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:560
+ (inlined by) vPortExitCritical at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:505
+0x400ffa16: i2c_slave_transmit at C:/SysGCC/esp32/esp-idf/v5.3.1/components/esp_driver_i2c/i2c_slave.c:336
+0x400dabda: i2cEngin_slave::slaveTransmit(i2cFrame_transmitQueue) at D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/i2c_engine/i2c_engine.cpp:308
+0x400d9446: esp32PrepareKbrdDataAndSent_to_QueueSend(i2cFrame_keyboardFrame const*, unsigned int) at D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/tasksFunctions/tasksFunctions.cpp:287
+0x400d96dd: keyboardQueueParametersParser(void*) at D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/tasksFunctions/tasksFunctions.cpp:239
+0x400948ea: vPortTaskWrapper at C:/SysGCC/esp32/esp-idf/v5.3.1/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:134
