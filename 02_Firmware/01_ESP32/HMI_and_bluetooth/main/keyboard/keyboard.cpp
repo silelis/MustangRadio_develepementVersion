@@ -476,7 +476,7 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	//starting task that feed queue about button long press	in progress
 	printf("%s Starting 'keyboardLongPressOnPressQueueFeeder' task.\n", this->TAG);
 	handlerTask_keyboardLongPressOnPressQueueFeeder	 = NULL;
-	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 5, this, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
+	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 10, this, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
 						 
 
 	//interrupts (GPIOs and timer) callback function data passing structure

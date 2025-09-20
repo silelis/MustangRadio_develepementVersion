@@ -233,6 +233,8 @@ void keyboardQueueParametersParser(void *parameters)
 				
 				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
 				
+				
+				
 
 				#warning zastanowić się jak poprawić funkcję "esp32PrepareKbrdDataAndSent_to_QueueSend" bo to proteza, która nie za bardzo mi się podoba
 				//if (p_i2cSlave->pTransmitQueueObject->esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
@@ -284,10 +286,13 @@ static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboa
 		//return this->QueueSend(&dataToTransmitQueue);
 		//return p_i2cSlave->pTransmitQueueObject->QueueSend(&dataToTransmitQueue);
 		//return p_i2cSlave->slaveTransmit(dataToTransmitQueue);
-		if (p_i2cSlave->slaveTransmit(dataToTransmitQueue) == ESP_OK)
+		return p_i2cSlave->i2cSendDataToTransisionQueue(&dataToTransmitQueue);
+		
+		
+/*		if (p_i2cSlave->slaveTransmit(dataToTransmitQueue) == ESP_OK)
 			return pdTRUE;
 		else
-			return pdFALSE;		
+			return pdFALSE;		*/
 	}
 	else
 	{
@@ -575,6 +580,15 @@ void stepperMotorDataParser(void *TaskParameters)
  */
 
 
+void i2cSlaveTransmit(void *nothing)
+{
+	while (true)
+	{
+		p_i2cSlave->i2cSlaveTransmit();
+	}
+	
+	
+}
 
 //Funkcja tasku zajmującego się odbieraniem otrzymanych przez i2c slave danych i przesyłaniem do kolejki danych.
 // Dane trafiają do funkcji parsera i2c.

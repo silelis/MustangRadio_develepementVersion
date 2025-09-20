@@ -109,6 +109,7 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 	
 	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(20));
+	configASSERT(this->i2cSlaveTransmitDataQueue = new i2cQueue4DynamicData(20));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	
@@ -246,6 +247,11 @@ void i2cEngin_slave::esp32i2cBusInitialised(void)
 }
 
 
+BaseType_t i2cEngin_slave::i2cSendDataToTransisionQueue(i2cFrame_transmitQueue* tempFrameToParserQueue)
+{
+	return this->i2cSlaveTransmitDataQueue->QueueSendFromISR(tempFrameToParserQueue);
+}
+
 
 
 /*---------------------------------------------------------------
@@ -302,6 +308,41 @@ i2cEngin_slave::~i2cEngin_slave()
 
 
 
+
+esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
+{
+	
+	i2cFrame_transmitQueue dataToTransmit;
+	esp_err_t retVal = ESP_FAIL;
+	if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY)	== pdTRUE)
+	{
+//		return this->slaveTransmit(dataToTransmit);
+		
+		
+//		esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
+		
+		
+//		esp_err_t retVal = ESP_FAIL;
+		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
+		if (ESP_OK == retVal)
+		{
+			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
+		}
+		
+		this->interruptRequestSet();
+		this->interruptRequestReset();
+		delete[] static_cast<char*>(dataToTransmit.pData);
+		return retVal;
+		
+		
+	}
+	return pdFALSE;
+	
+}
+
+
+
+/*
 esp_err_t i2cEngin_slave::slaveTransmit(i2cFrame_transmitQueue ItemWithPointer)
 {
 	esp_err_t retVal = ESP_FAIL;
@@ -315,7 +356,7 @@ esp_err_t i2cEngin_slave::slaveTransmit(i2cFrame_transmitQueue ItemWithPointer)
 	this->interruptRequestReset();
 	delete[] static_cast<char*>(ItemWithPointer.pData);
 	return retVal;
-}
+}	   */
 
 
 
