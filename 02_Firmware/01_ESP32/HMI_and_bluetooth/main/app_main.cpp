@@ -90,13 +90,6 @@ extern "C" void app_main(void)
 	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 10, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveReceive));
 	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveReceive));
 	
-						 
-//	***ERROR*** A stack overflow in task I2C slave tx has been detected.
-//	Backtrace : 0x40081d36 : 0x3ffd8fd0 0x4009413d : 0x3ffd8ff0 0x400950e2 : 0x3ffd9010 0x4                                                                                                                                                             0096423 : 0x3ffd9090 0x400951ec : 0x3ffd90b0 0x4009519e : 0x00000000 |  < -CORRUPTED
-//	 : 0x40081d36 : 0x3ffd8fd0 0x4009413d : 0x3ffd8ff0 0x400950e2 : 0x3ffd9010 0x4                                                                                                                                                             0096423 : 0x3ffd9090 0x400951ec : 0x3ffd90b0 0x4009519e : 0x00000000 |  < -CORRUPTED
-
-	
-	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s Display leds task starting\n", main_TAG);
