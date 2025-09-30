@@ -30,8 +30,7 @@ volatile static uint32_t rx_fifo_end_addrLast = 0;
 //----------------------------------------------
 // Callback dla zdarzeń I2C Slave
 //----------------------------------------------
-static IRAM_ATTR bool i2c_slave_rx_done_callback(
-    i2c_slave_dev_handle_t channel,
+IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel,
 	const i2c_slave_rx_done_event_data_t *edata,
 	void *user_data) {
 	BaseType_t high_task_wakeup = pdFALSE;
@@ -316,13 +315,7 @@ esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
 	esp_err_t retVal = ESP_FAIL;
 	if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY)	== pdTRUE)
 	{
-//		return this->slaveTransmit(dataToTransmit);
 		
-		
-//		esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
-		
-		
-//		esp_err_t retVal = ESP_FAIL;
 		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t*) &dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
 		if (ESP_OK == retVal)
 		{
@@ -480,7 +473,7 @@ i2cEngin_master::~i2cEngin_master()
 	}
 	else
 	{
-		printf("%s there is  %d devices on bus. You CAN NOT use object destructor \(~i2cEngin_master\).\r\n", this->TAG, this->devicesOnBus);
+		printf("%s there is  %d devices on bus. You CAN NOT use object destructor (~i2cEngin_master).\r\n", this->TAG, this->devicesOnBus);
 		assert(0);
 	}	
 }

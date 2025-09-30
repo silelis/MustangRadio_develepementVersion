@@ -1,0 +1,25 @@
+
+Core  0 register dump:
+PC      : 0x40082886  PS      : 0x00060335  A0      : 0x40083e7c  A1      : 0x3ffbf430  
+A2      : 0x3ffd77bc  A3      : 0x00000001  A4      : 0x00000000  A5      : 0x4009511e  
+A6      : 0x3ffd761c  A7      : 0x3ffd89d0  A8      : 0x3ff6702c  A9      : 0x00000000  
+A10     : 0x00000001  A11     : 0xffffffff  A12     : 0x8009509a  A13     : 0x00060323  
+A14     : 0x400da57c  A15     : 0x0000cdcd  SAR     : 0x00000004  EXCCAUSE: 0x00000005  
+EXCVADDR: 0x00000000  LBEG    : 0x4000c2e0  LEND    : 0x4000c2f6  LCOUNT  : 0xffffffff  
+Core  0 was running in ISR context:
+EPC1    : 0x400d47cb  EPC2    : 0x00000000  EPC3    : 0x40091c7a  EPC4    : 0x40091c7a
+
+
+Backtrace: 0x40082883:0x3ffbf430 0x40083e79:0x3ffbf450 0x400828a0:0x3ffda090 0x40095097:0x3ffda0a0 0x40103c55:0x3ffda0c0 0x400dbfdd:0x3ffda0f0 0x400daa7c:0x3ffda120 0x40094cf5:0x3ffda140
+
+
+Core  1 register dump:
+PC      : 0x40091c7a  PS      : 0x00060d35  A0      : 0x800d45d2  A1      : 0x3ffd6cf0  
+A2      : 0x00000000  A3      : 0x00000001  A4      : 0x8009509a  A5      : 0x3ffde9f0  
+A6      : 0x00000003  A7      : 0x00060023  A8      : 0x800f9456  A9      : 0x3ffd6cb0  
+A10     : 0x00000000  A11     : 0x00000001  A12     : 0x8009509a  A13     : 0x3ffd6c00  
+A14     : 0x00000003  A15     : 0x3ffbd980  SAR     : 0x00000000  EXCCAUSE: 0x00000005  
+EXCVADDR: 0x00000000  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x40091c77:0x3ffd6cf0 0x400d45cf:0x3ffd6d10 0x40095b49:0x3ffd6d30 0x40094cf5:0x3ffd6d50

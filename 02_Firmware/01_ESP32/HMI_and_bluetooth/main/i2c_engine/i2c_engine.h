@@ -22,6 +22,7 @@ public:
 	i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin);
 	~i2cEngin_slave();
 
+
 	
 //	esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
 	esp_err_t i2cSlaveTransmit(void);
@@ -42,6 +43,7 @@ protected:
 	esp_err_t interruptRequestSet(void);
 	esp_err_t interruptRequestReset(void);
 private:
+	static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data);
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	const int tx_timeout_ms = 500;

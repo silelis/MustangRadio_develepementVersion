@@ -117,6 +117,9 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
+//Enable/Disable output of build database during the build.
+CMAKE_EXPORT_BUILD_DATABASE:BOOL=
+
 //Enable/Disable output of compile commands during generation.
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 
@@ -178,7 +181,7 @@ CMAKE_INSTALL_SYSCONFDIR:PATH=etc
 CMAKE_LINKER:FILEPATH=C:/SysGCC/esp32/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32-elf-ld.exe
 
 //No help, variable specified on the command line.
-CMAKE_MAKE_PROGRAM:UNINITIALIZED=C:/SysGCC/esp32/tools/ninja/1.11.1/ninja.exe
+CMAKE_MAKE_PROGRAM:UNINITIALIZED=c:/sysgcc/esp32/tools/ninja/1.11.1/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.
@@ -423,9 +426,9 @@ CMAKE_CACHEFILE_DIR:INTERNAL=d:/!!!__GitHUB_repositories/MustangRadio_develepeme
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=28
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=31
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=1
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=5
 //Path to CMake executable.
 CMAKE_COMMAND:INTERNAL=C:/Users/dbank/AppData/Local/VisualGDB/CMake/bin/cmake.exe
 //Path to cpack program executable.
@@ -474,6 +477,8 @@ CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_EXPORT_BUILD_DATABASE
+CMAKE_EXPORT_BUILD_DATABASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS
 CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
 //Name of external makefile project generator.
@@ -550,7 +555,7 @@ CMAKE_RANLIB-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_READELF
 CMAKE_READELF-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.28
+CMAKE_ROOT:INTERNAL=C:/Users/dbank/AppData/Local/VisualGDB/CMake/share/cmake-3.31
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
@@ -584,9 +589,9 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
 C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS:INTERNAL=1
 //Details about finding Git
-FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[C:/Program Files/Git/cmd/git.exe][v2.43.0.windows.1()]
+FIND_PACKAGE_MESSAGE_DETAILS_Git:INTERNAL=[C:/Program Files/Git/cmd/git.exe][v2.51.0.windows.1()]
 //Details about finding Python3
-FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[C:/Python/Python38/python.exe][cfound components: Interpreter ][v3.8.10()]
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[C:/Python/Python313/python.exe][cfound components: Interpreter ][v3.13.7()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: GIT_EXECUTABLE
@@ -598,10 +603,10 @@ _Python3_Compiler_REASON_FAILURE:INTERNAL=
 //Development reason failure
 _Python3_Development_REASON_FAILURE:INTERNAL=
 //Path to a program.
-_Python3_EXECUTABLE:INTERNAL=C:/Python/Python38/python.exe
+_Python3_EXECUTABLE:INTERNAL=C:/Python/Python313/python.exe
 //Python3 Properties
-_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;8;10;32;64;;;abi3;C:\Python\Python38\Lib;C:\Python\Python38\Lib;C:\Python\Python38\Lib\site-packages;C:\Python\Python38\Lib\site-packages
-_Python3_INTERPRETER_SIGNATURE:INTERNAL=515c9efa6706bc3067787a87b5357919
+_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;13;7;32;64;;;abi3;C:\Python\Python313\Lib;C:\Python\Python313\Lib;C:\Python\Python313\Lib\site-packages;C:\Python\Python313\Lib\site-packages
+_Python3_INTERPRETER_SIGNATURE:INTERNAL=6220d1a25bc258941e4f7cf741a65219
 //NumPy reason failure
 _Python3_NumPy_REASON_FAILURE:INTERNAL=
 
