@@ -1,0 +1,2 @@
+1) Uruchom poenOCD: openocd.exe -f interface/jlink.cfg -c "transport select jtag" -f target/esp32.cfg -c "adapter speed 1000" -c "jlink usb 0" -c "reset_config none" -c "init"
+2) Uruchom GDB hardware debugging w Espressif IDE
