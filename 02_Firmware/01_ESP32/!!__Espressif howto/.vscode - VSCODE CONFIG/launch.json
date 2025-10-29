@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Eclipse CDT GDB Adapter",
+      "type": "cppdbg",
+      "request": "launch",
+      "cwd" : "${workspaceFolder}/build",
+      "program": "${workspaceFolder}/build/blink_example.elf",          //moja nazwa elf
+      "miDebuggerPath": "C://Espressif//tools//xtensa-esp-elf-gdb//16.3_20250913//xtensa-esp-elf-gdb//bin//xtensa-esp32-elf-gdb.exe",       //sprawdź ścieżki
+      "setupCommands": [
+            {"text": "target extended-remote 127.0.0.1:3333"},
+            {"text": "set remote hardware-watchpoint-limit 2"},
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"},
+             //wgrywa bootloader
+            {"text": "mon program_esp build/bootloader/bootloader.bin 0x1000 verify"},              //adres (np. 0x1000) może być sprawdzony poprzez odczyt na końcy po wykonaniu komendy idf.py build
+            //wgrywa partition table
+            {"text": "mon program_esp build/partition_table/partition-table.bin 0x8000 verify"},    //adres (np. 0x8000) może być sprawdzony poprzez odczyt na końcy po wykonaniu komendy idf.py build
+            //wgrywa firmware
+            {"text": "mon program_esp build/blink_example.bin  0x10000 verify"},    //zmień nazwę bin                 //adres (np. 0x10000) może być sprawdzony poprzez odczyt na końcy po wykonaniu komendy idf.py build
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"}
+        ]
+    }
+  ]
+}
