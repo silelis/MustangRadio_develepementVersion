@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Eclipse CDT GDB Adapter",
+      "type": "cppdbg",
+      "request": "launch",
+      "cwd" : "${workspaceFolder}/build",
+      "program": "${workspaceFolder}/${config:esp_flash_files.application_elf}",          //moja nazwa elf0
+//      "miDebuggerPath": "C://Espressif//tools//xtensa-esp-elf-gdb//16.3_20250913//xtensa-esp-elf-gdb//bin//xtensa-esp32-elf-gdb.exe",       //sprawdź ścieżki
+      "miDebuggerPath": "${config:esp_gdb_path}/xtensa-esp32-elf-gdb.exe",       //sprawdź ścieżki
+      "setupCommands": [
+            {"text": "target extended-remote 127.0.0.1:3333"},
+            {"text": "set remote hardware-watchpoint-limit 2"},
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"},
+        //wgrywa bootloader
+            {"text": "mon program_esp ${config:esp_flash_files.bootloader} ${config:esp_flash_addresses.bootloader} verify"},
+        //wgrywa partition table  
+            {"text": "mon program_esp ${config:esp_flash_files.partition_table} ${config:esp_flash_addresses.partition_table} verify"},
+        //wgrywa firmware
+            {"text": "mon program_esp ${config:esp_flash_files.application_bin} ${config:esp_flash_addresses.application} verify"},
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"}
+        ]
+    }
+  ]
+}

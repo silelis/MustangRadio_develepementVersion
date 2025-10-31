@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"terminal.integrated.profiles.windows": {
+			"ESP-IDF": {
+				"path": "cmd.exe",
+				"args": [
+					"/k",
+					"${config:idf.espIdfPathWin}/export.bat"
+				],
+				"icon": "terminal",
+				"overrideName": true
+			}
+		},
+		"terminal.integrated.defaultProfile.windows": "ESP-IDF"
+	}
+}
