@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "type": "gdbtarget",
+      "request": "attach",
+      "name": "Eclipse CDT GDB Adapter"
+    },
+    {
+      "type": "espidf",
+      "name": "Launch",
+      "request": "launch"
+    },
+
+
+    {
+      "preLaunchTask": "preRun openOCD",
+      "name": "Run OpenOCD and Debuggr",
+      "type": "cppdbg",
+      "request": "launch",
+      "cwd" : "${workspaceFolder}/build",
+      "program": "${workspaceFolder}/${config:esp_flash_files.application_elf}",
+      "miDebuggerPath": "${config:esp_gdb_path}/xtensa-esp32-elf-gdb.exe",
+ //     "serverStarted": "Ready for Remote Connections",
+      "setupCommands": [
+            {"text": "shell sleep 20"},  // CZEKAJ 3 SEKUNDY na OpenOCD
+            {"text": "target extended-remote 127.0.0.1:3333"},
+            {"text": "set remote hardware-watchpoint-limit 2"},
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"},
+        //wgrywa bootloader
+            {"text": "mon program_esp ${config:esp_flash_files.bootloader} ${config:esp_flash_addresses.bootloader} verify"},
+        //wgrywa partition table  
+            {"text": "mon program_esp ${config:esp_flash_files.partition_table} ${config:esp_flash_addresses.partition_table} verify"},
+        //wgrywa firmware
+            {"text": "mon program_esp ${config:esp_flash_files.application_bin} ${config:esp_flash_addresses.application} verify"},
+            {"text": "monitor reset halt"},
+            {"text": "flushregs"}
+        ]
+    }
+  ]
+}
