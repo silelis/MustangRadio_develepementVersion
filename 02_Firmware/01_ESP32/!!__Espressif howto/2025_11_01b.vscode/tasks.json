@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "preRun openOCD",
+			"type": "shell",
+			"command": "clear & C:/Espressif/tools/openocd-esp32/v0.12.0-esp32-20250707/openocd-esp32/bin/openocd.exe -d${config:idf.openOcdDebugLevel} -f interface/ftdi/esp_ftdi.cfg -c \"adapter speed 14000\" -f target/esp32.cfg -c init -c \"reset halt\" -c \"esp32.cpu0 configure -rtos FreeRTOS\"  -c \"esp32.cpu1 configure -rtos FreeRTOS\" -c \"set ESP_RTOS none\"  & exit",  
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": ".",
+					"file": 0,
+					"location": 1,
+					"message": 2
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Listening on port 3333 for gdb connections",
+					"endsPattern": ".*"
+				}
+			}
+		}
+	]
+}
