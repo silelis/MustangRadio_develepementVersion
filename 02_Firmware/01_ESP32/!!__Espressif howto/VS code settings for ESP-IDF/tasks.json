@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+		//commands znajdują się w plik package.json w sekcji "activationEvents": [
+/*		        {
+            "label": "ESP-IDF Build & Flash (by SileliS)",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "ESP-IDF Flash (by SileliS)",
+                "ESP-IDF Build (by SileliS)"
+            ],
+            "group": "build"
+        },*/
+
+
+        {
+			
+            "label": "ESP-IDF Build (by SileliS)",
+            "type": "shell",
+            "command": "${command:espIdf.buildDevice}",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "ESP-IDF Flash (by SileliS)",
+            "type": "shell",
+            "command": "${command:espIdf.flashDevice}",
+            "group": "build",
+         //   "dependsOn": "ESP-IDF Build (by SileliS)"
+        },
+        {
+            "label": "ESP-IDF Menuconfig (by SileliS)",
+            "type": "shell",
+            "command": "${command:espIdf.menuconfig.start}",
+            "group": "build"
+        },
+        {
+            "label": "ESP-IDF Clean (by SileliS)",
+            "type": "shell",
+            "command": "${command:espIdf.fullClean}",
+            "group": "build"
+        }
+    ]
+}
