@@ -1,10 +1,10 @@
 //potrzebne rozszeżenia:
 //- ESP-IDF
 //- C/C++ IntelliSense
-//- Shortcut Menu Bar
 {
   "C_Cpp.intelliSenseEngine": "default",
   
+  /*
 // Należy ustawić zgodnie z danymi Twojej aplikacji
 // adresy wgrania bootloadera, partition table i aplikacji/ firmware (np. 0x1000) moża sprawdzić poprzez odczyt
 // danych na końcy po wykonaniu komendy idf.py build
@@ -22,7 +22,7 @@
     "application_bin" : "build/blink_example.bin",      //plik binarny do flashowania, może być *.bin lub lepiej nazwa pliku
     "application_elf" : "build/blink_example.elf"       //plik binarny do flashowania, może być *.bin lub lepiej nazwa pliku
   },
-
+*/
 
 
     //SNależy ustawić zgodnie z danymi ze środowiska Espressif
@@ -33,7 +33,8 @@
     "tools_xtensa-esp-elf_ver"    : "esp-14.2.0_20241119",
     "tools_esp_idf-python_ver"    : "3.11.2",
     "tools_esp-clang_ver"         : "esp-19.1.2_20250312",   
-    "tools_xtensa-esp-elf-gdb_ver"  : "16.3_20250913",
+    "tools_xtensa-esp-elf-gdb_ver": "16.3_20250913",
+    "tools_ADDR2LINE_ver"         : "esp-14.2.0_20241119",
     "framework_esp-idf_ver"       : "esp-idf-v5.5.1",
 
 
@@ -47,8 +48,9 @@
     "esp_toolchain_root":"${env:HOME}/.espressif",
     "esp_binutils_path" : "${config:esp_idf_tools}/esp32ulp-elf/${config:tools_esp32ulp-elf_ver}/esp32ulp-elf/bin",
     "esp_openocd_path"  : "${config:esp_idf_tools}/openocd-esp32/${config:tools_openocd-esp32_ver}/openocd-esp32/bin",
-    "esp_python_path"   : "${config:esp_idf_tools}/python_env/${config:esp_python_path_ver}/bin",
+    "esp_python_path"   : "${config:esp_idf_path}/python_env/${config:esp_python_path_ver}/Scripts",
     "esp_toolchain_path": "${config:esp_idf_tools}/xtensa-esp-elf/${config:tools_xtensa-esp-elf_ver}/xtensa-esp-elf/bin",
+    "esp_ADDR2LINE_path": "${config:esp_idf_tools}/xtensa-esp-elf/${config:tools_ADDR2LINE_ver}/xtensa-esp-elf/bin",
     "esp_clang_path"    :  "${config:esp_idf_tools}/esp-clang/${config:tools_esp-clang_ver}/esp-clang/bin",
     "esp_gdb_path"      :  "${config:esp_idf_tools}/xtensa-esp-elf-gdb/${config:tools_xtensa-esp-elf-gdb_ver}/xtensa-esp-elf-gdb/bin",
     "esp_dev_env_path": "${config:esp_idf_tools}:${config:esp_binutils_path}:${config:esp_openocd_path}:${config:esp_python_path}:${config:esp_toolchain_path}:${config:esp_clang_path}:${config:esp_gdb_path}",
