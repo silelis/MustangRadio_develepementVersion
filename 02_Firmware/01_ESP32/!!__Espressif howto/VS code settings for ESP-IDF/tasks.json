@@ -44,6 +44,40 @@
             "type": "shell",
             "command": "${command:espIdf.fullClean}",
             "group": "build"
+        },
+
+{
+            "label": "Decode Guru Meditation Error",
+            "type": "process",
+ //           "command": "C:\\Program Files\\Python311\\python.exe",
+            "command": "${config:esp_python_path}/python.exe",
+            "args": [
+                "${workspaceFolder}\\.vscode\\scripts\\decode_guru.py",
+                "${input:elfFilePath}"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "ADDR2LINE_PATH": "${config:esp_ADDR2LINE_path}/xtensa-esp32-elf-addr2line.exe"
+                }
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "elfFilePath",
+            "type": "promptString",
+            "description": "Enter path to ELF file (e.g., build/your_project.elf):",
+            "default": "build/project.elf"
         }
     ]
 }
