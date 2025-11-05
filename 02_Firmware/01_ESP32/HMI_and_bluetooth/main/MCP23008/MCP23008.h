@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "i2c_engine/i2c_engine.h"
+#include "i2c_engine/i2c_engine_master.h"
 
 #define MCP23008_IODIR		0x00		//I/O DIRECTION (IODIR) REGISTER
 #define MCP23008_IPOL		0x01		//INPUT POLARITY (IPOL) REGISTER

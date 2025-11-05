@@ -2,7 +2,7 @@
 #include "tasksFunctions/tasksFunctionsLeds.h"
 #include "tasksFunctions/tasksFunctionsStepperMotor.h"
 #include "tasksFunctions/tasksFunctionsStorage.h"
-#include "i2c_engine/i2c_engine.h"
+#include "i2c_engine/i2c_engine_slave.h"
 
 
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
