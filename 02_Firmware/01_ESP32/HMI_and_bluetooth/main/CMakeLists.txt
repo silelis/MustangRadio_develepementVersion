@@ -8,7 +8,8 @@ idf_component_register(
         NVSeeprom/NVSeeprom.cpp
         StepperOptoPowerOFF/StepperOptoPowerOFF.cpp
         a2dpSikn/a2dp_sink_demo.cpp
-        i2c_engine/i2c_engine.cpp
+        i2c_engine/i2c_engine_slave.cpp
+        i2c_engine/i2c_engine_master.cpp
         common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.cpp
         common/comunicationProtocol/comunicationProtocol.cpp
         common/comunicationStructures/comunicationStructures.cpp
