@@ -22,7 +22,9 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	i2c_bus_config_master.scl_io_num = scl_io_num;
 	i2c_bus_config_master.sda_io_num = sda_io_num;
 	i2c_bus_config_master.glitch_ignore_cnt = 7;
-	i2c_bus_config_master.flags.enable_internal_pullup = false;
+	i2c_bus_config_master.flags.enable_internal_pullup = GPIO_PULLUP_ENABLE;
+	i2c_bus_config_master.flags.allow_pd =pdFALSE;
+
 
 	phandler_i2c_bus = &handler_i2c_bus_master;
 	assert(!i2c_new_master_bus(&i2c_bus_config_master, phandler_i2c_bus));
@@ -35,7 +37,6 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	//xSemaphoreGive(this->xI2CMasterMutex);
 	this->semaphoreGive();
 	printf("%s bus has been initialised on port %d.\r\n", this->TAG, i2c_port);
-
 }
 
 /*---------------------------------------------------------------
@@ -50,7 +51,7 @@ esp_err_t i2cEngin_master::i2cPing(uint8_t i2c_address)
 {
 	//xSemaphoreTake(this->xI2CMasterMutex, portMAX_DELAY);
 	this->semaphoreTake();
-	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus, i2c_address, 150);
+	esp_err_t ret = i2c_master_probe(*phandler_i2c_bus, i2c_address, this->xfer_timeout_ms);
 	//xSemaphoreGive(this->xI2CMasterMutex);
 	this->semaphoreGive();
 	if (ret == ESP_OK) {
