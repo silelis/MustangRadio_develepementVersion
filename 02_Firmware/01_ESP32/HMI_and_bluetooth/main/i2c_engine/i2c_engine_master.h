@@ -28,4 +28,5 @@ private:
 	uint16_t devicesOnBus;
 	const char *TAG = "I2C MASTER log:";
 	SemaphoreHandle_t xI2CMasterMutex; //mutex which controlls access to I2C
+	int xfer_timeout_ms = 5500;
 };
