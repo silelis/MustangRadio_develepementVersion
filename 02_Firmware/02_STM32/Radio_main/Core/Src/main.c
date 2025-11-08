@@ -30,7 +30,7 @@
 #include "freertos.h"
 //#include "printfRedirect.h"
 //#include "tasksFunctions.h"
-#include "SileliS_code/tasksFunctions.h"
+#include "SileliS_code/tasksFunctionsCppWrapper.h".h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -71,18 +71,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-#ifdef __cplusplus
-extern "C" {
-#endif
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-#ifdef __cplusplus
-}
-#endif
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -125,7 +120,7 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  startUpTask(NULL);
+  startUpTaskCPPWrapper(NULL);
 
   /* USER CODE END 2 */
 

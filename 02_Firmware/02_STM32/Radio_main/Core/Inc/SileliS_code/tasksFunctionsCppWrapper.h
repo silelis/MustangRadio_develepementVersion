@@ -1,0 +1,23 @@
+/*
+ * tasksFunctionsCppWrapper.h
+ *
+ *  Created on: Nov 8, 2025
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_TASKSFUNCTIONSCPPWRAPPER_H_
+#define INC_SILELIS_CODE_TASKSFUNCTIONSCPPWRAPPER_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+//#include "SileliS_code/tasksFunctions.h"
+
+void startUpTaskCPPWrapper(void* noThing);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* INC_SILELIS_CODE_TASKSFUNCTIONSCPPWRAPPER_H_ */
