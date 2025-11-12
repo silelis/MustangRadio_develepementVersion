@@ -14,29 +14,32 @@
 #include "SileliS_code/myPrintfTask.h"
 #include "SileliS_code/keyboardToFunction_buttonDefinitions.h"
 
-struct _execute_t{
-	keyboardUnion buttonSequence;				//kod klawisza wywołujący funkcję
-	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
+struct _execute_t {
+	keyboardUnion buttonSequence;			//kod klawisza wywołujący funkcję
+	std::function<void()> functionPointer;//wskaźnik do funkcji jaka ma być wywołana
 
 };
 
 class keyboardToFunction {
 public:
-	keyboardToFunction(_execute_t*	ExecutableButtonsArray);
+	keyboardToFunction(_execute_t *ExecutableButtonsArray);
 	virtual ~keyboardToFunction();
 
 //private:
-	uint8_t	searchButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
-	bool	isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
-	void	buildExecutableButtonsArrayEmpty(void);
-	bool	executeButtonFunction(keyboardUnion buttonSequence);
+	uint8_t searchButtonSequenceInExecutableButtonsArray(
+			keyboardUnion buttonSequence);
+	bool isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
+	void buildExecutableButtonsArrayEmpty(void);
+	bool executeButtonFunction(keyboardUnion buttonSequence);
 
-	bool	appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence, std::function<void()> newFunc);
-	bool	appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray, std::function<void()> newFunc);
+	bool appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence,
+			std::function<void()> newFunc);
+	bool appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray,
+			std::function<void()> newFunc);
 
 protected:
 //	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
-	_execute_t	*pExecutableButtonsArray;
+	_execute_t *pExecutableButtonsArray;
 
 private:
 	void noButtonInArrayMessage(keyboardUnion buttonSequence);

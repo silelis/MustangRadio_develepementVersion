@@ -8,7 +8,6 @@
 #ifndef INC_TASKSFUNCTIONS_H_
 #define INC_TASKSFUNCTIONS_H_
 
-
 #include <stdint.h>
 #include "stm32h7xx_hal.h"
 #include "hwConfigFile.h"
@@ -35,7 +34,7 @@
 //static void esp32IntrrruptRequestCallback(void *pNothing);
 //static void i2cMaster_pReceiveQueueObjectParser(void *pNothing);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-void startUpTask(void* noThing);
+void startUpTask(void *noThing);
 //#ifdef __cplusplus
 //}
 //#endif

@@ -45,7 +45,7 @@ private:
 	static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data);
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
-	const int tx_timeout_ms = 1500;
+	const int tx_timeout_ms = 5500;
 	i2cQueue4DynamicData* i2cSlaveReceiveDataToDataParserQueue;
 	i2cQueue4DynamicData* i2cSlaveTransmitDataQueue;
 	

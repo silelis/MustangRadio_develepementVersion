@@ -22,49 +22,49 @@
 class ledsController {
 public:
 
+	ledsController(hmiLeds *leds,
+			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
+	virtual ~ledsController();
 
-    ledsController(hmiLeds* leds, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue);
-    virtual ~ledsController();
+	void setLedSourceBlinking(ws2812Color primary, ws2812Color secondary);
+	void setLedSourceWithColor(ws2812Color color);
+	void setLedSourceCleaned(void);
 
-    void setLedSourceBlinking(ws2812Color primary, ws2812Color secondary);
-    void setLedSourceWithColor(ws2812Color color);
-    void setLedSourceCleaned(void);
+	void setLedEqualiserBlinking(ws2812Color primary, ws2812Color secondary);
+	void setLedEqualiserWithColor(ws2812Color color);
+	void setLedEqualiserCleaned(void);
 
-    void setLedEqualiserBlinking(ws2812Color primary, ws2812Color secondary);
-    void setLedEqualiserWithColor(ws2812Color color);
-    void setLedEqualiserCleaned(void);
+	void setLedErrorBlinking(ws2812Color primary, ws2812Color secondary);
+	void setLedErrorWithColor(ws2812Color color);
+	void setLedErrorCleaned(void);
 
-    void setLedErrorBlinking(ws2812Color primary, ws2812Color secondary);
-    void setLedErrorWithColor(ws2812Color color);
-    void setLedErrorCleaned(void);
+	//   void setLedBacklightAllBlinking(ws2812Color primary, ws2812Color secondary);
+	//   void setLedBacklightAllWithColor(ws2812Color color);
+	//   void setLedBacklightInRangeBlinking(ws2812Color primary, ws2812Color secondary, uint8_t from, uint8_t to);
+	//   void setLedBacklightInRangeWithColor(ws2812Color color, uint8_t from, uint8_t to);
+	//   void setLedBacklighCleaned(void);
 
- //   void setLedBacklightAllBlinking(ws2812Color primary, ws2812Color secondary);
- //   void setLedBacklightAllWithColor(ws2812Color color);
- //   void setLedBacklightInRangeBlinking(ws2812Color primary, ws2812Color secondary, uint8_t from, uint8_t to);
- //   void setLedBacklightInRangeWithColor(ws2812Color color, uint8_t from, uint8_t to);
- //   void setLedBacklighCleaned(void);
+	void setLedAllCleaned(void);
 
-    void setLedAllCleaned(void);
-
-    BaseType_t sendDataToI2cTransmitQueue();
+	BaseType_t sendDataToI2cTransmitQueue();
 
 protected:
-    enum ledEnum {
-        sourceLed,
-        equaliserLed,
-        errorLed//,
-        //backlightLeds
-    };
-    void setLedBlinking(ledEnum whichLed, ws2812Color primary, ws2812Color secondary);
-    void setLedWithColor(ledEnum whichLed, ws2812Color color);
-    void setLedCleaned(ledEnum whichLed);
+	enum ledEnum {
+		sourceLed, equaliserLed, errorLed //,
+	//backlightLeds
+	};
+	void setLedBlinking(ledEnum whichLed, ws2812Color primary,
+			ws2812Color secondary);
+	void setLedWithColor(ledEnum whichLed, ws2812Color color);
+	void setLedCleaned(ledEnum whichLed);
 
 private:
 
-    hmiLeds* pLeds;
+	hmiLeds *pLeds;
 
-    void setLedColors(ledEnum whichLed, ws2812Color primary, ws2812Color secondary);
-    i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;
+	void setLedColors(ledEnum whichLed, ws2812Color primary,
+			ws2812Color secondary);
+	i2cQueue4DynamicData *pI2C_MasterTransmitToSlave_DataQueue;
 
 };
 #endif /* LEDSCONTROLLER_H_ */

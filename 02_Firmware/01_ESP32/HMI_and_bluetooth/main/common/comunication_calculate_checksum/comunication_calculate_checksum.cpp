@@ -1,6 +1,5 @@
 #include "comunication_calculate_checksum.h"
 
-
 #if I2C_SLAVE_CRC_METHOD == I2C_SLAVE_CRC_8
 // Tablica preobliczonych wartości CRC-8 dla każdego możliwego bajtu
 static const uint8_t crc8_table[256] = {
@@ -59,9 +58,9 @@ static const uint8_t crc8_table[256] = {
  * NONE
  *---------------------------------------------------------------*/
 uint8_t calculate_checksum(const void *buffer, size_t length) {
-	const size_t bufferOffset = 1;        //In my solution bufferOffset is required because 1st 8 bits of buffer is uint8_t CRC field
-	const uint8_t *data = (const uint8_t *)buffer;
-    
+	const size_t bufferOffset = 1; //In my solution bufferOffset is required because 1st 8 bits of buffer is uint8_t CRC field
+	const uint8_t *data = (const uint8_t*) buffer;
+
 #if I2C_SLAVE_CRC_METHOD == I2C_SLAVE_CRC_NONE
 	// Zwraca 0 gdy CRC jest ustawione na NONE
 	return 0;
