@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdint.h> 
 
-//#define STM32_2_ESP32_I2C_IN_SEQUENCE  - nie działa po stronie STM32
+//#define STM32_2_ESP32_I2C_IN_SEQUENCE  - nie działa po stronie STM32 i nie wiem jak naprawić nie właczać!!!
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 /*typedef*/struct i2cFrame_transmitQueue {

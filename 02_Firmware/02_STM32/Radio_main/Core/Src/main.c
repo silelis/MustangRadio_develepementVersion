@@ -120,7 +120,7 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  startUpTaskCPPWrapper(NULL);
+  startUpTask_CPPWrapper(NULL);
 
   /* USER CODE END 2 */
 

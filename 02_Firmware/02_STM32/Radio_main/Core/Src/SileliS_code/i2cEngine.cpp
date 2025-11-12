@@ -26,10 +26,10 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1) {
 
 	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
 	this->i2cMasterSemaphoreGive();
-	this->i2cMasterSemaphoreTake();
+//	this->i2cMasterSemaphoreTake();
 
 	pPrintf->feedPrintf("%s bus had been initialized.", this->TAG);
-	this->i2cMasterSemaphoreGive();
+//	this->i2cMasterSemaphoreGive();
 }
 
 /********************************************************************

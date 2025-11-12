@@ -159,13 +159,15 @@ BaseType_t esp32_i2cComunicationDriver::masterTransmitData(
 	} else {
 		assert(0);
 	}
-
 	return retVal;
 }
 
+#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
-		i2cFrame_transmitQueue *dataFrame) {
+	#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE.
+	i2cFrame_transmitQueue *dataFrame) {
 	HAL_StatusTypeDef retVal = HAL_ERROR;
+
 
 	i2cFrame_commonHeader temp_i2cFrameCommonHeader;
 
@@ -184,12 +186,12 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
 
 
 
-	i2cFrame_commonHeader* pCheck_i2cFrameCommonHeader;
-	pCheck_i2cFrameCommonHeader = (i2cFrame_commonHeader*) dataFrame->pData;
+//	i2cFrame_commonHeader* pCheck_i2cFrameCommonHeader;
+//	pCheck_i2cFrameCommonHeader = (i2cFrame_commonHeader*) dataFrame->pData;
 
-	i2cFrame_keyboardFrame* pCheck_i2cFrame_keyboardFrame;
-	pCheck_i2cFrame_keyboardFrame = (i2cFrame_keyboardFrame*) dataFrame->pData;
-
+//	i2cFrame_keyboardFrame* pCheck_i2cFrame_keyboardFrame;
+//	pCheck_i2cFrame_keyboardFrame = (i2cFrame_keyboardFrame*) dataFrame->pData;
+//	keyboardUnion fakeUnion;
 
 
 
@@ -199,13 +201,15 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
 				sizeof(i2cFrame_commonHeader));
 
 
+
 		retVal = this->masterReceiveFromESP32_DMA_inSequence(
 				//(uint8_t*) (dataFrame->pData + sizeof(i2cFrame_commonHeader)),
-				(uint8_t*) (&pCheck_i2cFrame_keyboardFrame->keyboardData),
-				(uint16_t) (temp_i2cFrameCommonHeader.dataSize - (size_t) sizeof(i2cFrame_commonHeader)), I2C_LAST_FRAME);
+				(uint8_t*) dataFrame->pData+sizeof(i2cFrame_commonHeader),
+				temp_i2cFrameCommonHeader.dataSize-sizeof(i2cFrame_commonHeader), I2C_LAST_FRAME);
 	}
 	return retVal;
 }
+#endif
 
 HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveData(
 		i2cFrame_transmitQueue *dataFrame) {
@@ -256,8 +260,9 @@ void esp32_i2cComunicationDriver::giveESP32I2CInterfaceTime(void) {
 HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA_inSequence(
 		uint8_t *pData, uint16_t Size, uint32_t XferOptions) {
 
-	HAL_StatusTypeDef retVal = this->pi2cMaster->I2C_Master_Receive_DMA_inSequence(
-			this->esp32i2cSlaveAdress_7bit, pData, Size, XferOptions);
+	HAL_StatusTypeDef retVal =
+			this->pi2cMaster->I2C_Master_Receive_DMA_inSequence(
+					this->esp32i2cSlaveAdress_7bit, pData, Size, XferOptions);
 
 	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME) || (XferOptions ==
 	I2C_LAST_FRAME)) {
