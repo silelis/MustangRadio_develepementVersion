@@ -1,7 +1,5 @@
 #include "i2c_slave_master_queueClass.h"
 
-
-
 /********************************************************************
  * @brief  Konstruktor obiektu
  *
@@ -15,12 +13,11 @@
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-i2cQueue4DynamicData::i2cQueue4DynamicData(UBaseType_t uxQueueLength)
-{
+i2cQueue4DynamicData::i2cQueue4DynamicData(UBaseType_t uxQueueLength) {
 	this->handler_Queue = NULL;
-	configASSERT(this->handler_Queue = xQueueCreate(uxQueueLength, sizeof(i2cFrame_transmitQueue)));
+	configASSERT(
+			this->handler_Queue = xQueueCreate(uxQueueLength, sizeof(i2cFrame_transmitQueue)));
 }
-
 
 /********************************************************************
  * @brief  Destruktor obiektu
@@ -40,21 +37,18 @@ i2cQueue4DynamicData::i2cQueue4DynamicData(UBaseType_t uxQueueLength)
  * 		   i2cFrame_transmitQueue
  * @warning NONE
  *******************************************************************/
-i2cQueue4DynamicData::~i2cQueue4DynamicData(void)
-{
+i2cQueue4DynamicData::~i2cQueue4DynamicData(void) {
 	i2cFrame_transmitQueue tempItemToDestrouQueue;
 	BaseType_t tempQueueRetVal;
-	do
-	{
-		tempQueueRetVal = xQueueReceive(this->handler_Queue, &tempItemToDestrouQueue, pdMS_TO_TICKS(1));
-		if (tempQueueRetVal == pdPASS)
-		{
+	do {
+		tempQueueRetVal = xQueueReceive(this->handler_Queue,
+				&tempItemToDestrouQueue, pdMS_TO_TICKS(1));
+		if (tempQueueRetVal == pdPASS) {
 			this->QueueDeleteDataFromPointer(tempItemToDestrouQueue);
-		}			
+		}
 	} while (tempQueueRetVal == pdPASS);
 	vQueueDelete(this->handler_Queue);
 }
-
 
 /********************************************************************
  * @brief  Usuwa dane wskazane w *pData
@@ -72,11 +66,10 @@ i2cQueue4DynamicData::~i2cQueue4DynamicData(void)
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-void i2cQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQueue structWithPointer)
-{
-	delete[] static_cast<char*>(structWithPointer.pData);	
+void i2cQueue4DynamicData::QueueDeleteDataFromPointer(
+		i2cFrame_transmitQueue structWithPointer) {
+	delete[] static_cast<char*>(structWithPointer.pData);
 }
-
 
 /********************************************************************
  * @brief  Pobiera dane z bufora kolejki i2c
@@ -95,18 +88,16 @@ void i2cQueue4DynamicData::QueueDeleteDataFromPointer(i2cFrame_transmitQueue str
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-BaseType_t  i2cQueue4DynamicData::QueueReceive(/*void*/i2cFrame_transmitQueue * /*const*/ pvBuffer, TickType_t xTicksToWait)
-{
-	
+BaseType_t i2cQueue4DynamicData::QueueReceive(
+		/*void*/i2cFrame_transmitQueue * /*const*/pvBuffer,
+		TickType_t xTicksToWait) {
+
 	return xQueueReceive(this->handler_Queue, pvBuffer, xTicksToWait);
 }
 
-
-UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void)
-{
+UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void) {
 	return uxQueueMessagesWaiting(this->handler_Queue);
 }
-
 
 /********************************************************************
  * @brief  Wysyła odebrane z i2c slave dane do kolejki butora odbiorczego
@@ -127,28 +118,26 @@ UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void)
  * 			dynamicznie danych, kóre są pod adresem *pData. Dane te to dane
  * 			jakie sąw ysyłane przez slave po i2c bus.
  *******************************************************************/
-BaseType_t i2cQueue4DynamicData::QueueSend(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue){
-	if (xQueueSend(this->handler_Queue, pvItemToQueue, pdMS_TO_TICKS(700)) == pdTRUE)
-	{
+BaseType_t i2cQueue4DynamicData::QueueSend(
+		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue) {
+	if (xQueueSend(this->handler_Queue, pvItemToQueue,
+			pdMS_TO_TICKS(700)) == pdTRUE) {
 		return pdTRUE;
-	}
-	else
-	{
+	} else {
 		this->QueueDeleteDataFromPointer(*pvItemToQueue);
 		//delete[] static_cast<char*>(pointerToData);
 		return pdFALSE;
 	}
 }
 
-BaseType_t i2cQueue4DynamicData::QueueSendFromISR(/*const*/ /*void*/i2cFrame_transmitQueue * pvItemToQueue){
+BaseType_t i2cQueue4DynamicData::QueueSendFromISR(
+		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	if (xQueueSendFromISR(this->handler_Queue, pvItemToQueue,&xHigherPriorityTaskWoken) == pdTRUE)
-	{
+	if (xQueueSendFromISR(this->handler_Queue, pvItemToQueue,
+			&xHigherPriorityTaskWoken) == pdTRUE) {
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		return pdTRUE;
-	}
-	else
-	{
+	} else {
 		this->QueueDeleteDataFromPointer(*pvItemToQueue);
 		return pdFALSE;
 	}

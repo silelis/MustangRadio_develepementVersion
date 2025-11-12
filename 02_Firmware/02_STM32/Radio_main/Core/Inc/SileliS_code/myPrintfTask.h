@@ -19,14 +19,13 @@
 
 class myPrintfTask: public i2cQueue4DynamicData {
 public:
-	myPrintfTask(UART_HandleTypeDef* huart, UBaseType_t printfTaskQueueLength);
+	myPrintfTask(UART_HandleTypeDef *huart, UBaseType_t printfTaskQueueLength);
 	virtual ~myPrintfTask();
 	BaseType_t feedPrintf(const char *format, ...);
 	HAL_StatusTypeDef myPrintf(i2cFrame_transmitQueue itemToPrint);
 
-
 private:
-	UART_HandleTypeDef* pHuart;
+	UART_HandleTypeDef *pHuart;
 };
 
 #endif /* INC_MYPRINTFTASK_H_ */

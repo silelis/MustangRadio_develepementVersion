@@ -14,10 +14,10 @@
 //#include "SileliS_code/radioMegaStruct.h"
 #include "comunication_calculate_checksum.h"
 
-
 class StepperOptoPowerOFF {
 public:
-	StepperOptoPowerOFF(stepperMotorStruct* stepperMotorData, i2cQueue4DynamicData* MasterTransmitToSlave_DataQueue);
+	StepperOptoPowerOFF(stepperMotorStruct *stepperMotorData,
+			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
 	virtual ~StepperOptoPowerOFF();
 
 	void setMotorCalibration(void);
@@ -32,14 +32,11 @@ public:
 protected:
 
 private:
-	stepperMotorStruct* pStepperMotorData;
-	i2cQueue4DynamicData* pI2C_MasterTransmitToSlave_DataQueue;
+	stepperMotorStruct *pStepperMotorData;
+	i2cQueue4DynamicData *pI2C_MasterTransmitToSlave_DataQueue;
 	//i2cFrame_stepper stepperComunicationFrame;
 	BaseType_t sendDataToI2cTransmitQueue();
 
 };
-
-
-
 
 #endif /* INC_SILELIS_CODE_STEPPEROPTOPOWEROFF_H_ */

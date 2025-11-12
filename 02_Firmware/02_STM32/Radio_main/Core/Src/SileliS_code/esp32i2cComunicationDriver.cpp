@@ -8,7 +8,7 @@
 //#include "esp32i2cComunicationDriver.h"
 #include "SileliS_code/esp32i2cComunicationDriver.h"
 
-extern myPrintfTask* pPrintf;
+extern myPrintfTask *pPrintf;
 /********************************************************************
  * @brief  Konstruktor klasy esp32_i2cComunicationDriver
  *
@@ -24,14 +24,17 @@ extern myPrintfTask* pPrintf;
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(i2cMaster* pointer_to_i2cMasterObject) {
+esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(
+		i2cMaster *pointer_to_i2cMasterObject) {
 	// TODO Auto-generated constructor stub
-		this->pi2cMaster = pointer_to_i2cMasterObject;
-		configASSERT(this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
-		this->esp32DynamicmMemeoryAlocationError=this->esp32InrerruptRequest_CountingSemaphoreOverflowError=pdFALSE;
-		this->esp32CrcSumCounterError=0;
+	this->pi2cMaster = pointer_to_i2cMasterObject;
+	configASSERT(
+			this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
+	this->esp32DynamicmMemeoryAlocationError =
+			this->esp32InrerruptRequest_CountingSemaphoreOverflowError =
+			pdFALSE;
+	this->esp32CrcSumCounterError = 0;
 }
-
 
 /********************************************************************
  * @brief  Oblicza sume kontrolną
@@ -59,22 +62,22 @@ esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(i2cMaster* pointer_to_i
  * informacje na temat otrzymanych danych i miejsce (wskaźnik) ich
  * przechowywania w RAM.
  *******************************************************************/
-BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame, uint8_t	crcSum){
+BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(
+		i2cFrame_transmitQueue I2CReceivedFrame, uint8_t crcSum) {
 
-
-	if(crcSum==calculate_checksum(I2CReceivedFrame.pData, I2CReceivedFrame.dataSize/*sizeof(i2cFrame_keyboardFrame)*/))
-	{
-		this->esp32CrcSumCounterError=0;
+	if (crcSum
+			== calculate_checksum(I2CReceivedFrame.pData,
+					I2CReceivedFrame.dataSize/*sizeof(i2cFrame_keyboardFrame)*/)) {
+		this->esp32CrcSumCounterError = 0;
 		return pdPASS;
-	}
-	else{
+	} else {
 		this->esp32CrcSumCounterError++;
 		//printf("%sCRC sum NOT correct: %d time(s)\r\n", this->TAG, this->esp32CrcSumCounterError);
-		pPrintf->feedPrintf("%s CRC sum NOT correct: %d time(s).", this->TAG, this->esp32CrcSumCounterError);
+		pPrintf->feedPrintf("%s CRC sum NOT correct: %d time(s).", this->TAG,
+				this->esp32CrcSumCounterError);
 		return pdFAIL;
 	}
 }
-
 
 /********************************************************************
  * @brief  Zlicza ilość wywołań przerwania od esp32 informującego, że
@@ -97,20 +100,18 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(i2cFrame_transmitQueue 
  * 			danych.
  * @warning [NONE
  *******************************************************************/
-void esp32_i2cComunicationDriver::incrementInterruptRequestCountingSemaphore(void){
+void esp32_i2cComunicationDriver::incrementInterruptRequestCountingSemaphore(
+		void) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	xSemaphoreGiveFromISR(this->esp32IntrrruptRequest_CountingSemaphore, &xHigherPriorityTaskWoken);
+	xSemaphoreGiveFromISR(this->esp32IntrrruptRequest_CountingSemaphore,
+			&xHigherPriorityTaskWoken);
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
-
-
-
 esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
 	// TODO Auto-generated destructor stub
-	#warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
+#warning zrobic porzadny destruktor np. w destruktorze ma wyłączy ć się radio
 }
-
 
 /********************************************************************
  * @brief  Sprawdza czy wartość semafora zliczającego nie jest równa
@@ -124,11 +125,13 @@ esp32_i2cComunicationDriver::~esp32_i2cComunicationDriver() {
  * @note   	NONE
  * @warning NONE
  *******************************************************************/
-void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
-	if( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)== this->esp32InterruptRequestCountingSemaphore_MAX){		//sprawdza czy licznik esp32 interrupt request nie jest przepełniony
-		this->esp32InrerruptRequest_CountingSemaphoreOverflowError= pdTRUE;
+void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void) {
+	if ( uxSemaphoreGetCount(this->esp32IntrrruptRequest_CountingSemaphore)
+			== this->esp32InterruptRequestCountingSemaphore_MAX) { //sprawdza czy licznik esp32 interrupt request nie jest przepełniony
+		this->esp32InrerruptRequest_CountingSemaphoreOverflowError = pdTRUE;
 		//printf("!!! ESP32 interrupt request counter overflowed   !!!\r\n");
-		pPrintf->feedPrintf("!!! ESP32 interrupt request counter overflowed !!!");
+		pPrintf->feedPrintf(
+				"!!! ESP32 interrupt request counter overflowed !!!");
 	}
 }
 
@@ -140,34 +143,82 @@ void esp32_i2cComunicationDriver::isCountingSemaphoreOverflowed(void){
  *
  * @return NONE
  *******************************************************************/
-BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void){
-	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore, portMAX_DELAY) == pdTRUE;
+BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void) {
+	return xSemaphoreTake(this->esp32IntrrruptRequest_CountingSemaphore,
+			portMAX_DELAY) == pdTRUE;
 }
 
-
-BaseType_t esp32_i2cComunicationDriver::masterTransmitData(i2cFrame_transmitQueue* dataFrame){
-	BaseType_t  retVal =pdFALSE;
-	if (dataFrame->dataSize<=ESP32_SLAVE_RECEIVE_BUFFER_LEN){
-		retVal=this->pi2cMaster->I2C_Master_Transmite_DMA(this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData, dataFrame->dataSize);
+BaseType_t esp32_i2cComunicationDriver::masterTransmitData(
+		i2cFrame_transmitQueue *dataFrame) {
+	BaseType_t retVal = pdFALSE;
+	if (dataFrame->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN) {
+		retVal = this->pi2cMaster->I2C_Master_Transmite_DMA(
+				this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData,
+				dataFrame->dataSize);
 		vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
-	}
-	else{
+	} else {
 		assert(0);
 	}
 
 	return retVal;
 }
 
+HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
+		i2cFrame_transmitQueue *dataFrame) {
+	HAL_StatusTypeDef retVal = HAL_ERROR;
+
+	i2cFrame_commonHeader temp_i2cFrameCommonHeader;
+
+	retVal = this->masterReceiveFromESP32_DMA_inSequence(
+			(uint8_t*) &temp_i2cFrameCommonHeader,
+			sizeof(i2cFrame_commonHeader),
+			I2C_FIRST_FRAME);
+
+//	uint8_t dataSize;
+//	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize,
+//			sizeof(size_t));
+	if (retVal !=HAL_ERROR) {
+		dataFrame->pData =
+				new (std::nothrow) char[temp_i2cFrameCommonHeader.dataSize];
+	}
 
 
 
-BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue* dataFrame){
-	BaseType_t retVal = pdFAIL;
+	i2cFrame_commonHeader* pCheck_i2cFrameCommonHeader;
+	pCheck_i2cFrameCommonHeader = (i2cFrame_commonHeader*) dataFrame->pData;
+
+	i2cFrame_keyboardFrame* pCheck_i2cFrame_keyboardFrame;
+	pCheck_i2cFrame_keyboardFrame = (i2cFrame_keyboardFrame*) dataFrame->pData;
+
+
+
+
+
+	if (dataFrame->pData != nullptr) {
+		memcpy(dataFrame->pData, &temp_i2cFrameCommonHeader,
+				sizeof(i2cFrame_commonHeader));
+
+
+		retVal = this->masterReceiveFromESP32_DMA_inSequence(
+				//(uint8_t*) (dataFrame->pData + sizeof(i2cFrame_commonHeader)),
+				(uint8_t*) (&pCheck_i2cFrame_keyboardFrame->keyboardData),
+				(uint16_t) (temp_i2cFrameCommonHeader.dataSize - (size_t) sizeof(i2cFrame_commonHeader)), I2C_LAST_FRAME);
+	}
+	return retVal;
+}
+
+HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveData(
+		i2cFrame_transmitQueue *dataFrame) {
+	HAL_StatusTypeDef retVal = HAL_ERROR;
 	uint8_t dataSize;
-	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize, sizeof(size_t));
-	dataFrame->pData = new (std::nothrow) char[dataFrame->dataSize];
-	if (dataFrame->pData!=nullptr){
-		retVal =this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData, dataFrame->dataSize);
+	retVal = this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize,
+			sizeof(size_t));
+	if (retVal != HAL_ERROR) {
+		dataFrame->pData = new (std::nothrow) char[dataFrame->dataSize];
+	}
+	if (dataFrame->pData != nullptr) {
+		retVal = this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData,
+				dataFrame->dataSize);
 	}
 	return retVal;
 }
@@ -188,14 +239,32 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveData(i2cFrame_transmitQueue
  * @note	NONE
  * @warning	NONE
  *******************************************************************/
-BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size){
+HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(
+		uint8_t *pData, uint16_t Size) {
 
-	BaseType_t  retVal=this->pi2cMaster->I2C_Master_Receive_DMA(this->esp32i2cSlaveAdress_7bit, pData, Size);
-	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
+	HAL_StatusTypeDef retVal = this->pi2cMaster->I2C_Master_Receive_DMA(
+			this->esp32i2cSlaveAdress_7bit, pData, Size);
+	//vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
+	this->giveESP32I2CInterfaceTime();
 	return retVal;
 }
 
+void esp32_i2cComunicationDriver::giveESP32I2CInterfaceTime(void) {
+	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
+}
 
+HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA_inSequence(
+		uint8_t *pData, uint16_t Size, uint32_t XferOptions) {
+
+	HAL_StatusTypeDef retVal = this->pi2cMaster->I2C_Master_Receive_DMA_inSequence(
+			this->esp32i2cSlaveAdress_7bit, pData, Size, XferOptions);
+
+	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME) || (XferOptions ==
+	I2C_LAST_FRAME)) {
+		this->giveESP32I2CInterfaceTime();
+	}
+	return retVal;
+}
 
 /********************************************************************
  * @brief  Oczekuje do czasu, aż interfejs i2c nie bedzie dostępny.
@@ -210,7 +279,7 @@ BaseType_t esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(uint8_t *pDat
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
+void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void) {
 	pi2cMaster->while_I2C_STATE_READY();
 }
 
@@ -226,33 +295,36 @@ void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void){
  * @note   NONE
  * @warning NONE
  *******************************************************************/
-void esp32_i2cComunicationDriver::parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame){
-	i2cFrame_commonHeader tempI2cFrameCommandHeader;														//tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
-	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData, sizeof(i2cFrame_commonHeader));
+void esp32_i2cComunicationDriver::parseReceivedData(
+		i2cFrame_transmitQueue I2CReceivedFrame) {
+	i2cFrame_commonHeader tempI2cFrameCommandHeader; //tymczasowa zmienna, do któej będa kopiowane otrzymane dane (aby zawsze uzyskać sumę crc z prawidłowego miejsca, nawert jeśli zmieni się typredef i2cFrame_commonHeader)
+	memcpy(&tempI2cFrameCommandHeader, I2CReceivedFrame.pData,
+			sizeof(i2cFrame_commonHeader));
 
 	//kopiowanie danych z otrzymanego bufora do zmiennej tymczasowej
-	if(this->isCrcSumCorreect(I2CReceivedFrame, tempI2cFrameCommandHeader.crcSum))
-	{
-		switch(tempI2cFrameCommandHeader.commandGroup){
+	if (this->isCrcSumCorreect(I2CReceivedFrame,
+			tempI2cFrameCommandHeader.crcSum)) {
+		switch (tempI2cFrameCommandHeader.commandGroup) {
 
 		case I2C_COMMAND_GROUP_KEYBOARD:
-			parserFunction::keyboardToRadioMeny((i2cFrame_keyboardFrame*)I2CReceivedFrame.pData);
+			parserFunction::keyboardToRadioMeny(
+					(i2cFrame_keyboardFrame*) I2CReceivedFrame.pData);
 			break;
 		default:
 			//printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
-			pPrintf->feedPrintf("%sunknown commandGroup value:0x%x",this->TAG, tempI2cFrameCommandHeader.commandGroup);
+			pPrintf->feedPrintf("%sunknown commandGroup value:0x%x", this->TAG,
+					tempI2cFrameCommandHeader.commandGroup);
 			assert(0);
 		}
 	}
 }
 
-
 #include "SileliS_code/radioMenu.h"
 
-extern radioMenu* pRadioMenu;		//from tasksFunctions.cpp
-namespace parserFunction{
-	void keyboardToRadioMeny(i2cFrame_keyboardFrame* kbrdFrame){
-		pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
-	}
+extern radioMenu *pRadioMenu;		//from tasksFunctions.cpp
+namespace parserFunction {
+void keyboardToRadioMeny(i2cFrame_keyboardFrame *kbrdFrame) {
+	pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
+}
 
 }

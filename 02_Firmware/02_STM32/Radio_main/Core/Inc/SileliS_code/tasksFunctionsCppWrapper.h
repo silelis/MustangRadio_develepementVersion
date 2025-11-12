@@ -14,7 +14,7 @@ extern "C" {
 
 //#include "SileliS_code/tasksFunctions.h"
 
-void startUpTaskCPPWrapper(void* noThing);
+void startUpTaskCPPWrapper(void *noThing);
 
 #ifdef __cplusplus
 }

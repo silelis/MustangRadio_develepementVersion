@@ -19,17 +19,15 @@
 #include "SileliS_code/myPrintfTask.h"
 #include "SileliS_code/keyboardToFunction.h"
 
-
-struct execute_t{
+struct execute_t {
 	keyboardUnion buttonSequence;		//kod klawisza wywołujący funkcję
-	std::function<void()> functionPointer;		//wskaźnik do funkcji jaka ma być wywołana
+	std::function<void()> functionPointer;//wskaźnik do funkcji jaka ma być wywołana
 };
 
-
-class menuItem{
+class menuItem {
 public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
-	menuItem(const char* tag/*, _execute_t *ExecutableButtonsArray*/);
+	menuItem(const char *tag/*, _execute_t *ExecutableButtonsArray*/);
 	~menuItem();
 
 //	void	mI_appendInit(std::function<void()> newFunc);
@@ -37,16 +35,15 @@ public:
 //	void	mI_appendDeInit(std::function<void()> newFunc);
 //	void	mI_executeDeInit(void);
 
-	void	mi_bindInit(void (*new_init)(void*));
-	void	mi_bindDeInit(void (*new_init)(void*));
-	void	mi_bindBackInit(void (*new_init)(void*));
-	void 	mi_execInit(void*);
-	void 	mi_execDeInit(void*);
-	void 	mi_execBackInit(void*);
-
+	void mi_bindInit(void (*new_init)(void*));
+	void mi_bindDeInit(void (*new_init)(void*));
+	void mi_bindBackInit(void (*new_init)(void*));
+	void mi_execInit(void*);
+	void mi_execDeInit(void*);
+	void mi_execBackInit(void*);
 
 protected:
-	const char*	mI_TAG;
+	const char *mI_TAG;
 
 private:
 //	std::function<void()> Init;
@@ -55,15 +52,12 @@ private:
 	void (*cBackInit)(void*)= nullptr;
 	void (*cDeInit)(void*)= nullptr;
 
-	void	mi_bindFunction(void (**target)(void*), void (*new_func)(void*));
-	void 	mi_execFunction(void (*callback)(void*), void* context);
+	void mi_bindFunction(void (**target)(void*), void (*new_func)(void*));
+	void mi_execFunction(void (*callback)(void*), void *context);
 	/*_execute_t	*pExecutableButtonsArray;		//pointer to executable button arrayi in radioMeny class*/
-
-
 
 //	void	appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc);
 //	void	executeFunctionPointer(std::function<void()>* funcPtr);
-
 
 };
 

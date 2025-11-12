@@ -9,6 +9,6 @@
 
 #include "SileliS_code/tasksFunctions.h"
 
-void startUpTaskCPPWrapper(void* noThing){
+void startUpTaskCPPWrapper(void *noThing) {
 	startUpTask(noThing);
 }
