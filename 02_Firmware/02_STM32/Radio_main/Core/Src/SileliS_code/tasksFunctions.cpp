@@ -93,6 +93,7 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing) {
 			case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
+
 				pESP32->masterReceiveDataInSequence(&I2CFrameToReadFromSlave);
 #else
 				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
@@ -193,8 +194,8 @@ static void initTaskFunctions(void) {
 	assert(pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster));
 
 	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
-	pi2cMaster->i2cMasterSemaphoreTake();
-	pi2cMaster->i2cMasterSemaphoreGive();
+//	pi2cMaster->i2cMasterSemaphoreTake();
+//	pi2cMaster->i2cMasterSemaphoreGive();
 	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
 
 	pi2cMaster->while_I2C_STATE_READY();
