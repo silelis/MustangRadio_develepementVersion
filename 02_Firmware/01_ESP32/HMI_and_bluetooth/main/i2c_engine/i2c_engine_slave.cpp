@@ -265,6 +265,7 @@ esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 
+#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE.
 		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
 
 #else

@@ -46,9 +46,9 @@ struct FM_AM_parameters {
 };
 
 struct radioMegaStruct {
-	struct {
-		_execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
-	} control;
+//	struct {
+//		_execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+//	} control;
 
 	struct {
 		hmiLeds leds;
