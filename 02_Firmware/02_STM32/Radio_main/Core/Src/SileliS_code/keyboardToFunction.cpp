@@ -9,66 +9,38 @@
 
 extern myPrintfTask *pPrintf;
 
-keyboardToFunction::keyboardToFunction(_execute_t *ExecutableButtonsArray) {
-	this->pExecutableButtonsArray = ExecutableButtonsArray;
+_execute_t keyboardToFunction::ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 
-//	memset(this->ExecutableButtonsArray,0, sizeof(EXECUTALBE_BUTTONS_ARRAY_SIZE));
-//	this->execFunctionArryAppended=0;
-//	this->buildExecutableButtonsArrayEmpty();
-
-//this->pExecutableButtonsArray = ExecutableButtonsArray;
-
-//	memset(this->pExecutableButtonsArray,0, sizeof(EXECUTALBE_BUTTONS_ARRAY_SIZE));
+keyboardToFunction::keyboardToFunction() {
 	this->buildExecutableButtonsArrayEmpty();
 }
 
 void keyboardToFunction::buildExecutableButtonsArrayEmpty(void) {
-	/*	this->ExecutableButtonsArray[0]={POWER_ON_OFF_SHORT_PRESS,	nullptr};	//poweroff pressed   //std::function<void()>{};
-	 this->ExecutableButtonsArray[1]={POWER_ON_OFF_LONG_RELEASED,nullptr};	//long poweroff release
-	 this->ExecutableButtonsArray[2]={EQUALIZER_SHORT_PRESS,		nullptr};
-	 this->ExecutableButtonsArray[3]={EQUALIZER_LONG_RELEASED,	nullptr};		//EQUALIZER_LONG_RELEASED
-	 this->ExecutableButtonsArray[4]={{0,0},NULL};
-	 this->ExecutableButtonsArray[5]={{0,0},NULL};
-	 this->ExecutableButtonsArray[6]={{0,0},NULL};
-	 this->ExecutableButtonsArray[7]={{0,0},NULL};
-	 this->ExecutableButtonsArray[8]={{0,0},NULL};
-	 this->ExecutableButtonsArray[9]={{0,0},NULL};
-	 this->ExecutableButtonsArray[10]={{0,0},NULL};
-	 this->ExecutableButtonsArray[11]={{0,0},NULL};
-	 this->ExecutableButtonsArray[12]={{0,0},NULL};
-	 this->ExecutableButtonsArray[13]={{0,0},NULL};
-	 this->ExecutableButtonsArray[14]={{0,0},NULL};
-	 this->ExecutableButtonsArray[15]={{0,0},NULL};
-	 this->ExecutableButtonsArray[16]={{0,0},NULL};
-	 this->ExecutableButtonsArray[17]={{0,0},NULL};
-	 //this->ExecutableButtons[18]={{0,0},NULL};*/
-
-	this->pExecutableButtonsArray[0] = { POWER_ON_OFF_SHORT_PRESS, nullptr };//poweroff pressed   //std::function<void()>{};
-	this->pExecutableButtonsArray[1] = { POWER_ON_OFF_LONG_RELEASED, nullptr };	//long poweroff release
-	this->pExecutableButtonsArray[2] = { EQUALIZER_SHORT_PRESS, nullptr };
-	this->pExecutableButtonsArray[3] = { EQUALIZER_LONG_RELEASED, nullptr };//EQUALIZER_LONG_RELEASED
-	this->pExecutableButtonsArray[4] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[5] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[6] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[7] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[8] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[9] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[10] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[11] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[12] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[13] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[14] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[15] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[16] = { { 0, 0 }, NULL };
-	this->pExecutableButtonsArray[17] = { { 0, 0 }, NULL };
-	//this->ExecutableButtons[18]={{0,0},NULL};
+	this->ExecutableButtonsArray[0] = { POWER_ON_OFF_SHORT_PRESS, nullptr };//poweroff pressed   //std::function<void()>{};
+	this->ExecutableButtonsArray[1] = { POWER_ON_OFF_LONG_RELEASED, nullptr };	//long poweroff release
+	this->ExecutableButtonsArray[2] = { EQUALIZER_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[3] = { EQUALIZER_LONG_RELEASED, nullptr };//EQUALIZER_LONG_RELEASED
+	this->ExecutableButtonsArray[4] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[5] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[6] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[7] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[8] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[9] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[10] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[11] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[12] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[13] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[14] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[15] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[16] = { { 0, 0 }, NULL };
+	this->ExecutableButtonsArray[17] = { { 0, 0 }, NULL };
 }
 uint8_t keyboardToFunction::searchButtonSequenceInExecutableButtonsArray(
 		keyboardUnion buttonSequence) {
 	for (uint8_t i = 0; i < EXECUTALBE_BUTTONS_ARRAY_SIZE; i++) {
-		if ((this->pExecutableButtonsArray[i].buttonSequence.kbrdValue.input
+		if ((this->ExecutableButtonsArray[i].buttonSequence.kbrdValue.input
 				== buttonSequence.kbrdValue.input)
-				&& (this->pExecutableButtonsArray[i].buttonSequence.kbrdValue.value
+				&& (this->ExecutableButtonsArray[i].buttonSequence.kbrdValue.value
 						== buttonSequence.kbrdValue.value)) {
 			return i;
 		}
@@ -84,13 +56,13 @@ bool keyboardToFunction::executeButtonFunction(keyboardUnion buttonSequence) {
 		this->noButtonInArrayMessage(buttonSequence);
 		return false;
 	}
-	if (!this->pExecutableButtonsArray[whichPosition].functionPointer) {//== nullptr){
+	if (!this->ExecutableButtonsArray[whichPosition].functionPointer) {//== nullptr){
 		pPrintf->feedPrintf(
 				"%c %x - there is no function binded for this button.",
 				buttonSequence.array[0], buttonSequence.array[1]);
 		return false;
 	}
-	this->pExecutableButtonsArray[whichPosition].functionPointer();
+	this->ExecutableButtonsArray[whichPosition].functionPointer();
 	return true;
 }
 
@@ -103,7 +75,7 @@ bool keyboardToFunction::appendButtonArrayWithFunctionPointer(
 				EXECUTALBE_BUTTONS_ARRAY_SIZE);
 		return false;
 	}
-	this->pExecutableButtonsArray[buttonPlaceInArray].functionPointer = newFunc;
+	this->ExecutableButtonsArray[buttonPlaceInArray].functionPointer = newFunc;
 	return true;
 
 }
@@ -136,7 +108,7 @@ bool keyboardToFunction::appendButtonArrayWithFunctionPointer(
 		//assert(0);
 		return false;
 	}
-	this->pExecutableButtonsArray[whichPosition].functionPointer = newFunc;
+	this->ExecutableButtonsArray[whichPosition].functionPointer = newFunc;
 	return true;
 }
 

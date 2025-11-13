@@ -22,7 +22,7 @@ struct _execute_t {
 
 class keyboardToFunction {
 public:
-	keyboardToFunction(_execute_t *ExecutableButtonsArray);
+	keyboardToFunction(/*_execute_t *ExecutableButtonsArray*/);
 	virtual ~keyboardToFunction();
 
 //private:
@@ -38,8 +38,8 @@ public:
 			std::function<void()> newFunc);
 
 protected:
-//	_execute_t	ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
-	_execute_t *pExecutableButtonsArray;
+//	_execute_t *pExecutableButtonsArray;
+	static _execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 
 private:
 	void noButtonInArrayMessage(keyboardUnion buttonSequence);

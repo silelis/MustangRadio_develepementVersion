@@ -13,8 +13,8 @@ extern myPrintfTask *pPrintf;
 
 radioMegaStruct radioStruct;
 
-radioMenu::radioMenu() :
-		keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
+radioMenu::radioMenu():keyboardToFunction(){
+//	keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
 	queueRadioMenuKbrd = nullptr;
 	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
 
