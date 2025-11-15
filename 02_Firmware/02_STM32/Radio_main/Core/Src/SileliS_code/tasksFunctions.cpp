@@ -12,7 +12,10 @@
 #include "SileliS_code/ledsController.h"
 #include "SileliS_code/StepperOptoPowerOFF.h"
 #include <new>
+#include "SileliS_code/radioMegaStruct.h"
 
+
+radioMegaStruct radioStruct;
 static bool esp32I2cInitialised = false; //zmienna sprawdza czy esp32 zainiclował interfejs i2c
 static TaskHandle_t taskHandle_i2cMasterReceiveFromSlaveDataTask = nullptr;	//task obsługujący czytanie danych z urządzeń slave i2c
 static TaskHandle_t taskHandle_i2cMasterTransmitToSlaveDataTask = nullptr;//task wysyła dane do i2c slave
@@ -25,6 +28,9 @@ i2cMaster *pi2cMaster = nullptr; //wsyaźnik do obiektu służącego do komunika
 static esp32_i2cComunicationDriver *pESP32 = nullptr; //wsyaźnik do obiektu obsługującego komunikację z ESP32
 radioMenu *pRadioMenu = nullptr;
 myPrintfTask *pPrintf = nullptr; //pointer do taska obsługuącego pisanie komunikatow na konsolę
+ledsController *pHmiLeds = nullptr;
+
+
 
 //task parsujący otrzymane z i2c slave dane (przełącza parsowanie po adresie slave z jakiego dane zostały otrzymane
 static void i2cMasterParseReceivedData(void *pNothing) {
@@ -153,6 +159,7 @@ void peripheryMenuTimeoutFunction(void *thing) {
 	}
 }
 
+
 //glówna funkcja radio inicjalizująca menu i podmenu i obslugę klawiszy
 static void manageRadioButtonsAndManue(void *thing) {
 	radioMenu *ptrRadioMenu = (radioMenu*) thing;
@@ -161,22 +168,24 @@ static void manageRadioButtonsAndManue(void *thing) {
 
 //przykład dzialania LEDów
 
-	extern radioMegaStruct radioStruct;
-
-//ledsController hmiLeds = ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
+//	extern radioMegaStruct radioStruct;
 
 	StepperOptoPowerOFF stepperMotor = StepperOptoPowerOFF(
 			&radioStruct.humanMachineInterface.stepperMotorData,
 			pi2cMaster->getTransmitQueue());
 
-	/*
-	 hmiLeds.setLedAllCleaned();
-	 hmiLeds.setLedSourceWithColor(COLOR_RED);
-	 hmiLeds.sendDataToI2cTransmitQueue();
+/*
+	 pHmiLeds->setLedAllCleaned();
+	 pHmiLeds->setLedSourceWithColor(COLOR_RED);
+	 pHmiLeds->sendDataToI2cTransmitQueue();
 	 vTaskDelay(pdMS_TO_TICKS(2000));
-	 hmiLeds.setLedAllCleaned();
-	 hmiLeds.setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
-	 hmiLeds.sendDataToI2cTransmitQueue();*/
+	 pHmiLeds->setLedAllCleaned();
+	 pHmiLeds->setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
+	 pHmiLeds->sendDataToI2cTransmitQueue();
+
+*/
+
+
 
 	stepperMotor.setMotorCalibration();
 
@@ -212,6 +221,9 @@ static void initTaskFunctions(void) {
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(
 			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMasterParseReceivedData));
+
+	pHmiLeds = new (std::nothrow) ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
+
 
 	assert(pRadioMenu = new (std::nothrow) radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy

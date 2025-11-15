@@ -11,7 +11,7 @@
 extern myPrintfTask *pPrintf;
 //extern i2cMaster* pi2cMaster;
 
-radioMegaStruct radioStruct;
+//radioMegaStruct radioStruct;
 
 radioMenu::radioMenu():keyboardToFunction(){
 //	keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
@@ -47,13 +47,19 @@ void radioMenu::createDeviceMenuList_audio(void) {
 	assert(
 			this->audioDevices = new (std::nothrow) myList(
 					&(this->ListHeader_audioDevices),
-					"FM"/*, this->pExecutableButtonsArray*/));
-	this->audioDevices->addAtEnd("DAB+"/*,pExecutableButtonsArray*/);
-	this->audioDevices->addAtEnd("AM"/*,pExecutableButtonsArray*/);
-	this->audioDevices->addAtEnd("Bluetooth"/*,this->pExecutableButtonsArray*/);
-	this->audioDevices->addAtEnd("USB"/*,this->pExecutableButtonsArray*/);
-	this->audioDevices->addAtEnd("SD"/*,this->pExecutableButtonsArray*/);
-	this->audioDevices->addAtEnd("Aux"/*,this->pExecutableButtonsArray*/);
+					"FM"));
+	//this->audioDevices->mi_bindInit(new_init);
+	//this->audioDevices->mi_bindDeInit(new_init);
+	//this->audioDevices->mi_bindBackInit(new_init);
+	this->audioDevices->addAtEnd("DAB+");
+	//this->audioDevices->mi_bindInit(new_init);
+	//this->audioDevices->mi_bindDeInit(new_init);
+	//this->audioDevices->mi_bindBackInit(new_init);
+	this->audioDevices->addAtEnd("AM");
+	this->audioDevices->addAtEnd("Bluetooth");
+	this->audioDevices->addAtEnd("USB");
+	this->audioDevices->addAtEnd("SD");
+	this->audioDevices->addAtEnd("Aux");
 
 	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
 	this->peripheryDevices->resetToFirst();
@@ -70,23 +76,23 @@ void radioMenu::createDeviceMenuList_periphery(void) {
 	assert(
 			this->peripheryDevices = new (std::nothrow) myList(
 					&(this->ListHeader_peripheryDevices),
-					"Antena"/*,this->pExecutableButtonsArray*/));
+					"Antena"));
 	this->peripheryDevices->addAtEnd(
-			"Treble"/*,this->pExecutableButtonsArray*/);
-	this->peripheryDevices->addAtEnd("Midle"/*,this->pExecutableButtonsArray*/);
-	this->peripheryDevices->addAtEnd("Bass"/*,this->pExecutableButtonsArray*/);
+			"Treble");
+	this->peripheryDevices->addAtEnd("Midle");
+	this->peripheryDevices->addAtEnd("Bass");
 	this->peripheryDevices->addAtEnd(
-			"Subwoofer"/*,this->pExecutableButtonsArray*/);
+			"Subwoofer");
 	this->peripheryDevices->addAtEnd(
-			"L_H_Boost"/*,this->pExecutableButtonsArray*/);
+			"L_H_Boost");
 	this->peripheryDevices->addAtEnd(
-			"Left<->Right"/*,this->pExecutableButtonsArray*/);
+			"Left<->Right");
 	this->peripheryDevices->addAtEnd(
-			"Front<->Rear"/*,this->pExecutableButtonsArray*/);
+			"Front<->Rear");
 	this->peripheryDevices->addAtEnd(
-			"Backlight"/*,this->pExecutableButtonsArray*/);
+			"Backlight");
 	this->peripheryDevices->addAtEnd(
-			"Tip calibration"/*,this->pExecutableButtonsArray*/);
+			"Tip calibration");
 
 	this->peripheryDevices->resetToFirst();
 	//this->peripheryDevices->printList();
@@ -97,7 +103,7 @@ void radioMenu::createDeviceMenuList_mainMenu(void) {
 	assert(
 			this->radioMainMenu = new (std::nothrow) myList(
 					&(this->ListHeader_mainMenu),
-					"MainMenu: "/*,this->pExecutableButtonsArray*/));
+					"MainMenu: "));
 
 	this->appendButtonArrayWithFunctionPointer( { { 'b', 0x3f } },
 			std::bind(&radioMenu::menuFunction_equButShortPressed, this));
