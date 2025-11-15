@@ -15,14 +15,14 @@
 //#define STM32_2_ESP32_I2C_IN_SEQUENCE  - nie działa po stronie STM32 i nie wiem jak naprawić nie właczać!!!
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
-/*typedef*/struct i2cFrame_transmitQueue {
+struct i2cFrame_transmitQueue {
 	uint8_t slaveDevice7bitAddress;	//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
 	size_t dataSize;//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
 	void *pData;//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
 	i2cFrame_transmitQueue() :
 			slaveDevice7bitAddress(0), dataSize(0), pData(nullptr) {
 	}
-} /*i2cFrame_transmitQueue*/;
+};
 #else
 	typedef struct{
 		size_t dataSize;					//jak wyżej

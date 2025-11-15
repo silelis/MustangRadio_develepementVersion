@@ -1,14 +1,8 @@
-21:42:05 **** Incremental Build of configuration Debug for project Radio_main ****
+22:21:15 **** Incremental Build of configuration Debug for project Radio_main ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Src/SileliS_code/keyboardToFunction.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunication_calculate_checksum" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationProtocol" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationStructures" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/i2c_slave_master_queueClass" -ID:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/keyboardToFunction.d" -MT"Core/Src/SileliS_code/keyboardToFunction.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/keyboardToFunction.o"
-arm-none-eabi-g++ "../Core/Src/SileliS_code/tasksFunctions.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunication_calculate_checksum" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationProtocol" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationStructures" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/i2c_slave_master_queueClass" -ID:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/tasksFunctions.d" -MT"Core/Src/SileliS_code/tasksFunctions.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/tasksFunctions.o"
-In file included from ../Core/Inc/SileliS_code/tasksFunctions.h:27,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:9:
-../Core/Inc/SileliS_code/esp32i2cComunicationDriver.h:61:2: warning: #warning zrobic obs\U00000142ug\U00000119 b\U00000142\U00000119d\U000000f3w komunikacji (je\U0000015bli s\U00000105 b\U00000142\U00000119dy komunikacji i je\U0000015bli nie ma sygna\U00000142u keep alive [-Wcpp]
-   61 | #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-      |  ^~~~~~~
+arm-none-eabi-g++ "../Core/Src/SileliS_code/radioMenu.cpp" -mcpu=cortex-m7 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H7A3xx -c -I../Core/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunication_calculate_checksum" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationProtocol" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationStructures" -I"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/i2c_slave_master_queueClass" -ID:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/SileliS_code/radioMenu.d" -MT"Core/Src/SileliS_code/radioMenu.o" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "Core/Src/SileliS_code/radioMenu.o"
 In file included from ../Core/Inc/SileliS_code/radioMenu.h:10,
-                 from ../Core/Src/SileliS_code/tasksFunctions.cpp:11:
+                 from ../Core/Src/SileliS_code/radioMenu.cpp:8:
 ../Core/Inc/SileliS_code/myList.h:28:83: warning: "/*" within comment [-Wcomment]
    28 |                         const char *nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
       |                                                                                    
@@ -24,11 +18,11 @@ Finished building target: Radio_main.elf
 arm-none-eabi-size  Radio_main.elf 
 arm-none-eabi-objdump -h -S Radio_main.elf  > "Radio_main.list"
    text	   data	    bss	    dec	    hex	filename
- 247000	    720	  43016	 290736	  46fb0	Radio_main.elf
+ 247648	    720	  43024	 291392	  47240	Radio_main.elf
 Finished building: default.size.stdout
  
 Finished building: Radio_main.list
  
 
-21:42:08 Build Finished. 0 errors, 4 warnings. (took 2s.767ms)
+22:21:18 Build Finished. 0 errors, 3 warnings. (took 2s.724ms)
 

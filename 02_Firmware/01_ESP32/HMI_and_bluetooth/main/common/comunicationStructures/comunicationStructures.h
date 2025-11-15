@@ -20,9 +20,6 @@ struct hmiLeds {//struktura zawierająca informacje o stanie ledów wykorzystywa
 	colorSet sourceLed;
 	colorSet equaliserLed;
 	colorSet errorLed;
-	//colorSet	backlightLeds;
-	//uint8_t		backlightLedsFrom=BACKLIGHT_LED_FROM;
-	//uint8_t		backlightLedsTo=BACKLIGHT_LED_TO;
 };
 
 union keyboardUnion {
