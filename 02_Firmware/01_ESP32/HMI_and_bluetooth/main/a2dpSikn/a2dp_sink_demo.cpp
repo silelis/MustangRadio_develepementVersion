@@ -67,8 +67,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "btstack.h"
 
+#include "btstack.h"
 #include "btstack_resample.h"
 
 //functions required by Mustang radio hardware

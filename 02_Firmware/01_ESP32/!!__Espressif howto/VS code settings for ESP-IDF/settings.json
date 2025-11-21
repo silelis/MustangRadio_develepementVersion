@@ -51,7 +51,7 @@
     "esp_python_path"   : "${config:esp_idf_path}/python_env/${config:esp_python_path_ver}/Scripts",
     "esp_toolchain_path": "${config:esp_idf_tools}/xtensa-esp-elf/${config:tools_xtensa-esp-elf_ver}/xtensa-esp-elf/bin",
     "esp_ADDR2LINE_path": "${config:esp_idf_tools}/xtensa-esp-elf/${config:tools_ADDR2LINE_ver}/xtensa-esp-elf/bin",
-    "esp_clang_path"    :  "${config:esp_idf_tools}/esp-clang/${config:tools_esp-clang_ver}/esp-clang/bin",s
+    "esp_clang_path"    :  "${config:esp_idf_tools}/esp-clang/${config:tools_esp-clang_ver}/esp-clang/bin",
     "esp_gdb_path"      :  "${config:esp_idf_tools}/xtensa-esp-elf-gdb/${config:tools_xtensa-esp-elf-gdb_ver}/xtensa-esp-elf-gdb/bin",
     "esp_dev_env_path": "${config:esp_idf_tools}:${config:esp_binutils_path}:${config:esp_openocd_path}:${config:esp_python_path}:${config:esp_toolchain_path}:${config:esp_clang_path}:${config:esp_gdb_path}",
        //DO NOT CHANGE THIS ///
@@ -63,25 +63,21 @@
 
   //Konfiguracja OpenOCD należy ustawić wg. swoich parametrów
   // UWAGA - jak przestało działać OpenOCD to odinstaluj sterowniki Interfejsu 0 - zainstaluj ponownie WinUSB (v6.1.7600.16385)
-  //szybki test open  ocd: openocd -f interface/ftdi/esp_ftdi.cfg -c "adapter speed 1000" -f target/esp32.cfg
   "idf.openOcdDebugLevel": 3,         //od 0 do 4
   "idf.openOcdLaunchArgs": [
-    "-d${config:idf.openOcdDebugLevel}",
+    //"-d${config:idf.openOcdDebugLevel}",
     "-f", "interface/ftdi/esp_ftdi.cfg",
-    "-c", "adapter speed 14000", 
     "-f", "target/esp32.cfg",
+    "-c", "adapter speed 400", 
     "-c", "init",
     "-c", "reset halt",
     "-c", "esp32.cpu0 configure -rtos FreeRTOS",    //można ustawić tyle ile ESP ma CPU
     "-c", "esp32.cpu1 configure -rtos FreeRTOS",     //można ustawić tyle ile ESP ma CPU
     "-c", "set ESP_RTOS none"                       //jest istotne, bo czasem GDB nie che łączuyć się z pierwszym razem
   ],
-  //Konfiguracja OpenOCD należy ustawić wg. swoich parametrów
 
-//    "buildBeforeRun": true,
-//    "flashBeforeRun": true,
   
-  "idf.portWin": "COM11",                         //wybierz odpowiedni
+  "idf.portWin": "COM8",                         //wybierz odpowiedni
   "idf.toolsPathWin": "${config:esp_idf_path}",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"                         //Twoj target
@@ -97,4 +93,5 @@
 
   ],
   "idf.flashType": "JTAG"                          //wybierz odpowiedni
+  //"idf.flashBaudRate": 115200
 }
