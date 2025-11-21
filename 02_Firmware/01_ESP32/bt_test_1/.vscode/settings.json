@@ -65,22 +65,19 @@
   // UWAGA - jak przestało działać OpenOCD to odinstaluj sterowniki Interfejsu 0 - zainstaluj ponownie WinUSB (v6.1.7600.16385)
   "idf.openOcdDebugLevel": 3,         //od 0 do 4
   "idf.openOcdLaunchArgs": [
-  //  "-d${config:idf.openOcdDebugLevel}",
+    //"-d${config:idf.openOcdDebugLevel}",
     "-f", "interface/ftdi/esp_ftdi.cfg",
-    "-c", "adapter speed 500", 
     "-f", "target/esp32.cfg",
+    "-c", "adapter speed 400", 
     "-c", "init",
     "-c", "reset halt",
     "-c", "esp32.cpu0 configure -rtos FreeRTOS",    //można ustawić tyle ile ESP ma CPU
     "-c", "esp32.cpu1 configure -rtos FreeRTOS",     //można ustawić tyle ile ESP ma CPU
     "-c", "set ESP_RTOS none"                       //jest istotne, bo czasem GDB nie che łączuyć się z pierwszym razem
   ],
-  //Konfiguracja OpenOCD należy ustawić wg. swoich parametrów
 
-//    "buildBeforeRun": true,
-//    "flashBeforeRun": true,
   
-  "idf.portWin": "COM14",                         //wybierz odpowiedni
+  "idf.portWin": "COM8",                         //wybierz odpowiedni
   "idf.toolsPathWin": "${config:esp_idf_path}",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"                         //Twoj target
@@ -95,6 +92,6 @@
   //DO NOT CHANGE THIS ///
 
   ],
-  "idf.flashType": "UART"                          //wybierz odpowiedni
+  "idf.flashType": "JTAG"                          //wybierz odpowiedni
   //"idf.flashBaudRate": 115200
 }
