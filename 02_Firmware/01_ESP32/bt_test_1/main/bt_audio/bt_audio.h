@@ -24,6 +24,7 @@ https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component*/
 #define BT_AUDIO_NAME "SileliS Radio"
 esp_err_t i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data);
 
+
 enum i2sPinStates
 {
     highZenabled,
@@ -32,8 +33,7 @@ enum i2sPinStates
     highZdisabled
 };
 
-class bt_audio_sink
-{
+class bt_audio_sink{
     friend esp_err_t i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data);
 
 public:

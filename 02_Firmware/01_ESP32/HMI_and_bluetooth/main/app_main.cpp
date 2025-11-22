@@ -25,7 +25,13 @@
 #include "tasksFunctions/tasksFunctionsLeds.h"
 #include "tasksFunctions/tasksFunctionsStepperMotor.h"
 //#include "NVSeeprom/NVSeeprom.h"
+
+#if USED_BLUETOOTH_STACK == USE_BTSTACK
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
+#error "Btstack had been tested and is working but code had not been implemented
+#elif USED_BLUETOOTH_STACK == USE_ESP32A2DP
+
+#endif
 
 #include "driver/uart.h"
 void init_uart();
@@ -116,9 +122,12 @@ extern "C" void app_main(void)
 		
 	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
 	
+
+#if USED_BLUETOOTH_STACK == USE_BTSTACK
 	btstack_init();
 	btstack_main(0, NULL);
 	btstack_run_loop_execute();
+#endif
 	
 	while (true)
 	{
