@@ -72,7 +72,46 @@ void bt_audio_sink::btAudioInit(void){
     this->i2s->begin(cfg);
 
     this->a2dp_sink->set_auto_reconnect(false);
+
+    this->a2dp_sink->set_on_connection_state_changed(onConnCallback);
+    this->a2dp_sink->set_on_audio_state_changed_post(onAudioStateCallback);
+    this->a2dp_sink->set_avrc_rn_playstatus_callback(onAVRCPlayStatusCallback);
+
     this->a2dp_sink->start(BT_AUDIO_NAME);
+}
+
+static void onConnCallback(esp_a2d_connection_state_t state, void*){
+    switch(state){
+        case ESP_A2D_CONNECTION_STATE_DISCONNECTED:     /*!< connection released  */
+        
+        case ESP_A2D_CONNECTION_STATE_CONNECTING:       /*!< connecting remote device */
+        
+        case ESP_A2D_CONNECTION_STATE_CONNECTED:        /*!< connection established */
+        
+        case ESP_A2D_CONNECTION_STATE_DISCONNECTING:    /*!< disconnecting remote device */
+    }
+
+}
+
+static void onAudioStateCallback(esp_a2d_audio_state_t state, void*){
+    switch(state){
+            case ESP_A2D_AUDIO_STATE_SUSPEND:           /*!< audio stream datapath suspended by remote device */
+            case ESP_A2D_AUDIO_STATE_STARTED:           /*!< audio stream datapath started */
+   
+            //case ESP_A2D_AUDIO_STATE_STOPPED: /*aka ESP_A2D_AUDIO_STATE_SUSPEND*/            /*!< @note Deprecated */
+            //case ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND: /*aka ESP_A2D_AUDIO_STATE_SUSPEND*/     /*!< @note Deprecated */
+    }
+}
+
+static void onAVRCPlayStatusCallback(esp_avrc_playback_stat_t playback){
+    switch(playback){
+        case  ESP_AVRC_PLAYBACK_STOPPED:               /*!< stopped */
+        case ESP_AVRC_PLAYBACK_PLAYING:                /*!< playing */
+        case ESP_AVRC_PLAYBACK_PAUSED:                 /*!< paused */
+        case ESP_AVRC_PLAYBACK_FWD_SEEK:               /*!< forward seek */
+        case ESP_AVRC_PLAYBACK_REV_SEEK:               /*!< reverse seek */
+        case ESP_AVRC_PLAYBACK_ERROR:                  /*!< error */
+    }
 }
 
 void bt_audio_sink::btAudioDeinit(void){
@@ -96,4 +135,19 @@ void bt_audio_sink::btAudioStop(void){
 
 void bt_audio_sink::btAudioPause(void){
     this->a2dp_sink->pause();
+}
+
+void bt_audio_sink::btAudioNext(void){
+this->a2dp_sink->next();
+}
+void bt_audio_sink::btAudioPrevious(void){
+    this->a2dp_sink->previous();
+}
+
+void bt_audio_sink::btAudioFastForward(void){
+    this->a2dp_sink->fast_forward();
+}
+
+void bt_audio_sink::btAudioFastFRewind(void){
+    this->a2dp_sink->rewind();
 }
