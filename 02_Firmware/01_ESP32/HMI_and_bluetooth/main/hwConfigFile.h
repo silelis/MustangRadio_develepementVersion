@@ -13,6 +13,10 @@
 #include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 #endif
 
+//Wybór stosu bluetooth audio
+#define USE_BTSTACK 0
+#define USE_ESP32A2DP 1
+#define USED_BLUETOOTH_STACK	USE_ESP32A2DP //or USE_BTSTACK - można użyć tylko jeden
 
 #define DEBOUNCE_TIMER_PRIORITY			0									//w ESP-IDF 5.2+ wprowadzono nowy parametr timera (prioryter timera), który we moim kodzie odpowiada za debouncowanie styków 
 #define DEBOUNCE_PARAMETERS				DEBOUNCE_PARAMETERS_100us_20x		//PLEASE choose one of: "DEBOUNCE_PARAMETERS_100us_20x" or "DEBOUNCE_PARAMETERS_275us_20x" or "DEBOUNCE_PARAMETERS_137us_40x"
