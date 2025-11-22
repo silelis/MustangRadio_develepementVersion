@@ -17,6 +17,7 @@ idf_component_register(
         tasksFunctions/tasksFunctionsLeds.cpp
         tasksFunctions/tasksFunctionsStepperMotor.cpp
         tasksFunctions/tasksFunctionsStorage.cpp
+	bt_audio/bt_audio.cpp
     INCLUDE_DIRS "."
     REQUIRES
 	btstack 
@@ -25,4 +26,6 @@ idf_component_register(
         nvs_flash
         esp_partition 
         esp_system
+	arduino-audio-tools
+	ESP32-A2DP
 )
