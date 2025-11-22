@@ -30,7 +30,7 @@
 #include "a2dpSikn/a2dp_sink_demo_main_incl_err.h"
 #error "Btstack had been tested and is working but code had not been implemented
 #elif USED_BLUETOOTH_STACK == USE_ESP32A2DP
-
+#include "bt_audio/bt_audio.h"
 #endif
 
 #include "driver/uart.h"
@@ -75,15 +75,13 @@ extern "C" void app_main(void)
 	//- VisualGDB-6.0
 	//- esp-idf 5.2 ==? 5.2.2
 	/* CAUTION */
-		
+
+	i2sHighImpedanceEnabled(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);		//musi być na samym początku, aby nie uszkodzić urządzeń szyny I2S
 
 	QueueHandle_t handlerQueue_MainKeyboard;
 	TaskHandle_t handlerTask_keyboardQueueParametersParser;
 	
-	init_uart();
-	i2sPinsHighImpedanceEnabled();
-	
-	
+	init_uart();	
 	
 
 	const char *main_TAG = "Main function:";

@@ -5,10 +5,9 @@
 //#include "./../../../03_Common/comunicationProtocol.h"
 //#include "driver/gpio.h"
 
+//wybór czhipy ESP32
 #define chip_ESP32_WROOM32D_DEVBOARD	0
-
 #define CHIP chip_ESP32_WROOM32D_DEVBOARD		//select Your chip/ devboard type
-
 #if CHIP == chip_ESP32_WROOM32D_DEVBOARD  
 #include "chip_config_ESP32_WROOM32D_DEVBOARD.h"
 #endif
@@ -17,6 +16,13 @@
 #define USE_BTSTACK 0
 #define USE_ESP32A2DP 1
 #define USED_BLUETOOTH_STACK	USE_ESP32A2DP //or USE_BTSTACK - można użyć tylko jeden
+
+//nazwa urządzenie BLUETOOTH
+#define BT_AUDIO_NAME 			"SileliS Radio"
+//definicj pinów I2S - zgodnie z projektem hardware
+#define I2S_PIN_BCK				GPIO_NUM_26
+#define I2S_PIN_WS				GPIO_NUM_27
+#define I2S_PIN_DATA			GPIO_NUM_25
 
 #define DEBOUNCE_TIMER_PRIORITY			0									//w ESP-IDF 5.2+ wprowadzono nowy parametr timera (prioryter timera), który we moim kodzie odpowiada za debouncowanie styków 
 #define DEBOUNCE_PARAMETERS				DEBOUNCE_PARAMETERS_100us_20x		//PLEASE choose one of: "DEBOUNCE_PARAMETERS_100us_20x" or "DEBOUNCE_PARAMETERS_275us_20x" or "DEBOUNCE_PARAMETERS_137us_40x"
@@ -62,5 +68,5 @@
 
 #define NVS_RADIO_CONFIG_NAMESPACE			"RadioConfig"		//not for bluetooth which is controlled via BTstack nvs functions
 #define NVS_PARTITION_NAME_DEFAULT			NULL
-#define NVS_EREASE_COUNTDOWN_TIME			10
+//#define NVS_EREASE_COUNTDOWN_TIME			10
 
