@@ -115,4 +115,7 @@ typedef struct {
 #define BT_SUBCOMMAND_onConnCallback			0x01
 //#define BT_SUBCOMMAND_onAudioStateCallback		0x02
 #define BT_SUBCOMMAND_onAVRCPlayStatusCallback	0x03
+#define BT_SUBCOMMAND_I2S_PINS_STATE			0x04
 
+#define BT_AUDIO_DEVICE_ON	true
+#define BT_AUDIO_DEVICE_OFF	false

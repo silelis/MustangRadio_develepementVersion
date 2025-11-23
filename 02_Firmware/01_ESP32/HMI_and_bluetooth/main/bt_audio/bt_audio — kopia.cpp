@@ -3,51 +3,19 @@
 
 i2sPinStates bt_audio_sink::i2sState;
 
-
 static void seti2cFrame_btAudioHeaderData(i2cFrame_btAudio* btAudioFrame){
     btAudioFrame->i2cframeCommandHeader.commandGroup=I2C_COMMAND_GROUP_BTAUDIO;
     btAudioFrame->i2cframeCommandHeader.dataSize=sizeof(i2cFrame_btAudio);
     btAudioFrame->i2cframeCommandHeader.crcSum=calculate_checksum(btAudioFrame, btAudioFrame->i2cframeCommandHeader.dataSize);
 }
 
-static BaseType_t PrepareBtDataAndSent_to_i2cQueueSend(i2cFrame_btAudio* dataToSend){
-    extern i2cEngin_slave *p_i2cSlave;
-
-    i2cFrame_transmitQueue dataToTransmitQueue;
-    dataToTransmitQueue.pData = new char[dataToSend->i2cframeCommandHeader.dataSize];
-    assert(dataToTransmitQueue.pData);
-    if (dataToTransmitQueue.pData != NULL){
-        memcpy(dataToTransmitQueue.pData,dataToSend, dataToSend->i2cframeCommandHeader.dataSize);
-        dataToTransmitQueue.dataSize = dataToSend->i2cframeCommandHeader.dataSize;
-        return p_i2cSlave->i2cSendDataToTransisionQueue(&dataToTransmitQueue);
-    }
-    else{
-        return pdFALSE;
-    }
+static void sendDataToI2CMaster(i2cFrame_btAudio* dataToSend){
+    extern i2cEngin_slave *p_i2cSlave
+    
 }
-
-void bt_audio_sink::sendToMasterI2sPinsState(i2sPinStates i2s_pins_state){
-    bt_audio_sink::i2sState=i2s_pins_state;
-    i2cFrame_btAudio temp_btAudioFrame;
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_I2S_PINS_STATE;
-    temp_btAudioFrame.btAudioData.btAudioUnion.highZstateState = i2s_pins_state;
-    seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
-    assert(PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame));
-}
-
-void bt_audio_sink::sendToMastserDeviceOnOffState(bool on_off){
-    i2cFrame_btAudio temp_btAudioFrame;
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_deviceOnOff;
-    temp_btAudioFrame.btAudioData.btAudioUnion.btAudioDeviceOn_Off=on_off;
-    seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
-    assert(PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame));
-}
-
-
 
 static void onConnCallback(esp_a2d_connection_state_t state, void*){
         i2cFrame_btAudio temp_btAudioFrame;
-        temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_onConnCallback;
         switch(state){
         case ESP_A2D_CONNECTION_STATE_DISCONNECTED:     /*!< connection released  */
             printf("onConnCallback: ESP_A2D_CONNECTION_STATE_DISCONNECTED\r\n");
@@ -59,73 +27,69 @@ static void onConnCallback(esp_a2d_connection_state_t state, void*){
             break;
         case ESP_A2D_CONNECTION_STATE_CONNECTED:        /*!< connection established */
             printf("onConnCallback: ESP_A2D_CONNECTION_STATE_CONNECTED\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onConnCallbackStates = BT_ESP_A2D_CONNECTION_STATE_CONNECTED;
+            temp_btAudioFrame.btAudioData.btAudioUnion.onConnCallbackStates = BT_ESP_A2D_CONNECTION_STATE_CONNECTED
             break;
         case ESP_A2D_CONNECTION_STATE_DISCONNECTING:    /*!< disconnecting remote device */
             printf("onConnCallback: ESP_A2D_CONNECTION_STATE_DISCONNECTING\r\n");
             temp_btAudioFrame.btAudioData.btAudioUnion.onConnCallbackStates = BT_ESP_A2D_CONNECTION_STATE_DISCONNECTING;
             break;
     }
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_onConnCallback;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
-    assert(PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame));
+
+    
+    #error "tutaj skończyłem"
 }
 
-/*
 static void onAudioStateCallback(esp_a2d_audio_state_t state, void*){
     
     i2cFrame_btAudio temp_btAudioFrame;
     switch(state){
-            case ESP_A2D_AUDIO_STATE_SUSPEND:           //!< audio stream datapath suspended by remote device
+            case ESP_A2D_AUDIO_STATE_SUSPEND:           /*!< audio stream datapath suspended by remote device */
                 printf("onAudioStateCallback ESP_A2D_AUDIO_STATE_SUSPEND\r\n");
                 break;
-            case ESP_A2D_AUDIO_STATE_STARTED:           //< audio stream datapath started 
+            case ESP_A2D_AUDIO_STATE_STARTED:           /*!< audio stream datapath started */
                 printf("onAudioStateCallback ESP_A2D_AUDIO_STATE_STARTED\r\n");
                 break;
    
-            //case ESP_A2D_AUDIO_STATE_STOPPED: //aka ESP_A2D_AUDIO_STATE_SUSPEND            //!< @note Deprecated 
-            //case ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND: //aka ESP_A2D_AUDIO_STATE_SUSPEND     //!< @note Deprecated 
+            //case ESP_A2D_AUDIO_STATE_STOPPED: /*aka ESP_A2D_AUDIO_STATE_SUSPEND*/            /*!< @note Deprecated */
+            //case ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND: /*aka ESP_A2D_AUDIO_STATE_SUSPEND*/     /*!< @note Deprecated */
     }
 
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     extern i2cEngin_slave *p_i2cSlave;
 
-}*/
+}
 
 static void onAVRCPlayStatusCallback(esp_avrc_playback_stat_t playback){
     i2cFrame_btAudio temp_btAudioFrame;
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_onAVRCPlayStatusCallback;
+
     switch(playback){
         case  ESP_AVRC_PLAYBACK_STOPPED:               /*!< stopped */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_STOPPED\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_STOPPED;
             break;
         case ESP_AVRC_PLAYBACK_PLAYING:                /*!< playing */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_PLAYING\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_PLAYING;
             break;
         case ESP_AVRC_PLAYBACK_PAUSED:                 /*!< paused */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_PAUSED\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_PAUSED;
             break;
         case ESP_AVRC_PLAYBACK_FWD_SEEK:               /*!< forward seek */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_FWD_SEEK\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_FWD_SEEK;
             break;
         case ESP_AVRC_PLAYBACK_REV_SEEK:               /*!< reverse seek */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_REV_SEEK\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_REV_SEEK;
             break;
         case ESP_AVRC_PLAYBACK_ERROR:                  /*!< error */
             printf("onAVRCPlayStatusCallback ESP_AVRC_PLAYBACK_ERROR\r\n");
-            temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates=BT_ESP_AVRC_PLAYBACK_ERROR;
             break;
     }
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
-    assert(PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame));
+    extern i2cEngin_slave *p_i2cSlave;
 }
 
 
-esp_err_t bt_audio_sink::i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data)
+esp_err_t i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data)
 {
     gpio_config_t io_conf = { };
     io_conf.intr_type = GPIO_INTR_DISABLE;
@@ -137,15 +101,13 @@ esp_err_t bt_audio_sink::i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pi
     if (retVal == ESP_OK)
     {
         printf("I2S pins high impedance mode had been initialized.\n");
-        //bt_audio_sink::i2sState = highZenabled;
-        bt_audio_sink::sendToMasterI2sPinsState(highZenabled);
+        bt_audio_sink::i2sState = highZenabled;
     }
     else
     {
         printf("PROBLEM with I2S pins high impedance mode initialization.\n");
         assert(!ESP_OK);
     }
-
     return retVal;
 }
 
@@ -173,8 +135,7 @@ esp_err_t bt_audio_sink::i2sHighImpedanceDisable(void)
     if (retVal == ESP_OK)
     {
         printf("I2S pins high impedance mode had been deinitialized.\n");
-        //bt_audio_sink::i2sState = highZdisabled;
-        bt_audio_sink::sendToMasterI2sPinsState(highZdisabled);
+        bt_audio_sink::i2sState = highZdisabled;
     }
     else
     {
@@ -186,11 +147,9 @@ esp_err_t bt_audio_sink::i2sHighImpedanceDisable(void)
 
 void bt_audio_sink::btAudioDeviceOn(void){
     this->i2sHighImpedanceDisable();
-    //bt_audio_sink::i2sState=i2sNotConfigured;
-    bt_audio_sink::sendToMasterI2sPinsState(i2sNotConfigured);
+    bt_audio_sink::i2sState=i2sNotConfigured;
     this->i2s = new I2SStream();
-   // bt_audio_sink::i2sState=i2sConfigured;
-    bt_audio_sink::sendToMasterI2sPinsState(i2sConfigured);
+    bt_audio_sink::i2sState=i2sConfigured;
     this->a2dp_sink = new BluetoothA2DPSink(*i2s);
     
     auto cfg = i2s->defaultConfig();
@@ -205,7 +164,6 @@ void bt_audio_sink::btAudioDeviceOn(void){
     //this->a2dp_sink->set_on_audio_state_changed_post(onAudioStateCallback); //nie potrzebuję w mojej aplikacji
     this->a2dp_sink->set_avrc_rn_playstatus_callback(onAVRCPlayStatusCallback);
     this->a2dp_sink->start(BT_AUDIO_NAME);
-    this->sendToMastserDeviceOnOffState(BT_AUDIO_DEVICE_ON);
 }
 
 void bt_audio_sink::btAudioDeviceOff(void){
@@ -215,10 +173,8 @@ void bt_audio_sink::btAudioDeviceOff(void){
     this->i2s->end();
     delete this->i2s;
     this->i2s=nullptr;
-    //bt_audio_sink::i2sState=i2sNotConfigured;
-    bt_audio_sink::sendToMasterI2sPinsState(i2sNotConfigured);
-    bt_audio_sink::i2sHighImpedanceEnabled(this->pin_bck, this->pin_ws, this->pin_data);
-    this->sendToMastserDeviceOnOffState(BT_AUDIO_DEVICE_OFF);
+    bt_audio_sink::i2sState=i2sNotConfigured;
+    i2sHighImpedanceEnabled(this->pin_bck, this->pin_ws, this->pin_data);
 }
 
 void bt_audio_sink::btAudioPlay(void){

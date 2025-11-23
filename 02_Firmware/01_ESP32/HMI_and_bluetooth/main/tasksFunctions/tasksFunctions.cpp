@@ -11,7 +11,7 @@
 //static NVS* pSTORAGE;					//obiekt zapisujący i czytający dane z NCS ESP32
 //extern LEDS_BACKLIGHT *pLedDisplay;		//obiekt sterujący pracą ledów (diody i backlioght)
 //static 	StepperOptoPowerOFF * pMotor;	//obiekt sterujący pracą silnika krokowego, jego krańcówej i power off radia
-static i2cEngin_slave *p_i2cSlave;		//obiekt sterujący komunikacją z stm32 po szynie i2c
+/*static*/ i2cEngin_slave *p_i2cSlave;		//obiekt sterujący komunikacją z stm32 po szynie i2c
 
 
 /*---------------------------------------------------------------
