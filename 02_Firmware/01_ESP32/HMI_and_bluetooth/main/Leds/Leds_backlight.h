@@ -33,7 +33,7 @@ public:
 	UBaseType_t QueueMessagesWaiting(void);
 	
 	void blinkTimeMultiplierSetMaxValue(void);
-	void blinkTimeDelayLoop(void);
+	void blinkTimeDelayLoop();
 protected:
 	
 private:
@@ -42,7 +42,7 @@ private:
 	uint32_t equaliserLedAddress;
 	uint32_t sourceLedAddress;
 	led_strip_handle_t ledStrip;
-	SemaphoreHandle_t handlerMutex_ledDisplay_Backlight; //mutex synchronizuj¹cy wyœwietlanie komunikatów ledów (source, equaliser, error) i podœwietlenia (backlight);
+	SemaphoreHandle_t handlerMutex_ledDisplay_Backlight; //mutex synchronizujï¿½cy wyï¿½wietlanie komunikatï¿½w ledï¿½w (source, equaliser, error) i podï¿½wietlenia (backlight);
 	i2cQueue4DynamicData* ParserDataToLedsDataQueue;
 	uint8_t blinkTimeMultiplier;
 	void blinkTimeMultiplierReset(void);

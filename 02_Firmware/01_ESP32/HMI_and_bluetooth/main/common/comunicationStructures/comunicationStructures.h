@@ -51,18 +51,6 @@ struct stepperMotorStruct {
 };
 
 
-struct btAudioStruct{
-	uint8_t btAudioSubcommand;
-	union{
-		bool btAudioDeviceOn_Off;									//0- bt and i2s device "off", 1 - bt and i2s device "on"
-		bt_AudioCommand audioCommand;								//sterowanie komendami bt (play, pause, ff, rew, etc)
-		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
-		bt_onConnCallbackStats onConnCallbackStates;
-		bt_onAudioStateCallbackStates onAudioStateCallbackStates;
-		bt_onAVRCPlayStatusCallback onAVRCPlayStatusCallbackStates;
-	}btAudioUnion;
-};
-
 typedef enum 
 {
     highZenabled,
@@ -79,19 +67,19 @@ typedef enum {
 }bt_onConnCallbackStats;
 
 typedef enum {
-    ESP_A2D_AUDIO_STATE_SUSPEND = 0,           /*!< audio stream datapath suspended by remote device */
-    ESP_A2D_AUDIO_STATE_STARTED,               /*!< audio stream datapath started */
-    ESP_A2D_AUDIO_STATE_STOPPED = ESP_A2D_AUDIO_STATE_SUSPEND,          /*!< @note Deprecated */
-    ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND = ESP_A2D_AUDIO_STATE_SUSPEND,   /*!< @note Deprecated */
+    BT_ESP_A2D_AUDIO_STATE_SUSPEND = 0,           /*!< audio stream datapath suspended by remote device */
+   BT_ESP_A2D_AUDIO_STATE_STARTED,               /*!< audio stream datapath started */
+    BT_ESP_A2D_AUDIO_STATE_STOPPED = BT_ESP_A2D_AUDIO_STATE_SUSPEND,          /*!< @note Deprecated */
+    BT_ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND = BT_ESP_A2D_AUDIO_STATE_SUSPEND,   /*!< @note Deprecated */
 } bt_onAudioStateCallbackStates;
 
 typedef enum {
-    ESP_AVRC_PLAYBACK_STOPPED = 0,                /*!< stopped */
-    ESP_AVRC_PLAYBACK_PLAYING = 1,                /*!< playing */
-    ESP_AVRC_PLAYBACK_PAUSED = 2,                 /*!< paused */
-    ESP_AVRC_PLAYBACK_FWD_SEEK = 3,               /*!< forward seek */
-    ESP_AVRC_PLAYBACK_REV_SEEK = 4,               /*!< reverse seek */
-    ESP_AVRC_PLAYBACK_ERROR = 0xFF,               /*!< error */
+    BT_ESP_AVRC_PLAYBACK_STOPPED = 0,                /*!< stopped */
+    BT_ESP_AVRC_PLAYBACK_PLAYING = 1,                /*!< playing */
+    BT_ESP_AVRC_PLAYBACK_PAUSED = 2,                 /*!< paused */
+    BT_ESP_AVRC_PLAYBACK_FWD_SEEK = 3,               /*!< forward seek */
+    BT_ESP_AVRC_PLAYBACK_REV_SEEK = 4,               /*!< reverse seek */
+    BT_ESP_AVRC_PLAYBACK_ERROR = 0xFF,               /*!< error */
 } bt_onAVRCPlayStatusCallback;
 
 typedef enum {
@@ -103,3 +91,15 @@ typedef enum {
     FastForward,
     Rewind,
 }bt_AudioCommand;
+
+struct btAudioStruct{
+	uint8_t btAudioSubcommand;
+	union{
+		bool btAudioDeviceOn_Off;									//0- bt and i2s device "off", 1 - bt and i2s device "on"
+		bt_AudioCommand audioCommand;								//sterowanie komendami bt (play, pause, ff, rew, etc)
+		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
+		bt_onConnCallbackStats onConnCallbackStates;
+		bt_onAudioStateCallbackStates onAudioStateCallbackStates;
+		bt_onAVRCPlayStatusCallback onAVRCPlayStatusCallbackStates;
+	}btAudioUnion;
+};

@@ -262,7 +262,7 @@ void LEDS_BACKLIGHT::blinkTimeMultiplierSetMaxValue(void)
 	this->blinkTimeMultiplier = LED_DISPLAY_BLINK_TIME_MULTIPLIER;	
 }
 
-void LEDS_BACKLIGHT::blinkTimeDelayLoop(void) {
+void LEDS_BACKLIGHT::blinkTimeDelayLoop() {
 	this->blinkTimeMultiplierReset();
 	do
 	{
