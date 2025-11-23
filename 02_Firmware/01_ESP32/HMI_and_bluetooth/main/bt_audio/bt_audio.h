@@ -22,17 +22,14 @@ more info:
 https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component*/
 
 #include "hwConfigFile.h"
+#include  "common/comunication_calculate_checksum/comunication_calculate_checksum.h"
+#include  "common/comunicationProtocol/comunicationProtocol.h"
+#include  "common/comunicationStructures/comunicationStructures.h"
 
 esp_err_t i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data);
 
 
-enum i2sPinStates
-{
-    highZenabled,
-    i2sNotConfigured,
-    i2sConfigured,
-    highZdisabled
-};
+
 
 class bt_audio_sink{
     friend esp_err_t i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pin_data);
@@ -47,10 +44,10 @@ public:
     void btAudioNext(void);
     void btAudioPrevious(void);
     void btAudioFastForward(void);
-    void btAudioFastFRewind(void);
+    void btAudioRewind(void);
 
 private:
-    static enum i2sPinStates i2sState;
+    static i2sPinStates i2sState;
     int pin_bck;
     int pin_ws;
     int pin_data;
@@ -60,6 +57,6 @@ private:
     esp_err_t i2sHighImpedanceDisable(void);
 
 public: // ale potem ma być private
-    void btAudioInit(void);
-    void btAudioDeinit(void);
+    void btAudioDeviceOn(void);
+    void btAudioDeviceOff(void);
 };

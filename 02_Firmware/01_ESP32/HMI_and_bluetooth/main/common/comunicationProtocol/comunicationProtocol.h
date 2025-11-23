@@ -46,18 +46,40 @@ typedef struct {
 #define I2C_COMMAND_GROUP_NVS				0x02
 #define I2C_COMMAND_GROUP_LEDS				0x03	//DONE
 #define I2C_COMMAND_GROUP_STEPPER			0x04	//DONE
+#define I2C_COMMAND_GROUP_BTAUDIO			0x05
 
-//I2C_COMMAND_GROUP_KEYBOARD			0x01
+
+//I2C_COMMAND_GROUP_SYSTEM					0x00
+//#define SYSTEM_KEEPALIV					0x01
+//#define SYSTEM_CRC_ERROR					0x02
+//#define SYSTEM_CRC_OK						0x03
+
+
+//I2C_COMMAND_GROUP_KEYBOARD				0x01
+typedef struct {
+	i2cFrame_commonHeader i2cframeCommandHeader;
+	union keyboardUnion keyboardData;
+} i2cFrame_keyboardFrame;
 #define HMI_INPUT_BUTTON					'b'		//oznacza, że przycisk został zwolniony (po osiagnięciu czasu long press lub przed tym czasem)
 #define HMI_INPUT_BUTTON_LONG_AND_PRESSED	'B'		//oznacza, że przycisk jest nadal wciśnięty po osiagnięciu czasu long press 
 #define HMI_INPUT_VOLUME					'v'		//oznacza, że poruszany jest encoder głośności
 #define HMI_INPUT_EQUALISER					'e'		//oznacza, że poruszany jest encoder equalizera
 #define LONG_PRESS_BIT_MASK					0b10000000
 
-typedef struct {
-	i2cFrame_commonHeader i2cframeCommandHeader;
-	union keyboardUnion keyboardData;
-} i2cFrame_keyboardFrame;
+
+
+
+//I2C_COMMAND_GROUP_NVS					0x02
+//#define NVS_KEY_IS_INITIALISED			(const char[]){0x01,0x01}
+#define NVS_KEY_MOTOR_BEGIN_OFFSET		(const char[]){0x01,0x02}
+#define NVS_KEY_MOTOR_END_OFFSET				(const char[]){0x01,0x03}
+
+//#define NVS_KEY_IS_INITIALISED_ANSWER   "YES"
+//#define NVS_KEY_i8_test					"test"
+//#define NVS_KEY_BLOB_MotorParameters	"MotorParam"
+
+
+
 
 //I2C_COMMAND_GROUP_LEDS				0x03
 typedef struct {
@@ -65,7 +87,12 @@ typedef struct {
 	struct hmiLeds ledsData;
 } i2cFrame_hmiLeds;
 
+
 //I2C_COMMAND_GROUP_STEPPER			0x04
+typedef struct {
+	i2cFrame_commonHeader i2cframeCommandHeader;
+	struct stepperMotorStruct stepperData;
+} i2cFrame_stepper;
 #define MOTOR_SUBCOMMAND_CALIBRATION			0x00
 #define MOTOR_SUBCOMMAND_GOTO_ABSOLUT			0x01
 #define MOTOR_SUBCOMMAND_GOTO_IN_BOARDERS		0x02
@@ -75,24 +102,17 @@ typedef struct {
 #define MOTOR_SUBCOMMAND_PERCENTS_BOARDER		0x06
 #define MOTOR_SUBCOMMAND_POWER_OFF				0x07
 
+
+
+
+
+//I2C_COMMAND_GROUP_BTAUDIO			0x05
 typedef struct {
 	i2cFrame_commonHeader i2cframeCommandHeader;
-	//uint8_t stepperSubcommand;
-	//union stepperUnion stepperData;
-	struct stepperMotorStruct stepperData;
-} i2cFrame_stepper;
-
-//I2C_COMMAND_GROUP_SYSTEM				0x00
-//#define SYSTEM_KEEPALIV				0x01
-//#define SYSTEM_CRC_ERROR				0x02
-//#define SYSTEM_CRC_OK					0x03
-
-//I2C_COMMAND_GROUP_NVS					0x02
-#define NVS_KEY_IS_INITIALISED			(const char[]){0x01,0x01}
-#define NVS_KEY_MOTOR_BEGIN_OFFSET		(const char[]){0x01,0x02}
-#define NVS_KEY_MOTOR_END_OFFSET				(const char[]){0x01,0x03}
-
-#define NVS_KEY_IS_INITIALISED_ANSWER   "YES"
-#define NVS_KEY_i8_test					"test"
-#define NVS_KEY_BLOB_MotorParameters	"MotorParam"
+	struct btAudioStruct btAudioData;
+} i2cFrame_btAudio;
+#define BT_SUBCOMMAND_deviceOnOff				0x00			
+#define BT_SUBCOMMAND_onConnCallback			0x01
+//#define BT_SUBCOMMAND_onAudioStateCallback		0x02
+#define BT_SUBCOMMAND_onAVRCPlayStatusCallback	0x03
 
