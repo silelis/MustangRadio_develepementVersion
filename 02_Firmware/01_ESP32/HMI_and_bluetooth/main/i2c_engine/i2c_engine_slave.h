@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-//#include "./../../../03_Common/comunicationProtocol.h"
-//#include "./../../../03_Common/i2c_slave_master_queueClass.h"
 #include "common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
 #include "common/comunicationProtocol/comunicationProtocol.h"
 
@@ -22,14 +20,10 @@ public:
 	~i2cEngin_slave();
 
 
-	
-//	esp_err_t slaveTransmit(i2cFrame_transmitQueue ItemWithPointer);
 	esp_err_t i2cSlaveTransmit(void);
 	
 	
 	
-	//esp_err_t slaveTransmit(void);
-	//i2cQueue4DynamicData* pTransmitQueueObject;		//wskaźnik do obiektu klasy i2cQueue4DynamicData odpowiadajacego za obsługę kolejki danych nadawanych po i2c przez ESP32 (jako slave) do smt32
 	void esp32i2cBusInitialised(void);
 	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
 	void i2cSlaveReceive(void);
