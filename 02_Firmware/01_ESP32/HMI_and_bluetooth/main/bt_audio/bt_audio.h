@@ -26,6 +26,15 @@ https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component*/
 #include  "common/comunicationProtocol/comunicationProtocol.h"
 #include  "common/comunicationStructures/comunicationStructures.h"
 
+typedef enum 
+{
+    highZenabled,
+    i2sNotConfigured,
+    i2sConfigured,
+    highZdisabled
+}i2sPinStates;
+
+
 class bt_audio_sink{
 public:
     bt_audio_sink(int pin_bck, int pin_ws, int pin_data);
@@ -40,12 +49,14 @@ protected:
     void btAudioPrevious(void);
     void btAudioFastForward(void);
     void btAudioRewind(void);
+
+public:
     void btAudioDeviceOn(void);
     void btAudioDeviceOff(void);
 
 private:
     static i2sPinStates i2sState;
-    static void sendToMasterI2sPinsState(i2sPinStates i2s_pins_state);
+    //static void sendToMasterI2sPinsState(i2sPinStates i2s_pins_state);
     void sendToMastserDeviceOnOffState(bool on_off);
     int pin_bck;
     int pin_ws;

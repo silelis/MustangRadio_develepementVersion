@@ -463,6 +463,7 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	gpioDebounceTimer_config.intr_priority = DEBOUNCE_TIMER_PRIORITY;
 	gpioDebounceTimer_config.flags.intr_shared = pdTRUE;
 	gpioDebounceTimer_config.flags.allow_pd = pdFALSE;
+	gpioDebounceTimer_config.flags.backup_before_sleep = pdFALSE;
 
 
 	//ESP_ERROR_CHECK(
