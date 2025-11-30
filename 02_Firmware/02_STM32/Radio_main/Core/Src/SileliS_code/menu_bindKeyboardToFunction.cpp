@@ -1,0 +1,152 @@
+/*
+ * keyboardToFunction.cpp
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#include <SileliS_code/menu_bindKeyboardToFunction.h>
+
+extern myPrintfTask *pPrintf;
+
+_execute_t bindKeyboardToFunction::ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+//uint8_t bindKeyboardToFunction::ExecutableButtonsArrayRadioMenuArea=0;
+bool bindKeyboardToFunction::radioMenuButtonsAssignedInMainMenu=false;
+
+bindKeyboardToFunction::bindKeyboardToFunction() {
+	this->buildExecutableButtonsArrayEmpty();
+}
+
+void bindKeyboardToFunction::buildExecutableButtonsArrayEmpty(void) {
+	if (this->radioMenuButtonsAssignedInMainMenu==false){
+		this->ExecutableButtonsArray[0] = { POWER_ON_OFF_SHORT_PRESS, nullptr };//poweroff pressed   //std::function<void()>{};
+		this->ExecutableButtonsArray[1] = { POWER_ON_OFF_LONG_RELEASED, nullptr };	//long poweroff release
+		this->ExecutableButtonsArray[2] = { EQUALIZER_SHORT_PRESS, nullptr };
+		this->ExecutableButtonsArray[3] = { VOL_INCREMENT, nullptr };
+		this->ExecutableButtonsArray[4] = { VOL_DECREMENT, nullptr };
+		this->ExecutableButtonsArray[5] = { RESET_TO_DEFAULT, nullptr };
+		this->ExecutableButtonsArray[6] = { RETURN_FROM_EQUALIZER_MENU, nullptr }; //aka. EQUALIZER_LONG_RELEASED
+//		this->ExecutableButtonsArrayRadioMenuArea = 7; //to jest zakres klawiszy głownego menu. W tym zakresie bindowanie klawiszy nie powinno być czyszczone.
+	}
+
+
+	this->ExecutableButtonsArray[7] = { EQUALIZER_INCREMENT, nullptr };
+	this->ExecutableButtonsArray[8] = { EQUALIZER_DECREMENT, nullptr };
+
+	this->ExecutableButtonsArray[9] = { BUT1_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[10] = { BUT1_LONG_PRESS, nullptr };
+	this->ExecutableButtonsArray[11] = { BUT1_LONG_RELEASED, nullptr };
+
+	this->ExecutableButtonsArray[12] = { BUT2_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[13] = { BUT2_LONG_PRESS, nullptr };
+	this->ExecutableButtonsArray[14] = { BUT2_LONG_RELEASED, nullptr };
+
+	this->ExecutableButtonsArray[15] = { BUT3_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[16] = { BUT3_LONG_PRESS, nullptr };
+	this->ExecutableButtonsArray[17] = { BUT3_LONG_RELEASED, nullptr };
+
+	this->ExecutableButtonsArray[18] = { BUT4_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[19] = { BUT4_LONG_PRESS, nullptr };
+	this->ExecutableButtonsArray[20] = { BUT4_LONG_RELEASED, nullptr };
+
+	this->ExecutableButtonsArray[21] = { BUT5_SHORT_PRESS, nullptr };
+	this->ExecutableButtonsArray[22] = { BUT5_LONG_PRESS, nullptr };
+	this->ExecutableButtonsArray[23] = { BUT5_LONG_RELEASED, nullptr };
+
+	this->ExecutableButtonsArray[24] = { TUNE_LEFT_TIP_BOARDER, nullptr };		//aka. BUT1_BUT3_LONG_RELEASED
+	this->ExecutableButtonsArray[25] = { TUNE_RIGHT_TIP_BOARDER, nullptr };		//aka. BUT3_BUT5_LONG_RELEASED
+}
+
+uint8_t bindKeyboardToFunction::searchButtonSequenceInExecutableButtonsArray(
+		keyboardUnion buttonSequence) {
+	for (uint8_t i = 0; i < EXECUTALBE_BUTTONS_ARRAY_SIZE; i++) {
+		if ((this->ExecutableButtonsArray[i].buttonSequence.kbrdValue.input
+				== buttonSequence.kbrdValue.input)
+				&& (this->ExecutableButtonsArray[i].buttonSequence.kbrdValue.value
+						== buttonSequence.kbrdValue.value)) {
+			return i;
+		}
+	}
+	return EXECUTALBE_BUTTONS_ARRAY_SIZE;//jeżeli zwraca warotść równią execFunctionArrySize to znaczy, żę sekwencja klawiszy nie znajduje się w tablicy
+}
+
+bool bindKeyboardToFunction::executeButtonFunction(keyboardUnion buttonSequence) {
+	uint8_t whichPosition = this->searchButtonSequenceInExecutableButtonsArray(
+			buttonSequence);
+	if (whichPosition == EXECUTALBE_BUTTONS_ARRAY_SIZE) {
+		//pPrintf->feedPrintf("%s %c %x - there is no button in array.", "PASS TAG HERE"/*ptrRadioMenu->getCurrentNodeTag()*/, buttonSequence.array[0], buttonSequence.array[1]);
+		this->noButtonInArrayMessage(buttonSequence);
+		return false;
+	}
+	if (!this->ExecutableButtonsArray[whichPosition].functionPointer) {//== nullptr){
+		pPrintf->feedPrintf(
+				"%c %x - there is no function binded for this button.",
+				buttonSequence.array[0], buttonSequence.array[1]);
+		return false;
+	}
+	this->ExecutableButtonsArray[whichPosition].functionPointer();
+	return true;
+}
+
+bool bindKeyboardToFunction::appendButtonArrayWithFunctionPointer(
+		uint8_t buttonPlaceInArray, std::function<void()> newFunc) {
+	if (buttonPlaceInArray >= EXECUTALBE_BUTTONS_ARRAY_SIZE) {
+		pPrintf->feedPrintf(
+				"%s You are trying to bind ExecutableButtonsArray[%d] but array size is ExecutableButtonsArray[%d]",
+				"PASS TAG HERE", buttonPlaceInArray,
+				EXECUTALBE_BUTTONS_ARRAY_SIZE);
+		return false;
+	}
+	this->ExecutableButtonsArray[buttonPlaceInArray].functionPointer = newFunc;
+	return true;
+
+}
+
+bool bindKeyboardToFunction::isButtonSequenceInExecutableButtonsArray(
+		keyboardUnion buttonSequence) {
+	if (this->searchButtonSequenceInExecutableButtonsArray(
+			buttonSequence)==EXECUTALBE_BUTTONS_ARRAY_SIZE)
+		return false;
+	return true;
+}
+
+/*
+ void keyboardToFunction::appendFunctionPointer(std::function<void()>* funcPtr, std::function<void()> newFunc){
+ *funcPtr = newFunc;
+ }*/
+
+void bindKeyboardToFunction::noButtonInArrayMessage(keyboardUnion buttonSequence) {
+	pPrintf->feedPrintf("%c %x - there is no button in array.",
+			buttonSequence.array[0], buttonSequence.array[1]);
+}
+
+bool bindKeyboardToFunction::appendButtonArrayWithFunctionPointer(
+		keyboardUnion buttonSequence, std::function<void()> newFunc) {
+	uint8_t whichPosition = this->searchButtonSequenceInExecutableButtonsArray(
+			buttonSequence);
+	if (whichPosition == EXECUTALBE_BUTTONS_ARRAY_SIZE) {
+		//pPrintf->feedPrintf("%s %c %x - there is no button in array.", "PASS TAG HERE"/*ptrRadioMenu->getCurrentNodeTag()*/, buttonSequence.array[0], buttonSequence.array[1]);
+		this->noButtonInArrayMessage(buttonSequence);
+		//assert(0);
+		return false;
+	}
+	this->ExecutableButtonsArray[whichPosition].functionPointer = newFunc;
+	return true;
+}
+
+/*
+ *
+ void keyboardToFunction::executeFunctionPointer(std::function<void()>* funcPtr){
+ if (*funcPtr) {
+ (*funcPtr)(); // Prawidłowe wywołanie std::function<void()>
+ } else {
+ pPrintf->feedPrintf("%s: Pointer to function is empty.", "TAG_NAME_HERE");
+ }
+ }
+ */
+
+bindKeyboardToFunction::~bindKeyboardToFunction() {
+	// TODO Auto-generated destructor stub
+	this->buildExecutableButtonsArrayEmpty();
+}
+

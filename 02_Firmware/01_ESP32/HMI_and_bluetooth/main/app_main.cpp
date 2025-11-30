@@ -121,6 +121,18 @@ extern "C" void app_main(void)
 	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
 	
 
+
+
+
+	
+
+	bt_audio_sink testBT(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);
+	testBT.btAudioDeviceOn();
+
+
+
+
+
 #if USED_BLUETOOTH_STACK == USE_BTSTACK
 	btstack_init();
 	btstack_main(0, NULL);
@@ -129,7 +141,8 @@ extern "C" void app_main(void)
 	
 	while (true)
 	{
-	         
+	         vTaskDelay(portMAX_DELAY);
+			 
 	}
 		
 }

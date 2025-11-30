@@ -50,7 +50,7 @@ struct stepperMotorStruct {
 	} stepperUnion;
 };
 
-
+/*
 typedef enum 
 {
     highZenabled,
@@ -59,6 +59,7 @@ typedef enum
     highZdisabled
 }i2sPinStates;
 
+*/
 typedef enum {
     BT_ESP_A2D_CONNECTION_STATE_DISCONNECTED = 0, /*!< connection released  */
     BT_ESP_A2D_CONNECTION_STATE_CONNECTING,       /*!< connecting remote device */
@@ -66,12 +67,13 @@ typedef enum {
     BT_ESP_A2D_CONNECTION_STATE_DISCONNECTING     /*!< disconnecting remote device */
 }bt_onConnCallbackStats;
 
-typedef enum {
-    BT_ESP_A2D_AUDIO_STATE_SUSPEND = 0,           /*!< audio stream datapath suspended by remote device */
-   BT_ESP_A2D_AUDIO_STATE_STARTED,               /*!< audio stream datapath started */
-    BT_ESP_A2D_AUDIO_STATE_STOPPED = BT_ESP_A2D_AUDIO_STATE_SUSPEND,          /*!< @note Deprecated */
-    BT_ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND = BT_ESP_A2D_AUDIO_STATE_SUSPEND,   /*!< @note Deprecated */
-} bt_onAudioStateCallbackStates;
+//typedef enum {
+//    BT_ESP_A2D_AUDIO_STATE_SUSPEND = 0,           /*!< audio stream datapath suspended by remote device */
+//    BT_ESP_A2D_AUDIO_STATE_STARTED,               /*!< audio stream datapath started */
+//    BT_ESP_A2D_AUDIO_STATE_STOPPED = BT_ESP_A2D_AUDIO_STATE_SUSPEND,          /*!< @note Deprecated */
+//    BT_ESP_A2D_AUDIO_STATE_REMOTE_SUSPEND = BT_ESP_A2D_AUDIO_STATE_SUSPEND,   /*!< @note Deprecated */
+//} bt_onAudioStateCallbackStates;
+
 
 typedef enum {
     BT_ESP_AVRC_PLAYBACK_STOPPED = 0,                /*!< stopped */
@@ -96,10 +98,10 @@ struct btAudioStruct{
 	uint8_t btAudioSubcommand;
 	union{
 		bool btAudioDeviceOn_Off;									//0- bt and i2s device "off", 1 - bt and i2s device "on"
-		bt_AudioCommand audioCommand;								//sterowanie komendami bt (play, pause, ff, rew, etc)
-		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
+		bt_AudioCommand audioSinkCommand;								//sterowanie komendami bt (play, pause, ff, rew, etc)
+//		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
 		bt_onConnCallbackStats onConnCallbackStates;
-		bt_onAudioStateCallbackStates onAudioStateCallbackStates;
+//		bt_onAudioStateCallbackStates onAudioStateCallbackStates;
 		bt_onAVRCPlayStatusCallback onAVRCPlayStatusCallbackStates;
 	}btAudioUnion;
 };

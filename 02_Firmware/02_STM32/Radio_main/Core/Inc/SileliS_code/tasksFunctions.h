@@ -15,6 +15,8 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <SileliS_code/comunication_esp32i2cComunicationDriver.h>
+#include <SileliS_code/comunication_i2cEngine.h>
 #include "comunicationProtocol.h"
 #include "comunicationStructures.h"
 #include "FreeRTOS.h"
@@ -23,9 +25,6 @@
 #include "i2c.h"
 //#include <cstring>
 #include "semphr.h"
-#include "SileliS_code/i2cEngine.h"
-#include "SileliS_code/esp32i2cComunicationDriver.h"
-//#include "SileliS_code/menuItem.h"
 #include "SileliS_code/myPrintfTask.h"
 //#include "SileliS_code/keyboardToFunction.h"
 

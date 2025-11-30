@@ -1,0 +1,49 @@
+/*
+ * keyboardToFunction.h
+ *
+ *  Created on: Apr 24, 2025
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_BINDKEYBOARDTOFUNCTION_H_
+#define INC_SILELIS_CODE_BINDKEYBOARDTOFUNCTION_H_
+#include <iostream>
+#include <functional>
+#include "comunicationStructures.h"
+#include <string.h>
+#include <SileliS_code/bindKeyboardToFunction_buttonDefinitions.h>
+#include "SileliS_code/myPrintfTask.h"
+
+struct _execute_t {
+	keyboardUnion buttonSequence;			//kod klawisza wywołujący funkcję
+	std::function<void()> functionPointer;//wskaźnik do funkcji jaka ma być wywołana
+
+};
+
+class bindKeyboardToFunction {
+public:
+	bindKeyboardToFunction(/*_execute_t *ExecutableButtonsArray*/);
+	virtual ~bindKeyboardToFunction();
+
+//private:
+	uint8_t searchButtonSequenceInExecutableButtonsArray(
+			keyboardUnion buttonSequence);
+	bool isButtonSequenceInExecutableButtonsArray(keyboardUnion buttonSequence);
+	void buildExecutableButtonsArrayEmpty(void);
+	bool executeButtonFunction(keyboardUnion buttonSequence);
+
+	bool appendButtonArrayWithFunctionPointer(keyboardUnion buttonSequence,
+			std::function<void()> newFunc);
+	bool appendButtonArrayWithFunctionPointer(uint8_t buttonPlaceInArray,
+			std::function<void()> newFunc);
+
+protected:
+//	_execute_t *pExecutableButtonsArray;
+	static _execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
+	static uint8_t ExecutableButtonsArrayRadioMenuArea;
+
+private:
+	void noButtonInArrayMessage(keyboardUnion buttonSequence);
+};
+
+#endif /* INC_SILELIS_CODE_BINDKEYBOARDTOFUNCTION_H_ */

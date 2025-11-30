@@ -1,1 +1,0 @@
-#include "comunicationStructures.h"

@@ -6,13 +6,13 @@
  */
 
 //#include "tasksFunctions.h"
+#include <SileliS_code/device_ledsController.h>
+#include <SileliS_code/device_StepperOptoPowerOFF.h>
+#include <SileliS_code/menu_radioMegaStruct.h>
+#include <SileliS_code/menu_radioMenu.h>
 #include "SileliS_code/tasksFunctions.h"
 //#include <SileliS_code/myList.h>
-#include <SileliS_code/radioMenu.h>
-#include "SileliS_code/ledsController.h"
-#include "SileliS_code/StepperOptoPowerOFF.h"
 #include <new>
-#include "SileliS_code/radioMegaStruct.h"
 
 
 radioMegaStruct radioStruct;
@@ -145,7 +145,7 @@ void peripheryMenuTimeoutFunction(void *thing) {
 
 		xSemaphoreTake(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore,
 				portMAX_DELAY);
-		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement() >= 6) {//6 = 12 SECUNDS
+		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement() >= EQUALIZER_TIMEOUT_PERIOD) {//6 = 12 SECUNDS
 			ptrRadioMenu->peripheryMenu_onTimeoutActions();
 			vTaskSuspend(NULL);
 			selfSuspended = true;
@@ -161,7 +161,7 @@ void peripheryMenuTimeoutFunction(void *thing) {
 
 
 //glówna funkcja radio inicjalizująca menu i podmenu i obslugę klawiszy
-static void manageRadioButtonsAndManue(void *thing) {
+static void manageRadioButtonsAndMenu(void *thing) {
 	radioMenu *ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
 	keyboardUnion receivedKeyboard;
@@ -228,7 +228,7 @@ static void initTaskFunctions(void) {
 	assert(pRadioMenu = new (std::nothrow) radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
 	configASSERT(
-			xTaskCreate(manageRadioButtonsAndManue, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue));
+			xTaskCreate(manageRadioButtonsAndMenu, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue));
 	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
 	configASSERT(
 			xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle));

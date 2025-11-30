@@ -1,0 +1,18 @@
+D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/main/common/comunicationProtocol/comunicationProtocol.h:22:2:i2cFrame_transmitQueue::i2cFrame_transmitQueue()	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:13:1:i2cMaster::i2cMaster(I2C_HandleTypeDef*)	7
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:49:12:BaseType_t i2cMaster::i2cMasterSemaphoreTake()	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:67:12:BaseType_t i2cMaster::i2cMasterSemaphoreGive()	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:84:19:HAL_StatusTypeDef i2cMaster::ping(uint16_t)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:116:12:BaseType_t i2cMaster::setI2cAdressToAdressQueue(uint16_t)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:139:12:BaseType_t i2cMaster::getI2cAdressFromAdressQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:146:12:BaseType_t i2cMaster::passReceivedI2cDataToParsingQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:153:12:BaseType_t i2cMaster::takeReceivedI2cDataFromParsingQueue(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:160:12:BaseType_t i2cMaster::takeTransmitI2cDataToI2C_buffer(i2cFrame_transmitQueue*)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:167:6:void i2cMaster::deleteAlocatedDataAfterParsing(i2cFrame_transmitQueue)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:173:1:i2cMaster::~i2cMaster()	4
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:173:1:virtual i2cMaster::~i2cMaster()	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:183:6:void i2cMaster::while_I2C_STATE_READY()	2
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:188:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t, uint8_t*, uint16_t)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:198:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA_inSequence(uint16_t, uint8_t*, uint16_t, uint32_t)	4
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:211:19:HAL_StatusTypeDef i2cMaster::I2C_Master_Transmite_DMA(uint16_t, uint8_t*, uint16_t)	1
+../Core/Src/SileliS_code/comunication_i2cEngine.cpp:219:23:i2cQueue4DynamicData* i2cMaster::getTransmitQueue()	1

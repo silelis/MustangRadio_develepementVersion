@@ -139,7 +139,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  vTaskDelay(portMAX_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
