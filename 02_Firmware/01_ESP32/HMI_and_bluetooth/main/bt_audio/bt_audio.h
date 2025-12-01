@@ -26,13 +26,14 @@ https://github.com/pschatzmann/ESP32-A2DP/wiki/Espressif-IDF-as-a-Component*/
 #include  "common/comunicationProtocol/comunicationProtocol.h"
 #include  "common/comunicationStructures/comunicationStructures.h"
 
+/*
 typedef enum 
 {
     highZenabled,
     i2sNotConfigured,
     i2sConfigured,
     highZdisabled
-}i2sPinStates;
+}i2sPinStates;*/
 
 
 class bt_audio_sink{
@@ -55,6 +56,13 @@ public:
     void btAudioDeviceOff(void);
 
 private:
+    typedef enum 
+    {
+        highZenabled,
+        i2sNotConfigured,
+        i2sConfigured,
+        highZdisabled
+    }i2sPinStates;
     static i2sPinStates i2sState;
     //static void sendToMasterI2sPinsState(i2sPinStates i2s_pins_state);
     void sendToMastserDeviceOnOffState(bool on_off);

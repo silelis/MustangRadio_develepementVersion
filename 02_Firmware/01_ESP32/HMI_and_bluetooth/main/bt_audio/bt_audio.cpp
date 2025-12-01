@@ -1,8 +1,9 @@
 #include "bt_audio.h"
 #include "i2c_engine/i2c_engine_slave.h"
 
-i2sPinStates bt_audio_sink::i2sState;
+//i2sPinStates bt_audio_sink::i2sState;
 
+bt_audio_sink::i2sPinStates bt_audio_sink::i2sState;
 
 static void seti2cFrame_btAudioHeaderData(i2cFrame_btAudio* btAudioFrame){
     btAudioFrame->i2cframeCommandHeader.commandGroup=I2C_COMMAND_GROUP_BTAUDIO;
@@ -139,7 +140,7 @@ esp_err_t bt_audio_sink::i2sHighImpedanceEnabled(int pin_bck, int pin_ws, int pi
     if (retVal == ESP_OK)
     {
         printf("I2S pins high impedance mode had been initialized.\n");
-        bt_audio_sink::i2sState = highZenabled;
+        bt_audio_sink::i2sState = bt_audio_sink::highZenabled;
         //bt_audio_sink::sendToMasterI2sPinsState(highZenabled);
     }
     else
@@ -175,7 +176,7 @@ esp_err_t bt_audio_sink::i2sHighImpedanceDisable(void)
     if (retVal == ESP_OK)
     {
         printf("I2S pins high impedance mode had been deinitialized.\n");
-        bt_audio_sink::i2sState = highZdisabled;
+        bt_audio_sink::i2sState = bt_audio_sink::highZdisabled;
         //bt_audio_sink::sendToMasterI2sPinsState(highZdisabled);
     }
     else
@@ -188,10 +189,10 @@ esp_err_t bt_audio_sink::i2sHighImpedanceDisable(void)
 
 void bt_audio_sink::btAudioDeviceOn(void){
     this->i2sHighImpedanceDisable();
-    bt_audio_sink::i2sState=i2sNotConfigured;
+    bt_audio_sink::i2sState=bt_audio_sink::i2sNotConfigured;
     //bt_audio_sink::sendToMasterI2sPinsState(i2sNotConfigured);
     this->i2s = new I2SStream();
-    bt_audio_sink::i2sState=i2sConfigured;
+    bt_audio_sink::i2sState=bt_audio_sink::i2sConfigured;
     //bt_audio_sink::sendToMasterI2sPinsState(i2sConfigured);
     this->a2dp_sink = new BluetoothA2DPSink(*i2s);
     
@@ -217,7 +218,7 @@ void bt_audio_sink::btAudioDeviceOff(void){
     this->i2s->end();
     delete this->i2s;
     this->i2s=nullptr;
-    bt_audio_sink::i2sState=i2sNotConfigured;
+    bt_audio_sink::i2sState=bt_audio_sink::i2sNotConfigured;
     //bt_audio_sink::sendToMasterI2sPinsState(i2sNotConfigured);
     bt_audio_sink::i2sHighImpedanceEnabled(this->pin_bck, this->pin_ws, this->pin_data);
     this->sendToMastserDeviceOnOffState(BT_AUDIO_DEVICE_OFF);

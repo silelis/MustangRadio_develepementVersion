@@ -48,11 +48,11 @@ struct FM_AM_parameters {
 struct radioMegaStruct {
 //	_execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 
-	struct {
+/*	struct {
 		hmiLeds leds;
 		//StepperPositionInPercents stepperPositionInBoardsPercents;
 		stepperMotorStruct stepperMotorData;
-	} humanMachineInterface;
+	} humanMachineInterface;*/
 
 	struct {
 		struct {
