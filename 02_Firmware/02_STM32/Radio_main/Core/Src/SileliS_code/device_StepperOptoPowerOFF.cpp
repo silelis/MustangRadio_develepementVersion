@@ -8,13 +8,13 @@
 #include <SileliS_code/device_StepperOptoPowerOFF.h>
 #include <new>
 
-StepperOptoPowerOFF::StepperOptoPowerOFF(stepperMotorStruct *stepperMotorData,
+StepperOptoPowerOFF::StepperOptoPowerOFF(/*stepperMotorStruct *stepperMotorData,*/
 		i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
 
 	this->pI2C_MasterTransmitToSlave_DataQueue =
 			MasterTransmitToSlave_DataQueue;
 
-	this->pStepperMotorData = stepperMotorData;
+	//this->pStepperMotorData = stepperMotorData;
 
 }
 
@@ -30,7 +30,7 @@ BaseType_t StepperOptoPowerOFF::sendDataToI2cTransmitQueue() {
 	I2C_COMMAND_GROUP_STEPPER;
 	stepperToSend.i2cframeCommandHeader.dataSize = sizeof(i2cFrame_stepper);
 	//kopiuje dane z radioMegaStruct do ramki
-	memcpy(&stepperToSend.stepperData, this->pStepperMotorData,
+	memcpy(&stepperToSend.stepperData, &this->StepperMotorData,
 			sizeof(stepperMotorStruct));
 	stepperToSend.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(
 			&stepperToSend, stepperToSend.i2cframeCommandHeader.dataSize);
@@ -52,8 +52,8 @@ BaseType_t StepperOptoPowerOFF::sendDataToI2cTransmitQueue() {
 }
 
 void StepperOptoPowerOFF::setMotorCalibration(void) {
-	this->pStepperMotorData->stepperSubcommand = MOTOR_SUBCOMMAND_CALIBRATION;
-	this->pStepperMotorData->stepperUnion.stepperCalibration = 1;
+	this->StepperMotorData.stepperSubcommand = MOTOR_SUBCOMMAND_CALIBRATION;
+	this->StepperMotorData.stepperUnion.stepperCalibration = 1;
 	this->sendDataToI2cTransmitQueue();
 }
 

@@ -15,6 +15,8 @@ extern ledsController *pHmiLeds;
 //extern stepper
 //extern NVS
 
+bool menuPrototype::HumanMachineInterfaceStruct::backlight;
+
 menuPrototype::menuPrototype():bindKeyboardToFunction() {
 	// TODO Auto-generated constructor stub
 }

@@ -126,12 +126,18 @@ extern "C" void app_main(void)
 
 	
 
+
+
+
 	bt_audio_sink testBT(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);
 	testBT.btAudioDeviceOn();
 
 
 
 
+
+
+	
 
 #if USED_BLUETOOTH_STACK == USE_BTSTACK
 	btstack_init();
@@ -141,8 +147,7 @@ extern "C" void app_main(void)
 	
 	while (true)
 	{
-	         vTaskDelay(portMAX_DELAY);
-			 
+	         vTaskDelay(portMAX_DELAY);	 
 	}
 		
 }

@@ -16,7 +16,7 @@
 
 class StepperOptoPowerOFF {
 public:
-	StepperOptoPowerOFF(stepperMotorStruct *stepperMotorData,
+	StepperOptoPowerOFF(/*stepperMotorStruct *stepperMotorData,*/
 			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
 	virtual ~StepperOptoPowerOFF();
 
@@ -32,7 +32,7 @@ public:
 protected:
 
 private:
-	stepperMotorStruct *pStepperMotorData;
+	stepperMotorStruct StepperMotorData;
 	i2cQueue4DynamicData *pI2C_MasterTransmitToSlave_DataQueue;
 	//i2cFrame_stepper stepperComunicationFrame;
 	BaseType_t sendDataToI2cTransmitQueue();

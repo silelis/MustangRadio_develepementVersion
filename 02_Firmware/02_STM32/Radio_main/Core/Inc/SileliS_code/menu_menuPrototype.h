@@ -10,7 +10,7 @@
 
 #include <SileliS_code/menu_bindKeyboardToFunction.h>
 #include "SileliS_code/myPrintfTask.h"
-
+#include "comunicationStructures.h"
 
 class menuPrototype: protected bindKeyboardToFunction {
 public:
@@ -26,7 +26,12 @@ protected:
 
 
 private:
-
+    struct HumanMachineInterfaceStruct {
+        hmiLeds leds;
+        static bool backlight;
+        stepperMotorStruct stepperMotorData;
+    };
+    HumanMachineInterfaceStruct humanMachineInterface;
 };
 
 #endif /* INC_SILELIS_CODE_MENU_MENUPROTOTYPE_H_ */
