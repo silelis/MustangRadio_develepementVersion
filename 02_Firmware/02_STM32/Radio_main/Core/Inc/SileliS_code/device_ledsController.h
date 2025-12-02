@@ -22,7 +22,7 @@
 class ledsController {
 public:
 
-	ledsController(hmiLeds *leds,
+	ledsController(/*hmiLeds *leds,*/
 			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
 	virtual ~ledsController();
 
@@ -46,7 +46,7 @@ public:
 
 	void setLedAllCleaned(void);
 
-	BaseType_t sendDataToI2cTransmitQueue();
+	BaseType_t sendDataToI2cTransmitQueueLeds();
 
 protected:
 	enum ledEnum {
@@ -61,7 +61,7 @@ protected:
 private:
 
 	hmiLeds *pLeds;
-
+	hmiLeds Leds;
 	void setLedColors(ledEnum whichLed, ws2812Color primary,
 			ws2812Color secondary);
 	i2cQueue4DynamicData *pI2C_MasterTransmitToSlave_DataQueue;
