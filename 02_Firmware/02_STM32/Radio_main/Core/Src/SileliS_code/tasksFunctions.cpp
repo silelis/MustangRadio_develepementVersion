@@ -29,7 +29,7 @@ static esp32_i2cComunicationDriver *pESP32 = nullptr; //wsyaźnik do obiektu obs
 radioMenu *pRadioMenu = nullptr;
 myPrintfTask *pPrintf = nullptr; //pointer do taska obsługuącego pisanie komunikatow na konsolę
 ledsController *pHmiLeds = nullptr;
-StepperOptoPowerOFF *stepperMotor = nullptr;
+StepperOptoPowerOFF *pStepperMotor = nullptr;
 
 
 //task parsujący otrzymane z i2c slave dane (przełącza parsowanie po adresie slave z jakiego dane zostały otrzymane
@@ -173,7 +173,7 @@ static void manageRadioButtonsAndMenu(void *thing) {
 /*	stepperMotor = new StepperOptoPowerOFF(
 			pi2cMaster->getTransmitQueue());*/
 
-/*
+
 	 pHmiLeds->setLedAllCleaned();
 	 pHmiLeds->setLedSourceWithColor(COLOR_RED);
 	 pHmiLeds->sendDataToI2cTransmitQueue();
@@ -182,7 +182,7 @@ static void manageRadioButtonsAndMenu(void *thing) {
 	 pHmiLeds->setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
 	 pHmiLeds->sendDataToI2cTransmitQueue();
 
-*/
+
 
 
 	//#error "sprawdzić czy działa"
@@ -223,8 +223,8 @@ static void initTaskFunctions(void) {
 			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMasterParseReceivedData));
 
 	pHmiLeds = new (std::nothrow) ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
-	stepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
-
+	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
+	//tutaj inicjoać wszytkie menu.
 
 	assert(pRadioMenu = new (std::nothrow) radioMenu());
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
