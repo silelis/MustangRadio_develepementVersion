@@ -7,10 +7,10 @@
 
 #include <SileliS_code/device_ledsController.h>
 
-ledsController::ledsController(hmiLeds *leds,
+ledsController::ledsController(/*hmiLeds *leds,*/
 		i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
 	// TODO Auto-generated constructor stub
-	this->pLeds = leds;
+	this->pLeds = &this->Leds;
 	this->pI2C_MasterTransmitToSlave_DataQueue =
 			MasterTransmitToSlave_DataQueue;
 //	this->setLedBlinking(sourceLed, this->color.Red, this->color.Black);
@@ -149,9 +149,8 @@ void ledsController::setLedAllCleaned(void) {
 	this->setLedSourceCleaned();
 	this->setLedEqualiserCleaned();
 	this->setLedErrorCleaned();
-//	this->setLedBacklighCleaned();
 }
-BaseType_t ledsController::sendDataToI2cTransmitQueue() {
+BaseType_t ledsController::sendDataToI2cTransmitQueueLeds() {
 
 	//tworzy ramke do przesłania
 	i2cFrame_hmiLeds hmiLedsToSend;

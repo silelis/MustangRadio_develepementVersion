@@ -175,12 +175,14 @@ static void manageRadioButtonsAndMenu(void *thing) {
 
 
 	 pHmiLeds->setLedAllCleaned();
+	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
 	 pHmiLeds->setLedSourceWithColor(COLOR_RED);
-	 pHmiLeds->sendDataToI2cTransmitQueue();
-	 vTaskDelay(pdMS_TO_TICKS(2000));
+	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
+//	 vTaskDelay(pdMS_TO_TICKS(2000));
 	 pHmiLeds->setLedAllCleaned();
+	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
 	 pHmiLeds->setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
-	 pHmiLeds->sendDataToI2cTransmitQueue();
+	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
 
 
 
@@ -222,7 +224,7 @@ static void initTaskFunctions(void) {
 	configASSERT(
 			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMasterParseReceivedData));
 
-	pHmiLeds = new (std::nothrow) ledsController(&radioStruct.humanMachineInterface.leds, pi2cMaster->getTransmitQueue());
+	pHmiLeds = new (std::nothrow) ledsController(/*&radioStruct.humanMachineInterface.leds,*/ pi2cMaster->getTransmitQueue());
 	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
 	//tutaj inicjoać wszytkie menu.
 
