@@ -74,9 +74,14 @@ void taskFunctionsStaticHandlersInit(void)
 	printf("I2C master bus init\n");
 	i2cEngin_master *p_i2cMaster = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
 	assert(p_i2cMaster);
+	
+	/*
 	// sprawdza czy MCP23008 jest dostępny na szynie i2c
 	assert(!p_i2cMaster->i2cPing(MCP23008_I2C_DEVICE_OPCODE));
 	//tworzy obiekt obsługujący transmisję danych z MCP23008
+	*/
+
+
 	printf("MCP23008 on I2C master bus init\n");
 	MCP23008* p_MCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, p_i2cMaster, I2C_MASTER_SPEED);
 	assert(p_MCP23008);
