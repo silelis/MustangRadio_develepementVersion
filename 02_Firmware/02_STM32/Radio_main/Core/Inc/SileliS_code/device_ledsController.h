@@ -48,6 +48,7 @@ public:
 
 	BaseType_t sendDataToI2cTransmitQueueLeds();
 
+
 protected:
 	enum ledEnum {
 		sourceLed, equaliserLed, errorLed //,

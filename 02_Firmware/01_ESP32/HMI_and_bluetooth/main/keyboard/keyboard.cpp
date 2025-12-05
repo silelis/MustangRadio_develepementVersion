@@ -404,7 +404,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 		}
 
 		BaseType_t xHigherPriorityTaskWoken;
-		xHigherPriorityTaskWoken = pdFALSE;
+		xHigherPriorityTaskWoken = pdTRUE;
 
 		xQueueSendFromISR(_gpioInterruptCallback->queueHandler_keyboard, _gpioInterruptCallback->keyboardExitValueHandler, &xHigherPriorityTaskWoken);
 
