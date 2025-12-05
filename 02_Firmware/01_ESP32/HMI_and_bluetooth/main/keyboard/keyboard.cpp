@@ -1,6 +1,24 @@
 #include "keyboard.h"
 
-static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
+
+DRAM_ATTR const int8_t QEM[16] = { 0, -1, 1, 2, 1, 0, 2, -1, -1, 2, 0, 1, 2, 1, -1, 0 };		//rotary encoder state martix
+DRAM_ATTR QueueHandle_t queueHandler_keyboard;		//pointer to keyboard values queue received from main (form class Keyboard constructor)
+DRAM_ATTR TaskHandle_t taskHandler_onPeriodLongButtonPressNotification; //wskaźnik do zadania (taska), które wskazuje (notyfikuje), że nastąpił long button press 
+DRAM_ATTR TaskHandle_t taskHandler_keyboardLongPressOnPressQueueFeeder; //wskaźnik do zadania (taska), które po przekroczenia minimalnego czasu long press i do czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
+DRAM_ATTR gpioInterruptCallbackStruct gpioInterruptCallback;
+DRAM_ATTR encoderState VolEncState;
+DRAM_ATTR encoderState EquEncState;
+DRAM_ATTR gptimer_handle_t gptimer = NULL;
+
+
+DRAM_ATTR keyboardUnion onExitHMIValue;  //To zlikwidować i dać bezpośrednio w gpioInterruptCallbackStruct zamiast wskaźnika
+
+DRAM_ATTR kbrdState buttonsState;
+
+
+
+
+/*static*/ IRAM_ATTR TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
 																		//czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
 
 /*---------------------------------------------------------------
@@ -19,7 +37,7 @@ static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do
  *---------------------------------------------------------------*/ 
 /*static*/ void keyboardLongPressOnPressQueueFeeder(void *object)
 {
-	KEYBOARD* instance = static_cast<KEYBOARD*>(object);
+	//KEYBOARD* instance = static_cast<KEYBOARD*>(object);
 	keyboardUnion valueToQueue;
 	valueToQueue.kbrdValue.input = HMI_INPUT_BUTTON_LONG_AND_PRESSED;
 	BaseType_t xHigherPriorityTaskWoken;
@@ -27,9 +45,17 @@ static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do
 	vTaskSuspend(NULL);
 	while (true)
 	{
-		valueToQueue.kbrdValue.value = instance->buttonsState.latchedState;
-		//xQueueSend(instance->gpioInterruptCallback.queueHandler_keyboard, valueToQueue.array, portMAX_DELAY);
-		xQueueSendFromISR(instance->gpioInterruptCallback.queueHandler_keyboard, valueToQueue.array, &xHigherPriorityTaskWoken);
+		/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+
+
+
+
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+		valueToQueue.kbrdValue.value = buttonsState.latchedState;
+		xQueueSendFromISR(queueHandler_keyboard, valueToQueue.array, &xHigherPriorityTaskWoken);
 		vTaskDelay(pdMS_TO_TICKS(ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS));
 	}
 }
@@ -270,7 +296,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 					if (_gpioInterruptCallback->debounceTime /*>*/ == GPIO_LONG_PRESS)
 					{
 						_gpioInterruptCallback->pbuttonsState->latchedState = _gpioInterruptCallback->pbuttonsState->latchedState | LONG_PRESS_BIT_MASK; // set "1" in LONG_PRESS_BIT_MASK aka 0b10000000 means long button press
-						xTaskResumeFromISR(_gpioInterruptCallback->taskHandler_onPeriodLongButtonPressNotification); //Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
+						xTaskResumeFromISR(taskHandler_onPeriodLongButtonPressNotification); //Uruchamnia zadanie odpowiadające za powiadomienie o długim naciśnięciu przycisku(ów)
 						xTaskResumeFromISR/*vTaskResume*/(handlerTask_keyboardLongPressOnPressQueueFeeder);
 					}
 				}
@@ -358,7 +384,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 			{
 				
 				//QEM [OLD_states * 4 + NEW_states];
-				pEncoderActive->latchedQEM += _gpioInterruptCallback->QEM[4*pEncoderActive->lastLatchedState +
+				pEncoderActive->latchedQEM += QEM[4*pEncoderActive->lastLatchedState +
 																								pEncoderActive->newLatchedState];
 				
 				
@@ -406,7 +432,7 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 		BaseType_t xHigherPriorityTaskWoken;
 		xHigherPriorityTaskWoken = pdTRUE;
 
-		xQueueSendFromISR(_gpioInterruptCallback->queueHandler_keyboard, _gpioInterruptCallback->keyboardExitValueHandler, &xHigherPriorityTaskWoken);
+		xQueueSendFromISR(queueHandler_keyboard, _gpioInterruptCallback->keyboardExitValueHandler, &xHigherPriorityTaskWoken);
 
 //for test purpouses only
 //		char exitValue111[HMI_INPUT_COMMAND_LEN];
@@ -479,21 +505,21 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	//starting task that feed queue about button long press	in progress
 	printf("%s Starting 'keyboardLongPressOnPressQueueFeeder' task.\n", this->TAG);
 	handlerTask_keyboardLongPressOnPressQueueFeeder	 = NULL;
-	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 10, this, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
+	assert(xTaskCreate(keyboardLongPressOnPressQueueFeeder, "Long press feeder", 128 * 10, NULL /*this*/, tskIDLE_PRIORITY, &handlerTask_keyboardLongPressOnPressQueueFeeder));
 						 
 
 	//interrupts (GPIOs and timer) callback function data passing structure
-	this->gpioInterruptCallback.pbuttonsState = &buttonsState;
-	this->gpioInterruptCallback.pEquEncState = &EquEncState;
-	this->gpioInterruptCallback.pVolEncState = &VolEncState;
-	this->gpioInterruptCallback.pgptimer = gptimer;
-	this->gpioInterruptCallback.queueHandler_keyboard = queueHandler_Keyboard;
-	this->gpioInterruptCallback.keyboardExitValueHandler = &this->onExitHMIValue;
-	this->gpioInterruptCallback.taskHandler_onPeriodLongButtonPressNotification = taskHandler_onPeriodLongButtonPressNotification;
-	this->gpioInterruptCallback.taskHandler_keyboardLongPressOnPressQueueFeeder = handlerTask_keyboardLongPressOnPressQueueFeeder;
+	gpioInterruptCallback.pbuttonsState = &buttonsState;
+	gpioInterruptCallback.pEquEncState = &EquEncState;
+	gpioInterruptCallback.pVolEncState = &VolEncState;
+	gpioInterruptCallback.pgptimer = gptimer;
+	queueHandler_keyboard = queueHandler_Keyboard;
+	gpioInterruptCallback.keyboardExitValueHandler = &onExitHMIValue;
+	taskHandler_onPeriodLongButtonPressNotification = taskHandler_onPeriodLongButtonPressNotification;
+	taskHandler_keyboardLongPressOnPressQueueFeeder = handlerTask_keyboardLongPressOnPressQueueFeeder;
 	
 	cbs.on_alarm = debounceAndGpiosCheckCallback;
-	ESP_ERROR_CHECK(gptimer_register_event_callbacks(gptimer, &cbs, &this->gpioInterruptCallback));
+	ESP_ERROR_CHECK(gptimer_register_event_callbacks(gptimer, &cbs, &gpioInterruptCallback));
 	ESP_ERROR_CHECK(gptimer_enable(gptimer));
 
 	printf("%s Create button inputs GPIO configuration.\n", this->TAG);
@@ -537,23 +563,23 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	
 	
 	//nie wiem czy tutaj czy nie lepiej w interrupcie od GPIO???
-	this->VolEncState.pulseIncrement = 0;
-	this->EquEncState.pulseIncrement = 0;
-	this->VolEncState.lastLatchedState = encoderGetLevel(VolRot_A, VolRot_B);
-	this->EquEncState.lastLatchedState = encoderGetLevel(EquRot_A, EquRot_B);
+	VolEncState.pulseIncrement = 0;
+	EquEncState.pulseIncrement = 0;
+	VolEncState.lastLatchedState = encoderGetLevel(VolRot_A, VolRot_B);
+	EquEncState.lastLatchedState = encoderGetLevel(EquRot_A, EquRot_B);
 	
-	gpio_isr_handler_add(VolBut, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(BUT_1, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(BUT_2, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(BUT_3, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(BUT_4, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(BUT_5, button_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(EquBut, button_isr_handler, &this->gpioInterruptCallback);
+	gpio_isr_handler_add(VolBut, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(BUT_1, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(BUT_2, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(BUT_3, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(BUT_4, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(BUT_5, button_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(EquBut, button_isr_handler, &gpioInterruptCallback);
 	
-	gpio_isr_handler_add(VolRot_A, volume_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(VolRot_B, volume_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(EquRot_A, equaliser_isr_handler, &this->gpioInterruptCallback);
-	gpio_isr_handler_add(EquRot_B, equaliser_isr_handler, &this->gpioInterruptCallback);
+	gpio_isr_handler_add(VolRot_A, volume_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(VolRot_B, volume_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(EquRot_A, equaliser_isr_handler, &gpioInterruptCallback);
+	gpio_isr_handler_add(EquRot_B, equaliser_isr_handler, &gpioInterruptCallback);
 	
 	this->gpio_intr_enableAll();
 	
@@ -671,29 +697,3 @@ KEYBOARD::~KEYBOARD()
 	vTaskDelete(handlerTask_keyboardLongPressOnPressQueueFeeder);
 	
 }
-
-
-//void KEYBOARD::keyboardQueueSendResetToDefault(QueueHandle_t keyboardQueue)
-//{
-//	uint8_t button;
-//	const uint8_t keyboardResetvaluePattern = 0b01110001;		//wartość zwracana przez buttonsGetLevel(), gdy wciśnięte śa przycisk But1, But2, But3
-//	const uint8_t buttonOnOffBitPattern	= 0b00000001;			//bit 1 to bit przycisku Power On/ Off
-//	
-//	do
-//	{
-//		ESP_LOGI(this->TAG, "Release Power ON/OFF to go fortrher to continue initializing \r\n or press 'reset to default' key set.");
-//		button = buttonsGetLevel();
-//	} while (!(button & buttonOnOffBitPattern));		//czeka zanim przycisk Power On/Off zostanie zwolniony po właczeniu radio
-//		
-//	if (button == keyboardResetvaluePattern)	//sprzqwdza czy podczas właczenia radio użytkownik trzymał włączone But1 + But2 + But3,
-//												//co jest oznaką, że użytkownik podczas startu dał komendę reset to default.
-//	{
-//
-//		ESP_LOGI(this->TAG, "Reset to default!!!");
-//
-//		this->onExitHMIValue[0] = HMI_INPUT_BUTTON;//this->gpioInterruptCallback.case_buttonInput;
-//		this->onExitHMIValue[1] = button;
-//		
-//		xQueueSend(keyboardQueue, this->onExitHMIValue, portMAX_DELAY); //wpisanie do kolejki warości przycisków oznaczającej RESET TO DEFAULT
-//	}
-//}
