@@ -19,6 +19,7 @@ typedef enum
 
 volatile static i2cCallbackState rxToEsp32 = recpeptionNotToMe;
 volatile static uint32_t rx_fifo_end_addrLast = 0;
+enum DRAM_ATTR i2cTransmitSynchronisation_size_data i2cSlaveTransmit2Synchronisation_packageData;
 
 //----------------------------------------------
 // Callback dla zdarzeń I2C Slave
@@ -48,6 +49,12 @@ IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t
 	{
 		// Slave -> Master (ESP32 wysyła)
 		rxToEsp32 = transmition;
+		if (i2cSlaveTransmit2Synchronisation_packageData == ready2_sendSizeOfPackage){
+			i2cSlaveTransmit2Synchronisation_packageData = ready2_sendPackage;
+		}
+		else{
+			i2cSlaveTransmit2Synchronisation_packageData = ready2_sendSizeOfPackage;
+		}
 	}
 
 	// 2. Wyślij zdarzenie do kolejki (z zabezpieczeniem przed NULL)
@@ -121,6 +128,9 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->s_receive_queue));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
+
+	i2cSlaveTransmit2Synchronisation_packageData=ready2_sendSizeOfPackage;
+
 
 	this->i2cMasterCrcSumCounterErrorReset();
 }
@@ -265,21 +275,41 @@ esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 
-#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE.
+#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE."
 		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
 
 #else
 
+		this->waitForI2cSynchro_sendSizeOfPackage();
 		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
-		if (ESP_OK == retVal)
-		{
-			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
-		}
-#endif
 		this->interruptRequestSet();
 		this->interruptRequestReset();
+		if (ESP_OK == retVal)
+		{
+			this->waitForI2cSynchro_sendPackage();
+			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
+			this->interruptRequestSet();
+			this->interruptRequestReset();
+		}
+		else{
+			assert(0);
+		}
+#endif
+
 		delete[] static_cast<char *>(dataToTransmit.pData);
 		// return retVal;
 	}
 	return retVal;
+}
+
+void i2cEngin_slave::waitForI2cSynchro_sendSizeOfPackage(){
+	while(i2cSlaveTransmit2Synchronisation_packageData!=ready2_sendSizeOfPackage){
+		vTaskDelay(10);
+	}
+}
+
+void i2cEngin_slave::waitForI2cSynchro_sendPackage(){
+	while(i2cSlaveTransmit2Synchronisation_packageData!=ready2_sendPackage){
+		vTaskDelay(10);
+	}
 }
