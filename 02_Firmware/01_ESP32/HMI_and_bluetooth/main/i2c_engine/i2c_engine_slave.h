@@ -12,6 +12,11 @@
 #include "common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
 #include "common/comunicationProtocol/comunicationProtocol.h"
 
+	enum i2cTransmitSynchronisation_size_data{
+		ready2_sendSizeOfPackage,
+		ready2_sendPackage
+	};
+	
 class i2cEngin_slave
 {
 	friend void i2cReceivedDataParser(void *nothing);
@@ -45,4 +50,6 @@ private:
 	
 	uint16_t i2cMasterCrcSumCounterError;
 	//const uint8_t esp32InterruptRequestCountingSemaphore_MAX = 25;
+	void waitForI2cSynchro_sendSizeOfPackage();
+	void waitForI2cSynchro_sendPackage();
 };

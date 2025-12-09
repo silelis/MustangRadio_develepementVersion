@@ -22,7 +22,7 @@
   "esp_dev_env_path": "${config:esp_idf_tools}:${config:esp_binutils_path}:${config:esp_openocd_path}:${config:esp_python_path}:${config:esp_toolchain_path}:${config:esp_clang_path}:${config:esp_gdb_path}",
   "idf.espIdfPathWin": "${config:esp_idf_path}/frameworks/${config:framework_esp-idf_ver}/",
   "idf.pythonInstallPath": "${config:esp_idf_tools}/idf-python/${config:tools_esp_idf-python_ver}/python.exe",
-  "idf.openOcdDebugLevel": 3,
+ // "idf.openOcdDebugLevel": 1,
   "idf.openOcdLaunchArgs": [
     "-f",
     "interface/ftdi/esp_ftdi.cfg",
