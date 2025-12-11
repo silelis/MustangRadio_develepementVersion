@@ -273,21 +273,11 @@ void startUpTask(void *noThing) {
 			xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions));
 }
 
-
-extern esp32I2cTransmitSynchronisation_size_data Ees32TransmitSynchronisation_size_data;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-
 	if (esp32I2cInitialised == false) {
 		esp32I2cInitialised = true;
-		Ees32TransmitSynchronisation_size_data = ready2_receiveSizeOfPackage;
 	} else {
-		if (Ees32TransmitSynchronisation_size_data == ready2_receiveSizeOfPackage){
-			pESP32->incrementInterruptRequestCountingSemaphore();//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
-			//Ees32TransmitSynchronisation_size_data = ready2_receivePackage;
-		}
-		else{
-			Ees32TransmitSynchronisation_size_data =ready2_receivePackage;
-		}
+		pESP32->incrementInterruptRequestCountingSemaphore();//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
 	}
 
 }
