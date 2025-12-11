@@ -15,13 +15,6 @@
 //#include <iostream>
 #include "SileliS_code/myPrintfTask.h"
 
-enum esp32I2cTransmitSynchronisation_size_data{
-	ready2_receiveSizeOfPackage,
-	ready2_receivePackage
-};
-
-
-
 class esp32_i2cComunicationDriver {
 public:
 	static const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32; //7bit address

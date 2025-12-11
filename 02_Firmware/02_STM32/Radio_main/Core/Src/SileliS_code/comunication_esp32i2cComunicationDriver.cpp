@@ -9,8 +9,6 @@
 #include <SileliS_code/comunication_esp32i2cComunicationDriver.h>
 
 extern myPrintfTask *pPrintf;
-esp32I2cTransmitSynchronisation_size_data Ees32TransmitSynchronisation_size_data;
-
 /********************************************************************
  * @brief  Konstruktor klasy esp32_i2cComunicationDriver
  *
@@ -217,30 +215,15 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveData(
 		i2cFrame_transmitQueue *dataFrame) {
 	HAL_StatusTypeDef retVal = HAL_ERROR;
 	uint8_t dataSize;
-
-
-
-	while(Ees32TransmitSynchronisation_size_data!=ready2_receiveSizeOfPackage){
-		vTaskDelay(5);
+	retVal = this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize,
+			sizeof(size_t));
+	if (retVal != HAL_ERROR) {
+		dataFrame->pData = new (std::nothrow) char[dataFrame->dataSize];
 	}
-		retVal = this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize,
-					sizeof(size_t));
-		//Ees32TransmitSynchronisation_size_data=ready2_receivePackage;
-		if (retVal != HAL_ERROR) {
-			dataFrame->pData = new (std::nothrow) char[dataFrame->dataSize];
-		}
-
-		while(Ees32TransmitSynchronisation_size_data!=ready2_receivePackage){
-			vTaskDelay(5);
-		}
-
-		if (dataFrame->pData != nullptr) {
-			retVal = this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData,
-					dataFrame->dataSize);
-			Ees32TransmitSynchronisation_size_data=ready2_receiveSizeOfPackage;
-		}
-
-
+	if (dataFrame->pData != nullptr) {
+		retVal = this->masterReceiveFromESP32_DMA((uint8_t*) dataFrame->pData,
+				dataFrame->dataSize);
+	}
 	return retVal;
 }
 
