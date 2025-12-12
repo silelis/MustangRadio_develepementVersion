@@ -1,0 +1,44 @@
+/*
+ * menu_menuPrototype.cpp
+ *
+ *  Created on: Nov 29, 2025
+ *      Author: dbank
+ */
+
+#include <SileliS_code/menu_menuPrototype.h>
+
+
+#include "SileliS_code/i2cEngine.h"
+#include "SileliS_code/ledsController.h"
+extern i2cMaster *pi2cMaster;
+extern ledsController *pHmiLeds;
+//extern stepper
+//extern NVS
+
+menuPrototype::menuPrototype():bindKeyboardToFunction() {
+	// TODO Auto-generated constructor stub
+}
+
+menuPrototype::~menuPrototype() {
+	// TODO Auto-generated destructor stub
+}
+
+void menuPrototype::deviceInit(void){
+
+}
+
+void menuPrototype::deviceDeInit(void){
+
+}
+
+void menuPrototype::deviceBackInit(void){
+
+}
+
+void menuPrototype::deviceOn(void){
+
+}
+
+void menuPrototype::deviceOff(void){
+
+}

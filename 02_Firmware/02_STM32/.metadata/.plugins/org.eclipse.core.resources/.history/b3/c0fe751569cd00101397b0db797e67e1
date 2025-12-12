@@ -1,0 +1,26 @@
+/*
+ * menu_menuPrototype.h
+ *
+ *  Created on: Nov 29, 2025
+ *      Author: dbank
+ */
+
+#ifndef INC_SILELIS_CODE_MENU_MENUPROTOTYPE_H_
+#define INC_SILELIS_CODE_MENU_MENUPROTOTYPE_H_
+
+#include "SileliS_code/bindKeyboardToFunction.h"
+#include "SileliS_code/myPrintfTask.h"
+
+class menuPrototype: public bindKeyboardToFunction {
+public:
+	menuPrototype();
+	~menuPrototype();
+
+protected:
+
+private:
+	extern i2cMaster *pi2cMaster;
+	extern ledsController *pHmiLeds;
+};
+
+#endif /* INC_SILELIS_CODE_MENU_MENUPROTOTYPE_H_ */
