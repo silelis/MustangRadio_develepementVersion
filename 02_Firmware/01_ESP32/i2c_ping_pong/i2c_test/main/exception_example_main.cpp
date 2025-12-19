@@ -41,11 +41,18 @@ static bool IRAM_ATTR i2c_slave_receive_cb(i2c_slave_dev_handle_t i2c_slave, con
     return xTaskWoken;
 }
 
+uint32_t write_len;
 static bool IRAM_ATTR i2c_slave_request_cb(i2c_slave_dev_handle_t i2c_slave, const i2c_slave_request_event_data_t *evt_data, void *arg)
 {
     i2c_slave_event_t evt = I2C_SLAVE_EVT_TX;
     BaseType_t xTaskWoken = 0;
+
+    uint8_t data_buffer[9]="TataTata";
+
+    i2c_slave_write(i2c_slave, (const uint8_t*) data_buffer, 8, &write_len, 10);
+
     xQueueSendFromISR(i2cSlaveEventQueue , &evt, &xTaskWoken);
+    vTaskDelay(pdMS_TO_TICKS(100));
     return xTaskWoken;
 }
 
@@ -97,12 +104,6 @@ extern "C" void app_main(void)
     i2c_slv_config.flags.allow_pd = 0;
     i2c_slv_config.flags.enable_internal_pullup = true;
     i2c_slv_config.intr_priority = 3;
-
-
-
-    // Register callback in a task
-
-
 //
 
 i2c_slave_dev_handle_t slave_handle; //aka context
@@ -120,8 +121,8 @@ interruptRequestSet();
 interruptRequestReset();
 
     while(1){
-        vTaskDelay(pdMS_TO_TICKS(1000));
-     //   interruptRequestSet();
-      //  interruptRequestReset();
+        vTaskDelay(pdMS_TO_TICKS(3000));
+        interruptRequestSet();
+        interruptRequestReset();
     }
 }
