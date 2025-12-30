@@ -585,11 +585,11 @@ void stepperMotorDataParser(void *TaskParameters)
  */
 
 
-void i2cSlaveTransmit(void *nothing)
+void i2cSlaveDataReadyToTransmit(void *nothing)
 {
 	while (true)
 	{
-		p_i2cSlave->i2cSlaveTransmit();
+		p_i2cSlave->i2cSlaveDataRadyToTransmit();
 	}
 	
 	
@@ -597,9 +597,9 @@ void i2cSlaveTransmit(void *nothing)
 
 //Funkcja tasku zajmującego się odbieraniem otrzymanych przez i2c slave danych i przesyłaniem do kolejki danych.
 // Dane trafiają do funkcji parsera i2c.
-void i2cSlaveReceive(void *nothing)
+void i2cSlaveReceiveTransit(void *nothing)
 {	
-	p_i2cSlave->i2cSlaveReceive();
+	p_i2cSlave->i2cSlaveReceiveTransmit();
 }
 
 //Funkcja zajmuje się parsowaniem otrzymanych z i2cSlaveReceive danych
