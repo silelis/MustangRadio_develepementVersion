@@ -33,8 +33,8 @@ void keyboardQueueParametersParser(void*);
 //void humanMahineDisplayLeds(void *);
 //void humanMahineBacklightLeds(void *);
 //void stepperMotorDataParser(void *);
-void i2cSlaveTransmit(void *);
-void i2cSlaveReceive(void *);
+void i2cSlaveDataReadyToTransmit(void *);
+void i2cSlaveReceiveTransit(void *);
 void i2cReceivedDataParser(void *nothing);
 
 static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize);

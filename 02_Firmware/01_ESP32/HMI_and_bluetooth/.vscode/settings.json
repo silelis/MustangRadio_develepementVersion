@@ -22,7 +22,7 @@
   "esp_dev_env_path": "${config:esp_idf_tools}:${config:esp_binutils_path}:${config:esp_openocd_path}:${config:esp_python_path}:${config:esp_toolchain_path}:${config:esp_clang_path}:${config:esp_gdb_path}",
   "idf.espIdfPathWin": "${config:esp_idf_path}/frameworks/${config:framework_esp-idf_ver}/",
   "idf.pythonInstallPath": "${config:esp_idf_tools}/idf-python/${config:tools_esp_idf-python_ver}/python.exe",
-  "idf.openOcdDebugLevel": 3,
+  "idf.openOcdDebugLevel": 0,
   "idf.openOcdLaunchArgs": [
     "-f",
     "interface/ftdi/esp_ftdi.cfg",
@@ -41,7 +41,7 @@
     "-c",
     "set ESP_RTOS none"
    ],
-  "idf.portWin": "COM5",
+  "idf.portWin": "COM7",
   "idf.toolsPathWin": "${config:esp_idf_path}",
   "idf.customExtraVars": {
     "ESPTOOLPY_ARGS": "--no-verify",
@@ -53,5 +53,5 @@
     "--query-driver=C:\\Espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20241119\\xtensa-esp-elf\\bin\\xtensa-esp32-elf-gcc.exe",
     "--compile-commands-dir=d:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\01_ESP32\\HMI_and_bluetooth\\build"
   ],
-  "idf.flashType": "JTAG"
+  "idf.flashType": "UART"
 }
