@@ -3,8 +3,8 @@
 static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
 
-#include "soc/i2c_struct.h"
-extern i2c_dev_t I2C0;
+//#include "soc/i2c_struct.h"
+//extern i2c_dev_t I2C0;
 
 #include "driver/i2c.h"
 /*
@@ -27,8 +27,9 @@ typedef enum {
 
 typedef struct{
  	i2c_slave_event_t event_type;
-	uint32_t receivedDataLength=0;
-	uint8_t *receivedDataBuffer=nullptr;
+//	uint32_t receivedDataLength=0;
+//	uint8_t *receivedDataBuffer=nullptr;
+	i2cFrame_transmitQueue DataToParserQueue = {0, nullptr};
 } i2c_slave_event_context_t;
 
 
@@ -42,15 +43,19 @@ static bool IRAM_ATTR i2c_slave_receive_cb(i2c_slave_dev_handle_t i2c_slave, con
 	if (evt_data->length>0 && evt_data->length<=ESP32_SLAVE_RECEIVE_BUFFER_LEN){
 		i2c_slave_event_context_t evt;
 		evt.event_type = I2C_SLAVE_EVT_RX;
-		evt.receivedDataLength= evt_data->length;
+		//evt.receivedDataLength= evt_data->length;
+		evt.DataToParserQueue.dataSize= evt_data->length;
 
-		evt.receivedDataBuffer = new uint8_t[evt.receivedDataLength];
+		//evt.receivedDataBuffer = new uint8_t[evt.receivedDataLength];
+		evt.DataToParserQueue.pData = new uint8_t[evt.DataToParserQueue.dataSize];
 
-		if (evt.receivedDataBuffer!=nullptr){
-			memcpy(evt.receivedDataBuffer,evt_data->buffer,evt_data->length);
+		//if (evt.receivedDataBuffer!=nullptr){
+		if (evt.DataToParserQueue.pData!=nullptr){	
+			memcpy(evt.DataToParserQueue.pData,evt_data->buffer,evt_data->length);
 
 			if (xQueueSendFromISR(i2cSlaveCallbackEventQueue , &evt, &xTaskWoken) == pdFAIL){
-				delete evt.receivedDataBuffer;
+				//delete evt.receivedDataBuffer;
+				delete evt.DataToParserQueue.pData;
 			}
 		} 
 	}
@@ -205,7 +210,7 @@ void i2cEngin_slave::i2cMasterCrcSumCounterErrorReset(void)
  *---------------------------------------------------------------*/
 void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 {
-	uint8_t *data_rd = new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+	//uint8_t *data_rd = new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 
 	// uint32_t size_rd = 0;
 //	i2c_slave_rx_done_event_data_t rx_data;
@@ -213,8 +218,8 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 	this->esp32i2cBusInitialised(); // informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 
 	i2c_slave_event_context_t callbackEvtData;
-	i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)data_rd; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
-	i2cFrame_transmitQueue tempFrameToParserQueue;
+	//i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)data_rd; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
+	//i2cFrame_transmitQueue tempFrameToParserQueue;
 	
 	while (1)
 	{
@@ -223,24 +228,34 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 			switch(callbackEvtData.event_type){
 				case     I2C_SLAVE_EVT_RX:
 
-					
-					delete callbackEvtData.receivedDataBuffer; //usuwanie bufora z danymi oprzymanymi z callback
-					printf("I2C slace - data received/r/n");
+					this->i2cSlaveReceiveDataToDataParserQueue->QueueSend(&callbackEvtData.DataToParserQueue); // funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
+					//delete callbackEvtData.receivedDataBuffer; //usuwanie bufora z danymi oprzymanymi z callback
+					printf("I2C slace - data received and forwarded to parser queu\n");
 					break;
 				case     I2C_SLAVE_EVT_TX:
+
+					i2cFrame_transmitQueue dataToTransmit;
+					esp_err_t retVal = ESP_FAIL;
+					if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY/* to powinno być od razu*/) == pdTRUE)
+					{
+
+						//todo: tutaj powinna odbywać się transmisja
+
+						printf("TUTAJ POWINNA BYĆ TRANSMISJA DANYCH/r/n");
+						delete[] static_cast<char *>(dataToTransmit.pData);
+					}
+
+
+
 
 					printf("I2C slace - data transmited/r/n");
 					break;
 			}
-
-
-
-
 		}
 
 
 
-		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+		/*memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
 
 
 		if (xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
@@ -258,7 +273,7 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
 
-					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); // funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
+					this->i2cSlaveReceiveDataToDataParserQueue->QueueSend(&tempFrameToParserQueue); // funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
 				}
 				else
 				{
@@ -268,7 +283,7 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 				// printf("I2C rec. len:%d\n", fakeCommHeader->dataSize);
 				// printf("I2C rec\n");
 			}
-		}
+		}*/
 	}
 }
 /*---------------------------------------------------------------
@@ -314,7 +329,11 @@ void i2cEngin_slave::esp32i2cBusInitialised(void)
 
 BaseType_t i2cEngin_slave::i2cSendDataToTransisionQueue(i2cFrame_transmitQueue *tempFrameToParserQueue)
 {
-	return this->i2cSlaveTransmitDataQueue->QueueSendFromISR(tempFrameToParserQueue);
+	BaseType_t retVal = this->i2cSlaveTransmitDataQueue->QueueSend/*FromISR*/(tempFrameToParserQueue);
+	this->interruptRequestSet();
+	this->interruptRequestReset();
+	return retVal;
+
 }
 
 /*---------------------------------------------------------------
@@ -335,6 +354,8 @@ i2cEngin_slave::~i2cEngin_slave()
 	// delete this->pTransmitQueueObject;
 }
 
+
+/*
 esp_err_t i2cEngin_slave::i2cSlaveDataRadyToTransmit(void)
 {
 
@@ -342,6 +363,7 @@ esp_err_t i2cEngin_slave::i2cSlaveDataRadyToTransmit(void)
 	esp_err_t retVal = ESP_FAIL;
 	if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
 	{
+
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 
@@ -362,4 +384,4 @@ esp_err_t i2cEngin_slave::i2cSlaveDataRadyToTransmit(void)
 		// return retVal;
 	}
 	return retVal;
-}
+}*/
