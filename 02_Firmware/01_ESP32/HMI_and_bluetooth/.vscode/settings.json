@@ -4,12 +4,12 @@
   "esp_python_path_ver": "idf5.5_py3.11_env",
   "tools_esp32ulp-elf_ver": "esp32ulp-elf",
   "tools_openocd-esp32_ver": "v0.12.0-esp32-20250707",
-  "tools_xtensa-esp-elf_ver": "esp-14.2.0_20241119",
+  "tools_xtensa-esp-elf_ver": "esp-14.2.0_20251107",
   "tools_esp_idf-python_ver": "3.11.2",
   "tools_esp-clang_ver": "esp-19.1.2_20250312",
   "tools_xtensa-esp-elf-gdb_ver": "16.3_20250913",
-  "tools_ADDR2LINE_ver": "esp-14.2.0_20241119",
-  "framework_esp-idf_ver": "esp-idf-v5.5.1",
+  "tools_ADDR2LINE_ver": "esp-14.2.0_20251107",
+  "framework_esp-idf_ver": "esp-idf-v5.5.2",
   "esp_idf_tools": "${config:esp_idf_path}/tools",
   "esp_toolchain_root": "${env:HOME}/.espressif",
   "esp_binutils_path": "${config:esp_idf_tools}/esp32ulp-elf/${config:tools_esp32ulp-elf_ver}/esp32ulp-elf/bin",
@@ -50,8 +50,8 @@
   "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
   "clangd.arguments": [
     "--background-index",
-    "--query-driver=C:\\Espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20241119\\xtensa-esp-elf\\bin\\xtensa-esp32-elf-gcc.exe",
+    "--query-driver=C:\\Espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20251107\\xtensa-esp-elf\\bin\\xtensa-esp32-elf-gcc.exe",
     "--compile-commands-dir=d:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\01_ESP32\\HMI_and_bluetooth\\build"
   ],
-  "idf.flashType": "UART"
+  "idf.flashType": "JTAG"
 }

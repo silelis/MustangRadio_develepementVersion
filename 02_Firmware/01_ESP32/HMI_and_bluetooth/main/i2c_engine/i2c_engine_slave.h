@@ -20,7 +20,7 @@ public:
 	~i2cEngin_slave();
 
 
-	esp_err_t i2cSlaveDataRadyToTransmit(void);
+	//esp_err_t i2cSlaveDataRadyToTransmit(void);
 	
 	
 	
