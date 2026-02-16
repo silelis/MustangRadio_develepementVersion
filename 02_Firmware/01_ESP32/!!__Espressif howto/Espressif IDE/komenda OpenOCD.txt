@@ -1,0 +1,8 @@
+opcje openOCD podstawowe:
+-s C:\Espressif\tools\openocd-esp32\v0.12.0-esp32-20250707\openocd-esp32\share\openocd\scripts -f interface/ftdi/esp_ftdi.cfg -f  target/esp32.cfg  -c "adapter speed 400"
+
+można też dodać:
+-c "init" -c "reset halt" -c "esp32.cpu0 configure -rtos FreeRTOS" -c "esp32.cpu1 configure -rtos FreeRTOS" -c "set ESP_RTOS none"
+
+
+ -c "adapter speed 2000" <---- też działa
