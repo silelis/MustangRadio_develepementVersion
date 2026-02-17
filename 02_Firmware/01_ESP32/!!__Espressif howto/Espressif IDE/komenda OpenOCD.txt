@@ -1,8 +1,50 @@
 opcje openOCD podstawowe:
 -s C:\Espressif\tools\openocd-esp32\v0.12.0-esp32-20250707\openocd-esp32\share\openocd\scripts -f interface/ftdi/esp_ftdi.cfg -f  target/esp32.cfg  -c "adapter speed 400"
 
-można też dodać:
--c "init" -c "reset halt" -c "esp32.cpu0 configure -rtos FreeRTOS" -c "esp32.cpu1 configure -rtos FreeRTOS" -c "set ESP_RTOS none"
 
 
- -c "adapter speed 2000" <---- też działa
+
+
+można też dodać )po jednej z komend i patrzeć czy nie wywala błędów):
+-c "init" -c "reset halt"
+
+
+
+ -c "adapter speed 4000" <---- też działa
+
+
+
+
+
+
+
+
+NIe koniecznie potrzebne:
+1) to było w części tutoriali, ale nie dziala (zawiesza GDB):
+ -c "esp32.cpu0 configure -rtos FreeRTOS" -c "esp32.cpu1 configure -rtos FreeRTOS" -c "set ESP_RTOS none"
+
+2) aby wgrać programy dodaj opcję (ale z tego co zauważyłem dziala też bez tego, po pierwszym flashowaniu ESP32 przez komendę: /esptool.py):
+  -c "init" \
+  -c "reset halt" \
+  -c "flash write_image erase build/bootloader/bootloader.bin 0x1000 bin" \
+  -c "flash write_image erase build/partition_table/partition-table.bin 0x8000 bin" \
+  -c "flash write_image erase build/hello_world.bin 0x10000 bin" \
+  -c "reset halt" \
+  -c "echo \"Programming complete. Ready for debugging.\""
+
+
+Adresy i nazwy plików można wziąć z końcówki logu po kompilacji:
+Successfully created esp32 image.
+Generated C:/112121/hello_world/build/hello_world.bin
+[488/488] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\112121\...ion-table.bin C:/112121/hello_world/build/hello_world.bin"
+hello_world.bin binary size 0x21850 bytes. Smallest app partition is 0x100000 bytes. 0xde7b0 bytes (87%) free.
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 2MB --flash_freq 40m 0x1000 build\bootloader\bootloader.bin 0x8000 build\partition_table\partition-table.bin 0x10000 build\hello_world.bin
+or from the "C:\112121\hello_world\build" directory
+ python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
+
