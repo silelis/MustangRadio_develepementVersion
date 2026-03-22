@@ -1,19 +1,33 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
-    
-    
-    {
-      "type": "gdbtarget",
-      "request": "attach",
-      "name": "Eclipse CDT GDB Adapter"
-      
-    },
+
+    // ============================================================
+    // DEBUG — tylko debugowanie (bez build/flash)
+    // Używaj gdy firmware jest już wgrany i chcesz tylko podłączyć debugger.
+    // OpenOCD uruchamia się automatycznie przez rozszerzenie ESP-IDF.
+    // ============================================================
     {
       "type": "espidf",
-      "name": "Launch",
+      "name": "ESP32: Debug (attach)",
       "request": "launch"
+    },
+
+    // ============================================================
+    // BUILD + FLASH + DEBUG — pełny cykl
+    // 1. Kompiluje projekt (idf.py build)
+    // 2. Wgrywa firmware przez JTAG (idf.py flash)
+    // 3. Uruchamia debugger (OpenOCD + GDB)
+    //
+    // Wymaga podłączonego debuggera JTAG (ESP-PROG lub wbudowany JTAG).
+    // Port i konfiguracja OpenOCD w settings.json → idf.openOcdLaunchArgs.
+    // ============================================================
+    {
+      "type": "espidf",
+      "name": "ESP32: Build + Flash + Debug",
+      "request": "launch",
+      "preLaunchTask": "Build + Flash"
     }
+
   ]
 }
