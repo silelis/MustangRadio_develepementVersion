@@ -1,23 +1,39 @@
 {
+  // Ścieżki do kompilatora i nagłówków opierają się na zmiennych
+  // zdefiniowanych w settings.json (sekcja KONFIGURACJA WERSJI).
+  // Przy aktualizacji ESP-IDF wystarczy zmienić settings.json.
   "configurations": [
     {
-      "name": "ESP-IDF",
-      "compilerPath": "${config:idf.toolsPathWin}\\tools\\xtensa-esp-elf\\esp-14.2.0_20251107\\xtensa-esp-elf\\bin\\xtensa-esp32-elf-gcc.exe",
+      "name": "ESP-IDF (esp32)",
+
+      // Kompilator — używa esp_tools_root + esp_ver_xtensa z settings.json
+      "compilerPath": "${config:esp_tools_root}/tools/xtensa-esp-elf/${config:esp_ver_xtensa}/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe",
+
+      // Plik generowany przez cmake podczas budowania — najlepsza jakość IntelliSense
       "compileCommands": "${config:idf.buildPath}/compile_commands.json",
+
+      // Ścieżki include (używane gdy compile_commands.json nie istnieje)
       "includePath": [
-        //"${config:idf.espIdfPath}/components/**",
         "${config:idf.espIdfPathWin}/components/**",
-        "${workspaceFolder}/Components/**"
+        "${workspaceFolder}/Components/**",
+        "${workspaceFolder}/main/**"
       ],
+
       "browse": {
         "path": [
-          //"${config:idf.espIdfPath}/components",
           "${config:idf.espIdfPathWin}/components",
-          "${workspaceFolder}",
-          "${workspaceFolder}/Components/**"
+          "${workspaceFolder}/Components",
+          "${workspaceFolder}/main"
         ],
         "limitSymbolsToIncludedHeaders": true
-      }
+      },
+
+      // Definicje procesora (dla IntelliSense bez compile_commands.json)
+      "defines": [
+        "ESP_PLATFORM",
+        "IDF_VER=\"v5.5.3\"",
+        "CONFIG_IDF_TARGET_ESP32=1"
+      ]
     }
   ],
   "version": 4

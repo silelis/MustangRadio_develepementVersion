@@ -240,6 +240,8 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 					{
 
 						//todo: tutaj powinna odbywać się transmisja
+						//dataToTransmit.dataSize
+						//dataToTransmit.pData
 
 						printf("TUTAJ POWINNA BYĆ TRANSMISJA DANYCH/r/n");
 						delete[] static_cast<char *>(dataToTransmit.pData);
@@ -330,6 +332,7 @@ void i2cEngin_slave::esp32i2cBusInitialised(void)
 BaseType_t i2cEngin_slave::i2cSendDataToTransisionQueue(i2cFrame_transmitQueue *tempFrameToParserQueue)
 {
 	BaseType_t retVal = this->i2cSlaveTransmitDataQueue->QueueSend/*FromISR*/(tempFrameToParserQueue);
+
 	this->interruptRequestSet();
 	this->interruptRequestReset();
 	return retVal;
