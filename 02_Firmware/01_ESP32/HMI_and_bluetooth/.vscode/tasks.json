@@ -87,6 +87,32 @@
     },
 
     // ============================================================
+    // FACTORY RESET — kasuje NVS i wszystkie partycje danych
+    // Używa esptool przez port COM (nie JTAG) — podłącz USB-UART.
+    // ============================================================
+    {
+      "label": "Factory Reset (erase flash)",
+      "type": "process",
+      "command": "${config:esp_python_bin}/python.exe",
+      "args": [
+        "-m", "esptool",
+        "--chip", "esp32",
+        "--port", "${config:idf.portWin}",
+        "--baud", "921600",
+        "erase_flash"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================================
     // DECODE GURU MEDITATION ERROR
     // Dekoduje adresy z crash dump na symbole — wymaga pliku .elf.
     // ============================================================
