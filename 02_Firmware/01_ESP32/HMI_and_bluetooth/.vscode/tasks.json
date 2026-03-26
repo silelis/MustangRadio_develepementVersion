@@ -4,11 +4,20 @@
 
     // ============================================================
     // BUILD
+    // Bezpośrednie wywołanie idf.py — task blokuje do końca kompilacji.
+    // (${command:espIdf.buildDevice} wraca natychmiast, nie czeka na proces)
     // ============================================================
     {
       "label": "Build",
       "type": "shell",
-      "command": "${command:espIdf.buildDevice}",
+      "command": "call \"${config:esp_idf_root}/export.bat\" > NUL 2>&1 && idf.py build",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": ["/d", "/c"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
       "group": {
         "kind": "build",
         "isDefault": true
@@ -25,11 +34,19 @@
 
     // ============================================================
     // FLASH (JTAG)
+    // Bezpośrednie wywołanie idf.py flash przez JTAG/OpenOCD.
     // ============================================================
     {
       "label": "Flash (JTAG)",
       "type": "shell",
-      "command": "${command:espIdf.flashDevice}",
+      "command": "call \"${config:esp_idf_root}/export.bat\" > NUL 2>&1 && idf.py -p JTAG flash",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": ["/d", "/c"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
       "group": "build",
       "presentation": {
         "echo": true,
