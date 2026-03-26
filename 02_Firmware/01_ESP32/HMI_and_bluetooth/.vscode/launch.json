@@ -3,30 +3,28 @@
   "configurations": [
 
     // ============================================================
-    // DEBUG — tylko debugowanie (bez build/flash)
-    // Używaj gdy firmware jest już wgrany i chcesz tylko podłączyć debugger.
-    // OpenOCD uruchamia się automatycznie przez rozszerzenie ESP-IDF.
+    // GDB TARGET — debugowanie przez Eclipse CDT GDB Adapter
+    // Wymaga: OpenOCD uruchomiony osobno, projekt zbudowany.
     // ============================================================
     {
-      "type": "espidf",
-      "name": "ESP32: Debug (attach)",
-      "request": "launch"
-    },
-
-    // ============================================================
-    // BUILD + FLASH + DEBUG — pełny cykl
-    // 1. Kompiluje projekt (idf.py build)
-    // 2. Wgrywa firmware przez JTAG (idf.py flash)
-    // 3. Uruchamia debugger (OpenOCD + GDB)
-    //
-    // Wymaga podłączonego debuggera JTAG (ESP-PROG lub wbudowany JTAG).
-    // Port i konfiguracja OpenOCD w settings.json → idf.openOcdLaunchArgs.
-    // ============================================================
-    {
-      "type": "espidf",
-      "name": "ESP32: Build + Flash + Debug",
-      "request": "launch",
-      "preLaunchTask": "Build + Flash"
+      "type": "gdbtarget",
+      "request": "attach",
+      "name": "ESP32: GDB (attach)",
+      "program": "${workspaceFolder}/build/${workspaceFolderBasename}.elf",
+      "gdb": "${config:esp_gdb_bin}/xtensa-esp32-elf-gdb.exe",
+      "target": {
+        "host": "localhost",
+        "port": 3333,
+        "type": "remote"
+      },
+      "initCommands": [
+        "set remote noack-packet off",
+        "set remote hardware-watchpoint-limit 2",
+        "set remote hardware-breakpoint-limit 2",
+        "mon reset halt",
+        "maintenance flush register-cache",
+        "flushregs"
+      ]
     }
 
   ]

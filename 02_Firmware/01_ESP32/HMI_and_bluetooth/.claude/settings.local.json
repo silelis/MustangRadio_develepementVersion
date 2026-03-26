@@ -5,7 +5,16 @@
       "Bash(cp \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/settings.json\" \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/obsolete/settings.json\")",
       "Bash(cp \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/c_cpp_properties.json\" \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/obsolete/c_cpp_properties.json\")",
       "Bash(cp \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/tasks.json\" \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/obsolete/tasks.json\")",
-      "Bash(cp \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/launch.json\" \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/obsolete/launch.json\")"
+      "Bash(cp \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/launch.json\" \"D:/!!!__GitHUB_repositories/MustangRadio_develepementVersion/02_Firmware/01_ESP32/HMI_and_bluetooth/.vscode/obsolete/launch.json\")",
+      "Bash(python3 -c \":*)",
+      "Bash(find C:/Espressif -path */bt/controller* -name *.a)",
+      "Read(//c/Espressif/tools/**)",
+      "Read(//c/Espressif/**)",
+      "Bash(python C:/esp/v5.5.2/esp-idf/tools/idf_tools.py list --outdated)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(t[''''name''''], [v[''''name''''] for v in t.get\\(''''versions'''',[]\\) if v.get\\(''''status''''\\)==''''recommended'''']\\) for t in d[''''tools''''] if t[''''name''''] in [''''xtensa-esp-elf'''',''''openocd-esp32'''',''''esp-clang'''',''''xtensa-esp-elf-gdb'''']]\")",
+      "Bash(find d:!!!__GitHUB_repositoriesMustangRadio_develepementVersion02_Firmware01_ESP32HMI_and_bluetooth/build -name *.h -path */driver/*i2c* -type f)",
+      "Bash(find d:!!!__GitHUB_repositoriesMustangRadio_develepementVersion02_Firmware01_ESP32HMI_and_bluetooth/build -path */esp_driver_i2c/* -name *.h)",
+      "Bash(find d:!!!__GitHUB_repositoriesMustangRadio_develepementVersion02_Firmware01_ESP32HMI_and_bluetooth -type d -name *component*)"
     ]
   }
 }

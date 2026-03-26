@@ -233,25 +233,31 @@ void i2cEngin_slave::i2cSlaveReceiveTransmit(void)
 					printf("I2C slace - data received and forwarded to parser queu\n");
 					break;
 				case     I2C_SLAVE_EVT_TX:
-
+				{
 					i2cFrame_transmitQueue dataToTransmit;
 					esp_err_t retVal = ESP_FAIL;
-					if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY/* to powinno być od razu*/) == pdTRUE)
+					if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, 0) == pdTRUE)
 					{
+						uint32_t bytesWritten = 0;
+						retVal = i2c_slave_write(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, &bytesWritten, this->tx_timeout_ms);
 
-						//todo: tutaj powinna odbywać się transmisja
-						//dataToTransmit.dataSize
-						//dataToTransmit.pData
-
-						printf("TUTAJ POWINNA BYĆ TRANSMISJA DANYCH/r/n");
 						delete[] static_cast<char *>(dataToTransmit.pData);
+
+						if (retVal != ESP_OK)
+						{
+							printf("%s i2c_slave_write failed (err=0x%x)\r\n", this->TAG, retVal);
+						}
+						else{
+							printf("I2C slace - data transmitted to master\n");
+						}
 					}
-
-
-
-
-					printf("I2C slace - data transmited/r/n");
+//					else
+//					{
+//						printf("%s I2C_SLAVE_EVT_TX: brak danych w kolejce!\r\n", this->TAG);
+//					}
+//					printf("%s I2C slave - dane wyslane\r\n", this->TAG);
 					break;
+				}
 			}
 		}
 

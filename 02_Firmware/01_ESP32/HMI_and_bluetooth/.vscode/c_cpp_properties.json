@@ -7,21 +7,23 @@
       "name": "ESP-IDF (esp32)",
 
       // Kompilator — używa esp_tools_root + esp_ver_xtensa z settings.json
-      "compilerPath": "${config:esp_tools_root}/tools/xtensa-esp-elf/${config:esp_ver_xtensa}/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe",
+      // UWAGA: c_cpp_properties.json nie obsługuje ${config:...} — ścieżka absolutna.
+      // Przy zmianie wersji zaktualizuj esp_ver_xtensa ORAZ tę linię ręcznie.
+      "compilerPath": "C:/Espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe",
 
       // Plik generowany przez cmake podczas budowania — najlepsza jakość IntelliSense
-      "compileCommands": "${config:idf.buildPath}/compile_commands.json",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json",
 
       // Ścieżki include (używane gdy compile_commands.json nie istnieje)
       "includePath": [
-        "${config:idf.espIdfPathWin}/components/**",
+        "${config:esp_idf_root}/components/**",
         "${workspaceFolder}/Components/**",
         "${workspaceFolder}/main/**"
       ],
 
       "browse": {
         "path": [
-          "${config:idf.espIdfPathWin}/components",
+          "${config:esp_idf_root}/components",
           "${workspaceFolder}/Components",
           "${workspaceFolder}/main"
         ],
@@ -31,7 +33,7 @@
       // Definicje procesora (dla IntelliSense bez compile_commands.json)
       "defines": [
         "ESP_PLATFORM",
-        "IDF_VER=\"v5.5.3\"",
+        "IDF_VER=\"v5.5.2\"",
         "CONFIG_IDF_TARGET_ESP32=1"
       ]
     }
