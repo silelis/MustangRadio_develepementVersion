@@ -1,0 +1,66 @@
+{
+  "esp_idf_root": "C:/esp/v5.5.2/esp-idf",
+  "esp_tools_root": "C:/Espressif",
+  "esp_ver_xtensa": "esp-14.2.0_20251107",
+  "esp_ver_openocd": "v0.12.0-esp32-20251215",
+  "esp_ver_clang": "esp-19.1.2_20250312",
+  "esp_ver_gdb": "16.3_20250913",
+  "esp_ver_python_env": "v5.5.2",
+  "esp_compiler_bin": "${config:esp_tools_root}/tools/xtensa-esp-elf/${config:esp_ver_xtensa}/xtensa-esp-elf/bin",
+  "esp_openocd_bin": "${config:esp_tools_root}/tools/openocd-esp32/${config:esp_ver_openocd}/openocd-esp32/bin",
+  "esp_clang_bin": "${config:esp_tools_root}/tools/esp-clang/${config:esp_ver_clang}/esp-clang/bin",
+  "esp_gdb_bin": "${config:esp_tools_root}/tools/xtensa-esp-elf-gdb/${config:esp_ver_gdb}/xtensa-esp-elf-gdb/bin",
+  "esp_python_bin": "${config:esp_tools_root}/tools/python/${config:esp_ver_python_env}/venv/Scripts",
+  "idf.espIdfPathWin": "${config:esp_idf_root}",
+  "idf.toolsPathWin": "${config:esp_tools_root}",
+  "idf.flashType": "JTAG",
+  "idf.portWin": "COM7",
+  "idf.openOcdDebugLevel": 0,
+  "idf.openOcdLaunchArgs": [
+    "-f",
+    "interface/ftdi/esp_ftdi.cfg",
+    "-f",
+    "target/esp32.cfg",
+    "-c",
+    "adapter speed 400",
+    "-c",
+    "init",
+    "-c",
+    "reset halt",
+    "-c",
+    "esp32.cpu0 configure -rtos FreeRTOS",
+    "-c",
+    "esp32.cpu1 configure -rtos FreeRTOS",
+    "-c",
+    "set ESP_RTOS none"
+  ],
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32"
+  },
+  "C_Cpp.intelliSenseEngine": "default",
+  "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=d:\\!!!__GitHUB_repositories\\MustangRadio_develepementVersion\\02_Firmware\\01_ESP32\\HMI_and_bluetooth\\build"
+  ],
+  "terminal.integrated.profiles.windows": {
+    "ESP-IDF": {
+      "path": "cmd.exe",
+      "args": [
+        "/k",
+        "${config:esp_idf_root}/export.bat"
+      ],
+      "icon": "terminal",
+      "overrideName": true
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "ESP-IDF",
+  "files.associations": {
+    "chrono": "cpp",
+    "text_encoding": "cpp",
+    "typeinfo": "cpp",
+    "iostream": "cpp"
+  },
+  "idf.currentSetup": "C:\\esp\\v5.5.2\\esp-idf"
+}

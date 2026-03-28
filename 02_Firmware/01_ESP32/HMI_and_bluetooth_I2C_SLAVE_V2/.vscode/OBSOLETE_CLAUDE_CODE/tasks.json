@@ -1,0 +1,174 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+
+    // ============================================================
+    // BUILD
+    // Bezpośrednie wywołanie idf.py — task blokuje do końca kompilacji.
+    // (${command:espIdf.buildDevice} wraca natychmiast, nie czeka na proces)
+    // ============================================================
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "call \"${config:esp_idf_root}/export.bat\" > NUL 2>&1 && idf.py build",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": ["/d", "/c"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": "$gcc"
+    },
+
+    // ============================================================
+    // FLASH (JTAG)
+    // Bezpośrednie wywołanie idf.py flash przez JTAG/OpenOCD.
+    // ============================================================
+    {
+      "label": "Flash (JTAG)",
+      "type": "shell",
+      "command": "call \"${config:esp_idf_root}/export.bat\" > NUL 2>&1 && idf.py -p JTAG flash",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": ["/d", "/c"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================================
+    // BUILD + FLASH — kompiluje, a następnie wgrywa firmware
+    // Używane też jako preLaunchTask przez konfiguracje debugowania.
+    // ============================================================
+    {
+      "label": "Build + Flash",
+      "dependsOrder": "sequence",
+      "dependsOn": ["Build", "Flash (JTAG)"],
+      "group": "build",
+      "problemMatcher": []
+    },
+
+    // ============================================================
+    // CLEAN
+    // ============================================================
+    {
+      "label": "Clean (Full)",
+      "type": "shell",
+      "command": "${command:espIdf.fullClean}",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================================
+    // MENUCONFIG
+    // ============================================================
+    {
+      "label": "Menuconfig",
+      "type": "shell",
+      "command": "${command:espIdf.menuconfig.start}",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================================
+    // FACTORY RESET — kasuje NVS i wszystkie partycje danych
+    // Używa esptool przez port COM (nie JTAG) — podłącz USB-UART.
+    // ============================================================
+    {
+      "label": "Factory Reset (erase flash)",
+      "type": "process",
+      "command": "${config:esp_python_bin}/python.exe",
+      "args": [
+        "-m", "esptool",
+        "--chip", "esp32",
+        "--port", "${config:idf.portWin}",
+        "--baud", "921600",
+        "erase_flash"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================================
+    // DECODE GURU MEDITATION ERROR
+    // Dekoduje adresy z crash dump na symbole — wymaga pliku .elf.
+    // ============================================================
+    {
+      "label": "Decode Guru Meditation Error",
+      "type": "process",
+      "command": "${config:esp_python_bin}/python.exe",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/decode_guru.py",
+        "${input:elfFilePath}"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "env": {
+          "ADDR2LINE_PATH": "${config:esp_compiler_bin}/xtensa-esp32-elf-addr2line.exe"
+        }
+      },
+      "problemMatcher": []
+    }
+
+  ],
+
+  // ============================================================
+  // INPUTS
+  // ============================================================
+  "inputs": [
+    {
+      "id": "elfFilePath",
+      "type": "promptString",
+      "description": "Ścieżka do pliku .elf (względna od workspaceFolder):",
+      "default": "build/HMI_and_bluetooth.elf"
+    }
+  ]
+}
