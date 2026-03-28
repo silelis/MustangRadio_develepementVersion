@@ -35,13 +35,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_line   0003e3a4  00000000  00000000  000e1407  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    0015b163  00000000  00000000  0011f7ab  2**0
+ 16 .debug_str    0015b161  00000000  00000000  0011f7ab  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000043  00000000  00000000  0027a90e  2**0
+ 17 .comment      00000043  00000000  00000000  0027a90c  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  0001fbbc  00000000  00000000  0027a954  2**2
+ 18 .debug_frame  0001fbbc  00000000  00000000  0027a950  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line_str 0000008b  00000000  00000000  0029a510  2**0
+ 19 .debug_line_str 0000008b  00000000  00000000  0029a50c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1160,7 +1160,7 @@ BaseType_t esp32_i2cComunicationDriver::masterTransmitData(
 	if (dataFrame->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN) {
  8000cd6:	683b      	ldr	r3, [r7, #0]
  8000cd8:	685b      	ldr	r3, [r3, #4]
- 8000cda:	2bd0      	cmp	r3, #208	@ 0xd0
+ 8000cda:	2b34      	cmp	r3, #52	@ 0x34
  8000cdc:	d80f      	bhi.n	8000cfe <_ZN27esp32_i2cComunicationDriver18masterTransmitDataEP22i2cFrame_transmitQueue+0x36>
 		retVal = this->pi2cMaster->I2C_Master_Transmite_DMA(
  8000cde:	687b      	ldr	r3, [r7, #4]

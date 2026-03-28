@@ -1,31 +1,18 @@
 {
   "version": "0.2.0",
   "configurations": [
-
-    // ============================================================
-    // GDB TARGET — debugowanie przez Eclipse CDT GDB Adapter
-    // Wymaga: OpenOCD uruchomiony osobno, projekt zbudowany.
-    // ============================================================
+    
+    
     {
       "type": "gdbtarget",
       "request": "attach",
-      "name": "ESP32: GDB (attach)",
-      "program": "${workspaceFolder}/build/${workspaceFolderBasename}.elf",
-      "gdb": "${config:esp_gdb_bin}/xtensa-esp32-elf-gdb.exe",
-      "target": {
-        "host": "localhost",
-        "port": 3333,
-        "type": "remote"
-      },
-      "initCommands": [
-        "set remote noack-packet off",
-        "set remote hardware-watchpoint-limit 2",
-        "set remote hardware-breakpoint-limit 2",
-        "mon reset halt",
-        "maintenance flush register-cache",
-        "flushregs"
-      ]
+      "name": "Eclipse CDT GDB Adapter"
+      
+    },
+    {
+      "type": "espidf",
+      "name": "Launch",
+      "request": "launch"
     }
-
   ]
 }

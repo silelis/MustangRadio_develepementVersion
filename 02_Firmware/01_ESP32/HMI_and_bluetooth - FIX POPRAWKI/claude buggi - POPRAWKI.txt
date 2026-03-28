@@ -1,0 +1,140 @@
+Mam pełny obraz problemu. Oto szczegółowa analiza:
+
+Diagnoza
+Są dwa niezależne, ale powiązane problemy.
+
+Problem 1 — Przepełnienie I2C ring buffer (pierwotna przyczyna)
+Interwał 5500 ms między każdym no space in ringbuffer to nie przypadek — to dokładnie wartość tx_timeout_ms = 5500 z i2c_engine_slave.h:42:
+
+
+E (9090)  → E (14590) → E (20090) → E (25590) ...  // dokładnie co 5500ms
+Jak to działa: i2c_slave_transmit() wpisuje dane do wewnętrznego ring buffera sterownika I2C (send_buf_depth = 2 × ESP32_SLAVE_RECEIVE_BUFFER_LEN = 2 × 52 = 104 bajty). Jeśli master (STM32) jest wyłączony i nie odczytuje danych, ring buffer zapełnia się w całości. Każde kolejne wywołanie i2c_slave_transmit() wtedy blokuje task na 5500ms czekając na wolne miejsce i zwraca błąd.
+
+Problem 2 — Ciągłe zdarzenia klawiatury (źródło eventów przy braku naciskania)
+W czasie gdy i2cSlaveTransmit jest zablokowany na te 5500ms, task keyboardQueueParametersParser przetwarza nowe zdarzenia i próbuje wpisać je do i2cSlaveTransmitDataQueue (pojemność 20). Gdy kolejka jest pełna → QueueSendFromISR zwraca pdFALSE → wywołuje się keyboardQueueParameters_isEmergencyResetRequired() → drukuje "Queue feeding error".
+
+Obliczenie pasuje idealnie:
+
+ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS = 750ms (keyboard.h:13)
+W oknie 5500ms: 5500 / 750 ≈ 7.3 eventów → obserwowane 8-12 komunikatów ✓
+Oznacza to, że task keyboardLongPressOnPressQueueFeeder jest aktywny (wysyła eventy HMI_INPUT_BUTTON_LONG_AND_PRESSED co 750ms), mimo że nie naciskasz klawiszy. Najbardziej prawdopodobna przyczyna: któryś z GPIO przycisków ma szum elektryczny wystarczający do wyzwolenia ISR i dalej do detekcji "long press" przez timer debounce'owy (20 000 ticków @ 20 kHz = 1 sekunda trzymania).
+
+Dodatkowe błędy znalezione przy okazji
+Bug 1 — Przepełnienie bufora w esp32PrepareKbrdDataAndSent_to_QueueSend() (tasksFunctions.cpp:273):
+
+
+// BŁĄD — alokuje sizeof(size_t) = 4 bajty, ale kopiuje itemSize bajtów → heap corruption!
+dataToTransmitQueue.pData = new char[sizeof(itemSize)];
+//                                   ^^^^^^^^^^^^^^^^^  powinno być: new char[itemSize]
+memcpy(dataToTransmitQueue.pData, pvItemToQueue, itemSize);
+Bug 2 — Oba taski mają ten sam uchwyt (app_main.cpp:94-95):
+
+
+configASSERT(xTaskCreate(i2cSlaveReceive, ..., &handlerTask_i2cSlaveReceive));
+configASSERT(xTaskCreate(i2cSlaveTransmit, ..., &handlerTask_i2cSlaveReceive)); // nadpisuje!
+Uchwyt taska i2cSlaveReceive jest utracony.
+
+Bug 3 — vTaskSuspend() wywoływane z kontekstu ISR (keyboard.cpp:422):
+
+
+vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);  // w timer ISR callback!
+vTaskSuspend() nie jest API bezpiecznym dla ISR w FreeRTOS — możliwe niedziałające zawieszanie taska feeder'a, co wyjaśniałoby dlaczego działa jakby keyboardLongPressOnPressQueueFeeder nigdy nie był zawieszony.
+
+Podsumowanie łańcucha zdarzeń
+
+keyboardLongPressOnPressQueueFeeder działa (vTaskSuspend z ISR nie zawiesza)
+       ↓ co 750ms
+handlerQueue_MainKeyboard ← HMI_INPUT_BUTTON_LONG_AND_PRESSED
+       ↓
+keyboardQueueParametersParser → i2cSlaveTransmitDataQueue (pełna, bo task zablokowany)
+       ↓
+"Queue feeding error" × N
+       ↓  (co 5500ms)
+i2cSlaveTransmit odblokowany → i2c_slave_transmit() → "no space in ringbuffer"
+Największy problem do naprawy: Bug 3 (wywołanie vTaskSuspend z ISR) i Bug 1 (heap corruption). Tymczasowo tx_timeout_ms można też zmniejszyć z 5500ms do np. 100ms, żeby task nie blokował tak długo.
+
+czy mozesz to zapamietac, bo chce do tego powrocic po restarcie??
+Read C:\Users\dbank\.claude\projects\d-------GitHUB-repositories-MustangRadio-develepementVersion\memory\MEMORY.md
+Write C:\Users\dbank\.claude\projects\d-------GitHUB-repositories-MustangRadio-develepementVersion\memory\MEMORY.md
+4 lines
+# Memory Index
+
+- [I2C ring buffer + queue overflow bug analysis](project_i2c_ringbuffer_bug.md) — Analiza błędów: no space in ringbuffer co 5500ms, Queue feeding error, vTaskSuspend z ISR, heap corruption
+Write C:\Users\dbank\.claude\projects\d-------GitHUB-repositories-MustangRadio-develepementVersion\memory\project_i2c_ringbuffer_bug.md
+64 lines
+---
+name: I2C ring buffer + queue overflow bug analysis
+description: Analiza błędów no space in ringbuffer (co 5500ms) i Queue feeding error w projekcie MustangRadio HMI_and_bluetooth na ESP32
+type: project
+---
+
+Użytkownik zgłosił: po pewnym okresie bezczynności (klawiatura nieużywana, I2C master wyłączony) ESP32 loguje cyklicznie:
+- `E i2c.slave: i2c_slave_transmit(350): no space in ringbuffer` — co dokładnie 5500ms
+- `Queue feeding error` — 8-12 razy między każdym w/w błędem
+
+## Zidentyfikowane błędy (NIE naprawione, do powrotu)
+
+### Bug 1 — KRYTYCZNY: heap corruption w esp32PrepareKbrdDataAndSent_to_QueueSend()
+**Plik**: `main/tasksFunctions/tasksFunctions.cpp` linia 273
+```cpp
+// BŁĄD — alokuje sizeof(size_t)=4 bajty, ale kopiuje itemSize bajtów
+dataToTransmitQueue.pData = new char[sizeof(itemSize)];
+// POWINNO BYĆ:
+dataToTransmitQueue.pData = new char[itemSize];
+```
+
+### Bug 2 — KRYTYCZNY: vTaskSuspend() wywoływane z kontekstu ISR
+**Plik**: `main/keyboard/keyboard.cpp` linia 422
+```cpp
+vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);  // w timer ISR callback!
+```
+`vTaskSuspend()` NIE jest API bezpiecznym dla ISR w FreeRTOS. To najprawdopodobniej powoduje, że task `keyboardLongPressOnPressQueueFeeder` nigdy nie jest prawidłowo zawieszany, przez co wysyła eventy `HMI_INPUT_BUTTON_LONG_AND_PRESSED` co 750ms mimo braku naciśnięcia klawiszy.
+**Naprawa**: użyć `vTaskSuspendFromISR` jeśli istnieje, lub ustawić flagę i zawiesić z taska, albo użyć `xTaskNotifyFromISR` do komunikacji.
+
+### Bug 3 — Przepełnienie I2C ring buffer (pierwotna przyczyna pętli błędów)
+**Plik**: `main/i2c_engine/i2c_engine_slave.h` linia 42
+```cpp
+const int tx_timeout_ms = 5500;
+```
+Ring buffer sterownika I2C: `send_buf_depth = 2 × ESP32_SLAVE_RECEIVE_BUFFER_LEN = 2 × 52 = 104 bajty`.
+Gdy STM32 (I2C master) jest wyłączony, `i2c_slave_transmit()` zapełnia ring buffer i każde kolejne wywołanie blokuje task na dokładnie 5500ms → stąd cykl co 5500ms.
+Tymczasowe obejście: zmniejszyć `tx_timeout_ms` do np. 100ms.
+
+### Bug 4 — Oba taski I2C mają ten sam uchwyt
+**Plik**: `main/app_main.cpp` linie 94-95
+```cpp
+configASSERT(xTaskCreate(i2cSlaveReceive, ..., &handlerTask_i2cSlaveReceive));
+configASSERT(xTaskCreate(i2cSlaveTransmit, ..., &handlerTask_i2cSlaveReceive)); // nadpisuje!
+```
+Uchwyt taska `i2cSlaveReceive` jest utracony (nadpisany przez `i2cSlaveTransmit`).
+
+## Łańcuch zdarzeń prowadzący do błędu
+
+```
+keyboardLongPressOnPressQueueFeeder działa (vTaskSuspend z ISR nie zawiesza — Bug 2)
+       ↓ co 750ms (ON_PRESS_QUEUE_FEEDER_DELEY_TIME_MS)
+handlerQueue_MainKeyboard ← HMI_INPUT_BUTTON_LONG_AND_PRESSED
+       ↓
+keyboardQueueParametersParser → i2cSlaveTransmitDataQueue (pełna, bo task zablokowany na 5500ms)
+       ↓
+"Queue feeding error" × ~9-12  (kolejka pełna, QueueSendFromISR zwraca pdFALSE)
+       ↓  (co 5500ms — Bug 3)
+i2cSlaveTransmit odblokowany → i2c_slave_transmit() → "no space in ringbuffer"
+```
+
+## Why / How to apply
+**Why:** I2C master (STM32) jest wyłączony podczas testów / startu. vTaskSuspend z ISR jest niezdefiniowanym zachowaniem w FreeRTOS.
+**How to apply:** Przy powrocie do tematu: zacząć od Bug 2 (vTaskSuspend z ISR) jako głównej przyczyny ciągłych eventów, potem Bug 1 (heap corruption), potem Bug 3 (tx_timeout_ms), na końcu Bug 4 (duplikat uchwytu).
+Zapisane. Przy następnym restarcie sesji przypomnę Ci:
+
+Bug 2 (priorytet 1) — vTaskSuspend() w ISR w keyboard.cpp:422 — prawdopodobna główna przyczyna ciągłych eventów
+Bug 1 (priorytet 2) — heap corruption w tasksFunctions.cpp:273 (new char[sizeof(itemSize)] zamiast new char[itemSize])
+Bug 3 — tx_timeout_ms = 5500 w i2c_engine_slave.h:42 — zmniejszyć jako tymczasowe obejście
+Bug 4 — duplikat uchwytu w app_main.cpp:94-95
+
+Jest jeszcze jeden błąd w 	// [BUG FIX] Błąd: nazwa parametru konstruktora była identyczna z nazwą zmiennej globalnej.
+	// Skutek: przypisanie było samo do siebie (self-assignment) - globalna zostawała NULL.
+	// Przy długim naciśnięciu przycisku ISR wywoływał xTaskResumeFromISR(NULL) -> assert.
+	// Błąd był maskowany przez wcześniejszy Guru Meditation crash (WDT deadlock).
+	// Naprawa: użycie operatora :: aby jawnie wskazać zmienną globalną.
+	::taskHandler_onPeriodLongButtonPressNotification = 
