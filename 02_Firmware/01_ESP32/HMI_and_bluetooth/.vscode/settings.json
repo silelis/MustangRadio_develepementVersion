@@ -25,7 +25,8 @@
   "idf.openOcdDebugLevel": 0,
   "idf.openOcdLaunchArgs": [
     "-f",
-    "interface/ftdi/esp_ftdi.cfg",
+    //"interface/ftdi/esp_ftdi.cfg",         // działa z OpenOCD esp32-20251215 (esp-idf 5.5.2 / 5.5.3)
+    "interface/ftdi/esp32_devkitj_v1.cfg",   // działa z OpenOCD esp32-20230921 (esp-idf 5.2); odpowiednik dla FT2232H/FT232H
     "-f",
     "target/esp32.cfg",
     "-c",
