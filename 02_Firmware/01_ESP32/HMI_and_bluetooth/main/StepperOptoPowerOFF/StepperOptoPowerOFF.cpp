@@ -295,7 +295,7 @@ void StepperOptoPowerOFF::moveXSteps(int32_t stepAmount)
  * Returns:
  * NONE
  *---------------------------------------------------------------*/
-void StepperOptoPowerOFF::moveTo_xPosition(uint16_t xPosition)
+void StepperOptoPowerOFF::moveTo_xPosition(int32_t xPosition)
 {
 	int32_t stepAmount;
 	if (xPosition < 0)

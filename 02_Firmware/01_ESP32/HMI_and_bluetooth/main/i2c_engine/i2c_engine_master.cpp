@@ -1,4 +1,5 @@
 #include "i2c_engine_master.h"
+#include "esp_idf_version.h"
 
 static i2c_master_bus_handle_t handler_i2c_bus_master;
 static i2c_master_bus_config_t i2c_bus_config_master;
@@ -23,7 +24,9 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 	i2c_bus_config_master.sda_io_num = sda_io_num;
 	i2c_bus_config_master.glitch_ignore_cnt = 7;
 	i2c_bus_config_master.flags.enable_internal_pullup = GPIO_PULLUP_ENABLE;
-	i2c_bus_config_master.flags.allow_pd =pdFALSE;
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)  // TODO: sprawdzić dokładną wersję ESP-IDF, w której dodano allow_pd (może być inna niż 5.3.0)
+	i2c_bus_config_master.flags.allow_pd = pdFALSE;
+#endif
 
 
 	phandler_i2c_bus = &handler_i2c_bus_master;

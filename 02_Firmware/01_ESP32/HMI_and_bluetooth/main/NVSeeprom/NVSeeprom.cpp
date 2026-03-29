@@ -17,6 +17,7 @@ NVS::NVS(const char* nameSpace)
 		{
 		case ESP_ERR_NVS_NO_FREE_PAGES:
 			printf("ESP_ERR_NVS_NO_FREE_PAGES\n");
+			break;
 		case ESP_ERR_NVS_NEW_VERSION_FOUND:
 			printf("ESP_ERR_NVS_NEW_VERSION_FOUND\n");
 		}

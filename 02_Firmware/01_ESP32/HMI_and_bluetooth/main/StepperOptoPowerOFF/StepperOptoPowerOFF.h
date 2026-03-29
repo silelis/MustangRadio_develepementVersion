@@ -18,7 +18,7 @@
 #define MOVE_BACKWARD			0
 
 
-typedef struct {		//struktura zawieraj¹ca informacje o stanie ledów wykorzystywana podczas komunikacji miêdzy master a slave
+typedef struct {		//struktura zawierajï¿½ca informacje o stanie ledï¿½w wykorzystywana podczas komunikacji miï¿½dzy master a slave
 	uint16_t beginOffest;
 	uint16_t endOffset;
 	uint16_t maxPosition;
@@ -37,7 +37,7 @@ public:
 	void radioPowerOffInSecond(uint8_t seconds);
 	void measureSliderRange(uint16_t begginOffset, uint16_t endOffset);
 	void moveXSteps(int32_t stepAmount);
-	void moveTo_xPosition(uint16_t xPosition);
+	void moveTo_xPosition(int32_t xPosition);
 	void moveTo_xPercent(float xPercent);
 	void moveTo_xPercentIncludeOffset(float xPercent);
 	MotorParameters getValue_motorParameters();
