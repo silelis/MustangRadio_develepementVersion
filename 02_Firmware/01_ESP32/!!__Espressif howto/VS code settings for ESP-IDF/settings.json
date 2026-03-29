@@ -22,7 +22,7 @@
   "esp_dev_env_path": "${config:esp_idf_tools}:${config:esp_binutils_path}:${config:esp_openocd_path}:${config:esp_python_path}:${config:esp_toolchain_path}:${config:esp_clang_path}:${config:esp_gdb_path}",
   "idf.espIdfPathWin": "C:/esp/v5.5.3/esp-idf",
   "idf.pythonInstallPath": "${config:esp_idf_tools}/python/${config:esp_python_path_ver}/venv/Scripts/python.exe",
-  "idf.openOcdDebugLevel": 4,
+  "idf.openOcdDebugLevel": 0,
   "idf.openOcdLaunchArgs": [
     "-f",
     "interface/ftdi/esp_ftdi.cfg",
@@ -35,14 +35,14 @@
     "init",
     "-c",
     "reset halt",
-    "-c",
-    "esp32.cpu0 configure -rtos FreeRTOS",
-    "-c",
-    "esp32.cpu1 configure -rtos FreeRTOS",
-    // "-c",
-    // "set ESP_RTOS none"  // usunięto: sprzeczne z configure -rtos FreeRTOS powyżej
-    "-c",
-    "esp32 smpbreak BreakIn BreakOut"  // dodano: atomowe zatrzymanie obu rdzeni - cpu1 (BT) nie generuje IRQ do cpu0 po halcie
+    //"-c",
+    //"esp32.cpu0 configure -rtos FreeRTOS",
+    //"-c",
+    //"esp32.cpu1 configure -rtos FreeRTOS",
+     "-c",
+     "set ESP_RTOS none"  // usunięto: sprzeczne z configure -rtos FreeRTOS powyżej
+    //"-c",
+    //"esp32 smpbreak BreakIn BreakOut"  // dodano: atomowe zatrzymanie obu rdzeni - cpu1 (BT) nie generuje IRQ do cpu0 po halcie
    ],
   "idf.portWin": "COM5",
   "idf.toolsPathWin": "${config:esp_idf_path}",
