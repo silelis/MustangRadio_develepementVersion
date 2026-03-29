@@ -4,6 +4,8 @@
 #include "tasksFunctions/tasksFunctionsStorage.h"
 #include "i2c_engine/i2c_engine_slave.h"
 
+static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize);
+
 
 //static QueueHandle_t handlerQueue_i2cSlaveSetBuffer_keyboard;		//wskaźnik do kolejki przechowującej dane jakie mają być wysłane po i2c z ESP32 do STM32
 //static SemaphoreHandle_t handlerMutex_ledDisplay_Backlight;	//mutex synchronizujący wyświetlanie komunikatów ledów (source, equaliser, error) i podświetlenia (backlight);

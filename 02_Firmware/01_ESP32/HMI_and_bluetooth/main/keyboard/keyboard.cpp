@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include "esp_idf_version.h"
 
 static TaskHandle_t handlerTask_keyboardLongPressOnPressQueueFeeder; //uchwyt do taska, który po przekroczenia minimalnego czasu long press i do
 																		//czasu puszczenia przysicka informuje (wysyła do kolejki dane) o przytrzymaniu prtzycisku
@@ -462,8 +463,10 @@ KEYBOARD::KEYBOARD(QueueHandle_t queueHandler_Keyboard, TaskHandle_t taskHandler
 	
 	gpioDebounceTimer_config.intr_priority = DEBOUNCE_TIMER_PRIORITY;
 	gpioDebounceTimer_config.flags.intr_shared = pdTRUE;
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)  // TODO: sprawdzić dokładną wersję ESP-IDF, w której dodano allow_pd/backup_before_sleep (może być inna niż 5.3.0)
 	gpioDebounceTimer_config.flags.allow_pd = pdFALSE;
 	gpioDebounceTimer_config.flags.backup_before_sleep = pdFALSE;
+#endif
 
 
 	//ESP_ERROR_CHECK(
