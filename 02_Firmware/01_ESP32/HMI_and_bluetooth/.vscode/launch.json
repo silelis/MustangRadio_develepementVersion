@@ -12,7 +12,14 @@
     {
       "type": "espidf",
       "name": "Launch",
-      "request": "launch"
+      "request": "launch",
+      "setupCommands": [
+        {
+          "description": "Ignore SIGINT - prevent GDB from stopping on UART TX FIFO polling",
+          "text": "handle SIGINT nostop noprint pass",
+          "ignoreFailures": false
+        }
+      ]
     }
   ]
 }

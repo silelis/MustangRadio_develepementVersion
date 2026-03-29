@@ -62,7 +62,7 @@ void init_uart();
 TaskHandle_t handlerTask_ledDisplay;
 TaskHandle_t handlerTask_backlightDisplay;	
 TaskHandle_t handlerTask_stepperMotorDataPasrser;	
-//TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
+TaskHandle_t handlerTask_i2cSlaveTransmit; //uchwyt do taska obsługującego transmisję z i2c slave to i2c master
 TaskHandle_t handlerTask_i2cSlaveReceive; //uchwyt do taska obsługającego odbieranie danych z i2c slave to i2c master
 TaskHandle_t handlerTask_i2cReceivedDataParser; //uchwyt do taska obsługającego parsowanie otrzymanych z i2c danych
 //#include "driver/i2c_slave.h"
@@ -92,7 +92,7 @@ extern "C" void app_main(void)
 	
 	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+1, &handlerTask_i2cSlaveTransmit));
 	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 10, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveReceive));
-	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveReceive));
+	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveTransmit));
 	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
@@ -128,11 +128,11 @@ extern "C" void app_main(void)
 
 
 
-
+/*
 	bt_audio_sink testBT(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);
 	testBT.btAudioDeviceOn();
 
-
+*/
 
 
 
@@ -167,5 +167,5 @@ void init_uart() {
 	};
 
 	uart_param_config(UART_NUM_0, &uart_config);
-	uart_driver_install(UART_NUM_0, 256, 0, 0, NULL, 0);
+	uart_driver_install(UART_NUM_0, 256, 256, 0, NULL, 0);
 }
