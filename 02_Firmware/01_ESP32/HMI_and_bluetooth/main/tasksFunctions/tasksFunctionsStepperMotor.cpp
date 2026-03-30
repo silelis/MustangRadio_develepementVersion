@@ -1,23 +1,24 @@
 #include "tasksFunctions/tasksFunctionsStepperMotor.h"
 #include "tasksFunctions/tasksFunctionsStorage.h"
-#include "tasksFunctions/tasksFunctions.h"		//tutaj jest extern NVS* pSTORAGE; //obiekt zapisuj¹cy i czytaj¹cy dane z NCS ESP32
+#include "tasksFunctions/tasksFunctions.h"		//tutaj jest extern NVS* pSTORAGE; //obiekt zapisujï¿½cy i czytajï¿½cy dane z NCS ESP32
 
-StepperOptoPowerOFF * pMotor; //obiekt steruj¹cy prac¹ silnika krokowego, jego krañcówej i power off radia
+StepperOptoPowerOFF * pMotor; //obiekt sterujï¿½cy pracï¿½ silnika krokowego, jego kraï¿½cï¿½wej i power off radia
 
 static TaskHandle_t handlerTask_stepperMotorCalibration = NULL;
 static TaskHandle_t handlerTask_stepperMotorMove = NULL;
 
 static void stepperMotorCalibration(void* nothing)
 {
+#ifndef GURU_FIX
 	uint16_t beginOffest;
 	uint16_t endOffset;
-	
+
 	if (pSTORAGE->get_u16(NVS_KEY_MOTOR_BEGIN_OFFSET, &beginOffest) != ESP_OK) {
 		beginOffest = 0;
-	} 	
+	}
 	if (esp_err_t retVal1 = pSTORAGE->get_u16(NVS_KEY_MOTOR_END_OFFSET, &endOffset) != ESP_OK)
 	{
-		endOffset = UINT16_MAX;	
+		endOffset = UINT16_MAX;
 	}
 	vTaskSuspend(handlerTask_stepperMotorCalibration);
 	for (;;)
@@ -26,12 +27,15 @@ static void stepperMotorCalibration(void* nothing)
 		{
 			pMotor->measureSliderRange(beginOffest, endOffset);
 		}
-		
 	}
+#else
+	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr
+#endif
 }
 
 static void stepperMotorMove(void* nothing)
 {
+#ifndef GURU_FIX
 	vTaskSuspend(handlerTask_stepperMotorMove);
 	for (;;)
 	{
@@ -39,16 +43,19 @@ static void stepperMotorMove(void* nothing)
 		{
 			pMotor->moveToVolatileDestinationPosition();
 		}
-		
 	}
+#else
+	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr
+#endif
 }
 
 
 void stepperMotorDataParser(void *TaskParameters)
 {
+#ifndef GURU_FIX
 	configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
 	configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
-	
+
 	i2cFrame_transmitQueue tempBuffer;
 	i2cFrame_stepper loclaStepperMotorFrame;
 	for (;;)
@@ -90,11 +97,11 @@ void stepperMotorDataParser(void *TaskParameters)
 		}
 		else
 		{
-			//sprawdza czy praca tasku zosta³¹ zakoñczona
+			//sprawdza czy praca tasku zostaï¿½ï¿½ zakoï¿½czona
 			if (
 				eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended && pMotor->isCalibrated() &&
 				eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && pMotor->isPositionReached()) {
-				//na wszelki wypadek sprawdza czy w kolejce do tasku nie ma ¿adnych nowych danych
+				//na wszelki wypadek sprawdza czy w kolejce do tasku nie ma ï¿½adnych nowych danych
 				if (pMotor->QueueMessagesWaiting() == 0)
 				{
 					extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
@@ -106,10 +113,10 @@ void stepperMotorDataParser(void *TaskParameters)
 
 		
 		
-		//sprawdza czy slider jest skalibrowany (jeœli NIE TO:)
+		//sprawdza czy slider jest skalibrowany (jeï¿½li NIE TO:)
 		if (pMotor->isCalibrated() == pdFALSE)
 		{
-			// SprawdŸ, czy task kalibracji nie jest zawieszony															
+			// Sprawdï¿½, czy task kalibracji nie jest zawieszony															
 			if (eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended)
 			{
 				vTaskResume(handlerTask_stepperMotorCalibration);
@@ -128,7 +135,10 @@ void stepperMotorDataParser(void *TaskParameters)
 			else if (pMotor->isPositionReached() && (eTaskGetState(handlerTask_stepperMotorMove) != eSuspended))
 			{
 				vTaskSuspend(handlerTask_stepperMotorMove);
-			}		
+			}
 		}
 	}
+#else
+	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr, caÅ‚y stepper I2C wyÅ‚Ä…czony
+#endif
 }

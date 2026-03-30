@@ -394,7 +394,8 @@ static bool debounceAndGpiosCheckCallback(gptimer_handle_t timer, const gptimer_
 		{
 		case HMI_INPUT_BUTTON:
 			_gpioInterruptCallback->keyboardExitValueHandler->array[1] = (char) _gpioInterruptCallback->pbuttonsState->latchedState;
-			vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);
+#warning "BUG: vTaskSuspend() wywolane z kontekstu ISR (gptimer callback) — niezdefiniowane zachowanie w FreeRTOS! Task moze nie zostac zawieszony, co powoduje ze keyboardLongPressOnPressQueueFeeder wysyla eventy HMI_INPUT_BUTTON_LONG_AND_PRESSED co 750ms mimo braku naciśniecia przycisku. Naprawic przez: ustawienie flagi volatile w ISR i zawieszenie taska z poziomu dedykowanego taska lub użycie xTaskNotifyFromISR."
+			vTaskSuspend(handlerTask_keyboardLongPressOnPressQueueFeeder);	// TODO: [BUG] vTaskSuspend() NIE jest bezpieczne dla ISR — zastąpić flagą volatile + zawieszeniem z taska, lub xTaskNotifyFromISR()
 			break;
 		case HMI_INPUT_EQUALISER:
 			_gpioInterruptCallback->keyboardExitValueHandler->array[1] = _gpioInterruptCallback->pEquEncState->latchedQEM;
