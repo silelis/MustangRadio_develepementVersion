@@ -5,6 +5,10 @@
 //#include "./../../../03_Common/comunicationProtocol.h"
 //#include "driver/gpio.h"
 
+// ---- GURU FIX: dezaktywuje I2C master bus (i2cEngin_master, MCP23008, StepperOptoPowerOFF) ----
+// Odkomentuj poniższe aby wyłączyć I2C master i uniknąć cross-core deadlocku (Guru Meditation)
+#define GURU_FIX
+
 //wybór czhipy ESP32
 #define chip_ESP32_WROOM32D_DEVBOARD	0
 #define CHIP chip_ESP32_WROOM32D_DEVBOARD		//select Your chip/ devboard type
