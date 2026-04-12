@@ -164,8 +164,7 @@ BaseType_t esp32_i2cComunicationDriver::masterTransmitData(
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
-	#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE.
-	i2cFrame_transmitQueue *dataFrame) {
+		i2cFrame_transmitQueue *dataFrame) {
 	HAL_StatusTypeDef retVal = HAL_ERROR;
 
 
@@ -174,38 +173,29 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveDataInSequence(
 	retVal = this->masterReceiveFromESP32_DMA_inSequence(
 			(uint8_t*) &temp_i2cFrameCommonHeader,
 			sizeof(i2cFrame_commonHeader),
-			I2C_FIRST_FRAME);
+			I2C_FIRST_AND_NEXT_FRAME);	// RELOAD: SCL trzymany przez hardware
 
-//	uint8_t dataSize;
-//	this->masterReceiveFromESP32_DMA((uint8_t*) &dataFrame->dataSize,
-//			sizeof(size_t));
-	if (retVal !=HAL_ERROR) {
+	this->while_I2C_STATE_READY();	// czekaj na zakończenie DMA przed odczytem dataSize!
+
+	if (retVal != HAL_ERROR) {
+		dataFrame->dataSize = temp_i2cFrameCommonHeader.dataSize;
 		dataFrame->pData =
 				new (std::nothrow) char[temp_i2cFrameCommonHeader.dataSize];
-	}
 
+		if (dataFrame->pData != nullptr) {
+			memcpy(dataFrame->pData, &temp_i2cFrameCommonHeader,
+					sizeof(i2cFrame_commonHeader));
 
-
-//	i2cFrame_commonHeader* pCheck_i2cFrameCommonHeader;
-//	pCheck_i2cFrameCommonHeader = (i2cFrame_commonHeader*) dataFrame->pData;
-
-//	i2cFrame_keyboardFrame* pCheck_i2cFrame_keyboardFrame;
-//	pCheck_i2cFrame_keyboardFrame = (i2cFrame_keyboardFrame*) dataFrame->pData;
-//	keyboardUnion fakeUnion;
-
-
-
-
-	if (dataFrame->pData != nullptr) {
-		memcpy(dataFrame->pData, &temp_i2cFrameCommonHeader,
-				sizeof(i2cFrame_commonHeader));
-
-
-
-		retVal = this->masterReceiveFromESP32_DMA_inSequence(
-				//(uint8_t*) (dataFrame->pData + sizeof(i2cFrame_commonHeader)),
-				(uint8_t*) dataFrame->pData+sizeof(i2cFrame_commonHeader),
-				temp_i2cFrameCommonHeader.dataSize-sizeof(i2cFrame_commonHeader), I2C_LAST_FRAME);
+			retVal = this->masterReceiveFromESP32_DMA_inSequence(
+					(uint8_t*) dataFrame->pData + sizeof(i2cFrame_commonHeader),
+					temp_i2cFrameCommonHeader.dataSize - sizeof(i2cFrame_commonHeader),
+					I2C_LAST_FRAME);
+		} else {
+			// alokacja nie powiodła się, ale pierwsza DMA się udała — zwolnij magistralę z trybu RELOAD
+			uint8_t dummy;
+			this->masterReceiveFromESP32_DMA_inSequence(&dummy, sizeof(dummy), I2C_LAST_FRAME);
+			retVal = HAL_ERROR;
+		}
 	}
 	return retVal;
 }
@@ -264,8 +254,8 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA_inSequ
 			this->pi2cMaster->I2C_Master_Receive_DMA_inSequence(
 					this->esp32i2cSlaveAdress_7bit, pData, Size, XferOptions);
 
-	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME) || (XferOptions ==
-	I2C_LAST_FRAME)) {
+	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME) || (XferOptions == I2C_LAST_FRAME)) {
+		this->while_I2C_STATE_READY();	// czekaj na zakończenie DMA przed opóźnieniem
 		this->giveESP32I2CInterfaceTime();
 	}
 	return retVal;

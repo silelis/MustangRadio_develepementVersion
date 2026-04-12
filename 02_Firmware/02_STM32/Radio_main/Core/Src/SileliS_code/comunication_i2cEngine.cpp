@@ -200,7 +200,9 @@ HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA_inSequence(
 		uint32_t XferOptions) {
 	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME)
 			|| (XferOptions == I2C_FIRST_FRAME)
-			|| (XferOptions == I2C_FIRST_AND_NEXT_FRAME)) {
+			|| (XferOptions == I2C_FIRST_AND_NEXT_FRAME)
+			|| (XferOptions == I2C_NEXT_FRAME)
+			|| (XferOptions == I2C_LAST_FRAME)) {
 		this->while_I2C_STATE_READY();
 	}
 //	this->while_I2C_STATE_READY();
