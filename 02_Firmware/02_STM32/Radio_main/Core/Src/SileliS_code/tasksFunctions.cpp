@@ -256,8 +256,7 @@ static void printfTask(void *noThing) {
 	pPrintf->feedPrintf("Radio firmware version: %.2f", FW_VERSION);
 	while (1) {
 		if (pPrintf->QueueReceive(&itemToPrint, portMAX_DELAY) == pdTRUE) {
-			pPrintf->myPrintf(itemToPrint);
-			pPrintf->QueueDeleteDataFromPointer(itemToPrint);
+			pPrintf->myPrintf(itemToPrint);	// myPrintf() sam zwalnia itemToPrint.pData - nie wolno usuwać go tu ponownie (double free)
 		}
 	}
 }
