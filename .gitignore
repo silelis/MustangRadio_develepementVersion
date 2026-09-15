@@ -34,7 +34,20 @@
 # Pliki generowane przez VisualGDB
 .HMI_and_bluetooth_VisualGDB/.visualgdb/VisualGDBCache/
 *.vgdbproj-Debug-VisualGDB/
-*.vgdbproj-Release-VisualGDB/02_Firmware/01_ESP32/**/build/ 
-build/ 
-02_Firmware/01_ESP32/**/build/ 
-02_Firmware/01_ESP32/**/build 
+*.vgdbproj-Release-VisualGDB/02_Firmware/01_ESP32/**/build/
+build/
+02_Firmware/01_ESP32/**/build/
+02_Firmware/01_ESP32/**/build
+
+# Katalogi Debug/Release projektów Eclipse (STM32) i ESP-IDF
+02_Firmware/02_STM32/*/Debug/
+02_Firmware/02_STM32/*/Release/
+
+# Metadane workspace'u Eclipse
+02_Firmware/02_STM32/.metadata/
+
+# Lokalne ustawienia Claude Code
+.claude/
+
+# Katalogi backupów KiCad (auto-save), same pliki .kicad_pcb/.kicad_sch pozostają śledzone
+**/*-backups/
