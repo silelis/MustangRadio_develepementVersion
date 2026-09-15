@@ -33301,7 +33301,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "e93299f5-2693-4311-980f-4c27b160f8a4")
-		(at 119.460595 80.384893 180)
+		(at 121.25 80.384893)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R57"
@@ -33329,7 +33329,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 0 0 180)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "11d7f982-4992-402d-a8b7-44c02e1bae86")
@@ -33341,7 +33341,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 0 0 180)
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "7c9a5896-b5cf-4d8d-8fcc-713ef23e3149")
@@ -33371,16 +33371,6 @@
 		(sheetfile "esp32 bluetooth.kicad_sch")
 		(attr smd)
 		(fp_line
-			(start -0.237258 0.5225)
-			(end 0.237258 0.5225)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "1c7df9bc-0945-4dc1-a435-cf1ae55ead1f")
-		)
-		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
 			(stroke
@@ -33391,34 +33381,14 @@
 			(uuid "41c0f717-fc5d-401a-80c8-e17d1b2bc688")
 		)
 		(fp_line
-			(start 1.48 0.73)
-			(end 1.48 -0.73)
+			(start -0.237258 0.5225)
+			(end 0.237258 0.5225)
 			(stroke
-				(width 0.05)
+				(width 0.12)
 				(type solid)
 			)
-			(layer "B.CrtYd")
-			(uuid "5c577123-ad1e-46e5-8b32-0c70c14d4982")
-		)
-		(fp_line
-			(start 1.48 -0.73)
-			(end -1.48 -0.73)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "B.CrtYd")
-			(uuid "009acbf6-2ef2-466a-85fd-e201e875c194")
-		)
-		(fp_line
-			(start -1.48 0.73)
-			(end 1.48 0.73)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "B.CrtYd")
-			(uuid "8f245c90-64dd-4915-b448-e695468386a2")
+			(layer "B.SilkS")
+			(uuid "1c7df9bc-0945-4dc1-a435-cf1ae55ead1f")
 		)
 		(fp_line
 			(start -1.48 -0.73)
@@ -33431,24 +33401,44 @@
 			(uuid "f650b6f0-22c9-4984-b070-7d94900606d7")
 		)
 		(fp_line
-			(start 0.8 0.4125)
-			(end 0.8 -0.4125)
+			(start -1.48 0.73)
+			(end 1.48 0.73)
 			(stroke
-				(width 0.1)
+				(width 0.05)
 				(type solid)
 			)
-			(layer "B.Fab")
-			(uuid "84e764c6-8a3e-4ece-9591-837a00459323")
+			(layer "B.CrtYd")
+			(uuid "8f245c90-64dd-4915-b448-e695468386a2")
 		)
 		(fp_line
-			(start 0.8 -0.4125)
-			(end -0.8 -0.4125)
+			(start 1.48 -0.73)
+			(end -1.48 -0.73)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "009acbf6-2ef2-466a-85fd-e201e875c194")
+		)
+		(fp_line
+			(start 1.48 0.73)
+			(end 1.48 -0.73)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "B.CrtYd")
+			(uuid "5c577123-ad1e-46e5-8b32-0c70c14d4982")
+		)
+		(fp_line
+			(start -0.8 -0.4125)
+			(end -0.8 0.4125)
 			(stroke
 				(width 0.1)
 				(type solid)
 			)
 			(layer "B.Fab")
-			(uuid "769eec6d-437e-41a7-85b1-f382ce8c2ed7")
+			(uuid "8cae11d5-7d52-4738-9237-e5866927b0b4")
 		)
 		(fp_line
 			(start -0.8 0.4125)
@@ -33461,14 +33451,24 @@
 			(uuid "95e088d6-0a0f-4b70-96c7-f173b780b3d8")
 		)
 		(fp_line
-			(start -0.8 -0.4125)
-			(end -0.8 0.4125)
+			(start 0.8 -0.4125)
+			(end -0.8 -0.4125)
 			(stroke
 				(width 0.1)
 				(type solid)
 			)
 			(layer "B.Fab")
-			(uuid "8cae11d5-7d52-4738-9237-e5866927b0b4")
+			(uuid "769eec6d-437e-41a7-85b1-f382ce8c2ed7")
+		)
+		(fp_line
+			(start 0.8 0.4125)
+			(end 0.8 -0.4125)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "B.Fab")
+			(uuid "84e764c6-8a3e-4ece-9591-837a00459323")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 0)
@@ -33483,7 +33483,7 @@
 			)
 		)
 		(pad "1" smd roundrect
-			(at -0.825 0 180)
+			(at -0.825 0)
 			(size 0.8 0.95)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
@@ -33492,11 +33492,11 @@
 			(uuid "aaaa0a90-3128-4571-aff4-22e4387eeb81")
 		)
 		(pad "2" smd roundrect
-			(at 0.825 0 180)
+			(at 0.825 0)
 			(size 0.8 0.95)
 			(layers "B.Cu" "B.Mask" "B.Paste")
 			(roundrect_rratio 0.25)
-			(net 2 "GNDD")
+			(net 47 "+3V3")
 			(pintype "passive")
 			(uuid "a8fb5e85-b785-492c-a5a7-a21ce1e82576")
 		)

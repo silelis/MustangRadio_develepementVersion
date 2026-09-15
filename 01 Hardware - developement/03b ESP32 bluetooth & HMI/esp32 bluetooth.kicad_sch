@@ -41776,6 +41776,71 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
+		(at 101.6 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4fe6ecde-05b7-46e5-9818-e021253b25ca")
+		(property "Reference" "#PWR071"
+			(at 101.6 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 101.6001 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0507dd07-8878-485a-a9c9-fbc24949c823")
+		)
+		(instances
+			(project "esp32 bluetooth"
+				(path "/85fd60db-6313-4d29-84e5-9ad356eb710e"
+					(reference "#PWR071")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
 		(at 22.86 17.78 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -44118,70 +44183,6 @@
 			(project "esp32 bluetooth"
 				(path "/85fd60db-6313-4d29-84e5-9ad356eb710e"
 					(reference "R12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GNDD")
-		(at 101.6 109.22 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "987abad9-5a41-45cc-bb16-89682223f887")
-		(property "Reference" "#PWR071"
-			(at 101.6 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDD"
-			(at 101.4984 105.283 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 101.6 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 101.6 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 101.6 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c223583b-b17d-4f66-8925-ec775a1cde18")
-		)
-		(instances
-			(project "esp32 bluetooth"
-				(path "/85fd60db-6313-4d29-84e5-9ad356eb710e"
-					(reference "#PWR071")
 					(unit 1)
 				)
 			)
