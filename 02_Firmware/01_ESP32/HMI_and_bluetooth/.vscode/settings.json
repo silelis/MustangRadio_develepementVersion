@@ -3,7 +3,7 @@
   "esp_idf_path": "C:/Espressif",
   "esp_python_path_ver": "v5.2",
   "tools_esp32ulp-elf_ver": "2.35_20220830",
-  "tools_openocd-esp32_ver": "v0.12.0-esp32-20230921",
+  "tools_openocd-esp32_ver": "v0.12.0-esp32-20251215",
   "tools_xtensa-esp-elf_ver": "esp-13.2.0_20230928",
   "tools_esp_idf-python_ver": "3.13.12",
   "tools_esp-clang_ver": "16.0.1-fe4f10a809",
@@ -25,8 +25,9 @@
   "idf.openOcdDebugLevel": 0,
   "idf.openOcdLaunchArgs": [
     "-f",
-    //"interface/ftdi/esp_ftdi.cfg",         // działa z OpenOCD esp32-20251215 (esp-idf 5.5.2 / 5.5.3)
-    "interface/ftdi/esp32_devkitj_v1.cfg",   // działa z OpenOCD esp32-20230921 (esp-idf 5.2); odpowiednik dla FT2232H/FT232H
+    "interface/ftdi/esp_ftdi.cfg",         // ESP-Prog (FT2232H), OpenOCD 20251215 "recommended" w tools.json ESP-IDF 5.2
+    //"interface/jlink.cfg",                 // J-Link, nie wykryty przez Windows
+    //"interface/ftdi/esp32_devkitj_v1.cfg",   // działa z OpenOCD esp32-20230921 (esp-idf 5.2); odpowiednik dla FT2232H/FT232H
     "-f",
     "target/esp32.cfg",
     "-c",
@@ -45,7 +46,7 @@
     //"-c",
     //"esp32 smpbreak BreakIn BreakOut"  // dodano: atomowe zatrzymanie obu rdzeni - cpu1 (BT) nie generuje IRQ do cpu0 po halcie
    ],
-  "idf.portWin": "COM5",
+  "idf.portWin": "COM8",
   "idf.toolsPathWin": "${config:esp_idf_path}",
   "idf.customExtraVars": {
     "ESPTOOLPY_ARGS": "--no-verify",
