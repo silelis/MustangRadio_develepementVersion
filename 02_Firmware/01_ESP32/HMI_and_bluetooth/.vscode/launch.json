@@ -1,25 +1,29 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
-    
     {
       "type": "gdbtarget",
       "request": "attach",
-      "name": "Eclipse CDT GDB Adapter"
-      
-    },
-    {
-      "type": "espidf",
-      "name": "Launch",
-      "request": "launch",
-      "setupCommands": [
-        {
-          "description": "Ignore SIGINT - prevent GDB from stopping on UART TX FIFO polling",
-          "text": "handle SIGINT nostop noprint pass",
-          "ignoreFailures": false
-        }
-      ]
+      "name": "Eclipse CDT GDB Adapter",
+      "program": "${workspaceFolder}/build/${command:espIdf.getProjectName}.elf",
+      "gdb": "${command:espIdf.getToolchainGdb}",
+      "initialBreakpoint": "app_main",
+      "initCommands": [
+        "set remote hardware-watchpoint-limit 2",
+        "mon gdb_breakpoint_override hard"
+      ],
+      "target": {
+        "type": "extended-remote",
+        "host": "localhost",
+        "port": 3333,
+        "connectCommands": [
+          "set remotetimeout 20"
+        ]
+      },
+      "runOpenOCD": true,
+      "buildFlashMonitor": false,
+      "verifyAppBinBeforeDebug": false,
+      "verbose": false
     }
   ]
 }

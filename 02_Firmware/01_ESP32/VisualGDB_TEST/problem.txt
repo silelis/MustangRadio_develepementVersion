@@ -1,0 +1,104 @@
+Run "C:\Users\dbank\AppData\Local\VisualGDB\Python-3.8.10\python.exe C:\SysGCC\esp32\esp-idf\v5.2\tools\idf_tools.py install-python-env" in directory "" on local computer
+--------------------------
+Creating a new Python environment in C:\Users\dbank\.espressif\python_env\idf5.2_py3.8_env
+Downloading https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.2.txt
+Destination: C:\Users\dbank\.espressif\espidf.constraints.v5.2.txt.tmp
+
+0%
+100%
+Done
+Upgrading pip...
+Requirement already satisfied: pip in c:\users\dbank\.espressif\python_env\idf5.2_py3.8_env\lib\site-packages (21.1.1)
+Collecting pip
+  Downloading pip-25.0.1-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 21.1.1
+    Uninstalling pip-21.1.1:
+      Successfully uninstalled pip-21.1.1
+Successfully installed pip-25.0.1
+Upgrading setuptools...
+Collecting setuptools
+  Downloading setuptools-75.3.4-py3-none-any.whl.metadata (6.9 kB)
+Downloading setuptools-75.3.4-py3-none-any.whl (1.3 MB)
+   ---------------------------------------- 1.3/1.3 MB 15.7 MB/s eta 0:00:00
+Installing collected packages: setuptools
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 56.0.0
+    Uninstalling setuptools-56.0.0:
+      Successfully uninstalled setuptools-56.0.0
+Successfully installed setuptools-75.3.4
+Installing Python packages
+ Constraint file: C:\Users\dbank\.espressif\espidf.constraints.v5.2.txt
+ Requirement files:
+  - C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt
+Looking in indexes: https://pypi.org/simple, https://dl.espressif.com/pypi
+Ignoring importlib_metadata: markers 'python_version < "3.8"' don't match your environment
+Requirement already satisfied: setuptools in c:\users\dbank\.espressif\python_env\idf5.2_py3.8_env\lib\site-packages (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 3)) (75.3.4)
+Collecting packaging (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 4))
+  Downloading https://dl.espressif.com/pypi/packaging/packaging-26.2-py3-none-any.whl (100 kB)
+Collecting click (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 7))
+  Using cached https://dl.espressif.com/pypi/click/click-8.1.8-py3-none-any.whl (98 kB)
+Collecting pyserial (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 8))
+  Using cached https://dl.espressif.com/pypi/pyserial/pyserial-3.5-py2.py3-none-any.whl (90 kB)
+Collecting cryptography (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 9))
+  Downloading cryptography-41.0.7-cp37-abi3-win32.whl.metadata (5.3 kB)
+Collecting pyparsing (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 10))
+  Downloading https://dl.espressif.com/pypi/pyparsing/pyparsing-3.1.4-py3-none-any.whl (104 kB)
+Collecting pyelftools (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 11))
+  Using cached https://dl.espressif.com/pypi/pyelftools/pyelftools-0.32-py3-none-any.whl (188 kB)
+Collecting idf-component-manager (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 12))
+  Downloading https://dl.espressif.com/pypi/idf-component-manager/idf_component_manager-2.5.2-py3-none-any.whl (184 kB)
+Collecting esp-coredump (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 13))
+  Downloading esp_coredump-1.17.2-py3-none-any.whl.metadata (5.3 kB)
+Collecting esptool (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 14))
+  Downloading https://dl.espressif.com/pypi/esptool/esptool-4.12.0.tar.gz (463 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting esp-idf-kconfig (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 15))
+  Using cached https://dl.espressif.com/pypi/esp-idf-kconfig/esp_idf_kconfig-1.5.0-py3-none-any.whl (44 kB)
+Collecting esp-idf-monitor (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 16))
+  Downloading https://dl.espressif.com/pypi/esp-idf-monitor/esp_idf_monitor-1.10.0-py3-none-any.whl (73 kB)
+Collecting esp-idf-size (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 17))
+  Using cached https://dl.espressif.com/pypi/esp-idf-size/esp_idf_size-1.7.1-py3-none-any.whl (82 kB)
+Collecting esp-idf-panic-decoder (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 18))
+  Downloading https://dl.espressif.com/pypi/esp-idf-panic-decoder/esp_idf_panic_decoder-1.5.0-py3-none-any.whl (21 kB)
+Collecting pyclang (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 19))
+  Downloading https://dl.espressif.com/pypi/pyclang/pyclang-0.7.0-py3-none-any.whl (13 kB)
+Collecting construct (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 20))
+  Using cached https://dl.espressif.com/pypi/construct/construct-2.10.70-py3-none-any.whl (63 kB)
+Collecting tree_sitter (from -r C:\SysGCC\esp32\esp-idf\v5.2\tools\requirements\requirements.core.txt (line 23))
+  Downloading tree-sitter-0.21.3.tar.gz (155 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+ERROR: Cannot install tree_sitter_c because these package versions have conflicting dependencies.
+
+The conflict is caused by:
+    The user requested tree_sitter_c
+    The user requested (constraint) tree-sitter-c>=0.21.4
+
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip to attempt to solve the dependency conflict
+
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+Traceback (most recent call last):
+  File "C:\SysGCC\esp32\esp-idf\v5.2\tools\idf_tools.py", line 2918, in <module>
+    main(sys.argv[1:])
+  File "C:\SysGCC\esp32\esp-idf\v5.2\tools\idf_tools.py", line 2910, in main
+    action_func(args)
+  File "C:\SysGCC\esp32\esp-idf\v5.2\tools\idf_tools.py", line 2374, in action_install_python_env
+    subprocess.check_call(run_args, stdout=sys.stdout, stderr=sys.stderr, env=env_copy)
+  File "C:\Users\dbank\AppData\Local\VisualGDB\Python-3.8.10\lib\subprocess.py", line 364, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command '['C:\\Users\\dbank\\.espressif\\python_env\\idf5.2_py3.8_env\\Scripts\\python.exe', '-m', 'pip', 'install', '--no-warn-script-location', '-r', 'C:\\SysGCC\\esp32\\esp-idf\\v5.2\\tools\\requirements\\requirements.core.txt', '--upgrade', '--constraint', 'C:\\Users\\dbank\\.espressif\\espidf.constraints.v5.2.txt', '--extra-index-url', 'https://dl.espressif.com/pypi']' returned non-zero exit status 1.
+--------------------------
+Command exited with code 1
