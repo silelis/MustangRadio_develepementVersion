@@ -8502,9 +8502,9 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "C10 i C11 są niepotrzebne\nprzy tym krysztale.\nWylutować je z PCB"
+	(text "C10 i C11 są niepotrzebne\nprzy tym krysztale.\nWylutować je z PCB\n\n2026-09-23 Nie wiem skąd to się wziłęo do\nweryfikacji czy wl;utowałem, ale kondensatory\nsą potrzebne."
 		(exclude_from_sim no)
-		(at 116.84 113.03 0)
+		(at 88.646 134.366 0)
 		(effects
 			(font
 				(size 2.5 2.5)
@@ -8563,6 +8563,18 @@
 			(justify left bottom)
 		)
 		(uuid "1112c84f-cbdb-4a19-8e7f-8f503f039893")
+	)
+	(text "C10 i C11 są niepotrzebne\nprzy tym krysztale.\nWylutować je z PCB\n\n2026-09-23 Sprawdzic w datasheet stm32,\nale tutaj mam bład."
+		(exclude_from_sim no)
+		(at -72.898 118.11 0)
+		(effects
+			(font
+				(size 2.5 2.5)
+				(color 255 0 34 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "609fa521-2275-4ace-9c0a-16464c518048")
 	)
 	(text "<--- do not exist in RF switch.\n            It is used only if relay switch is populated."
 		(exclude_from_sim no)
