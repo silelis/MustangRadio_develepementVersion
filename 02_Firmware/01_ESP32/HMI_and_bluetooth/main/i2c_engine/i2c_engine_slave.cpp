@@ -260,6 +260,7 @@ esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
 
 	i2cFrame_transmitQueue dataToTransmit;
 	esp_err_t retVal = ESP_FAIL;
+	
 	if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
 	{
 

@@ -12,7 +12,7 @@
 #include "common/comunicationStructures/comunicationStructures.h"
 //#include "./../../../03_Common/comunicationStructures.h"
 //#include "comunicationStructures.h"
-#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
+#include "common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
 
 #define MOVE_FORWARD			1
 #define MOVE_BACKWARD			0
