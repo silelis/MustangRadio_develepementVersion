@@ -20,7 +20,7 @@ public:
 	~i2cEngin_slave();
 
 
-	esp_err_t i2cSlaveTransmit(void);
+	void i2cSlaveTransmit(void);
 	
 	
 	
