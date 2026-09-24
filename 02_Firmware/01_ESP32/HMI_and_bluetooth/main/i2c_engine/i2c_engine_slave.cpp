@@ -255,52 +255,52 @@ i2cEngin_slave::~i2cEngin_slave()
 	// delete this->pTransmitQueueObject;
 }
 
-esp_err_t i2cEngin_slave::i2cSlaveTransmit(void)
+void i2cEngin_slave::i2cSlaveTransmit(void)
 {
-
 	i2cFrame_transmitQueue dataToTransmit;
 	esp_err_t retVal = ESP_FAIL;
-	
-	if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
+
+	while (1)
 	{
+		if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
+		{
 
 #ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
 
 #error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE."
-		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
+			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
 
 #else
 
-		// ============================================================
-		// STARE ROZWIĄZANIE (BŁĘDNE — powodowało WDT deadlock):
-		// i2c_slave_transmit blokuje czekając na START od STM32,
-		// ale STM32 nigdy nie wysyłał START bo nie dostał sygnału GPIO.
-		// Efekt: timeout 5500ms × 2 → Interrupt WDT reset.
-		// ============================================================
-		// retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
-		// if (ESP_OK == retVal)
-		// {
-		// 	retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
-		// }
-		// this->interruptRequestSet();		// ZA PÓŹNO — po timeoucie, STM32 nigdy nie widział sygnału
-		// this->interruptRequestReset();
+			// ============================================================
+			// STARE ROZWIĄZANIE (BŁĘDNE — powodowało WDT deadlock):
+			// i2c_slave_transmit blokuje czekając na START od STM32,
+			// ale STM32 nigdy nie wysyłał START bo nie dostał sygnału GPIO.
+			// Efekt: timeout 5500ms × 2 → Interrupt WDT reset.
+			// ============================================================
+			// retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
+			// if (ESP_OK == retVal)
+			// {
+			// 	retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
+			// }
+			// this->interruptRequestSet();		// ZA PÓŹNO — po timeoucie, STM32 nigdy nie widział sygnału
+			// this->interruptRequestReset();
 
-		// ============================================================
-		// NOWE ROZWIĄZANIE (POPRAWNE):
-		// 1. Najpierw sygnał GPIO LOW → STM32 widzi przerwanie i wysyła START
-		// 2. Potem i2c_slave_transmit — STM32 już czeka, transmisja natychmiastowa
-		// 3. Na końcu GPIO HIGH → STM32 wie że transmisja zakończona
-		// ============================================================
-		this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
-		retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);	// STM32 wysyła START i czyta rozmiar danych
-		if (ESP_OK == retVal)
-		{
-			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);	// STM32 czyta właściwe dane
-		}
-		this->interruptRequestReset();	// GPIO HIGH: sygnał do STM32 "transmisja zakończona"
+			// ============================================================
+			// NOWE ROZWIĄZANIE (POPRAWNE):
+			// 1. Najpierw sygnał GPIO LOW → STM32 widzi przerwanie i wysyła START
+			// 2. Potem i2c_slave_transmit — STM32 już czeka, transmisja natychmiastowa
+			// 3. Na końcu GPIO HIGH → STM32 wie że transmisja zakończona
+			// ============================================================
+			this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
+			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);	// STM32 wysyła START i czyta rozmiar danych
+			if (ESP_OK == retVal)
+			{
+				retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);	// STM32 czyta właściwe dane
+			}
+			this->interruptRequestReset();	// GPIO HIGH: sygnał do STM32 "transmisja zakończona"
 #endif
-		delete[] static_cast<char *>(dataToTransmit.pData);
-		// return retVal;
+			delete[] static_cast<char *>(dataToTransmit.pData);
+		}
 	}
-	return retVal;
 }
