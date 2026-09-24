@@ -1,4 +1,5 @@
 #include "i2c_engine_slave.h"
+#include "assert.h"
 
 static i2c_slave_dev_handle_t handler_i2c_dev_slave;
 static i2c_slave_config_t i2c_config_slave;
@@ -7,6 +8,7 @@ static i2c_slave_config_t i2c_config_slave;
 extern i2c_dev_t I2C0;
 
 #include "driver/i2c.h"
+#include "esp_rom_sys.h"
 //----------------------------------------------
 // Enumy i zmienne globalne (z volatile dla ISR)
 //----------------------------------------------
@@ -48,6 +50,18 @@ IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t
 	{
 		// Slave -> Master (ESP32 wysyła)
 		rxToEsp32 = transmition;
+		if (sInstance != nullptr){
+			switch(sInstance->i2cTxSlaveState){
+				case i2cTransmitionState::lenDataInTransmition:
+					sInstance->i2cTxSlaveState=i2cTransmitionState::lenDataTransmited;
+					break;
+				case i2cTransmitionState::packageDataInTransmition:
+					sInstance->i2cTxSlaveState= i2cTransmitionState::packageDataTransmited;
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	// 2. Wyślij zdarzenie do kolejki (z zabezpieczeniem przed NULL)
@@ -80,6 +94,7 @@ IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t
 *---------------------------------------------------------------*/
 i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, gpio_num_t scl_io_num, uint32_t slave_addr, i2c_addr_bit_len_t slave_addr_bit_len, gpio_num_t intRequestPin)
 {
+	sInstance = this;	// musi być przed i2c_slave_register_event_callbacks, żeby ISR nie widział nullptr
 	i2c_config_slave.addr_bit_len = slave_addr_bit_len;
 	i2c_config_slave.clk_source = I2C_CLK_SRC_DEFAULT;
 	i2c_config_slave.i2c_port = i2c_port;
@@ -262,45 +277,52 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 
 	while (1)
 	{
-		if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
-		{
-
-#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
-
-#error "DO NOT WORK ON STM32 site I do not knw how to solve it. Do not define STM32_2_ESP32_I2C_IN_SEQUENCE."
-			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
-
-#else
-
-			// ============================================================
-			// STARE ROZWIĄZANIE (BŁĘDNE — powodowało WDT deadlock):
-			// i2c_slave_transmit blokuje czekając na START od STM32,
-			// ale STM32 nigdy nie wysyłał START bo nie dostał sygnału GPIO.
-			// Efekt: timeout 5500ms × 2 → Interrupt WDT reset.
-			// ============================================================
-			// retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);
-			// if (ESP_OK == retVal)
-			// {
-			// 	retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);
-			// }
-			// this->interruptRequestSet();		// ZA PÓŹNO — po timeoucie, STM32 nigdy nie widział sygnału
-			// this->interruptRequestReset();
-
-			// ============================================================
-			// NOWE ROZWIĄZANIE (POPRAWNE):
-			// 1. Najpierw sygnał GPIO LOW → STM32 widzi przerwanie i wysyła START
-			// 2. Potem i2c_slave_transmit — STM32 już czeka, transmisja natychmiastowa
-			// 3. Na końcu GPIO HIGH → STM32 wie że transmisja zakończona
-			// ============================================================
-			this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
-			retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);	// STM32 wysyła START i czyta rozmiar danych
-			if (ESP_OK == retVal)
-			{
-				retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);	// STM32 czyta właściwe dane
-			}
-			this->interruptRequestReset();	// GPIO HIGH: sygnał do STM32 "transmisja zakończona"
-#endif
-			delete[] static_cast<char *>(dataToTransmit.pData);
+		
+		switch(this->i2cTxSlaveState){
+			case i2cTransmitionState::idle:		
+				if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
+				{
+					retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);	// rozmiar danych → bufor TX
+					if (ESP_OK == retVal)
+					{
+						this->i2cTxSlaveState=i2cTransmitionState::lenDataInTransmition;
+						this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
+						esp_rom_delay_us(20);			// minimalna szerokość impulsu dla EXTI STM32
+						this->interruptRequestReset();
+					}
+					else
+					{
+						this->i2cTxSlaveState=i2cTransmitionState::errorInTransmition;
+					}
+				}
+				break;
+			case i2cTransmitionState::lenDataInTransmition:
+				vTaskDelay(1);
+				break;
+			case i2cTransmitionState::lenDataTransmited:
+				retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);	// dane → bufor TX
+				if (ESP_OK == retVal)
+				{
+					this->i2cTxSlaveState=i2cTransmitionState::packageDataInTransmition;
+					this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
+					esp_rom_delay_us(20);			// minimalna szerokość impulsu dla EXTI STM32
+					this->interruptRequestReset();
+				}
+				else
+				{
+					this->i2cTxSlaveState=i2cTransmitionState::errorInTransmition;
+				}
+				break;
+			case i2cTransmitionState::packageDataInTransmition:
+				vTaskDelay(1);
+				break;
+			case i2cTransmitionState::packageDataTransmited:
+				delete[] static_cast<char *>(dataToTransmit.pData);
+				break;
+			case i2cTransmitionState::errorInTransmition:
+				delete[] static_cast<char *>(dataToTransmit.pData);
+				assert(0);
+				break;
 		}
 	}
 }
