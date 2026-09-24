@@ -5,8 +5,8 @@
 #include <string.h> // dla memcmp
 #include <stdbool.h> // dla typu bool
 //#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\03_Common\comunicationStructures.h"
-#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common\comunicationStructures\comunicationStructures.h"
-#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
+#include "common/comunicationStructures/comunicationStructures.h"
+#include "common/i2c_slave_master_queueClass/i2c_slave_master_queueClass.h"
 
 
 #define LED_DISPLAY_BLINK_TIME_MULTIPLIER	7

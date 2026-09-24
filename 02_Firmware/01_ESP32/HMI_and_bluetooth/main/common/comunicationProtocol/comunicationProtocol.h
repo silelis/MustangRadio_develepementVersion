@@ -1,7 +1,7 @@
 #pragma once
 #include "inttypes.h"
 #ifdef  /*TOOLCHAIN_ENVIRONMENT == __esp32__ */ ESP_PLATFORM
-	#include "D:\!!!__GitHUB_repositories\MustangRadio_develepementVersion\02_Firmware\01_ESP32\HMI_and_bluetooth\main\common\comunicationStructures/comunicationStructures.h"
+	#include "common/comunicationStructures/comunicationStructures.h"
 	#include "../../hwConfigFile.h"
 #elif /*TOOLCHAIN_ENVIRONMENT == __stm32__ */ __ARM_ARCH
 #include "comunicationStructures/comunicationStructures.h"
