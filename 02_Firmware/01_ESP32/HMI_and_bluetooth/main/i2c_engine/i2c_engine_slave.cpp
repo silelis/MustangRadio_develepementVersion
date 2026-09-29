@@ -14,13 +14,35 @@ extern i2c_dev_t I2C0;
 //----------------------------------------------
 typedef enum
 {
-	recpeptionNotToMe, // 0 - dane nie były do ESP32
-	recpeptionToMe,	   // 1 - ESP32 odebrało dane
-	transmition		   // 2 - ESP32 wysłało dane
+	recpeptionNotToMe,		// 0 - dane nie były do ESP32
+	recpeptionToMe,			// 1 - ESP32 odebrało dane
+	transmitionNotFromMe,	// 2 - STOP po obcej transakcji (slave_rw==1 zostało z poprzedniego odczytu ESP32)
+	transmitionFromMe		// 3 - ESP32 wysłało dane (przesunął się tx_fifo_start_addr)
 } i2cCallbackState;
 
-volatile static i2cCallbackState rxToEsp32 = recpeptionNotToMe;
-volatile static uint32_t rx_fifo_end_addrLast = 0;
+// dane współdzielone przez ISR i2c_slave_rx_done_callback i task i2cSlaveReceive
+typedef struct
+{
+	i2cCallbackState rxToEsp32;			// klasyfikacja ostatniego zdarzenia I2C
+	uint32_t rx_fifo_end_addrLast;		// ostatni wskaźnik zapisu RX FIFO - wykrywanie odbioru do ESP32
+	uint32_t tx_fifo_start_addrLast;	// ostatni wskaźnik odczytu TX FIFO - wykrywanie wysyłki z ESP32
+	// DIAGNOSTYKA: migawka rejestrów I2C0 z chwili callbacku, drukowana w tasku i2cSlaveReceive
+	uint8_t diag_slave_rw;
+	uint8_t diag_slave_addressed;
+	uint8_t diag_rx_fifo_end_addr;
+	uint8_t diag_tx_fifo_start_addrPrev;
+	uint8_t diag_tx_fifo_start_addr;
+	uint8_t diag_tx_fifo_end_addr;
+} i2cCallbackData;
+
+// element kolejki s_receive_queue: jedno zdarzenie I2C z kopią danych z chwili callbacku
+typedef struct
+{
+	i2cCallbackData cbData;							// klasyfikacja i DIAGNOSTYKA tego zdarzenia
+	uint8_t data[ESP32_SLAVE_RECEIVE_BUFFER_LEN];	// kopia bufora odbiorczego (edata->buffer) - task nie czyta bufora sterownika
+} i2cSlaveRxEvent;
+// bieżące zdarzenie budowane w ISR i kopiowane do kolejki; cbData.*_Last - pamięć ISR między callbackami
+static i2cSlaveRxEvent rxEvent = {{recpeptionNotToMe, 0, 0, 0, 0, 0, 0, 0, 0}, {0}};
 
 //----------------------------------------------
 // Callback dla zdarzeń I2C Slave
@@ -32,45 +54,79 @@ IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t
 	BaseType_t high_task_wakeup = pdFALSE;
 	QueueHandle_t receive_queue = (QueueHandle_t)user_data;
 
+	// DIAGNOSTYKA: zapis rejestrów zanim się zmienią
+	rxEvent.cbData.diag_slave_rw = I2C0.status_reg.slave_rw;
+	rxEvent.cbData.diag_slave_addressed = I2C0.status_reg.slave_addressed;
+	rxEvent.cbData.diag_rx_fifo_end_addr = I2C0.fifo_st.rx_fifo_end_addr;
+	rxEvent.cbData.diag_tx_fifo_start_addrPrev = rxEvent.cbData.tx_fifo_start_addrLast;
+	rxEvent.cbData.diag_tx_fifo_start_addr = I2C0.fifo_st.tx_fifo_start_addr;
+	rxEvent.cbData.diag_tx_fifo_end_addr = I2C0.fifo_st.tx_fifo_end_addr;
+
 	// 1. Sprawdź kierunek transmisji
-	if (I2C0.status_reg.slave_rw == 0)
+	switch ((i2c_slave_read_write_status_t)I2C0.status_reg.slave_rw)
 	{
+	case I2C_SLAVE_WRITE_BY_MASTER:
 		// Master -> Slave (ESP32 odbiera)
-		if (rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
+		if (rxEvent.cbData.rx_fifo_end_addrLast != I2C0.fifo_st.rx_fifo_end_addr)
 		{
-			rxToEsp32 = recpeptionToMe; // Nowe dane dla ESP32
+			rxEvent.cbData.rxToEsp32 = recpeptionToMe; // Nowe dane dla ESP32
 		}
 		else
 		{
-			rxToEsp32 = recpeptionNotToMe; // Dane były dla innego slave'a
+			rxEvent.cbData.rxToEsp32 = recpeptionNotToMe; // Dane były dla innego slave'a
 		}
-		rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
-	}
-	else
-	{
-		// Slave -> Master (ESP32 wysyła)
-		rxToEsp32 = transmition;
-		if (sInstance != nullptr){
-			switch(sInstance->i2cTxSlaveState){
-				case i2cTransmitionState::lenDataInTransmition:
-					sInstance->i2cTxSlaveState=i2cTransmitionState::lenDataTransmited;
-					break;
-				case i2cTransmitionState::packageDataInTransmition:
-					sInstance->i2cTxSlaveState= i2cTransmitionState::packageDataTransmited;
-					break;
-				default:
-					break;
+		rxEvent.cbData.rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+		break;
+	case I2C_SLAVE_READ_BY_MASTER:
+		// Slave -> Master (ESP32 wysyła) albo STOP po obcej transakcji (slave_rw nie zmienia się bez adresowania ESP32)
+		if (rxEvent.cbData.tx_fifo_start_addrLast != I2C0.fifo_st.tx_fifo_start_addr)
+		{
+			rxEvent.cbData.rxToEsp32 = transmitionFromMe;	// sprzęt wysłał bajty z TX FIFO
+			if (sInstance != nullptr){
+				sInstance->i2cTxStateNextFromISR();
 			}
 		}
+		else
+		{
+			rxEvent.cbData.rxToEsp32 = transmitionNotFromMe;	// wskaźnik odczytu TX FIFO bez zmian - transakcja nie z ESP32
+		}
+		rxEvent.cbData.tx_fifo_start_addrLast = I2C0.fifo_st.tx_fifo_start_addr;
+		break;
 	}
 
 	// 2. Wyślij zdarzenie do kolejki (z zabezpieczeniem przed NULL)
 	if (receive_queue != NULL && edata != NULL)
 	{
-		xQueueSendFromISR(receive_queue, edata, &high_task_wakeup);
+		memcpy(rxEvent.data, edata->buffer, ESP32_SLAVE_RECEIVE_BUFFER_LEN);	// kopia ramki - ramka kompletna, sterownik nie pisze teraz do bufora
+		BaseType_t queueSendResult = xQueueSendFromISR(receive_queue, &rxEvent, &high_task_wakeup);
+		assert(queueSendResult == pdTRUE);	// pełna kolejka = utrata zdarzenia i brak ponownego uzbrojenia odbiornika - błąd krytyczny
 	}
 
 	return high_task_wakeup == pdTRUE;
+}
+
+/*---------------------------------------------------------------
+ * Metoda wywoływana z ISR i2c_slave_rx_done_callback, gdy master
+ * odczytał dane z ESP32 (transmitionFromMe). Przesuwa maszynę
+ * stanów i2cSlaveTransmit do kolejnego stanu.
+ * Parameters:
+ * NONE
+ * Returns:
+ * NONE
+ *---------------------------------------------------------------*/
+IRAM_ATTR void i2cEngin_slave::i2cTxStateNextFromISR(void)
+{
+	switch (this->i2cTxSlaveState)
+	{
+	case i2cTransmitionState::lenDataInTransmition:
+		this->i2cTxSlaveState = i2cTransmitionState::lenDataTransmited;
+		break;
+	case i2cTransmitionState::packageDataInTransmition:
+		this->i2cTxSlaveState = i2cTransmitionState::packageDataTransmited;
+		break;
+	default:
+		break;
+	}
 }
 
 /*---------------------------------------------------------------
@@ -127,12 +183,13 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 	// configASSERT(this->pTransmitQueueObject = new i2cQueue4DynamicData(DEFAULT_TRANSMIT_QUEUE_SIZE));
 
 	// Tworzenie kolejki odbiorczej
-	configASSERT(this->s_receive_queue = xQueueCreate(10, sizeof(i2c_slave_rx_done_event_data_t)));
+	configASSERT(this->s_receive_queue = xQueueCreate(10, sizeof(i2cSlaveRxEvent)));	// element: zdarzenie I2C + kopia danych (ok. 72 B)
 	i2c_slave_event_callbacks_t cbs = {
 		.on_recv_done = i2c_slave_rx_done_callback,
 	};
 
-	rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	rxEvent.cbData.rx_fifo_end_addrLast = I2C0.fifo_st.rx_fifo_end_addr;
+	rxEvent.cbData.tx_fifo_start_addrLast = I2C0.fifo_st.tx_fifo_start_addr;
 
 	ESP_ERROR_CHECK(i2c_slave_register_event_callbacks(handler_i2c_dev_slave, &cbs, this->s_receive_queue));
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
@@ -165,24 +222,27 @@ void i2cEngin_slave::i2cMasterCrcSumCounterErrorReset(void)
  *---------------------------------------------------------------*/
 void i2cEngin_slave::i2cSlaveReceive(void)
 {
+	// Bufor roboczy sterownika I2C slave (ESP-IDF 5.2.8): i2c_slave_receive() przekazuje jego adres sterownikowi
+	// (t->buffer), a ISR sterownika zapisuje do niego odebrane bajty. Musi istnieć, ale task NIE czyta z niego danych:
+	// callback i2c_slave_rx_done_callback kopiuje zawartość (edata->buffer) do i2cSlaveRxEvent.data, a task parsuje
+	// wyłącznie rx_data.data. Dzięki temu ponowne uzbrojenie (i2c_slave_receive) nie koliduje z parsowaniem.
 	uint8_t *data_rd = new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
 
 	// uint32_t size_rd = 0;
-	i2c_slave_rx_done_event_data_t rx_data;
+	i2cSlaveRxEvent rx_data;	// kopia zdarzenia z kolejki - task pracuje wyłącznie na niej (nie na globalnym rxEvent ISR)
 	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
 	this->esp32i2cBusInitialised(); // informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 
-	i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)data_rd; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
+	i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)rx_data.data; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
 	i2cFrame_transmitQueue tempFrameToParserQueue;
 	while (1)
 	{
-		memset(data_rd, 0, ESP32_SLAVE_RECEIVE_BUFFER_LEN);
-
 		if (xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
 		{
 			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
-			if (rxToEsp32 == recpeptionToMe)
+			if (rx_data.cbData.rxToEsp32 == recpeptionToMe)
 			{
+				assert(fakeCommHeader->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN);	// długość spoza bufora = uszkodzona ramka; new/memcpy wyszłyby poza rx_data.data
 				void *tempData = static_cast<void *>(new char[fakeCommHeader->dataSize]);
 				if (tempData != nullptr)
 				{
@@ -190,7 +250,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 					// i2cFrame_hmiLeds tempToDelete;
 
 					tempFrameToParserQueue.dataSize = fakeCommHeader->dataSize;
-					memcpy(tempData, data_rd, tempFrameToParserQueue.dataSize);
+					memcpy(tempData, rx_data.data, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
 
 					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); // funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
@@ -202,7 +262,24 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 				// printf("Data len is%s\n", data_rd);
 				// printf("I2C rec. len:%d\n", fakeCommHeader->dataSize);
 				// printf("I2C rec\n");
+				printf("%s DIAG Reception to me\n", this->TAG);
 			}
+			// DIAGNOSTYKA rozpoznawania transakcji do/od ESP32 (jak w commit 8d705b12)
+			else if (rx_data.cbData.rxToEsp32 == recpeptionNotToMe)
+			{
+				printf("%s DIAG Reception NOT to me\n", this->TAG);
+			}
+			else if (rx_data.cbData.rxToEsp32 == transmitionFromMe)
+			{
+				printf("%s DIAG Transmition from me\n", this->TAG);
+			}
+			else if (rx_data.cbData.rxToEsp32 == transmitionNotFromMe)
+			{
+				printf("%s DIAG Transmition NOT from me\n", this->TAG);
+			}
+			printf("%s DIAG cb:%d slave_rw:%u slave_addressed:%u rx_fifo_end:%u tx_fifo_start:%u->%u tx_fifo_end:%u\n",
+				   this->TAG, rx_data.cbData.rxToEsp32, rx_data.cbData.diag_slave_rw, rx_data.cbData.diag_slave_addressed, rx_data.cbData.diag_rx_fifo_end_addr,
+				   rx_data.cbData.diag_tx_fifo_start_addrPrev, rx_data.cbData.diag_tx_fifo_start_addr, rx_data.cbData.diag_tx_fifo_end_addr);
 		}
 	}
 }
