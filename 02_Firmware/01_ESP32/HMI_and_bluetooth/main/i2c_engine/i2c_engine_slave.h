@@ -37,6 +37,7 @@ protected:
 	esp_err_t interruptRequestReset(void);
 private:
 	static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data);
+	void i2cTxStateNextFromISR(void);	// przesuwa i2cTxSlaveState po odczycie danych przez master (wywoływana z ISR)
 	inline static i2cEngin_slave* sInstance = nullptr;	// wskaźnik na obiekt dla statycznego callbacku ISR (zamiast this)
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
