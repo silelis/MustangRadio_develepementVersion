@@ -272,6 +272,7 @@ void startUpTask(void *noThing) {
 			xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions));
 }
 
+//callback od GPIO
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (esp32I2cInitialised == false) {
 		esp32I2cInitialised = true;
@@ -280,3 +281,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	}
 
 }
+
+//callbacki i2c
+//HAL_I2C_ErrorCallback 			//każdy błąd (NACK, BERR, ARLO, OVR, DMA). Nie mówi, czy dotyczył RX czy TX
+//HAL_I2C_AbortCpltCallback			//po HAL_I2C_Master_Abort_IT() (nasza ścieżka timeoutu)
+//HAL_I2C_MasterRxCpltCallback		//wywołuje	HAL_I2C_Master_Receive_DMA()
+//HAL_I2C_MemRxCpltCallback 		//wywołuje	HAL_I2C_Mem_Read_DMA()
+//HAL_I2C_MasterTxCpltCallback		//wywołuje	HAL_I2C_Master_Transmit_DMA()
+//HAL_I2C_MemTxCpltCallback			//wywołuje	HAL_I2C_Mem_Write_DMA()
