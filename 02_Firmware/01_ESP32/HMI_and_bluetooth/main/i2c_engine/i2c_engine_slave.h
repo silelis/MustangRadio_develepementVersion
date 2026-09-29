@@ -53,7 +53,8 @@ private:
 		lenDataTransmited,
 		packageDataInTransmition,
 		packageDataTransmited,
-		errorInTransmition
+		errorInTransmition,
+		timeoutInTransmition
 	};
 	volatile i2cTransmitionState i2cTxSlaveState = i2cTransmitionState::idle;	// volatile: zmieniane w ISR, czytane w tasku
 };
