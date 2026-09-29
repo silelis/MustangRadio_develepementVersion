@@ -275,13 +275,32 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 	i2cFrame_transmitQueue dataToTransmit;
 	esp_err_t retVal = ESP_FAIL;
 
+	// zmienne do cyklicznego (co txStatePrintPeriod_ms) wyświetlania stanu transmisji
+	const uint32_t txStatePrintPeriod_ms = 1000;
+	i2cTransmitionState txLastPrintedState = i2cTransmitionState::idle;
+	TickType_t txLastPrintTick = 0;		// tick ostatniego wydruku stanu, do odmierzania kolejnego printf co txStatePrintPeriod_ms
+	TickType_t txStateEntryTick = 0;	// tick wejścia w stan ...InTransmition, do wykrycia timeoutu (tx_timeout_ms)
+
+	// zwraca true przy wejściu w nowy stan lub gdy od ostatniego wydruku minęło txStatePrintPeriod_ms
+	auto isTimeToPrintTxState = [&](i2cTransmitionState currentState) -> bool {
+		TickType_t now = xTaskGetTickCount();
+		if ((currentState != txLastPrintedState) || ((now - txLastPrintTick) >= pdMS_TO_TICKS(txStatePrintPeriod_ms)))
+		{
+			txLastPrintedState = currentState;
+			txLastPrintTick = now;
+			return true;
+		}
+		return false;
+	};
+
 	while (1)
 	{
-		
+
 		switch(this->i2cTxSlaveState){
 			case i2cTransmitionState::idle:		
 				if (this->i2cSlaveTransmitDataQueue->QueueReceive(&dataToTransmit, portMAX_DELAY) == pdTRUE)
 				{
+					printf("%s i2c slave transmit IDLE\n", this->TAG);
 					retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)&dataToTransmit.dataSize, sizeof(dataToTransmit.dataSize), this->tx_timeout_ms);	// rozmiar danych → bufor TX
 					if (ESP_OK == retVal)
 					{
@@ -289,6 +308,7 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 						this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
 						esp_rom_delay_us(20);			// minimalna szerokość impulsu dla EXTI STM32
 						this->interruptRequestReset();
+						txStateEntryTick = xTaskGetTickCount();
 					}
 					else
 					{
@@ -297,9 +317,16 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 				}
 				break;
 			case i2cTransmitionState::lenDataInTransmition:
+				if (isTimeToPrintTxState(i2cTransmitionState::lenDataInTransmition)){
+					printf("%s i2c slave transmit LEN_DATA_IN_TRANSMITION\n", this->TAG);
+				}
+				if ((xTaskGetTickCount() - txStateEntryTick) >= pdMS_TO_TICKS(this->tx_timeout_ms)){
+					this->i2cTxSlaveState = i2cTransmitionState::timeoutInTransmition;	// STM32 nie odczytał len w czasie tx_timeout_ms
+				}
 				vTaskDelay(1);
 				break;
 			case i2cTransmitionState::lenDataTransmited:
+				printf("%s i2c slave transmit LEN_DATA_TRANSMITED\n", this->TAG);
 				retVal = i2c_slave_transmit(handler_i2c_dev_slave, (const uint8_t *)dataToTransmit.pData, dataToTransmit.dataSize, this->tx_timeout_ms);	// dane → bufor TX
 				if (ESP_OK == retVal)
 				{
@@ -307,6 +334,7 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 					this->interruptRequestSet();	// GPIO LOW: sygnał do STM32 "mam dane, czytaj"
 					esp_rom_delay_us(20);			// minimalna szerokość impulsu dla EXTI STM32
 					this->interruptRequestReset();
+					txStateEntryTick = xTaskGetTickCount();
 				}
 				else
 				{
@@ -314,14 +342,40 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 				}
 				break;
 			case i2cTransmitionState::packageDataInTransmition:
+				if (isTimeToPrintTxState(i2cTransmitionState::packageDataInTransmition)){
+					printf("%s i2c slave transmit PACKAGE_DATA_IN_TRANSMITION\n", this->TAG);
+				}
+				if ((xTaskGetTickCount() - txStateEntryTick) >= pdMS_TO_TICKS(this->tx_timeout_ms)){
+					this->i2cTxSlaveState = i2cTransmitionState::timeoutInTransmition;	// STM32 nie odczytał danych w czasie tx_timeout_ms
+				}
 				vTaskDelay(1);
 				break;
 			case i2cTransmitionState::packageDataTransmited:
+				printf("%s i2c slave transmit PACKAGE_DATA_TRANSMITED\n", this->TAG);
 				delete[] static_cast<char *>(dataToTransmit.pData);
+				dataToTransmit.pData = nullptr;
+				this->i2cTxSlaveState = i2cTransmitionState::idle;
 				break;
+			case i2cTransmitionState::timeoutInTransmition:
 			case i2cTransmitionState::errorInTransmition:
-				delete[] static_cast<char *>(dataToTransmit.pData);
-				assert(0);
+				if (isTimeToPrintTxState(i2cTransmitionState::errorInTransmition)){
+					switch(this->i2cTxSlaveState){
+					case i2cTransmitionState::errorInTransmition:
+						printf("%s i2c slave transmit ERROR_IN_TRANSMITION\n", this->TAG);
+						break;
+					case i2cTransmitionState::timeoutInTransmition:
+					printf("%s i2c slave transmit TIMEOUT_IN_TRANSMITION\n", this->TAG);
+						break;
+					default:
+						break;
+					};
+					
+				}
+				if (dataToTransmit.pData != nullptr){
+					delete[] static_cast<char *>(dataToTransmit.pData);
+					dataToTransmit.pData = nullptr;
+				}
+				vTaskDelay(1);
 				break;
 		}
 	}
