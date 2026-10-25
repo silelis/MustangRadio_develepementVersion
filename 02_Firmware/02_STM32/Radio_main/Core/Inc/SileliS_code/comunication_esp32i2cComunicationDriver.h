@@ -17,11 +17,19 @@
 
 class esp32_i2cComunicationDriver {
 public:
+	enum i2cReceiveStates{
+		idle,
+		lenDataInReception,
+		lenDataReceived,
+		packageDataInReception,
+		packageDataReceived,
+		errorpackageDataInReception,
+		timeoutpackageDataInReception
+	};
 	static const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32; //7bit address
 	esp32_i2cComunicationDriver(i2cMaster *pointer_to_i2cMasterObject);
 	virtual ~esp32_i2cComunicationDriver();
 	BaseType_t semaphoreTake__CountingSemaphore(void);
-
 	void incrementInterruptRequestCountingSemaphore(void); //metoda wywoływana podczas wykrycia sygnały interrupt request, aby inkrementować semafor zliczający wystąpienia
 	void isCountingSemaphoreOverflowed(void);
 	//void seteDynamicmMemeoryAlocationError();
@@ -38,9 +46,11 @@ public:
 	void while_I2C_STATE_READY(void);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);
+	enum i2cReceiveStates getI2cRxMasaterState(void);
 protected:
 
 private:
+	volatile i2cReceiveStates i2cRxMasaterState = i2cReceiveStates::idle;
 	HAL_StatusTypeDef masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
 	HAL_StatusTypeDef masterReceiveFromESP32_DMA_inSequence(uint8_t *pData,
 			uint16_t Size, uint32_t XferOptions);

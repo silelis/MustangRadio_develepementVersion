@@ -125,12 +125,38 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing) {
 //jeśli hmi (ESP32) ma jakieś dane do wyslania to najpierw ustawia linie INTIREQ na poziom niski. To 2 STM32 uruchamia to przerwanie, które callback
 // funkcja HAL_GPIO_EXTI_Callback podnosi wartość semafora zliczajacego dane do doczytania z ESP32, a ta funkcja odczytuje te dane i zmniejsza wartośc semafora
 static void esp32I2cIntrrruptRequest(void *pNothing) {
+	esp32_i2cComunicationDriver::i2cReceiveStates pESP32_I2cRxMasaterState;
+	bool stayInLoop;
 	while (1) {
 		pESP32->isCountingSemaphoreOverflowed();
 		if (pESP32->semaphoreTake__CountingSemaphore()) {//czeka dopuki nie pojawi się esp32 interrupt request
-			pi2cMaster->setI2cAdressToAdressQueue(
-					pESP32->esp32i2cSlaveAdress_7bit);
+
+			stayInLoop = true;
+			do{
+				pESP32_I2cRxMasaterState=pESP32->getI2cRxMasaterState();
+
+				if((pESP32_I2cRxMasaterState==esp32_i2cComunicationDriver::i2cReceiveStates::lenDataInReception)||
+						(pESP32_I2cRxMasaterState==esp32_i2cComunicationDriver::i2cReceiveStates::packageDataInReception)||
+						(pESP32_I2cRxMasaterState==esp32_i2cComunicationDriver::i2cReceiveStates::packageDataReceived)){
+					vTaskDelay(1);
+				}
+				else{
+					stayInLoop = false;
+				}
+			}while(stayInLoop);
+
+			switch(pESP32_I2cRxMasaterState){
+			case esp32_i2cComunicationDriver::i2cReceiveStates::idle:
+			case esp32_i2cComunicationDriver::i2cReceiveStates::lenDataReceived:
+				pi2cMaster->setI2cAdressToAdressQueue(pESP32->esp32i2cSlaveAdress_7bit);
+				break;
+			case esp32_i2cComunicationDriver::i2cReceiveStates::timeoutpackageDataInReception:
+			case esp32_i2cComunicationDriver::i2cReceiveStates::errorpackageDataInReception:
+				assert(0);
+				break;
+			}
 		}
+		vTaskDelay(1);
 	};
 }
 
