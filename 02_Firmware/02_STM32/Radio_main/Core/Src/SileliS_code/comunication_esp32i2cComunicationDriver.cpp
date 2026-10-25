@@ -327,6 +327,10 @@ void esp32_i2cComunicationDriver::parseReceivedData(
 	}
 }
 
+enum esp32_i2cComunicationDriver::i2cReceiveStates esp32_i2cComunicationDriver::getI2cRxMasaterState(void){
+	return this->i2cRxMasaterState;
+}
+
 #include <SileliS_code/menu_radioMenu.h>
 
 extern radioMenu *pRadioMenu;		//from tasksFunctions.cpp
