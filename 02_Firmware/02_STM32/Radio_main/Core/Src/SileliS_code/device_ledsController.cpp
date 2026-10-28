@@ -163,7 +163,7 @@ BaseType_t ledsController::sendDataToI2cTransmitQueueLeds() {
 					hmiLedsToSend.i2cframeCommandHeader.dataSize/*sizeof(i2cFrame_hmiLeds)*/);
 	//tworzy ramkę komunikacujną do przesłania
 	i2cFrame_transmitQueue dataToTransmitQueue;
-	dataToTransmitQueue.pData = new (std::nothrow) i2cFrame_hmiLeds; //new i2cFrame_hmiLeds[1];//malloc(sizeof(i2cFrame_hmiLeds));
+	dataToTransmitQueue.pData = new (std::nothrow) char[sizeof(i2cFrame_hmiLeds)]; //alokacja jako char[] - zgodnie z delete[] (char*) w i2cQueue4DynamicData::QueueDeleteDataFromPointer()
 
 	if (dataToTransmitQueue.pData != nullptr) {
 		dataToTransmitQueue.slaveDevice7bitAddress = I2C_SLAVE_ADDRESS_ESP32;

@@ -16,17 +16,20 @@
 
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 struct i2cFrame_transmitQueue {
-	uint8_t slaveDevice7bitAddress;	//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
-	size_t dataSize;//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
-	void *pData;//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane
-	i2cFrame_transmitQueue() :
-			slaveDevice7bitAddress(0), dataSize(0), pData(nullptr) {
-	}
+	uint8_t slaveDevice7bitAddress = 0;	//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
+	size_t dataSize = 0;//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
+	//UWAGA - zasada alokacji pamięci dla pData (wspólna dla STM32 i ESP32):
+	// - pData ZAWSZE alokować jako tablicę char: new (std::nothrow) char[rozmiar] (STM32) / new char[rozmiar] (ESP32),
+	//   także wtedy, gdy pod pData leży konkretna struktura, np. new (std::nothrow) char[sizeof(i2cFrame_hmiLeds)] + memcpy,
+	// - NIE używać new T, new T[n], ani malloc() - pamięć zwalnia wyłącznie i2cQueue4DynamicData::QueueDeleteDataFromPointer()
+	//   przez delete[] static_cast<char*>(pData), która nie zna typu danych,
+	// - pData == nullptr oznacza ramkę bez danych dynamicznych (np. ramka adresowa w kolejce odczytu) - delete[] nullptr jest bezpieczne.
+	void *pData = nullptr;//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane (inicjalizacja: ramka bez danych dynamicznych ma pData == nullptr, bezpieczne delete[] przy pełnej kolejce)
 };
 #else
 	typedef struct{
-		size_t dataSize;					//jak wyżej
-		void *pData;						//jak wyżej
+		size_t dataSize = 0;				//jak wyżej (inicjalizacja: ramka bez danych dynamicznych ma pData == nullptr, bezpieczne delete[] przy pełnej kolejce)
+		void *pData = nullptr;				//jak wyżej
 	} i2cFrame_transmitQueue;				//jak wyżej
 
 #endif
