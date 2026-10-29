@@ -148,36 +148,46 @@ Fakty sprzętowe/HAL (sprawdzone):
 | task, `masterReceiveData` `case idle` (token #1) | `dataSizeToRead = 0`; `idle → lenDataInReception` (przed startem DMA 4 B do `dataSizeToRead`) |
 | ISR `rxCompleteFromISR()` (z `HAL_I2C_MasterRxCpltCallback`) | `lenDataInReception → lenDataReceived`; `packageDataInReception → packageDataReceived` (TYLKO gdy stan `…InReception`) |
 | ISR `rxErrorFromISR()` (z `HAL_I2C_ErrorCallback`) | `…InReception → errorpackageDataInReception` (TYLKO gdy stan `…InReception`) |
-| task, `masterReceiveFromESP32_DMA` | start ≠ `HAL_OK` → `errorpackageDataInReception`; timeout → **najpierw** `timeoutpackageDataInReception`, **potem** `I2C_Master_Abort()` (spóźniony callback nic już nie zmieni) |
-| task, `case lenDataReceived` (token #2) | len poza `sizeof(i2cFrame_commonHeader) … ESP32_SLAVE_RECEIVE_BUFFER_LEN` → `errorpackageDataInReception`; `new (std::nothrow) char[len]` = nullptr → printf + `assert`; `lenDataReceived → packageDataInReception` (przed DMA) |
+| task, `masterReceiveFromESP32_DMA` | start ≠ `HAL_OK` → `errorpackageDataInReception`; timeout (`ESP32_I2C_RX_TIMEOUT_MS`) → **najpierw** `timeoutpackageDataInReception`, **potem** `I2C_Master_Abort()` (spóźniony callback nic już nie zmieni); po czekaniu stan `errorpackageDataInReception` (z ISR) → wykrywa task |
+| task, `case lenDataReceived` (token #2) | len poza `sizeof(i2cFrame_commonHeader) … ESP32_SLAVE_RECEIVE_BUFFER_LEN` → `errorpackageDataInReception`; `new (std::nothrow) char[len]` = nullptr → printf `"error with memory allocation."` + `//todo` + `assert`; `lenDataReceived → packageDataInReception` (przed DMA) |
 | task, po `packageDataReceived` | `dataFrame->pData/dataSize` ustawione, `dataSizeToRead = 0`, stan → `idle` |
-| task `esp32I2cIntrrruptRequest` | tylko czyta stan; error/timeout → printf + `assert(0)` |
+| task `esp32I2cIntrrruptRequest` | tylko czyta stan; `idle`/`lenDataReceived` → adres do kolejki; `default:` → printf + `//todo` + `assert(0)` (zabezpieczenie) |
+
+**WAŻNE (ustalone 2026-10-29):** `printf` + `//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32` + `assert(0)` MUSZĄ być **w miejscu wykrycia błędu w tasku odbioru** (kroki 7 i 8), a NIE w `esp32I2cIntrrruptRequest` — ten `switch` wykonuje się tylko po nowym impulsie INT, a ESP32 po błędzie/timeoucie przechodzi w stan końcowy `timeoutInTransmition` i INT już nie wyśle (błąd przeszedłby niezauważony). W ISR (`rxErrorFromISR`) tylko zmiana stanu — bez printf (`feedPrintf` nie jest ISR-safe); task wykrywa błąd w pętli czekania ≤1 ms później.
+- `feedPrintf` tylko kolejkuje tekst; `assert` → `_exit()` → `while(1)` (`syscalls.c:64`) z włączonymi przerwaniami. Task odbioru i `printfTask` mają ten sam priorytet 0 → time slicing → komunikat się wypisze. Użytkownik **NIE chce** `vTaskDelay` przed `assert`.
 
 ### 5.3 Decyzje użytkownika (PODJĘTE)
 - Czekanie na koniec DMA: **pętla `vTaskDelay(1)`** sprawdzająca stan (nie `xTaskNotify`).
 - Abort: **nowa metoda `i2cMaster::I2C_Master_Abort()`** (`HAL_I2C_Master_Abort_IT(p_hi2c1, …)`).
-- Po błędzie/timeoucie: **zostajemy w stanie błędu**, sygnalizacja `printf` + `assert(0)` w `esp32I2cIntrrruptRequest`. Obsługi błędów (recovery) na razie NIE ma — użytkownik zrobi ją, gdy błędy zaczną występować.
+- Po błędzie/timeoucie: **zostajemy w stanie błędu**, sygnalizacja `printf` + `//todo` + `assert(0)` **w miejscu wykrycia** (patrz „WAŻNE” w 5.2). Obsługi błędów (recovery) na razie NIE ma — użytkownik zrobi ją, gdy błędy zaczną występować.
+- Komentarz przy każdym takim `assert` (STM32 i ESP32): `//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32`.
+- **ESP32 też dostaje `assert(0)`** w stanach `timeoutInTransmition`/`errorInTransmition` (po istniejącym printf). W ESP-IDF zwykły `assert` jest właściwy (asercje włączone w `sdkconfig`: `CONFIG_COMPILER_OPTIMIZATION_ASSERTIONS_ENABLE=y`); po panice ESP32 domyślnie się **resetuje** (nie wisi).
+- **Wspólny timeout:** `ESP32_I2C_TX_TIMEOUT_MS 500` w `comunicationProtocol.h` (plik wspólny); ESP32 `tx_timeout_ms = ESP32_I2C_TX_TIMEOUT_MS`; STM32 `ESP32_I2C_RX_TIMEOUT_MS (ESP32_I2C_TX_TIMEOUT_MS + 100)` w `comunication_esp32i2cComunicationDriver.h` — STM32 czeka dłużej niż ESP32 (ESP liczy od INT, STM od startu DMA). Margines +100 ms zaakceptowany.
 - `len` + stan → **struktura** w `esp32_i2cComunicationDriver`.
-- `assert` przy braku pamięci zostaje, ale przeniesiony do `new` w fazie danych (w tasku po fazie len `pData == nullptr` jest poprawne).
-- Usunąć `#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE` i martwy kod `_inSequence`.
-- `switch` w `esp32I2cIntrrruptRequest` dostaje `default:` z `printf` + `assert(0)`.
+- `assert` przy braku pamięci (`"error with memory allocation."`) zostaje, ale przeniesiony do `new` w fazie danych (`case lenDataReceived`); w tasku po fazie len `pData == nullptr` jest poprawne.
+- Usunąć `#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE` i CAŁY martwy kod `_inSequence` (także `i2cMaster::I2C_Master_Receive_DMA_inSequence` i komentarz `comunicationProtocol.h:15`) — zaakceptowane.
+- `switch` w `esp32I2cIntrrruptRequest`: `idle`/`lenDataReceived` → kolejka, `default:` z `printf` + `//todo` + `assert(0)`.
 - `HAL_GPIO_EXTI_Callback` — dodać sprawdzenie pinu i `pESP32 != nullptr`.
+- **Sposób pracy (wymóg użytkownika):** dla każdego kroku Claude pokazuje **diff w czacie**, czeka na „akceptuję krok X”, dopiero wtedy `Edit`. Kroki wieloplikowe/wielomiejscowe → kilka `Edit` (1a, 1b…).
 
-### 5.4 Kroki (każdy = osobny `Edit` z akceptacją; **kroki 1–12 jeszcze NIEZAAKCEPTOWANE formalnie — zapytaj**)
+### 5.4 Kroki — **ZAAKCEPTOWANE 2026-10-29 (plan); każdy diff akceptowany osobno**
 | # | Plik | Zmiana |
 |---|---|---|
-| 1 | `comunication_esp32i2cComunicationDriver.h` | `struct i2cRxMasterControl { volatile i2cReceiveStates state = idle; size_t dataSizeToRead = 0; };` (typ w `public`, pole `i2cRxMaster` w `private`) zastępuje `i2cRxMasaterState`; deklaracje `rxCompleteFromISR()` / `rxErrorFromISR()`; `static_assert(sizeof(size_t)==4)` |
+| 1 | `comunication_esp32i2cComunicationDriver.h` | **1a:** pod `enum i2cReceiveStates` (public): `struct i2cRxMasterControl { volatile i2cReceiveStates state = i2cReceiveStates::idle; size_t dataSizeToRead = 0; };` + `static_assert(sizeof(size_t) == 4, …)`. **1b:** po `getI2cRxMasaterState()` deklaracje `void rxCompleteFromISR(void);` / `void rxErrorFromISR(void);`; w `private` `volatile i2cReceiveStates i2cRxMasaterState` → `i2cRxMasterControl i2cRxMaster;` (projekt nie kompiluje się między krokiem 1 a 2) |
 | 2 | `.cpp` | `getI2cRxMasaterState()` zwraca `i2cRxMaster.state` |
-| 3 | `.cpp` | definicje `rxCompleteFromISR()` / `rxErrorFromISR()` (przejścia z 5.2) |
+| 3 | `.cpp` | definicje `rxCompleteFromISR()` / `rxErrorFromISR()` (przejścia z 5.2, tylko ze stanów `…InReception`) |
 | 4 | `comunication_i2cEngine.h/.cpp` | `i2cMaster::I2C_Master_Abort()` |
-| 5 | `Inc/hwConfigFile.h` | `#define ESP32_I2C_RX_TIMEOUT_MS 50` (limit jednej fazy) |
+| 5a | `comunicationProtocol.h` (wspólny) | `#define ESP32_I2C_TX_TIMEOUT_MS 500` |
+| 5b | ESP32 `main/i2c_engine/i2c_engine_slave.h:45` | `const int tx_timeout_ms = ESP32_I2C_TX_TIMEOUT_MS;` |
+| 5c | `comunication_esp32i2cComunicationDriver.h` | `#define ESP32_I2C_RX_TIMEOUT_MS (ESP32_I2C_TX_TIMEOUT_MS + 100)` |
 | 6 | `tasksFunctions.cpp` | `HAL_I2C_MasterRxCpltCallback` + `HAL_I2C_ErrorCallback` (warunki `hi2c == &hi2c1`, `pESP32 != nullptr`) → metody z kroku 3 |
-| 7 | `.cpp` `masterReceiveFromESP32_DMA()` | start DMA → pętla `vTaskDelay(1)` aż stan ≠ `…InReception` → timeout: stan + `I2C_Master_Abort()` → `giveESP32I2CInterfaceTime()` |
-| 8 | `.cpp` `masterReceiveData()` | `switch` po stanie wg 5.2; `== HAL_OK`; usunąć nieużywane `uint8_t dataSize` (dziś ostrzeżenie kompilatora) |
-| 9 | `tasksFunctions.cpp` `i2cMasterReceiveFromSlaveDataTask` | do parsera tylko `pData != nullptr`; usunąć stary `assert` „error with memory allocation” (ramka z kolejki adresów ma już `pData == nullptr` z inicjalizatorów struktury — patrz 6.1) |
-| 10 | `tasksFunctions.cpp` `esp32I2cIntrrruptRequest` | error/timeout → `printf` + `assert(0)`; `default:` → `printf` + `assert(0)` (usuwa dzisiejsze `-Wswitch`) |
+| 7 | `.cpp` `masterReceiveFromESP32_DMA()` | start DMA (≠`HAL_OK` → stan error) → pętla `vTaskDelay(1)` aż stan ≠ `…InReception` lub `ESP32_I2C_RX_TIMEOUT_MS` → timeout: stan + `I2C_Master_Abort()`; error/timeout → printf (faza, stan, `dataSizeToRead`) + `//todo` + `assert(0)`; `giveESP32I2CInterfaceTime()` |
+| 8 | `.cpp` `masterReceiveData()` | `switch` po stanie wg 5.2; len poza zakresem / `new == nullptr` → printf + `//todo` + `assert(0)`; `== HAL_OK`; usunąć nieużywane `uint8_t dataSize` |
+| 9 | `tasksFunctions.cpp:117-120` | usunąć `else if (pData == nullptr)` → printf + `assert` (przeniesione do kroku 8); `if (pData != nullptr)` → parser zostaje |
+| 10 | `tasksFunctions.cpp` `esp32I2cIntrrruptRequest` | `case idle`/`lenDataReceived` → kolejka; `default:` → printf + `//todo` + `assert(0)` (usuwa `-Wswitch`) |
 | 11 | `tasksFunctions.cpp` `HAL_GPIO_EXTI_Callback` | `switch (GPIO_Pin) { case esp32i2cInterruptReqest_Pin: if (!esp32I2cInitialised) …=true; else if (pESP32 != nullptr) pESP32->incrementInterruptRequestCountingSemaphore(); break; default: break; }` — bez printf (feedPrintf nie jest ISR-safe) |
-| 12 | `.h`/`.cpp` drivera, `tasksFunctions.cpp:101-106` | usunięcie `STM32_2_ESP32_I2C_IN_SEQUENCE`, `masterReceiveDataInSequence`, `masterReceiveFromESP32_DMA_inSequence`; **do potwierdzenia:** także `i2cMaster::I2C_Master_Receive_DMA_inSequence` i komentarz w `comunicationProtocol.h:15` |
+| 12 | driver `.h/.cpp`, `tasksFunctions.cpp:101-106`, `comunication_i2cEngine.h:44/.cpp:198`, `comunicationProtocol.h:15` | usunięcie `STM32_2_ESP32_I2C_IN_SEQUENCE`, `masterReceiveDataInSequence`, `masterReceiveFromESP32_DMA_inSequence`, `i2cMaster::I2C_Master_Receive_DMA_inSequence`, komentarz o makrze |
+| 13 | ESP32 `main/i2c_engine/i2c_engine_slave.cpp:436-450` | w `case timeoutInTransmition`/`errorInTransmition` po printf stanu: `//todo` + `assert(0)` |
 
 Przyszłość (poza zakresem): TX do ESP32 przez `MasterTxCpltCallback`, `Mem_*` dla EEPROM/MCP23008.
 
@@ -211,9 +221,11 @@ Przyszłość (poza zakresem): TX do ESP32 przez `MasterTxCpltCallback`, `Mem_*`
 
 ## 7. Gdzie jesteśmy / co dalej (START TUTAJ)
 
-1. Zapytać użytkownika o: akceptację kroków 1–12 z p. 5.4, zakres kroku 12, propozycję z 6.1 (nazwa struktury w `#else`).
-2. Realizować kroki 1–12 pojedynczo (osobny `Edit` na krok, każdy akceptowany w prompcie narzędzia).
-3. Po krokach: kompilacja STM32 (jak w 6.3) i ESP32.
+1. Plan (kroki 1–13 z p. 5.4) **zaakceptowany 2026-10-29**. Żaden krok nie jest jeszcze wprowadzony.
+2. **Następny: krok 1** — diff 1a/1b był pokazany w czacie, czeka na „akceptuję krok 1”. Pokaż go ponownie (treść w 5.4) i czekaj na akceptację.
+3. Realizować kroki 1–13 pojedynczo: diff w czacie → akceptacja → `Edit`.
+4. Po krokach: kompilacja STM32 i ESP32 (jak w 6.3).
+5. Otwarte (niezaakceptowane, opcjonalne): nazwa struktury w `#else` z 6.1.
 4. (Użytkownik, w domu) test pełnego protokołu na sprzęcie + diagnostyka ESP32 wg p. 3.4.
 5. Usunięcie printfów DIAG po stronie ESP32 (lub `#ifdef`) — po uzgodnieniu.
 6. Commit — tylko na prośbę użytkownika.
