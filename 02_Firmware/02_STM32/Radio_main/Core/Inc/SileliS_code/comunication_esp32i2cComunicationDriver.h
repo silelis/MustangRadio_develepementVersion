@@ -15,6 +15,8 @@
 //#include <iostream>
 #include "SileliS_code/myPrintfTask.h"
 
+#define ESP32_I2C_RX_TIMEOUT_MS		(ESP32_I2C_TX_TIMEOUT_MS + 100)	//czas [ms] oczekiwania STM32 na zakończenie odczytu jednej fazy ramki z ESP32 (len lub dane) - dłuższy niż ESP32_I2C_TX_TIMEOUT_MS, bo ESP32 liczy od impulsu INT, a STM32 od startu DMA
+
 class esp32_i2cComunicationDriver {
 public:
 	enum i2cReceiveStates{
@@ -26,6 +28,12 @@ public:
 		errorpackageDataInReception,
 		timeoutpackageDataInReception
 	};
+	//struktura kontrolująca odbiór danych z esp32 (2 fazy: len, dane). Zmieniana przez task odbioru i callbacki HAL (ISR)
+	struct i2cRxMasterControl {
+		volatile i2cReceiveStates state = i2cReceiveStates::idle;	//stan odbioru - task ustawia ...InReception PRZED startem DMA, ISR przesuwa na ...Received / errorpackageDataInReception
+		size_t dataSizeToRead = 0;	//długość ramki odczytana w fazie len (token #1), używana w fazie danych (token #2)
+	};
+	static_assert(sizeof(size_t) == 4, "ESP32 wysyła długość ramki jako size_t (4 B) - size_t na STM32 musi mieć ten sam rozmiar");
 	static const uint8_t esp32i2cSlaveAdress_7bit = I2C_SLAVE_ADDRESS_ESP32; //7bit address
 	esp32_i2cComunicationDriver(i2cMaster *pointer_to_i2cMasterObject);
 	virtual ~esp32_i2cComunicationDriver();
@@ -38,22 +46,19 @@ public:
 	//BaseType_t i2cMasterSemaphoreGive(void);
 	//HAL_StatusTypeDef ping(void);
 	HAL_StatusTypeDef masterReceiveData(i2cFrame_transmitQueue *dataFrame);
-#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
-	HAL_StatusTypeDef masterReceiveDataInSequence(i2cFrame_transmitQueue *dataFrame);
-#endif
 
 	BaseType_t masterTransmitData(i2cFrame_transmitQueue *dataFrame);
 	void while_I2C_STATE_READY(void);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);
 	enum i2cReceiveStates getI2cRxMasaterState(void);
+	void rxCompleteFromISR(void);	//wywoływana z HAL_I2C_MasterRxCpltCallback: lenDataInReception -> lenDataReceived, packageDataInReception -> packageDataReceived
+	void rxErrorFromISR(void);		//wywoływana z HAL_I2C_ErrorCallback: ...InReception -> errorpackageDataInReception
 protected:
 
 private:
-	volatile i2cReceiveStates i2cRxMasaterState = i2cReceiveStates::idle;
+	i2cRxMasterControl i2cRxMaster;	//stan odbioru i długość ramki z esp32
 	HAL_StatusTypeDef masterReceiveFromESP32_DMA(uint8_t *pData, uint16_t Size);
-	HAL_StatusTypeDef masterReceiveFromESP32_DMA_inSequence(uint8_t *pData,
-			uint16_t Size, uint32_t XferOptions);
 
 	const char *TAG = "ESP32 communication driver log:";
 	BaseType_t isCrcSumCorreect(i2cFrame_transmitQueue I2CReceivedFrame,

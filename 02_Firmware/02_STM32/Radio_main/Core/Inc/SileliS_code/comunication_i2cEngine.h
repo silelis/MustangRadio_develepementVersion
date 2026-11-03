@@ -41,11 +41,9 @@ public:
 
 	HAL_StatusTypeDef I2C_Master_Receive_DMA(uint16_t DevAddress_7bit,
 			uint8_t *pData, uint16_t Size);
-	HAL_StatusTypeDef I2C_Master_Receive_DMA_inSequence(
-			uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size,
-			uint32_t XferOptions);
 	HAL_StatusTypeDef I2C_Master_Transmite_DMA(uint16_t DevAddress_7bit,
 			uint8_t *pData, uint16_t Size);
+	HAL_StatusTypeDef I2C_Master_Abort(uint16_t DevAddress_7bit);	//przerywa trwającą transmisję/odbiór master (np. po timeoucie)
 	void while_I2C_STATE_READY(void);
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);

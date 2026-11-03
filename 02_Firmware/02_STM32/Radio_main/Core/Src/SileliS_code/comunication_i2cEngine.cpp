@@ -195,17 +195,25 @@ HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA(uint16_t DevAddress_7bit,
 	//return retVal;
 }
 
-HAL_StatusTypeDef i2cMaster::I2C_Master_Receive_DMA_inSequence(
-		uint16_t DevAddress_7bit, uint8_t *pData, uint16_t Size,
-		uint32_t XferOptions) {
-	if ((XferOptions == I2C_FIRST_AND_LAST_FRAME)
-			|| (XferOptions == I2C_FIRST_FRAME)
-			|| (XferOptions == I2C_FIRST_AND_NEXT_FRAME)) {
-		this->while_I2C_STATE_READY();
-	}
-//	this->while_I2C_STATE_READY();
-	return HAL_I2C_Master_Seq_Receive_DMA(this->p_hi2c1, DevAddress_7bit << 1,
-			pData, Size, XferOptions);
+/********************************************************************
+ * @brief  Przerywa trwającą transmisję/odbiór i2c w trybie master.
+ *
+ * Wywołuje HAL_I2C_Master_Abort_IT() - używane gdy odbiór/nadawanie
+ * nie zakończyło się w zadanym czasie (timeout).
+ *
+ * @param  [DevAddress_7bit] [uint16_t] 7-bitowy adres slave, z którym
+ * 			trwa transmisja
+ *
+ * @return [HAL_StatusTypeDef] aka. wartość zwracana przez
+ * 			HAL_I2C_Master_Abort_IT
+ *
+ * @note   Po zakończeniu przerwania HAL wywołuje
+ * 			HAL_I2C_AbortCpltCallback (NIE HAL_I2C_ErrorCallback).
+ * @warning Zwraca HAL_ERROR, gdy interfejs nie jest w trakcie
+ * 			transmisji master.
+ *******************************************************************/
+HAL_StatusTypeDef i2cMaster::I2C_Master_Abort(uint16_t DevAddress_7bit) {
+	return HAL_I2C_Master_Abort_IT(this->p_hi2c1, DevAddress_7bit << 1);
 }
 
 HAL_StatusTypeDef i2cMaster::I2C_Master_Transmite_DMA(uint16_t DevAddress_7bit,

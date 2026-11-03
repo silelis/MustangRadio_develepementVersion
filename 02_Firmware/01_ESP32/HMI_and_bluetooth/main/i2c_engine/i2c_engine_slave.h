@@ -42,7 +42,7 @@ private:
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
 	//const int tx_timeout_ms = 5500;	// [BUG] zbyt długi timeout: gdy STM32 nie odpowiada, task i2cSlaveTransmit blokuje na 5500ms → ring buffer zapełnia się → "no space in ringbuffer" co dokładnie 5500ms
-	const int tx_timeout_ms = 500;		// [FIX] STM32 odpowiada w ~20ms (7ms ESP_delay + narzut HAL); 500ms = 25× margines, ale nie blokuje systemu przy braku odpowiedzi STM32
+	const int tx_timeout_ms = ESP32_I2C_TX_TIMEOUT_MS;		// [FIX] STM32 odpowiada w ~20ms (7ms ESP_delay + narzut HAL); 500ms = 25× margines, ale nie blokuje systemu przy braku odpowiedzi STM32. Wartość wspólna z STM32 - comunicationProtocol.h
 	i2cQueue4DynamicData* i2cSlaveReceiveDataToDataParserQueue;
 	i2cQueue4DynamicData* i2cSlaveTransmitDataQueue;
 	

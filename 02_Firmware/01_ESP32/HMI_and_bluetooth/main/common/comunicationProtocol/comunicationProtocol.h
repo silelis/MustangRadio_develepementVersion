@@ -12,8 +12,6 @@
 #include <stdio.h>
 #include <stdint.h> 
 
-//#define STM32_2_ESP32_I2C_IN_SEQUENCE  - nie działa po stronie STM32 i nie wiem jak naprawić nie właczać!!!
-
 #ifdef I2C_STM32_TO_ESP32_ROLE_MASTER
 struct i2cFrame_transmitQueue {
 	uint8_t slaveDevice7bitAddress = 0;	//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
@@ -42,6 +40,7 @@ typedef struct {
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
 #define ESP32_SLAVE_RECEIVE_BUFFER_LEN			52		//wygląda na to, że 52 to max
+#define ESP32_I2C_TX_TIMEOUT_MS					500		//czas [ms], przez jaki ESP32 czeka, aż STM32 odczyta każdą fazę ramki (len, dane); STM32 czeka dłużej (ESP32_I2C_RX_TIMEOUT_MS)
 
 //DEFINICJE I STRUKTURY KOMUNIKACYJNE POMIĘDZY STM32 i ESP32
 #define I2C_COMMAND_GROUP_SYSTEM			0x00

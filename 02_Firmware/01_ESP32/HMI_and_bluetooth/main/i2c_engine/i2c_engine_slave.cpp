@@ -446,7 +446,8 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 					default:
 						break;
 					};
-					
+					//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
+					assert(0);
 				}
 				if (dataToTransmit.pData != nullptr){
 					delete[] static_cast<char *>(dataToTransmit.pData);

@@ -97,26 +97,16 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing) {
 			pi2cMaster->i2cMasterSemaphoreTake();
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress) {
 			case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
-
-#ifdef STM32_2_ESP32_I2C_IN_SEQUENCE
-
-				pESP32->masterReceiveDataInSequence(&I2CFrameToReadFromSlave);
-#else
 				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
-#endif
-
 				break;
 			default:
 				pPrintf->feedPrintf("I2C slave address not recognized.");
 				assert(0);
 			}
 			pi2cMaster->i2cMasterSemaphoreGive();
-			if (I2CFrameToReadFromSlave.pData != nullptr) {
+			if (I2CFrameToReadFromSlave.pData != nullptr) {	//po fazie len (esp32) pData == nullptr - nic do parsera; kontrola alokacji w esp32_i2cComunicationDriver::masterReceiveData()
 				pi2cMaster->passReceivedI2cDataToParsingQueue(
 						&I2CFrameToReadFromSlave);
-			} else if (I2CFrameToReadFromSlave.pData == nullptr) {
-				pPrintf->feedPrintf("error with memory allocation.");
-				assert(0);
 			}
 		}
 	}
@@ -150,8 +140,10 @@ static void esp32I2cIntrrruptRequest(void *pNothing) {
 			case esp32_i2cComunicationDriver::i2cReceiveStates::lenDataReceived:
 				pi2cMaster->setI2cAdressToAdressQueue(pESP32->esp32i2cSlaveAdress_7bit);
 				break;
-			case esp32_i2cComunicationDriver::i2cReceiveStates::timeoutpackageDataInReception:
-			case esp32_i2cComunicationDriver::i2cReceiveStates::errorpackageDataInReception:
+			default:	//error/timeout zgłasza (printf + assert) task odbioru w miejscu wykrycia - tu tylko zabezpieczenie
+				pPrintf->feedPrintf("esp32 interrupt request in unexpected rx state: %d",
+						(int) pESP32_I2cRxMasaterState);
+				//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 				assert(0);
 				break;
 			}
@@ -300,12 +292,17 @@ void startUpTask(void *noThing) {
 
 //callback od GPIO
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (esp32I2cInitialised == false) {
-		esp32I2cInitialised = true;
-	} else {
-		pESP32->incrementInterruptRequestCountingSemaphore();//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
+	switch (GPIO_Pin) {
+	case esp32i2cInterruptReqest_Pin:		//esp32 interrupt request
+		if (esp32I2cInitialised == false) {
+			esp32I2cInitialised = true;
+		} else if (pESP32 != nullptr) {		//okno między impulsem inicjalizacji, a utworzeniem pESP32 (bez printf - feedPrintf nie jest ISR-safe)
+			pESP32->incrementInterruptRequestCountingSemaphore();//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
+		}
+		break;
+	default:	//przerwania od innych pinów EXTI - obecnie nieużywane
+		break;
 	}
-
 }
 
 //callbacki i2c
@@ -315,3 +312,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //HAL_I2C_MemRxCpltCallback 		//wywołuje	HAL_I2C_Mem_Read_DMA()
 //HAL_I2C_MasterTxCpltCallback		//wywołuje	HAL_I2C_Master_Transmit_DMA()
 //HAL_I2C_MemTxCpltCallback			//wywołuje	HAL_I2C_Mem_Write_DMA()
+
+//callback HAL: zakończony odczyt master przez DMA (po STOP) - przesuwa stan odbioru z esp32
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+	if ((hi2c == &hi2c1) && (pESP32 != nullptr)) {
+		pESP32->rxCompleteFromISR();	//zmienia stan tylko gdy trwa odbiór z esp32 (...InReception)
+	}
+}
+
+//callback HAL: błąd i2c (NACK, BERR, ARLO, OVR, DMA) - ustawia stan błędu odbioru z esp32
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
+	if ((hi2c == &hi2c1) && (pESP32 != nullptr)) {
+		pESP32->rxErrorFromISR();	//zmienia stan tylko gdy trwa odbiór z esp32 (...InReception) - błąd nadawania (TX) nie zmienia stanu odbioru
+	}
+}
