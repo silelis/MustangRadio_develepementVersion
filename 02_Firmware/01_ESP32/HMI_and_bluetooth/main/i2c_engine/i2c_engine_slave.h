@@ -37,7 +37,7 @@ protected:
 	esp_err_t interruptRequestReset(void);
 private:
 	static IRAM_ATTR bool i2c_slave_rx_done_callback(i2c_slave_dev_handle_t channel, const i2c_slave_rx_done_event_data_t *edata, void *user_data);
-	void i2cTxStateNextFromISR(void);	// przesuwa i2cTxSlaveState po odczycie danych przez master (wywoływana z ISR)
+	bool i2cTxStateNextFromISR(void);	// przesuwa i2cTxSlaveState po odczycie danych przez master (wywoływana z ISR); true = stan przesunięty (odczyt z ESP32)
 	inline static i2cEngin_slave* sInstance = nullptr;	// wskaźnik na obiekt dla statycznego callbacku ISR (zamiast this)
 	const char *TAG = "I2C SLAVE log:";
 	gpio_num_t i2cSlave_intRequestPin;
@@ -58,4 +58,6 @@ private:
 		timeoutInTransmition
 	};
 	volatile i2cTransmitionState i2cTxSlaveState = i2cTransmitionState::idle;	// volatile: zmieniane w ISR, czytane w tasku
+	bool i2cTxStateNextIfReadDone(void);	// to samo co i2cTxStateNextFromISR, ale z tasku i2cSlaveTransmit (zabezpieczenie, gdy callback przepadł)
+	esp_err_t i2cTxWaitForFifoLoaded(void);	// czeka, aż ISR sterownika przeniesie dane z ring buffera do TX FIFO (przed ustawieniem ...InTransmition)
 };

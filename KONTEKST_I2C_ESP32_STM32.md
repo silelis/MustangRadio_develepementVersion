@@ -1,7 +1,7 @@
 # KONTEKST: komunikacja I2C ESP32 (slave) → STM32 (master) z GPIO interrupt request
 
 > **Dla Claude na nowym komputerze:** przeczytaj ten plik w całości, zanim zaczniesz cokolwiek robić.
-> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`) oraz **2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), nietestowany na sprzęcie**.
+> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`), 2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`) oraz **2026-11-03 (test na sprzęcie): RX STM32←ESP32 DZIAŁA w trybie debugowania** — po poprawce wykrywania odczytu w ESP32 (`tx_fifo_cnt` zamiast `tx_fifo_start_addr`, sekcja 3.6).
 > **Zacznij od sekcji 7 („Gdzie jesteśmy / co dalej”)** — tam: co jest zrobione, jak testować na sprzęcie, plan TX/RX (`waitForTransferEnd`, W1–W7) i otwarte decyzje.
 > Sekcje 2–4 to tło; sekcja 5 to opis już wprowadzonych kroków 1–13; stary plan z `xTaskNotify` został ZASTĄPIONY.
 > Numery linii są orientacyjne — przed zmianą zawsze przeczytaj aktualny plik.
@@ -24,7 +24,8 @@
 | | |
 |---|---|
 | Repo | `MustangRadio_develepementVersion` (GitLab) |
-| ESP32 | `02_Firmware/01_ESP32/HMI_and_bluetooth` — ESP-IDF **v5.2.8** (`C:/esp/v5.2.8/esp-idf`), Espressif-IDE; kompiluje się (potwierdzone przez użytkownika) |
+| ESP32 | `02_Firmware/01_ESP32/HMI_and_bluetooth` — ESP-IDF **v5.2.8** (`C:/esp/v5.2.8/esp-idf`), Espressif-IDE; kompiluje się (potwierdzone przez użytkownika). **Komputer domowy (ze sprzętem):** ESP-IDF `release-v5.2` w `C:/esp/release-v5.2/esp-idf`, build: `. C:\Espressif\tools\Microsoft.release-v5.2.PowerShell_profile.ps1; idf.py build` |
+| Debug ESP32 | J-Link CE V9.60 (klon) przez OpenOCD (`interface/jlink.cfg`, `target/esp32.cfg`, `adapter speed` w `HMI_and_bluetooth Configuration.launch`). Interfejs 2 J-Linka (`1366 0105 02`, w Zadigu „BULK interface”) musi mieć sterownik **WinUSB** (Zadig; J-Link Configurator nie umie przełączyć tego modelu), inaczej OpenOCD: `LIBUSB_ERROR_NOT_SUPPORTED`. Interfejs 0 (CDC, COM12) zostaje na sterowniku SEGGER |
 | STM32 | `02_Firmware/02_STM32/Radio_main` — STM32H7A3RITx, STM32CubeIDE, HAL, FreeRTOS **V10.3.1** (CMSIS-RTOS v2, heap_4) |
 | Pliki wspólne | `.../HMI_and_bluetooth/main/common/` (`comunicationProtocol.h`, `comunicationStructures.h`, `i2c_slave_master_queueClass`, checksum) — używane przez oba projekty |
 | Sprzęt | użytkownik testuje w domu; w pracy nie ma dostępu do sprzętu |
@@ -40,10 +41,10 @@
 ```
  ESP32 (i2cSlaveTransmit)                         STM32 (master)
  idle: ramka z kolejki
- i2c_slave_transmit(&dataSize, 4 B) → lenDataInTransmition
+ i2c_slave_transmit(&dataSize, 4 B) → czekaj tx_fifo_cnt>0 → lenDataInTransmition
  INT ▼ ─────────────────────────────────────────► token #1 → read 4 B (dataSize, size_t LE)
- ISR (STOP, slave_rw=1, tx_fifo_start_addr się ruszył) → lenDataTransmited
- i2c_slave_transmit(pData, dataSize) → packageDataInTransmition
+ ISR (STOP, slave_rw=1, tx_fifo_cnt==0) → lenDataTransmited   (zapas: to samo sprawdza task co tick)
+ i2c_slave_transmit(pData, dataSize) → czekaj tx_fifo_cnt>0 → packageDataInTransmition
  INT ▼ ─────────────────────────────────────────► token #2 → read dataSize B (cała ramka)
  ISR → packageDataTransmited → delete[] → idle          parser: CRC + commandGroup
 ```
@@ -51,6 +52,7 @@
 - STM32 **musi czytać dokładnie 4 B, potem dokładnie `dataSize` B** (ESP przesuwa stan po każdym zakończonym odczycie, niezależnie od liczby bajtów).
 - `dataSize` obejmuje całą ramkę z nagłówkiem `i2cFrame_commonHeader {crcSum, commandGroup, size_t dataSize}`; zakres: `sizeof(i2cFrame_commonHeader) ≤ dataSize ≤ ESP32_SLAVE_RECEIVE_BUFFER_LEN (52)`.
 - **ESP32 czeka na każdy odczyt max 500 ms** (`tx_timeout_ms`), potem przechodzi w `timeoutInTransmition` — **stan końcowy** (ESP przestaje nadawać; na razie tylko printf, obsługa błędów później).
+- **Debugowanie:** ESP32 odlicza 500 ms także wtedy, gdy STM32 stoi na breakpoincie. Breakpoint w STM32 w środku protokołu (np. `masterReceiveData()` `case lenDataReceived`, przed odczytem ramki) ⇒ ESP32 `TIMEOUT_IN_TRANSMITION` + `assert` — to NIE jest błąd komunikacji (potwierdzone 2026-11-03: `stateBefore:3`, `tx_fifo_cnt=12` = ramka czekała w FIFO). Breakpointy stawiać po zakończeniu odczytu (np. `parseReceivedData()`).
 
 ---
 
@@ -69,8 +71,8 @@ Plik: `02_Firmware/01_ESP32/HMI_and_bluetooth/main/i2c_engine/i2c_engine_slave.c
 - Enum `i2cCallbackState`: `recpeptionNotToMe`, `recpeptionToMe`, `transmitionNotFromMe`, `transmitionFromMe`.
 - **Rozpoznawanie obcych transakcji:** `on_recv_done` przychodzi na każdy STOP na szynie (także do innych slave), a `slave_rw` zmienia się tylko przy adresowaniu ESP32. Dlatego:
   - zapis: jak wcześniej — zmiana `I2C0.fifo_st.rx_fifo_end_addr` ⇒ `recpeptionToMe`,
-  - odczyt: zmiana `I2C0.fifo_st.tx_fifo_start_addr` (wskaźnik odczytu TX FIFO) ⇒ `transmitionFromMe`, inaczej `transmitionNotFromMe`.
-  - **Stan TX przesuwa się tylko przy `transmitionFromMe`** → `sInstance->i2cTxStateNextFromISR()` (nowa prywatna metoda `IRAM_ATTR`, deklaracja w `.h`).
+  - ~~odczyt: zmiana `I2C0.fifo_st.tx_fifo_start_addr` (wskaźnik odczytu TX FIFO) ⇒ `transmitionFromMe`~~ — **BŁĘDNE, zastąpione 2026-11-03 (sekcja 3.6):** `tx_fifo_start_addr` na ESP32 nie przesuwa się przy odczycie przez mastera. Teraz odczyt = `slave_rw==1` + stan `...InTransmition` + `status_reg.tx_fifo_cnt == 0`.
+  - **Stan TX przesuwa się tylko przy `transmitionFromMe`** → `sInstance->i2cTxStateNextFromISR()` (prywatna metoda `IRAM_ATTR`; od 2026-11-03 zwraca `bool` i sama sprawdza warunki).
 - Struktury:
   - `i2cCallbackData { rxToEsp32; rx_fifo_end_addrLast; tx_fifo_start_addrLast; diag_slave_rw; diag_slave_addressed; diag_rx_fifo_end_addr; diag_tx_fifo_start_addrPrev; diag_tx_fifo_start_addr; diag_tx_fifo_end_addr; }`
   - `i2cSlaveRxEvent { i2cCallbackData cbData; uint8_t data[ESP32_SLAVE_RECEIVE_BUFFER_LEN]; }` — **element kolejki `s_receive_queue`** (~72 B, 10 elementów).
@@ -85,22 +87,41 @@ Plik: `02_Firmware/01_ESP32/HMI_and_bluetooth/main/i2c_engine/i2c_engine_slave.c
 - `assert(fakeCommHeader->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN)` przed `new`.
 - Printfy DIAG: `Reception to me` / `Reception NOT to me` / `Transmition from me` / `Transmition NOT from me` + wiersz `DIAG cb:… slave_rw:… slave_addressed:… rx_fifo_end:… tx_fifo_start:prev->now tx_fifo_end:…`.
 
-### 3.4 Do sprawdzenia na sprzęcie (diagnostyka w domu)
-| Zdarzenie | Oczekiwane `tx_fifo_start` | Klasyfikacja |
+### 3.4 Wynik testu na sprzęcie (2026-11-03) — założenie z `tx_fifo_start_addr` OBALONE
+Pomiar (log DIAG + rejestry I2C0 w chwili timeoutu):
+| Rejestr / pole | Po odczycie 4 B len przez STM32 | Wniosek |
 |---|---|---|
-| STM32 czyta len | przesuw o 4 (mod 32) | Transmition from me |
-| STM32 czyta dane | przesuw o `dataSize` (mod 32) | Transmition from me |
-| obcy STOP (np. `pi2cMaster->ping()` na nieużywany adres) | bez zmian | Transmition NOT from me |
-| STM32 pisze do ESP32 | — | Reception to me |
+| `fifo_st.tx_fifo_start_addr` | `0->0` (bez zmian) | **nie nadaje się** do wykrywania odczytu |
+| `fifo_st.tx_fifo_end_addr` | 4 (i nadal 4, gdy w FIFO było już 12 B ramki) | wskaźniki `fifo_st` dla TX nie odzwierciedlają transmisji |
+| `status_reg.tx_fifo_cnt` (bity 23:18) | **0** (przed odczytem 4, w fazie danych 12) | **wiarygodny** — używany od 3.6 |
+| `status_reg.slave_addressed` | 0 zawsze | nie nadaje się |
+| `int_ena` | `0x880` (`trans_complete` bit 7 + `rx_rec_full` bit 11) | ponowne uzbrajanie przez `i2c_slave_receive()` działa |
+| `int_raw` | `0x413` (m.in. `ack_err` bit 10) | `ack_err` normalny — master daje NACK na ostatnim bajcie odczytu |
+| `fifo_st.rx_fifo_end_addr` | 28→24→20→16 przy ramkach LED 28 B | OK — 5-bitowy wskaźnik przewija się co 32 |
 
-Jeśli każda ramka kończy się `TIMEOUT_IN_TRANSMITION` i DIAG pokazuje `tx_fifo_start:X->X` → założenie o `tx_fifo_start_addr` jest błędne (alternatywa do sprawdzenia: `status_reg.slave_addressed`).
+Oczekiwany log poprawnej fazy (potwierdzony): `LEN_DATA_IN_TRANSMITION` → `DIAG Transmition from me` / `DIAG cb:3 slave_rw:1 … tx_fifo_cnt:0` → `LEN_DATA_TRANSMITED` → `PACKAGE_DATA_IN_TRANSMITION` → (`from me`) → `PACKAGE_DATA_TRANSMITED`.
 
 ### 3.5 Znane, zgłoszone, NIE poprawione (ESP32)
-- Ramka o długości dokładnie 32 B → wskaźnik FIFO mod 32 bez zmian → błędnie `NotFromMe`.
-- Okno między callbackiem a ponownym `i2c_slave_receive()` w tasku: transakcja zakończona w tym czasie ginie (sterownik kasuje zaległe flagi przy uzbrajaniu). Krótkie, mało prawdopodobne przy odstępach ≥7 ms.
+- ~~Ramka o długości dokładnie 32 B → wskaźnik FIFO mod 32 bez zmian → błędnie `NotFromMe`.~~ — nieaktualne od 3.6 (nie porównujemy wskaźników).
+- Okno między callbackiem a ponownym `i2c_slave_receive()` w tasku: transakcja zakończona w tym czasie ginie (sterownik kasuje zaległe flagi przy uzbrajaniu). **Dla TX (odczyt z ESP32) pokryte od 3.6** sprawdzaniem w tasku (`i2cTxStateNextIfReadDone`); dla RX (zapis do ESP32) nadal aktualne. Krótkie, mało prawdopodobne przy odstępach ≥7 ms.
 - `if (tempData != nullptr)` po zwykłym `new` to martwy kod (IDF przy braku pamięci robi `abort()`).
 - Okno INT#1 → odczyt len nie jest chronione przed obcymi transakcjami (częściowo pokrywa krok 8 planu STM32).
-- Printfy DIAG do usunięcia po testach (brak `#ifdef`).
+- Printfy DIAG do usunięcia po testach (brak `#ifdef`) — od 3.6 dochodzi `DIAG TX FAIL` przed `assert` w stanie timeout/error.
+
+### 3.6 Zmiany po teście na sprzęcie (2026-11-03, ESP32)
+1. **Stack overflow taska „I2C slave rx”** (`app_main.cpp`): stos `128 * 10` (1280 B — w ESP-IDF `xTaskCreate` przyjmuje **bajty**) za mały dla printf DIAG → `128 * 32` (jak „I2C slave tx”). Objaw: `panic_abort` z `***ERROR*** A stack overflow in task I2C slave rx`.
+2. **Wykrywanie odczytu z ESP32** (`i2c_engine_slave.cpp`, pełny opis w bloku komentarza nad `i2c_slave_rx_done_callback`):
+   - odczyt = JEDNOCZEŚNIE `slave_rw == 1` + `i2cTxSlaveState` ∈ {`lenDataInTransmition`, `packageDataInTransmition`} + `I2C0.status_reg.tx_fifo_cnt == 0`; stary warunek `tx_fifo_start_addr` zakomentowany jako `[BUG]`,
+   - `i2cTxWaitForFifoLoaded()`: po `i2c_slave_transmit()` czeka (max 1 ms, `esp_rom_delay_us`) aż `tx_fifo_cnt > 0`, dopiero potem stan `...InTransmition` + INT — puste FIFO w `...InTransmition` oznacza więc „odczytane”, a nie „jeszcze nie załadowane”; brak załadowania → `errorInTransmition`,
+   - `i2cTxStateNextIfReadDone()`: zapas w tasku — co tick w `...InTransmition` sprawdza `tx_fifo_cnt == 0 && bus_busy == 0` (callback mógł przepaść, 3.5),
+   - spinlock `s_i2cTxStateMux` (ESP32 dwurdzeniowy): sprawdź-i-zmień stanu w ISR i tasku atomowe; timeout ustawiany tylko, gdy stan nadal `...InTransmition` (ISR nie zostanie nadpisany),
+   - `static_assert(I2C_SLAVE_PORT == 0)` — callback czyta rejestry `I2C0` na sztywno (master ESP32 jest na porcie 1 / `I2C1` i na to nie wpływa).
+   - **Obce transakcje STM32** (z innym układem na tej samej szynie, także między fazą len a fazą danych) są ignorowane: albo stan ≠ `...InTransmition`, albo FIFO ESP32 pełne (obca transakcja go nie opróżni). Jedyne ograniczenie: każda faza musi być odczytana w `ESP32_I2C_TX_TIMEOUT_MS`.
+3. **Diagnostyka:** `DIAG cb:` + `tx_fifo_cnt`; przed `assert` w timeout/error linia `DIAG TX FAIL: stateBefore:N retVal status_reg fifo_st int_raw int_ena …` (`stateBefore`: 1 = len, 3 = dane, 0/2 = błąd `i2c_slave_transmit`/ładowania FIFO).
+4. **Debugowanie — uwagi praktyczne:**
+   - Odczyt rejestrów `I2C0` przez gdb (`p/x I2C0.fifo_st`, `monitor mdw 0x3ff53…`) po panice **zrywał połączenie OpenOCD** — rejestry czytać printfem w kodzie (pełne słowa `.val`). Nigdy nie czytać `fifo_data` (`0x3ff5301C`) — odczyt zdejmuje bajt z RX FIFO.
+   - Konsola gdb w Espressif IDE: *Console* → „Display Selected Console” → konsola `gdb` (istnieje tylko w trakcie sesji); wklejone kilka komend naraz bywa gubione — wpisywać pojedynczo. Prywatne pola przez `p p_i2cSlave->i2cTxSlaveState`.
+   - Wynik: **komunikacja RX STM32←ESP32 działa w trybie debugowania** (obie fazy `from me`); jedyny timeout pochodził od breakpointu w STM32 (sekcja 2, „Debugowanie”).
 
 ---
 
@@ -228,7 +249,8 @@ Przyszłość: TX i przebudowa RX na wspólny mechanizm `waitForTransferEnd()` �
 |---|---|
 | `0eb76373` | `pData`: inicjalizacja pól `i2cFrame_transmitQueue`, alokacja `char[]` (sekcja 6) |
 | `400d8a48` | ten plik: zaakceptowany plan kroków 1–13 |
-| `b4e6bba9` | **RX STM32←ESP32 (kroki 1–13)** — „komunikacja stm32<->esp32 poprawiona (na sucho)”; **NIEtestowane na sprzęcie** |
+| `b4e6bba9` | **RX STM32←ESP32 (kroki 1–13)** — „komunikacja stm32<->esp32 poprawiona (na sucho)” |
+| (2026-11-03, gałąź `esp32-jlink-adapter-speed`) | J-Link `adapter speed` w `.launch`; **ESP32: stos „I2C slave rx”, wykrywanie odczytu przez `tx_fifo_cnt` (3.6)** — przetestowane na sprzęcie: **RX STM32←ESP32 działa w trybie debugowania** |
 
 Co działa w kodzie (RX, odczyt STM32 z ESP32):
 - 1 impuls INT z ESP32 = 1 token semafora = 1 wywołanie `masterReceiveData()` = 1 faza: `idle` → odczyt 4 B długości do `i2cRxMaster.dataSizeToRead` → `lenDataReceived`; kolejny INT → `new char[len]`, odczyt całej ramki → `idle`, ramka do parsera.
@@ -237,7 +259,9 @@ Co działa w kodzie (RX, odczyt STM32 z ESP32):
 - TX (STM32→ESP32: LED, silnik) **NIE był zmieniany** — nadal ślepe `vTaskDelay(7)` zamiast czekania na koniec (patrz 7.3).
 
 ### 7.2 Test na sprzęcie (użytkownik, w domu) — czego oczekiwać
-1. Wgrać oba firmware (STM32 z `b4e6bba9`, ESP32 z `b4e6bba9`).
+> **2026-11-03:** test wykonany w trybie debugowania — RX działa po zmianach z 3.6. Do zrobienia: test bez debuggera (normalna praca, wiele ramek/klawiszy z rzędu, obce transakcje STM32 na szynie), potem 7.3. W punkcie 3 poniżej kryterium `tx_fifo_start` jest nieaktualne — patrz log oczekiwany w 3.4.
+
+1. Wgrać oba firmware (STM32 z `b4e6bba9`, ESP32 z commitu po 3.6).
 2. Start: ESP32 daje impuls INT inicjalizacji; STM32 wypisuje „waiting for esp32 i2c bus to be initialized.” aż go dostanie.
 3. Naciśnięcie klawisza HMI (ESP32 → STM32, ramka klawiatury):
    - UART STM32: **brak** komunikatów `RX ERROR` / `RX TIMEOUT` / `frame length out of range` / `error with memory allocation` / `unexpected state`; klawisz trafia do menu (`keyboardToRadioMeny`).
