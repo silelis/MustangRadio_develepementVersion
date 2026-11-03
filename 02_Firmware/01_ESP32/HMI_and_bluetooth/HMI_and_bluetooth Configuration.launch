@@ -18,7 +18,7 @@
     <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerExecutable" value="${openocd_path}/${openocd_executable}"/>
     <intAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerGdbPortNumber" value="3333"/>
     <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerLog" value=""/>
-    <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerOther" value="-s ${OPENOCD_SCRIPTS} -f interface/jlink.cfg -f target/esp32.cfg -c &quot;adapter speed 2000&quot;"/>
+    <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerOther" value="-s ${OPENOCD_SCRIPTS} -f interface/jlink.cfg -f target/esp32.cfg -c &quot;adapter speed 12000&quot;"/>
     <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerTclPortNumber" value="6666"/>
     <intAttribute key="com.espressif.idf.debug.gdbjtag.openocd.gdbServerTelnetPortNumber" value="4444"/>
     <stringAttribute key="com.espressif.idf.debug.gdbjtag.openocd.launchConfigurationName" value="HMI_and_bluetooth"/>
