@@ -1,8 +1,9 @@
 # KONTEKST: komunikacja I2C ESP32 (slave) → STM32 (master) z GPIO interrupt request
 
 > **Dla Claude na nowym komputerze:** przeczytaj ten plik w całości, zanim zaczniesz cokolwiek robić.
-> Plik opisuje stan prac z 2026-09-29 (ESP32) oraz **aktualizację z 2026-10-28** (sekcje 5–7: nowy, zaakceptowany kierunek dla STM32 i zrobione poprawki `pData`).
-> **Zacznij od sekcji 7 („Gdzie jesteśmy / co dalej”).** Sekcje 2–4 to tło; stary plan z `xTaskNotify` (dawna sekcja 5) został ZASTĄPIONY.
+> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`) oraz **2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), nietestowany na sprzęcie**.
+> **Zacznij od sekcji 7 („Gdzie jesteśmy / co dalej”)** — tam: co jest zrobione, jak testować na sprzęcie, plan TX/RX (`waitForTransferEnd`, W1–W7) i otwarte decyzje.
+> Sekcje 2–4 to tło; sekcja 5 to opis już wprowadzonych kroków 1–13; stary plan z `xTaskNotify` został ZASTĄPIONY.
 > Numery linii są orientacyjne — przed zmianą zawsze przeczytaj aktualny plik.
 
 ---
@@ -53,7 +54,7 @@
 
 ---
 
-## 3. Co zostało zrobione po stronie ESP32 (NIEZACOMMITOWANE w chwili pisania)
+## 3. Co zostało zrobione po stronie ESP32 (zacommitowane; od `b4e6bba9` dodatkowo `assert(0)` w stanach timeout/error i wspólny `ESP32_I2C_TX_TIMEOUT_MS`)
 
 Plik: `02_Firmware/01_ESP32/HMI_and_bluetooth/main/i2c_engine/i2c_engine_slave.cpp` (+ `.h`)
 
@@ -170,7 +171,8 @@ Fakty sprzętowe/HAL (sprawdzone):
 - `HAL_GPIO_EXTI_Callback` — dodać sprawdzenie pinu i `pESP32 != nullptr`.
 - **Sposób pracy (wymóg użytkownika):** dla każdego kroku Claude pokazuje **diff w czacie**, czeka na „akceptuję krok X”, dopiero wtedy `Edit`. Kroki wieloplikowe/wielomiejscowe → kilka `Edit` (1a, 1b…).
 
-### 5.4 Kroki — **ZAAKCEPTOWANE 2026-10-29 (plan); każdy diff akceptowany osobno**
+### 5.4 Kroki — **WSZYSTKIE WPROWADZONE 2026-11-03, commit `b4e6bba9` „komunikacja stm32<->esp32 poprawiona (na sucho)”**
+Odstępstwa od pierwotnego opisu: krok 7 ma dodatkowo `taskENTER_CRITICAL()` przy ustawianiu stanu timeout (wyścig z callbackiem); krok 8 ma `break;` po każdym `assert(0)` (ochrona przy `NDEBUG`); krok 10 — w `default:` jest też printf. Kompilacja STM32 i ESP32 po krokach: OK, bez nowych ostrzeżeń (zniknęły `#error` z `_inSequence`, `-Wswitch`, nieużywane `dataSize`).
 | # | Plik | Zmiana |
 |---|---|---|
 | 1 | `comunication_esp32i2cComunicationDriver.h` | **1a:** pod `enum i2cReceiveStates` (public): `struct i2cRxMasterControl { volatile i2cReceiveStates state = i2cReceiveStates::idle; size_t dataSizeToRead = 0; };` + `static_assert(sizeof(size_t) == 4, …)`. **1b:** po `getI2cRxMasaterState()` deklaracje `void rxCompleteFromISR(void);` / `void rxErrorFromISR(void);`; w `private` `volatile i2cReceiveStates i2cRxMasaterState` → `i2cRxMasterControl i2cRxMaster;` (projekt nie kompiluje się między krokiem 1 a 2) |
@@ -189,7 +191,7 @@ Fakty sprzętowe/HAL (sprawdzone):
 | 12 | driver `.h/.cpp`, `tasksFunctions.cpp:101-106`, `comunication_i2cEngine.h:44/.cpp:198`, `comunicationProtocol.h:15` | usunięcie `STM32_2_ESP32_I2C_IN_SEQUENCE`, `masterReceiveDataInSequence`, `masterReceiveFromESP32_DMA_inSequence`, `i2cMaster::I2C_Master_Receive_DMA_inSequence`, komentarz o makrze |
 | 13 | ESP32 `main/i2c_engine/i2c_engine_slave.cpp:436-450` | w `case timeoutInTransmition`/`errorInTransmition` po printf stanu: `//todo` + `assert(0)` |
 
-Przyszłość (poza zakresem): TX do ESP32 przez `MasterTxCpltCallback`, `Mem_*` dla EEPROM/MCP23008.
+Przyszłość: TX i przebudowa RX na wspólny mechanizm `waitForTransferEnd()` — patrz sekcja 7.3 (plan W1–W7). Pomysł „TX przez `MasterTxCpltCallback`” został PORZUCONY.
 
 ### Znane, zgłoszone, NIE poprawione (STM32)
 - `i2cMasterTransmitToSlaveDataTask` ma `vTaskDelay(3000)` w każdej iteracji (wysyłka LED/silnik opóźniona do 3 s).
@@ -221,12 +223,55 @@ Przyszłość (poza zakresem): TX do ESP32 przez `MasterTxCpltCallback`, `Mem_*`
 
 ## 7. Gdzie jesteśmy / co dalej (START TUTAJ)
 
-1. Plan (kroki 1–13 z p. 5.4) **zaakceptowany 2026-10-29**. Żaden krok nie jest jeszcze wprowadzony.
-2. **Następny: krok 1** — diff 1a/1b był pokazany w czacie, czeka na „akceptuję krok 1”. Pokaż go ponownie (treść w 5.4) i czekaj na akceptację.
-3. Realizować kroki 1–13 pojedynczo: diff w czacie → akceptacja → `Edit`.
-4. Po krokach: kompilacja STM32 i ESP32 (jak w 6.3).
-5. Otwarte (niezaakceptowane, opcjonalne): nazwa struktury w `#else` z 6.1.
-4. (Użytkownik, w domu) test pełnego protokołu na sprzęcie + diagnostyka ESP32 wg p. 3.4.
-5. Usunięcie printfów DIAG po stronie ESP32 (lub `#ifdef`) — po uzgodnieniu.
-6. Commit — tylko na prośbę użytkownika.
-7. **OSTATNI KROK: usunąć ten plik (`KONTEKST_I2C_ESP32_STM32.md`) z repozytorium** po zakończeniu prac.
+### 7.1 Stan na 2026-11-03
+| Commit | Co |
+|---|---|
+| `0eb76373` | `pData`: inicjalizacja pól `i2cFrame_transmitQueue`, alokacja `char[]` (sekcja 6) |
+| `400d8a48` | ten plik: zaakceptowany plan kroków 1–13 |
+| `b4e6bba9` | **RX STM32←ESP32 (kroki 1–13)** — „komunikacja stm32<->esp32 poprawiona (na sucho)”; **NIEtestowane na sprzęcie** |
+
+Co działa w kodzie (RX, odczyt STM32 z ESP32):
+- 1 impuls INT z ESP32 = 1 token semafora = 1 wywołanie `masterReceiveData()` = 1 faza: `idle` → odczyt 4 B długości do `i2cRxMaster.dataSizeToRead` → `lenDataReceived`; kolejny INT → `new char[len]`, odczyt całej ramki → `idle`, ramka do parsera.
+- Koniec odczytu: callback `HAL_I2C_MasterRxCpltCallback`/`HAL_I2C_ErrorCallback` (`tasksFunctions.cpp`) → `pESP32->rxCompleteFromISR()/rxErrorFromISR()`; task czeka w `masterReceiveFromESP32_DMA()` (pętla `vTaskDelay(1)`, limit `ESP32_I2C_RX_TIMEOUT_MS` = 600 ms, timeout → `I2C_Master_Abort()`).
+- Błąd / timeout / długość poza `sizeof(i2cFrame_commonHeader)…52` / brak pamięci → `feedPrintf` + `//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32` + `assert(0)` (STM32 staje). ESP32 przy timeout/error: printf + `assert(0)` → panic → **reset** ESP32.
+- TX (STM32→ESP32: LED, silnik) **NIE był zmieniany** — nadal ślepe `vTaskDelay(7)` zamiast czekania na koniec (patrz 7.3).
+
+### 7.2 Test na sprzęcie (użytkownik, w domu) — czego oczekiwać
+1. Wgrać oba firmware (STM32 z `b4e6bba9`, ESP32 z `b4e6bba9`).
+2. Start: ESP32 daje impuls INT inicjalizacji; STM32 wypisuje „waiting for esp32 i2c bus to be initialized.” aż go dostanie.
+3. Naciśnięcie klawisza HMI (ESP32 → STM32, ramka klawiatury):
+   - UART STM32: **brak** komunikatów `RX ERROR` / `RX TIMEOUT` / `frame length out of range` / `error with memory allocation` / `unexpected state`; klawisz trafia do menu (`keyboardToRadioMeny`).
+   - ESP32 (DIAG): 2× „Transmition from me” na ramkę (len, potem dane), `tx_fifo_start` przesuwa się o 4, potem o `dataSize` (tabela w 3.4); brak `TIMEOUT_IN_TRANSMITION`.
+4. Jeśli STM32 stanie na `assert` — komunikat przed nim mówi: `Size: 4` = faza len, inny = faza danych; `HAL status`; `dataSizeToRead`. Jeśli ESP32 resetuje się z `TIMEOUT_IN_TRANSMITION` i DIAG pokazuje `tx_fifo_start:X->X` → założenie o `tx_fifo_start_addr` błędne (3.4).
+5. Znane ryzyka do obserwacji: ramka dokładnie 32 B (3.5), okno ponownego uzbrojenia `i2c_slave_receive` po stronie ESP32 (3.5), TX LED/silnik nadal bez czekania na koniec (7.3).
+
+### 7.3 Następny etap: wspólny `waitForTransferEnd()` dla TX i RX (plan, NIEWPROWADZONY)
+**Problem TX:** `esp32_i2cComunicationDriver::masterTransmitData()` startuje `HAL_I2C_Master_Transmit_DMA` (wraca od razu) i robi ślepe `vTaskDelay(ESP_I2C_BUS_DELAY = 7 ms)`. Task TX (`tasksFunctions.cpp` `i2cMasterTransmitToSlaveDataTask`) potem robi `i2cMasterSemaphoreGive()` i `deleteAlocatedDataAfterParsing()` — gdy wysyłka trwa > 7 ms, semafor oddany przy zajętej szynie, a bufor zwolniony w trakcie DMA. Kolejność `Take → funkcja drivera → Give → delete` w taskach jest DOBRA — zła jest funkcja drivera, która wraca przed końcem transmisji.
+**Ustalenia (z analizy HAL `stm32h7xx_hal_i2c.c`):** po końcu transmisji HAL ustawia `State = HAL_I2C_STATE_READY` (sukces: l. 6181 TX / 6216 RX, PRZED callbackiem; błąd: l. 6566, `ErrorCode` l. 6539) — także dla `Mem_*` (EEPROM). Więc stan `READY` + `HAL_I2C_GetError()` wystarczą dla KAŻDEGO urządzenia, RX i TX, bez callbacków. HAL DMA/IT nie ma własnego timeoutu (tylko wersje blokujące).
+**Rozważone i ODRZUCONE:** czekanie w `i2cMasterSemaphoreTake()` (nic nie daje) i jako główny mechanizm w `i2cMasterSemaphoreGive()` (za późno — driver RX potrzebuje wyniku przed Give, np. walidacja długości; brak adresu do abort; błąd nie trafia do drivera); `Give` w ISR (bufor/7 ms/błędy rozproszone); osobne stany+callbacki per urządzenie (nie skaluje się); blokujące `HAL_I2C_Master_Receive(…, Timeout)` (polling CPU).
+**Wybrany kierunek (zaakceptowany ogólnie 2026-11-03):** czekanie WEWNĄTRZ metod transmisji `i2cMaster`, `waitForTransferEnd()` jako `private`:
+| # | Plik | Zmiana |
+|---|---|---|
+| W1 | `comunication_i2cEngine.h/.cpp` | `private HAL_StatusTypeDef waitForTransferEnd(uint16_t DevAddress_7bit, uint32_t timeout_ms, uint32_t *pErrorCode)`: pętla `while (HAL_I2C_GetState(p_hi2c1) != HAL_I2C_STATE_READY)` z `vTaskDelay(1)` i limitem; timeout → `I2C_Master_Abort(DevAddress_7bit)` + `HAL_TIMEOUT`; potem `HAL_I2C_GetError()` → `HAL_ERROR` gdy ≠ `HAL_I2C_ERROR_NONE`; kod błędu przez `pErrorCode` (opcjonalny) |
+| W2 | j.w. | `I2C_Master_Receive_DMA()` / `I2C_Master_Transmite_DMA()`: nowe parametry `uint32_t timeout_ms, uint32_t *pErrorCode = nullptr`; start DMA → `waitForTransferEnd()`; dzisiejsze `while_I2C_STATE_READY()` przed startem → usunąć lub `return HAL_BUSY` (decyzja 2). `while_I2C_STATE_READY()` ZOSTAJE dla `initTaskFunctions()` (`tasksFunctions.cpp`) |
+| W3 | driver ESP32 `.cpp` | `masterReceiveFromESP32_DMA()`: pętla + sekcja krytyczna + abort z kroku 7 → jedno wywołanie; stany `lenDataReceived`/`packageDataReceived`/error/timeout ustawia task z wyniku; printf + kod błędu HAL + `//todo` + `assert`; `giveESP32I2CInterfaceTime()` |
+| W4 | driver ESP32 `.cpp` (+`.h`) | `masterTransmitData()`: wywołanie z limitem; error/timeout → printf + `//todo` + `assert`; ślepe `vTaskDelay(7)` → `giveESP32I2CInterfaceTime()` PO końcu wysyłki (7 ms ZOSTAJE — ESP32 musi ponownie uzbroić `i2c_slave_receive`, 3.5); typ zwracany `BaseType_t` → `HAL_StatusTypeDef` (dziś `HAL_OK`=0 → `pdFALSE`, czyli sukces wygląda jak porażka; wynik nieużywany) |
+| W5 | driver ESP32 `.h/.cpp` + `tasksFunctions.cpp` | usunąć zbędne: `rxCompleteFromISR()`, `rxErrorFromISR()`, `HAL_I2C_MasterRxCpltCallback`, `HAL_I2C_ErrorCallback` |
+| W6 | `tasksFunctions.cpp` | dostosowanie do typu z W4 (jeśli zmieniony) |
+| W7 | (opcja) `comunication_i2cEngine.cpp` | asekuracja w `i2cMasterSemaphoreGive()`: krótkie czekanie na `READY` z limitem + ogólny printf |
+Po W1–W7: kompilacja STM32 + ESP32, commit (na prośbę), test TX (LED/silnik) i RX na sprzęcie.
+
+**Otwarte decyzje użytkownika przed W1 (ZAPYTAJ):**
+1. Asekuracja w `Give` (W7): tak/nie.
+2. Sprawdzenie przed startem transmisji w metodach `i2cMaster`: usunąć czy `return HAL_BUSY` (rekomendacja: `HAL_BUSY`).
+3. Wspólny limit RX/TX = 600 ms (użytkownik chciał jak przy odczycie — OK); przemianować `ESP32_I2C_RX_TIMEOUT_MS` → np. `ESP32_I2C_MASTER_TIMEOUT_MS`: tak/nie.
+4. Typ zwracany `masterTransmitData()` → `HAL_StatusTypeDef`: tak/nie.
+
+### 7.4 Pozostałe (później)
+- Zamiana semafora binarnego szyny na mutex w `i2cMaster` (dziedziczenie priorytetu) — osobna decyzja.
+- Obsługa błędów zamiast `assert` (wszystkie miejsca z `//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32`). Uwaga z HAL: przy błędzie DMA `READY` ustawia się zanim zakończy się abort strumienia DMA.
+- Otwarte, opcjonalne: nazwa struktury w `#else` z 6.1 (ostrzeżenie tylko w clang/edytorze).
+- Usunięcie printfów DIAG po stronie ESP32 (lub `#ifdef`) — po testach, po uzgodnieniu.
+- Znane z 3.5 i z „Znane, zgłoszone” w sekcji 5 (m.in. `vTaskDelay(3000)` w tasku TX, priorytety tasków, „ta funkcja nie działa” przy `masterTransmitData` — sprawdzić po W4). `ESP_I2C_BUS_DELAY 7` bez opisu w kodzie — wartość empiryczna, do sprawdzenia na sprzęcie.
+- Commit / push — tylko na prośbę użytkownika.
+- **OSTATNI KROK: usunąć ten plik (`KONTEKST_I2C_ESP32_STM32.md`) z repozytorium** po zakończeniu prac.
