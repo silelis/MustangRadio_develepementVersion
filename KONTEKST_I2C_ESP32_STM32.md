@@ -300,7 +300,7 @@ Skutki: stan `timeoutpackageDataInReception` zostaje w enumie, ale STM32 go nie 
 
 ### 7.4 Do zrobienia / otwarte
 - **NAJBLIŻSZE: test na sprzęcie** wg 7.2 (RX klawisze + TX LED/silnik). Po teście TX: usunąć komentarz `//ta funkcja nie działa` (`tasksFunctions.cpp`, task TX) i nieaktualny dopisek „(nasza ścieżka timeoutu)” w liście callbacków (`tasksFunctions.cpp`).
-- **Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)** — do zrobienia (z tytułu commita `9a8d7f3a`); problemu jeszcze nie opisano. Do ustalenia z użytkownikiem, co obserwował. Możliwe przypadki z kodu: (a) reset ESP32 (np. po `assert`), gdy STM32 już działa — impuls inicjalizacji (100 ms) STM32 traktuje jak zwykły token i robi odczyt `len`; (b) STM32 startuje po ESP32 — impuls inicjalizacji przepada i `startUpTask_initTaskFunctions()` czeka w nieskończoność na `esp32I2cInitialised`.
+- **Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)** — analiza i propozycja w **sekcji 7.5**; czeka na decyzje użytkownika (7.5.6).
 - Opcja: semafor szyny → **mutex rekurencyjny** z `Take/Give` wewnątrz metod transmisji (automatyczna ochrona pojedynczej transmisji, dziedziczenie priorytetu; sekwencje nadal `Take/Give` w driverze). Niezaakceptowane.
 - Niewykrywalne bez czasu: SDA trzymane nisko PO ostatnim bajcie (STOP się nie wykona) — dziś pokryte diagnostyką co 1 s + assert po 10 s; na przyszłość do rozważenia IWDG.
 - si4689 (`02_Firmware/04_si468x/rev 026`): obrazy ~520 kB (DAB/FMHD/AMHD), I2C1 ~100 kHz (`Timing 0x20B0CCFF`, PCLK1 140 MHz) → ~48 s ładowania; `HOST_LOAD` porcjami (≤4 KB ≈ 370 ms); semafor oddawać po każdej porcji (ESP32: 500 ms); rozważyć Fast Mode 400 kHz lub SPI flash + `FLASH_LOAD`; 3 obrazy ≈ 1,58 MB przy 2 MB flash STM32H7A3RI.
@@ -311,3 +311,53 @@ Skutki: stan `timeoutpackageDataInReception` zostaje w enumie, ale STM32 go nie 
 - Znane z sekcji 5: `vTaskDelay(3000)` w tasku TX, priorytety tasków.
 - Commit / push — tylko na prośbę użytkownika.
 - **OSTATNI KROK: usunąć ten plik (`KONTEKST_I2C_ESP32_STM32.md`) z repozytorium** po zakończeniu prac.
+
+### 7.5 Synchronizacja ESP32 interrupt request / wykrycie startu ESP32 (2026-11-04, ANALIZA — kod NIEzmieniany)
+
+#### 7.5.1 Problem (opis użytkownika)
+- Pierwszy impuls INT (`esp32i2cBusInitialised()`: LOW 100 ms) oznacza „ESP32 wystartował” — wprowadzone, żeby STM32 nie czytał śmieci / nie pisał do ESP32 w trakcie jego bootowania (zwykły `delay` się nie sprawdzał). STM32: pierwsze zbocze → `esp32I2cInitialised = true` (`HAL_GPIO_EXTI_Callback`), `startUpTask_initTaskFunctions()` czeka na to w pętli, blokując cały start STM32.
+- **Podczas flashowania ESP32 pin INT „wariuje”** → STM32 myśli, że ESP32 już pracuje. Przy debugowaniu trzeba: uruchomić STM32 i zatrzymać na `main`, uruchomić ESP32 i zatrzymać na `main`, puścić STM32, puścić ESP32.
+- Dodatkowo (z analizy kodu): reset ESP32 w trakcie pracy STM32 (np. po `assert`) → impuls 100 ms STM32 liczy jako zwykły token → odczyt `len` → śmieci → `assert`. STM32 uruchomiony PO ESP32 nie złapie impulsu → czeka w nieskończoność.
+
+#### 7.5.2 Przyczyna
+- INT jest na **GPIO0 ESP32** (`chip_config_ESP32_WROOM32D_DEVBOARD.h:19`, `I2C_SLAVE_INTERRUP_REQUEST_PIN GPIO_NUM_0`) — **pin strapping** (tryb bootowania): `esptool` przez auto-reset (DTR/RTS) ściąga go nisko przy flashowaniu; na devboardzie jest też przycisk BOOT. Strapping ESP32: 0, 2, 5, 12, 15; wolne „zwykłe” np. 4, 13, 14, 16–19, 23, 32, 33.
+- Na linii INT jest **zewnętrzny pull-up 10 kΩ** (informacja od użytkownika) — linia nie pływa; STM32 PB5 ma `GPIO_NOPULL` (`gpio.c`), pull-up w CubeMX niepotrzebny.
+
+#### 7.5.3 Rozważone opcje — użytkownik wybrał **3 i 4**
+1. Przeniesienie INT z GPIO0 na zwykły pin (sprzęt + `#define`) — usuwa przyczynę; nie wybrane (na razie).
+2. Pull-up na PB5 — zbędny (jest 10 kΩ).
+3. **Potwierdzenie startu przez I2C:** STM32 odpytuje ESP32 (ping adresu 0x3C) i uznaje go za gotowy dopiero po ACK. ESP32 nie odpowiada ACK w bootloaderze / przy flashowaniu / w resecie (sterownik I2C slave nie działa) → zakłócenia na INT nie oszukają STM32; **kolejność uruchamiania dowolna**.
+4. **Ponowna synchronizacja po resecie ESP32:** STM32 mierzy długość impulsu INT (EXTI na oba zbocza + czas): ~20 µs = dane, ~100 ms = restart ESP32 → zerowanie stanu odbioru ESP32 (`idle`, `dataSizeToRead = 0`), czyszczenie zaległych tokenów, ponowne potwierdzenie pingiem. Wymaga zmiany PB5 w CubeMX na oba zbocza. Zastrzeżenie: breakpoint ESP32 w środku impulsu wyglądałby jak restart (STM32 i tak potwierdzi pingiem).
+
+#### 7.5.4 Ping — ustalenia
+- `i2cMaster::ping()` → `HAL_I2C_IsDeviceReady()` → `I2C_GENERATE_START` (`stm32h7xx_hal_i2c.h:801-804`) zeruje `RD_WRN`: na szynie `START → 0x3C + W → ACK/NACK → STOP`, 0 bajtów.
+- ESP32 (callback `i2c_slave_rx_done_callback`): `slave_rw = 0` → gałąź zapisu; `rx_fifo_end_addr` bez zmian → **`recpeptionNotToMe`**; maszyna stanów TX (`i2cTxStateNextFromISR`, tylko `slave_rw == 1`) i zapas w tasku (`tx_fifo_cnt == 0`) — **bez wpływu**; nic do parsera; w logu `DIAG Reception NOT to me`. Jak po każdym STOP: ESP-IDF wyłącza `trans_complete` do ponownego `i2c_slave_receive()` → po pingu przerwa `giveESP32I2CInterfaceTimeForDataProcessing()` przed zapisem.
+- ESP32 odpowiada ACK od `i2c_new_slave_device` (konstruktor `i2cEngin_slave`) — kilka ms PRZED impulsem inicjalizacji (task `i2cSlaveReceive`).
+- **Obecny `ping()` się NIE nadaje** (`comunication_i2cEngine.cpp:118-130`): przy NACK `assert(0)`, `Trials = 100` × `Timeout = 1000` ms (blokujący), omija semafor i `waitForTransferEnd`, printf przy każdym wywołaniu. Używany tylko w parserze przy nieznanym adresie (`tasksFunctions.cpp`) — zostaje bez zmian.
+- **Propozycja:** nowa `i2cMaster::isDeviceReady(DevAddress_7bit)` — 1 próba, krótki limit, bez `assert`/printf, zwraca `HAL_OK` (ACK) / `HAL_ERROR` (NACK); wołana przy wziętym semaforze (`Take/Give`).
+
+#### 7.5.5 Inne urządzenia na szynie
+- Ping do 0x3C ignorują pozostałe slave (inny adres). Adresy planowanych układów (si468x 0x64–0x67, TDA741x 0x44, 24C16 0x50–0x57, TEA5767 0x60, MCP23008 0x20–0x27) nie kolidują z 0x3C. **Uwaga: OLED SSD1306 ma domyślnie 0x3C — nie dokładać bez zmiany adresu.**
+- ESP32 już ignoruje obce transakcje (3.6).
+- Ping zawsze z `Take/Give` (przy resynchronizacji w trakcie pracy inny task może nadawać → bez semafora `HAL_BUSY` → assert).
+- Inne urządzenia nie muszą czekać na ESP32 — czekanie dotyczy tylko komunikacji z ESP32.
+- Sprzęt: ESP32 **bez zasilania** przy zasilonej szynie może przez diody ściągać SDA/SCL nisko (cała szyna stoi; diagnostyka `waitForTransferEnd` pokaże „SDA/SCL trzymane nisko”) — sprawa projektu zasilania. Reset/flashowanie ESP32 tego nie powoduje (GPIO21/22 w high-Z).
+
+#### 7.5.6 Proponowana architektura (NIEzaakceptowana) i decyzje do podjęcia
+| Element | Rola |
+|---|---|
+| flaga `esp32Ready` w driverze ESP32 | `false` na starcie i po wykryciu restartu ESP32 (opcja 4) |
+| istniejący task `esp32I2cIntrrruptRequest` | na początku (i po restarcie ESP32) odpytuje: `Take` → `isDeviceReady()` → `Give` → `vTaskDelay(~100 ms)` → … aż ACK; potem `esp32Ready = true` i normalna obsługa tokenów (bez nowego taska) |
+| `HAL_GPIO_EXTI_Callback` | przy `esp32Ready == false` impulsy INT ignorowane (flashowanie, impuls inicjalizacji) |
+| `startUpTask_initTaskFunctions()` | **nie czeka** na ESP32 — STM32 i inne urządzenia startują od razu |
+Wysyłka do ESP32 przed gotowością (ramki LED wysyła `manageRadioButtonsAndMenu()` na starcie):
+- A: `masterTransmitData()` czeka na `esp32Ready` — blokuje cały task TX (inne urządzenia też czekają),
+- **B (rekomendacja):** odrzuć ramkę (zwolnij bufor) + printf,
+- C: B + po gotowości ESP32 ponowne wysłanie aktualnego stanu (LED, silnik) — później.
+
+**Decyzje do podjęcia (ZAPYTAJ przed planem):**
+1. Nowa `i2cMaster::isDeviceReady()` (1 próba, bez `assert`/printf, z `Take/Give`).
+2. Flaga `esp32Ready` + odpytywanie w tasku `esp32I2cIntrrruptRequest` + ignorowanie INT przed gotowością + start STM32 bez czekania na ESP32.
+3. Wysyłka do ESP32 przed gotowością: A / B / C.
+4. Po pierwszym ACK odczekać ~100 ms (ESP32 kończy start; impuls inicjalizacji i tak ignorowany)?
+5. Opcja 4 (pomiar długości impulsu, restart ESP32) w tym samym etapie czy osobno.
