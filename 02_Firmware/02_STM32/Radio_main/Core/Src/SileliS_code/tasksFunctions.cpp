@@ -218,16 +218,10 @@ static void manageRadioButtonsAndMenu(void *thing) {
 
 static void initTaskFunctions(void) {
 
-	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1));
+	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
+			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin));	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
 
 	assert(pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster));
-
-	//pętla opóźniająca oczekująza aż zakończy się proces bootowania ESP32
-//	pi2cMaster->i2cMasterSemaphoreTake();
-//	pi2cMaster->i2cMasterSemaphoreGive();
-	//pętla opóźniająca oczekująza aż zakończy si ę proces bootowania ESP32
-
-	pi2cMaster->while_I2C_STATE_READY();
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(
@@ -312,17 +306,3 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //HAL_I2C_MemRxCpltCallback 		//wywołuje	HAL_I2C_Mem_Read_DMA()
 //HAL_I2C_MasterTxCpltCallback		//wywołuje	HAL_I2C_Master_Transmit_DMA()
 //HAL_I2C_MemTxCpltCallback			//wywołuje	HAL_I2C_Mem_Write_DMA()
-
-//callback HAL: zakończony odczyt master przez DMA (po STOP) - przesuwa stan odbioru z esp32
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
-	if ((hi2c == &hi2c1) && (pESP32 != nullptr)) {
-		pESP32->rxCompleteFromISR();	//zmienia stan tylko gdy trwa odbiór z esp32 (...InReception)
-	}
-}
-
-//callback HAL: błąd i2c (NACK, BERR, ARLO, OVR, DMA) - ustawia stan błędu odbioru z esp32
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
-	if ((hi2c == &hi2c1) && (pESP32 != nullptr)) {
-		pESP32->rxErrorFromISR();	//zmienia stan tylko gdy trwa odbiór z esp32 (...InReception) - błąd nadawania (TX) nie zmienia stanu odbioru
-	}
-}

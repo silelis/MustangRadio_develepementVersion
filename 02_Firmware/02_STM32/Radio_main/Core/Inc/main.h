@@ -64,6 +64,10 @@ void Error_Handler(void);
 #define esp32i2cInterruptReqest_Pin GPIO_PIN_5
 #define esp32i2cInterruptReqest_GPIO_Port GPIOB
 #define esp32i2cInterruptReqest_EXTI_IRQn EXTI9_5_IRQn
+#define I2C1_SCL_Pin GPIO_PIN_8
+#define I2C1_SCL_GPIO_Port GPIOB
+#define I2C1_SDA_Pin GPIO_PIN_9
+#define I2C1_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

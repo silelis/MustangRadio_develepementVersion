@@ -15,8 +15,6 @@
 //#include <iostream>
 #include "SileliS_code/myPrintfTask.h"
 
-#define ESP32_I2C_RX_TIMEOUT_MS		(ESP32_I2C_TX_TIMEOUT_MS + 100)	//czas [ms] oczekiwania STM32 na zakończenie odczytu jednej fazy ramki z ESP32 (len lub dane) - dłuższy niż ESP32_I2C_TX_TIMEOUT_MS, bo ESP32 liczy od impulsu INT, a STM32 od startu DMA
-
 class esp32_i2cComunicationDriver {
 public:
 	enum i2cReceiveStates{
@@ -28,9 +26,9 @@ public:
 		errorpackageDataInReception,
 		timeoutpackageDataInReception
 	};
-	//struktura kontrolująca odbiór danych z esp32 (2 fazy: len, dane). Zmieniana przez task odbioru i callbacki HAL (ISR)
+	//struktura kontrolująca odbiór danych z esp32 (2 fazy: len, dane). Zmieniana przez task odbioru (masterReceiveData / masterReceiveFromESP32_DMA)
 	struct i2cRxMasterControl {
-		volatile i2cReceiveStates state = i2cReceiveStates::idle;	//stan odbioru - task ustawia ...InReception PRZED startem DMA, ISR przesuwa na ...Received / errorpackageDataInReception
+		volatile i2cReceiveStates state = i2cReceiveStates::idle;	//stan odbioru - ...InReception przed odczytem, ...Received / errorpackageDataInReception po odczycie; volatile - czytany przez task esp32I2cIntrrruptRequest
 		size_t dataSizeToRead = 0;	//długość ramki odczytana w fazie len (token #1), używana w fazie danych (token #2)
 	};
 	static_assert(sizeof(size_t) == 4, "ESP32 wysyła długość ramki jako size_t (4 B) - size_t na STM32 musi mieć ten sam rozmiar");
@@ -47,13 +45,10 @@ public:
 	//HAL_StatusTypeDef ping(void);
 	HAL_StatusTypeDef masterReceiveData(i2cFrame_transmitQueue *dataFrame);
 
-	BaseType_t masterTransmitData(i2cFrame_transmitQueue *dataFrame);
-	void while_I2C_STATE_READY(void);
+	HAL_StatusTypeDef masterTransmitData(i2cFrame_transmitQueue *dataFrame);
 
 	void parseReceivedData(i2cFrame_transmitQueue I2CReceivedFrame);
 	enum i2cReceiveStates getI2cRxMasaterState(void);
-	void rxCompleteFromISR(void);	//wywoływana z HAL_I2C_MasterRxCpltCallback: lenDataInReception -> lenDataReceived, packageDataInReception -> packageDataReceived
-	void rxErrorFromISR(void);		//wywoływana z HAL_I2C_ErrorCallback: ...InReception -> errorpackageDataInReception
 protected:
 
 private:
@@ -75,7 +70,7 @@ private:
 	uint16_t esp32CrcSumCounterError;
 #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
 	//const uint8_t ESP_I2C_BUS_DELAY = 7;
-	void giveESP32I2CInterfaceTime(void);
+	void giveESP32I2CInterfaceTimeForDataProcessing(void);	//przerwa ESP_I2C_BUS_DELAY po każdej transmisji - esp32 musi ponownie uzbroić odbiornik (opis w .cpp)
 };
 
 namespace parserFunction {

@@ -148,15 +148,43 @@ BaseType_t esp32_i2cComunicationDriver::semaphoreTake__CountingSemaphore(void) {
 			portMAX_DELAY) == pdTRUE;
 }
 
-BaseType_t esp32_i2cComunicationDriver::masterTransmitData(
+/********************************************************************
+ * @brief  Wysyła ramkę danych do esp32 (i2c slave).
+ *
+ * Wysyła ramkę przez i2cMaster::I2C_Master_Transmite_DMA(), która
+ * wraca dopiero po zakończeniu transmisji, a potem daje esp32
+ * ESP_I2C_BUS_DELAY na ponowne uzbrojenie odbiornika
+ * (i2c_slave_receive po stronie esp32).
+ *
+ * @param  [dataFrame] [i2cFrame_transmitQueue*] ramka do wysłania
+ * 			(pData - dane, dataSize - długość)
+ *
+ * @return [HAL_StatusTypeDef]
+ * @retval [HAL_OK] ramka wysłana
+ *
+ * @note   Wywoływać z tasku, przy wziętym semaforze szyny. Po powrocie
+ * 			transmisja jest zakończona - bufor pData można zwolnić.
+ * @warning Błąd transmisji i za długa ramka kończą się printf +
+ * 			assert(0) (brak obsługi błędów - patrz //todo).
+ *******************************************************************/
+HAL_StatusTypeDef esp32_i2cComunicationDriver::masterTransmitData(
 		i2cFrame_transmitQueue *dataFrame) {
-	BaseType_t retVal = pdFALSE;
+	HAL_StatusTypeDef retVal = HAL_ERROR;
 	if (dataFrame->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN) {
 		retVal = this->pi2cMaster->I2C_Master_Transmite_DMA(
 				this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData,
-				dataFrame->dataSize);
-		vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
+				dataFrame->dataSize);	//wraca po zakończeniu wysyłki (szyna zajęta / błąd startu / zawieszenie -> assert w i2cMaster)
+		if (retVal != HAL_OK) {
+			pPrintf->feedPrintf("%s TX ERROR, dataSize: %u, HAL status: %d", this->TAG,
+					(unsigned int) dataFrame->dataSize, (int) retVal);
+			//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
+			assert(0);
+		}
+		this->giveESP32I2CInterfaceTimeForDataProcessing();	//przerwa dla esp32 PO zakończeniu wysyłki (waitForTransferEnd czeka na STM32, ta funkcja - na esp32); opis przy giveESP32I2CInterfaceTimeForDataProcessing()
 	} else {
+		pPrintf->feedPrintf("%s TX frame too long: %u > %u", this->TAG,
+				(unsigned int) dataFrame->dataSize, (unsigned int) ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+		//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 		assert(0);
 	}
 	return retVal;
@@ -228,12 +256,13 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveData(
 }
 
 /********************************************************************
- * @brief  Odczytuje dane z esp32 (i2c slave) i czeka na koniec odczytu
+ * @brief  Odczytuje z esp32 (i2c slave) jedną fazę ramki (len lub dane)
  *
- * Startuje odczyt DMA i czeka (vTaskDelay(1)), aż callback HAL zmieni
- * stan z ...InReception na ...Received (sukces) lub
- * errorpackageDataInReception (błąd). Po ESP32_I2C_RX_TIMEOUT_MS
- * ustawia timeoutpackageDataInReception i przerywa transmisję.
+ * Odczyt przez i2cMaster::I2C_Master_Receive_DMA(), która wraca
+ * dopiero po zakończeniu transmisji. Na podstawie wyniku przesuwa stan
+ * odbioru: lenDataInReception -> lenDataReceived,
+ * packageDataInReception -> packageDataReceived (sukces) albo
+ * -> errorpackageDataInReception (błąd).
  *
  * @param  [*pData] [uint8_t] Wskaźnik do adresu pamięci pod jakim mają
  * 			być zapisane otrzymane dane
@@ -241,81 +270,73 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveData(
  *
  * @return [HAL_StatusTypeDef]
  * @retval [HAL_OK] odczyt zakończony poprawnie
- * @retval [HAL_ERROR / HAL_BUSY] błąd startu lub transmisji
- * @retval [HAL_TIMEOUT] odczyt nie zakończył się w czasie
  *
  * @note	Stan ...InReception ustawia wywołujący (masterReceiveData)
- * 			PRZED wywołaniem tej metody.
- * @warning	Błąd i timeout kończą się printf + assert(0) (brak obsługi
+ * 			PRZED wywołaniem tej metody. Szyna zajęta, błąd startu DMA i
+ * 			zawieszona transmisja kończą się printf + assert(0) w i2cMaster.
+ * @warning	Błąd transmisji kończy się printf + assert(0) (brak obsługi
  * 			błędów - patrz //todo).
  *******************************************************************/
 HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(
 		uint8_t *pData, uint16_t Size) {
-
 	HAL_StatusTypeDef retVal = this->pi2cMaster->I2C_Master_Receive_DMA(
-			this->esp32i2cSlaveAdress_7bit, pData, Size);
-	if (retVal != HAL_OK) {
-		this->i2cRxMaster.state = i2cReceiveStates::errorpackageDataInReception;	//odczyt nie wystartował
+			this->esp32i2cSlaveAdress_7bit, pData, Size);	//wraca po zakończeniu odczytu (szyna zajęta / błąd startu / zawieszenie -> assert w i2cMaster)
+	if (retVal == HAL_OK) {
+		switch (this->i2cRxMaster.state) {
+		case i2cReceiveStates::lenDataInReception:
+			this->i2cRxMaster.state = i2cReceiveStates::lenDataReceived;
+			break;
+		case i2cReceiveStates::packageDataInReception:
+			this->i2cRxMaster.state = i2cReceiveStates::packageDataReceived;
+			break;
+		default:	//nie powinno wystąpić - masterReceiveData() ustawia ...InReception przed wywołaniem
+			pPrintf->feedPrintf("%s RX unexpected state: %d", this->TAG, (int) this->i2cRxMaster.state);
+			//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
+			assert(0);
+			break;
+		}
 	} else {
-		TickType_t startTick = xTaskGetTickCount();
-		//czekanie, aż callback HAL (ISR) zmieni stan ...InReception
-		while ((this->i2cRxMaster.state == i2cReceiveStates::lenDataInReception)
-				|| (this->i2cRxMaster.state == i2cReceiveStates::packageDataInReception)) {
-			if ((xTaskGetTickCount() - startTick) >= pdMS_TO_TICKS(ESP32_I2C_RX_TIMEOUT_MS)) {
-				taskENTER_CRITICAL();	//sprawdzenie i zmiana stanu bez wyścigu z callbackiem HAL (ISR)
-				if ((this->i2cRxMaster.state == i2cReceiveStates::lenDataInReception)
-						|| (this->i2cRxMaster.state == i2cReceiveStates::packageDataInReception)) {
-					this->i2cRxMaster.state = i2cReceiveStates::timeoutpackageDataInReception;	//NAJPIERW stan - spóźniony callback już go nie zmieni
-				}
-				taskEXIT_CRITICAL();
-				if (this->i2cRxMaster.state == i2cReceiveStates::timeoutpackageDataInReception) {
-					this->pi2cMaster->I2C_Master_Abort(this->esp32i2cSlaveAdress_7bit);	//POTEM zwolnienie szyny i DMA
-					retVal = HAL_TIMEOUT;
-				}
-				break;
-			}
-			vTaskDelay(1);
-		}
-	}
-
-	switch (this->i2cRxMaster.state) {
-	case i2cReceiveStates::errorpackageDataInReception:
-	case i2cReceiveStates::timeoutpackageDataInReception:
-		if (retVal == HAL_OK) {
-			retVal = HAL_ERROR;	//błąd zgłoszony przez callback HAL (ISR)
-		}
-		pPrintf->feedPrintf("%s RX %s, Size: %u, dataSizeToRead: %u, HAL status: %d", this->TAG,
-				(this->i2cRxMaster.state == i2cReceiveStates::timeoutpackageDataInReception) ? "TIMEOUT" : "ERROR",
+		this->i2cRxMaster.state = i2cReceiveStates::errorpackageDataInReception;
+		pPrintf->feedPrintf("%s RX ERROR, Size: %u, dataSizeToRead: %u, HAL status: %d", this->TAG,
 				(unsigned int) Size, (unsigned int) this->i2cRxMaster.dataSizeToRead, (int) retVal);
 		//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 		assert(0);
-		break;
-	default:	//lenDataReceived / packageDataReceived - odczyt poprawny
-		break;
 	}
-	this->giveESP32I2CInterfaceTime();
+	this->giveESP32I2CInterfaceTimeForDataProcessing();	//przerwa dla esp32 PO zakończeniu odczytu (waitForTransferEnd czeka na STM32, ta funkcja - na esp32); opis przy giveESP32I2CInterfaceTimeForDataProcessing()
 	return retVal;
 }
 
-void esp32_i2cComunicationDriver::giveESP32I2CInterfaceTime(void) {
-	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
-}
-
 /********************************************************************
- * @brief  Oczekuje do czasu, aż interfejs i2c nie bedzie dostępny.
+ * @brief  Daje esp32 czas na przygotowanie się do kolejnej transmisji
+ * 			i2c (ESP_I2C_BUS_DELAY).
  *
- * [Dłuższy opis funkcji, w którym można wyjaśnić szczegóły działania,
- *  algorytmy, przypadki brzegowe itp.]
+ * Wywoływać PO każdej zakończonej transmisji z esp32 (zapis i odczyt).
  *
  * @param  NONE
  *
  * @return NONE
  *
- * @note   NONE
- * @warning NONE
+ * @note   Dlaczego jest potrzebna, mimo że i2cMaster czeka na koniec
+ * 			transmisji (waitForTransferEnd):
+ * 			- waitForTransferEnd() czeka na STM32 - aż transmisja na
+ * 			  magistrali się skończy (STOP),
+ * 			- ta funkcja czeka na ESP32 - aż przetworzy zakończoną
+ * 			  transmisję. Sterownik ESP-IDF po każdym STOP wywołuje
+ * 			  callback i WYŁĄCZA przerwanie trans_complete; ponownie
+ * 			  włącza je dopiero task i2cSlaveReceive (i2c_slave_receive).
+ * 			  Zapis STM32 -> ESP32 zakończony w tej przerwie nie wywoła
+ * 			  callbacku i ramka PRZEPADA (KONTEKST_I2C_ESP32_STM32.md,
+ * 			  p. 3.5).
+ * 			Po zapisie chroni następny zapis (np. LED, zaraz po nim
+ * 			silnik). Po odczycie chroni zapis wykonany zaraz po odczycie
+ * 			(ESP32 po odczycie też wyłącza trans_complete); sam kolejny
+ * 			odczyt i tak inicjuje ESP32 impulsem INT.
+ * @warning ESP_I2C_BUS_DELAY (hwConfigFile.h) dobrane doświadczalnie.
+ * 			Do usunięcia/zmniejszenia, gdy ESP32 będzie uzbrajał
+ * 			odbiornik bez opóźnienia lub sygnalizował gotowość.
  *******************************************************************/
-void esp32_i2cComunicationDriver::while_I2C_STATE_READY(void) {
-	pi2cMaster->while_I2C_STATE_READY();
+void esp32_i2cComunicationDriver::giveESP32I2CInterfaceTimeForDataProcessing(void) {
+	vTaskDelay(pdMS_TO_TICKS(ESP_I2C_BUS_DELAY));
 }
 
 /********************************************************************
@@ -359,60 +380,6 @@ void esp32_i2cComunicationDriver::parseReceivedData(
 
 enum esp32_i2cComunicationDriver::i2cReceiveStates esp32_i2cComunicationDriver::getI2cRxMasaterState(void){
 	return this->i2cRxMaster.state;
-}
-
-/********************************************************************
- * @brief  Przesuwa stan odbioru z esp32 po zakończeniu odczytu (STOP).
- *
- * Metoda wywoływana z przerwania (HAL_I2C_MasterRxCpltCallback) po
- * zakończeniu odczytu DMA. Zmienia stan TYLKO gdy trwa odbiór z esp32
- * (stan ...InReception).
- *
- * @param  NONE
- *
- * @return NONE
- *
- * @note   Inne stany (np. spóźniony callback po timeoucie lub odczyt
- * 			z innego slave) nie są zmieniane.
- * @warning Wywoływać wyłącznie z ISR (bez printf).
- *******************************************************************/
-void esp32_i2cComunicationDriver::rxCompleteFromISR(void) {
-	switch (this->i2cRxMaster.state) {
-	case i2cReceiveStates::lenDataInReception:
-		this->i2cRxMaster.state = i2cReceiveStates::lenDataReceived;
-		break;
-	case i2cReceiveStates::packageDataInReception:
-		this->i2cRxMaster.state = i2cReceiveStates::packageDataReceived;
-		break;
-	default:	//callback nie dotyczy odbioru z esp32 - stan bez zmian
-		break;
-	}
-}
-
-/********************************************************************
- * @brief  Ustawia stan błędu odbioru z esp32.
- *
- * Metoda wywoływana z przerwania (HAL_I2C_ErrorCallback) przy błędzie
- * transmisji (NACK, BERR, ARLO, OVR, DMA). Zmienia stan TYLKO gdy
- * trwa odbiór z esp32 (stan ...InReception).
- *
- * @param  NONE
- *
- * @return NONE
- *
- * @note   Błąd wykrywa i zgłasza (printf + assert) task odbioru w
- * 			masterReceiveFromESP32_DMA().
- * @warning Wywoływać wyłącznie z ISR (bez printf).
- *******************************************************************/
-void esp32_i2cComunicationDriver::rxErrorFromISR(void) {
-	switch (this->i2cRxMaster.state) {
-	case i2cReceiveStates::lenDataInReception:
-	case i2cReceiveStates::packageDataInReception:
-		this->i2cRxMaster.state = i2cReceiveStates::errorpackageDataInReception;
-		break;
-	default:	//błąd nie dotyczy odbioru z esp32 - stan bez zmian
-		break;
-	}
 }
 
 #include <SileliS_code/menu_radioMenu.h>
