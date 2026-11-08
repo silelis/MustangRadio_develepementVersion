@@ -39,7 +39,8 @@ typedef struct {
 } i2cFrame_commonHeader;//nagłówek każdej ramki komunikacyjnej i2c zpomiędzy stm32 i ESP32
 
 #define I2C_SLAVE_ADDRESS_ESP32					0x3C	//si468x 0b11001xx, TDA741x	 0b1000100, 24C16 0b1010xxx, TEA5767 0b1100000, MCP23008 0b0100xxx
-#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			52		//wygląda na to, że 52 to max
+#define ESP32_SLAVE_RECEIVE_BUFFER_LEN			32		//max długość ramki I2C w OBU kierunkach (STM32 <-> ESP32) = SOC_I2C_FIFO_LEN ESP32; obejście błędu sterownika I2C slave ESP-IDF 5.2 (opis w i2c_engine_slave.cpp); plik wspólny ze STM32 - dlatego liczba, a nie SOC_I2C_FIFO_LEN (zgodność sprawdza static_assert w i2c_engine_slave.cpp)
+#define I2C_SLAVE_DRIVER_RECEIVE_LEN			ESP32_SLAVE_RECEIVE_BUFFER_LEN	//długość, na jaką ESP32 uzbraja odbiór w i2c_slave_receive() - nie więcej niż SOC_I2C_FIFO_LEN (opis w i2c_engine_slave.cpp)
 #define ESP32_I2C_TX_TIMEOUT_MS					500		//czas [ms], przez jaki ESP32 czeka, aż STM32 odczyta każdą fazę ramki (len, dane); STM32 czeka dłużej (ESP32_I2C_RX_TIMEOUT_MS)
 
 //DEFINICJE I STRUKTURY KOMUNIKACYJNE POMIĘDZY STM32 i ESP32

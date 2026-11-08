@@ -20,6 +20,19 @@ static portMUX_TYPE s_i2cTxStateMux = portMUX_INITIALIZER_UNLOCKED;
 // Maksymalny czas czekania na przeniesienie danych z ring buffera do TX FIFO przez ISR sterownika (zwykle kilka us)
 #define I2C_TX_FIFO_LOAD_TIMEOUT_US		1000
 #define I2C_TX_FIFO_LOAD_POLL_US		10
+
+// Długość, na jaką uzbrajany jest odbiór w i2c_slave_receive() - NIE WIĘCEJ niż sprzętowe FIFO (32 B).
+// Błąd sterownika ESP-IDF 5.2 (i2c_slave.c, s_i2c_handle_complete): po STOP czyta t->rcv_fifo_cnt bajtów
+// (reszta z receive_size, a nie liczba bajtów w FIFO) do data_buf[SOC_I2C_FIFO_LEN] - przy receive_size 52
+// przepełnia data_buf i nadpisuje trans_data_length / callbacki sterownika -> Interrupt WDT / Double exception
+// przy następnym i2c_slave_transmit(). Przy receive_size <= 32 przepełnienie jest niemożliwe.
+// I2C_SLAVE_DRIVER_RECEIVE_LEN i ESP32_SLAVE_RECEIVE_BUFFER_LEN - w comunicationProtocol.h (wspólny ze STM32, tam liczba 32)
+static_assert(ESP32_SLAVE_RECEIVE_BUFFER_LEN == SOC_I2C_FIFO_LEN, "ESP32_SLAVE_RECEIVE_BUFFER_LEN (comunicationProtocol.h) musi być równe SOC_I2C_FIFO_LEN - obejście błędu sterownika IDF 5.2");
+static_assert(I2C_SLAVE_DRIVER_RECEIVE_LEN <= SOC_I2C_FIFO_LEN, "odbiór I2C slave dłuższy niż FIFO - przepełnienie data_buf w sterowniku IDF 5.2");
+// ramki STM32 -> ESP32 muszą zmieścić się w jednym odbiorze
+static_assert(sizeof(i2cFrame_hmiLeds) <= I2C_SLAVE_DRIVER_RECEIVE_LEN, "ramka LED dłuższa niż odbiór I2C slave");
+static_assert(sizeof(i2cFrame_stepper) <= I2C_SLAVE_DRIVER_RECEIVE_LEN, "ramka silnika dłuższa niż odbiór I2C slave");
+static_assert(sizeof(i2cFrame_btAudio) <= I2C_SLAVE_DRIVER_RECEIVE_LEN, "ramka BT dłuższa niż odbiór I2C slave");
 //----------------------------------------------
 // Enumy i zmienne globalne (z volatile dla ISR)
 //----------------------------------------------
@@ -374,7 +387,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 
 	// uint32_t size_rd = 0;
 	i2cSlaveRxEvent rx_data;	// kopia zdarzenia z kolejki - task pracuje wyłącznie na niej (nie na globalnym rxEvent ISR)
-	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
+	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, I2C_SLAVE_DRIVER_RECEIVE_LEN));	// max 32 B - błąd sterownika IDF 5.2 (opis przy I2C_SLAVE_DRIVER_RECEIVE_LEN)
 	this->esp32i2cBusInitialised(); // informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
 
 	i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)rx_data.data; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
@@ -383,7 +396,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	{
 		if (xQueueReceive(this->s_receive_queue, &rx_data, portMAX_DELAY) == pdTRUE)
 		{
-			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, ESP32_SLAVE_RECEIVE_BUFFER_LEN));
+			ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, I2C_SLAVE_DRIVER_RECEIVE_LEN));	// max 32 B - błąd sterownika IDF 5.2 (opis przy I2C_SLAVE_DRIVER_RECEIVE_LEN)
 			if (rx_data.cbData.rxToEsp32 == recpeptionToMe)
 			{
 				assert(fakeCommHeader->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN);	// długość spoza bufora = uszkodzona ramka; new/memcpy wyszłyby poza rx_data.data
@@ -470,6 +483,12 @@ void i2cEngin_slave::esp32i2cBusInitialised(void)
 
 BaseType_t i2cEngin_slave::i2cSendDataToTransisionQueue(i2cFrame_transmitQueue *tempFrameToParserQueue)
 {
+	if (tempFrameToParserQueue->dataSize > ESP32_SLAVE_RECEIVE_BUFFER_LEN)	// limit długości ramki (comunicationProtocol.h) - jak w STM32 masterTransmitData()
+	{
+		printf("%s TX frame too long: %u > %u\n", this->TAG, (unsigned int)tempFrameToParserQueue->dataSize, (unsigned int)ESP32_SLAVE_RECEIVE_BUFFER_LEN);
+		//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
+		assert(0);
+	}
 	return this->i2cSlaveTransmitDataQueue->QueueSendFromISR(tempFrameToParserQueue);
 }
 

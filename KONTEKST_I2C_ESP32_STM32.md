@@ -1,7 +1,7 @@
 # KONTEKST: komunikacja I2C ESP32 (slave) → STM32 (master) z GPIO interrupt request
 
 > **Dla Claude na nowym komputerze:** przeczytaj ten plik w całości, zanim zaczniesz cokolwiek robić.
-> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`), 2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), **2026-11-03 (test na sprzęcie): RX STM32←ESP32 DZIAŁA w trybie debugowania** (poprawka ESP32 `tx_fifo_cnt`, sekcja 3.6) oraz **2026-11-04: wspólny mechanizm czekania na koniec transmisji w `i2cMaster` (`waitForTransferEnd`) dla TX i RX — NIEtestowany na sprzęcie** (sekcja 7.3).
+> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`), 2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), **2026-11-03 (test na sprzęcie): RX STM32←ESP32 DZIAŁA w trybie debugowania** (poprawka ESP32 `tx_fifo_cnt`, sekcja 3.6) oraz **2026-11-04: wspólny mechanizm czekania na koniec transmisji w `i2cMaster` (`waitForTransferEnd`) dla TX i RX — NIEtestowany na sprzęcie** (sekcja 7.3) oraz **2026-11-08: crash ESP32 (Interrupt WDT / Double exception) = błąd sterownika I2C slave ESP-IDF 5.2 — obejście: max długość ramki 32 B w obu kierunkach (sekcja 3.7)**.
 > **Zacznij od sekcji 7 („Gdzie jesteśmy / co dalej”)** — tam: co jest zrobione, jak testować, zasady użycia `i2cMaster` i otwarte tematy (m.in. synchronizacja INT / wykrycie startu ESP32).
 > Sekcje 2–4 to tło; sekcja 5 to opis kroków 1–13 (część zastąpiona w 7.3 — tam jest aktualny stan RX); stary plan z `xTaskNotify` został ZASTĄPIONY.
 > Numery linii są orientacyjne — przed zmianą zawsze przeczytaj aktualny plik.
@@ -50,7 +50,7 @@
 ```
 
 - STM32 **musi czytać dokładnie 4 B, potem dokładnie `dataSize` B** (ESP przesuwa stan po każdym zakończonym odczycie, niezależnie od liczby bajtów).
-- `dataSize` obejmuje całą ramkę z nagłówkiem `i2cFrame_commonHeader {crcSum, commandGroup, size_t dataSize}`; zakres: `sizeof(i2cFrame_commonHeader) ≤ dataSize ≤ ESP32_SLAVE_RECEIVE_BUFFER_LEN (52)`.
+- `dataSize` obejmuje całą ramkę z nagłówkiem `i2cFrame_commonHeader {crcSum, commandGroup, size_t dataSize}`; zakres: `sizeof(i2cFrame_commonHeader) ≤ dataSize ≤ ESP32_SLAVE_RECEIVE_BUFFER_LEN` (**od 2026-11-08: 32**, wcześniej 52 — sekcja 3.7).
 - **ESP32 czeka na każdy odczyt max 500 ms** (`tx_timeout_ms`), potem przechodzi w `timeoutInTransmition` — **stan końcowy** (ESP przestaje nadawać; na razie tylko printf, obsługa błędów później).
 - **Debugowanie:** ESP32 odlicza 500 ms także wtedy, gdy STM32 stoi na breakpoincie. Breakpoint w STM32 w środku protokołu (np. `masterReceiveData()` `case lenDataReceived`, przed odczytem ramki) ⇒ ESP32 `TIMEOUT_IN_TRANSMITION` + `assert` — to NIE jest błąd komunikacji (potwierdzone 2026-11-03: `stateBefore:3`, `tx_fifo_cnt=12` = ramka czekała w FIFO). Breakpointy stawiać po zakończeniu odczytu (np. `parseReceivedData()`).
 
@@ -122,6 +122,23 @@ Oczekiwany log poprawnej fazy (potwierdzony): `LEN_DATA_IN_TRANSMITION` → `DIA
    - Odczyt rejestrów `I2C0` przez gdb (`p/x I2C0.fifo_st`, `monitor mdw 0x3ff53…`) po panice **zrywał połączenie OpenOCD** — rejestry czytać printfem w kodzie (pełne słowa `.val`). Nigdy nie czytać `fifo_data` (`0x3ff5301C`) — odczyt zdejmuje bajt z RX FIFO.
    - Konsola gdb w Espressif IDE: *Console* → „Display Selected Console” → konsola `gdb` (istnieje tylko w trakcie sesji); wklejone kilka komend naraz bywa gubione — wpisywać pojedynczo. Prywatne pola przez `p p_i2cSlave->i2cTxSlaveState`.
    - Wynik: **komunikacja RX STM32←ESP32 działa w trybie debugowania** (obie fazy `from me`); jedyny timeout pochodził od breakpointu w STM32 (sekcja 2, „Debugowanie”).
+
+### 3.7 Błąd sterownika I2C slave ESP-IDF 5.2 i obejście (2026-11-08, test na sprzęcie)
+**Objaw:** po commicie STM32 `fb7d1d4c` (TX STM32→ESP32 zaczął działać) ESP32: kilka × `DIAG Reception to me` (ramki LED 28 B), potem `i2c slave transmit IDLE` (klawisz) i natychmiast `Guru Meditation: Interrupt wdt timeout on CPU0` albo `Double exception` (PC w `_xt_context_save`, ślad spinlocka). Wtórnie: ESP32 się resetuje → impuls startowy INT → STM32 czyta len z pustego FIFO → `RX frame length out of range` + assert (`comunication_esp32i2cComunicationDriver.cpp:228`) — problem 7.5. Inny przebieg: STM32 już stał na tym assercie → ESP32 `TIMEOUT_IN_TRANSMITION` w `lenDataInTransmition` (`tx_fifo_cnt = 4`, `int_raw = 0x2` — na szynie cisza).
+**Przyczyna (sterownik, nie nasz kod):** `C:\esp\release-v5.2\esp-idf\components\driver\i2c\i2c_slave.c`, `s_i2c_handle_complete()`: po STOP czyta `t->rcv_fifo_cnt` bajtów (reszta z rozmiaru podanego w `i2c_slave_receive()`, a nie liczba bajtów w FIFO) do `i2c_slave->data_buf[SOC_I2C_FIFO_LEN = 32]`. Przy `receive_size` 52 i krótkiej ramce → przepełnienie → nadpisane pola `i2c_slave_dev_t` za `data_buf`: `trans_data_length` (przerwanie TX FIFO nigdy nie gaśnie → burza przerwań → Interrupt WDT), dalej `callbacks.on_recv_done`, `user_ctx` (→ Double exception). Odbiór działa poprawnie, uszkodzenie wychodzi dopiero przy pierwszej wysyłce ESP32. Wcześniej niewidoczne, bo TX STM32→ESP32 nie działał. IDF 6.x (`esp_driver_i2c`, sterownik slave v2) — kod przepisany, błędu nie ma.
+**Obejście (decyzja użytkownika: bez zmian w ESP-IDF; migracja na 6.x — na sam koniec, gdy nic innego nie pomoże):**
+- `comunicationProtocol.h` (wspólny): `ESP32_SLAVE_RECEIVE_BUFFER_LEN` **52 → 32** = max długość ramki w **obu kierunkach** (liczba, bo STM32 nie zna `SOC_I2C_FIFO_LEN`); nowe `I2C_SLAVE_DRIVER_RECEIVE_LEN` (= `ESP32_SLAVE_RECEIVE_BUFFER_LEN`) — rozmiar uzbrajania `i2c_slave_receive()`.
+- `i2c_engine_slave.cpp`: oba `i2c_slave_receive(..., I2C_SLAVE_DRIVER_RECEIVE_LEN)`; komentarz z opisem błędu; `static_assert`: `ESP32_SLAVE_RECEIVE_BUFFER_LEN == SOC_I2C_FIFO_LEN`, `I2C_SLAVE_DRIVER_RECEIVE_LEN <= SOC_I2C_FIFO_LEN`, `sizeof(i2cFrame_hmiLeds/stepper/btAudio) <= I2C_SLAVE_DRIVER_RECEIVE_LEN` (nowy typ ramki STM32→ESP32 → dopisać `static_assert`).
+- Funkcje nadające sprawdzają długość: STM32 `masterTransmitData()` (było), ESP32 `i2cSendDataToTransisionQueue()` (nowe) → `TX frame too long: N > 32` + `//todo` + `assert(0)`.
+- Ramki < 32 B działają (sterownik doczytuje śmieci z pustego FIFO, ale w granicach bufora; długość z nagłówka). Ramki > 32 B przy IDF 5.2 niemożliwe (reszta zostaje w FIFO). Gdyby były potrzebne: migracja na IDF 6.x / dzielenie ramek na części ≤ 32 B / stała długość ramki 52 B (dopełnienie).
+- Kompilacja ESP32 (`idf.py build`, release-v5.2) i STM32 (`make -j8 all`, GCC 13.3 z CubeIDE 2.0.0): OK.
+- **Test na sprzęcie:** wersja z uzbrajaniem odbioru na 32 B (bez zmiany 52 → 32 we wspólnym pliku) — działa (LED + klawisze, bez crasha). Wersja końcowa (32 we wspólnym pliku + sprawdzenie w ESP32) — skompilowana, do wgrania na OBA układy.
+
+**Uwagi przy okazji (2026-11-08):**
+- Poprawka deadlocku I2C master/slave między rdzeniami (pamięć: init mastera na Core 1, przypięcie tasków) istnieje TYLKO w folderze `01_ESP32/HMI_and_bluetooth - FIX POPRAWKI`; aktywny projekt ma `xTaskCreate` bez przypięcia (`app_main.cpp:94-95, 118`) i init mastera w `tasksFunctions.cpp:78`. Przy błędach przy silniku krokowym — sprawdzić najpierw to.
+- Flashowanie ESP32 przez J-Link przy `adapter speed 12000` przerwało się w połowie (`[esp32.cpu1] Examination failed`) → pusta partycja aplikacji (`invalid magic byte`). Przy 2000 kHz bez błędów. `.launch` ma nadal 12000 (propozycja zmiany na 2000 — czeka na decyzję).
+- Espressif-IDE, nowy workspace: trzeba wybrać ESP-IDF w ESP-IDF Manager (inaczej „No Toolchain found for Target esp32” / „No board selected”), potem zbudować projekt przed Debug (inaczej `build\null not found`).
+- Core dump ESP32 z UART: `esp_coredump info_corefile -t b64 -c core.b64 build/HMI_and_bluetooth.elf` (python z venv release-v5.2, `IDF_PATH` ustawiony, GDB 16.3 w PATH, `--gdb-timeout-sec 20`); zmienne lokalne: `-s core.elf` + `xtensa-esp32-elf-gdb -batch -ex "frame 3" -ex "info locals"`.
 
 ---
 
@@ -251,7 +268,8 @@ Przyszłość: TX i przebudowa RX na wspólny mechanizm `waitForTransferEnd()` �
 | `400d8a48` | ten plik: zaakceptowany plan kroków 1–13 |
 | `b4e6bba9` | **RX STM32←ESP32 (kroki 1–13)** — „komunikacja stm32<->esp32 poprawiona (na sucho)” |
 | `49d5d4b3`, `b5e9dee7`, `9a8d7f3a` (na `main`) | J-Link `adapter speed`; **ESP32: stos „I2C slave rx”, wykrywanie odczytu przez `tx_fifo_cnt` (3.6)**; „GOLDEN SAMPLE” — **RX STM32←ESP32 działa w trybie debugowania** |
-| (2026-11-04, ten commit) | **`waitForTransferEnd` w `i2cMaster` dla TX i RX (7.3) — NIEtestowane na sprzęcie** |
+| `fb7d1d4c` (2026-11-04) | **`waitForTransferEnd` w `i2cMaster` dla TX i RX (7.3)** |
+| (2026-11-08, „GOLDEN SAMPLE - poprawiono długośc buffora ESP32 i2c slave…”) | **obejście błędu sterownika I2C slave IDF 5.2: max ramka 32 B w obu kierunkach, sprawdzenie długości w funkcjach nadających (3.7)** |
 
 Co działa w kodzie (stan po 7.3):
 - RX (odczyt STM32 z ESP32): 1 impuls INT = 1 token = 1 wywołanie `masterReceiveData()` = 1 faza: `idle` → odczyt 4 B długości do `i2cRxMaster.dataSizeToRead` → `lenDataReceived`; kolejny INT → `new char[len]`, odczyt ramki → `idle`, ramka do parsera. Odczyt przez `i2cMaster::I2C_Master_Receive_DMA()`, która wraca po końcu transmisji; stan przesuwa task na podstawie wyniku (bez callbacków HAL).
@@ -299,7 +317,10 @@ Skutki: stan `timeoutpackageDataInReception` zostaje w enumie, ale STM32 go nie 
 - Nie brać semafora drugi raz (binarny, nie rekurencyjny → deadlock); oddawać go podczas czekania na urządzenie (CTS si4689, zapis EEPROM); nie trzymać długo (ESP32 czeka na odczyt max 500 ms od INT); nie wołać z ISR.
 
 ### 7.4 Do zrobienia / otwarte
-- **NAJBLIŻSZE: test na sprzęcie** wg 7.2 (RX klawisze + TX LED/silnik). Po teście TX: usunąć komentarz `//ta funkcja nie działa` (`tasksFunctions.cpp`, task TX) i nieaktualny dopisek „(nasza ścieżka timeoutu)” w liście callbacków (`tasksFunctions.cpp`).
+- **NAJBLIŻSZE: wgrać i przetestować wersję końcową z 3.7 na OBU układach** (32 B w `comunicationProtocol.h` zmienia też STM32). Test 2026-11-08: RX klawisze + TX LED działają (z uzbrajaniem odbioru na 32 B); **silnik krokowy (TX ramka stepper) — nieprzetestowany** (uwaga o deadlocku i `FIX POPRAWKI` w 3.7).
+- `adapter speed` w `HMI_and_bluetooth Configuration.launch`: 12000 → 2000 (3.7) — czeka na decyzję.
+- Migracja ESP32 na ESP-IDF 6.x — **na sam koniec**, gdy nic innego nie pomoże (decyzja użytkownika 2026-11-08); usuwa błąd sterownika z 3.7 i większość obejść w `i2c_engine_slave.cpp` (callbacki `on_request`/`on_receive`, ring buffer odbiorczy).
+- Po teście TX: usunąć komentarz `//ta funkcja nie działa` (`tasksFunctions.cpp`, task TX) i nieaktualny dopisek „(nasza ścieżka timeoutu)” w liście callbacków (`tasksFunctions.cpp`).
 - **Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)** — analiza i propozycja w **sekcji 7.5**; czeka na decyzje użytkownika (7.5.6).
 - Opcja: semafor szyny → **mutex rekurencyjny** z `Take/Give` wewnątrz metod transmisji (automatyczna ochrona pojedynczej transmisji, dziedziczenie priorytetu; sekwencje nadal `Take/Give` w driverze). Niezaakceptowane.
 - Niewykrywalne bez czasu: SDA trzymane nisko PO ostatnim bajcie (STOP się nie wykona) — dziś pokryte diagnostyką co 1 s + assert po 10 s; na przyszłość do rozważenia IWDG.
