@@ -221,16 +221,16 @@ static void initTaskFunctions(void) {
 
 	//tworzenie taska czytającego dane po I2C ze slave
 	configASSERT(
-			xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY/*+1*/, &taskHandle_i2cMasterReceiveFromSlaveDataTask));
+			xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterReceiveFromSlaveDataTask));	//+2: odczyt z ESP32 w czasie ESP32_I2C_TX_TIMEOUT_MS niezależnie od obciążenia (menu, printf); większość czasu czeka na kolejkę/semafor
 	configASSERT(
-			xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY/*+5*/, &taskHandle_i2cMasterTransmitToSlaveDataTask));
+			xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterTransmitToSlaveDataTask));	//+2: jak odbiór (wspólny semafor szyny)
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
 	configASSERT(
 			xTaskCreate(esp32I2cIntrrruptRequest, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32I2cIntrrruptRequest));
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
 	configASSERT(
-			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_i2cMasterParseReceivedData));
+			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY + 1, &taskHandle_i2cMasterParseReceivedData));	//+1: parsowanie odebranych ramek przed menu/printf
 
 	pHmiLeds = new (std::nothrow) ledsController(/*&radioStruct.humanMachineInterface.leds,*/ pi2cMaster->getTransmitQueue());
 	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
