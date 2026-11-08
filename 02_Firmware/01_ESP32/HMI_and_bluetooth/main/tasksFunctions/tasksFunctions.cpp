@@ -73,7 +73,6 @@ void taskFunctionsStaticHandlersInit(void)
 	pLedDisplay->ledStripClearAll();
 	
 	//tworzy obiekt obsługujący szyne i2c master komunikującą się z  MCP23008
-#ifndef GURU_FIX
 	printf("I2C master bus init\n");
 	i2cEngin_master *p_i2cMaster = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
 	assert(p_i2cMaster);
@@ -94,9 +93,6 @@ void taskFunctionsStaticHandlersInit(void)
 	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
 	printf("Stepper motor and powerOFF gpio init\n");
 	assert(pMotor = new StepperOptoPowerOFF(p_MCP23008));
-#else
-	pMotor = nullptr;	// GURU_FIX: I2C master wyłączony — sub-taski nie będą tworzone
-#endif
 
 
 }
@@ -197,9 +193,7 @@ static void keyboardQueueParameters_isEmergencyResetRequired(keyboardUnion keybo
 		//case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 0))):			//BUT0	presses	= emergency reset aka {'B', 0xfe}
 			printf("Emergency hardware restart\n");
 			//hardwarePowerOFF();
-#ifndef GURU_FIX
 			pMotor->radioPowerOff();
-#endif
 			break;
 		case (0xa3):			// BUT2_BUT3_BUT4_EQUALIZER_LONG_RELEASED = musi być taki sam jak w keyboardToFunction_buttonDefinitions.h STM32 dla RESET_TO_DEFAULT 
 			//case (LONG_PRESS_BIT_MASK | (0xff & ~(1 << 2) & ~(1 << 3) & ~(1 << 4) & ~(1 << 6))): //BUT0+BUT6 presses = NVS reset + emergency reset  aka {'b', 0xa3}     BUT2_BUT3_BUT4_EQUALIZER_LONG_RELEASED
@@ -643,10 +637,8 @@ void i2cReceivedDataParser(void *nothing)
 						break;
 					case I2C_COMMAND_GROUP_STEPPER:		//0x04
 						//extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
-#ifndef GURU_FIX
 						pMotor->QueueSendDataToMotorDataQueue(&parsingData);
 						//vTaskResume(handlerTask_stepperMotorDataPasrser);
-#endif
 						break;
 					default:
 						//nie wiadomo do jakiej "commandGroup" należą dane więc jest jakiś bład trzeba je usunąć, aby nie było przepełnienia pamięci

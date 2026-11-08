@@ -9,7 +9,6 @@ static TaskHandle_t handlerTask_stepperMotorMove = NULL;
 
 static void stepperMotorCalibration(void* nothing)
 {
-#ifndef GURU_FIX
 	uint16_t beginOffest;
 	uint16_t endOffset;
 
@@ -28,14 +27,10 @@ static void stepperMotorCalibration(void* nothing)
 			pMotor->measureSliderRange(beginOffest, endOffset);
 		}
 	}
-#else
-	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr
-#endif
 }
 
 static void stepperMotorMove(void* nothing)
 {
-#ifndef GURU_FIX
 	vTaskSuspend(handlerTask_stepperMotorMove);
 	for (;;)
 	{
@@ -44,15 +39,11 @@ static void stepperMotorMove(void* nothing)
 			pMotor->moveToVolatileDestinationPosition();
 		}
 	}
-#else
-	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr
-#endif
 }
 
 
 void stepperMotorDataParser(void *TaskParameters)
 {
-#ifndef GURU_FIX
 	configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
 	configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
 
@@ -138,7 +129,4 @@ void stepperMotorDataParser(void *TaskParameters)
 			}
 		}
 	}
-#else
-	vTaskDelete(NULL);	// GURU_FIX: pMotor == nullptr, cały stepper I2C wyłączony
-#endif
 }
