@@ -23,6 +23,7 @@ public:
 			GPIO_TypeDef *sdaGpioPort, uint16_t sdaPin);	//piny SCL/SDA - tylko do diagnostyki stanu linii i2c (waitForTransferEnd)
 	virtual ~i2cMaster();
 	HAL_StatusTypeDef ping(uint16_t DevAddress_7bit);
+	bool isDeviceReady(uint16_t DevAddress_7bit);	//pojedynczy ping bez printf/assert, z semaforem szyny - do odpytywania gotowości slave (np. ESP32 po starcie)
 	BaseType_t setI2cAdressToAdressQueue(uint16_t DevAddress_7bit);
 	BaseType_t getI2cAdressFromAdressQueue(
 			i2cFrame_transmitQueue *I2CFrameWithAdressOfSlaveToRead);

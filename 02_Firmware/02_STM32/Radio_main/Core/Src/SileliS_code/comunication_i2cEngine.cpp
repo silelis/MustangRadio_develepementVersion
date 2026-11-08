@@ -132,6 +132,33 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit) {
 }
 
 /********************************************************************
+ * @brief  Pojedynczy ping i2c (bez printf i assert) - sprawdza, czy
+ *  slave odpowiada ACK na swój adres.
+ *
+ * [Do cyklicznego odpytywania gotowości slave, np. ESP32 po starcie.
+ * W odróżnieniu od ping(): 1 próba, krótki timeout, brak assert przy
+ * NACK, bierze semafor szyny - bezpieczne przy pracujących taskach i2c]
+ *
+ * @param  uint16_t DevAddress_7bit - adres urządzenia i2c w notacji
+ * 					7bit
+ *
+ * @return bool - true: slave odpowiedział ACK, false: NACK/błąd
+ *
+ * @note   HAL_I2C_IsDeviceReady jest blokujące (polling), max
+ *         I2C_DEVICE_READY_TIMEOUT_MS
+ * @warning Przerwa dla slave po pingu (np. ESP32 musi ponownie
+ *         uzbroić odbiór) - po stronie wywołującego
+ *******************************************************************/
+bool i2cMaster::isDeviceReady(uint16_t DevAddress_7bit) {
+	HAL_StatusTypeDef retVal;
+	this->i2cMasterSemaphoreTake();
+	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit << 1, 1,
+			I2C_DEVICE_READY_TIMEOUT_MS);
+	this->i2cMasterSemaphoreGive();
+	return (retVal == HAL_OK);
+}
+
+/********************************************************************
  * @brief  Ustawia addres i2c urządzenia slave z jakiego mają być
  * czytane dane. Adres wpisywany jest do klejki, ktora przekazuje
  * informacje do taska odpowiedzialnego za odczyt danych ze slave.

@@ -311,7 +311,8 @@ Przyszłość: TX i przebudowa RX na wspólny mechanizm `waitForTransferEnd()` �
 | `53f250f4` (2026-11-08, „przywrócono pracę stepper motorua”) | **usunięty `GURU_FIX` — I2C master, MCP23008, silnik krokowy przywrócone (przetestowane); usunięte nieużywane katalogi (m.in. `FIX POPRAWKI`) (3.7)** |
 | `4f0d406f` (2026-11-08) | **okno uzbrojenia odbioru ESP32: `portYIELD_FROM_ISR` w callbacku + prio „I2C slave rx” +3; bez `vTaskDelay(3000)` w TX STM32; `getI2cError()`; sprzątanie (3.8)** |
 | `abf1ddcb` (2026-11-08, „GOLDEN SAMPLE”) | **priorytety tasków I2C STM32 (+2/+1) i własny `__assert_func` (3.9)** |
-| (2026-11-08, ten commit) | **impuls startowy ESP32 z taska tx (G1) — właściwa przyczyna NACK na starcie; `new (std::nothrow)`; nazwana struktura; usunięta nieużywana stała (3.8 sprostowanie)** — przetestowane |
+| `cbc55fa3` (2026-11-08) | **impuls startowy ESP32 z taska tx (G1) — właściwa przyczyna NACK na starcie; `new (std::nothrow)`; nazwana struktura; usunięta nieużywana stała (3.8 sprostowanie)** — przetestowane |
+| (2026-11-08, ten commit, gałąź `poprawa-synchronizacji`) | **synchronizacja startu przez ping i2c: `i2cMaster::isDeviceReady()`, STM32 czeka w `startUpTask_initTaskFunctions()` na ACK ESP32, usunięty impuls startowy ESP32 (7.5.7)** — przetestowane |
 
 Co działa w kodzie (stan po 7.3):
 - RX (odczyt STM32 z ESP32): 1 impuls INT = 1 token = 1 wywołanie `masterReceiveData()` = 1 faza: `idle` → odczyt 4 B długości do `i2cRxMaster.dataSizeToRead` → `lenDataReceived`; kolejny INT → `new char[len]`, odczyt ramki → `idle`, ramka do parsera. Odczyt przez `i2cMaster::I2C_Master_Receive_DMA()`, która wraca po końcu transmisji; stan przesuwa task na podstawie wyniku (bez callbacków HAL).
@@ -365,7 +366,7 @@ Skutki: stan `timeoutpackageDataInReception` zostaje w enumie, ale STM32 go nie 
 - `adapter speed` w `HMI_and_bluetooth Configuration.launch` — użytkownik: zostaje 12000 (przy problemach z flashowaniem — 2000).
 - ~~`ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX 21`~~, ~~`new (std::nothrow)` w ESP32~~, ~~nazwa struktury w `#else`~~ — ZROBIONE 2026-11-08 (3.8).
 - Migracja ESP32 na ESP-IDF 6.x — **na sam koniec**, gdy nic innego nie pomoże (decyzja użytkownika 2026-11-08); usuwa błąd sterownika z 3.7 i większość obejść w `i2c_engine_slave.cpp` (callbacki `on_request`/`on_receive`, ring buffer odbiorczy).
-- **Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)** — analiza i propozycja w **sekcji 7.5**; czeka na decyzje użytkownika (7.5.6).
+- ~~**Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)**~~ — start ZROBIONY i przetestowany 2026-11-08 (7.5.7). Otwarte: restart ESP32 w trakcie pracy STM32 (7.5.8).
 - Opcja: semafor szyny → **mutex rekurencyjny** z `Take/Give` wewnątrz metod transmisji (automatyczna ochrona pojedynczej transmisji, dziedziczenie priorytetu; sekwencje nadal `Take/Give` w driverze). Niezaakceptowane.
 - Niewykrywalne bez czasu: SDA trzymane nisko PO ostatnim bajcie (STOP się nie wykona) — dziś pokryte diagnostyką co 1 s + assert po 10 s; na przyszłość do rozważenia IWDG.
 - si4689 (`02_Firmware/04_si468x/rev 026`): obrazy ~520 kB (DAB/FMHD/AMHD), I2C1 ~100 kHz (`Timing 0x20B0CCFF`, PCLK1 140 MHz) → ~48 s ładowania; `HOST_LOAD` porcjami (≤4 KB ≈ 370 ms); semafor oddawać po każdej porcji (ESP32: 500 ms); rozważyć Fast Mode 400 kHz lub SPI flash + `FLASH_LOAD`; 3 obrazy ≈ 1,58 MB przy 2 MB flash STM32H7A3RI.
@@ -429,3 +430,26 @@ Wysyłka do ESP32 przed gotowością (ramki LED wysyła `manageRadioButtonsAndMe
 3. Wysyłka do ESP32 przed gotowością: A / B / C.
 4. Po pierwszym ACK odczekać ~100 ms (ESP32 kończy start; impuls inicjalizacji i tak ignorowany)?
 5. Opcja 4 (pomiar długości impulsu, restart ESP32) w tym samym etapie czy osobno.
+
+> **Rozstrzygnięte 2026-11-08 — patrz 7.5.7.** Użytkownik wybrał prostszy wariant niż 7.5.6: czekanie zostaje w `startUpTask_initTaskFunctions()` (jak przy GPIO), zmienia się tylko warunek (ping zamiast zbocza); impuls startowy ESP32 usunięty → **opcja 4 (pomiar długości impulsu) odpada**.
+
+#### 7.5.7 ZROBIONE 2026-11-08: synchronizacja startu przez ping i2c (gałąź `poprawa-synchronizacji`, przetestowane)
+**Objaw (bez debuggera, zasilanie obu układów ze stabilizatora załączanego przyciskiem):** STM32 `RX frame length out of range: 4294967292` (`0xFFFFFFFC` = odczyt długości z pustego TX FIFO ESP32) → assert; potem `esp32 interrupt request in unexpected rx state: 5`; ESP32 `DIAG TX FAIL: stateBefore:1` (`lenDataInTransmition`, `tx_fifo_cnt = 4` — STM32 nie odczytał długości) → assert `i2c_engine_slave.cpp:656`. Działało, gdy ESP32 trzymany w resecie (EN) i puszczony po ustabilizowaniu zasilania. COM5/COM10 to tylko TX/RX (bez DTR/RTS).
+**Przyczyna:** stary mechanizm „pierwsze zbocze INT = start ESP32” — każde dodatkowe zbocze na GPIO0 (najpewniej podwójny start ESP32 / brown-out przy narastaniu zasilania z przycisku; niepotwierdzone — S0 `esp_reset_reason()` pominięte) przesuwało liczniki: pierwsze zbocze → „start”, impuls startowy 100 ms → token danych → odczyt śmieci. Przeniesienie INT z GPIO0 niemożliwe (sprzęt).
+**Zmiany:**
+| Krok | Plik | Zmiana |
+|---|---|---|
+| S1 | STM32 `comunication_i2cEngine.h/.cpp`, `hwConfigFile.h` | `bool i2cMaster::isDeviceReady(DevAddress_7bit)`: `Take` → `HAL_I2C_IsDeviceReady(…, 1 próba, I2C_DEVICE_READY_TIMEOUT_MS = 2)` → `Give`; bez printf/assert. Stary `ping()` bez zmian (parser, nieznany adres). Przerwa dla slave po pingu — po stronie wywołującego |
+| S2 | STM32 `hwConfigFile.h` | `ESP32_READY_POLL_PERIOD_MS 150`, `ESP32_READY_SETTLE_MS 150` |
+| S2 | STM32 `tasksFunctions.cpp` | `startUpTask_initTaskFunctions()`: tworzy `pi2cMaster` (przeniesione z `initTaskFunctions()`), pętla `isDeviceReady(I2C_SLAVE_ADDRESS_ESP32)` co 150 ms z `waiting for esp32 i2c bus to be initialized.`, po ACK `vTaskDelay(150)` (ACK daje sprzęt i2c już w konstruktorze `i2cEngin_slave`, taski ESP32 startują później), `esp32I2cInitialised = true`, potem `initTaskFunctions()`. `esp32I2cInitialised` → `static volatile bool` |
+| S2 | STM32 `tasksFunctions.cpp` | `HAL_GPIO_EXTI_Callback`: INT zliczany tylko przy `esp32I2cInitialised == true && pESP32 != nullptr`; EXTI nie ustawia już flagi |
+| S2 | ESP32 `i2c_engine_slave.cpp/.h` | usunięty impuls startowy (wywołanie w `i2cSlaveTransmit()` + metoda `esp32i2cBusInitialised()`); komentarz w `i2cSlaveReceive()` zaktualizowany |
+- S3 (odrzucanie ramek do ESP32 przed gotowością) — niepotrzebne: taski i menu startują dopiero po pingu. S4 (ponowne wysłanie stanu LED po gotowości) — „później”.
+- Ping ESP32: w logu ESP32 jeden `DIAG Reception NOT to me` (7.5.4).
+- **Firmware obu układów wgrywać razem** (stary STM32 + nowy ESP32 czekałby w nieskończoność na impuls).
+- Test 2026-11-08 (użytkownik): działa.
+
+#### 7.5.8 Otwarte: restart ESP32 w trakcie pracy STM32
+- Ping jest tylko raz, przy starcie STM32. Reset ESP32 później (assert/panic, flashowanie, EN) → STM32 nie wie o restarcie; zbocza z bootu ESP32 liczone jako tokeny → odczyt śmieci → assert (jak przed 7.5.7).
+- Bez impulsu startowego opcja 4 (długość impulsu) niemożliwa. Propozycja **S6** (niezaakceptowana): śmieciowa długość (`masterReceiveData()`, dziś assert `comunication_esp32i2cComunicationDriver.cpp:222-228`) albo NACK od ESP32 → resynchronizacja: `esp32I2cInitialised = false`, stan odbioru `idle`/`dataSizeToRead = 0`, `xQueueReset` semafora INT, ponowna pętla pingu; ramki do ESP32 w tym czasie odrzucane (wariant B — decyzja użytkownika). Assert ESP32 przy timeoucie TX zostaje (restart ESP32 czyści jego TX FIFO).
+- Ewentualnie sprzętowo: większy kondensator na EN ESP32 / nadzorca zasilania (start dopiero na stabilnym zasilaniu).

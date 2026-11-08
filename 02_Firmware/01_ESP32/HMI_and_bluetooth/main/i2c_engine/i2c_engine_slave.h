@@ -24,7 +24,6 @@ public:
 	
 	
 	
-	void esp32i2cBusInitialised(void);
 	QueueHandle_t s_receive_queue;					//i2c slave receive task queue
 	void i2cSlaveReceive(void);
 	BaseType_t i2cMasterCrcSumCounterErrorIncrement(void);

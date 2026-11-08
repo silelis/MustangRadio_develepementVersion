@@ -16,7 +16,7 @@
 
 
 radioMegaStruct radioStruct;
-static bool esp32I2cInitialised = false; //zmienna sprawdza czy esp32 zainiclował interfejs i2c
+static volatile bool esp32I2cInitialised = false; //true: esp32 potwierdził start (ACK na ping i2c w startUpTask_initTaskFunctions) - od tej chwili EXTI zlicza interrupt request; volatile - czytana w ISR
 static TaskHandle_t taskHandle_i2cMasterReceiveFromSlaveDataTask = nullptr;	//task obsługujący czytanie danych z urządzeń slave i2c
 static TaskHandle_t taskHandle_i2cMasterTransmitToSlaveDataTask = nullptr;//task wysyła dane do i2c slave
 static TaskHandle_t taskHandle_esp32I2cIntrrruptRequest = nullptr;//uchwyt taska obsługującego komunikację (odczytywanie danych) z esp32, po pojawieniu się sygnału esp32 interrupt request
@@ -214,9 +214,7 @@ static void manageRadioButtonsAndMenu(void *thing) {
 
 static void initTaskFunctions(void) {
 
-	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
-			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin));	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
-
+	//pi2cMaster tworzony wcześniej - w startUpTask_initTaskFunctions() (potrzebny do pingu ESP32 przed startem)
 	assert(pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster));
 
 	//tworzenie taska czytającego dane po I2C ze slave
@@ -248,11 +246,18 @@ static void initTaskFunctions(void) {
 static TaskHandle_t taskHandle_initTaskFunctions = nullptr;	//uchwyt do taska (jodnorazowo wywolanego), który uruchamia całą konfigurację, trzeba tak to zrobić, aby printf działąło w tasku (task printf musi sie uruchomić  przed wszystkimi)
 static void startUpTask_initTaskFunctions(void *noThing) {
 
-	//czeka, aż esp32 wyśle pierwszy sygnał interrupt request (pusty bez danych), wtedy wiadomo, że komunikacja jest zainicjowana.
-	while (esp32I2cInitialised == false) {
-		pPrintf->feedPrintf("waiting for esp32 i2c bus to be initialized.");//sygnałem o inicjalizacji jest pierwsze Interrupt request HIGH to LOW to HIGH
-		vTaskDelay(pdMS_TO_TICKS(150));
+	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
+			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin));	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
+
+	//czeka, aż esp32 odpowie ACK na ping i2c - wtedy wiadomo, że jego i2c slave działa (ESP32 nie odpowiada ACK w bootloaderze /
+	//resecie / flashowaniu). Dawniej sygnałem było pierwsze zbocze interrupt request, ale każde dodatkowe zbocze na GPIO0 ESP32
+	//(reset brown-out, flashowanie, zakłócenia) psuło synchronizację.
+	while (pi2cMaster->isDeviceReady(I2C_SLAVE_ADDRESS_ESP32) == false) {
+		pPrintf->feedPrintf("waiting for esp32 i2c bus to be initialized.");
+		vTaskDelay(pdMS_TO_TICKS(ESP32_READY_POLL_PERIOD_MS));
 	}
+	vTaskDelay(pdMS_TO_TICKS(ESP32_READY_SETTLE_MS));	//ESP32 kończy start (taski, uzbrojenie odbioru)
+	esp32I2cInitialised = true;	//od teraz EXTI zlicza interrupt request (HAL_GPIO_EXTI_Callback)
 
 	//vTaskDelay(pdMS_TO_TICKS(2500));
 	initTaskFunctions();
@@ -284,9 +289,7 @@ void startUpTask(void *noThing) {
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	switch (GPIO_Pin) {
 	case esp32i2cInterruptReqest_Pin:		//esp32 interrupt request
-		if (esp32I2cInitialised == false) {
-			esp32I2cInitialised = true;
-		} else if (pESP32 != nullptr) {		//okno między impulsem inicjalizacji, a utworzeniem pESP32 (bez printf - feedPrintf nie jest ISR-safe)
+		if ((esp32I2cInitialised == true) && (pESP32 != nullptr)) {	//zbocza przed potwierdzeniem startu ESP32 pingiem ignorowane (reset brown-out, flashowanie, zakłócenia GPIO0); pESP32 powstaje chwilę po esp32I2cInitialised (bez printf - feedPrintf nie jest ISR-safe)
 			pESP32->incrementInterruptRequestCountingSemaphore();//inkrementacja semafora daje sygnał ,dla metody esp32_i2sComunicationDriver::intrrruptRequestCallback
 		}
 		break;
