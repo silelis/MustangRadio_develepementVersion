@@ -1,5 +1,6 @@
 #include "bt_audio.h"
 #include "i2c_engine/i2c_engine_slave.h"
+#include <new>	// std::nothrow
 
 //i2sPinStates bt_audio_sink::i2sState;
 
@@ -15,7 +16,7 @@ static BaseType_t PrepareBtDataAndSent_to_i2cQueueSend(i2cFrame_btAudio* dataToS
     extern i2cEngin_slave *p_i2cSlave;
 
     i2cFrame_transmitQueue dataToTransmitQueue;
-    dataToTransmitQueue.pData = new char[dataToSend->i2cframeCommandHeader.dataSize];
+    dataToTransmitQueue.pData = new (std::nothrow) char[dataToSend->i2cframeCommandHeader.dataSize];	// nothrow: przy braku pamięci nullptr -> assert niżej
     assert(dataToTransmitQueue.pData);
     if (dataToTransmitQueue.pData != NULL){
         memcpy(dataToTransmitQueue.pData,dataToSend, dataToSend->i2cframeCommandHeader.dataSize);

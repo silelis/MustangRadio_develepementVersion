@@ -9,6 +9,7 @@ extern i2c_dev_t I2C0;
 
 #include "driver/i2c.h"
 #include "esp_rom_sys.h"
+#include <new>	// std::nothrow
 
 // Callback i maszyna stanów TX czytają rejestry I2C0 bezpośrednio - działa tylko, gdy slave jest na porcie 0
 static_assert(I2C_SLAVE_PORT == 0, "i2c_engine_slave.cpp czyta rejestry I2C0 - przy zmianie I2C_SLAVE_PORT trzeba zmienić I2C0 na I2C1");
@@ -395,7 +396,9 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	// uint32_t size_rd = 0;
 	i2cSlaveRxEvent rx_data;	// kopia zdarzenia z kolejki - task pracuje wyłącznie na niej (nie na globalnym rxEvent ISR)
 	ESP_ERROR_CHECK(i2c_slave_receive(handler_i2c_dev_slave, data_rd, I2C_SLAVE_DRIVER_RECEIVE_LEN));	// max 32 B - błąd sterownika IDF 5.2 (opis przy I2C_SLAVE_DRIVER_RECEIVE_LEN)
-	this->esp32i2cBusInitialised(); // informuje i2c master poprzez pierwsze interrupt request, że szyna i2c jest zainicjowana
+	// Impuls startowy (esp32i2cBusInitialised, INT low 100 ms) daje task i2cSlaveTransmit, NIE ten task: STM32 zaczyna
+	// zapisy już na zboczu opadającym impulsu, a po każdej ramce odbiór trzeba ponownie uzbroić (i2c_slave_receive niżej).
+	// Gdy ten task spał 100 ms w impulsie, kolejne ramki LED zapychały RX FIFO -> NACK na STM32 (KONTEKST 3.8).
 
 	i2cFrame_commonHeader *fakeCommHeader = (i2cFrame_commonHeader *)rx_data.data; // potrzebny, aby przeczytać ilośc otrzymanych z i2c master byte'ów
 	i2cFrame_transmitQueue tempFrameToParserQueue;
@@ -407,7 +410,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 			if (rx_data.cbData.rxToEsp32 == recpeptionToMe)
 			{
 				assert(fakeCommHeader->dataSize <= ESP32_SLAVE_RECEIVE_BUFFER_LEN);	// długość spoza bufora = uszkodzona ramka; new/memcpy wyszłyby poza rx_data.data
-				void *tempData = static_cast<void *>(new char[fakeCommHeader->dataSize]);
+				void *tempData = static_cast<void *>(new (std::nothrow) char[fakeCommHeader->dataSize]);	// nothrow: przy braku pamięci nullptr -> assert niżej (zwykłe new w IDF bez wyjątków C++ robi abort())
 				if (tempData != nullptr)
 				{
 
@@ -540,6 +543,11 @@ void i2cEngin_slave::i2cSlaveTransmit(void)
 		}
 		return false;
 	};
+
+	// Impuls startowy: informuje i2c master (STM32), że szyna i2c ESP32 jest gotowa. Task "I2C slave rx" (prio +3,
+	// tworzony w app_main PRZED tym taskiem) uzbroił już odbiór i obsługuje zapisy STM32 w trakcie tego impulsu.
+	// Ten task może spać 100 ms - na starcie nie ma nic do wysłania (pierwszy klawisz najwyżej poczeka do końca impulsu).
+	this->esp32i2cBusInitialised();
 
 	while (1)
 	{

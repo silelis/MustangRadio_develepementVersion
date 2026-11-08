@@ -17,7 +17,7 @@ struct i2cFrame_transmitQueue {
 	uint8_t slaveDevice7bitAddress = 0;	//pole zawiera informację z którego urządzenia slave (ares urządzenia) pochodzą odczytane po i2c dane
 	size_t dataSize = 0;//pole zawiera informację o długości przesłanych danych (m.in. na podstawie tej informacji w sposób dynamiczny tworzone są zmienne przechowujące otrzymane dane
 	//UWAGA - zasada alokacji pamięci dla pData (wspólna dla STM32 i ESP32):
-	// - pData ZAWSZE alokować jako tablicę char: new (std::nothrow) char[rozmiar] (STM32) / new char[rozmiar] (ESP32),
+	// - pData ZAWSZE alokować jako tablicę char: new (std::nothrow) char[rozmiar] (STM32 i ESP32 - w ESP-IDF bez wyjątków C++ zwykłe new przy braku pamięci robi abort(), nothrow zwraca nullptr),
 	//   także wtedy, gdy pod pData leży konkretna struktura, np. new (std::nothrow) char[sizeof(i2cFrame_hmiLeds)] + memcpy,
 	// - NIE używać new T, new T[n], ani malloc() - pamięć zwalnia wyłącznie i2cQueue4DynamicData::QueueDeleteDataFromPointer()
 	//   przez delete[] static_cast<char*>(pData), która nie zna typu danych,
@@ -25,7 +25,7 @@ struct i2cFrame_transmitQueue {
 	void *pData = nullptr;//wskaźnik do miejsca w pamięci RAM (zarezerwowanej dynamicznie), gdzie przechowywane są otrzymane po i2c dane (inicjalizacja: ramka bez danych dynamicznych ma pData == nullptr, bezpieczne delete[] przy pełnej kolejce)
 };
 #else
-	typedef struct{
+	typedef struct i2cFrame_transmitQueue{		// nazwana struktura: anonimowy typedef z inicjalizatorami pól łamie regułę C++20 (ostrzeżenie clangd -Wnon-c-typedef-for-linkage); typ i użycie bez zmian
 		size_t dataSize = 0;				//jak wyżej (inicjalizacja: ramka bez danych dynamicznych ma pData == nullptr, bezpieczne delete[] przy pełnej kolejce)
 		void *pData = nullptr;				//jak wyżej
 	} i2cFrame_transmitQueue;				//jak wyżej

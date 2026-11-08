@@ -3,6 +3,7 @@
 #include "tasksFunctions/tasksFunctionsStepperMotor.h"
 #include "tasksFunctions/tasksFunctionsStorage.h"
 #include "i2c_engine/i2c_engine_slave.h"
+#include <new>	// std::nothrow
 
 static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboardFrame * pvItemToQueue, size_t itemSize);
 
@@ -273,7 +274,7 @@ static BaseType_t esp32PrepareKbrdDataAndSent_to_QueueSend(const i2cFrame_keyboa
 {
 	i2cFrame_transmitQueue dataToTransmitQueue;
 	//dataToTransmitQueue.pData = new char[sizeof(itemSize)];	// [BUG] heap corruption: sizeof(itemSize) = 4 bajty (rozmiar size_t), ale memcpy kopiuje itemSize bajtów → przepisanie poza bufor
-	dataToTransmitQueue.pData = new char[itemSize];				// [FIX] poprawna alokacja: itemSize bajtów
+	dataToTransmitQueue.pData = new (std::nothrow) char[itemSize];	// [FIX] poprawna alokacja: itemSize bajtów; nothrow: przy braku pamięci nullptr -> assert niżej
 	assert(dataToTransmitQueue.pData);
 	if (dataToTransmitQueue.pData != NULL)
 	{

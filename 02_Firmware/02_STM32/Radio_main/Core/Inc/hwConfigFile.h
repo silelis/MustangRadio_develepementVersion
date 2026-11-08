@@ -10,7 +10,6 @@
 
 #define FW_VERSION 0.1
 #define I2C_STM32_TO_ESP32_ROLE_MASTER
-#define ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX	21
 
 #define PERIPHERY_MENU_TIMEOUT_TASK_DELAY	2000
 #define ESP_I2C_BUS_DELAY					7	//[ms] przerwa po transmisji do ESP32 na ponowne uzbrojenie odbioru (dobrane doświadczalnie; okno ESP32 do 1 ticku = 10 ms - KONTEKST 3.5; zmniejszać dopiero po wymuszeniu przełączenia zadania w callbacku ESP32)
