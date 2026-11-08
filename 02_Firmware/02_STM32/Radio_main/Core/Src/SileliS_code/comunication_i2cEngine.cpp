@@ -288,6 +288,22 @@ HAL_StatusTypeDef i2cMaster::I2C_Master_Abort(uint16_t DevAddress_7bit) {
 }
 
 /********************************************************************
+ * @brief  Zwraca kod błędu HAL ostatniej transmisji i2c
+ *
+ * @return [uint32_t] HAL_I2C_GetError(): 0x00 brak błędu, bity:
+ * 			0x01 BERR (błąd magistrali), 0x02 ARLO (utrata arbitrażu),
+ * 			0x04 AF (NACK - slave nie odpowiada), 0x08 OVR (overrun),
+ * 			0x10 DMA, 0x20 TIMEOUT, 0x40 SIZE, 0x80 DMA_PARAM
+ *
+ * @note   Do printf w driverze urządzenia po HAL_ERROR z
+ * 			I2C_Master_Transmite_DMA / I2C_Master_Receive_DMA (i2cMaster
+ * 			sam nie drukuje błędów transmisji - zasada z 7.3).
+ *******************************************************************/
+uint32_t i2cMaster::getI2cError(void) {
+	return HAL_I2C_GetError(this->p_hi2c1);
+}
+
+/********************************************************************
  * @brief  Czeka na zakończenie bieżącej transmisji i2c (DMA).
  *
  * Sprawdza co 1 ms (vTaskDelay(1)) stan uchwytu HAL. HAL ustawia

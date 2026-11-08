@@ -15,7 +15,7 @@ static void stepperMotorCalibration(void* nothing)
 	if (pSTORAGE->get_u16(NVS_KEY_MOTOR_BEGIN_OFFSET, &beginOffest) != ESP_OK) {
 		beginOffest = 0;
 	}
-	if (esp_err_t retVal1 = pSTORAGE->get_u16(NVS_KEY_MOTOR_END_OFFSET, &endOffset) != ESP_OK)
+	if (pSTORAGE->get_u16(NVS_KEY_MOTOR_END_OFFSET, &endOffset) != ESP_OK)
 	{
 		endOffset = UINT16_MAX;
 	}
@@ -85,21 +85,6 @@ void stepperMotorDataParser(void *TaskParameters)
 			default:
 				assert(0);
 			}	
-		}
-		else
-		{
-			//sprawdza czy praca tasku zosta�� zako�czona
-			if (
-				eTaskGetState(handlerTask_stepperMotorCalibration) == eSuspended && pMotor->isCalibrated() &&
-				eTaskGetState(handlerTask_stepperMotorMove) == eSuspended && pMotor->isPositionReached()) {
-				//na wszelki wypadek sprawdza czy w kolejce do tasku nie ma �adnych nowych danych
-				if (pMotor->QueueMessagesWaiting() == 0)
-				{
-					extern TaskHandle_t handlerTask_stepperMotorDataPasrser;
-					//vTaskSuspend(NULL);
-					//				vTaskSuspend(handlerTask_stepperMotorDataPasrser);
-				}
-			}
 		}
 
 		

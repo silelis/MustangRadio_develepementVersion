@@ -175,8 +175,8 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterTransmitData(
 				this->esp32i2cSlaveAdress_7bit, (uint8_t*) dataFrame->pData,
 				dataFrame->dataSize);	//wraca po zakończeniu wysyłki (szyna zajęta / błąd startu / zawieszenie -> assert w i2cMaster)
 		if (retVal != HAL_OK) {
-			pPrintf->feedPrintf("%s TX ERROR, dataSize: %u, HAL status: %d", this->TAG,
-					(unsigned int) dataFrame->dataSize, (int) retVal);
+			pPrintf->feedPrintf("%s TX ERROR, dataSize: %u, HAL status: %d, err: 0x%02lx (0x04 = NACK)", this->TAG,
+					(unsigned int) dataFrame->dataSize, (int) retVal, (unsigned long) this->pi2cMaster->getI2cError());
 			//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 			assert(0);
 		}
@@ -297,8 +297,9 @@ HAL_StatusTypeDef esp32_i2cComunicationDriver::masterReceiveFromESP32_DMA(
 		}
 	} else {
 		this->i2cRxMaster.state = i2cReceiveStates::errorpackageDataInReception;
-		pPrintf->feedPrintf("%s RX ERROR, Size: %u, dataSizeToRead: %u, HAL status: %d", this->TAG,
-				(unsigned int) Size, (unsigned int) this->i2cRxMaster.dataSizeToRead, (int) retVal);
+		pPrintf->feedPrintf("%s RX ERROR, Size: %u, dataSizeToRead: %u, HAL status: %d, err: 0x%02lx (0x04 = NACK)", this->TAG,
+				(unsigned int) Size, (unsigned int) this->i2cRxMaster.dataSizeToRead, (int) retVal,
+				(unsigned long) this->pi2cMaster->getI2cError());
 		//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 		assert(0);
 	}

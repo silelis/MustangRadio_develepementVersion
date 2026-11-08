@@ -69,7 +69,6 @@ private:
 	BaseType_t esp32DynamicmMemeoryAlocationError;//zmienna mówiąza o tytm, że nastąpił błąd w dynamicxznej alokacji pamięcia
 	uint16_t esp32CrcSumCounterError;
 #warning zrobic obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive
-	//const uint8_t ESP_I2C_BUS_DELAY = 7;
 	void giveESP32I2CInterfaceTimeForDataProcessing(void);	//przerwa ESP_I2C_BUS_DELAY po każdej transmisji - esp32 musi ponownie uzbroić odbiornik (opis w .cpp)
 };
 

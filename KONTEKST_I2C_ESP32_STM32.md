@@ -1,7 +1,7 @@
 # KONTEKST: komunikacja I2C ESP32 (slave) → STM32 (master) z GPIO interrupt request
 
 > **Dla Claude na nowym komputerze:** przeczytaj ten plik w całości, zanim zaczniesz cokolwiek robić.
-> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`), 2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), **2026-11-03 (test na sprzęcie): RX STM32←ESP32 DZIAŁA w trybie debugowania** (poprawka ESP32 `tx_fifo_cnt`, sekcja 3.6) oraz **2026-11-04: wspólny mechanizm czekania na koniec transmisji w `i2cMaster` (`waitForTransferEnd`) dla TX i RX — NIEtestowany na sprzęcie** (sekcja 7.3) oraz **2026-11-08: crash ESP32 (Interrupt WDT / Double exception) = błąd sterownika I2C slave ESP-IDF 5.2 — obejście: max długość ramki 32 B w obu kierunkach (sekcja 3.7)**.
+> Plik opisuje stan prac z 2026-09-29 (ESP32), 2026-10-28 (poprawki `pData`), 2026-11-03: RX STM32←ESP32 ZROBIONY (kroki 1–13, commit `b4e6bba9`), **2026-11-03 (test na sprzęcie): RX STM32←ESP32 DZIAŁA w trybie debugowania** (poprawka ESP32 `tx_fifo_cnt`, sekcja 3.6) oraz **2026-11-04: wspólny mechanizm czekania na koniec transmisji w `i2cMaster` (`waitForTransferEnd`) dla TX i RX — NIEtestowany na sprzęcie** (sekcja 7.3) oraz **2026-11-08: crash ESP32 (Interrupt WDT / Double exception) = błąd sterownika I2C slave ESP-IDF 5.2 — obejście: max długość ramki 32 B w obu kierunkach (sekcja 3.7)**; **okno uzbrojenia odbioru ESP32 — `portYIELD_FROM_ISR` w callbacku (sekcja 3.8)**.
 > **Zacznij od sekcji 7 („Gdzie jesteśmy / co dalej”)** — tam: co jest zrobione, jak testować, zasady użycia `i2cMaster` i otwarte tematy (m.in. synchronizacja INT / wykrycie startu ESP32).
 > Sekcje 2–4 to tło; sekcja 5 to opis kroków 1–13 (część zastąpiona w 7.3 — tam jest aktualny stan RX); stary plan z `xTaskNotify` został ZASTĄPIONY.
 > Numery linii są orientacyjne — przed zmianą zawsze przeczytaj aktualny plik.
@@ -138,6 +138,24 @@ Oczekiwany log poprawnej fazy (potwierdzony): `LEN_DATA_IN_TRANSMITION` → `DIA
 - Poprawka „deadlocku” I2C master/slave między rdzeniami (init mastera na Core 1 w `stepperMotorDataParser`, przypięcie tasków slave do Core 0 / parsera silnika do Core 1, semafor `xMotorInitDone`) była TYLKO w folderze `01_ESP32/HMI_and_bluetooth - FIX POPRAWKI` — **folder usunięty 2026-11-08** (commit „przywrócono pracę stepper motorua”); kod do odzyskania z historii gita (folder dodany w `d4bc765d`, np. `git show d4bc765d:"02_Firmware/01_ESP32/HMI_and_bluetooth - FIX POPRAWKI/main/app_main.cpp"`). Aktywny projekt ma `xTaskCreate` bez przypięcia (`app_main.cpp:94-95, 118`) i init mastera w `tasksFunctions.cpp`.
 - **`GURU_FIX` usunięty (2026-11-08)**: makro w `hwConfigFile.h` wyłączało I2C master, MCP23008 i silnik krokowy (`pMotor = nullptr`, taski silnika `vTaskDelete`, brak `radioPowerOff`, ramki silnika w parserze nieobsługiwane i NIEzwalniane = wyciek pamięci). Usunięte wszystkie `#ifndef GURU_FIX` (`hwConfigFile.h`, `tasksFunctions.cpp`, `tasksFunctionsStepperMotor.cpp`) — kod silnika przywrócony do stanu sprzed blokady, przypięcia rdzeni bez zmian. Hipoteza: pierwotny crash (Interrupt WDT CPU0 po klawiszu Power, który startował kalibrację) to ten sam błąd sterownika IDF 5.2 co wyżej (klawisz = TX ESP32, potem zapisy STM32 LED/silnik = przepełnienie `data_buf`, następna wysyłka ESP32 = burza przerwań), a nie deadlock (`xKernelLock` trzymany jest przez µs, nie 300 ms). Kompilacja OK (nowe ostrzeżenia z przywróconego kodu: nieużywane `retVal1` `tasksFunctionsStepperMotor.cpp:18`, `handlerTask_stepperMotorDataPasrser` `:98`). **Test na sprzęcie: do zrobienia** — przy Guru Meditation: core dump → ewentualnie przeniesienie przypięć z historii (krok S2).
 - Usunięte też nieużywane katalogi: `01_ESP32/HMI_and_bluetooth_I2C_SLAVE_V2`, `01_ESP32/VisualGDB_TEST`, `02_STM32/Radio_main_I2C_SLAVE_V2_5.5.2`.
+- **Silnik krokowy po usunięciu `GURU_FIX` — PRZETESTOWANY 2026-11-08: działa, bez crasha** (bez przenoszenia przypięć rdzeni) → hipoteza potwierdzona, dawna diagnoza „deadlocku” była błędna; krok S2 niepotrzebny.
+
+### 3.8 Okno ponownego uzbrojenia odbioru ESP32 (3.5) — przyczyna i poprawka (2026-11-08, test na sprzęcie)
+**Objaw:** po usunięciu przez użytkownika `vTaskDelay(3000)` w tasku TX STM32 i (błędnej) zmianie `ESP_I2C_BUS_DELAY` 7 → 2 ms: STM32 na starcie `TX ERROR, dataSize: 28, HAL status: 1, err: 0x04 (NACK)` + assert; ESP32 tylko 1× `Reception to me`, potem `TIMEOUT_IN_TRANSMITION` (`DIAG TX FAIL … status_reg:0x05102000` → `rx_fifo_cnt` = 32 = RX FIFO pełne, `tx_fifo_cnt` = 4).
+**Przebieg:** ramka LED #1 odebrana → sterownik wyłącza przerwania odbioru do `i2c_slave_receive()` w tasku → ramka #2 po 2 ms trafia do FIFO, ale zdarzenie przepada (okno 3.5) → ramka #3 przepełnia FIFO → ESP32 NACK → STM32 assert → ESP32 timeout przy klawiszu.
+**Przyczyna:** sterownik IDF 5.2 (`i2c_slave.c`, `s_i2c_handle_complete`) **ignoruje wartość zwracaną przez callback `on_recv_done`** — po `xQueueSendFromISR` nie ma przełączenia zadania, task „I2C slave rx” budzi się dopiero przy następnym ticku ESP32 (`CONFIG_FREERTOS_HZ=100` → do **10 ms**), niezależnie od priorytetu. Stare 7 ms działało „zwykle”; z `vTaskDelay(3000)` ramki szły co 3 s, więc okno nie miało znaczenia.
+**Zmiany:**
+- **Y1** (ESP32 `i2c_engine_slave.cpp`, koniec `i2c_slave_rx_done_callback`): `if (high_task_wakeup == pdTRUE) portYIELD_FROM_ISR();` — na ESP32 (Xtensa) ustawia tylko flagę, przełączenie przy wyjściu z przerwania → odbiór uzbrajany zaraz po ISR.
+- **B1** (ESP32 `app_main.cpp:94`): task „I2C slave rx” priorytet `+2` → `+3` (najwyższy z tasków I2C), działa razem z Y1.
+- **B2** (`ESP_I2C_BUS_DELAY` 7 → 2) — **WYCOFANE (R1)**, wartość 7 ms z komentarzem: zmniejszać dopiero osobnym krokiem, po teście szybkich serii ramek (Y1 + B1 skracają okno do µs).
+- Test 2026-11-08 (Y1 + B1 + 7 ms, bez `vTaskDelay(3000)`): **działa**.
+
+**Inne zmiany 2026-11-08 (ten sam commit):**
+- STM32 `tasksFunctions.cpp`: usunięte `vTaskDelay(pdMS_TO_TICKS(3000))` w `i2cMasterTransmitToSlaveDataTask` (użytkownik); komentarz `//ta funkcja nie działa` → opis; usunięte 2 zakomentowane `HAL_I2C_Master_Transmit_DMA`; „(nasza ścieżka timeoutu)” → „dziś nieużywane…”.
+- STM32 **E1**: `i2cMaster::getI2cError()` (`HAL_I2C_GetError`, opis bitów: 0x01 BERR, 0x02 ARLO, **0x04 AF = NACK**, 0x08 OVR, 0x10 DMA, 0x20 TIMEOUT); `TX ERROR` / `RX ERROR` w driverze ESP32 drukują `err: 0x..`.
+- STM32: usunięty martwy komentarz `//const uint8_t ESP_I2C_BUS_DELAY = 7;` (`comunication_esp32i2cComunicationDriver.h`).
+- ESP32 **C1/C2** (`tasksFunctionsStepperMotor.cpp`): usunięta martwa gałąź `else` z `if (pMotor->QueueMessagesWaiting() == 0)` (zakomentowane `vTaskSuspend`, nic nie robiła) i zbędne `retVal1` — znikają 2 ostrzeżenia. Plik w Windows-1250 + CRLF — edytować bajtowo, nie przekodowywać.
+- **`assert` na STM32 — jak działa:** newlib `__assert_func()` drukuje `assertion … failed` bezpośrednio (`_write` → `__io_putchar` w `printfRedirect.c`), potem `abort()` → `_exit()` (`syscalls.c` — plik generowany przez CubeIDE, NIE edytować) → `while(1)`. Komunikat `feedPrintf` sprzed assert idzie przez `printfTask` (prio 0) — wypisze się tylko, jeśli task z assertem ma prio 0 (ważne przy podnoszeniu priorytetów, 7.4).
 - Flashowanie ESP32 przez J-Link przy `adapter speed 12000` przerwało się w połowie (`[esp32.cpu1] Examination failed`) → pusta partycja aplikacji (`invalid magic byte`). Przy 2000 kHz bez błędów. `.launch` ma nadal 12000 (propozycja zmiany na 2000 — czeka na decyzję).
 - Espressif-IDE, nowy workspace: trzeba wybrać ESP-IDF w ESP-IDF Manager (inaczej „No Toolchain found for Target esp32” / „No board selected”), potem zbudować projekt przed Debug (inaczej `build\null not found`).
 - Core dump ESP32 z UART: `esp_coredump info_corefile -t b64 -c core.b64 build/HMI_and_bluetooth.elf` (python z venv release-v5.2, `IDF_PATH` ustawiony, GDB 16.3 w PATH, `--gdb-timeout-sec 20`); zmienne lokalne: `-s core.elf` + `xtensa-esp32-elf-gdb -batch -ex "frame 3" -ex "info locals"`.
@@ -272,7 +290,8 @@ Przyszłość: TX i przebudowa RX na wspólny mechanizm `waitForTransferEnd()` �
 | `49d5d4b3`, `b5e9dee7`, `9a8d7f3a` (na `main`) | J-Link `adapter speed`; **ESP32: stos „I2C slave rx”, wykrywanie odczytu przez `tx_fifo_cnt` (3.6)**; „GOLDEN SAMPLE” — **RX STM32←ESP32 działa w trybie debugowania** |
 | `fb7d1d4c` (2026-11-04) | **`waitForTransferEnd` w `i2cMaster` dla TX i RX (7.3)** |
 | (2026-11-08, „GOLDEN SAMPLE - poprawiono długośc buffora ESP32 i2c slave…”) | **obejście błędu sterownika I2C slave IDF 5.2: max ramka 32 B w obu kierunkach, sprawdzenie długości w funkcjach nadających (3.7)** |
-| (2026-11-08, „przywrócono pracę stepper motorua”) | **usunięty `GURU_FIX` — I2C master, MCP23008, silnik krokowy przywrócone; usunięte nieużywane katalogi (m.in. `FIX POPRAWKI`) — test silnika do zrobienia (3.7)** |
+| `53f250f4` (2026-11-08, „przywrócono pracę stepper motorua”) | **usunięty `GURU_FIX` — I2C master, MCP23008, silnik krokowy przywrócone (przetestowane); usunięte nieużywane katalogi (m.in. `FIX POPRAWKI`) (3.7)** |
+| (2026-11-08, ten commit) | **okno uzbrojenia odbioru ESP32: `portYIELD_FROM_ISR` w callbacku + prio „I2C slave rx” +3; bez `vTaskDelay(3000)` w TX STM32; `getI2cError()`; sprzątanie (3.8)** |
 
 Co działa w kodzie (stan po 7.3):
 - RX (odczyt STM32 z ESP32): 1 impuls INT = 1 token = 1 wywołanie `masterReceiveData()` = 1 faza: `idle` → odczyt 4 B długości do `i2cRxMaster.dataSizeToRead` → `lenDataReceived`; kolejny INT → `new char[len]`, odczyt ramki → `idle`, ramka do parsera. Odczyt przez `i2cMaster::I2C_Master_Receive_DMA()`, która wraca po końcu transmisji; stan przesuwa task na podstawie wyniku (bez callbacków HAL).
@@ -320,19 +339,21 @@ Skutki: stan `timeoutpackageDataInReception` zostaje w enumie, ale STM32 go nie 
 - Nie brać semafora drugi raz (binarny, nie rekurencyjny → deadlock); oddawać go podczas czekania na urządzenie (CTS si4689, zapis EEPROM); nie trzymać długo (ESP32 czeka na odczyt max 500 ms od INT); nie wołać z ISR.
 
 ### 7.4 Do zrobienia / otwarte
-- ~~Wgrać i przetestować wersję końcową z 3.7 na OBU układach~~ — ZROBIONE 2026-11-08. Test 2026-11-08: RX klawisze + TX LED działają (z uzbrajaniem odbioru na 32 B); wersja końcowa 3.7 przetestowana przez użytkownika. **NAJBLIŻSZE: test silnika krokowego po usunięciu `GURU_FIX`** (3.7, „Uwagi przy okazji”): start (`I2C master bus init` → `MCP23008…` → `Stepper motor…`), klawisz Power (kalibracja), ruch z menu STM32, klawisze + LED; przy crashu core dump.
-- `adapter speed` w `HMI_and_bluetooth Configuration.launch`: 12000 → 2000 (3.7) — czeka na decyzję.
+- ~~Wgrać i przetestować wersję końcową z 3.7 na OBU układach~~ — ZROBIONE 2026-11-08. Test 2026-11-08: RX klawisze + TX LED działają (z uzbrajaniem odbioru na 32 B); wersja końcowa 3.7 przetestowana przez użytkownika; silnik po usunięciu `GURU_FIX` — działa (3.7).
+- **Priorytety tasków I2C STM32 (A1 + A2)** — propozycja: `i2cReceive` / `i2cTransmit` (`tasksFunctions.cpp` ~:220–226) `tskIDLE_PRIORITY` → `+2`, parser → `+1`, `esp32IntReq` bez zmian (+1). Warunek: komunikat `feedPrintf` przed `assert` musi się wypisać (patrz 3.8 „assert na STM32”) → A2 = własne `__assert_func()` w kodzie użytkownika (np. `printfRedirect.c`; obniża priorytet taska do 0 przed `while(1)`), **bez** edycji `syscalls.c`. Czeka na diff i akceptację.
+- `ESP_I2C_BUS_DELAY` 7 ms — próba zmniejszenia osobnym krokiem (po Y1 + B1, 3.8), z testem szybkich serii ramek LED.
+- `adapter speed` w `HMI_and_bluetooth Configuration.launch` — użytkownik: zostaje 12000 (przy problemach z flashowaniem — 2000).
+- `ESP32_INTERRUPT_REQUEST_COUNTING_SEMAPHORE_MAX 21` (STM32 `hwConfigFile.h:13`) — nieużywane (driver ma własne `= 25`).
+- `new char[...]` w ESP32 → `new (std::nothrow)` (bez wyjątków C++ zwykłe `new` robi `abort()`, więc `if (tempData != nullptr)` w `i2c_engine_slave.cpp` jest martwe) — kosmetyka, niezaakceptowane.
 - Migracja ESP32 na ESP-IDF 6.x — **na sam koniec**, gdy nic innego nie pomoże (decyzja użytkownika 2026-11-08); usuwa błąd sterownika z 3.7 i większość obejść w `i2c_engine_slave.cpp` (callbacki `on_request`/`on_receive`, ring buffer odbiorczy).
-- Po teście TX: usunąć komentarz `//ta funkcja nie działa` (`tasksFunctions.cpp`, task TX) i nieaktualny dopisek „(nasza ścieżka timeoutu)” w liście callbacków (`tasksFunctions.cpp`).
 - **Mechanizm synchronizacji ESP32 interrupt request (wykrycie startu ESP32)** — analiza i propozycja w **sekcji 7.5**; czeka na decyzje użytkownika (7.5.6).
 - Opcja: semafor szyny → **mutex rekurencyjny** z `Take/Give` wewnątrz metod transmisji (automatyczna ochrona pojedynczej transmisji, dziedziczenie priorytetu; sekwencje nadal `Take/Give` w driverze). Niezaakceptowane.
 - Niewykrywalne bez czasu: SDA trzymane nisko PO ostatnim bajcie (STOP się nie wykona) — dziś pokryte diagnostyką co 1 s + assert po 10 s; na przyszłość do rozważenia IWDG.
 - si4689 (`02_Firmware/04_si468x/rev 026`): obrazy ~520 kB (DAB/FMHD/AMHD), I2C1 ~100 kHz (`Timing 0x20B0CCFF`, PCLK1 140 MHz) → ~48 s ładowania; `HOST_LOAD` porcjami (≤4 KB ≈ 370 ms); semafor oddawać po każdej porcji (ESP32: 500 ms); rozważyć Fast Mode 400 kHz lub SPI flash + `FLASH_LOAD`; 3 obrazy ≈ 1,58 MB przy 2 MB flash STM32H7A3RI.
-- `ESP_I2C_BUS_DELAY 7` (empiryczne) — zmniejszyć/usunąć, gdy ESP32 będzie uzbrajał odbiornik bez opóźnienia lub sygnalizował gotowość.
 - Obsługa błędów zamiast `assert` (wszystkie `//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32`).
-- Opcjonalne: nazwa struktury w `#else` z 6.1; getter `i2cMaster::getI2cError()` (kod błędu HAL w printf drivera).
-- Usunięcie printfów DIAG po stronie ESP32 (lub `#ifdef`) — po testach, po uzgodnieniu.
-- Znane z sekcji 5: `vTaskDelay(3000)` w tasku TX, priorytety tasków.
+- Opcjonalne: nazwa struktury w `#else` z 6.1 (tylko ostrzeżenie clangd w edytorze ESP32).
+- Printfy DIAG po stronie ESP32 — **użytkownik: zostają**.
+- IWDG — użytkownik: nic nie robimy.
 - Commit / push — tylko na prośbę użytkownika.
 - **OSTATNI KROK: usunąć ten plik (`KONTEKST_I2C_ESP32_STM32.md`) z repozytorium** po zakończeniu prac.
 

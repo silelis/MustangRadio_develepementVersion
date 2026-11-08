@@ -184,6 +184,13 @@ IRAM_ATTR bool i2cEngin_slave::i2c_slave_rx_done_callback(i2c_slave_dev_handle_t
 		assert(queueSendResult == pdTRUE);	// pełna kolejka = utrata zdarzenia i brak ponownego uzbrojenia odbiornika - błąd krytyczny
 	}
 
+	// Sterownik IDF 5.2 (s_i2c_handle_complete) IGNORUJE wartość zwracaną przez callback - bez tego task "I2C slave rx"
+	// budzi się dopiero przy następnym ticku (do 10 ms), a do tego czasu odbiór jest nieuzbrojony (KONTEKST 3.5).
+	// Na ESP32 portYIELD_FROM_ISR() ustawia tylko flagę - przełączenie zadania nastąpi przy wyjściu z przerwania.
+	if (high_task_wakeup == pdTRUE)
+	{
+		portYIELD_FROM_ISR();
+	}
 	return high_task_wakeup == pdTRUE;
 }
 

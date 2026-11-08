@@ -45,6 +45,7 @@ public:
 	HAL_StatusTypeDef I2C_Master_Transmite_DMA(uint16_t DevAddress_7bit,
 			uint8_t *pData, uint16_t Size);
 	HAL_StatusTypeDef I2C_Master_Abort(uint16_t DevAddress_7bit);	//przerywa trwającą transmisję/odbiór master (np. po timeoucie)
+	uint32_t getI2cError(void);	//kod błędu HAL ostatniej transmisji (HAL_I2C_GetError) - do printf w driverze urządzenia
 	BaseType_t i2cMasterSemaphoreTake(void);
 	BaseType_t i2cMasterSemaphoreGive(void);
 

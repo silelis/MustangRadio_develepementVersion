@@ -59,16 +59,12 @@ static void i2cMasterParseReceivedData(void *pNothing) {
 static void i2cMasterTransmitToSlaveDataTask(void *pNothing) {
 	i2cFrame_transmitQueue transmitFrame;
 	while (1) {
-		vTaskDelay(pdMS_TO_TICKS(3000));
 		if (pi2cMaster->takeTransmitI2cDataToI2C_buffer(
 				&transmitFrame)==pdTRUE) {
 			pi2cMaster->i2cMasterSemaphoreTake();
 			switch (transmitFrame.slaveDevice7bitAddress) {
 			case pESP32->esp32i2cSlaveAdress_7bit:
-				pESP32->masterTransmitData(&transmitFrame);	//ta funkcja nie działa
-
-				//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)"Dawid", 6);
-				//HAL_I2C_Master_Transmit_DMA(&hi2c1, I2C_SLAVE_ADDRESS_ESP32<<1, (uint8_t*)&transmitFrame.pData, transmitFrame.dataSize);
+				pESP32->masterTransmitData(&transmitFrame);	//wraca po zakończeniu wysyłki + 7 ms dla ESP32 (błąd -> printf + assert w środku)
 				break;
 			default:
 				pPrintf->feedPrintf("I2C slave address not recognized.");
@@ -301,7 +297,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 //callbacki i2c
 //HAL_I2C_ErrorCallback 			//każdy błąd (NACK, BERR, ARLO, OVR, DMA). Nie mówi, czy dotyczył RX czy TX
-//HAL_I2C_AbortCpltCallback			//po HAL_I2C_Master_Abort_IT() (nasza ścieżka timeoutu)
+//HAL_I2C_AbortCpltCallback			//po HAL_I2C_Master_Abort_IT() (dziś nieużywane - I2C_Master_Abort() zostawione na przyszłą obsługę błędów)
 //HAL_I2C_MasterRxCpltCallback		//wywołuje	HAL_I2C_Master_Receive_DMA()
 //HAL_I2C_MemRxCpltCallback 		//wywołuje	HAL_I2C_Mem_Read_DMA()
 //HAL_I2C_MasterTxCpltCallback		//wywołuje	HAL_I2C_Master_Transmit_DMA()

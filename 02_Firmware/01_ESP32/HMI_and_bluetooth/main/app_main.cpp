@@ -91,7 +91,7 @@ extern "C" void app_main(void)
 	taskFunctionsStaticHandlersInit();
 	
 	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+1, &handlerTask_i2cSlaveTransmit));
-	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 32, NULL, tskIDLE_PRIORITY+2, &handlerTask_i2cSlaveReceive));
+	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 32, NULL, tskIDLE_PRIORITY + 3, &handlerTask_i2cSlaveReceive));	// +3: najwyższy z tasków I2C - po ISR od razu ponowne uzbrojenie odbioru (i2c_slave_receive), skraca okno z KONTEKST 3.5 do µs
 	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveTransmit));
 	
 	
