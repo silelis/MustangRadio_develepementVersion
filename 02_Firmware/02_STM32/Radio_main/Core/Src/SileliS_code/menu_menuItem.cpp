@@ -14,7 +14,7 @@ menuItem::menuItem(const char *tag/*, _execute_t *ExecutableButtonsArray*/) {
 	this->mI_TAG = tag;
 
 	//this->Init= nullptr;
-	//this->deInit = nullptr;
+	//this->destroyInit = nullptr;
 	/*this->pExecutableButtonsArray = ExecutableButtonsArray;*/
 	pPrintf->feedPrintf("%s: menuItem had been created.", this->mI_TAG);
 //	}
@@ -22,33 +22,72 @@ menuItem::menuItem(const char *tag/*, _execute_t *ExecutableButtonsArray*/) {
 ;
 
 /*
- void menuItem::mi_bindInit(void (*new_init)(void*)){
- if (new_init!=nullptr)
- this->cInit = new_init;
+ void menuItem::mi_bindInit(void (*new_func)(void*)){
+ if (new_func!=nullptr)
+ this->cInit = new_func;
  }
 
- void menuItem::	mi_bindDeInit(void (*new_init)(void*)){
- if (new_init!=nullptr)
- this->cDeInit= new_init;
+ void menuItem::	mi_bindDestroyInit(void (*new_func)(void*)){
+ if (new_func!=nullptr)
+ this->cDestroyInit= new_func;
  }
 
- void menuItem::	mi_bindBackInit(void (*new_init)(void*)){
- if (new_init!=nullptr)
- this->cBackInit= new_init;
+ void menuItem::	mi_bindReturnInit(void (*new_func)(void*)){
+ if (new_func!=nullptr)
+ this->cReturnInit= new_func;
  }*/
 
-void menuItem::mi_bindInit(void (*new_init)(void*)) {
-	this->mi_bindFunction(&this->cInit, new_init);
+/********************************************************************
+ * @brief  Zapisuje w TYM węźle wskaźnik na callback Init - wejście
+ * 			do urządzenia (utworzenie / uruchomienie urządzenia).
+ *
+ * @param  [new_func] [void(*)(void*)] funkcja callback; nullptr jest
+ * 			ignorowany (poprzedni callback zostaje)
+ *
+ * @return NONE
+ *
+ * @note   protected: wołać przez myList::bindCurrent(), które wybiera
+ * 			BIEŻĄCY węzeł listy. Wywołanie na xxxDevices (głowa
+ * 			listy) po addAtEnd() nadpisałoby callback pierwszego węzła.
+ *******************************************************************/
+void menuItem::mi_bindInit(void (*new_func)(void*)) {
+	this->mi_bindFunction(&this->cInit, new_func);
 }
 
-void menuItem::mi_bindDeInit(void (*new_init)(void*)) {
-	this->mi_bindFunction(&this->cDeInit, new_init);
+/********************************************************************
+ * @brief  Zapisuje w TYM węźle wskaźnik na callback DestroyInit -
+ * 			wyjście z urządzenia (zniszczenie / zatrzymanie urządzenia).
+ * 			Parametry i uwagi jak mi_bindInit().
+ *******************************************************************/
+void menuItem::mi_bindDestroyInit(void (*new_func)(void*)) {
+	this->mi_bindFunction(&this->cDestroyInit, new_func);
 }
 
-void menuItem::mi_bindBackInit(void (*new_init)(void*)) {
-	this->mi_bindFunction(&this->cBackInit, new_init);
+/********************************************************************
+ * @brief  Zapisuje w TYM węźle wskaźnik na callback ReturnInit -
+ * 			powrót do urządzenia, które NIE było niszczone (np. audio
+ * 			po wyjściu z peryferiów): przywrócenie klawiszy, LED,
+ * 			steppera bez ponownej inicjalizacji urządzenia.
+ * 			Parametry i uwagi jak mi_bindInit().
+ *******************************************************************/
+void menuItem::mi_bindReturnInit(void (*new_func)(void*)) {
+	this->mi_bindFunction(&this->cReturnInit, new_func);
 }
 
+/********************************************************************
+ * @brief  Wspólna implementacja mi_bind*(): zapisuje new_func pod
+ * 			adres target (jedno z pól cInit / cDestroyInit /
+ * 			cReturnInit).
+ *
+ * @param  [target] [void(**)(void*)] adres pola przechowującego callback
+ * @param  [new_func] [void(*)(void*)] nowy callback
+ *
+ * @return NONE
+ *
+ * @note   Gdy new_func lub target == nullptr - nic nie robi (callback
+ * 			nie jest kasowany). Dlatego nie da się "odbindować"
+ * 			callbacka przez przekazanie nullptr.
+ *******************************************************************/
 void menuItem::mi_bindFunction(void (**target)(void*),
 		void (*new_func)(void*)) {
 	if (new_func != nullptr && target != nullptr) {
@@ -56,18 +95,52 @@ void menuItem::mi_bindFunction(void (**target)(void*),
 	}
 }
 
+/********************************************************************
+ * @brief  Wykonuje callback Init TEGO węzła.
+ *
+ * @param  [context] [void*] wartość przekazywana do callbacka
+ * 			(z radioMenu: wskaźnik na radioMenu)
+ *
+ * @return NONE
+ *
+ * @note   protected: wołać przez myList::execCurrentInit() lub
+ * 			myList::moveToNextInLoop(), które wybierają BIEŻĄCY węzeł.
+ * @note   Domyślna wartość context = nullptr jest tylko w definicji
+ * 			(.cpp), nie w deklaracji (.h) - poza tym plikiem argument
+ * 			trzeba podać jawnie.
+ *******************************************************************/
 void menuItem::mi_execInit(void *context = nullptr) {
 	this->mi_execFunction(this->cInit, context);
 }
 
-void menuItem::mi_execDeInit(void *context = nullptr) {
-	this->mi_execFunction(this->cDeInit, context);
+/********************************************************************
+ * @brief  Wykonuje callback DestroyInit TEGO węzła.
+ * 			Parametry i uwagi jak mi_execInit().
+ *******************************************************************/
+void menuItem::mi_execDestroyInit(void *context = nullptr) {
+	this->mi_execFunction(this->cDestroyInit, context);
 }
 
-void menuItem::mi_execBackInit(void *context = nullptr) {
-	this->mi_execFunction(this->cBackInit, context);
+/********************************************************************
+ * @brief  Wykonuje callback ReturnInit TEGO węzła.
+ * 			Parametry i uwagi jak mi_execInit().
+ *******************************************************************/
+void menuItem::mi_execReturnInit(void *context = nullptr) {
+	this->mi_execFunction(this->cReturnInit, context);
 }
 
+/********************************************************************
+ * @brief  Wspólna implementacja mi_exec*(): wywołuje callback
+ * 			z przekazanym context.
+ *
+ * @param  [callback] [void(*)(void*)] callback do wykonania
+ * @param  [context] [void*] argument callbacka
+ *
+ * @return NONE
+ *
+ * @note   callback == nullptr (nie zbindowany) jest bezpiecznie
+ * 			pomijany - np. peryferia bez ReturnInit.
+ *******************************************************************/
 void menuItem::mi_execFunction(void (*callback)(void*),
 		void *context = nullptr) {
 	if (callback != nullptr) {
@@ -100,12 +173,12 @@ void menuItem::mi_execFunction(void (*callback)(void*),
  }*/
 
 /*
- void menuItem::mI_appendDeInit(std::function<void()> newFunc){
- appendFunctionPointer(&this->deInit, newFunc);
+ void menuItem::mI_appendDestroyInit(std::function<void()> newFunc){
+ appendFunctionPointer(&this->destroyInit, newFunc);
  }
 
- void menuItem::mI_executeDeInit(void){
- this->executeFunctionPointer(&this->deInit);
+ void menuItem::mI_executeDestroyInit(void){
+ this->executeFunctionPointer(&this->destroyInit);
  }*/
 
 menuItem::~menuItem() {

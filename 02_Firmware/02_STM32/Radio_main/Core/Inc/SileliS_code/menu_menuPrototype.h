@@ -17,8 +17,8 @@ public:
 	menuPrototype();
 	~menuPrototype();
 	virtual void deviceInit();
-	virtual void deviceDeInit();
-	virtual void deviceBackInit();
+	virtual void deviceDestroyInit();
+	virtual void deviceReturnInit();
 
 protected:
 	virtual void deviceOn(void);

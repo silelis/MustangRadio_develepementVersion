@@ -28,9 +28,6 @@ public:
 	virtual ~radioMenu();
 	BaseType_t queueRadioMenuKbrdSend(const void *kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion *kbrdUnionReceived);
-
-	bool executeButtonFrom_radioMainMenu(keyboardUnion buttonSequence);
-	bool executeButtonFrom_curretDevice(keyboardUnion buttonSequence);
 	const char* getCurrentNodeTag(); // const;
 
 protected:
@@ -75,7 +72,6 @@ public:
 private:
 	uint8_t peripheryMenu_TimeoutCounterIncrement(void);
 	void peripheryMenu_TimeoutCounterReset(void);
-	void peripheryMenu_onTimeoutActions(void);
 	friend void peripheryMenuTimeoutFunction(void *thing);
 };
 

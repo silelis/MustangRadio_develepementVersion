@@ -119,9 +119,10 @@ UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void) {
  * 			jakie sąw ysyłane przez slave po i2c bus.
  *******************************************************************/
 BaseType_t i2cQueue4DynamicData::QueueSend(
-		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue) {
+		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue,
+		TickType_t xTicksToWait) {
 	if (xQueueSend(this->handler_Queue, pvItemToQueue,
-			pdMS_TO_TICKS(700)) == pdTRUE) {
+			xTicksToWait) == pdTRUE) {
 		return pdTRUE;
 	} else {
 		this->QueueDeleteDataFromPointer(*pvItemToQueue);

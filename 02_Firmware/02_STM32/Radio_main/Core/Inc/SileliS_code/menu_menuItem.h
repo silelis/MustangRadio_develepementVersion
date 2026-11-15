@@ -32,25 +32,26 @@ public:
 
 //	void	mI_appendInit(std::function<void()> newFunc);
 //	void	mI_executeInit(void);
-//	void	mI_appendDeInit(std::function<void()> newFunc);
-//	void	mI_executeDeInit(void);
-
-	void mi_bindInit(void (*new_init)(void*));
-	void mi_bindDeInit(void (*new_init)(void*));
-	void mi_bindBackInit(void (*new_init)(void*));
-	void mi_execInit(void*);
-	void mi_execDeInit(void*);
-	void mi_execBackInit(void*);
+//	void	mI_appendDestroyInit(std::function<void()> newFunc);
+//	void	mI_executeDestroyInit(void);
 
 protected:
 	const char *mI_TAG;
+	//protected: wywoływane tylko przez myList (bindCurrent / execCurrent*) na BIEŻĄCYM węźle;
+	//z zewnątrz (radioMenu) wywołanie na xxxDevices trafiałoby w głowę listy zamiast w bieżące urządzenie
+	void mi_bindInit(void (*new_func)(void*));
+	void mi_bindDestroyInit(void (*new_func)(void*));
+	void mi_bindReturnInit(void (*new_func)(void*));
+	void mi_execInit(void*);
+	void mi_execDestroyInit(void*);
+	void mi_execReturnInit(void*);
 
 private:
 //	std::function<void()> Init;
-//	std::function<void()> deInit;
+//	std::function<void()> destroyInit;
 	void (*cInit)(void*) = nullptr;
-	void (*cBackInit)(void*)= nullptr;
-	void (*cDeInit)(void*)= nullptr;
+	void (*cReturnInit)(void*)= nullptr;
+	void (*cDestroyInit)(void*)= nullptr;
 
 	void mi_bindFunction(void (**target)(void*), void (*new_func)(void*));
 	void mi_execFunction(void (*callback)(void*), void *context);

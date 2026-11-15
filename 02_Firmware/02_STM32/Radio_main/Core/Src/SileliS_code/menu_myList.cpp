@@ -84,12 +84,28 @@ void myList::moveToEnd(void) {
 		this->moveToNext();
 	}
 }
-void myList::moveToNextInLoop(void) {
+/********************************************************************
+ * @brief  Przejście na następny węzeł listy (w pętli: po ostatnim
+ * 			wraca na pierwszy) z wykonaniem callbacków urządzeń.
+ *
+ * Kolejność: DestroyInit bieżącego węzła -> przesunięcie current ->
+ * Init nowego bieżącego węzła. Obsługuje tylko przejścia WEWNĄTRZ
+ * jednej listy. Przejścia między listami (audio <-> peryferia, start
+ * radia, timeout) obsługuje radioMenu przez execCurrent*().
+ *
+ * @param  [context] [void*] wartość przekazywana do callbacków
+ * 			DestroyInit i Init (z radioMenu: wskaźnik na radioMenu).
+ *
+ * @return NONE
+ *
+ * @note   Callbacki z nullptr są pomijane (menuItem::mi_execFunction).
+ *******************************************************************/
+void myList::moveToNextInLoop(void *context) {
 	pPrintf->feedPrintf("Exit from %d: %s",
 			this->pListHeader->currentListNode->index,
 			this->pListHeader->currentListNode->mI_TAG);
-	//this->pListHeader->currentListNode->mI_executeDeInit();
-	this->pListHeader->currentListNode->mi_execDeInit(NULL);
+	//this->pListHeader->currentListNode->mI_executeDestroyInit();
+	this->execCurrentDestroyInit(context);
 
 	if (!moveToNext())
 		resetToFirst();
@@ -98,7 +114,73 @@ void myList::moveToNextInLoop(void) {
 			this->pListHeader->currentListNode->mI_TAG);
 
 	//this->pListHeader->currentListNode->mI_executeInit();
-	this->pListHeader->currentListNode->mi_execInit(NULL);
+	this->execCurrentInit(context);
+}
+
+/********************************************************************
+ * @brief  Binduje callbacki Init, DestroyInit i ReturnInit do
+ * 			BIEŻĄCEGO węzła listy (pListHeader->currentListNode).
+ *
+ * Wywoływać zaraz po konstruktorze myList lub po addAtEnd() /
+ * addAtBeginning() - one ustawiają current na nowo dodany węzeł.
+ * Nie używać xxxDevices->mi_bindInit() po addAtEnd(): xxxDevices
+ * zawsze wskazuje głowę listy, więc nadpisałoby to callbacki
+ * pierwszego węzła zamiast dodanego.
+ *
+ * @param  [init] [void(*)(void*)] wejście do urządzenia (tworzy je)
+ * @param  [destroyInit] [void(*)(void*)] wyjście z urządzenia
+ * 			(niszczy je)
+ * @param  [returnInit] [void(*)(void*)] powrót do urządzenia, które
+ * 			nie było niszczone (przywraca klawisze, LED, stepper);
+ * 			nullptr gdy niepotrzebny (np. peryferia)
+ *
+ * @return NONE
+ *
+ * @note   current jest odczytywany RAZ do zmiennej lokalnej: wszystkie
+ * 			trzy callbacki na pewno trafiają do tego samego węzła,
+ * 			a kod jest krótszy niż trzykrotne
+ * 			this->pListHeader->currentListNode->...
+ *******************************************************************/
+void myList::bindCurrent(void (*init)(void*), void (*destroyInit)(void*),
+		void (*returnInit)(void*)) {
+	myList *current = this->pListHeader->currentListNode;
+	current->mi_bindInit(init);
+	current->mi_bindDestroyInit(destroyInit);
+	current->mi_bindReturnInit(returnInit);
+}
+
+/********************************************************************
+ * @brief  Wykonuje callback Init BIEŻĄCEGO węzła listy.
+ *
+ * Używane przez radioMenu przy przejściach między listami (start
+ * radia, wejście do peryferiów). curretDevice / xxxDevices wskazują
+ * głowę listy - wywołanie mi_execInit() wprost na nich wykonałoby
+ * callback pierwszego węzła, a nie bieżącego urządzenia.
+ *
+ * @param  [context] [void*] wartość przekazywana do callbacka
+ *
+ * @return NONE
+ * @note   nullptr jest pomijany (menuItem::mi_execFunction)
+ *******************************************************************/
+void myList::execCurrentInit(void *context) {
+	this->pListHeader->currentListNode->mi_execInit(context);
+}
+
+/********************************************************************
+ * @brief  Wykonuje callback DestroyInit BIEŻĄCEGO węzła listy
+ * 			(np. wyjście z peryferiów). Opis jak execCurrentInit().
+ *******************************************************************/
+void myList::execCurrentDestroyInit(void *context) {
+	this->pListHeader->currentListNode->mi_execDestroyInit(context);
+}
+
+/********************************************************************
+ * @brief  Wykonuje callback ReturnInit BIEŻĄCEGO węzła listy
+ * 			(powrót do audio po timeout / długim EQ).
+ * 			Opis jak execCurrentInit().
+ *******************************************************************/
+void myList::execCurrentReturnInit(void *context) {
+	this->pListHeader->currentListNode->mi_execReturnInit(context);
 }
 
 // Zwracanie indeksu aktualnego węzła
@@ -151,13 +233,13 @@ bool myList::canAddItem() const {
 }
 
 void myList::deleteList() {
-	while (this->pListHeader->head != nullptr) {
-		myList *temp = this->pListHeader->head;   // Zapamiętaj aktualny head
-		this->pListHeader->head = this->pListHeader->head->nextListNode; // Przejdź do następnego elementu
+	ListHeader *header = this->pListHeader;	//lokalna kopia - w pętli usuwany jest także this (głowa listy), po tym nie wolno czytać pól this
+	while (header->head != nullptr) {
+		myList *temp = header->head;   // Zapamiętaj aktualny head
+		header->head = header->head->nextListNode; // Przejdź do następnego elementu
 		delete temp;           // Usuń aktualny element	aka ~myList()
-		this->pListHeader->indexCounter--;
+		header->indexCounter--;
 	}
-	this->pListHeader->currentListNode = nullptr; // Po usunięciu wszystkich elementów ustaw current na nullptr
-
+	header->currentListNode = nullptr; // Po usunięciu wszystkich elementów ustaw current na nullptr
 }
 

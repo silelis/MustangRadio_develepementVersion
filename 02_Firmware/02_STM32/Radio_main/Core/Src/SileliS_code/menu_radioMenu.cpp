@@ -6,6 +6,23 @@
  */
 
 #include <SileliS_code/menu_radioMenu.h>
+#include <SileliS_code/menu_radioMenu_audio_fm.h>
+#include <SileliS_code/menu_radioMenu_audio_dab.h>
+#include <SileliS_code/menu_radioMenu_audio_am.h>
+#include <SileliS_code/menu_radioMenu_audio_bluetooth.h>
+#include <SileliS_code/menu_radioMenu_audio_usb.h>
+#include <SileliS_code/menu_radioMenu_audio_sd.h>
+#include <SileliS_code/menu_radioMenu_audio_aux.h>
+#include <SileliS_code/menu_radioMenu_periphery_antena.h>
+#include <SileliS_code/menu_radioMenu_periphery_treble.h>
+#include <SileliS_code/menu_radioMenu_periphery_middle.h>
+#include <SileliS_code/menu_radioMenu_periphery_bass.h>
+#include <SileliS_code/menu_radioMenu_periphery_subwoofer.h>
+#include <SileliS_code/menu_radioMenu_periphery_lhBoost.h>
+#include <SileliS_code/menu_radioMenu_periphery_leftRight.h>
+#include <SileliS_code/menu_radioMenu_periphery_frontRear.h>
+#include <SileliS_code/menu_radioMenu_periphery_backlight.h>
+#include <SileliS_code/menu_radioMenu_periphery_tipCalibration.h>
 //#include "SileliS_code/i2cEngine.h"
 
 extern myPrintfTask *pPrintf;
@@ -40,6 +57,7 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 
 	this->setCurrentDeviceMenu_audio();
 	this->curretDevice->printCurrent();
+	this->curretDevice->execCurrentInit(this);	//power on: Init BIEŻĄCEGO urządzenia audio (docelowo zapamiętanego, nie zawsze FM); peryferia NIE są inicjowane przy starcie
 }
 
 void radioMenu::createDeviceMenuList_audio(void) {
@@ -48,21 +66,22 @@ void radioMenu::createDeviceMenuList_audio(void) {
 			this->audioDevices = new (std::nothrow) myList(
 					&(this->ListHeader_audioDevices),
 					"FM"));
-	//this->audioDevices->mi_bindInit(new_init);
-	//this->audioDevices->mi_bindDeInit(new_init);
-	//this->audioDevices->mi_bindBackInit(new_init);
+	this->audioDevices->bindCurrent(radioMenuAudioFm_Init, radioMenuAudioFm_DestroyInit, radioMenuAudioFm_ReturnInit);	//bindCurrent: zawsze do węzła dodanego przed chwilą (current), nie do głowy listy
 	this->audioDevices->addAtEnd("DAB+");
-	//this->audioDevices->mi_bindInit(new_init);
-	//this->audioDevices->mi_bindDeInit(new_init);
-	//this->audioDevices->mi_bindBackInit(new_init);
+	this->audioDevices->bindCurrent(radioMenuAudioDab_Init, radioMenuAudioDab_DestroyInit, radioMenuAudioDab_ReturnInit);
 	this->audioDevices->addAtEnd("AM");
+	this->audioDevices->bindCurrent(radioMenuAudioAm_Init, radioMenuAudioAm_DestroyInit, radioMenuAudioAm_ReturnInit);
 	this->audioDevices->addAtEnd("Bluetooth");
+	this->audioDevices->bindCurrent(radioMenuAudioBluetooth_Init, radioMenuAudioBluetooth_DestroyInit, radioMenuAudioBluetooth_ReturnInit);
 	this->audioDevices->addAtEnd("USB");
+	this->audioDevices->bindCurrent(radioMenuAudioUsb_Init, radioMenuAudioUsb_DestroyInit, radioMenuAudioUsb_ReturnInit);
 	this->audioDevices->addAtEnd("SD");
+	this->audioDevices->bindCurrent(radioMenuAudioSd_Init, radioMenuAudioSd_DestroyInit, radioMenuAudioSd_ReturnInit);
 	this->audioDevices->addAtEnd("Aux");
+	this->audioDevices->bindCurrent(radioMenuAudioAux_Init, radioMenuAudioAux_DestroyInit, radioMenuAudioAux_ReturnInit);
 
 	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
-	this->peripheryDevices->resetToFirst();
+	this->audioDevices->resetToFirst();
 	//this->audioDevices->moveToEnd();
 	//this->audioDevices->moveToNextInLoop();
 	//this->audioDevices->printList();
@@ -77,22 +96,32 @@ void radioMenu::createDeviceMenuList_periphery(void) {
 			this->peripheryDevices = new (std::nothrow) myList(
 					&(this->ListHeader_peripheryDevices),
 					"Antena"));
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryAntena_Init, radioMenuPeripheryAntena_DestroyInit, nullptr);	//peryferia: ReturnInit = nullptr (do peryferium nigdy się nie wraca)
 	this->peripheryDevices->addAtEnd(
 			"Treble");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryTreble_Init, radioMenuPeripheryTreble_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd("Midle");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryMiddle_Init, radioMenuPeripheryMiddle_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd("Bass");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryBass_Init, radioMenuPeripheryBass_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"Subwoofer");
+	this->peripheryDevices->bindCurrent(radioMenuPeripherySubwoofer_Init, radioMenuPeripherySubwoofer_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"L_H_Boost");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryLhBoost_Init, radioMenuPeripheryLhBoost_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"Left<->Right");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryLeftRight_Init, radioMenuPeripheryLeftRight_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"Front<->Rear");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryFrontRear_Init, radioMenuPeripheryFrontRear_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"Backlight");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryBacklight_Init, radioMenuPeripheryBacklight_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
 			"Tip calibration");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryTipCalibration_Init, radioMenuPeripheryTipCalibration_DestroyInit, nullptr);
 
 	this->peripheryDevices->resetToFirst();
 	//this->peripheryDevices->printList();
@@ -162,9 +191,12 @@ radioMenu::~radioMenu() {
 
 	vTaskDelete(this->peripheryMenu_taskHandle);
 
-	delete[] this->radioMainMenu;
-	delete[] this->audioDevices;
-	delete[] this->peripheryDevices;
+	this->radioMainMenu->deleteList();		//usuwa wszystkie węzły listy (obiekty z new, nie new[]) - samo delete usunęłoby tylko pierwszy węzeł
+	this->audioDevices->deleteList();
+	this->peripheryDevices->deleteList();
+	this->radioMainMenu = nullptr;			//wskaźniki wskazywały na usunięte głowy list
+	this->audioDevices = nullptr;
+	this->peripheryDevices = nullptr;
 
 	//memset(&(this->ListHeader_audioDevices),0,sizeof(ListHeader));
 	//memset(&(this->ListHeader_peripheryDevices),0,sizeof(ListHeader));
@@ -185,10 +217,11 @@ void radioMenu::menuFunction_equButShortPressed(void) {
 				this->radioMainMenu->getCurrentNodeTag());
 		this->setCurrentDeviceMenu_periphery();
 		this->curretDevice->printCurrent();
+		this->peripheryDevices->execCurrentInit(this);	//wejście do peryferiów: Init bieżącego (pierwszego) peryferium; DestroyInit audio NIE jest wykonywany - urządzenie audio działa dalej w tle
 		this->peripheryMenu_TimeoutCounterReset();
 		vTaskResume(this->peripheryMenu_taskHandle);
 	} else {
-		this->curretDevice->moveToNextInLoop();
+		this->curretDevice->moveToNextInLoop(this);	//this (radioMenu*) trafia jako context do callbacków DestroyInit/Init - to zwykłe funkcje, bez this nie mają dostępu do radioMenu (klawisze, LED); wcześniej przekazywano NULL
 	}
 
 }
@@ -222,17 +255,22 @@ void radioMenu:: menuFunction_resetToDefaultLongPress(void){
 	assert(0);
 }
 
-void radioMenu:: menuFunction_returnForEqualizerMenu(void){
-
-	pPrintf->feedPrintf("%s Powrot z menu Equalizera",
-			this->radioMainMenu->getCurrentNodeTag());
-	vTaskDelay(pdMS_TO_TICKS(2000));
-	assert(0);
-/*	for (uint8_t i=0; i<=EQUALIZER_TIMEOUT_PERIOD; i++){
-		this->peripheryMenu_TimeoutCounterIncrement();
-	}*/
+//powrót z peryferiów do TEGO SAMEGO urządzenia audio: długie EQ (RETURN_FROM_EQUALIZER_MENU) oraz timeout (task timeoutu wysyła ten sam klawisz do kolejki)
+void radioMenu::menuFunction_returnForEqualizerMenu(void) {
+	if (eTaskGetState(this->peripheryMenu_taskHandle) == eSuspended) {	//semafor i suspend taska timeoutu - jak w menuFunction_volButShortPressed()
+		xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	}
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore,
+			portMAX_DELAY);
+	if (this->curretDevice == this->peripheryDevices) {	//strażnik: klawisz mógł czekać w kolejce, a VOL zdążył już wyjść z peryferiów
+		pPrintf->feedPrintf("%s return from peripheryDevices to audioDevices.",
+				this->radioMainMenu->getCurrentNodeTag());
+		this->menuFunction_swithPeripheryDeviceToAudioDevice();	//DestroyInit peryferium + przełączenie na listę audio
+		this->audioDevices->execCurrentReturnInit(this);		//ReturnInit TEGO SAMEGO audio (nie było niszczone) - inaczej niż VOL short, który przechodzi do następnego
+		vTaskSuspend(this->peripheryMenu_taskHandle);
+	}
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
 }
-
 
 void radioMenu::menuFunction_volButShortPressed(void) {
 	if (eTaskGetState(this->peripheryMenu_taskHandle) == eSuspended) {
@@ -241,30 +279,27 @@ void radioMenu::menuFunction_volButShortPressed(void) {
 	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore,
 			portMAX_DELAY);
 	if (this->curretDevice != this->audioDevices) {
-		//this->peripheryDevices->mI_executeDeInit();
-		this->menuFunction_swithPeripheryDeviceToAudioDevice();
+		//this->peripheryDevices->mI_executeDestroyInit();
+		this->menuFunction_swithPeripheryDeviceToAudioDevice();	//DestroyInit peryferium, BEZ ReturnInit audio - za chwilę moveToNextInLoop() (linia 256) zrobi DestroyInit bieżącego audio i Init następnego
 		vTaskSuspend(this->peripheryMenu_taskHandle);
 	}
 	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
 	//printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 	pPrintf->feedPrintf("%s switch to next audioDevices.",
 			this->radioMainMenu->getCurrentNodeTag());
-	this->curretDevice->moveToNextInLoop();
+	this->curretDevice->moveToNextInLoop(this);	//this (radioMenu*) jako context dla callbacków - jak w menuFunction_equButShortPressed()
 }
 
 void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice(void) {
 	//printf("%s switch from peripheryDevices to audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 	pPrintf->feedPrintf("%s switch from peripheryDevices to audioDevices.",
 			this->radioMainMenu->getCurrentNodeTag());
+	this->peripheryDevices->execCurrentDestroyInit(this);	//wyjście z peryferiów: DestroyInit BIEŻĄCEGO peryferium - musi być PRZED resetToFirst(), potem current = pierwsze peryferium
 	this->peripheryDevices->resetToFirst();
 	this->setCurrentDeviceMenu_audio();
 	this->curretDevice->printCurrent();
-
-	this->curretDevice->mi_execBackInit(NULL);
-}
-
-void radioMenu::peripheryMenu_onTimeoutActions(void) {
-	this->menuFunction_swithPeripheryDeviceToAudioDevice();
+	//ReturnInit audio NIE tutaj: VOL short (menuFunction_volButShortPressed) przechodzi dalej do następnego audio (moveToNextInLoop),
+	//ReturnInit wykonuje tylko powrót po timeout / długim EQ (menuFunction_returnForEqualizerMenu)
 }
 
 uint8_t radioMenu::peripheryMenu_TimeoutCounterIncrement(void) {

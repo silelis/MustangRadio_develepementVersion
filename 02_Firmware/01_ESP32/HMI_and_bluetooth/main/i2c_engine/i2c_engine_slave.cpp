@@ -419,7 +419,7 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 					memcpy(tempData, rx_data.data, tempFrameToParserQueue.dataSize);
 					tempFrameToParserQueue.pData = tempData;
 
-					this->i2cSlaveReceiveDataToDataParserQueue->QueueSendFromISR(&tempFrameToParserQueue); // funkcja ma od razu sprawdzanie czy pdTure, jeśli nie to usuwa zmienną zadeklarowaną dynamicznie
+					this->i2cSlaveReceiveDataToDataParserQueue->QueueSend(&tempFrameToParserQueue, pdMS_TO_TICKS(10)); // kontekst taska (nie ISR); przy pełnej kolejce po 10 ms sama usuwa zmienną zadeklarowaną dynamicznie
 				}
 				else
 				{
@@ -483,7 +483,7 @@ BaseType_t i2cEngin_slave::i2cSendDataToTransisionQueue(i2cFrame_transmitQueue *
 		//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32
 		assert(0);
 	}
-	return this->i2cSlaveTransmitDataQueue->QueueSendFromISR(tempFrameToParserQueue);
+	return this->i2cSlaveTransmitDataQueue->QueueSend(tempFrameToParserQueue, pdMS_TO_TICKS(10));	//kontekst taska (klawiatura, callbacki BT) - nie ISR; max 10 ms czekania
 }
 
 /*---------------------------------------------------------------

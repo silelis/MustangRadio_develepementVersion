@@ -152,23 +152,18 @@ static void esp32I2cIntrrruptRequest(void *pNothing) {
 void peripheryMenuTimeoutFunction(void *thing) {
 	radioMenu *ptrRadioMenu = (radioMenu*) thing;
 	assert(ptrRadioMenu);
-	bool selfSuspended = false;
+	bool timeoutElapsed;
 	vTaskSuspend(NULL);
 	while (1) {
 		vTaskDelay(pdMS_TO_TICKS(PERIPHERY_MENU_TIMEOUT_TASK_DELAY));
 
 		xSemaphoreTake(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore,
 				portMAX_DELAY);
-		if (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement() >= EQUALIZER_TIMEOUT_PERIOD) {//6 = 12 SECUNDS
-			ptrRadioMenu->peripheryMenu_onTimeoutActions();
-			vTaskSuspend(NULL);
-			selfSuspended = true;
-		}
-		if (selfSuspended == false) {
-			xSemaphoreGive(
-					ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);//if self Suspended it means semaphore had been taken by menuFunction_equButShortPressed(void);
-		} else {
-			selfSuspended = false;		//reset self Suspend notification
+		timeoutElapsed = (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement() >= EQUALIZER_TIMEOUT_PERIOD);//6 = 12 SECUNDS
+		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);	//semafor oddany ZAWSZE - task nie zawiesza się sam trzymając semafor (groziło deadlockiem z menuFunction_returnForEqualizerMenu)
+		if (timeoutElapsed) {
+			keyboardUnion returnKey = { RETURN_FROM_EQUALIZER_MENU };
+			ptrRadioMenu->queueRadioMenuKbrdSend(&returnKey);	//powrót jak po długim EQ: wykona go task RadioMenu (menuFunction_returnForEqualizerMenu), który też zawiesza ten task
 		}
 	}
 }

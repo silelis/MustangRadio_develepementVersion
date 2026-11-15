@@ -29,11 +29,11 @@ void menuPrototype::deviceInit(void){
 
 }
 
-void menuPrototype::deviceDeInit(void){
+void menuPrototype::deviceDestroyInit(void){
 
 }
 
-void menuPrototype::deviceBackInit(void){
+void menuPrototype::deviceReturnInit(void){
 
 }
 

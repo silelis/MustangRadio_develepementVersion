@@ -177,8 +177,8 @@ bool i2cMaster::isDeviceReady(uint16_t DevAddress_7bit) {
 BaseType_t i2cMaster::setI2cAdressToAdressQueue(uint16_t DevAddress_7bit) {
 	i2cFrame_transmitQueue I2CFrameWithAdressOfSlaveToRead;
 	I2CFrameWithAdressOfSlaveToRead.slaveDevice7bitAddress = DevAddress_7bit;
-	return this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueSendFromISR(
-			&I2CFrameWithAdressOfSlaveToRead);
+	return this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue->QueueSend(	//kontekst taska esp32I2cIntrrruptRequest (nie ISR); max 10 ms czekania
+			&I2CFrameWithAdressOfSlaveToRead, pdMS_TO_TICKS(10));
 }
 
 /********************************************************************

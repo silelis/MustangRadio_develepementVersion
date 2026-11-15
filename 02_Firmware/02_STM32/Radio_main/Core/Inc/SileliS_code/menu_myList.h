@@ -40,11 +40,17 @@ public:
 	// Poruszanie się po liście
 	void resetToFirst();
 	myList* moveToNext();
-	void moveToNextInLoop(void);
+	void moveToNextInLoop(void *context);	//DestroyInit bieżącego, przejście na następny, Init następnego; context przekazywany do callbacków
 	void moveToEnd(void);
 	uint8_t getCurrentNodeIndex() const;
 	const char* getCurrentNodeTag();         // const;
 	bool isAtEnd() const;
+
+	// Bindowanie i wykonywanie callbacków BIEŻĄCEGO węzła (pListHeader->currentListNode), a nie węzła, na którym wywołano metodę
+	void bindCurrent(void (*init)(void*), void (*destroyInit)(void*), void (*returnInit)(void*));
+	void execCurrentInit(void *context);
+	void execCurrentDestroyInit(void *context);
+	void execCurrentReturnInit(void *context);
 
 	// Usuwanie elementu z listy
 	//void removeElement(uint8_t indexToDelete);

@@ -565,4 +565,6 @@ NVS::~NVS()
 	this->err = nvs_flash_deinit();
 	//assert(!this->err);
 	ESP_ERROR_CHECK(this->err);
+	delete[] namespaceName;		//para do new char[] z konstruktora (NVSeeprom.cpp:29)
+	namespaceName = nullptr;
 }
