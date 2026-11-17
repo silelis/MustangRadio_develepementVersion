@@ -15,6 +15,14 @@ extern myPrintfTask *pPrintf;
 //wejście do urządzenia (power on / przejście z poprzedniego audio): utworzenie urządzenia + ReturnInit (klawisze, LED, stepper)
 void radioMenuAudioSd_Init(void *context) {
 	pPrintf->feedPrintf("SD Init");
+	//inicjuj urządzenie (w tym antena i active antena oraz i2s)
+
+	//przełączenie wejścia korektora audio i wy  łaczneie audio mute
+
+	//Wzmacniacz audio włączony
+
+	//załaczenie grania
+
 	radioMenuAudioSd_ReturnInit(context);
 }
 
@@ -22,10 +30,22 @@ void radioMenuAudioSd_Init(void *context) {
 void radioMenuAudioSd_ReturnInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("SD ReturnInit");
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z urządzenia (przejście do następnego audio)
 void radioMenuAudioSd_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("SD DestroyInit");
+	//Włączenie audio mute na korektorze audio i wzmacniacz audio wyłaczyć
+
+	//zatrzymaj odtwarzanie
+
+	//i2s w stan wysokiej impedancji
+
+	//destroj urządzenia
 }

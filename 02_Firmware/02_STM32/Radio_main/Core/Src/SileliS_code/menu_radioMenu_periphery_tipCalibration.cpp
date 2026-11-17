@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryTipCalibration_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Tip calibration Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryTipCalibration_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Tip calibration DestroyInit");
+
+	//destroj urządzenia
 }

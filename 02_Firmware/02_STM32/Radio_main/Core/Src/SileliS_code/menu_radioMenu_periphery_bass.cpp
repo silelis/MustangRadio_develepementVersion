@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryBass_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Bass Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryBass_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Bass DestroyInit");
+
+	//destroj urządzenia
 }

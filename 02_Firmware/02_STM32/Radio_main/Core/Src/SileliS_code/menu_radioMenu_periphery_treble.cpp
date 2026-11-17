@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryTreble_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Treble Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryTreble_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Treble DestroyInit");
+
+	//destroj urządzenia
 }

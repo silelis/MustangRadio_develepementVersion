@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryLeftRight_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Left<->Right Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryLeftRight_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Left<->Right DestroyInit");
+
+	//destroj urządzenia
 }

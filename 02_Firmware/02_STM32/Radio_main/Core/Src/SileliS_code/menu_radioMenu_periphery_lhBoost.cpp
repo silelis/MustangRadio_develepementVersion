@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryLhBoost_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("L_H_Boost Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryLhBoost_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("L_H_Boost DestroyInit");
+
+	//destroj urządzenia
 }

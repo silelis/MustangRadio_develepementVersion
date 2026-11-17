@@ -16,10 +16,19 @@ extern myPrintfTask *pPrintf;
 void radioMenuPeripheryAntena_Init(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Antena Init");
+	//inicjuj urządzenie
+
+	//bindowanie klawiatury
+
+	//ustawienie stepper motora
+
+	//wyczyszczenie LED i ustawienie LED
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)
 void radioMenuPeripheryAntena_DestroyInit(void *context) {
 	(void) context;
 	pPrintf->feedPrintf("Antena DestroyInit");
+
+	//destroj urządzenia
 }
