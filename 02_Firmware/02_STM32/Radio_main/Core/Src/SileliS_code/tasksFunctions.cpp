@@ -175,31 +175,6 @@ static void manageRadioButtonsAndMenu(void *thing) {
 	assert(ptrRadioMenu);
 	keyboardUnion receivedKeyboard;
 
-//przykład dzialania LEDów
-
-//	extern radioMegaStruct radioStruct;
-
-/*	stepperMotor = new StepperOptoPowerOFF(
-			pi2cMaster->getTransmitQueue());*/
-
-
-	 pHmiLeds->setLedAllCleaned();
-	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
-	 pHmiLeds->setLedSourceWithColor(COLOR_RED);
-	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
-//	 vTaskDelay(pdMS_TO_TICKS(2000));
-	 pHmiLeds->setLedAllCleaned();
-	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
-	 pHmiLeds->setLedEqualiserBlinking(COLOR_RED, COLOR_BLUE);
-	 pHmiLeds->sendDataToI2cTransmitQueueLeds();
-
-
-
-
-	//#error "sprawdzić czy działa"
-//	vTaskDelay(pdMS_TO_TICKS(30000));
-//	stepperMotor->setMotorCalibration();
-
 	while (1) {
 		if (ptrRadioMenu->queueRadioMenuKbrdReceive(&receivedKeyboard)) {
 			ptrRadioMenu->executeButtonFunction(receivedKeyboard);

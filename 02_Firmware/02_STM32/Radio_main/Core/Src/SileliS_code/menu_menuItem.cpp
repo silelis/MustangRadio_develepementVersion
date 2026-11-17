@@ -105,11 +105,8 @@ void menuItem::mi_bindFunction(void (**target)(void*),
  *
  * @note   protected: wołać przez myList::execCurrentInit() lub
  * 			myList::moveToNextInLoop(), które wybierają BIEŻĄCY węzeł.
- * @note   Domyślna wartość context = nullptr jest tylko w definicji
- * 			(.cpp), nie w deklaracji (.h) - poza tym plikiem argument
- * 			trzeba podać jawnie.
  *******************************************************************/
-void menuItem::mi_execInit(void *context = nullptr) {
+void menuItem::mi_execInit(void *context) {
 	this->mi_execFunction(this->cInit, context);
 }
 
@@ -117,7 +114,7 @@ void menuItem::mi_execInit(void *context = nullptr) {
  * @brief  Wykonuje callback DestroyInit TEGO węzła.
  * 			Parametry i uwagi jak mi_execInit().
  *******************************************************************/
-void menuItem::mi_execDestroyInit(void *context = nullptr) {
+void menuItem::mi_execDestroyInit(void *context) {
 	this->mi_execFunction(this->cDestroyInit, context);
 }
 
@@ -125,7 +122,7 @@ void menuItem::mi_execDestroyInit(void *context = nullptr) {
  * @brief  Wykonuje callback ReturnInit TEGO węzła.
  * 			Parametry i uwagi jak mi_execInit().
  *******************************************************************/
-void menuItem::mi_execReturnInit(void *context = nullptr) {
+void menuItem::mi_execReturnInit(void *context) {
 	this->mi_execFunction(this->cReturnInit, context);
 }
 
@@ -142,7 +139,7 @@ void menuItem::mi_execReturnInit(void *context = nullptr) {
  * 			pomijany - np. peryferia bez ReturnInit.
  *******************************************************************/
 void menuItem::mi_execFunction(void (*callback)(void*),
-		void *context = nullptr) {
+		void *context) {
 	if (callback != nullptr) {
 		callback(context);
 	}

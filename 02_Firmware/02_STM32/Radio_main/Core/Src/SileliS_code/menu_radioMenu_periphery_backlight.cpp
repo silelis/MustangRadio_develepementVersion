@@ -7,8 +7,10 @@
 
 #include <SileliS_code/menu_radioMenu_periphery_backlight.h>
 #include "SileliS_code/myPrintfTask.h"
+#include <SileliS_code/device_ledsController.h>
 
 extern myPrintfTask *pPrintf;
+extern ledsController *pHmiLeds;	//obiekt sterowania diodami HMI (ESP32 przez I2C) - tworzony w tasksFunctions.cpp:203
 
 //wersja testowa: tylko log, context (radioMenu*) nieużywany
 
@@ -23,6 +25,11 @@ void radioMenuPeripheryBacklight_Init(void *context) {
 	//ustawienie stepper motora
 
 	//wyczyszczenie LED i ustawienie LED
+	pHmiLeds->setLedAllCleaned();
+	pHmiLeds->setLedEqualiserWithColor(COLOR_RED_GREEN_BLUE);
+	if (pHmiLeds->sendDataToI2cTransmitQueueLeds() != pdTRUE) {	//kolejka TX do ESP32 pełna > 700 ms - diody bez zmiany, radio działa dalej
+		pPrintf->feedPrintf("Backlight Init: LED send error (I2C TX queue full)");
+	}
 }
 
 //wyjście z peryferium (następne peryferium, VOL, długie EQ, timeout)

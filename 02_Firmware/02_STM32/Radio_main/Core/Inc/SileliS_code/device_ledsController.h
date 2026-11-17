@@ -18,6 +18,10 @@
 #define COLOR_BLUE 		{0, 0, 128}
 #define COLOR_BLACK 	{0, 0, 0}
 #define COLOR_WHITE 	{128, 128, 128}
+#define COLOR_RED_GREEN 		{128, 128, 0}		//żółty
+#define COLOR_RED_BLUE 		{128, 0, 128}		//magenta
+#define COLOR_GREEN_BLUE 		{0, 128, 128}		//cyjan
+#define COLOR_RED_GREEN_BLUE 	{128, 128, 128}		//biały (= COLOR_WHITE)
 
 class ledsController {
 public:

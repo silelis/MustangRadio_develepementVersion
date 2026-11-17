@@ -22,7 +22,7 @@
 #include <SileliS_code/menu_radioMenu_periphery_leftRight.h>
 #include <SileliS_code/menu_radioMenu_periphery_frontRear.h>
 #include <SileliS_code/menu_radioMenu_periphery_backlight.h>
-#include <SileliS_code/menu_radioMenu_periphery_tipCalibration.h>
+#include <SileliS_code/menu_radioMenu_periphery_tipCalibrationLeftRight.h>
 //#include "SileliS_code/i2cEngine.h"
 
 extern myPrintfTask *pPrintf;
@@ -120,8 +120,11 @@ void radioMenu::createDeviceMenuList_periphery(void) {
 			"Backlight");
 	this->peripheryDevices->bindCurrent(radioMenuPeripheryBacklight_Init, radioMenuPeripheryBacklight_DestroyInit, nullptr);
 	this->peripheryDevices->addAtEnd(
-			"Tip calibration");
-	this->peripheryDevices->bindCurrent(radioMenuPeripheryTipCalibration_Init, radioMenuPeripheryTipCalibration_DestroyInit, nullptr);
+			"Tip calibration Left");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryTipCalibrationLeft_Init, radioMenuPeripheryTipCalibrationLeft_DestroyInit, nullptr);
+	this->peripheryDevices->addAtEnd(
+			"Tip calibration Right");
+	this->peripheryDevices->bindCurrent(radioMenuPeripheryTipCalibrationRight_Init, radioMenuPeripheryTipCalibrationRight_DestroyInit, nullptr);
 
 	this->peripheryDevices->resetToFirst();
 	//this->peripheryDevices->printList();
