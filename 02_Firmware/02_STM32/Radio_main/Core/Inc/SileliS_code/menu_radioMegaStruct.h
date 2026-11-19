@@ -55,6 +55,7 @@ struct radioMegaStruct {
 	} humanMachineInterface;*/
 
 	struct {
+		uint8_t nodeIndex;
 		struct {
 			struct {
 				enum regionFM region;

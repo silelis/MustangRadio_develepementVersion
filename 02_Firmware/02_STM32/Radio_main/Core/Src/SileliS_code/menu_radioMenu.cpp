@@ -38,6 +38,7 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 	this->peripheryDevices = nullptr;
 	this->audioDevices = nullptr;
 	this->radioMainMenu = nullptr;
+	this->curretDevice = nullptr;	//do setCurrentDeviceMenu_audio() brak aktywnej listy - strażniki nullptr w get/set działają od początku
 
 	this->peripheryMenu_TimeoutCounter = 0;
 	this->peripheryMenu_TimeoutCounterSemaphore = NULL;
@@ -56,8 +57,7 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 	this->createDeviceMenuList_mainMenu();
 
 	this->setCurrentDeviceMenu_audio();
-	this->curretDevice->printCurrent();
-	this->curretDevice->execCurrentInit(this);	//power on: Init BIEŻĄCEGO urządzenia audio (docelowo zapamiętanego, nie zawsze FM); peryferia NIE są inicjowane przy starcie
+	this->setCurrentAudioNodeIndex(1, true);	//power on: FM (indeks 1), bez DestroyInit - żadne urządzenie nie było jeszcze zainicjalizowane; docelowo zapamiętany indeks; peryferia NIE są inicjowane przy starcie
 }
 
 void radioMenu::createDeviceMenuList_audio(void) {
@@ -162,6 +162,18 @@ void radioMenu::createDeviceMenuList_mainMenu(void) {
 	this->radioMenuButtonsAssignedInMainMenu= true;
 }
 
+/********************************************************************
+ * @brief  Wybiera listę urządzeń audio jako aktywną
+ * 			(curretDevice = audioDevices).
+ *
+ * Zmienia tylko to, KTÓRA lista jest obsługiwana przez menu.
+ * Nie zmienia bieżącego węzła w liście i nie wywołuje callbacków
+ * (Init/DestroyInit/ReturnInit) - to robi wywołujący.
+ * Musi być wywołana przed pierwszym użyciem curretDevice
+ * (konstruktor) oraz przy każdym powrocie z peryferiów.
+ *
+ * @return NONE
+ *******************************************************************/
 void radioMenu::setCurrentDeviceMenu_audio(void) {
 	this->curretDevice = this->audioDevices;
 }
@@ -211,6 +223,71 @@ radioMenu::~radioMenu() {
 
 const char* radioMenu::getCurrentNodeTag()/* const*/{
 	return (const char*) this->curretDevice->getCurrentNodeTag();
+}
+
+/********************************************************************
+ * @brief  Zwraca indeks bieżącego węzła AKTYWNEJ listy
+ * 			(curretDevice: audio albo peryferia).
+ *
+ * @return [uint8_t] indeks węzła (od 1); 0 - brak aktywnej listy
+ * 			lub lista pusta
+ *******************************************************************/
+uint8_t radioMenu::getCurrentNodeIndex()/* const*/{
+	if (this->curretDevice == nullptr) return 0;	//brak aktywnej listy (np. po destruktorze)
+	return this->curretDevice->getCurrentNodeIndex();
+}
+
+/********************************************************************
+ * @brief  Przełącza aktywne urządzenie audio na węzeł o wskazanym
+ * 			indeksie: [DestroyInit poprzedniego] -> moveToIndex() ->
+ * 			printCurrent() -> Init nowego.
+ *
+ * Działa TYLKO gdy radio jest w trybie sterowania audio
+ * (curretDevice == audioDevices). W innym trybie (peryferia), gdy
+ * lista audio nie istnieje lub jest pusta - nic nie zmienia,
+ * wypisuje komunikat i zwraca false.
+ *
+ * @param  [nodeIndex] [uint8_t] indeks urządzenia (od 1);
+ * 			0 -> pierwsze, indeks > liczby urządzeń -> ostatnie
+ * @param  [noNodeInitialised] [bool] true - żadne urządzenie audio
+ * 			nie było jeszcze zainicjalizowane, pomija DestroyInit
+ * 			poprzedniego (TYLKO raz, w konstruktorze);
+ * 			false (domyślnie) - normalne przełączenie z DestroyInit
+ * 			aktualnie używanego urządzenia.
+ * 			Jeśli wskazane urządzenie już gra - nic nie robi (bez
+ * 			DestroyInit/Init, bez przerwy w graniu) i zwraca true.
+ * 			Dotyczy to też indeksu poprawionego do zakresu, np. gra
+ * 			ostatnie urządzenie (Aux, 7) i podano 255 -> 255 zostaje
+ * 			zamienione na 7 -> to samo urządzenie -> nic nie robi.
+ *
+ * @return [bool] true - przełączono lub to samo urządzenie;
+ * 			false - nie tryb audio / brak urządzeń
+ *
+ * @note   private: wywoływać z tasku radioMenu (konstruktor, obsługa
+ * 			klawiszy) - callbacki urządzeń nie są chronione przed
+ * 			równoległym wywołaniem z innego tasku.
+ *******************************************************************/
+bool radioMenu::setCurrentAudioNodeIndex(uint8_t nodeIndex, bool noNodeInitialised) {
+	if (this->audioDevices == nullptr || this->curretDevice != this->audioDevices) {	//nie jesteśmy w trybie audio - nic nie zmieniamy
+		pPrintf->feedPrintf("%ssetCurrentAudioNodeIndex(%d): not in audio mode.", this->TAG, nodeIndex);
+		return false;
+	}
+	uint8_t nodeCount = this->audioDevices->getNodeCount();
+	if (nodeCount == 0) {	//pusta lista - execCurrentInit() odwołałby się do nullptr
+		pPrintf->feedPrintf("%ssetCurrentAudioNodeIndex(%d): no audio devices.", this->TAG, nodeIndex);
+		return false;
+	}
+	if (nodeIndex == 0) nodeIndex = 1;							//0 -> pierwsze urządzenie
+	else if (nodeIndex > nodeCount) nodeIndex = nodeCount;		//za duży -> ostatnie urządzenie
+
+	if (!noNodeInitialised) {
+		if (nodeIndex == this->audioDevices->getCurrentNodeIndex()) return true;	//to samo urządzenie - nic nie robimy
+		this->audioDevices->execCurrentDestroyInit(this);		//deinit poprzedniego urządzenia
+	}
+	this->audioDevices->moveToIndex(nodeIndex);
+	this->audioDevices->printCurrent();
+	this->audioDevices->execCurrentInit(this);					//init nowego urządzenia
+	return true;
 }
 
 void radioMenu::menuFunction_equButShortPressed(void) {

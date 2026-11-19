@@ -42,7 +42,9 @@ public:
 	myList* moveToNext();
 	void moveToNextInLoop(void *context);	//DestroyInit bieżącego, przejście na następny, Init następnego; context przekazywany do callbacków
 	void moveToEnd(void);
+	void moveToIndex(uint8_t nodeIndex);	//ustawia current na węzeł o indeksie (bez callbacków); 0 -> pierwszy, indeks > liczby węzłów -> ostatni
 	uint8_t getCurrentNodeIndex() const;
+	uint8_t getNodeCount() const;	//liczba węzłów listy (= indeks ostatniego węzła); 0 - lista pusta
 	const char* getCurrentNodeTag();         // const;
 	bool isAtEnd() const;
 

@@ -29,12 +29,14 @@ public:
 	BaseType_t queueRadioMenuKbrdSend(const void *kbrdUnionSend);
 	BaseType_t queueRadioMenuKbrdReceive(keyboardUnion *kbrdUnionReceived);
 	const char* getCurrentNodeTag(); // const;
+	uint8_t getCurrentNodeIndex(); // const;
 
 protected:
 
 	void setCurrentDeviceMenu_audio(void);
 	void setCurrentDeviceMenu_periphery(void);
 private:
+	bool setCurrentAudioNodeIndex(uint8_t nodeIndex, bool noNodeInitialised = false);	//przełącza aktywne urządzenie audio (tylko w trybie audio); true - TYLKO raz w konstruktorze (bez DestroyInit)
 	const char *TAG = "Main menu log: ";
 	QueueHandle_t queueRadioMenuKbrd;//kolejka, którza pobiera klawisze otrzymane z ESP32 i przekazuje do menuRadio
 

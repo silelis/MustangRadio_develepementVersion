@@ -84,6 +84,28 @@ void myList::moveToEnd(void) {
 		this->moveToNext();
 	}
 }
+
+/********************************************************************
+ * @brief  Ustawia current na węzeł o wskazanym indeksie.
+ *
+ * Zaczyna od pierwszego węzła (resetToFirst()) i przesuwa się do
+ * przodu, dopóki index < nodeIndex i nie jest na końcu listy
+ * (lista jednokierunkowa - nie da się cofać).
+ * Tylko przestawia wskaźnik - nie wywołuje callbacków.
+ *
+ * @param  [nodeIndex] [uint8_t] indeks węzła (od 1);
+ * 			0 -> pierwszy, indeks > liczby węzłów -> ostatni
+ *
+ * @return NONE
+ * @note   Pusta lista (indexCounter == 0) - nic nie robi.
+ *******************************************************************/
+void myList::moveToIndex(uint8_t nodeIndex) {
+	if (this->pListHeader->indexCounter == 0) return;	//pusta lista - currentListNode == nullptr
+	this->resetToFirst();
+	while (this->pListHeader->currentListNode->index < nodeIndex && !this->isAtEnd()) {
+		this->moveToNext();
+	}
+}
 /********************************************************************
  * @brief  Przejście na następny węzeł listy (w pętli: po ostatnim
  * 			wraca na pierwszy) z wykonaniem callbacków urządzeń.
@@ -183,9 +205,27 @@ void myList::execCurrentReturnInit(void *context) {
 	this->pListHeader->currentListNode->mi_execReturnInit(context);
 }
 
-// Zwracanie indeksu aktualnego węzła
+/********************************************************************
+ * @brief  Zwraca indeks bieżącego węzła listy (currentListNode).
+ *
+ * @return [uint8_t] indeks węzła (od 1); 0 - lista pusta
+ *******************************************************************/
 uint8_t myList::getCurrentNodeIndex() const {
-	return /*current ?*/this->pListHeader->currentListNode->index /*: UINT8_MAX*/;
+	if (this->pListHeader->indexCounter == 0) return 0;	//pusta lista - brak węzła (indeksy węzłów zaczynają się od 1)
+	return this->pListHeader->currentListNode->index;
+}
+
+/********************************************************************
+ * @brief  Zwraca liczbę węzłów listy (pListHeader->indexCounter).
+ *
+ * Indeksy węzłów są ciągłe 1..getNodeCount() (renumberNodes()), więc
+ * wynik jest jednocześnie indeksem ostatniego węzła - pozwala
+ * przyciąć indeks do zakresu bez przechodzenia po liście.
+ *
+ * @return [uint8_t] liczba węzłów; 0 - lista pusta
+ *******************************************************************/
+uint8_t myList::getNodeCount() const {
+	return this->pListHeader->indexCounter;
 }
 
 const char* myList::getCurrentNodeTag()/* const*/{

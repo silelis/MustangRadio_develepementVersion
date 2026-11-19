@@ -19,6 +19,8 @@ void radioMenuAudioUsb_Init(void *context) {
 	pPrintf->feedPrintf("USB Init");
 	//inicjuj urządzenie (w tym antena i active antena oraz i2s)
 
+	//odczyt aktualnego numeru węzła RadioMenu
+
 	//przełączenie wejścia korektora audio i wy  łaczneie audio mute
 
 	//Wzmacniacz audio włączony
