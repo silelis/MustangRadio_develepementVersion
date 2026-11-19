@@ -79,15 +79,6 @@ void radioMenu::createDeviceMenuList_audio(void) {
 	this->audioDevices->bindCurrent(radioMenuAudioSd_Init, radioMenuAudioSd_DestroyInit, radioMenuAudioSd_ReturnInit);
 	this->audioDevices->addAtEnd("Aux");
 	this->audioDevices->bindCurrent(radioMenuAudioAux_Init, radioMenuAudioAux_DestroyInit, radioMenuAudioAux_ReturnInit);
-
-	//todo: tutaj zamiast ustawiania pierwszego urządzenia powinno by ć zapamiętywanie, któe urządzenie było ustawione, a jeśli inicjalizacja to pierwsze
-	this->audioDevices->resetToFirst();
-	//this->audioDevices->moveToEnd();
-	//this->audioDevices->moveToNextInLoop();
-	//this->audioDevices->printList();
-
-	//this->setCurrentDeviceMenu_audio();
-	//this->curretDevice->printCurrent();
 }
 
 void radioMenu::createDeviceMenuList_periphery(void) {
