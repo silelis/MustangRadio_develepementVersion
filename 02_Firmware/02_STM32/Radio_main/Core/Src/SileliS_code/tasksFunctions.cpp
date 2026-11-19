@@ -200,7 +200,7 @@ static void initTaskFunctions(void) {
 	configASSERT(
 			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY + 1, &taskHandle_i2cMasterParseReceivedData));	//+1: parsowanie odebranych ramek przed menu/printf
 
-	pHmiLeds = new (std::nothrow) ledsController(/*&radioStruct.humanMachineInterface.leds,*/ pi2cMaster->getTransmitQueue());
+	pHmiLeds = new (std::nothrow) ledsController(pi2cMaster->getTransmitQueue());
 	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
 	//tutaj inicjoać wszytkie menu.
 

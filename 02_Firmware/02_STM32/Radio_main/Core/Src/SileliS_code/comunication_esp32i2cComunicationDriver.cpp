@@ -67,7 +67,7 @@ BaseType_t esp32_i2cComunicationDriver::isCrcSumCorreect(
 
 	if (crcSum
 			== calculate_checksum(I2CReceivedFrame.pData,
-					I2CReceivedFrame.dataSize/*sizeof(i2cFrame_keyboardFrame)*/)) {
+					I2CReceivedFrame.dataSize)) {
 		this->esp32CrcSumCounterError = 0;
 		return pdPASS;
 	} else {

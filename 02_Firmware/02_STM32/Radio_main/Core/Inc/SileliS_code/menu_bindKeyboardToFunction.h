@@ -23,7 +23,7 @@ struct _execute_t {
 class bindKeyboardToFunction {
 	friend class radioMenu;
 public:
-	bindKeyboardToFunction(/*_execute_t *ExecutableButtonsArray*/);
+	bindKeyboardToFunction();
 	virtual ~bindKeyboardToFunction();
 
 //private:

@@ -121,11 +121,11 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit) {
 			1000);
 	if (retVal == HAL_OK) {
 		pPrintf->feedPrintf("%s i2c slave avaliable on address: 0x%x (7bit).",
-				this->TAG, DevAddress_7bit/*<<1*/);
+				this->TAG, DevAddress_7bit);
 	} else {
 		pPrintf->feedPrintf(
 				"%s i2c slave NOT avaliable on address: 0x%x (7bit).",
-				this->TAG, DevAddress_7bit/*<<1*/);
+				this->TAG, DevAddress_7bit);
 		assert(0);
 	}
 	return retVal;

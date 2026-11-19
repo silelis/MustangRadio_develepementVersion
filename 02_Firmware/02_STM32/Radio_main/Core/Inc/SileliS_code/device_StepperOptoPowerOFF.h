@@ -16,8 +16,7 @@
 
 class StepperOptoPowerOFF {
 public:
-	StepperOptoPowerOFF(/*stepperMotorStruct *stepperMotorData,*/
-			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
+	StepperOptoPowerOFF(i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
 	virtual ~StepperOptoPowerOFF();
 
 	void setMotorCalibration(void);

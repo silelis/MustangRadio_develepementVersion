@@ -25,7 +25,7 @@ class myList: public menuItem {
 public:
 	// Konstruktor
 	myList(ListHeader *pointerListHeader,
-			const char *nodeName/*, _execute_t*ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+			const char *nodeName);
 
 	// Destruktor
 	void deleteList();
@@ -33,9 +33,9 @@ public:
 
 	// Dodawanie elementów do listy
 	void addAtBeginning(
-			const char *nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+			const char *nodeName);
 	void addAtEnd(
-			const char *nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/);
+			const char *nodeName);
 
 	// Poruszanie się po liście
 	void resetToFirst();

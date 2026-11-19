@@ -9,7 +9,7 @@
 
 extern myPrintfTask *pPrintf;
 
-menuItem::menuItem(const char *tag/*, _execute_t *ExecutableButtonsArray*/) {
+menuItem::menuItem(const char *tag) {
 //	if (execFunctionArraySize<= UINT8_MAX){
 	this->mI_TAG = tag;
 

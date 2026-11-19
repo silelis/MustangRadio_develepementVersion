@@ -7,8 +7,7 @@
 
 #include <SileliS_code/device_ledsController.h>
 
-ledsController::ledsController(/*hmiLeds *leds,*/
-		i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
+ledsController::ledsController(i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
 	// TODO Auto-generated constructor stub
 	this->pLeds = &this->Leds;
 	this->pI2C_MasterTransmitToSlave_DataQueue =
@@ -160,7 +159,7 @@ BaseType_t ledsController::sendDataToI2cTransmitQueueLeds() {
 	memcpy(&hmiLedsToSend.ledsData, this->pLeds, sizeof(hmiLeds));
 	hmiLedsToSend.i2cframeCommandHeader.crcSum =
 			(uint8_t) calculate_checksum(&hmiLedsToSend,
-					hmiLedsToSend.i2cframeCommandHeader.dataSize/*sizeof(i2cFrame_hmiLeds)*/);
+					hmiLedsToSend.i2cframeCommandHeader.dataSize);
 	//tworzy ramkę komunikacujną do przesłania
 	i2cFrame_transmitQueue dataToTransmitQueue;
 	dataToTransmitQueue.pData = new (std::nothrow) char[sizeof(i2cFrame_hmiLeds)]; //alokacja jako char[] - zgodnie z delete[] (char*) w i2cQueue4DynamicData::QueueDeleteDataFromPointer()

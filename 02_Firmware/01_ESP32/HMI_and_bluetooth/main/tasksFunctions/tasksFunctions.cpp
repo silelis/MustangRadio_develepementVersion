@@ -230,7 +230,7 @@ void keyboardQueueParametersParser(void *parameters)
 		
 	//keyboardDataToI2cTransmittQueue.frameSize = sizeof(keyboardDataToI2cTransmittQueue.frameSize) + sizeof(keyboardDataToI2cTransmittQueue.commandGroup) + sizeof(keyboardDataToI2cTransmittQueue.commandData);
 	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.commandGroup = I2C_COMMAND_GROUP_KEYBOARD;
-	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(i2cFrame_keyboardFrame /*keyboardUnion*/ /*keyboardDataToParse*/);
+	kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.dataSize = sizeof(i2cFrame_keyboardFrame);
 	for (;;)
 	{
 		if (xQueueReceive(handlerParameterAsKeyboard, &keyboardDataToParse, portMAX_DELAY))
@@ -239,17 +239,17 @@ void keyboardQueueParametersParser(void *parameters)
 			{
 				memcpy(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData, &keyboardDataToParse, sizeof(keyboardUnion));
 				
-				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable/*&keyboardDataToParse*/, sizeof(i2cFrame_keyboardFrame/*keyboardDataToParse*/));
+				kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.i2cframeCommandHeader.crcSum = (uint8_t) calculate_checksum(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame));
 				
 				
 				
 
 				#warning zastanowić się jak poprawić funkcję "esp32PrepareKbrdDataAndSent_to_QueueSend" bo to proteza, która nie za bardzo mi się podoba
 				//if (p_i2cSlave->pTransmitQueueObject->esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
-				if(esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE/*ESP_OK*/)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
+				if(esp32PrepareKbrdDataAndSent_to_QueueSend(&kbrdDataToI2CSlaveTransmittQueueTemoraryVariable, sizeof(i2cFrame_keyboardFrame)) != pdTRUE)	//to nigdy nie zajdzie, bo kolejka zawsze będzie karmiona, bo zawsze karmi inną
 				{
 					#warning   obsługę błędów komunikacji (jeśli są błędy komunikacji i jeśli nie ma sygnału keep alive, nie wiem czy tutaj ale zrobnić
-					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData/*keyboardDataToParse*/);
+					keyboardQueueParameters_isEmergencyResetRequired(kbrdDataToI2CSlaveTransmittQueueTemoraryVariable.keyboardData);
 				}
 				//----------------------------------------------------------------------//
 				//poniższa funkcja jest tylko do celów debugowania poprawności programu

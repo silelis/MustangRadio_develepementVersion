@@ -89,7 +89,7 @@ void i2cQueue4DynamicData::QueueDeleteDataFromPointer(
  * @warning NONE
  *******************************************************************/
 BaseType_t i2cQueue4DynamicData::QueueReceive(
-		/*void*/i2cFrame_transmitQueue * /*const*/pvBuffer,
+		i2cFrame_transmitQueue *pvBuffer,
 		TickType_t xTicksToWait) {
 
 	return xQueueReceive(this->handler_Queue, pvBuffer, xTicksToWait);
@@ -119,7 +119,7 @@ UBaseType_t i2cQueue4DynamicData::QueueMessagesWaiting(void) {
  * 			jakie sąw ysyłane przez slave po i2c bus.
  *******************************************************************/
 BaseType_t i2cQueue4DynamicData::QueueSend(
-		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue,
+		i2cFrame_transmitQueue *pvItemToQueue,
 		TickType_t xTicksToWait) {
 	if (xQueueSend(this->handler_Queue, pvItemToQueue,
 			xTicksToWait) == pdTRUE) {
@@ -132,7 +132,7 @@ BaseType_t i2cQueue4DynamicData::QueueSend(
 }
 
 BaseType_t i2cQueue4DynamicData::QueueSendFromISR(
-		/*const*//*void*/i2cFrame_transmitQueue *pvItemToQueue) {
+		i2cFrame_transmitQueue *pvItemToQueue) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if (xQueueSendFromISR(this->handler_Queue, pvItemToQueue,
 			&xHigherPriorityTaskWoken) == pdTRUE) {

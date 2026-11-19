@@ -26,8 +26,7 @@
 class ledsController {
 public:
 
-	ledsController(/*hmiLeds *leds,*/
-			i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
+	ledsController(i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue);
 	virtual ~ledsController();
 
 	void setLedSourceBlinking(ws2812Color primary, ws2812Color secondary);

@@ -27,7 +27,7 @@ struct execute_t {
 class menuItem {
 public:
 	//http://www.embeddeddev.pl/menu-na-lcd-wprowadzenie/
-	menuItem(const char *tag/*, _execute_t *ExecutableButtonsArray*/);
+	menuItem(const char *tag);
 	~menuItem();
 
 //	void	mI_appendInit(std::function<void()> newFunc);

@@ -14,7 +14,7 @@
 class LEDS_BACKLIGHT
 {
 public:
-	LEDS_BACKLIGHT(/*led_strip_rmt_config_t rtmConfig,*/ int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel);
+	LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel);
 	~LEDS_BACKLIGHT();
 	
 	esp_err_t ledStripSet_sourceLed(struct ws2812Color colorSet);

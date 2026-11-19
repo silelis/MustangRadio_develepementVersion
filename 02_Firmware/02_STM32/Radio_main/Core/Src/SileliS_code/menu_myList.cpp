@@ -4,8 +4,8 @@ extern myPrintfTask *pPrintf;
 
 // Konstruktor
 myList::myList(ListHeader *pointerListHeader,
-		const char *nodeName/*, _execute_t*ExecutableButtonsArray*/) :
-		menuItem(nodeName/*, ExecutableButtonsArray/*, execFunctionArraySize*/) {
+		const char *nodeName) :
+		menuItem(nodeName) {
 	this->pListHeader = pointerListHeader;
 
 	if (this->pListHeader->head == nullptr) {
@@ -26,14 +26,14 @@ myList::~myList() {
 
 // Dodanie elementu na początku listy
 void myList::addAtBeginning(
-		const char *nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+		const char *nodeName) {
 	if (!canAddItem())
 		return;
 	myList *newNode; // = new myList(nodeName, execFunctionArraySize);
 	assert(
 			newNode =
 					new (std::nothrow) myList(pListHeader,
-							nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
+							nodeName));
 	newNode->nextListNode = this->pListHeader->head;
 	this->pListHeader->head = newNode;
 	this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -42,7 +42,7 @@ void myList::addAtBeginning(
 
 // Dodanie elementu na końcu listy
 void myList::addAtEnd(
-		const char *nodeName/*, _execute_t *ExecutableButtonsArray /*uint8_t execFunctionArraySize*/) {
+		const char *nodeName) {
 	if (!canAddItem())
 		return;
 
@@ -50,7 +50,7 @@ void myList::addAtEnd(
 	assert(
 			newNode =
 					new myList(pListHeader,
-							nodeName/*, ExecutableButtonsArray /*execFunctionArraySize*/));
+							nodeName));
 	if (!this->pListHeader->head) {
 		this->pListHeader->head = newNode;
 	} else {

@@ -8,8 +8,7 @@
 #include <SileliS_code/device_StepperOptoPowerOFF.h>
 #include <new>
 
-StepperOptoPowerOFF::StepperOptoPowerOFF(/*stepperMotorStruct *stepperMotorData,*/
-		i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
+StepperOptoPowerOFF::StepperOptoPowerOFF(i2cQueue4DynamicData *MasterTransmitToSlave_DataQueue) {
 
 	this->pI2C_MasterTransmitToSlave_DataQueue =
 			MasterTransmitToSlave_DataQueue;
