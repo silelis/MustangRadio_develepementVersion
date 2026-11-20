@@ -158,6 +158,7 @@ bt_audio_sink::bt_audio_sink(int pin_bck, int pin_ws, int pin_data){
     this->pin_bck = pin_bck;
     this->pin_ws = pin_ws;
     this->pin_data = pin_data;
+    bt_audio_sink::i2sHighImpedanceEnabled(this->pin_bck, this->pin_ws, this->pin_data);	//klasa sama gwarantuje high-Z pinów I2S do czasu btAudioDeviceOn() (niezależnie od wywołania w app_main)
 }
 
 bt_audio_sink::~bt_audio_sink(void){

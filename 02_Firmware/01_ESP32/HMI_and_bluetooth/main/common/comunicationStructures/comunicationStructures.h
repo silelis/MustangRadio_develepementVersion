@@ -50,17 +50,7 @@ struct stepperMotorStruct {
 	} stepperUnion;
 };
 
-/*
-typedef enum 
-{
-    highZenabled,
-    i2sNotConfigured,
-    i2sConfigured,
-    highZdisabled
-}i2sPinStates;
-
-*/
-typedef enum {
+typedef enum : uint8_t {	//: uint8_t - enum przesyłany po I2C musi mieć 1 B na STM32 (ARM: short enums) i ESP32 (Xtensa: enum = int, 4 B)
     BT_ESP_A2D_CONNECTION_STATE_DISCONNECTED = 0, /*!< connection released  */
     BT_ESP_A2D_CONNECTION_STATE_CONNECTING,       /*!< connecting remote device */
     BT_ESP_A2D_CONNECTION_STATE_CONNECTED,        /*!< connection established */
@@ -75,7 +65,7 @@ typedef enum {
 //} bt_onAudioStateCallbackStates;
 
 
-typedef enum {
+typedef enum : uint8_t {	//: uint8_t - jak wyżej (rozmiar 1 B na STM32 i ESP32); max wartość 0xFF mieści się w uint8_t
     BT_ESP_AVRC_PLAYBACK_STOPPED = 0,                /*!< stopped */
     BT_ESP_AVRC_PLAYBACK_PLAYING = 1,                /*!< playing */
     BT_ESP_AVRC_PLAYBACK_PAUSED = 2,                 /*!< paused */
@@ -84,7 +74,7 @@ typedef enum {
     BT_ESP_AVRC_PLAYBACK_ERROR = 0xFF,               /*!< error */
 } bt_onAVRCPlayStatusCallback;
 
-typedef enum {
+typedef enum : uint8_t {	//: uint8_t - jak wyżej (rozmiar 1 B na STM32 i ESP32)
     Play,
     Stop,
     Pause,
