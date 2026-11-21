@@ -25,7 +25,8 @@ MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint3
 	MCP23008_dev_cfg.scl_speed_hz = scl_speed_hz;// I2C_MASTER_SPEED;
 	
 	
-	assert(!i2c_master_bus_add_device(*(this->pI2cMasterBus->phandler_i2c_bus), &MCP23008_dev_cfg, &MCP23008_dev_handle));
+	esp_err_t err = i2c_master_bus_add_device(*(this->pI2cMasterBus->phandler_i2c_bus), &MCP23008_dev_cfg, &MCP23008_dev_handle);
+	assert(err == ESP_OK);
 	
 	this->pI2cMasterBus->devicesOnBusIncrement();
 	//i2cMasterBus->devicesOnBusIncrement();
@@ -41,7 +42,8 @@ MCP23008::MCP23008(uint8_t i2cDeviceOpcode, i2cEngin_master* i2cMasterBus, uint3
 *---------------------------------------------------------------*/
 MCP23008::~MCP23008()
 {
-	assert(!i2c_master_bus_rm_device(MCP23008_dev_handle));
+	esp_err_t err = i2c_master_bus_rm_device(MCP23008_dev_handle);
+	assert(err == ESP_OK);
 	this->pI2cMasterBus->devicesOnBusDecrement();
 	printf("MCP23008 GPIO  expander with address 0x%x has been deleted from i2c bus.\r\n", DeviceOpcode);
 	

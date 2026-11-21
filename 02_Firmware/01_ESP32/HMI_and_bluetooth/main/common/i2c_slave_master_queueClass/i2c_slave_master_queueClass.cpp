@@ -15,8 +15,8 @@
  *******************************************************************/
 i2cQueue4DynamicData::i2cQueue4DynamicData(UBaseType_t uxQueueLength) {
 	this->handler_Queue = NULL;
-	configASSERT(
-			this->handler_Queue = xQueueCreate(uxQueueLength, sizeof(i2cFrame_transmitQueue)));
+	this->handler_Queue = xQueueCreate(uxQueueLength, sizeof(i2cFrame_transmitQueue));
+	configASSERT(this->handler_Queue);
 }
 
 /********************************************************************

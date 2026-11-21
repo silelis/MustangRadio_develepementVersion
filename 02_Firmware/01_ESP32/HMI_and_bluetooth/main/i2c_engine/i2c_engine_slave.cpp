@@ -339,8 +339,10 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 
-	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(20));
-	configASSERT(this->i2cSlaveTransmitDataQueue = new i2cQueue4DynamicData(20));
+	this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(20);
+	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue);
+	this->i2cSlaveTransmitDataQueue = new i2cQueue4DynamicData(20);
+	configASSERT(this->i2cSlaveTransmitDataQueue);
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
 	// Tworzenie kolejki nadawczej

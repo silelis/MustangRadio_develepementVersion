@@ -185,39 +185,43 @@ static void manageRadioButtonsAndMenu(void *thing) {
 static void initTaskFunctions(void) {
 
 	//pi2cMaster tworzony wcześniej - w startUpTask_initTaskFunctions() (potrzebny do pingu ESP32 przed startem)
-	assert(pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster));
+	pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster);
+	assert(pESP32);
 
+	BaseType_t taskCreated;	//wynik xTaskCreate - operacja zawsze poza makrem asercji, makro tylko sprawdza wynik
 	//tworzenie taska czytającego dane po I2C ze slave
-	configASSERT(
-			xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterReceiveFromSlaveDataTask));	//+2: odczyt z ESP32 w czasie ESP32_I2C_TX_TIMEOUT_MS niezależnie od obciążenia (menu, printf); większość czasu czeka na kolejkę/semafor
-	configASSERT(
-			xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterTransmitToSlaveDataTask));	//+2: jak odbiór (wspólny semafor szyny)
+	taskCreated = xTaskCreate(i2cMasterReceiveFromSlaveDataTask, "i2cReceive", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterReceiveFromSlaveDataTask);	//+2: odczyt z ESP32 w czasie ESP32_I2C_TX_TIMEOUT_MS niezależnie od obciążenia (menu, printf); większość czasu czeka na kolejkę/semafor
+	configASSERT(taskCreated == pdPASS);
+	taskCreated = xTaskCreate(i2cMasterTransmitToSlaveDataTask, "i2cTransmit", 5*128, NULL, tskIDLE_PRIORITY + 2, &taskHandle_i2cMasterTransmitToSlaveDataTask);	//+2: jak odbiór (wspólny semafor szyny)
+	configASSERT(taskCreated == pdPASS);
 
 	//tworzy task callback na przerwanie od ESP32 informującę, że ESP32 ma jakieś dane do wysłania
-	configASSERT(
-			xTaskCreate(esp32I2cIntrrruptRequest, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32I2cIntrrruptRequest));
+	taskCreated = xTaskCreate(esp32I2cIntrrruptRequest, "esp32IntReq", 3*128, NULL, tskIDLE_PRIORITY+1, &taskHandle_esp32I2cIntrrruptRequest);
+	configASSERT(taskCreated == pdPASS);
 	//tworzy task przetwarzający dane (parsujący) z kolejki odbiorczej i2c Mastera
-	configASSERT(
-			xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY + 1, &taskHandle_i2cMasterParseReceivedData));	//+1: parsowanie odebranych ramek przed menu/printf
+	taskCreated = xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY + 1, &taskHandle_i2cMasterParseReceivedData);	//+1: parsowanie odebranych ramek przed menu/printf
+	configASSERT(taskCreated == pdPASS);
 
 	pHmiLeds = new (std::nothrow) ledsController(pi2cMaster->getTransmitQueue());
 	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
 	//tutaj inicjoać wszytkie menu.
 
-	assert(pRadioMenu = new (std::nothrow) radioMenu());
+	pRadioMenu = new (std::nothrow) radioMenu();
+	assert(pRadioMenu);
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
-	configASSERT(
-			xTaskCreate(manageRadioButtonsAndMenu, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue));
+	taskCreated = xTaskCreate(manageRadioButtonsAndMenu, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue);
+	configASSERT(taskCreated == pdPASS);
 	//tworzy task timeoutu kontrolującego moment wyjścia z menu periphery (gdy radio jest w tym menu, a klawisze nie są używane)
-	configASSERT(
-			xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle));
+	taskCreated = xTaskCreate(peripheryMenuTimeoutFunction, "periTimeout", 2*128, pRadioMenu, tskIDLE_PRIORITY, &pRadioMenu->peripheryMenu_taskHandle);
+	configASSERT(taskCreated == pdPASS);
 }
 
 static TaskHandle_t taskHandle_initTaskFunctions = nullptr;	//uchwyt do taska (jodnorazowo wywolanego), który uruchamia całą konfigurację, trzeba tak to zrobić, aby printf działąło w tasku (task printf musi sie uruchomić  przed wszystkimi)
 static void startUpTask_initTaskFunctions(void *noThing) {
 
-	assert(pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
-			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin));	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
+	pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
+			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin);	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
+	assert(pi2cMaster);
 
 	//czeka, aż esp32 odpowie ACK na ping i2c - wtedy wiadomo, że jego i2c slave działa (ESP32 nie odpowiada ACK w bootloaderze /
 	//resecie / flashowaniu). Dawniej sygnałem było pierwsze zbocze interrupt request, ale każde dodatkowe zbocze na GPIO0 ESP32
@@ -245,14 +249,16 @@ static void printfTask(void *noThing) {
 }
 
 void startUpTask(void *noThing) {
-	assert(pPrintf = new (std::nothrow) myPrintfTask(&huart1, 15));
+	pPrintf = new (std::nothrow) myPrintfTask(&huart1, 15);
+	assert(pPrintf);
 
-	assert(
-			xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask));
+	BaseType_t taskCreated;	//jak w initTaskFunctions()
+	taskCreated = xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask);
+	assert(taskCreated == pdPASS);
 
 	//tworzy task (JEDNORAZOWY), który wywołuje funkcję inicjalizacji calego sprzętu (inaczej nie dalo się zaimplementować printf działającego w tasku
-	assert(
-			xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions));
+	taskCreated = xTaskCreate(startUpTask_initTaskFunctions, "initTasks", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_initTaskFunctions);
+	assert(taskCreated == pdPASS);
 }
 
 //callback od GPIO

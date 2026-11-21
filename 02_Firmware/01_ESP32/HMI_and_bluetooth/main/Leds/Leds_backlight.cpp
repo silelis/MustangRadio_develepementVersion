@@ -16,7 +16,8 @@
 LEDS_BACKLIGHT::LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel)
 {
 	
-	configASSERT(this->ParserDataToLedsDataQueue = new i2cQueue4DynamicData(4));
+	this->ParserDataToLedsDataQueue = new i2cQueue4DynamicData(4);
+	configASSERT(this->ParserDataToLedsDataQueue);
 	//ESP_LOGI(TAG, "Leds and background light configuration");
 	printf("%s: Leds and background light configuration\n", TAG);
 	/* LED strip initialization with the GPIO and pixels number*/
@@ -24,7 +25,8 @@ LEDS_BACKLIGHT::LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t l
 	
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	this->handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
-	configASSERT(this->handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary()); //tworzy mutex dla podświetlenia
+	this->handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary();	//tworzy mutex dla podświetlenia
+	configASSERT(this->handlerMutex_ledDisplay_Backlight);
 	//xSemaphoreGive(this->handlerMutex_ledDisplay_Backlight);
 	this->SemaphoreGive();
 	

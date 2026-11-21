@@ -30,10 +30,9 @@ void myList::addAtBeginning(
 	if (!canAddItem())
 		return;
 	myList *newNode; // = new myList(nodeName, execFunctionArraySize);
-	assert(
-			newNode =
-					new (std::nothrow) myList(pListHeader,
-							nodeName));
+	newNode = new (std::nothrow) myList(pListHeader,
+			nodeName);
+	assert(newNode);
 	newNode->nextListNode = this->pListHeader->head;
 	this->pListHeader->head = newNode;
 	this->pListHeader->currentListNode = newNode; // Ustawienie current na nowo dodany element
@@ -47,10 +46,9 @@ void myList::addAtEnd(
 		return;
 
 	myList *newNode; // = new myList(nodeName, execFunctionArraySize);
-	assert(
-			newNode =
-					new myList(pListHeader,
-							nodeName));
+	newNode = new myList(pListHeader,
+			nodeName);
+	assert(newNode);
 	if (!this->pListHeader->head) {
 		this->pListHeader->head = newNode;
 	} else {

@@ -51,14 +51,15 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1, GPIO_TypeDef *sclGpioPort,
 	this->pI2C_MasterTransmitToSlave_DataQueue = nullptr;
 	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = nullptr;
 
-	configASSERT(
-			this->pI2C_MasterReceiveFromSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(
-			this->pI2C_MasterTransmitToSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
-	configASSERT(
-			this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE));
+	this->pI2C_MasterReceiveFromSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE);
+	configASSERT(this->pI2C_MasterReceiveFromSlave_DataQueue);
+	this->pI2C_MasterTransmitToSlave_DataQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE);
+	configASSERT(this->pI2C_MasterTransmitToSlave_DataQueue);
+	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE);
+	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue);
 
-	assert(this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary());
+	this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary();
+	assert(this->handle_i2cBinarySemaphore);
 	this->i2cMasterSemaphoreGive();
 //	this->i2cMasterSemaphoreTake();
 

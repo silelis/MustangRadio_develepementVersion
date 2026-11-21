@@ -28,8 +28,8 @@ esp32_i2cComunicationDriver::esp32_i2cComunicationDriver(
 		i2cMaster *pointer_to_i2cMasterObject) {
 	// TODO Auto-generated constructor stub
 	this->pi2cMaster = pointer_to_i2cMasterObject;
-	configASSERT(
-			this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0));
+	this->esp32IntrrruptRequest_CountingSemaphore = xSemaphoreCreateCounting(this->esp32InterruptRequestCountingSemaphore_MAX, 0);
+	configASSERT(this->esp32IntrrruptRequest_CountingSemaphore);
 	this->esp32DynamicmMemeoryAlocationError =
 			this->esp32InrerruptRequest_CountingSemaphoreOverflowError =
 			pdFALSE;

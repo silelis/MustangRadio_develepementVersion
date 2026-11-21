@@ -11,7 +11,8 @@
 StepperOptoPowerOFF::StepperOptoPowerOFF(MCP23008* pointer_MCP23008)
 	//: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
 {
-	configASSERT(this->ParserDataToStepperMotorDataQueue = new i2cQueue4DynamicData(4));
+	this->ParserDataToStepperMotorDataQueue = new i2cQueue4DynamicData(4);
+	configASSERT(this->ParserDataToStepperMotorDataQueue);
 	
 	pMCP23008 = pointer_MCP23008; 
 	this->pMCP23008->writeIODIR(SENSOR_EQU_SIDE_MASK | SENSOR_VOL_SIDE_MASK | MOTOR_FAULT_MASK);

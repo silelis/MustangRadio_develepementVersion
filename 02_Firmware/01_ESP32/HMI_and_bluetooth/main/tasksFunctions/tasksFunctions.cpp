@@ -34,7 +34,8 @@ void taskFunctionsStaticHandlersInit(void)
 	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
 	printf("I2C slave bus init\n");
 	p_i2cSlave = nullptr;
-	assert(p_i2cSlave = 	new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN));
+	p_i2cSlave = new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN);
+	assert(p_i2cSlave);
 	
 	
 	//assert(p_i2cSlave);
@@ -55,7 +56,8 @@ void taskFunctionsStaticHandlersInit(void)
 /*
 	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
-	configASSERT(handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary()); //tworzy mutex dla podświetlenia
+	handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary();	//tworzy mutex dla podświetlenia
+	configASSERT(handlerMutex_ledDisplay_Backlight);
 	xSemaphoreGive(handlerMutex_ledDisplay_Backlight);	
 */
 	
@@ -65,12 +67,14 @@ void taskFunctionsStaticHandlersInit(void)
 	
 	//tworzy obiekt obsługujący NVS flash radio
 	printf("NVS storage init\n");
-	assert(pSTORAGE = new NVS(NVS_RADIO_CONFIG_NAMESPACE));
+	pSTORAGE = new NVS(NVS_RADIO_CONFIG_NAMESPACE);
+	assert(pSTORAGE);
 	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
 	printf("Backlight and display leds init\n");
-	assert(pLedDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812));
+	pLedDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812);
+	assert(pLedDisplay);
 	pLedDisplay->ledStripClearAll();
 	
 	//tworzy obiekt obsługujący szyne i2c master komunikującą się z  MCP23008
@@ -93,7 +97,8 @@ void taskFunctionsStaticHandlersInit(void)
 
 	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
 	printf("Stepper motor and powerOFF gpio init\n");
-	assert(pMotor = new StepperOptoPowerOFF(p_MCP23008));
+	pMotor = new StepperOptoPowerOFF(p_MCP23008);
+	assert(pMotor);
 
 
 }
@@ -649,7 +654,8 @@ void i2cReceivedDataParser(void *nothing)
 			}
 			else
 			{
-				assert(p_i2cSlave->i2cMasterCrcSumCounterErrorIncrement());	//tutaj powinien być reset radio jak będzie za dużo błędow
+				BaseType_t crcErrorsBelowLimit = p_i2cSlave->i2cMasterCrcSumCounterErrorIncrement();	//tutaj powinien być reset radio jak będzie za dużo błędow
+				assert(crcErrorsBelowLimit == pdTRUE);
 				p_i2cSlave->i2cSlaveReceiveDataToDataParserQueue->QueueDeleteDataFromPointer(parsingData);	
 			}
 			

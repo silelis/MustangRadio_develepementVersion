@@ -30,7 +30,8 @@ i2cEngin_master::i2cEngin_master(i2c_port_num_t i2c_port, gpio_num_t sda_io_num,
 
 
 	phandler_i2c_bus = &handler_i2c_bus_master;
-	assert(!i2c_new_master_bus(&i2c_bus_config_master, phandler_i2c_bus));
+	esp_err_t err = i2c_new_master_bus(&i2c_bus_config_master, phandler_i2c_bus);
+	assert(err == ESP_OK);
 	this->devicesOnBus = 0;
 		
 	vTaskDelay(pdMS_TO_TICKS(50));

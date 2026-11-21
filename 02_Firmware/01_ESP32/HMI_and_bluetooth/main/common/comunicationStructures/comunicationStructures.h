@@ -84,12 +84,20 @@ typedef enum : uint8_t {	//: uint8_t - jak wyżej (rozmiar 1 B na STM32 i ESP32)
     Rewind,
 }bt_AudioCommand;
 
+typedef enum : uint8_t {	//: uint8_t - jak wyżej (rozmiar 1 B na STM32 i ESP32); stan pinów I2S ESP32 na wspólnej szynie DAC
+    highZenabled,			//piny I2S w high-Z - szyna wolna, STM32 może przełączyć DAC na inne urządzenie
+    i2sNotConfigured,
+    i2sConfigured,
+    highZdisabled
+}i2sPinStates;
+static_assert(sizeof(i2sPinStates) == 1, "i2sPinStates musi miec 1 B - pole ramki I2C STM32 <-> ESP32");
+
 struct btAudioStruct{
 	uint8_t btAudioSubcommand;
 	union{
 		bool btAudioDeviceOn_Off;									//0- bt and i2s device "off", 1 - bt and i2s device "on"
 		bt_AudioCommand audioSinkCommand;								//sterowanie komendami bt (play, pause, ff, rew, etc)
-//		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
+		i2sPinStates highZstateState;								//przekazywanie informacji o stanie pinów i2s dopiero ak jest highZenablet to można przejśc do kolejnego urządzenia
 		bt_onConnCallbackStats onConnCallbackStates;
 //		bt_onAudioStateCallbackStates onAudioStateCallbackStates;
 		bt_onAVRCPlayStatusCallback onAVRCPlayStatusCallbackStates;

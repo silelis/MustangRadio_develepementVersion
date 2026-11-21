@@ -44,8 +44,11 @@ static void stepperMotorMove(void* nothing)
 
 void stepperMotorDataParser(void *TaskParameters)
 {
-	configASSERT(xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1));
-	configASSERT(xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1));
+	BaseType_t taskCreated;	//jak w app_main
+	taskCreated = xTaskCreatePinnedToCore(stepperMotorCalibration, "StepMotCalib", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorCalibration, TASK_TO_CORE1);
+	configASSERT(taskCreated == pdPASS);
+	taskCreated = xTaskCreatePinnedToCore(stepperMotorMove, "StepMotMov", 26 * 128, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotorMove, TASK_TO_CORE1);
+	configASSERT(taskCreated == pdPASS);
 
 	i2cFrame_transmitQueue tempBuffer;
 	i2cFrame_stepper loclaStepperMotorFrame;

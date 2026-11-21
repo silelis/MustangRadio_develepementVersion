@@ -33,7 +33,8 @@ extern myPrintfTask *pPrintf;
 radioMenu::radioMenu():bindKeyboardToFunction(){
 //	keyboardToFunction(radioStruct.control.ExecutableButtonsArray) {
 	queueRadioMenuKbrd = nullptr;
-	configASSERT(queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion)));
+	queueRadioMenuKbrd = xQueueCreate(20, sizeof(keyboardUnion));
+	configASSERT(queueRadioMenuKbrd);
 
 	this->peripheryDevices = nullptr;
 	this->audioDevices = nullptr;
@@ -42,12 +43,12 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 
 	this->peripheryMenu_TimeoutCounter = 0;
 	this->peripheryMenu_TimeoutCounterSemaphore = NULL;
-	configASSERT(
-			this->peripheryMenu_TimeoutCounterSemaphore = xSemaphoreCreateBinary());
+	this->peripheryMenu_TimeoutCounterSemaphore = xSemaphoreCreateBinary();
+	configASSERT(this->peripheryMenu_TimeoutCounterSemaphore);
 	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
 
-	configASSERT(
-			this->peripheryMenu_TaskSuspendAllowedSemaphore = xSemaphoreCreateBinary());
+	this->peripheryMenu_TaskSuspendAllowedSemaphore = xSemaphoreCreateBinary();
+	configASSERT(this->peripheryMenu_TaskSuspendAllowedSemaphore);
 	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
 
 	this->peripheryMenu_taskHandle = NULL;
@@ -57,15 +58,15 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 	this->createDeviceMenuList_mainMenu();
 
 	this->setCurrentDeviceMenu_audio();
-	this->setCurrentAudioNodeIndex(1, true);	//power on: FM (indeks 1), bez DestroyInit - żadne urządzenie nie było jeszcze zainicjalizowane; docelowo zapamiętany indeks; peryferia NIE są inicjowane przy starcie
+	this->setCurrentAudioNodeIndex(4, true);	//power on: FM (indeks 1), bez DestroyInit - żadne urządzenie nie było jeszcze zainicjalizowane; docelowo zapamiętany indeks; peryferia NIE są inicjowane przy starcie
 }
 
 void radioMenu::createDeviceMenuList_audio(void) {
 
-	assert(
-			this->audioDevices = new (std::nothrow) myList(
-					&(this->ListHeader_audioDevices),
-					"FM"));
+	this->audioDevices = new (std::nothrow) myList(
+			&(this->ListHeader_audioDevices),
+			"FM");
+	assert(this->audioDevices);
 	this->audioDevices->bindCurrent(radioMenuAudioFm_Init, radioMenuAudioFm_DestroyInit, radioMenuAudioFm_ReturnInit);	//bindCurrent: zawsze do węzła dodanego przed chwilą (current), nie do głowy listy
 	this->audioDevices->addAtEnd("DAB+");
 	this->audioDevices->bindCurrent(radioMenuAudioDab_Init, radioMenuAudioDab_DestroyInit, radioMenuAudioDab_ReturnInit);
@@ -83,10 +84,10 @@ void radioMenu::createDeviceMenuList_audio(void) {
 
 void radioMenu::createDeviceMenuList_periphery(void) {
 
-	assert(
-			this->peripheryDevices = new (std::nothrow) myList(
-					&(this->ListHeader_peripheryDevices),
-					"Antena"));
+	this->peripheryDevices = new (std::nothrow) myList(
+			&(this->ListHeader_peripheryDevices),
+			"Antena");
+	assert(this->peripheryDevices);
 	this->peripheryDevices->bindCurrent(radioMenuPeripheryAntena_Init, radioMenuPeripheryAntena_DestroyInit, nullptr);	//peryferia: ReturnInit = nullptr (do peryferium nigdy się nie wraca)
 	this->peripheryDevices->addAtEnd(
 			"Treble");
@@ -123,10 +124,10 @@ void radioMenu::createDeviceMenuList_periphery(void) {
 
 void radioMenu::createDeviceMenuList_mainMenu(void) {
 
-	assert(
-			this->radioMainMenu = new (std::nothrow) myList(
-					&(this->ListHeader_mainMenu),
-					"MainMenu: "));
+	this->radioMainMenu = new (std::nothrow) myList(
+			&(this->ListHeader_mainMenu),
+			"MainMenu: ");
+	assert(this->radioMainMenu);
 
 	this->appendButtonArrayWithFunctionPointer( { POWER_ON_OFF_SHORT_PRESS },
 			std::bind(&radioMenu::menuFunction_volButShortPressed, this));

@@ -90,16 +90,21 @@ extern "C" void app_main(void)
 	//funkcja inicjalizująca handlery (static, widoczne tylkow headerze) funkcji tasków 
 	taskFunctionsStaticHandlersInit();
 	
+	BaseType_t taskCreated;	//wynik xTaskCreate - operacja zawsze poza makrem asercji, makro tylko sprawdza wynik
 	//configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 8, NULL, tskIDLE_PRIORITY+1, &handlerTask_i2cSlaveTransmit));
-	configASSERT(xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 32, NULL, tskIDLE_PRIORITY + 3, &handlerTask_i2cSlaveReceive));	// +3: najwyższy z tasków I2C - po ISR od razu ponowne uzbrojenie odbioru (i2c_slave_receive), skraca okno z KONTEKST 3.5 do µs
-	configASSERT(xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveTransmit));
+	taskCreated = xTaskCreate(i2cSlaveReceive, "I2C slave rx", 128 * 32, NULL, tskIDLE_PRIORITY + 3, &handlerTask_i2cSlaveReceive);	// +3: najwyższy z tasków I2C - po ISR od razu ponowne uzbrojenie odbioru (i2c_slave_receive), skraca okno z KONTEKST 3.5 do µs
+	configASSERT(taskCreated == pdPASS);
+	taskCreated = xTaskCreate(i2cSlaveTransmit, "I2C slave tx", 128 * 32, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cSlaveTransmit);
+	configASSERT(taskCreated == pdPASS);
 	
 	
 	//oddaje mutex, zasób jest dostępny dla pierwszego tasku, który się po niego zgłosi
 	printf("%s Display leds task starting\n", main_TAG);
-	configASSERT(xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay)); //tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	taskCreated = xTaskCreate(humanMahineDisplayLeds, "Leds control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_ledDisplay);	//tworzy task dla diód sygnalizacyjnych (korzystają z WS2812)
+	configASSERT(taskCreated == pdPASS);
 	printf("%s Backlight leds task starting\n", main_TAG);
-	configASSERT(xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay)); //tworzy task dla dod podświetlenia (korzystają z WS2812)
+	taskCreated = xTaskCreate(humanMahineBacklightLeds, "Backlight control", 128 * 8, NULL, tskIDLE_PRIORITY, &handlerTask_backlightDisplay);	//tworzy task dla dod podświetlenia (korzystają z WS2812)
+	configASSERT(taskCreated == pdPASS);
 	
 	//konfiguruje kolejkę, która będzie zawierać elementy odpowiedzi z debounceAndGpiosCheckCallback
 	printf("%s Buttons and encoders (aka keyboard) init\n", main_TAG);
@@ -109,16 +114,20 @@ extern "C" void app_main(void)
 	
 	//tworzy obiekt obsługujący klawiaturę
 	KEYBOARD *klawiatura = NULL;
-	configASSERT(klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay));
+	klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay);
+	configASSERT(klawiatura);
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s Keyboard queue pareser task starting\n", main_TAG);
 
-	configASSERT(xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard, tskIDLE_PRIORITY+1, &handlerTask_keyboardQueueParametersParser)); //tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	taskCreated = xTaskCreate(keyboardQueueParametersParser, "Keyboard Param", 128 * 20, handlerQueue_MainKeyboard, tskIDLE_PRIORITY+1, &handlerTask_keyboardQueueParametersParser);	//tworzy taska, który parsuje, sprawdza dane które przerwania od klawiatury wipsały w kolejkę: handlerQueue_MainKeyboard, w przerwaniach nie można tego zrobić, bo zajęło by to za dużo czasu
+	configASSERT(taskCreated == pdPASS);
 	
-	assert(xTaskCreate(stepperMotorDataParser, "Stepper morot", 128 * 20, NULL, tskIDLE_PRIORITY, &handlerTask_stepperMotorDataPasrser));
+	taskCreated = xTaskCreate(stepperMotorDataParser, "Stepper morot", 128 * 20, NULL, tskIDLE_PRIORITY, &handlerTask_stepperMotorDataPasrser);
+	assert(taskCreated == pdPASS);
 	//configASSERT(xTaskCreatePinnedToCore(stepperMotorDataParser, "StepMotParser", 3048, NULL, tskIDLE_PRIORITY + 1, &handlerTask_stepperMotor, TASK_TO_CORE1));
 		
-	configASSERT(xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cReceivedDataParser)); //tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
+	taskCreated = xTaskCreate(i2cReceivedDataParser, "I2C parser", 128 * 20, NULL, tskIDLE_PRIORITY + 2, &handlerTask_i2cReceivedDataParser);	//tworzy taska, który parsuje, sprawdza dane otrzymane z i2c
+	configASSERT(taskCreated == pdPASS);
 	
 
 
@@ -128,17 +137,15 @@ extern "C" void app_main(void)
 
 
 
-/*
+
 	bt_audio_sink testBT(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);
 	testBT.btAudioDeviceOn();
 
-*/
-
 
 
 
 	
-
+//TODO: ten stosu susunąć
 #if USED_BLUETOOTH_STACK == USE_BTSTACK
 	btstack_init();
 	btstack_main(0, NULL);
