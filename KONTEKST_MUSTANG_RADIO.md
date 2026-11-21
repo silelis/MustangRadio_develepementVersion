@@ -66,7 +66,11 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - Log ramek I2C po stronie ESP32 i kolejność high-Z → OFF.
 
 ### 4.2 ESP32 – task / obsługa komend od STM32 (połączenie, granie)
-- Parser `i2cReceivedDataParser` (`tasksFunctions.cpp` ~633) ma `case` dla KEYBOARD/NVS/LEDS/STEPPER – **brak `I2C_COMMAND_GROUP_BTAUDIO`**. Dodać obsługę:
+- **Brakuje całej ścieżki odbioru ramek BT na ESP32** (parser → kolejka → task BT):
+  - parser `i2cReceivedDataParser` (`tasksFunctions.cpp` ~633) ma `case` dla KEYBOARD/NVS/LEDS/STEPPER – **brak `I2C_COMMAND_GROUP_BTAUDIO`**;
+  - klasa `bt_audio_sink` **nie ma kolejki** na ramki od parsera ani taska, który by je obsługiwał.
+  - Wzorzec do powielenia (już działa): LED – `Leds_backlight.{h,cpp}`: `i2cQueue4DynamicData* ParserDataToLedsDataQueue` + `QueueSendDataToLedTask()` / `QueueReceive()` / `QueueDeleteDataFromPointer()`, w parserze `case I2C_COMMAND_GROUP_LEDS` → `pLedDisplay->QueueSendDataToLedTask(&parsingData)` + `vTaskResume(handlerTask_ledDisplay)`; analogicznie silnik – `StepperOptoPowerOFF` (`ParserDataToStepperMotorDataQueue`) + task `stepperMotorDataParser`.
+- Dodać obsługę:
   - On / Off BT (`btAudioDeviceOn/Off`),
   - komendy odtwarzania (`audioSinkCommand`: Play/Stop/Pause/Next/Previous/FF/Rew → metody `btAudio*`, dziś `protected`),
   - **żądania stanu** (STM32 pyta → `sendToMaster*()`); do zaprojektowania subcommand(y) „request”.
@@ -76,7 +80,12 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - Opcjonalnie: wysyłanie pozostałych pól (`audioState`, metadane, głośność, pozycja) – nowe subcommandy, tylko jeśli STM32 ich potrzebuje.
 
 ### 4.3 STM32 – task / obsługa komunikatów BT z ESP32
-- Parser `esp32_i2cComunicationDriver::parseReceivedData()` (`comunication_esp32i2cComunicationDriver.cpp` ~370): `case I2C_COMMAND_GROUP_BTAUDIO: break;` – **ramki BT są IGNOROWANE**. Napisać obsługę wszystkich subcommandów i miejsce przechowywania stanu BT na STM32.
+- **Brakuje całej ścieżki odbioru ramek BT na STM32** (parser → kolejka → klasa/task BT):
+  - parser `esp32_i2cComunicationDriver::parseReceivedData()` (`comunication_esp32i2cComunicationDriver.cpp` ~370): `case I2C_COMMAND_GROUP_BTAUDIO: break;` – **ramki BT są IGNOROWANE** (parser ich nie przekazuje dalej);
+  - **nie ma klasy obsługującej BT** po stronie STM32 (odpowiednik `bt_audio_sink`: stan BT, wysyłanie komend do ESP32 – On/Off, Play/Next…, żądania stanu);
+  - **nie ma kolejki** na ramki BT od parsera ani taska, który by je obsługiwał.
+  - Wzorzec na STM32: klawiatura – parser `case I2C_COMMAND_GROUP_KEYBOARD` → `parserFunction::keyboardToRadioMeny()` → `pRadioMenu->queueRadioMenuKbrdSend()`; wysyłka do ESP32 – `ledsController` / `StepperOptoPowerOFF` przez `pi2cMaster->getTransmitQueue()` (`tasksFunctions.cpp` ~203).
+- Napisać obsługę wszystkich subcommandów i miejsce przechowywania stanu BT na STM32.
 - **Reakcja na rozłączenie telefonu** (np. telefon się wyłączy) – po to ESP32 wysyła stan połączenia.
 - **Odpytywanie:** gdy brak połączenia, STM32 co jakiś czas pyta ESP32 o stan BT (mechanizm z 4.2).
 - STM32 wie z ramek, że BT nie jest połączony i trzeba go połączyć.
@@ -98,7 +107,6 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - `menu_myList.cpp:17`: `assert(this)` – nic nie sprawdza.
 - `bt_audio.cpp`: brak wcięcia w `btAudioNext()`; literówki w nazwach typu `Transision`, `Intrrrupt` – tylko jeśli użytkownik zechce.
 - Pliki `bt_audio — kopia.cpp/.h` w `main/bt_audio/` – do decyzji użytkownika.
-- `HMI_and_bluetooth Configuration.launch` (działająca konfiguracja debug z gdb 12.1) jest **usunięty z drzewa roboczego** (git status `D`) – sprawdzić, czy celowo.
 
 ---
 
