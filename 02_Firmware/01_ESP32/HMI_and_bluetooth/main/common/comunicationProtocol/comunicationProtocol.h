@@ -114,11 +114,12 @@ typedef struct {
 	i2cFrame_commonHeader i2cframeCommandHeader;
 	struct btAudioStruct btAudioData;
 } i2cFrame_btAudio;
-#define BT_SUBCOMMAND_deviceOnOff				0x00			
-#define BT_SUBCOMMAND_onConnCallback			0x01
-//#define BT_SUBCOMMAND_onAudioStateCallback		0x02
-#define BT_SUBCOMMAND_onAVRCPlayStatusCallback	0x03
-#define BT_SUBCOMMAND_I2S_PINS_STATE			0x04
+//informacje o STANIE BT wysyłane przez ESP32 do STM32 (_STATE_)
+#define BT_SUBCOMMAND_STATE_DEVICE_ON_OFF		0x00	//btAudioDeviceOn_Off
+#define BT_SUBCOMMAND_STATE_CONNECTION			0x01	//onConnCallbackStates
+#define BT_SUBCOMMAND_STATE_AVRC_PLAY_STATUS	0x02	//onAVRCPlayStatusCallbackStates
+#define BT_SUBCOMMAND_STATE_I2S_PINS			0x03	//highZstateState
+//#define BT_SUBCOMMAND_STATE_AUDIO				0x04	//onAudioStateCallbackStates - nieużywane
 
 #define BT_AUDIO_DEVICE_ON	true
 #define BT_AUDIO_DEVICE_OFF	false

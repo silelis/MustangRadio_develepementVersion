@@ -63,10 +63,10 @@ public:
     void btAudioDeviceOn(void);
     void btAudioDeviceOff(void);
     //wysyłka danych z btConnectionState do STM32 - wołane z callbacków, docelowo także na żądanie STM32
-    void sendToMasterDeviceOnOffState(void);		//BT_SUBCOMMAND_deviceOnOff z btConnectionState.btAudioDeviceOn_Off
-    void sendToMasterConnectionState(void);		//BT_SUBCOMMAND_onConnCallback z btConnectionState.onConnCallbackStates
-    void sendToMasterAVRCPlayStatus(void);		//BT_SUBCOMMAND_onAVRCPlayStatusCallback z btConnectionState.onAVRCPlayStatusCallbackStates
-    void sendToMasterI2sPinsState(void);		//BT_SUBCOMMAND_I2S_PINS_STATE z btConnectionState.highZstateState
+    void sendToMasterDeviceOnOffState(void);		//BT_SUBCOMMAND_STATE_DEVICE_ON_OFF z btConnectionState.btAudioDeviceOn_Off
+    void sendToMasterConnectionState(void);		//BT_SUBCOMMAND_STATE_CONNECTION z btConnectionState.onConnCallbackStates
+    void sendToMasterAVRCPlayStatus(void);		//BT_SUBCOMMAND_STATE_AVRC_PLAY_STATUS z btConnectionState.onAVRCPlayStatusCallbackStates
+    void sendToMasterI2sPinsState(void);		//BT_SUBCOMMAND_STATE_I2S_PINS z btConnectionState.highZstateState
 
 private:
     static i2sPinStates i2sState;	//i2sPinStates - wspólny enum z comunicationStructures.h (wysyłany do STM32)

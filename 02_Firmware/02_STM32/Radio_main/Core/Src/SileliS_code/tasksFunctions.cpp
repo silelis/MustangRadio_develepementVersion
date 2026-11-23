@@ -8,6 +8,7 @@
 //#include "tasksFunctions.h"
 #include <SileliS_code/device_ledsController.h>
 #include <SileliS_code/device_StepperOptoPowerOFF.h>
+#include <SileliS_code/device_btAudio.h>
 #include <SileliS_code/menu_radioMegaStruct.h>
 #include <SileliS_code/menu_radioMenu.h>
 #include "SileliS_code/tasksFunctions.h"
@@ -30,6 +31,7 @@ radioMenu *pRadioMenu = nullptr;
 myPrintfTask *pPrintf = nullptr; //pointer do taska obsługuącego pisanie komunikatow na konsolę
 ledsController *pHmiLeds = nullptr;
 StepperOptoPowerOFF *pStepperMotor = nullptr;
+btAudioDevice *pBtAudio = nullptr;	//obiekt BT audio (stan BT z ESP32) - używany w parserFunction::btAudioToBtAudioDevice() (extern)
 
 
 //task parsujący otrzymane z i2c slave dane (przełącza parsowanie po adresie slave z jakiego dane zostały otrzymane
@@ -187,6 +189,8 @@ static void initTaskFunctions(void) {
 	//pi2cMaster tworzony wcześniej - w startUpTask_initTaskFunctions() (potrzebny do pingu ESP32 przed startem)
 	pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster);
 	assert(pESP32);
+	pBtAudio = new (std::nothrow) btAudioDevice(&radioStruct.audioDevices.bluetooth);	//PRZED taskiem parsera (i2cMasterParseReceivedData) - ramki BT przetwarzane w locie, parser nie może trafić na nullptr
+	assert(pBtAudio);
 
 	BaseType_t taskCreated;	//wynik xTaskCreate - operacja zawsze poza makrem asercji, makro tylko sprawdza wynik
 	//tworzenie taska czytającego dane po I2C ze slave

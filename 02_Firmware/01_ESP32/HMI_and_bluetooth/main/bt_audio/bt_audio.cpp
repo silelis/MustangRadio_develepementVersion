@@ -33,7 +33,7 @@ BaseType_t bt_audio_sink::PrepareBtDataAndSent_to_i2cQueueSend(i2cFrame_btAudio*
 void bt_audio_sink::sendToMasterI2sPinsState(i2sPinStates i2s_pins_state){
     bt_audio_sink::i2sState=i2s_pins_state;
     i2cFrame_btAudio temp_btAudioFrame;
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_I2S_PINS_STATE;
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_STATE_I2S_PINS;
     temp_btAudioFrame.btAudioData.btAudioUnion.highZstateState = i2s_pins_state;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     assert(PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame));
@@ -42,7 +42,7 @@ void bt_audio_sink::sendToMasterI2sPinsState(i2sPinStates i2s_pins_state){
 
 void bt_audio_sink::sendToMasterDeviceOnOffState(void){
     i2cFrame_btAudio temp_btAudioFrame = {};	//jak w sendToMasterConnectionState()
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_deviceOnOff;
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_STATE_DEVICE_ON_OFF;
     temp_btAudioFrame.btAudioData.btAudioUnion.btAudioDeviceOn_Off = this->btConnectionState.btAudioDeviceOn_Off;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     BaseType_t frameQueued = PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame);
@@ -51,7 +51,7 @@ void bt_audio_sink::sendToMasterDeviceOnOffState(void){
 
 void bt_audio_sink::sendToMasterConnectionState(void){
     i2cFrame_btAudio temp_btAudioFrame = {};	//= {}: wyzerowana ramka - brak przypadkowych bajtów (padding, reszta unii) w CRC i w danych dla STM32
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_onConnCallback;
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_STATE_CONNECTION;
     temp_btAudioFrame.btAudioData.btAudioUnion.onConnCallbackStates = this->btConnectionState.onConnCallbackStates;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     BaseType_t frameQueued = PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame);
@@ -60,7 +60,7 @@ void bt_audio_sink::sendToMasterConnectionState(void){
 
 void bt_audio_sink::sendToMasterAVRCPlayStatus(void){
     i2cFrame_btAudio temp_btAudioFrame = {};	//jak wyżej
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_onAVRCPlayStatusCallback;
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_STATE_AVRC_PLAY_STATUS;
     temp_btAudioFrame.btAudioData.btAudioUnion.onAVRCPlayStatusCallbackStates = this->btConnectionState.onAVRCPlayStatusCallbackStates;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     BaseType_t frameQueued = PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame);
@@ -69,7 +69,7 @@ void bt_audio_sink::sendToMasterAVRCPlayStatus(void){
 
 void bt_audio_sink::sendToMasterI2sPinsState(void){
     i2cFrame_btAudio temp_btAudioFrame = {};	//jak w sendToMasterConnectionState()
-    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_I2S_PINS_STATE;
+    temp_btAudioFrame.btAudioData.btAudioSubcommand=BT_SUBCOMMAND_STATE_I2S_PINS;
     temp_btAudioFrame.btAudioData.btAudioUnion.highZstateState = this->btConnectionState.highZstateState;
     seti2cFrame_btAudioHeaderData(&temp_btAudioFrame);
     BaseType_t frameQueued = PrepareBtDataAndSent_to_i2cQueueSend(&temp_btAudioFrame);

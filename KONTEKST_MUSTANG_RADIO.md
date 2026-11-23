@@ -90,6 +90,7 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - **Odpytywanie:** gdy brak połączenia, STM32 co jakiś czas pyta ESP32 o stan BT (mechanizm z 4.2).
 - STM32 wie z ramek, że BT nie jest połączony i trzeba go połączyć.
 - Przełączanie źródła audio dopiero po `highZenabled` / OFF od ESP32 (wspólna szyna I2S do DAC).
+- **KOLEJNOŚĆ (decyzja użytkownika 2026-11-23):** (1) obsługa informacji PRZYCHODZĄCYCH z ESP32 → kompilacja → sprawdzenie działania na sprzęcie, (2) **zmiana tworzenia OBIEKTÓW KLAS (np. `pESP32`, `pi2cMaster`, `pRadioMenu`, `pHmiLeds`, `pStepperMotor`, `pBtAudio`, `pPrintf`; ESP32: `pMotor`, `pLedDisplay` itd.) z `new (std::nothrow)` na statyczne – w STM32 i ESP32; dynamiczne bufory danych (`pData` ramek I2C, printf – `new char[]` / `delete[]`) ZOSTAJĄ dynamiczne** (statyczny obiekt lokalny w funkcji inicjalizującej, np. `static btAudioDevice btAudio(...); pBtAudio = &btAudio;` – pamięć w `.bss` widoczna przy linkowaniu, konstruktor w tasku po starcie schedulera; globalne wskaźniki/`extern` zostają jako wskaźniki na obiekty statyczne; NIE zwykłe obiekty globalne – konstruktor przed `main()`, nieokreślona kolejność między plikami), (3) dopiero potem obsługa informacji WYCHODZĄCYCH (STM32 → ESP32).
 
 ### 4.4 STM32 – menu Bluetooth: Init / ReturnInit / DestroyInit + bindowanie klawiszy
 - Węzeł „Bluetooth” w `menu_radioMenu.cpp:75-76` → `radioMenuAudioBluetooth_Init / _ReturnInit / _DestroyInit` w `menu_radioMenu_audio_bluetooth.cpp` (szkielet, 60 linii; „bindowanie klawiatury” w ReturnInit ~37).

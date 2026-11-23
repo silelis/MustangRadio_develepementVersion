@@ -45,6 +45,13 @@ struct FM_AM_parameters {
 	uint32_t currentFreq;
 };
 
+struct btAudioState {	//stan BT odebrany z ESP32 (ramki I2C_COMMAND_GROUP_BTAUDIO); pisze WYŁĄCZNIE btAudioDevice (task BT), pozostałe moduły tylko czytają przez gettery klasy
+	bool btAudioDeviceOn_Off;									//BT_SUBCOMMAND_STATE_DEVICE_ON_OFF -BT_AUDIO_DEVICE_ON / BT_AUDIO_DEVICE_OFF
+	i2sPinStates highZstateState;								//BT_SUBCOMMAND_STATE_I2S_PINS -przełączenie DAC na inne źródło dopiero przy highZenabled
+	bt_onConnCallbackStats onConnCallbackStates;				//BT_SUBCOMMAND_STATE_CONNECTION -stan połączenia z telefonem
+	bt_onAVRCPlayStatusCallback onAVRCPlayStatusCallbackStates;	//BT_SUBCOMMAND_STATE_AVRC_PLAY_STATUS -stan odtwarzania
+};
+
 struct radioMegaStruct {
 //	_execute_t ExecutableButtonsArray[EXECUTALBE_BUTTONS_ARRAY_SIZE];
 
@@ -91,6 +98,7 @@ struct radioMegaStruct {
 			} antena;
 		} radioTuner;
 
+		btAudioState bluetooth;	//wskaźnik do tego pola dostaje btAudioDevice (konstruktor) - tasksFunctions.cpp
 	} audioDevices;
 
 	struct {

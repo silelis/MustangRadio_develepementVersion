@@ -74,6 +74,7 @@ private:
 
 namespace parserFunction {
 void keyboardToRadioMeny(i2cFrame_keyboardFrame *kbrdFrame);
+void btAudioToBtAudioDevice(i2cFrame_btAudio *btAudioFrame);
 }
 
 #endif /* SRC_ESP32I2CCOMUNICATIONDRIVER_H_ */

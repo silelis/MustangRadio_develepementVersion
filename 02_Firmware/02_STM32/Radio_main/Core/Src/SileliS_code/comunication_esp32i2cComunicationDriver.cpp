@@ -368,7 +368,8 @@ void esp32_i2cComunicationDriver::parseReceivedData(
 					(i2cFrame_keyboardFrame*) I2CReceivedFrame.pData);
 			break;
 		case I2C_COMMAND_GROUP_BTAUDIO:
-
+			parserFunction::btAudioToBtAudioDevice(
+					(i2cFrame_btAudio*) I2CReceivedFrame.pData);	//przetwarzanie w locie (tylko zapis stanu i log); pData zwalnia task parsera po powrocie
 			break;
 		default:
 			//printf("%sunknown commandGroup value:0x%x\r\n",this->TAG, tempI2cFrameCommandHeader.commandGroup);
@@ -384,11 +385,17 @@ enum esp32_i2cComunicationDriver::i2cReceiveStates esp32_i2cComunicationDriver::
 }
 
 #include <SileliS_code/menu_radioMenu.h>
+#include <SileliS_code/device_btAudio.h>
 
 extern radioMenu *pRadioMenu;		//from tasksFunctions.cpp
+extern btAudioDevice *pBtAudio;		//from tasksFunctions.cpp
 namespace parserFunction {
 void keyboardToRadioMeny(i2cFrame_keyboardFrame *kbrdFrame) {
 	pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
+}
+
+void btAudioToBtAudioDevice(i2cFrame_btAudio *btAudioFrame) {
+	pBtAudio->processReceivedData(btAudioFrame);
 }
 
 }
