@@ -41,6 +41,7 @@ void radioMenuAudioUsb_ReturnInit(void *context) {
 	//wyczyszczenie LED i ustawienie LED
 	pHmiLeds->setLedAllCleaned();
 	pHmiLeds->setLedSourceWithColor(COLOR_RED_GREEN);
+	//ustawienie diody Media In
 	if (pHmiLeds->sendDataToI2cTransmitQueueLeds() != pdTRUE) {	//kolejka TX do ESP32 pełna > 700 ms - diody bez zmiany, radio działa dalej
 		pPrintf->feedPrintf("USB ReturnInit: LED send error (I2C TX queue full)");
 	}
