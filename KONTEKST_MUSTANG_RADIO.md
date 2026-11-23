@@ -2,7 +2,7 @@
 
 > **Dla Claude:** przeczytaj cały plik, zanim cokolwiek zrobisz. To przypomnienie: co jest zrobione, co do zrobienia, jakie są zasady pracy.
 > Numery linii są orientacyjne – przed każdą zmianą przeczytaj aktualny plik.
-> Stan na: **2026-11-22**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
+> Stan na: **2026-11-23**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
 > `git show 887b0444:KONTEKST_I2C_ESP32_STM32.md`
 
 ---
@@ -18,7 +18,10 @@
 7. Asercje: **operacja zawsze poza makrem, w `assert`/`configASSERT` tylko sprawdzenie wyniku** (wzorzec w obu projektach, patrz 3.3).
 8. Spójność STM32 ↔ ESP32: enumy w ramkach I2C jako `typedef enum : uint8_t` we wspólnym pliku.
 9. Podczas debugowania na żywo pytaj zwykłym tekstem (nie narzędziem wielokrotnego wyboru).
-10. Commit / push – **tylko na prośbę użytkownika**.
+10. Commit / push – **tylko na prośbę użytkownika**. Przed commitem **zaktualizuj ten plik kontekstu** (wchodzi w ten sam commit).
+11. **„Zaczynamy krok X” = pokaż diff kroku X w czacie i czekaj** – NIE zapisuj od razu. Odpowiedzi na pytania projektowe też nie są zgodą na pisanie kodu.
+12. **Wzorce z TEGO SAMEGO kontrolera:** na STM32 rób jak w kodzie STM32, na ESP32 jak w ESP32 (nie przenoś mechanizmów między nimi).
+13. **Pamięć dynamiczna:** w każdym kroku wskaż, kto jest właścicielem `pData` i gdzie jest zwalniane – po użyciu ORAZ na każdej ścieżce błędu (przed `assert`); pilnuj też podwójnego zwolnienia.
 
 ---
 
@@ -32,6 +35,7 @@
 | Debug ESP32 | J-Link CE + OpenOCD. Działa konfiguracja z **ręcznie wpisanym gdb 12.1**; `${GDB_CLIENT_EXECUTABLE}` (gdb 16.3) wywala „Process not Terminated” (timeout 10 s wtyczki Espressif) |
 | F3 w Espressif-IDE | wymaga `HMI_and_bluetooth/build/compile_commands.json` (znika po Clean → Build) i edytora „C/C++ Editor (LSP)” |
 | Sprawdzanie kompilacji bez IDE | ESP32: `clangd --check=<plik>` z `--compile-commands-dir=build`; STM32: `make <obj>` w `Radio_main/Debug` z `make` i `arm-none-eabi` z pluginów STM32CubeIDE 1.15.1 |
+| Pełny build z terminala (działa 2026-11-23) | STM32: `make -j8 all` w `Radio_main/Debug` (toolchain + make z pluginów `C:\ST\STM32CubeIDE_2.0.0`; nowy plik .cpp trafia do makefile dopiero po odświeżeniu/buildzie w CubeIDE). ESP32: ESP-IDF `C:\esp\v5.2.8\esp-idf` (EIM, `IDF_TOOLS_PATH=C:\Espressif`), `idf.py -B <katalog w scratchpad> build` – nie rusza `build/` IDE. clangd bez ścieżek include projektu zgłasza fałszywe błędy – miarodajny jest tylko build |
 
 ---
 
@@ -49,7 +53,7 @@ Plik: `HMI_and_bluetooth/main/bt_audio/bt_audio.{h,cpp}`, klasa `bt_audio_sink`.
 - **Konstruktor:** high-Z jako PIERWSZE (wymóg sprzętowy), potem `btAudioDeviceOff()` (STM32 dostaje OFF).
 - **Auto-reconnect:** tylko podczas On. `BluetoothA2DPSinkExt` (klasa pochodna) przywraca adres ostatniego telefonu przed `start()` (bo `end()` czyści go w NVS). `start()` czeka 1000 ms (`reconnect_delay`).
 - **Guardy komend AVRC** (`btAudioPlay/Stop/Pause/Next/Previous/FastForward/Rewind`) – nic nie robią przy BT wyłączonym.
-- **Protokół:** wspólny `i2sPinStates : uint8_t` + `static_assert` w `comunicationStructures.h`; odkomentowany `BT_SUBCOMMAND_I2S_PINS_STATE 0x04`. Subcommandy BT: `deviceOnOff 0x00`, `onConnCallback 0x01`, `onAVRCPlayStatusCallback 0x03`, `I2S_PINS_STATE 0x04`.
+- **Protokół:** wspólny `i2sPinStates : uint8_t` + `static_assert` w `comunicationStructures.h`. Subcommandy STANU BT (ESP32 → STM32; 2026-11-23 zmiana nazw i numeracji, commit `886d11e0` – **wymaga wgrania OBU firmware'ów**): `BT_SUBCOMMAND_STATE_DEVICE_ON_OFF 0x00`, `BT_SUBCOMMAND_STATE_CONNECTION 0x01`, `BT_SUBCOMMAND_STATE_AVRC_PLAY_STATUS 0x02`, `BT_SUBCOMMAND_STATE_I2S_PINS 0x03` (zakomentowany `BT_SUBCOMMAND_STATE_AUDIO 0x04`). `#define` – DUŻYMI LITERAMI z `_`.
 - Profil rozmów (HFP) wyłączony w `sdkconfig` – radio nie obsługuje połączeń telefonicznych. GAP musi zostać (bez niego nie ma A2DP).
 
 ### 3.3 Asercje (2026-11-21, oba projekty) – ZROBIONE
@@ -80,12 +84,14 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - Opcjonalnie: wysyłanie pozostałych pól (`audioState`, metadane, głośność, pozycja) – nowe subcommandy, tylko jeśli STM32 ich potrzebuje.
 
 ### 4.3 STM32 – task / obsługa komunikatów BT z ESP32
-- **Brakuje całej ścieżki odbioru ramek BT na STM32** (parser → kolejka → klasa/task BT):
-  - parser `esp32_i2cComunicationDriver::parseReceivedData()` (`comunication_esp32i2cComunicationDriver.cpp` ~370): `case I2C_COMMAND_GROUP_BTAUDIO: break;` – **ramki BT są IGNOROWANE** (parser ich nie przekazuje dalej);
-  - **nie ma klasy obsługującej BT** po stronie STM32 (odpowiednik `bt_audio_sink`: stan BT, wysyłanie komend do ESP32 – On/Off, Play/Next…, żądania stanu);
-  - **nie ma kolejki** na ramki BT od parsera ani taska, który by je obsługiwał.
-  - Wzorzec na STM32: klawiatura – parser `case I2C_COMMAND_GROUP_KEYBOARD` → `parserFunction::keyboardToRadioMeny()` → `pRadioMenu->queueRadioMenuKbrdSend()`; wysyłka do ESP32 – `ledsController` / `StepperOptoPowerOFF` przez `pi2cMaster->getTransmitQueue()` (`tasksFunctions.cpp` ~203).
-- Napisać obsługę wszystkich subcommandów i miejsce przechowywania stanu BT na STM32.
+- **ZROBIONE 2026-11-23 (commit `886d11e0`) – odbiór ramek stanu BT** (kompilacja STM32 + ESP32 OK, **NIEtestowane na sprzęcie**):
+  - stan BT: typ `btAudioState` + pole `radioStruct.audioDevices.bluetooth` (`menu_radioMegaStruct.h`) – podgląd w debuggerze przez `radioStruct`; pisze WYŁĄCZNIE `btAudioDevice`;
+  - klasa `btAudioDevice` (`device_btAudio.{h,cpp}`): konstruktor dostaje wskaźnik do `radioStruct.audioDevices.bluetooth` (stan startowy OFF / `highZenabled` / DISCONNECTED / STOPPED), `processReceivedData(i2cFrame_btAudio*)` – `switch` po `BT_SUBCOMMAND_STATE_*`, zapis + log, nieznany → `assert(0)`;
+  - **konwencja nazw:** `is...()` (`isDeviceOn`, `isConnectionState`, `isPlayStatus`, `isI2sPinsState`) = OD RAZU ostatni stan z lokalnej struktury; `get...()` (do zrobienia) = TYLKO wysłanie żądania do ESP32 (zwraca, czy ramka trafiła do kolejki TX), odpowiedź asynchronicznie przez parser → struktura → `is...()`; **jak potwierdzić, że odpowiedź przyszła – do ustalenia** (I2C asynchroniczne, dziś brak takiej flagi);
+  - parser: `case I2C_COMMAND_GROUP_BTAUDIO` → `parserFunction::btAudioToBtAudioDevice()` → `pBtAudio->processReceivedData()` (`extern pBtAudio`, jak klawiatura). **Przetwarzanie w locie – bez kolejki i taska**: brak dynamicznej alokacji, `pData` zwalnia jak zawsze task parsera (`tasksFunctions.cpp` ~53). W parserze TYLKO zapis stanu i log, nic blokującego (opóźniłoby klawiaturę i odbiór z ESP32); reakcje na zmianę stanu – w menu (4.4);
+  - `tasksFunctions.cpp`: `btAudioDevice *pBtAudio` tworzony w `initTaskFunctions()` zaraz po `pESP32`, **przed** taskiem parsera (parser nie trafi na `nullptr`).
+- **NASTĘPNE:** test na sprzęcie (wgrać OBA firmware'y – zmiana numeracji): log UART STM32 `BT audio device log: ...` przy starcie ESP32 (On), połączeniu telefonu, play/pause, rozłączeniu.
+- Wysyłka STM32 → ESP32 (On/Off, Play/Next…, żądania stanu `get...()`) – w tej samej klasie `btAudioDevice`, jak `ledsController` / `StepperOptoPowerOFF` przez `pi2cMaster->getTransmitQueue()`; **po** zmianie obiektów na statyczne (patrz KOLEJNOŚĆ niżej).
 - **Reakcja na rozłączenie telefonu** (np. telefon się wyłączy) – po to ESP32 wysyła stan połączenia.
 - **Odpytywanie:** gdy brak połączenia, STM32 co jakiś czas pyta ESP32 o stan BT (mechanizm z 4.2).
 - STM32 wie z ramek, że BT nie jest połączony i trzeba go połączyć.
@@ -107,7 +113,10 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - `menu_myList.cpp:52` (`addAtEnd`): `new myList` **bez** `(std::nothrow)` (reszta ma).
 - `menu_myList.cpp:17`: `assert(this)` – nic nie sprawdza.
 - `bt_audio.cpp`: brak wcięcia w `btAudioNext()`; literówki w nazwach typu `Transision`, `Intrrrupt` – tylko jeśli użytkownik zechce.
-- Pliki `bt_audio — kopia.cpp/.h` w `main/bt_audio/` – do decyzji użytkownika.
+- Pliki `bt_audio — kopia.cpp/.h` w `main/bt_audio/` – do decyzji użytkownika (w `.cpp:37` została stara nazwa `BT_SUBCOMMAND_onConnCallback` – plik niekompilowany, nie ruszany).
+- **STM32 – `malloc`/`free` newlib prawdopodobnie NIE są thread-safe:** `configUSE_NEWLIB_REENTRANT 1`, ale brak `newlib_lock_glue.c` / własnych `__malloc_lock`/`__malloc_unlock`; `new`/`delete` `pData` działa równolegle w kilku taskach (odbiór I2C, parser, TX, printf) → ryzyko rzadkiego uszkodzenia sterty. Do sprawdzenia (osobny temat). `new` idzie na stertę newlib (`_sbrk`), NIE na stertę FreeRTOS (`heap_4`, 30 KB).
+- **STM32 – wyścig klawiatury przy starcie:** task parsera powstaje przed `pRadioMenu` → ramka klawiatury tuż po starcie trafiłaby na `nullptr` (`comunication_esp32i2cComunicationDriver.cpp` `keyboardToRadioMeny`). Dla BT rozwiązane kolejnością tworzenia.
+- `device_StepperOptoPowerOFF.cpp:59-74` (STM32): luźne deklaracje funkcji spoza klasy i powtórzone `#define MOTOR_SUBCOMMAND_*`.
 
 ---
 
