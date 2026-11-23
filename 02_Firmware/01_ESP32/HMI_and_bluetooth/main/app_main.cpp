@@ -113,9 +113,7 @@ extern "C" void app_main(void)
 	configASSERT(handlerQueue_MainKeyboard);
 	
 	//tworzy obiekt obsługujący klawiaturę
-	KEYBOARD *klawiatura = NULL;
-	klawiatura = new KEYBOARD(handlerQueue_MainKeyboard, handlerTask_backlightDisplay);
-	configASSERT(klawiatura);
+	static KEYBOARD klawiatura(handlerQueue_MainKeyboard, handlerTask_backlightDisplay);	//obiekt statyczny (.bss, nie stos taska main), konstruktor przy pierwszym wywołaniu
 	handlerTask_keyboardQueueParametersParser = NULL;
 	printf("%s Keyboard queue pareser task starting\n", main_TAG);
 

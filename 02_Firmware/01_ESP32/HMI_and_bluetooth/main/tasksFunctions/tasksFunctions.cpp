@@ -33,9 +33,8 @@ void taskFunctionsStaticHandlersInit(void)
 
 	//tworzenie obiektu i2cSlave komunikującewgo się STM32 po szynie i2c
 	printf("I2C slave bus init\n");
-	p_i2cSlave = nullptr;
-	p_i2cSlave = new i2cEngin_slave(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN);
-	assert(p_i2cSlave);
+	static i2cEngin_slave i2cSlaveObject(I2C_SLAVE_PORT, I2C_SLAVE_PIN_SDA, I2C_SLAVE_PIN_SCL, I2C_SLAVE_ADDRESS_ESP32, I2C_ADDR_BIT_LEN_7, I2C_SLAVE_INTERRUP_REQUEST_PIN);	//obiekt statyczny (.bss), konstruktor przy pierwszym wywołaniu (z app_main)
+	p_i2cSlave = &i2cSlaveObject;
 	
 	
 	//assert(p_i2cSlave);
@@ -67,20 +66,20 @@ void taskFunctionsStaticHandlersInit(void)
 	
 	//tworzy obiekt obsługujący NVS flash radio
 	printf("NVS storage init\n");
-	pSTORAGE = new NVS(NVS_RADIO_CONFIG_NAMESPACE);
-	assert(pSTORAGE);
+	static NVS storageObject(NVS_RADIO_CONFIG_NAMESPACE);	//obiekt statyczny (.bss), konstruktor przy pierwszym wywołaniu (z app_main)
+	pSTORAGE = &storageObject;
 	//storage->CAUTION_NVS_ereaseAndInit(NVS_EREASE_COUNTDOWN_TIME);
 	
 	//tworzy obiekt obsługujący ledy sygnalizacyjne i podświetlenia
 	printf("Backlight and display leds init\n");
-	pLedDisplay = new LEDS_BACKLIGHT(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812);
-	assert(pLedDisplay);
+	static LEDS_BACKLIGHT ledDisplayObject(LED_DISPLAY_GPIO, LED_DISPLAY_LEDS_QUANTITY, LED_PIXEL_FORMAT_GRB, LED_MODEL_WS2812);	//jak wyżej
+	pLedDisplay = &ledDisplayObject;
 	pLedDisplay->ledStripClearAll();
 	
 	//tworzy obiekt obsługujący szyne i2c master komunikującą się z  MCP23008
 	printf("I2C master bus init\n");
-	i2cEngin_master *p_i2cMaster = new i2cEngin_master(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);
-	assert(p_i2cMaster);
+	static i2cEngin_master i2cMasterObject(I2C_MASTER_PORT, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL);	//obiekt statyczny (.bss), konstruktor przy pierwszym wywołaniu (z app_main)
+	i2cEngin_master *p_i2cMaster = &i2cMasterObject;
 
 	/*
 	// sprawdza czy MCP23008 jest dostępny na szynie i2c
@@ -90,15 +89,15 @@ void taskFunctionsStaticHandlersInit(void)
 
 
 	printf("MCP23008 on I2C master bus init\n");
-	MCP23008* p_MCP23008 = new MCP23008(MCP23008_I2C_DEVICE_OPCODE, p_i2cMaster, I2C_MASTER_SPEED);
-	assert(p_MCP23008);
+	static MCP23008 MCP23008Object(MCP23008_I2C_DEVICE_OPCODE, p_i2cMaster, I2C_MASTER_SPEED);	//jak wyżej
+	MCP23008* p_MCP23008 = &MCP23008Object;
 
 
 
 	//tworzy obiekt obsługujący silnik krokowy, krańsówki i power off radia
 	printf("Stepper motor and powerOFF gpio init\n");
-	pMotor = new StepperOptoPowerOFF(p_MCP23008);
-	assert(pMotor);
+	static StepperOptoPowerOFF motorObject(p_MCP23008);	//jak wyżej
+	pMotor = &motorObject;
 
 
 }

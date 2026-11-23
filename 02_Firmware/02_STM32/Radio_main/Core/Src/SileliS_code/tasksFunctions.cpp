@@ -187,10 +187,10 @@ static void manageRadioButtonsAndMenu(void *thing) {
 static void initTaskFunctions(void) {
 
 	//pi2cMaster tworzony wcześniej - w startUpTask_initTaskFunctions() (potrzebny do pingu ESP32 przed startem)
-	pESP32 = new (std::nothrow) esp32_i2cComunicationDriver(pi2cMaster);
-	assert(pESP32);
-	pBtAudio = new (std::nothrow) btAudioDevice(&radioStruct.audioDevices.bluetooth);	//PRZED taskiem parsera (i2cMasterParseReceivedData) - ramki BT przetwarzane w locie, parser nie może trafić na nullptr
-	assert(pBtAudio);
+	static esp32_i2cComunicationDriver esp32DriverObject(pi2cMaster);	//static KONIECZNE: wywoływane z taska startUpTask_initTaskFunctions, który usuwa się sam (vTaskDelete)
+	pESP32 = &esp32DriverObject;
+	static btAudioDevice btAudioObject(&radioStruct.audioDevices.bluetooth);	//jak wyżej; PRZED taskiem parsera (i2cMasterParseReceivedData) - ramki BT przetwarzane w locie, parser nie może trafić na nullptr
+	pBtAudio = &btAudioObject;
 
 	BaseType_t taskCreated;	//wynik xTaskCreate - operacja zawsze poza makrem asercji, makro tylko sprawdza wynik
 	//tworzenie taska czytającego dane po I2C ze slave
@@ -206,12 +206,14 @@ static void initTaskFunctions(void) {
 	taskCreated = xTaskCreate(i2cMasterParseReceivedData, "i2cMastRecQue, Pars", 3*128, NULL, tskIDLE_PRIORITY + 1, &taskHandle_i2cMasterParseReceivedData);	//+1: parsowanie odebranych ramek przed menu/printf
 	configASSERT(taskCreated == pdPASS);
 
-	pHmiLeds = new (std::nothrow) ledsController(pi2cMaster->getTransmitQueue());
-	pStepperMotor = new (std::nothrow) StepperOptoPowerOFF(pi2cMaster->getTransmitQueue());
+	static ledsController hmiLedsObject(pi2cMaster->getTransmitQueue());	//static KONIECZNE: jak wyżej (task usuwa się sam)
+	pHmiLeds = &hmiLedsObject;
+	static StepperOptoPowerOFF stepperMotorObject(pi2cMaster->getTransmitQueue());	//jak wyżej
+	pStepperMotor = &stepperMotorObject;
 	//tutaj inicjoać wszytkie menu.
 
-	pRadioMenu = new (std::nothrow) radioMenu();
-	assert(pRadioMenu);
+	static radioMenu radioMenuObject;	//jak wyżej; bez () - "radioMenu radioMenuObject();" byłoby deklaracją funkcji, nie obiektu
+	pRadioMenu = &radioMenuObject;
 	//tworzy task obsługujący pobieranie z kolejki klawiszy
 	taskCreated = xTaskCreate(manageRadioButtonsAndMenu, "RadioMenu", 5*128, pRadioMenu, tskIDLE_PRIORITY, &taskHandle_manageTheRadioManue);
 	configASSERT(taskCreated == pdPASS);
@@ -223,9 +225,9 @@ static void initTaskFunctions(void) {
 static TaskHandle_t taskHandle_initTaskFunctions = nullptr;	//uchwyt do taska (jodnorazowo wywolanego), który uruchamia całą konfigurację, trzeba tak to zrobić, aby printf działąło w tasku (task printf musi sie uruchomić  przed wszystkimi)
 static void startUpTask_initTaskFunctions(void *noThing) {
 
-	pi2cMaster = new (std::nothrow) i2cMaster(&hi2c1, I2C1_SCL_GPIO_Port,
-			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin);	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji
-	assert(pi2cMaster);
+	static i2cMaster i2cMasterObject(&hi2c1, I2C1_SCL_GPIO_Port,
+			I2C1_SCL_Pin, I2C1_SDA_GPIO_Port, I2C1_SDA_Pin);	//piny SCL/SDA z main.h (etykiety CubeMX) - diagnostyka zawieszonej transmisji; static KONIECZNE: task usuwa się sam (vTaskDelete) - jego stos jest zwalniany
+	pi2cMaster = &i2cMasterObject;
 
 	//czeka, aż esp32 odpowie ACK na ping i2c - wtedy wiadomo, że jego i2c slave działa (ESP32 nie odpowiada ACK w bootloaderze /
 	//resecie / flashowaniu). Dawniej sygnałem było pierwsze zbocze interrupt request, ale każde dodatkowe zbocze na GPIO0 ESP32
@@ -253,8 +255,8 @@ static void printfTask(void *noThing) {
 }
 
 void startUpTask(void *noThing) {
-	pPrintf = new (std::nothrow) myPrintfTask(&huart1, 15);
-	assert(pPrintf);
+	static myPrintfTask printfTaskObject(&huart1, 15);	//static KONIECZNE: startUpTask() wołana z main() przed osKernelStart() - obiekt lokalny bez static zniknąłby po powrocie (a MSP jest resetowany przez scheduler); .bss - brak RAM = błąd linkera
+	pPrintf = &printfTaskObject;
 
 	BaseType_t taskCreated;	//jak w initTaskFunctions()
 	taskCreated = xTaskCreate(printfTask, "Printf", 3*128, NULL, tskIDLE_PRIORITY, &taskHandle_PrintfTask);
