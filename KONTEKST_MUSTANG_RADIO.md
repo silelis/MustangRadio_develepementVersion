@@ -36,6 +36,10 @@ Potem: mutex diod w `ledsController` (krok 2 LED) wg tego samego wzorca.
 
 Marker: `#error Tutaj dać świecenie LED trzeciego` w `device_btAudio.cpp` ~94 (`case BT_SUBCOMMAND_STATE_CONNECTION`). Trzecia dioda (`ledsController::errorLed`) = od razu **dioda statusu**:
 BT → stan połączenia; AM/FM/DAB → „Active antena”; SD/USB → „Media In” (komentarze w `radioMenuAudio*_ReturnInit`).
+**Zasada (użytkownik 2026-11-24):** dioda statusu pokazuje stan TYLKO aktualnie granego źródła. Ramka stanu od urządzenia,
+które nie jest aktywnym źródłem (np. BT połączony z telefonem, ale gra FM), zapisuje się do struktury, ale diody NIE zmienia.
+Przy przełączeniu źródła dioda ustawiana od nowa wg stanu nowego źródła (`ReturnInit`/`Init`).
+Do ustalenia przy kroku 5: skąd brać „aktywne źródło” – własna flaga w urządzeniu (obecny plan) czy bieżący węzeł audio w `radioMenu`.
 
 **Kolejność tworzenia obiektów w `initTaskFunctions()` (`tasksFunctions.cpp`):** `pi2cMaster` (wcześniej, w `startUpTask_initTaskFunctions`) → `pESP32` → `pHmiLeds` → `pStepperMotor` → `pBtAudio` (dostaje `pHmiLeds`) → taski I2C (odbiór, nadawanie, `esp32IntReq`, parser) → `pRadioMenu` + jego taski (bez zmian).
 Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich korzystają; przyszłe AM/FM/DAB/SD/USB – za BT. Bezpieczne, bo konstruktory `ledsController`, `StepperOptoPowerOFF`, `btAudioDevice` są pasywne (nic nie wysyłają, potrzebują tylko `pi2cMaster->getTransmitQueue()`).
@@ -61,12 +65,27 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
   Z opóźnieniem 100 ms działa. Marker: `#error` w `app_main.cpp` ~135 (ESP32 nie kompiluje się, dopóki marker jest).
 - **Kontekst:** konstruktor `bt_audio_sink` (`bt_audio.cpp` ~270, `btAudioDeviceOff()`) + `btAudioDeviceOn()` wrzucają do kolejki TX ~11 ramek BT naraz,
   kilka ms po utworzeniu tasków I2C; `start()` A2DP równolegle inicjuje kontroler BT (NVS/flash/przerwania).
-- **Hipotezy (nierozstrzygnięte):** (a) STM32 jeszcze nie gotowy do odczytu → timeout `ESP32_I2C_TX_TIMEOUT_MS`;
-  (b) sterownik I2C slave 5.2 jeszcze niegotowy → błąd już w `idle` (`i2c_slave_transmit` / `i2cTxWaitForFifoLoaded`);
-  (c) init stosu BT blokuje przerwania/flash → gubi się callback odczytu.
-- **NAJPIERW:** pełny log UART ESP32 do panicu – linia `DIAG TX FAIL: stateBefore:… retVal:…` + ostatni `i2c slave transmit …`;
-  ustalić kolejność startu płytek (obie razem / sam ESP32 po flashowaniu przy działającym STM32 – por. pkt 5 „Restart ESP32”).
-- Opóźnienie 100 ms to obejście, nie poprawka. Przy okazji: `testBT` nadal lokalny w `app_main` (nie `static`, patrz 4.2).
+- **DIAGNOZA (2026-11-24, log UART ESP32) – wyścig przy starcie, hipoteza (a) potwierdzona, (b) i (c) odrzucone:**
+  - log: `TIMEOUT_IN_TRANSMITION`, `DIAG TX FAIL: stateBefore:1 retVal:0x0 status_reg:0x03100000 fifo_st:0x00000380 int_raw:0x00000013 int_ena:0x00000880 | … slave_rw:0`;
+    wcześniej `DIAG Reception to me` (STM32 pisał do ESP32, np. LED z menu);
+  - `stateBefore:1` = `lenDataInTransmition`, `retVal:0` → `i2c_slave_transmit` + `i2cTxWaitForFifoLoaded` OK, impuls INT wysłany;
+    `tx_fifo_cnt = 4` (bity 18-23 `status_reg`) → `len` leży w FIFO NIEodczytany; `slave_rw:0` → STM32 tylko pisał, nie czytał → po 500 ms timeout → `assert(0)` `:639`;
+  - przyczyna: ESP32 odpowiada ACK na ping zaraz po konstruktorze `i2cEngin_slave`; STM32 po ACK czeka `ESP32_READY_SETTLE_MS` (150 ms, `hwConfigFile.h:20`),
+    dopiero potem `esp32I2cInitialised = true` (`tasksFunctions.cpp` ~241) i tworzy `pESP32` (`initTaskFunctions()`); do tego czasu `HAL_GPIO_EXTI_Callback`
+    celowo ignoruje INT. ESP32 w tym czasie tworzy taski i `bt_audio_sink` (~11 ramek) → pierwszy impuls INT trafia w „głuche okno” STM32 i przepada;
+    impuls nie jest powtarzany → ESP32 czeka do timeoutu. `vTaskDelay(100)` przesuwa impuls za okno – zależność czasowa, nie poprawka;
+  - problem ogólny: zgubienie JEDNEGO impulsu INT (start, restart ESP32 – pkt 5, zakłócenie) = zawsze panic.
+- **Poprawka – propozycje (NIE zaakceptowane):** (1, rekomendacja) ramka „STM32 gotowy” wysyłana przez STM32 po `initTaskFunctions()`;
+  `i2cSlaveTransmit` na ESP32 nic nie nadaje, dopóki jej nie dostanie (ramki czekają w kolejce TX) – pomoże też przy restarcie ESP32;
+  (2) ESP32 ponawia impuls INT (np. co 100 ms) do odczytu – wymaga zmiany zliczania impulsów na STM32 (dziś impuls = osobny odczyt);
+  (3) dłuższe opóźnienia po którejś stronie – tylko obejście.
+- **Dwie OSOBNE sprawy (ustalone 2026-11-24):**
+  1. **Synchronizacja startu** (ramka „STM32 gotowy”, propozycja 1) – usuwa PRZYCZYNĘ tego panicu; to nie obsługa błędów, tylko uzgodnienie gotowości obu stron. Szybkie – robić najpierw.
+  2. **Obsługa błędów zamiast `assert`** – potrzebna I TAK: impuls INT może zginąć w trakcie pracy (zakłócenie, restart ESP32, zajęta szyna), dziś każdy taki przypadek = panic.
+     Docelowo: ESP32 po timeoucie – wyczyścić FIFO TX, zwolnić `pData` (albo ponowić N razy), wrócić do `idle`, zalogować; STM32 – przy braku odpowiedzi / śmieciach
+     (zła suma, długość) odrzucić ramkę i ponownie się zsynchronizować, bez `assert`. Później, osobny większy temat (oba kontrolery) – patrz pkt 5 „Obsługa błędów”.
+- **Na razie (decyzja użytkownika 2026-11-24):** obejście opóźnieniem `vTaskDelay` w `app_main.cpp` przed `bt_audio_sink`; poprawka później.
+- Przy okazji: `testBT` nadal lokalny w `app_main` (nie `static`, patrz 4.2).
 - Potem: pozostałe sprawy z kontekstu (decyzja użytkownika: najpierw LED, potem reszta).
 
 ---
@@ -195,7 +214,7 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 
 - **Restart ESP32 w trakcie pracy STM32:** ping jest tylko przy starcie STM32; reset ESP32 później (panic, flashowanie, EN) → zbocza z bootu liczone jako tokeny → śmieci → assert. (dawne 7.5.8)
 - `ESP_I2C_BUS_DELAY` 7 ms – próba zmniejszenia osobnym krokiem, z testem szybkich serii ramek LED.
-- Obsługa błędów zamiast `assert` (`//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32`).
+- Obsługa błędów zamiast `assert` (`//todo: zrobić obsługę błędów komunikacji i2c dla stm32 i esp32`). Konkretny przypadek i zakres – PRIORYTET 3 („Dwie OSOBNE sprawy”, pkt 2).
 - Opcja (niezaakceptowana): semafor szyny → mutex rekurencyjny.
 - si4689: obrazy ~520 kB, I2C1 ~100 kHz → ~48 s ładowania; `HOST_LOAD` porcjami, oddawać semafor po porcji; rozważyć 400 kHz lub SPI flash.
 - ESP32 (znane, niepoprawione): okno między callbackiem a ponownym `i2c_slave_receive()` dla RX; okno INT#1 → odczyt len niechronione.
