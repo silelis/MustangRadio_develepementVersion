@@ -34,7 +34,7 @@ Potem: mutex diod w `ledsController` (krok 2 LED) wg tego samego wzorca.
 
 ## !!! PRIORYTET 2 – STM32: dioda statusu (`errorLed`) dla BT (kolejność zaakceptowana 2026-11-24)
 
-Marker: `#error Tutaj dać świecenie LED trzeciego` w `device_btAudio.cpp` ~94 (`case BT_SUBCOMMAND_STATE_CONNECTION`). Trzecia dioda (`ledsController::errorLed`) = od razu **dioda statusu**:
+Marker: `//#error Tutaj dać świecenie LED trzeciego` (zakomentowany przez użytkownika 2026-11-24) w `device_btAudio.cpp` ~94 (`case BT_SUBCOMMAND_STATE_CONNECTION`). Trzecia dioda (`ledsController::errorLed`) = od razu **dioda statusu**:
 BT → stan połączenia; AM/FM/DAB → „Active antena”; SD/USB → „Media In” (komentarze w `radioMenuAudio*_ReturnInit`).
 **Zasada (użytkownik 2026-11-24):** dioda statusu pokazuje stan TYLKO aktualnie granego źródła. Ramka stanu od urządzenia,
 które nie jest aktywnym źródłem (np. BT połączony z telefonem, ale gra FM), zapisuje się do struktury, ale diody NIE zmienia.
@@ -50,7 +50,7 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 3. Timeout wysyłki diod jako parametr z wartością domyślną = dzisiejsza (menu bez zmian), parser woła z 0 (parser nie może czekać do 700 ms).
 4. Konstruktor `btAudioDevice(btAudioState*, ledsController*)` + `assert` + wywołanie w `tasksFunctions.cpp`.
 5. Flaga „BT aktywnym źródłem” w `btAudioDevice`: true w `radioMenuAudioBluetooth_Init`, false w `_DestroyInit` (inaczej DISCONNECTED po przejściu na FM zgasi „Active antena”).
-6. `device_btAudio.cpp` ~94: gdy BT aktywny – dioda statusu wg stanu połączenia, wysyłka z timeoutem 0, błąd → log; usunąć `#error`.
+6. `device_btAudio.cpp` ~94: gdy BT aktywny – dioda statusu wg stanu połączenia, wysyłka z timeoutem 0, błąd → log; usunąć zakomentowany marker `//#error`.
 7. `radioMenuAudioBluetooth_ReturnInit`: dioda wg `isConnectionState()` (komentarz „ustawienie diody BT connection”).
 8. Później ten sam wzorzec: Active antena (AM/FM/DAB), Media In (SD/USB) – gdy będą klasy tych urządzeń.
 - Zmiana nazwy `errorLed` → `statusLed`: pominąć albo na samym końcu, osobny krok.
@@ -62,7 +62,7 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 
 - **Objaw (commit `e6e4edba`):** bez `vTaskDelay(pdMS_TO_TICKS(100))` w `app_main.cpp` przed `bt_audio_sink testBT(...)` → panic
   `assert failed: void i2cEngin_slave::i2cSlaveTransmit() i2c_engine_slave.cpp:639 (0)` (wspólna gałąź `errorInTransmition` / `timeoutInTransmition`).
-  Z opóźnieniem 100 ms działa. Marker: `#error` w `app_main.cpp` ~135 (ESP32 nie kompiluje się, dopóki marker jest).
+  Z opóźnieniem 100 ms działa. Marker w `app_main.cpp` ~135 – zakomentowany przez użytkownika 2026-11-24 (`/* … */`), ESP32 się kompiluje.
 - **Kontekst:** konstruktor `bt_audio_sink` (`bt_audio.cpp` ~270, `btAudioDeviceOff()`) + `btAudioDeviceOn()` wrzucają do kolejki TX ~11 ramek BT naraz,
   kilka ms po utworzeniu tasków I2C; `start()` A2DP równolegle inicjuje kontroler BT (NVS/flash/przerwania).
 - **DIAGNOZA (2026-11-24, log UART ESP32) – wyścig przy starcie, hipoteza (a) potwierdzona, (b) i (c) odrzucone:**

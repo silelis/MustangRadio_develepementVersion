@@ -91,7 +91,7 @@ void btAudioDevice::processReceivedData(i2cFrame_btAudio *btAudioFrame) {
 		break;
 	case BT_SUBCOMMAND_STATE_CONNECTION:
 		this->pBtAudioState->onConnCallbackStates = btAudioFrame->btAudioData.btAudioUnion.onConnCallbackStates;
-		#error Tutaj dać świecenie LED trzeciego
+//			#error Tutaj dać świecenie LED trzeciego
 		pPrintf->feedPrintf("%s connection state: %d", this->TAG,
 				(int) this->pBtAudioState->onConnCallbackStates);
 		break;

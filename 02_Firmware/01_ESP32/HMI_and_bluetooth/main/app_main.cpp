@@ -131,7 +131,7 @@ extern "C" void app_main(void)
 
 
 
-
+/*
 	#error Jak nie dam vTaskDelay nawer 100ms to wywala mi panic - jest to zwiazane z his->btAudioDeviceOff();	w 270 linijce bt.cpp
 	Name : details
 		Details:0x3ffd0acb "assert failed: void i2cEngin_slave::i2cSlaveTransmit() i2c_engine_slave.cpp:639 (0)"
@@ -140,7 +140,7 @@ extern "C" void app_main(void)
 		Hex:0x3ffd0acb
 		Binary:111111111111010000101011001011
 		Octal:07777205313
-
+*/
 //	vTaskDelay(pdMS_TO_TICKS(100));
 
 
