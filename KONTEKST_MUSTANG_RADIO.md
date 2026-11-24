@@ -2,8 +2,47 @@
 
 > **Dla Claude:** przeczytaj cały plik, zanim cokolwiek zrobisz. To przypomnienie: co jest zrobione, co do zrobienia, jakie są zasady pracy.
 > Numery linii są orientacyjne – przed każdą zmianą przeczytaj aktualny plik.
-> Stan na: **2026-11-23**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
+> Stan na: **2026-11-24**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
 > `git show 887b0444:KONTEKST_I2C_ESP32_STM32.md`
+
+---
+
+## !!! PRIORYTET 1 – STM32: dioda statusu (`errorLed`) dla BT (kolejność zaakceptowana 2026-11-24)
+
+Marker: `#error Tutaj dać świecenie LED trzeciego` w `device_btAudio.cpp` ~94 (`case BT_SUBCOMMAND_STATE_CONNECTION`). Trzecia dioda (`ledsController::errorLed`) = od razu **dioda statusu**:
+BT → stan połączenia; AM/FM/DAB → „Active antena”; SD/USB → „Media In” (komentarze w `radioMenuAudio*_ReturnInit`).
+
+**Kolejność tworzenia obiektów w `initTaskFunctions()` (`tasksFunctions.cpp`):** `pi2cMaster` (wcześniej, w `startUpTask_initTaskFunctions`) → `pESP32` → `pHmiLeds` → `pStepperMotor` → `pBtAudio` (dostaje `pHmiLeds`) → taski I2C (odbiór, nadawanie, `esp32IntReq`, parser) → `pRadioMenu` + jego taski (bez zmian).
+Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich korzystają; przyszłe AM/FM/DAB/SD/USB – za BT. Bezpieczne, bo konstruktory `ledsController`, `StepperOptoPowerOFF`, `btAudioDevice` są pasywne (nic nie wysyłają, potrzebują tylko `pi2cMaster->getTransmitQueue()`).
+
+**Kroki (każdy osobno: diff w czacie → akceptacja):**
+1. `tasksFunctions.cpp`: przenieść `hmiLedsObject` i `stepperMotorObject` zaraz za `pESP32`, przed `btAudioObject` (sama kolejność, bez zmiany zachowania).
+2. Mutex w `ledsController` – ustawienie diody + wysyłka chronione razem (menu i parser na jednym obiekcie).
+3. Timeout wysyłki diod jako parametr z wartością domyślną = dzisiejsza (menu bez zmian), parser woła z 0 (parser nie może czekać do 700 ms).
+4. Konstruktor `btAudioDevice(btAudioState*, ledsController*)` + `assert` + wywołanie w `tasksFunctions.cpp`.
+5. Flaga „BT aktywnym źródłem” w `btAudioDevice`: true w `radioMenuAudioBluetooth_Init`, false w `_DestroyInit` (inaczej DISCONNECTED po przejściu na FM zgasi „Active antena”).
+6. `device_btAudio.cpp` ~94: gdy BT aktywny – dioda statusu wg stanu połączenia, wysyłka z timeoutem 0, błąd → log; usunąć `#error`.
+7. `radioMenuAudioBluetooth_ReturnInit`: dioda wg `isConnectionState()` (komentarz „ustawienie diody BT connection”).
+8. Później ten sam wzorzec: Active antena (AM/FM/DAB), Media In (SD/USB) – gdy będą klasy tych urządzeń.
+- Zmiana nazwy `errorLed` → `statusLed`: pominąć albo na samym końcu, osobny krok.
+- Kolory (propozycja, potwierdzić przy kroku 6): CONNECTED – niebieski ciągły; CONNECTING / DISCONNECTING – miga niebieski/czarny; DISCONNECTED – zgaszona.
+
+---
+
+## !!! PRIORYTET 2 – ESP32: panic I2C slave TX przy starcie BT
+
+- **Objaw (commit `e6e4edba`):** bez `vTaskDelay(pdMS_TO_TICKS(100))` w `app_main.cpp` przed `bt_audio_sink testBT(...)` → panic
+  `assert failed: void i2cEngin_slave::i2cSlaveTransmit() i2c_engine_slave.cpp:639 (0)` (wspólna gałąź `errorInTransmition` / `timeoutInTransmition`).
+  Z opóźnieniem 100 ms działa. Marker: `#error` w `app_main.cpp` ~135 (ESP32 nie kompiluje się, dopóki marker jest).
+- **Kontekst:** konstruktor `bt_audio_sink` (`bt_audio.cpp` ~270, `btAudioDeviceOff()`) + `btAudioDeviceOn()` wrzucają do kolejki TX ~11 ramek BT naraz,
+  kilka ms po utworzeniu tasków I2C; `start()` A2DP równolegle inicjuje kontroler BT (NVS/flash/przerwania).
+- **Hipotezy (nierozstrzygnięte):** (a) STM32 jeszcze nie gotowy do odczytu → timeout `ESP32_I2C_TX_TIMEOUT_MS`;
+  (b) sterownik I2C slave 5.2 jeszcze niegotowy → błąd już w `idle` (`i2c_slave_transmit` / `i2cTxWaitForFifoLoaded`);
+  (c) init stosu BT blokuje przerwania/flash → gubi się callback odczytu.
+- **NAJPIERW:** pełny log UART ESP32 do panicu – linia `DIAG TX FAIL: stateBefore:… retVal:…` + ostatni `i2c slave transmit …`;
+  ustalić kolejność startu płytek (obie razem / sam ESP32 po flashowaniu przy działającym STM32 – por. pkt 5 „Restart ESP32”).
+- Opóźnienie 100 ms to obejście, nie poprawka. Przy okazji: `testBT` nadal lokalny w `app_main` (nie `static`, patrz 4.2).
+- Potem: pozostałe sprawy z kontekstu (decyzja użytkownika: najpierw LED, potem reszta).
 
 ---
 
