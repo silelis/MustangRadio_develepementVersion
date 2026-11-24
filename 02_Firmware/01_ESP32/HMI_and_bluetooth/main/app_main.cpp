@@ -141,7 +141,7 @@ extern "C" void app_main(void)
 		Binary:111111111111010000101011001011
 		Octal:07777205313
 */
-//	vTaskDelay(pdMS_TO_TICKS(100));
+	vTaskDelay(pdMS_TO_TICKS(100));
 
 
 	bt_audio_sink testBT(I2S_PIN_BCK, I2S_PIN_WS, I2S_PIN_DATA);
