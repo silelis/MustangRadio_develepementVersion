@@ -7,7 +7,32 @@
 
 ---
 
-## !!! PRIORYTET 1 – STM32: dioda statusu (`errorLed`) dla BT (kolejność zaakceptowana 2026-11-24)
+## !!! PRIORYTET 1 – semafory binarne używane jako mutexy → mutexy FreeRTOS (STM32 + ESP32; decyzja użytkownika 2026-11-24: PRZED krokiem 2 LED)
+
+Zasada: blokada zasobu (Take i Give w tym samym tasku, nigdy z ISR) = **mutex** (`xSemaphoreCreateMutex`, startuje WOLNY – bez początkowego `Give`, dziedziczenie priorytetu);
+sygnalizacja (Give z innego taska / ISR) = semafor binarny / zliczający – zostaje. Mutex: Give tylko przez task-właściciela (inaczej `configASSERT` w `xTaskPriorityDisinherit`), nie w ISR.
+`configUSE_MUTEXES 1` na STM32 (`FreeRTOSConfig.h:75`); na ESP32 mutex już używany (`i2c_engine_master.cpp:39`).
+
+Przegląd (2026-11-24):
+| # | Gdzie | Obiekt | Użycie | Decyzja |
+|---|---|---|---|---|
+| 1 | STM32 `comunication_i2cEngine.cpp:61` | `handle_i2cBinarySemaphore` (szyna I2C) | Take/Give parami w tym samym tasku: `tasksFunctions.cpp:66/75` (TX, +2), `:95/104` (RX, +2), `isDeviceReady()` `:155/158` (ping ze `startUpTask_initTaskFunctions`, priorytet idle), destruktor `:237` | → mutex; usunąć `Give` z `:63`; nazwa do zmiany (np. `handle_i2cBusMutex`) |
+| 2 | STM32 `menu_radioMenu.cpp:46` | `peripheryMenu_TimeoutCounterSemaphore` | ochrona licznika – Take/Give parami (`:378/381`, `:388/391`), destruktor `:193` | → mutex; usunąć `Give` z `:48` |
+| 3 | STM32 `menu_radioMenu.cpp:50` | `peripheryMenu_TaskSuspendAllowedSemaphore` | Take/Give parami (task menu `:335/344`, `:351/358`; task timeoutu `tasksFunctions.cpp:162/165`), ALE dodatkowe `Give` BEZ `Take` w `:333` i `:349` („gdy task timeoutu zawieszony”) | → mutex TYLKO po analizie i usunięciu `Give` z `:333`/`:349` (przy mutexie Give nie-właściciela = assert); usunąć `Give` z `:52` |
+| 4 | ESP32 `Leds/Leds_backlight.cpp:28` | `handlerMutex_ledDisplay_Backlight` (jedna taśma WS2812: podświetlenie + 3 diody, jeden bufor pikseli i kanał RMT) | `SemaphoreTake/Give()` parami w tym samym tasku: `humanMahineBacklightLeds` `tasksFunctionsLeds.cpp:12/42`, `:50/54`, `:58/62`; `humanMahineDisplayLeds` `:98` → `:112` lub `:142`. Brak Give bez Take, brak ISR. **Działa wersja z `tasksFunctionsLeds.cpp`** – kopia w `tasksFunctions.cpp:316-462` i tworzenie w `:57-60` są ZAKOMENTOWANE | Blokada POTRZEBNA (taski bez przypisania do rdzenia – równolegle na 2 rdzeniach + time slicing; bez niej mieszany stan pikseli / równoległy `refresh` RMT). → mutex (porządek: semantyka właściciela; dziś oba taski `tskIDLE_PRIORITY`, inwersji brak); `:31` `this->SemaphoreGive()` zbędne przy mutexie. Metody `SemaphoreTake/Give()` i wywołania bez zmian. Alternatywa (NIE teraz): jeden task-właściciel taśmy + kolejka żądań |
+| – | STM32 `comunication_esp32i2cComunicationDriver.cpp:147` | semafor zliczający INT od ESP32 | sygnalizacja z ISR (EXTI) | zostaje |
+| – | ESP32 `i2c_engine_slave.cpp:19` | `portMUX_TYPE s_i2cTxStateMux` | sekcja krytyczna task ↔ ISR callback | zostaje (mutex nie działa w ISR) |
+| – | ESP32 `i2c_engine_master.cpp:39` | `xI2CMasterMutex` | już mutex | bez zmian |
+
+**Początkowe `Give` po utworzeniu** (`i2cEngine.cpp:63`, `menu_radioMenu.cpp:48`, `:52`, `Leds_backlight.cpp:31`): przy semaforze binarnym KONIECZNE (startuje zajęty), przy mutexie zbędne (startuje wolny; `Give` nic nie robi i zwraca `pdFAIL`, bez assertu). Każde znika/zostaje w SWOIM kroku – razem ze zmianą swojego semafora (`:52` dopiero w pkt 3; do tego czasu potrzebne). **Do decyzji użytkownika:** usunąć (rekomendacja) czy zostawić z komentarzem.
+Inaczej `Give` BEZ `Take` w trakcie pracy (`menu_radioMenu.cpp:333/349`, pkt 3): przy mutexie, gdy trzyma go inny task → assert – stąd analiza przed zmianą.
+
+Kolejność: 1 → 2 → 3 (najpierw analiza `Give` bez `Take`) → 4; każdy osobno: diff w czacie → akceptacja → build (STM32 / ESP32).
+Potem: mutex diod w `ledsController` (krok 2 LED) wg tego samego wzorca.
+
+---
+
+## !!! PRIORYTET 2 – STM32: dioda statusu (`errorLed`) dla BT (kolejność zaakceptowana 2026-11-24)
 
 Marker: `#error Tutaj dać świecenie LED trzeciego` w `device_btAudio.cpp` ~94 (`case BT_SUBCOMMAND_STATE_CONNECTION`). Trzecia dioda (`ledsController::errorLed`) = od razu **dioda statusu**:
 BT → stan połączenia; AM/FM/DAB → „Active antena”; SD/USB → „Media In” (komentarze w `radioMenuAudio*_ReturnInit`).
@@ -16,8 +41,8 @@ BT → stan połączenia; AM/FM/DAB → „Active antena”; SD/USB → „Media
 Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich korzystają; przyszłe AM/FM/DAB/SD/USB – za BT. Bezpieczne, bo konstruktory `ledsController`, `StepperOptoPowerOFF`, `btAudioDevice` są pasywne (nic nie wysyłają, potrzebują tylko `pi2cMaster->getTransmitQueue()`).
 
 **Kroki (każdy osobno: diff w czacie → akceptacja):**
-1. `tasksFunctions.cpp`: przenieść `hmiLedsObject` i `stepperMotorObject` zaraz za `pESP32`, przed `btAudioObject` (sama kolejność, bez zmiany zachowania).
-2. Mutex w `ledsController` – ustawienie diody + wysyłka chronione razem (menu i parser na jednym obiekcie).
+1. **ZROBIONE 2026-11-24** (kompilacja `tasksFunctions.o` OK, NIEtestowane na sprzęcie): `tasksFunctions.cpp` – `hmiLedsObject` i `stepperMotorObject` przeniesione zaraz za `pESP32`, przed `btAudioObject` (sama kolejność, bez zmiany zachowania).
+2. Mutex w `ledsController` – ustawienie diody + wysyłka chronione razem (menu i parser na jednym obiekcie). **Dopiero po PRIORYTECIE 1.** Wariant API do wyboru: A – publiczne `lock(timeout)`/`unlock()` (rekomendacja), B – metody z mutexem w środku.
 3. Timeout wysyłki diod jako parametr z wartością domyślną = dzisiejsza (menu bez zmian), parser woła z 0 (parser nie może czekać do 700 ms).
 4. Konstruktor `btAudioDevice(btAudioState*, ledsController*)` + `assert` + wywołanie w `tasksFunctions.cpp`.
 5. Flaga „BT aktywnym źródłem” w `btAudioDevice`: true w `radioMenuAudioBluetooth_Init`, false w `_DestroyInit` (inaczej DISCONNECTED po przejściu na FM zgasi „Active antena”).
@@ -29,7 +54,7 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 
 ---
 
-## !!! PRIORYTET 2 – ESP32: panic I2C slave TX przy starcie BT
+## !!! PRIORYTET 3 – ESP32: panic I2C slave TX przy starcie BT
 
 - **Objaw (commit `e6e4edba`):** bez `vTaskDelay(pdMS_TO_TICKS(100))` w `app_main.cpp` przed `bt_audio_sink testBT(...)` → panic
   `assert failed: void i2cEngin_slave::i2cSlaveTransmit() i2c_engine_slave.cpp:639 (0)` (wspólna gałąź `errorInTransmition` / `timeoutInTransmition`).
