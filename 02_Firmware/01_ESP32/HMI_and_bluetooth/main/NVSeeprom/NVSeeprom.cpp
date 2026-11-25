@@ -1,4 +1,5 @@
 #include "NVSeeprom.h"
+#include <new>	// std::nothrow
 
 /*---------------------------------------------------------------
  * Konstruktor klasy obsługującej NVS.
@@ -26,7 +27,8 @@ NVS::NVS(const char* nameSpace)
 	this->nvsPartitionStatsPrintf();
 	
 	
-	namespaceName = new char[strlen(nameSpace) + 1];
+	namespaceName = new (std::nothrow) char[strlen(nameSpace) + 1];	//nothrow + assert: strcpy zaraz niżej; zwalniane delete[] w destruktorze
+	assert(namespaceName);
 	strcpy(const_cast<char*>(namespaceName), nameSpace);
 	this->err= nvs_open(namespaceName, NVS_READWRITE, &this->nvsHandle);
 	assert(!this->err);

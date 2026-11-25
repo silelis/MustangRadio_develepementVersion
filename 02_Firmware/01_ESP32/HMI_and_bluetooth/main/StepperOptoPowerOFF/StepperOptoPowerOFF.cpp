@@ -1,4 +1,5 @@
 #include "StepperOptoPowerOFF.h"
+#include <new>	// std::nothrow
 
 /*---------------------------------------------------------------
  * Konstruktor klasy obsługującej silnik krokowy i jego krańcówki.
@@ -11,7 +12,7 @@
 StepperOptoPowerOFF::StepperOptoPowerOFF(MCP23008* pointer_MCP23008)
 	//: MCP23008(MCP23008_I2C_DEVICE_OPCODE, I2C_MASTER_PIN_SDA, I2C_MASTER_PIN_SCL, I2C_MASTER_SPEED, I2C_MASTER_RX_BEFFER, I2C_MASTER_TX_BEFFER)
 {
-	this->ParserDataToStepperMotorDataQueue = new i2cQueue4DynamicData(4);
+	this->ParserDataToStepperMotorDataQueue = new (std::nothrow) i2cQueue4DynamicData(4);	//nothrow: przy braku pamięci nullptr -> configASSERT niżej
 	configASSERT(this->ParserDataToStepperMotorDataQueue);
 	
 	pMCP23008 = pointer_MCP23008; 

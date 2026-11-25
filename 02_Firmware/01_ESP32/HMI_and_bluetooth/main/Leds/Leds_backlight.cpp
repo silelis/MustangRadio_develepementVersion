@@ -1,4 +1,5 @@
 #include "Leds_backlight.h"
+#include <new>	// std::nothrow
 
 /*---------------------------------------------------------------
  * Konstruktor klasy obsługującej diody HMI.
@@ -16,7 +17,7 @@
 LEDS_BACKLIGHT::LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t ledPixelFormat, led_model_t ledModel)
 {
 	
-	this->ParserDataToLedsDataQueue = new i2cQueue4DynamicData(4);
+	this->ParserDataToLedsDataQueue = new (std::nothrow) i2cQueue4DynamicData(4);	//nothrow: przy braku pamięci nullptr -> configASSERT niżej
 	configASSERT(this->ParserDataToLedsDataQueue);
 	//ESP_LOGI(TAG, "Leds and background light configuration");
 	printf("%s: Leds and background light configuration\n", TAG);

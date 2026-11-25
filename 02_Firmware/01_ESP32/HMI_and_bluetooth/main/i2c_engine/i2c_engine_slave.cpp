@@ -339,9 +339,9 @@ i2cEngin_slave::i2cEngin_slave(i2c_port_num_t i2c_port, gpio_num_t sda_io_num, g
 
 	ESP_ERROR_CHECK(i2c_new_slave_device(&i2c_config_slave, &handler_i2c_dev_slave));
 
-	this->i2cSlaveReceiveDataToDataParserQueue = new i2cQueue4DynamicData(20);
+	this->i2cSlaveReceiveDataToDataParserQueue = new (std::nothrow) i2cQueue4DynamicData(20);	//nothrow: przy braku pamięci nullptr -> configASSERT niżej (zwykłe new w IDF bez wyjątków C++ robi abort())
 	configASSERT(this->i2cSlaveReceiveDataToDataParserQueue);
-	this->i2cSlaveTransmitDataQueue = new i2cQueue4DynamicData(20);
+	this->i2cSlaveTransmitDataQueue = new (std::nothrow) i2cQueue4DynamicData(20);	//jak wyżej
 	configASSERT(this->i2cSlaveTransmitDataQueue);
 	printf("%s bus has been initialised on port %d with address %lx.\n", this->TAG, i2c_port, slave_addr);
 
@@ -393,7 +393,8 @@ void i2cEngin_slave::i2cSlaveReceive(void)
 	// (t->buffer), a ISR sterownika zapisuje do niego odebrane bajty. Musi istnieć, ale task NIE czyta z niego danych:
 	// callback i2c_slave_rx_done_callback kopiuje zawartość (edata->buffer) do i2cSlaveRxEvent.data, a task parsuje
 	// wyłącznie rx_data.data. Dzięki temu ponowne uzbrojenie (i2c_slave_receive) nie koliduje z parsowaniem.
-	uint8_t *data_rd = new uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];
+	uint8_t *data_rd = new (std::nothrow) uint8_t[ESP32_SLAVE_RECEIVE_BUFFER_LEN];	//nothrow + assert: bufor uzbrajanego odbioru; task nie kończy się, więc bufor nie jest zwalniany
+	assert(data_rd);
 
 	// uint32_t size_rd = 0;
 	i2cSlaveRxEvent rx_data;	// kopia zdarzenia z kolejki - task pracuje wyłącznie na niej (nie na globalnym rxEvent ISR)

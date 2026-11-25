@@ -317,8 +317,10 @@ void bt_audio_sink::btAudioDeviceOn(void){
     //bt_audio_sink::sendToMasterI2sPinsState(i2sNotConfigured);
     if (this->a2dp_sink == nullptr){	//obiekty tworzone RAZ (przy pierwszym On), potem tylko start()/end(false):
 										//BluetoothA2DPSink ustawia globalne wskaźniki na siebie (actual_bluetooth_a2dp_sink/common), których stos BT używa - nie może być usuwany przy Off
-        this->i2s = new I2SStream();
-        this->a2dp_sink = new BluetoothA2DPSinkExt(*i2s);
+        this->i2s = new (std::nothrow) I2SStream();	//nothrow + assert: *i2s wyłuskiwane od razu niżej
+        assert(this->i2s);
+        this->a2dp_sink = new (std::nothrow) BluetoothA2DPSinkExt(*i2s);	//jak wyżej - a2dp_sink używany od razu niżej
+        assert(this->a2dp_sink);
         this->a2dp_sink->set_auto_reconnect(true);	//podczas On: łączy z ostatnim telefonem przy start() i ponawia przy zerwaniu łącza; Off (end()) wyłącza auto-reconnect
         this->a2dp_sink->set_on_connection_state_changed(onConnCallback);
         //this->a2dp_sink->set_on_audio_state_changed_post(onAudioStateCallback); //nie potrzebuję w mojej aplikacji

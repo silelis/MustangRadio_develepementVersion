@@ -6,6 +6,7 @@ extern myPrintfTask *pPrintf;
 myList::myList(ListHeader *pointerListHeader,
 		const char *nodeName) :
 		menuItem(nodeName) {
+	assert(pointerListHeader);	//nagłówek listy używany od razu niżej (head, indexCounter) - nullptr = crash
 	this->pListHeader = pointerListHeader;
 
 	if (this->pListHeader->head == nullptr) {
@@ -14,7 +15,6 @@ myList::myList(ListHeader *pointerListHeader,
 	nextListNode = nullptr;
 	this->pListHeader->indexCounter++;
 	this->index = this->pListHeader->indexCounter;
-	assert(this);
 	this->pListHeader->currentListNode = this;
 }
 
@@ -46,7 +46,7 @@ void myList::addAtEnd(
 		return;
 
 	myList *newNode; // = new myList(nodeName, execFunctionArraySize);
-	newNode = new myList(pListHeader,
+	newNode = new (std::nothrow) myList(pListHeader,	//nothrow: przy braku pamięci nullptr -> assert niżej (zwykłe new przy -fno-exceptions robi abort(), assert byłby martwy) - jak w addAtBeginning()
 			nodeName);
 	assert(newNode);
 	if (!this->pListHeader->head) {

@@ -89,6 +89,7 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 12. **Wzorce z TEGO SAMEGO kontrolera:** na STM32 rób jak w kodzie STM32, na ESP32 jak w ESP32 (nie przenoś mechanizmów między nimi).
 13. **Pamięć dynamiczna:** w każdym kroku wskaż, kto jest właścicielem `pData` i gdzie jest zwalniane – po użyciu ORAZ na każdej ścieżce błędu (przed `assert`); pilnuj też podwójnego zwolnienia.
 14. **Nazwy blokad (2026-11-25):** uchwyt/funkcja/metoda obsługująca mutex ma „Mutex” w nazwie, nie „Semaphore” (także w komentarzach i zakomentowanym kodzie).
+15. **`new` (2026-11-25):** zawsze `new (std::nothrow)` + `assert`/`configASSERT` (albo `if` + obsługa) zaraz po nim – w obu projektach wyjątki C++ są wyłączone.
 
 ---
 
@@ -109,7 +110,7 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 ## 4. DO ZROBIENIA – Bluetooth
 
 ### 4.1 TEST NA SPRZĘCIE (NAJPIERW – wgrać OBA firmware'y; wszystko z sekcji ZROBIONE jest tylko skompilowane)
-- **Start radia:** printf, ping ESP32 (`isDeviceReady` – teraz pod mutexem szyny), LED, stepper, klawiatura/enkodery, menu (obiekty statyczne).
+- **Start radia:** printf, ping ESP32 (`isDeviceReady` – teraz pod mutexem szyny), LED, stepper, klawiatura/enkodery, menu (obiekty statyczne, listy menu z `addAtEnd()` – `nothrow`), NVS na ESP32.
 - **Klawisz/enkoder w trakcie startu STM32:** log `keyboard frame dropped - radioMenu not created yet`, bez crasha.
 - **Mutexy:** EQ → powrót po ~12 s do tego samego urządzenia; długie EQ (powrót od razu); krótkie VOL w EQ (następne urządzenie); kilka cykli wejścia/wyjścia z EQ;
   ESP32: podświetlenie przy starcie, mignięcie przy klawiszu, diody stałe/migające po ramkach LED ze STM32.
@@ -151,8 +152,8 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 - **Przed zmianą zapytaj:** usunąć całkiem, zakomentować, czy zostawić za `#if` (dziś wyłączone przez `USED_BLUETOOTH_STACK = USE_ESP32A2DP`).
 
 ### 4.6 Drobne (zgłoszone, czekają na decyzję)
-- `menu_myList.cpp:52` (`addAtEnd`): `new myList` **bez** `(std::nothrow)` (reszta ma).
-- `menu_myList.cpp:17`: `assert(this)` – nic nie sprawdza.
+- ESP32 `i2c_engine_slave.cpp`: destruktor `i2cEngin_slave` NIE usuwa kolejek `i2cSlaveReceiveDataToDataParserQueue` / `i2cSlaveTransmitDataQueue` (`:506` tylko zakomentowany stary kod) – dziś bez skutku (obiekt `static`, nigdy niszczony).
+- ESP32 `NVSeeprom.cpp:570`: komentarz „para do new char[] z konstruktora (NVSeeprom.cpp:29)” – numer linii nieaktualny (teraz :30).
 - `bt_audio.cpp`: brak wcięcia w `btAudioNext()`; literówki w nazwach typu `Transision`, `Intrrrupt` – tylko jeśli użytkownik zechce.
 - Pliki `bt_audio — kopia.cpp/.h` w `main/bt_audio/` – do decyzji użytkownika (w `.cpp:37` została stara nazwa `BT_SUBCOMMAND_onConnCallback` – plik niekompilowany, nie ruszany).
 - **STM32 – `malloc`/`free` newlib prawdopodobnie NIE są thread-safe:** `configUSE_NEWLIB_REENTRANT 1`, ale brak `newlib_lock_glue.c` / własnych `__malloc_lock`/`__malloc_unlock`; `new`/`delete` `pData` działa równolegle w kilku taskach (odbiór I2C, parser, TX, printf) → ryzyko rzadkiego uszkodzenia sterty. Do sprawdzenia (osobny temat). `new` idzie na stertę newlib (`_sbrk`), NIE na stertę FreeRTOS (`heap_4`, 30 KB).
@@ -178,6 +179,13 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
 ---
 
 ## ZROBIONE (wszystko tylko skompilowane – NIEtestowane na sprzęcie, test w 4.1)
+
+### `new` zawsze z `(std::nothrow)` + sprawdzenie wyniku (2026-11-25, STM32 + ESP32)
+Powód: STM32 `-fno-exceptions`, ESP32 `CONFIG_COMPILER_CXX_EXCEPTIONS` wyłączone → zwykłe `new` przy braku pamięci robi `abort()` bez informacji, a `assert`/`configASSERT` za nim są martwe; z `nothrow` jest `nullptr` → assert z plikiem i linią.
+- **STM32 `menu_myList.cpp`:** `addAtEnd()` – `new (std::nothrow) myList` (jak `addAtBeginning()`); konstruktor `myList` – puste `assert(this)` usunięte, zamiast niego `assert(pointerListHeader)` na początku (przed pierwszym użyciem nagłówka).
+- **ESP32:** `i2c_engine_slave.cpp` – 2 kolejki (`configASSERT` teraz działa) + bufor `data_rd` (`nothrow` + `assert`); `Leds_backlight.cpp`, `StepperOptoPowerOFF.cpp` – kolejki parsera (`#include <new>` + `nothrow`); `bt_audio.cpp` – `i2s`, `a2dp_sink` (`nothrow` + `assert`); `NVSeeprom.cpp` – `namespaceName` (`#include <new>` + `nothrow` + `assert` przed `strcpy`).
+- Przegląd końcowy: w kompilowanym kodzie obu projektów NIE ma już `new` bez `nothrow` (poza komentarzami i niekompilowanym `bt_audio — kopia.cpp`; biblioteki w `components/` nie przeglądane). Zwalnianie sprawdzone: `deleteList()` list menu (`delete` każdego węzła, wołane w destruktorze `radioMenu` dla 3 list), kolejki w destruktorach, `delete[]` `namespaceName`, `pData` przez `QueueDeleteDataFromPointer()`.
+- Zasada na przyszłość: każde `new` → `new (std::nothrow)` + `assert`/`configASSERT` (albo `if` + obsługa) zaraz po nim.
 
 ### Mutexy zamiast semaforów binarnych (2026-11-25, STM32 + ESP32)
 Zasada: blokada zasobu (Take i Give w tym samym tasku, nigdy z ISR) = **mutex** (`xSemaphoreCreateMutex`, startuje WOLNY – bez początkowego `Give`, dziedziczenie priorytetu);
