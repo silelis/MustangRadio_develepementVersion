@@ -2,7 +2,7 @@
 
 > **Dla Claude:** przeczytaj cały plik, zanim cokolwiek zrobisz. To przypomnienie: co jest zrobione, co do zrobienia, jakie są zasady pracy.
 > Numery linii są orientacyjne – przed każdą zmianą przeczytaj aktualny plik.
-> Stan na: **2026-11-24**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
+> Stan na: **2026-11-25**. Poprzedni kontekst (`KONTEKST_I2C_ESP32_STM32.md`, szczegóły I2C, analizy, testy) jest w historii gita:
 > `git show 887b0444:KONTEKST_I2C_ESP32_STM32.md`
 
 ---
@@ -81,9 +81,18 @@ Zasada: najpierw WSZYSTKIE obiekty urządzeń ESP32, potem taski, które z nich 
   (3) dłuższe opóźnienia po którejś stronie – tylko obejście.
 - **Dwie OSOBNE sprawy (ustalone 2026-11-24):**
   1. **Synchronizacja startu** (ramka „STM32 gotowy”, propozycja 1) – usuwa PRZYCZYNĘ tego panicu; to nie obsługa błędów, tylko uzgodnienie gotowości obu stron. Szybkie – robić najpierw.
+     **Zachowanie ESP32 w czasie czekania (ustalone 2026-11-25)** – NIE trzymać ramek w kolejce TX do „gotowy”: kolejka TX ma 20 ramek (`i2c_engine_slave.cpp:344`), `i2cSendDataToTransisionQueue()` czeka max 10 ms (`:488`),
+     a okno czekania może być długie (ping + `ESP32_READY_SETTLE_MS` + init STM32, w przyszłości ładowanie si4689 ~48 s) → przepełnienie. Dlatego do czasu „gotowy”:
+     - **klawiatura** – ramki odrzucać od razu (stare wciśnięcia po starcie i tak nie powinny działać); dziś przy pełnej kolejce: log `Queue feeding error` + klawisz przepada (`tasksFunctions.cpp` ~253-256, długi POWER → `radioPowerOff()`), bez panicu;
+     - **BT** – to informacja o STANIE (liczy się ostatni): nic nie wkładać do kolejki, po „gotowy” ESP32 wysyła jedną migawkę stanu (`sendToMaster*()`); dziś pełna kolejka przy ramce BT = panic (patrz pkt 2).
+     Ramka „gotowy” NIE rozwiązuje wyścigu klawiatury na STM32 (`pRadioMenu` – 4.6) – tam osobne zabezpieczenie (wariant 1).
   2. **Obsługa błędów zamiast `assert`** – potrzebna I TAK: impuls INT może zginąć w trakcie pracy (zakłócenie, restart ESP32, zajęta szyna), dziś każdy taki przypadek = panic.
      Docelowo: ESP32 po timeoucie – wyczyścić FIFO TX, zwolnić `pData` (albo ponowić N razy), wrócić do `idle`, zalogować; STM32 – przy braku odpowiedzi / śmieciach
      (zła suma, długość) odrzucić ramkę i ponownie się zsynchronizować, bez `assert`. Później, osobny większy temat (oba kontrolery) – patrz pkt 5 „Obsługa błędów”.
+     **Także strona NADAWCY ramki (dopisane 2026-11-25):** ESP32 `bt_audio_sink::sendToMasterDeviceOnOffState()` / `...ConnectionState()` / `...AVRCPlayStatus()` / `...I2sPinsState()`
+     mają `assert(frameQueued == pdTRUE)` (`bt_audio.cpp` ~49/58/67/76) → każde chwilowe zapchanie kolejki TX (20 ramek, np. STM32 zajęty dłuższą transmisją; start BT wrzuca ~11 ramek naraz) = panic.
+     Docelowo: przy pełnej kolejce – log i pominięcie ramki stanu (`pData` zwalnia już `QueueSend`, brak wycieku); następna zmiana stanu albo migawka po „STM32 gotowy” przyniesie aktualny stan.
+     To inna warstwa niż błędy transmisji na szynie (`i2c_engine_slave.cpp` / sterownik STM32) – przy realizacji objąć oba miejsca.
 - **Na razie (decyzja użytkownika 2026-11-24):** obejście opóźnieniem `vTaskDelay` w `app_main.cpp` przed `bt_audio_sink`; poprawka później.
 - Przy okazji: `testBT` nadal lokalny w `app_main` (nie `static`, patrz 4.2).
 - Potem: pozostałe sprawy z kontekstu (decyzja użytkownika: najpierw LED, potem reszta).
@@ -206,6 +215,12 @@ Wszystkie `assert(x = new …)`, `configASSERT(xTaskCreate(…))`, `assert(!esp_
 - Pliki `bt_audio — kopia.cpp/.h` w `main/bt_audio/` – do decyzji użytkownika (w `.cpp:37` została stara nazwa `BT_SUBCOMMAND_onConnCallback` – plik niekompilowany, nie ruszany).
 - **STM32 – `malloc`/`free` newlib prawdopodobnie NIE są thread-safe:** `configUSE_NEWLIB_REENTRANT 1`, ale brak `newlib_lock_glue.c` / własnych `__malloc_lock`/`__malloc_unlock`; `new`/`delete` `pData` działa równolegle w kilku taskach (odbiór I2C, parser, TX, printf) → ryzyko rzadkiego uszkodzenia sterty. Do sprawdzenia (osobny temat). `new` idzie na stertę newlib (`_sbrk`), NIE na stertę FreeRTOS (`heap_4`, 30 KB).
 - **STM32 – wyścig klawiatury przy starcie:** task parsera powstaje przed `pRadioMenu` → ramka klawiatury tuż po starcie trafiłaby na `nullptr` (`comunication_esp32i2cComunicationDriver.cpp` `keyboardToRadioMeny`). Dla BT rozwiązane kolejnością tworzenia. Po zmianie na obiekty statyczne problem nadal ten sam (`pRadioMenu` ustawiany w tym samym miejscu).
+  Stan 2026-11-25: task parsera tworzony w `tasksFunctions.cpp` ~211 (priorytet `tskIDLE_PRIORITY + 1` – startuje od razu, wyżej niż task init), `pRadioMenu = &radioMenuObject` dopiero ~217 → okno realne (klawisz/enkoder przy starcie = crash).
+  `radioMenu` NIE da się przenieść przed taski (konstruktor → `setCurrentAudioNodeIndex()` → Init urządzenia → LED przez kolejkę TX, potrzebny task TX).
+  **ZROBIONE 2026-11-25 – wariant 1** (kompilacja STM32 OK, NIEtestowane na sprzęcie): w `parserFunction::keyboardToRadioMeny()` (`comunication_esp32i2cComunicationDriver.cpp` ~393) przy `pRadioMenu == nullptr` – ramka odrzucona z logiem `keyboard frame dropped - radioMenu not created yet`, bez `assert` (klawisz z czasu startu przepada; `pData` zwalnia jak zawsze task parsera).
+  **Przegląd podobnych wyścigów (2026-11-25) – brak innych:** STM32 – `pPrintf` w `main()` przed taskiem printf; `pi2cMaster`/`pESP32`/`pHmiLeds`/`pStepperMotor`/`pBtAudio` przed taskami I2C; taski menu dostają `pRadioMenu` po ustawieniu; EXTI ma guard `esp32I2cInitialised && pESP32 != nullptr` (impulsy INT przed `pESP32` przepadają – to „głuche okno” z PRIORYTETU 3, nie crash); brak własnych callbacków HAL I2C. ESP32 – `taskFunctionsStaticHandlersInit()` tworzy wszystkie obiekty przed jakimkolwiek taskiem; `klawiatura` po swojej kolejce i tasku podświetlenia; callbacki BT z guardem `instance == nullptr`.
+  Zgłoszone przy okazji (nie poprawiane): `keyboardToRadioMeny()` ignoruje wynik `queueRadioMenuKbrdSend()`, które czeka do 700 ms (`menu_radioMenu.cpp:178-179`) – przy zapchanym menu task parsera stoi do 700 ms (blokuje też ramki BT i resztę odbioru z ESP32).
+  Odrzucone: wariant 3 (tylko ramka „STM32 gotowy”) – ESP32 musiałby wstrzymać ramki do końca konfiguracji `radioMenu` → przepełnienie kolejki TX ESP32 (PRIORYTET 3, pkt 1); wariant 2 (rozdzielenie konstruktora `radioMenu`) – większa zmiana wnętrza klasy.
 - `device_StepperOptoPowerOFF.cpp:59-74` (STM32): luźne deklaracje funkcji spoza klasy i powtórzone `#define MOTOR_SUBCOMMAND_*`.
 
 ---

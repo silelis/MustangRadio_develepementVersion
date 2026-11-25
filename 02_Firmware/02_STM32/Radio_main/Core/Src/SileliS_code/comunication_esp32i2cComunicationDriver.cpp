@@ -391,6 +391,10 @@ extern radioMenu *pRadioMenu;		//from tasksFunctions.cpp
 extern btAudioDevice *pBtAudio;		//from tasksFunctions.cpp
 namespace parserFunction {
 void keyboardToRadioMeny(i2cFrame_keyboardFrame *kbrdFrame) {
+	if (pRadioMenu == nullptr) {	//radioMenu tworzone w initTaskFunctions() PO tasku parsera (konstruktor startuje urządzenie -> LED przez kolejkę TX) - klawisz z czasu startu odrzucony; pData zwalnia task parsera
+		pPrintf->feedPrintf("parserFunction: keyboard frame dropped - radioMenu not created yet.");
+		return;
+	}
 	pRadioMenu->queueRadioMenuKbrdSend(kbrdFrame->keyboardData.array);
 }
 
