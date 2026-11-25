@@ -63,7 +63,7 @@ static void i2cMasterTransmitToSlaveDataTask(void *pNothing) {
 	while (1) {
 		if (pi2cMaster->takeTransmitI2cDataToI2C_buffer(
 				&transmitFrame)==pdTRUE) {
-			pi2cMaster->i2cMasterSemaphoreTake();
+			pi2cMaster->i2cMasterMutexTake();
 			switch (transmitFrame.slaveDevice7bitAddress) {
 			case pESP32->esp32i2cSlaveAdress_7bit:
 				pESP32->masterTransmitData(&transmitFrame);	//wraca po zakończeniu wysyłki + 7 ms dla ESP32 (błąd -> printf + assert w środku)
@@ -72,7 +72,7 @@ static void i2cMasterTransmitToSlaveDataTask(void *pNothing) {
 				pPrintf->feedPrintf("I2C slave address not recognized.");
 				assert(0);
 			}
-			pi2cMaster->i2cMasterSemaphoreGive();
+			pi2cMaster->i2cMasterMutexGive();
 
 			if (transmitFrame.pData != nullptr) {
 				pi2cMaster->deleteAlocatedDataAfterParsing(transmitFrame);
@@ -92,7 +92,7 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing) {
 	while (1) {
 		if (pi2cMaster->getI2cAdressFromAdressQueue(
 				&I2CFrameToReadFromSlave)==pdPASS) {
-			pi2cMaster->i2cMasterSemaphoreTake();
+			pi2cMaster->i2cMasterMutexTake();
 			switch (I2CFrameToReadFromSlave.slaveDevice7bitAddress) {
 			case pESP32->esp32i2cSlaveAdress_7bit:		//czyta dane z ESP32
 				pESP32->masterReceiveData(&I2CFrameToReadFromSlave);
@@ -101,7 +101,7 @@ static void i2cMasterReceiveFromSlaveDataTask(void *pNothing) {
 				pPrintf->feedPrintf("I2C slave address not recognized.");
 				assert(0);
 			}
-			pi2cMaster->i2cMasterSemaphoreGive();
+			pi2cMaster->i2cMasterMutexGive();
 			if (I2CFrameToReadFromSlave.pData != nullptr) {	//po fazie len (esp32) pData == nullptr - nic do parsera; kontrola alokacji w esp32_i2cComunicationDriver::masterReceiveData()
 				pi2cMaster->passReceivedI2cDataToParsingQueue(
 						&I2CFrameToReadFromSlave);
@@ -159,10 +159,10 @@ void peripheryMenuTimeoutFunction(void *thing) {
 	while (1) {
 		vTaskDelay(pdMS_TO_TICKS(PERIPHERY_MENU_TIMEOUT_TASK_DELAY));
 
-		xSemaphoreTake(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore,
+		xSemaphoreTake(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedMutex,
 				portMAX_DELAY);
 		timeoutElapsed = (ptrRadioMenu->peripheryMenu_TimeoutCounterIncrement() >= EQUALIZER_TIMEOUT_PERIOD);//6 = 12 SECUNDS
-		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedSemaphore);	//semafor oddany ZAWSZE - task nie zawiesza się sam trzymając semafor (groziło deadlockiem z menuFunction_returnForEqualizerMenu)
+		xSemaphoreGive(ptrRadioMenu->peripheryMenu_TaskSuspendAllowedMutex);	//mutex oddany ZAWSZE - task nie może zostać zawieszony trzymając mutex (groziło deadlockiem z menuFunction_returnForEqualizerMenu)
 		if (timeoutElapsed) {
 			keyboardUnion returnKey = { RETURN_FROM_EQUALIZER_MENU };
 			ptrRadioMenu->queueRadioMenuKbrdSend(&returnKey);	//powrót jak po długim EQ: wykona go task RadioMenu (menuFunction_returnForEqualizerMenu), który też zawiesza ten task

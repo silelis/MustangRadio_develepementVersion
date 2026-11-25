@@ -23,12 +23,11 @@ LEDS_BACKLIGHT::LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t l
 	/* LED strip initialization with the GPIO and pixels number*/
 
 	
-	//tworzenie semafora dla punktu aktualizacji zmiennych przechowujących dane o ledach
+	//tworzenie mutexa dla punktu aktualizacji zmiennych przechowujących dane o ledach
 	this->handlerMutex_ledDisplay_Backlight = NULL; //czyści wskaźnik mutex'u dla podświetlenia	i diód sygnalizacyjnych, bo kilka tasków bedzi ekorzystać z linii komunikacyjnej WS2812 		
-	this->handlerMutex_ledDisplay_Backlight = xSemaphoreCreateBinary();	//tworzy mutex dla podświetlenia
+	this->handlerMutex_ledDisplay_Backlight = xSemaphoreCreateMutex();	//tworzy mutex dla podświetlenia i diod (jedna taśma WS2812); startuje WOLNY - bez początkowego Give
 	configASSERT(this->handlerMutex_ledDisplay_Backlight);
 	//xSemaphoreGive(this->handlerMutex_ledDisplay_Backlight);
-	this->SemaphoreGive();
 	
 	
 	
@@ -56,12 +55,12 @@ LEDS_BACKLIGHT::LEDS_BACKLIGHT(int gpioNum, uint8_t maxLed, led_pixel_format_t l
 	this->ledStripRefresh();
 }
 
-BaseType_t LEDS_BACKLIGHT::SemaphoreGive(void)
+BaseType_t LEDS_BACKLIGHT::MutexGive(void)
 {
 	return xSemaphoreGive(this->handlerMutex_ledDisplay_Backlight);
 }
 
-BaseType_t LEDS_BACKLIGHT::SemaphoreTake(TickType_t xTicksToWait)
+BaseType_t LEDS_BACKLIGHT::MutexTake(TickType_t xTicksToWait)
 {
 	return xSemaphoreTake(this->handlerMutex_ledDisplay_Backlight, xTicksToWait);	
 }

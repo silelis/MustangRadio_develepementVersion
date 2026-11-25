@@ -58,13 +58,12 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1, GPIO_TypeDef *sclGpioPort,
 	this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue = new (std::nothrow) i2cQueue4DynamicData(DEFAULT_RECEIVE_QUEUE_SIZE);
 	configASSERT(this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue);
 
-	this->handle_i2cBinarySemaphore = xSemaphoreCreateBinary();
-	assert(this->handle_i2cBinarySemaphore);
-	this->i2cMasterSemaphoreGive();
-//	this->i2cMasterSemaphoreTake();
+	this->handle_i2cBusMutex = xSemaphoreCreateMutex();	//mutex startuje WOLNY - bez początkowego Give (semafor binarny wymagał Give, bo startuje zajęty)
+	assert(this->handle_i2cBusMutex);
+//	this->i2cMasterMutexTake();
 
 	pPrintf->feedPrintf("%s bus had been initialized.", this->TAG);
-//	this->i2cMasterSemaphoreGive();
+//	this->i2cMasterMutexGive();
 }
 
 /********************************************************************
@@ -78,11 +77,12 @@ i2cMaster::i2cMaster(I2C_HandleTypeDef *hi2c1, GPIO_TypeDef *sclGpioPort,
  *
  * @return NONE
  *
- * @note   NONE
+ * @note   Mutex (handle_i2cBusMutex) - Give musi wywołać ten sam task,
+ * 			który wywołał Take; nie wywoływać z ISR.
  * @warning NONE
  *******************************************************************/
-BaseType_t i2cMaster::i2cMasterSemaphoreTake(void) {
-	return xSemaphoreTake(this->handle_i2cBinarySemaphore, portMAX_DELAY);
+BaseType_t i2cMaster::i2cMasterMutexTake(void) {
+	return xSemaphoreTake(this->handle_i2cBusMutex, portMAX_DELAY);
 }
 
 /********************************************************************
@@ -96,11 +96,12 @@ BaseType_t i2cMaster::i2cMasterSemaphoreTake(void) {
  *
  * @return NONE
  *
- * @note   NONE
+ * @note   Mutex - wywołać w tym samym tasku co i2cMasterMutexTake()
+ * 			(Give z innego taska = configASSERT w FreeRTOS); nie z ISR.
  * @warning NONE
  *******************************************************************/
-BaseType_t i2cMaster::i2cMasterSemaphoreGive(void) {
-	return xSemaphoreGive(this->handle_i2cBinarySemaphore);
+BaseType_t i2cMaster::i2cMasterMutexGive(void) {
+	return xSemaphoreGive(this->handle_i2cBusMutex);
 }
 
 /********************************************************************
@@ -152,10 +153,10 @@ HAL_StatusTypeDef i2cMaster::ping(uint16_t DevAddress_7bit) {
  *******************************************************************/
 bool i2cMaster::isDeviceReady(uint16_t DevAddress_7bit) {
 	HAL_StatusTypeDef retVal;
-	this->i2cMasterSemaphoreTake();
+	this->i2cMasterMutexTake();
 	retVal = HAL_I2C_IsDeviceReady(this->p_hi2c1, DevAddress_7bit << 1, 1,
 			I2C_DEVICE_READY_TIMEOUT_MS);
-	this->i2cMasterSemaphoreGive();
+	this->i2cMasterMutexGive();
 	return (retVal == HAL_OK);
 }
 
@@ -234,12 +235,12 @@ void i2cMaster::deleteAlocatedDataAfterParsing(
 
 i2cMaster::~i2cMaster() {
 	// TODO Auto-generated destructor stub
-	this->i2cMasterSemaphoreTake();
+	this->i2cMasterMutexTake();
 	this->p_hi2c1 = NULL;
 	delete this->pI2C_MasterReceiveFromSlave_DataQueue;
 	delete this->pI2C_MasterTransmitToSlave_DataQueue;
 	delete this->pI2C_MasterInitialiseReadFromSlave_AdressessQueue;
-	vSemaphoreDelete(this->handle_i2cBinarySemaphore);
+	vSemaphoreDelete(this->handle_i2cBusMutex);
 }
 
 /********************************************************************
@@ -260,7 +261,7 @@ i2cMaster::~i2cMaster() {
  * 			kod przez HAL_I2C_GetError(); obsługę robi driver urządzenia
  *
  * @note   Wywoływać z tasku, przy wziętym semaforze szyny
- * 			(i2cMasterSemaphoreTake). Szyna zajęta przy starcie
+ * 			(i2cMasterMutexTake). Szyna zajęta przy starcie
  * 			(HAL_BUSY: SDA/SCL trzymane nisko lub uchwyt HAL nie READY),
  * 			błąd startu DMA oraz transmisja, która się nie kończy,
  * 			kończą się printf + assert(0) wewnątrz i2cMaster.
@@ -363,7 +364,7 @@ uint32_t i2cMaster::getI2cError(void) {
  * 			I2C_Master_Receive_DMA), bezpośrednio PO starcie transmisji
  * 			DMA (HAL_I2C_..._DMA zwróciło HAL_OK). Nie wywoływać przed
  * 			transmisją: wyłączność szyny zapewnia semafor
- * 			(i2cMasterSemaphoreTake), a zajętą szynę zgłasza HAL
+ * 			(i2cMasterMutexTake), a zajętą szynę zgłasza HAL
  * 			(HAL_BUSY). Drivery urządzeń jej nie wołają - metoda
  * 			transmisji wraca do nich dopiero po zakończeniu transmisji.
  * @warning Wywoływać tylko z tasku (vTaskDelay).
@@ -427,7 +428,7 @@ HAL_StatusTypeDef i2cMaster::waitForTransferEnd(uint16_t DevAddress_7bit) {
  * 			kod przez HAL_I2C_GetError(); obsługę robi driver urządzenia
  *
  * @note   Wywoływać z tasku, przy wziętym semaforze szyny
- * 			(i2cMasterSemaphoreTake). Szyna zajęta przy starcie
+ * 			(i2cMasterMutexTake). Szyna zajęta przy starcie
  * 			(HAL_BUSY: SDA/SCL trzymane nisko lub uchwyt HAL nie READY),
  * 			błąd startu DMA oraz transmisja, która się nie kończy,
  * 			kończą się printf + assert(0) wewnątrz i2cMaster.

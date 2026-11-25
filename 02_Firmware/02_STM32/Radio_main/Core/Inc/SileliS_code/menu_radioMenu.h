@@ -67,8 +67,8 @@ private:
 	//friend		void manageRadioButtonsAndManue(void* thing);
 
 	uint8_t peripheryMenu_TimeoutCounter;
-	SemaphoreHandle_t peripheryMenu_TimeoutCounterSemaphore;
-	SemaphoreHandle_t peripheryMenu_TaskSuspendAllowedSemaphore;
+	SemaphoreHandle_t peripheryMenu_TimeoutCounterMutex;	//mutex chroniący peripheryMenu_TimeoutCounter (task timeoutu: Increment, task menu: Reset); Take i Give w tym samym tasku, nie w ISR
+	SemaphoreHandle_t peripheryMenu_TaskSuspendAllowedMutex;	//mutex: task menu zawiesza task timeoutu (vTaskSuspend) tylko trzymając ten mutex, task timeoutu trzyma go tylko w swojej sekcji (nigdy nie zawieszony z mutexem); Take i Give w tym samym tasku, nie w ISR
 public:
 	TaskHandle_t peripheryMenu_taskHandle;
 private:

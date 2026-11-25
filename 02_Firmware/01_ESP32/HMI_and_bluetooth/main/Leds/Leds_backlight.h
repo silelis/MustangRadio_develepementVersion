@@ -25,8 +25,8 @@ public:
 	esp_err_t ledStripClearAll();
 	bool areEqual(const struct colorSet *ledColors);// struct ws2812Color *color1, const struct ws2812Color *color2)
 	
-	BaseType_t SemaphoreGive(void);
-	BaseType_t SemaphoreTake(TickType_t xTicksToWait);
+	BaseType_t MutexGive(void);		//mutex taśmy WS2812 (handlerMutex_ledDisplay_Backlight) - Give w tym samym tasku co Take, nie w ISR
+	BaseType_t MutexTake(TickType_t xTicksToWait);
 	BaseType_t QueueSendDataToLedTask(i2cFrame_transmitQueue * pvItemToQueue);
 	BaseType_t QueueReceiveFormI2cParsingTask(i2cFrame_transmitQueue* pvBuffer, TickType_t xTicksToWait);
 	void QueueDeleteDataFormI2cParsingTask(i2cFrame_transmitQueue structWithPointer);

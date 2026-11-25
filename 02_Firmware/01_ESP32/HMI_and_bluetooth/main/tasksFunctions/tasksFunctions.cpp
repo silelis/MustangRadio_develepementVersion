@@ -321,7 +321,7 @@ void humanMahineBacklightLeds(void *lnothing)
 	const uint8_t COLOR_DIFFERENCE = 50;
 		
 	//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-	pLedDisplay->SemaphoreTake(portMAX_DELAY);
+	pLedDisplay->MutexTake(portMAX_DELAY);
 	pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.primary);
 	pLedDisplay->ledStripRefresh();
 	
@@ -351,7 +351,7 @@ void humanMahineBacklightLeds(void *lnothing)
 		baclightLedsLocal.secondary.blue = baclightLedsLocal.primary.blue - COLOR_DIFFERENCE;
 	}
 	//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-	pLedDisplay->SemaphoreGive();
+	pLedDisplay->MutexGive();
 	
 	
 		
@@ -359,19 +359,19 @@ void humanMahineBacklightLeds(void *lnothing)
 	{
 		vTaskSuspend(NULL);
 		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+		pLedDisplay->MutexTake(portMAX_DELAY);
 		pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.secondary);
 		pLedDisplay->ledStripRefresh();
 		//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-		pLedDisplay->SemaphoreGive();
+		pLedDisplay->MutexGive();
 		vTaskDelay(pdMS_TO_TICKS(150));
 		
 		//xSemaphoreTake(handlerMutex_ledDisplay_Backlight, portMAX_DELAY);
-		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+		pLedDisplay->MutexTake(portMAX_DELAY);
 		pLedDisplay->ledStripSet_backlightLeds(baclightLedsLocal.primary);
 		pLedDisplay->ledStripRefresh();
 		//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-		pLedDisplay->SemaphoreGive();
+		pLedDisplay->MutexGive();
 	}
 }
 
@@ -407,7 +407,7 @@ void humanMahineDisplayLeds(void *nothiong)
 		
 		
 		
-		pLedDisplay->SemaphoreTake(portMAX_DELAY);
+		pLedDisplay->MutexTake(portMAX_DELAY);
 			
 			if (pLedDisplay->areEqual(&ledsLocal.equaliserLed)&&
 				pLedDisplay->areEqual(&ledsLocal.errorLed)&&
@@ -421,7 +421,7 @@ void humanMahineDisplayLeds(void *nothiong)
 
 			
 			//xSemaphoreGive(handlerMutex_ledDisplay_Backlight);
-			pLedDisplay->SemaphoreGive();
+			pLedDisplay->MutexGive();
 			if (pLedDisplay->QueueMessagesWaiting() == 0)
 			{
 				extern TaskHandle_t handlerTask_ledDisplay;
@@ -450,7 +450,7 @@ void humanMahineDisplayLeds(void *nothiong)
 			}
 			
 			pLedDisplay->ledStripRefresh();
-			pLedDisplay->SemaphoreGive();
+			pLedDisplay->MutexGive();
 			pLedDisplay->blinkTimeDelayLoop();
 			
 			

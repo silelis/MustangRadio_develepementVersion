@@ -42,14 +42,12 @@ radioMenu::radioMenu():bindKeyboardToFunction(){
 	this->curretDevice = nullptr;	//do setCurrentDeviceMenu_audio() brak aktywnej listy - strażniki nullptr w get/set działają od początku
 
 	this->peripheryMenu_TimeoutCounter = 0;
-	this->peripheryMenu_TimeoutCounterSemaphore = NULL;
-	this->peripheryMenu_TimeoutCounterSemaphore = xSemaphoreCreateBinary();
-	configASSERT(this->peripheryMenu_TimeoutCounterSemaphore);
-	xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+	this->peripheryMenu_TimeoutCounterMutex = NULL;
+	this->peripheryMenu_TimeoutCounterMutex = xSemaphoreCreateMutex();	//mutex startuje WOLNY - bez początkowego Give (semafor binarny wymagał Give, bo startuje zajęty)
+	configASSERT(this->peripheryMenu_TimeoutCounterMutex);
 
-	this->peripheryMenu_TaskSuspendAllowedSemaphore = xSemaphoreCreateBinary();
-	configASSERT(this->peripheryMenu_TaskSuspendAllowedSemaphore);
-	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	this->peripheryMenu_TaskSuspendAllowedMutex = xSemaphoreCreateMutex();	//mutex startuje WOLNY - bez początkowego Give
+	configASSERT(this->peripheryMenu_TaskSuspendAllowedMutex);
 
 	this->peripheryMenu_taskHandle = NULL;
 
@@ -190,11 +188,11 @@ BaseType_t radioMenu::queueRadioMenuKbrdReceive(
 radioMenu::~radioMenu() {
 	//vTaskDelete(this->taskHandle_manageTheRadioManue);
 	vQueueDelete(queueRadioMenuKbrd);
-	xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore, portMAX_DELAY);
-	vSemaphoreDelete(this->peripheryMenu_TimeoutCounterSemaphore);
-	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore,
+	xSemaphoreTake(this->peripheryMenu_TimeoutCounterMutex, portMAX_DELAY);
+	vSemaphoreDelete(this->peripheryMenu_TimeoutCounterMutex);
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedMutex,
 			portMAX_DELAY);
-	vSemaphoreDelete(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	vSemaphoreDelete(this->peripheryMenu_TaskSuspendAllowedMutex);
 
 	vTaskDelete(this->peripheryMenu_taskHandle);
 
@@ -329,10 +327,7 @@ void radioMenu:: menuFunction_resetToDefaultLongPress(void){
 
 //powrót z peryferiów do TEGO SAMEGO urządzenia audio: długie EQ (RETURN_FROM_EQUALIZER_MENU) oraz timeout (task timeoutu wysyła ten sam klawisz do kolejki)
 void radioMenu::menuFunction_returnForEqualizerMenu(void) {
-	if (eTaskGetState(this->peripheryMenu_taskHandle) == eSuspended) {	//semafor i suspend taska timeoutu - jak w menuFunction_volButShortPressed()
-		xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
-	}
-	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore,
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedMutex,	//mutex i suspend taska timeoutu - jak w menuFunction_volButShortPressed(); task timeoutu nigdy nie jest zawieszony z mutexem, więc dawne Give "gdy zawieszony" zbędne (przy mutexie Give nie-właściciela = assert)
 			portMAX_DELAY);
 	if (this->curretDevice == this->peripheryDevices) {	//strażnik: klawisz mógł czekać w kolejce, a VOL zdążył już wyjść z peryferiów
 		pPrintf->feedPrintf("%s return from peripheryDevices to audioDevices.",
@@ -341,21 +336,18 @@ void radioMenu::menuFunction_returnForEqualizerMenu(void) {
 		this->audioDevices->execCurrentReturnInit(this);		//ReturnInit TEGO SAMEGO audio (nie było niszczone) - inaczej niż VOL short, który przechodzi do następnego
 		vTaskSuspend(this->peripheryMenu_taskHandle);
 	}
-	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedMutex);
 }
 
 void radioMenu::menuFunction_volButShortPressed(void) {
-	if (eTaskGetState(this->peripheryMenu_taskHandle) == eSuspended) {
-		xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
-	}
-	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedSemaphore,
+	xSemaphoreTake(this->peripheryMenu_TaskSuspendAllowedMutex,	//jak w menuFunction_returnForEqualizerMenu()
 			portMAX_DELAY);
 	if (this->curretDevice != this->audioDevices) {
 		//this->peripheryDevices->mI_executeDestroyInit();
 		this->menuFunction_swithPeripheryDeviceToAudioDevice();	//DestroyInit peryferium, BEZ ReturnInit audio - za chwilę moveToNextInLoop() (linia 256) zrobi DestroyInit bieżącego audio i Init następnego
 		vTaskSuspend(this->peripheryMenu_taskHandle);
 	}
-	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedSemaphore);
+	xSemaphoreGive(this->peripheryMenu_TaskSuspendAllowedMutex);
 	//printf("%s switch to next audioDevices.\r\n", this->radioMainMenu->getCurrentNodeTag());
 	pPrintf->feedPrintf("%s switch to next audioDevices.",
 			this->radioMainMenu->getCurrentNodeTag());
@@ -375,19 +367,19 @@ void radioMenu::menuFunction_swithPeripheryDeviceToAudioDevice(void) {
 }
 
 uint8_t radioMenu::peripheryMenu_TimeoutCounterIncrement(void) {
-	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore,
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterMutex,
 			portMAX_DELAY) == pdTRUE) {
 		uint8_t retVal = this->peripheryMenu_TimeoutCounter++;
-		xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+		xSemaphoreGive(this->peripheryMenu_TimeoutCounterMutex);
 		return retVal;
 	}
 	return this->peripheryMenu_TimeoutCounter;
 }
 
 void radioMenu::peripheryMenu_TimeoutCounterReset(void) {
-	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterSemaphore,
+	if (xSemaphoreTake(this->peripheryMenu_TimeoutCounterMutex,
 			portMAX_DELAY) == pdTRUE) {
 		this->peripheryMenu_TimeoutCounter = 0;
-		xSemaphoreGive(this->peripheryMenu_TimeoutCounterSemaphore);
+		xSemaphoreGive(this->peripheryMenu_TimeoutCounterMutex);
 	}
 }

@@ -47,8 +47,8 @@ public:
 			uint8_t *pData, uint16_t Size);
 	HAL_StatusTypeDef I2C_Master_Abort(uint16_t DevAddress_7bit);	//przerywa trwającą transmisję/odbiór master (np. po timeoucie)
 	uint32_t getI2cError(void);	//kod błędu HAL ostatniej transmisji (HAL_I2C_GetError) - do printf w driverze urządzenia
-	BaseType_t i2cMasterSemaphoreTake(void);
-	BaseType_t i2cMasterSemaphoreGive(void);
+	BaseType_t i2cMasterMutexTake(void);	//mutex szyny i2c - Take i Give w tym samym tasku, nie w ISR
+	BaseType_t i2cMasterMutexGive(void);
 
 protected:
 	i2cQueue4DynamicData *pI2C_MasterInitialiseReadFromSlave_AdressessQueue; //kolejka przechowująca informacje o tym, z ktorego slave należy przeczytać dane (przechowuje adres i2c slave do odczytu)
@@ -62,7 +62,7 @@ private:
 	GPIO_TypeDef *p_sdaGpioPort;	//port pinu SDA interfejsu p_hi2c1 - odczyt stanu linii przy diagnostyce zawieszonej transmisji
 	uint16_t sdaPin;				//pin SDA (j.w.)
 	const char *TAG = "I2C master log:";
-	SemaphoreHandle_t handle_i2cBinarySemaphore;//semafor blokujący zasoby do interfejsu i2c SMT'a podczas transmisji/ odbioru danych przez inny wątek
+	SemaphoreHandle_t handle_i2cBusMutex;	//mutex blokujący szynę i2c STM'a podczas transmisji / odbioru danych przez inny task (Take i Give zawsze w tym samym tasku, nie w ISR; dziedziczenie priorytetu)
 	HAL_StatusTypeDef waitForTransferEnd(uint16_t DevAddress_7bit);	//czeka na koniec bieżącej transmisji DMA - wywoływana WYŁĄCZNIE wewnątrz metod transmisji, PO starcie DMA
 	//void createI2C_DataObject(i2cQueue4DynamicData* queueToCreate);		//tworzy kolejkę przechowującą dane
 
